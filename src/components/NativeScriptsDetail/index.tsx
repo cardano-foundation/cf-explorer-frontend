@@ -35,40 +35,39 @@ const NativeScriptsDetail = () => {
 
   const smartcontractTabs: TTab[] = [
     {
-      key: "associatedAddresses",
-      icon: AssociatedAddressesIcon,
-      children: <AssociatedAddress />,
-      label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
-    },
-    {
       key: "mintingBurningPolicy",
       icon: MintingBurningPolicyIcon,
       children: <MinttingBurningPolicy />,
-      label: <Box data-testid="ns.mintBurnPolicy">Minting/ Burning Policy</Box>
+      label: <Box data-testid="ns.mintBurnPolicy">{t("nativeScript.policy")}</Box>
     },
     {
       key: "script",
       icon: ScriptTabIcon,
       children: <Script onVerifyScriptOpen={() => setOpen(true)} />,
-      label: <Box data-testid="ns.script"> Script</Box>
+      label: <Box data-testid="ns.script">{t("nativeScript.script")}</Box>
     },
     {
       key: "token",
       icon: TokenTabIcon,
       children: <Token />,
-      label: <Box data-testid="ns.token"> Token</Box>
+      label: <Box data-testid="ns.token">{t("nativeScript.token")}</Box>
     },
     {
       key: "assetHolders",
       icon: AssetHoldersIcon,
       children: <AssetHolders />,
-      label: <Box data-testid="ns.assetHolders"> Asset Holders</Box>
+      label: <Box data-testid="ns.assetHolders">{t("nativeScript.assetHolders")}</Box>
+    },
+    {
+      key: "associatedAddresses",
+      icon: AssociatedAddressesIcon,
+      children: <AssociatedAddress />,
+      label: <Box data-testid="ns.AssociatedAddresses">{t("common.associatedAddresses")}</Box>
     }
   ];
 
   const hiddenKeys = useMemo(() => {
     const keys: string[] = [];
-    // if (!associatedAddress?.length) keys.push("associatedAddresses");
     if (!keyHashes?.length) keys.push("mintingBurningPolicy");
     return keys;
   }, [associatedAddress, keyHashes]);
@@ -94,7 +93,9 @@ const NativeScriptsDetail = () => {
         }}
       />
       <HeaderOverview data={{ scriptHash: id }} />
-      <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      <Box sx={{ [theme.breakpoints.down("sm")]: { px: 2 } }}>
+        <CustomAccordion loading={loading} tabs={smartcontractTabs} hiddenKeys={hiddenKeys} onTabChange={onTabChange} />
+      </Box>
     </StyledContainer>
   );
 };

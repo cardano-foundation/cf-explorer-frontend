@@ -62,7 +62,7 @@ const TabSmartContracts = () => {
   }, []);
 
   useEffect(() => {
-    if (optionList.indexOf(pageInfo.size) + 1) {
+    if (optionList.indexOf(pageInfo.size) + 1 && tabActive === "smart-contracts") {
       setSize(pageInfo.size);
     } else {
       setSize(6);
@@ -104,7 +104,7 @@ const TabSmartContracts = () => {
     if (fetchData.loading) {
       return (
         <Box component={Grid} container spacing={2}>
-          {[...new Array(size)]?.map((idx) => (
+          {[...new Array(size)].map((_, idx) => (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box component={Skeleton} variant="rectangular" height={"145px"} borderRadius={2} />
             </Grid>
@@ -224,7 +224,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const [expanded, setExpanded] = useState<string | false>("");
   const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
   const transactionPurposeI18n: Record<string, string> = {
-    ANY: t("smartContract.sellectAll"),
+    ANY: t("smartContract.selectAll"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),
@@ -253,9 +253,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "version" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
@@ -323,9 +323,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "trxPurpose" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>

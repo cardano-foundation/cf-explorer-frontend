@@ -35,6 +35,7 @@ export const OptionSelect = styled(MenuItem)(({ theme }) => ({
   display: "flex",
   padding: "12px 16px",
   justifyContent: "space-between",
+  gap: "10px",
   height: "40px",
   cursor: "pointer",
   "&:hover": {

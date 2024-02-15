@@ -7,17 +7,14 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)(({ theme, whiteSpace }) => ({
-  display: "inline-block",
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  width: "100%",
-  textAlign: "left",
-  transform: "translateY(2px)",
-  [theme.breakpoints.down("sm")]: {
-    whiteSpace: whiteSpace
-  }
-}));
+const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
+  display: inline-block;
+  white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  transform: translateY(2px);
+`;
 
 const SubPart = styled("span")`
   display: inline-block;
@@ -81,6 +78,7 @@ const DynamicEllipsisText = ({
 
   const [isMin, setIsMin] = useState<boolean>(false);
   const { isGalaxyFoldSmall } = useScreen();
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
@@ -104,26 +102,41 @@ const DynamicEllipsisText = ({
     };
   }, [isMin]);
 
+  const handleClose = () => {
+    setOpenTooltip(false);
+  };
+
+  const handleOpen = () => {
+    setOpenTooltip(true);
+  };
+
   const firstPart = value?.slice(0, value?.length - postfix);
   const lastPart = value?.slice(-postfix);
 
   if (isMin && !isNoLimitPixel) {
     return (
-      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
-        <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
-          {customTruncateFold?.length === 2 && isGalaxyFoldSmall
-            ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
-            : getShortHash(value)}
-          {isCopy && <CopyButton text={value} />}
-          {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
-        </ContainerShortHand>
-      </CustomTooltip>
+      <ContainerShortHand>
+        <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+          <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
+            {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+              ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+              : getShortHash(value)}
+          </ContainerShortHand>
+        </CustomTooltip>
+        {isCopy && <CopyButton text={value} />}
+        {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
+      </ContainerShortHand>
     );
   }
 
   return (
     <Container id={randomIdRef.current} sx={sx} whiteSpace={whiteSpace}>
-      <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+      <CustomTooltip
+        open={openTooltip}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}
+      >
         <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>

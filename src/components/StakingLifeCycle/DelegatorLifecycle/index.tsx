@@ -198,6 +198,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       history.replace(details.staking(stakeId, "timeline", step.key));
     }
   };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>

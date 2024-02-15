@@ -1,6 +1,8 @@
 import { alpha, Box, Button, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
+import Card from "src/components/commons/Card";
+
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
@@ -168,14 +170,17 @@ export const JSONValue = styled(Value)`
   }
 `;
 
-export const MetadataWrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  padding: 0 25px;
-  margin: 25px 0px;
-  font-size: 16px;
-`;
+export const MetadataWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
+  padding: "0 25px",
+  margin: "25px 0px",
+  fontSize: "16px",
+  [theme.breakpoints.down(355)]: {
+    padding: `0 ${theme.spacing(1)}`
+  }
+}));
 
 export const MetadataHeader = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -212,16 +217,18 @@ export const MetaDataValue = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
-export const MetaDataJSONValue = styled(MetaDataValue)`
-  flex: 1;
-  display: inline-block;
-  overflow-wrap: anywhere;
-  padding: 16px 8px;
-  box-sizing: border-box;
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100])};
-  border-radius: 6px;
-  position: relative;
-`;
+export const MetaDataJSONValue = styled(MetaDataValue)<{ hasViewButton?: boolean }>(({ theme, hasViewButton }) => ({
+  flex: 1,
+  display: hasViewButton ? "inline-flex" : "inline-block",
+  justifyContent: "space-between",
+  overflowWrap: "anywhere",
+  padding: "16px",
+  boxSizing: "border-box",
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  borderRadius: "6px",
+  position: "relative",
+  gap: hasViewButton ? "12px" : "0px"
+}));
 
 export const MetaDataJSONValueText = styled(MetaDataValue)`
   position: relative;
@@ -268,4 +275,87 @@ export const BadgeContainer = styled(Box)`
 export const CIPLabel = styled(Typography)`
   font-size: 12px;
   color: ${({ theme }) => theme.palette.secondary.light};
+`;
+export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" | "Warning" }>`
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 31px;
+  width: min-content;
+  gap: 6px;
+  padding-left: 3px;
+  padding-right: 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+  user-select: none;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  background-color: ${({ theme, type }) => {
+    switch (type) {
+      case "Verified":
+        return theme.palette.success[100];
+      case "Warning":
+        return theme.palette.warning[100];
+      default:
+        return theme.palette.error[100];
+    }
+  }};
+  border: 1px solid
+    ${({ theme, type }) => {
+      switch (type) {
+        case "Verified":
+          return theme.palette.success[800];
+        case "Warning":
+          return theme.palette.warning[700];
+        default:
+          return theme.palette.error[800];
+      }
+    }};
+`;
+
+export const ItemBolnisi = styled(Card)`
+  padding: ${({ theme }) => theme.spacing(2)};
+  position: relative;
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
+  box-shadow: 2px 2px 10px 0px #43465633;
+  &:hover {
+    box-shadow: ${({ theme }) =>
+      theme.isDark ? ` 2px 2px 10px 0px ${theme.palette.secondary[100]}` : theme.shadow.cardHover};
+  }
+`;
+
+export const ViewWineButton = styled(Button)(({ theme }) => ({
+  width: "100%",
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  fontSize: 16,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  background: theme.palette.primary.main,
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
+  }
+}));
+
+export const ContentIdentifiers = styled(Box)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const ViewAllButton = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
+  &:hover {
+    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
+  }
 `;

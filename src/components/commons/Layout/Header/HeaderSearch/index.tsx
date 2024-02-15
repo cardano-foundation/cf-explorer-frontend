@@ -1,23 +1,23 @@
 /* eslint-disable no-case-declarations */
-import React, { FormEvent, useState, useEffect, useCallback } from "react";
-import { Backdrop, Box, SelectChangeEvent, CircularProgress, useTheme } from "@mui/material";
+import { Backdrop, Box, CircularProgress, SelectChangeEvent, useTheme } from "@mui/material";
+import axios from "axios";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 import { stringify } from "qs";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isEmpty, isNil, isObject, omitBy } from "lodash";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
+import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
-import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 
 import {
   Form,
@@ -195,12 +195,16 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(query));
-      const adaHanlde = await adaHandleSearch(search);
+      const res = await defaultAxios.get(API.SEARCH_ALL(query?.trim()));
+      const adaHanlde = await adaHandleSearch(search?.trim());
 
       setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
+
+      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "" && !adaHanlde) {
+        throw new Error();
+      }
 
       if (adaHanlde && adaHanlde !== null) {
         if (
@@ -440,6 +444,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       try {
         const dataHanlde = await adaHandleSearch(search);
+        if (Object.keys(dataHanlde)?.length === 0) {
+          throw new Error();
+        }
         if (dataHanlde) {
           handleSetSearchValueDefault();
           callback?.();
@@ -921,7 +928,7 @@ export const OptionsSearch = ({
     if (
       listOptions.length === 0 &&
       isObject(data) &&
-      Object.keys(data).length > 0 &&
+      Object.keys(data || {})?.length > 0 &&
       filter === "all" &&
       !ADAHandleOption
     ) {

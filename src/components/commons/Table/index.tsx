@@ -9,8 +9,8 @@ import {
   useScrollTrigger,
   useTheme
 } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -26,6 +26,7 @@ import {
   StartPage
 } from "src/commons/resources";
 import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import breakpoints from "src/themes/breakpoints";
 import {
   ColumnType,
   FooterTableProps,
@@ -34,11 +35,12 @@ import {
   TableRowProps,
   TableTopHeaderProps
 } from "src/types/table";
-import breakpoints from "src/themes/breakpoints";
 
 import CustomIcon from "../CustomIcon";
+import { Lowercase } from "../CustomText/styles";
 import Filter from "../Filter";
 import NoRecord from "../NoRecord";
+import NotAvailable from "../NotAvailable";
 import {
   Empty,
   InputNumber,
@@ -63,8 +65,6 @@ import {
   TotalNumber,
   Wrapper
 } from "./styles";
-import { Lowercase } from "../CustomText/styles";
-import NotAvailable from "../NotAvailable";
 
 const SPACING_TOP_TABLE = 300;
 
@@ -469,17 +469,25 @@ const Table: React.FC<TableProps> = ({
   const wrapperRef = useRef<HTMLElement>(null);
   const { width } = useScreen();
   const scrollHeight = 5;
-  let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
-  const tableFullHeight = (tableRef?.current?.clientHeight || 0) + scrollHeight;
 
-  if (width >= breakpoints.values.sm && (data || []).length >= 9) {
-    const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
-    const spaceTop =
-      Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
-        ? 0
-        : SPACING_TOP_TABLE;
-    heightTable = window.innerHeight - (footerHeight + spaceTop);
-  }
+  const tableFullHeight = useMemo(
+    () => (tableRef?.current?.clientHeight || 0) + scrollHeight,
+    [tableRef?.current?.clientHeight]
+  );
+
+  const heightTable = useMemo(() => {
+    let heightTable = Math.min((tableRef?.current?.clientHeight || 0) + scrollHeight, window.innerHeight * 0.5);
+
+    if (width >= breakpoints.values.sm && (data || []).length >= 9) {
+      const footerHeight = document.getElementById("footer")?.offsetHeight || SPACING_TOP_TABLE;
+      const spaceTop =
+        Math.min(tableRef?.current?.clientHeight || 0, window.innerHeight) - (footerHeight + SPACING_TOP_TABLE) < 200
+          ? 0
+          : SPACING_TOP_TABLE;
+      heightTable = window.innerHeight - (footerHeight + spaceTop);
+    }
+    return heightTable;
+  }, [tableRef?.current?.clientHeight]);
 
   const onCallBackHeight = (rowHeight: number) => {
     if (!maxHeightTable) setMaxHeightTable(rowHeight * 9);

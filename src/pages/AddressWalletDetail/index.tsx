@@ -42,10 +42,7 @@ const AddressWalletDetail = () => {
     blockKey
   );
 
-  if (!initialized && !state?.data) {
-    return null;
-  }
-  if (adaHandleLoading) {
+  if (adaHandleLoading || loading || !initialized || (!ADAHandleInitialized && !state?.data)) {
     return (
       <Box>
         <CircularProgress />

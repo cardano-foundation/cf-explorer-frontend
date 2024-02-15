@@ -1,4 +1,4 @@
-import { CircularProgress, useTheme } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -75,7 +75,12 @@ const DelegatorLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
-  const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
+  const {
+    data,
+    error,
+    initialized,
+    loading: loadingInitialData
+  } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
@@ -100,9 +105,6 @@ const DelegatorLifecycle = () => {
     if (mode === newMode) return;
     history.push(details.staking(stakeId, newMode, validTab));
   };
-  if (!initialized && !error) return null;
-
-  if (error || !data) return <NoRecord />;
 
   const checkDisableGenReport = () => {
     if (!isLoggedIn) return true;
@@ -116,6 +118,17 @@ const DelegatorLifecycle = () => {
     return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
   };
   const distributeTotal = listTabs as unknown as DistributionTotal;
+
+  if (loadingInitialData) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (!initialized && !error) return null;
+
+  if (error || !data) return <NoRecord />;
 
   return (
     <DelegatorDetailContext.Provider
@@ -166,7 +179,7 @@ const DelegatorLifecycle = () => {
             </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
-        {loadingListTabs && <CircularProgress color="success" />}
+        {loadingListTabs && <CircularProgress />}
 
         {!loadingListTabs && listTabs && (
           <>

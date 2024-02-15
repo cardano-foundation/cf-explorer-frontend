@@ -217,11 +217,13 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
             interval={tab === "BALANCE" ? getIntervalAnalyticChart(rangeTime) : undefined}
             {...xAxisProps}
           >
-            <Label
-              value={rangeTime === "ONE_DAY" ? "(UTC)" : "(As of 00:00 UTC)"}
-              offset={-12}
-              position="insideBottom"
-            />
+            {tab === "BALANCE" && (
+              <Label
+                value={rangeTime === "ONE_DAY" ? "(UTC)" : "(As of 00:00 UTC)"}
+                offset={-12}
+                position="insideBottom"
+              />
+            )}
           </XAxis>
           <YAxis
             color={theme.palette.secondary.light}

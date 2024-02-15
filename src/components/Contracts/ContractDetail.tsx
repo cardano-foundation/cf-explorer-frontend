@@ -52,7 +52,7 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
   return (
     <DetailContainer isMobile={+!!isMobile}>
       <DetailHeader>
-        <Box flex={1} display="flex" justifyContent="flex-start">
+        <Box flex={1} display="flex" justifyContent="flex-start" marginRight={"12px"}>
           {!isMobile && (
             <BackIcon data-testid="goback-button" style={{ cursor: "pointer" }} onClick={() => onGoBack?.(data)} />
           )}

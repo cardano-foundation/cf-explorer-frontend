@@ -73,7 +73,7 @@ const TabNativeScripts = () => {
   }, [JSON.stringify(data)]);
 
   useEffect(() => {
-    if (optionList.indexOf(pageInfo.size) + 1) {
+    if (optionList.indexOf(pageInfo.size) + 1 && tabActive === "native-scripts") {
       setSize(pageInfo.size);
       setSort(pageInfo.sort !== "" ? pageInfo.sort : "numberOfAssetHolders,DESC");
       setIsMultiSig(pageInfo?.isMultiSig || "");
@@ -114,7 +114,7 @@ const TabNativeScripts = () => {
     if (fetchData.loading) {
       return (
         <Box component={Grid} container spacing={2}>
-          {[...new Array(size)]?.map((idx) => (
+          {[...new Array(size).fill(0)].map((_, idx) => (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box component={Skeleton} variant="rectangular" height={"280px"} borderRadius={2} />
             </Grid>
@@ -128,7 +128,7 @@ const TabNativeScripts = () => {
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <NativeScriptCard data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
+              <NativeScriptCard key={idx} data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
             </Box>
           </Grid>
         ))}
@@ -250,14 +250,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               <Box display={"flex"} alignItems={"center"}>
                 <TimeLock fill={theme.palette.secondary.main} />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                  Time-Locked
+                  {t("nativeScript.timeLocked")}
                 </Box>
               </Box>
               <Box>
                 {expanded === "time-locked" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
@@ -324,9 +324,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
               </Box>
               <Box>
                 {expanded === "multi-sig" ? (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                ) : (
                   <IoIosArrowUp color={theme.palette.secondary.main} />
+                ) : (
+                  <IoIosArrowDown color={theme.palette.secondary.main} />
                 )}
               </Box>
             </Box>
