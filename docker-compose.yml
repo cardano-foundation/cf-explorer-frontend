@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   cardano-explorer-fe:
@@ -25,5 +25,6 @@ services:
       - REACT_APP_CARDANO_NEWS_URL=${REACT_APP_CARDANO_NEWS_URL}
       - REACT_APP_ADA_HANDLE_API=${REACT_APP_ADA_HANDLE_API}
       - REACT_APP_BOLNISI_NAME_API=${REACT_APP_BOLNISI_NAME_API}
+      - REACT_APP_API_URL_COIN_GECKKO=${REACT_APP_API_URL_COIN_GECKKO}
     ports:
       - "${PORT}:80"
