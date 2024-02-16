@@ -4,6 +4,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { t } from "i18next";
 import { useSelector } from "react-redux";
+import { t } from "i18next";
 
 import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -97,20 +98,37 @@ const BolnisiWineDrawer = () => {
             <Header>
               <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
                 <DefaultImageWine width={"100px"} height={"100px"} fontSize="36px" name={getWineName(wineryId) || ""} />
-                <Box
-                  position={"absolute"}
-                  width={32}
-                  height={32}
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  bgcolor={theme.palette.success[700]}
-                  borderRadius={"50%"}
-                  bottom={0}
-                  right={0}
-                >
-                  <VerifiedIcon width={20} height={20} />
-                </Box>
+                {!data?.externalApiAvailable ? (
+                  <Box
+                    position={"absolute"}
+                    width={32}
+                    height={32}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.warning[700]}
+                    borderRadius={"50%"}
+                    bottom={0}
+                    right={0}
+                  >
+                    <InvalidIcon fill={theme.palette.secondary.main} />
+                  </Box>
+                ) : (
+                  <Box
+                    position={"absolute"}
+                    width={32}
+                    height={32}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.success[700]}
+                    borderRadius={"50%"}
+                    bottom={0}
+                    right={0}
+                  >
+                    <VerifiedIcon width={20} height={20} />
+                  </Box>
+                )}
               </Box>
 
               <Box mt={2}>
@@ -205,7 +223,7 @@ const BolnisiWineDrawer = () => {
               </TableFullWidth>
             </Content>
             <WineDetailModal
-              externalApiAvailable={data?.externalApiAvailable}
+              externalApiAvailable={data?.externalApiAvailable || false}
               open={!!selectedWine}
               onClose={() => setSelectedWine(null)}
               wineData={selectedWine}

@@ -96,10 +96,12 @@ const HomeStatistic = () => {
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
 
   const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchInterval<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=btc`
+    `${API_GECKO}?ids=cardano&vs_currency=btc`,
+    `${API.MARKETS}?currency=btc`
   );
   const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchInterval<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=usd`
+    `${API_GECKO}?ids=cardano&vs_currency=usd`,
+    `${API.MARKETS}?currency=usd`
   );
 
   const btcMarketInterval = useMemo(() => {

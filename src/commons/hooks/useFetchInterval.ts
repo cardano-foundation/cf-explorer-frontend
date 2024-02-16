@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError } from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -14,6 +15,7 @@ interface FetchReturnType<T> {
 
 const useFetchInterval = <T>(
   url: string,
+  urlAlt?: string,
   intervalTime = 120000
   // 2 minutes
 ): FetchReturnType<T> => {
@@ -22,6 +24,7 @@ const useFetchInterval = <T>(
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const lastFetch = useRef<number>();
+  const intervalRef = useRef<any>();
 
   const fetch = useCallback(
     async (needLoading?: boolean, abortSignal?: AbortController) => {
@@ -35,8 +38,24 @@ const useFetchInterval = <T>(
         setError(null);
         setInitialized(true);
       } catch (error) {
+        if (urlAlt) {
+          defaultAxios
+            .get(urlAlt, {
+              signal: abortSignal?.signal
+            })
+            .then((res) => {
+              setData(res?.data as T);
+            })
+            .catch(() => {
+              setData(null);
+            });
+        }
+
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
         setInitialized(true);
-        setData(null);
+        // setData(null);
         if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
         else if (typeof error === "string") setError(error);
       }
@@ -56,12 +75,14 @@ const useFetchInterval = <T>(
   }, [fetch]);
 
   useEffect(() => {
-    const intervalRef = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       fetch();
     }, intervalTime);
 
     return () => {
-      clearInterval(intervalRef);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
     };
   }, [fetch, intervalTime]);
 
