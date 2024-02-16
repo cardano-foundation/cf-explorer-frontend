@@ -43,7 +43,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
   });
 
   useEffect(() => {
-    if (data.length) {
+    if (data?.length) {
       setInitialized(true);
     }
     setTotalOption(total);
@@ -53,7 +53,7 @@ const TokenAutocomplete = ({ address }: { address: string }) => {
     history.push(link);
   };
 
-  if (!data.length && !search && !initialized) return null;
+  if (!data?.length && !search && !initialized) return null;
 
   return (
     <Box>
