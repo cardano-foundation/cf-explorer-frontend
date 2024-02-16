@@ -77,8 +77,6 @@ const MILION = 10 ** 6;
 const MAX_PERCENT_SHOW_LAST_BAR = 89;
 const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
-const API_GECKO = "https://api.coingecko.com/api/v3/coins/markets";
-
 const HomeStatistic = () => {
   const { t } = useTranslation();
   const { currentEpoch, blockNo, btcMarket, usdMarket } = useSelector(({ system }: RootState) => system);
