@@ -4,7 +4,6 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { t } from "i18next";
 import { useSelector } from "react-redux";
-import { t } from "i18next";
 
 import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
