@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
 import moment from "moment";
-import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link as LinkDom } from "react-router-dom";
+import { useMemo } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -77,9 +77,11 @@ const MILION = 10 ** 6;
 const MAX_PERCENT_SHOW_LAST_BAR = 89;
 const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 
+const API_GECKO = "https://api.coingecko.com/api/v3/coins/markets";
+
 const HomeStatistic = () => {
   const { t } = useTranslation();
-  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
+  const { currentEpoch, blockNo, btcMarket, usdMarket } = useSelector(({ system }: RootState) => system);
 
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
@@ -102,15 +104,15 @@ const HomeStatistic = () => {
     `${API_GECKO}?ids=cardano&vs_currency=usd`
   );
 
-  const btcMarket = useMemo(() => {
+  const btcMarketInterval = useMemo(() => {
     if (btcData?.length === 0) return null;
-    return btcData?.[0] || null;
-  }, [btcData]);
+    return btcData?.[0] ? usdData?.[0] : btcMarket;
+  }, [btcData, btcMarket]);
 
-  const usdMarket = useMemo(() => {
+  const usdMarketInterval = useMemo(() => {
     if (usdData?.length === 0) return null;
-    return usdData?.[0] || null;
-  }, [usdData]);
+    return usdData?.[0] ? usdData?.[0] : usdMarket;
+  }, [usdData, usdMarket]);
 
   const { total_supply: total = 1 } = usdMarket || {};
 
@@ -137,7 +139,7 @@ const HomeStatistic = () => {
       data-testid="home-statistic"
     >
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket && btcMarket ? (
+        {usdMarketInterval && btcMarketInterval ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
@@ -158,20 +160,20 @@ const HomeStatistic = () => {
                     height={30}
                   />
                   <Box ml={1}>
-                    <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
+                    <Title data-testid="ada-current-price">${btcMarketInterval?.current_price}</Title>
                   </Box>
                 </Box>
                 <Content gap="5px 15px">
                   <RateWithIcon
                     data-testid="ada-twenty-four-hr-price-change"
-                    value={usdMarket.price_change_percentage_24h}
+                    value={btcMarketInterval?.price_change_percentage_24h || 0}
                     showIcon={false}
                   />
-                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket.current_price} BTC</AdaPrice>
+                  <AdaPrice data-testid="ada-price-in-btc">{btcMarketInterval?.current_price} BTC</AdaPrice>
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={lastUpdatedUsd} />
+                    <FormNowMessage time={lastUpdatedBtcData || btcMarketInterval?.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -182,7 +184,7 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket ? (
+        {usdMarketInterval ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
@@ -194,10 +196,10 @@ const HomeStatistic = () => {
                   />
                   <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
                 </Box>
-                <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
+                <Title data-testid="market-cap-value">${numberWithCommas(usdMarketInterval.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={lastUpdatedBtcData} />
+                    <FormNowMessage time={lastUpdatedUsd || usdMarketInterval.last_updated} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
