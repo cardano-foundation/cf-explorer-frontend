@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -9,11 +9,13 @@ import ExplanDropdown from "../common/ExplanDropdown";
 import DataCard from "../common/DataCard";
 
 type Data = { title: string; value?: string | number };
+
 export interface RedeemerModalProps {
   open?: boolean;
   onClose?: () => void;
   data?: Data[];
 }
+
 const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, data }) => {
   const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
@@ -27,7 +29,12 @@ const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, da
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title={t("explain.redeemer")}>{t("explain.redeemer.desc")}</ExplanDropdown>
+        <ExplanDropdown title={t("explain.redeemer")}>
+          <Typography component="p" mb={2}>
+            {t("explain.redeemer.desc")}
+          </Typography>
+          <Typography>{t("explain.redeemer.desc2")}</Typography>
+        </ExplanDropdown>
         <SlotContainer>
           <Grid container spacing={2}>
             {data &&
