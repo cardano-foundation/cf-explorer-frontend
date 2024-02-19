@@ -16,7 +16,7 @@ interface FetchReturnType<T> {
 const useFetchInterval = <T>(
   url: string,
   urlAlt?: string,
-  intervalTime = 10000
+  intervalTime = 120000
   // 2 minutes
 ): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(null);
