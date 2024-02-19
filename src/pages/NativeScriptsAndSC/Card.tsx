@@ -17,6 +17,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   const theme = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isCloseAllTooltip, setIsCloseAllTooltip] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -27,6 +28,20 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
       setIsOverflowing(isOverflowingHorizontally);
     }
   }, [isOverflowing]);
+
+  useEffect(() => {
+    const onCloseWhenChangeTab = () => {
+      if (document.visibilityState === "visible") {
+        setIsCloseAllTooltip(true);
+      }
+    };
+
+    document.addEventListener("visibilitychange", onCloseWhenChangeTab);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onCloseWhenChangeTab);
+    };
+  }, []);
 
   return (
     <Item>
@@ -61,6 +76,8 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
               return (
                 <Box
                   component={isOverflowing ? CustomTooltip : Box}
+                  closeTooltip={isCloseAllTooltip}
+                  setIsCloseTooltip={() => setIsCloseAllTooltip(true)}
                   key={index}
                   title={isOverflowing ? item.displayName || getShortHash(item.fingerprint) || "" : null}
                 >
