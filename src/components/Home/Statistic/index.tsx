@@ -77,14 +77,13 @@ const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 const HomeStatistic = () => {
   const { t } = useTranslation();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
-
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
-  const progress = moment(currentEpoch?.endTime).isAfter(moment())
+  const progress = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
@@ -227,7 +226,7 @@ const HomeStatistic = () => {
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
-                      {moment(currentEpoch?.endTime).isAfter(moment())
+                      {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
                         ? numberWithCommas(currentEpoch?.slot)
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}
