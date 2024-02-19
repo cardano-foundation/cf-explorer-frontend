@@ -25,6 +25,7 @@ const useFetchInterval = <T>(
   const [error, setError] = useState<string | null>(null);
   const lastFetch = useRef<number>();
   const intervalRef = useRef<any>();
+  const isFetchedDataWhenError = useRef(false);
 
   const fetch = useCallback(
     async (needLoading?: boolean, abortSignal?: AbortController) => {
@@ -38,26 +39,24 @@ const useFetchInterval = <T>(
         setError(null);
         setInitialized(true);
       } catch (error) {
-        if (urlAlt) {
+        if (urlAlt && !isFetchedDataWhenError.current) {
           defaultAxios
             .get(urlAlt, {
               signal: abortSignal?.signal
             })
             .then((res) => {
               setData(res?.data as T);
+              isFetchedDataWhenError.current = true;
             })
             .catch(() => {
               setData(null);
             });
+        } else {
+          setInitialized(true);
+          setData(null);
+          if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
+          else if (typeof error === "string") setError(error);
         }
-
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-        setInitialized(true);
-        // setData(null);
-        if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
-        else if (typeof error === "string") setError(error);
       }
       lastFetch.current = Date.now();
       if (needLoading) setLoading(false);
