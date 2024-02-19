@@ -59,7 +59,10 @@ const OverViews: React.FC = () => {
       </Grid>
     );
   }
-  const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
+
+  const slot = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+    ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
+    : MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
   const duration = moment.duration(countdown ? countdown : 0, "second");
   const days = duration.days();
@@ -102,7 +105,9 @@ const OverViews: React.FC = () => {
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value>
-                    {(currentEpoch?.slot || 0) % MAX_SLOT_EPOCH}
+                    {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
+                      : MAX_SLOT_EPOCH}
                     <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
                       / {MAX_SLOT_EPOCH}
                     </Box>
@@ -113,7 +118,11 @@ const OverViews: React.FC = () => {
               <Box position={"relative"} top={-60} px={4}>
                 <StyledLinearProgress
                   variant="determinate"
-                  value={(((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100}
+                  value={
+                    moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
+                      : 100
+                  }
                 />
               </Box>
             </Box>
