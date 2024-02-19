@@ -16,7 +16,7 @@ interface FetchReturnType<T> {
 const useFetchInterval = <T>(
   url: string,
   urlAlt?: string,
-  intervalTime = 120000
+  intervalTime = 10000
   // 2 minutes
 ): FetchReturnType<T> => {
   const [data, setData] = useState<T | null>(null);
@@ -25,7 +25,6 @@ const useFetchInterval = <T>(
   const [error, setError] = useState<string | null>(null);
   const lastFetch = useRef<number>();
   const intervalRef = useRef<any>();
-  const isFetchedDataWhenError = useRef(false);
 
   const fetch = useCallback(
     async (needLoading?: boolean, abortSignal?: AbortController) => {
@@ -39,14 +38,13 @@ const useFetchInterval = <T>(
         setError(null);
         setInitialized(true);
       } catch (error) {
-        if (urlAlt && !isFetchedDataWhenError.current) {
+        if (urlAlt) {
           defaultAxios
             .get(urlAlt, {
               signal: abortSignal?.signal
             })
             .then((res) => {
               setData(res?.data as T);
-              isFetchedDataWhenError.current = true;
             })
             .catch(() => {
               setData(null);
