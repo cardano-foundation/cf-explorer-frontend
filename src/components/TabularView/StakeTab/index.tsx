@@ -40,7 +40,7 @@ const StakeTab: React.FC<StackTabProps> = ({ tabs, tabActive, onChangeTab, tabsR
       if (newExpanded) {
         setTimeout(() => {
           tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 100);
+        }, 150);
         tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
     };
