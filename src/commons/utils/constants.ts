@@ -128,7 +128,7 @@ export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REA
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
 export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
-export const API_GECKO = process.env.REACT_APP_API_URL_COIN_GECKKO || get(window, "env.REACT_APP_API_URL_COIN_GECKKO");
+export const API_GECKO = process.env.REACT_APP_API_URL_COIN_GECKO || get(window, "env.REACT_APP_API_URL_COIN_GECKO");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",
