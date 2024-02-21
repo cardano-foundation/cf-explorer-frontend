@@ -8,7 +8,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import ExplanDropdown from "../common/ExplanDropdown";
+import ExplainationDropdown from "../common/ExplainationDropdown";
 import { DataCardBox, DataReferenceValue } from "../common/styles";
 import { ReferenceCount } from "../styles";
 import { ExternalLink, ModalContent, TitleReference, UTXOReference, UTXOWapper, ValueReference } from "./styles";
@@ -21,7 +21,7 @@ interface ReferenceInputModal {
 
 const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) => {
   if (!data) {
-    return <Box></Box>;
+    return null;
   }
   const { referenceInputs } = data;
   return (
@@ -37,7 +37,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title={t("explain.referenceInput")}>
+        <ExplainationDropdown title={t("explain.referenceInput")}>
           <Typography component="p" mb={2}>
             {t("explain.referenceInput.desc")}
           </Typography>
@@ -50,7 +50,7 @@ const ReferenceInputModal: React.FC<ReferenceInputModal> = ({ data, ...props }) 
             </ExternalLink>
             .
           </Typography>
-        </ExplanDropdown>
+        </ExplainationDropdown>
         <DataReferenceValue>
           {(referenceInputs || []).map((referenceInputs, index) => {
             const showTooltip = referenceInputs.scriptHash === data?.scriptHash;
