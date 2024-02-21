@@ -17,6 +17,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   const theme = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isCloseAllTooltip, setIsCloseAllTooltip] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -27,6 +28,20 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
       setIsOverflowing(isOverflowingHorizontally);
     }
   }, [isOverflowing]);
+
+  useEffect(() => {
+    const onCloseWhenChangeTab = () => {
+      if (document.visibilityState === "visible") {
+        setIsCloseAllTooltip(true);
+      }
+    };
+
+    document.addEventListener("visibilitychange", onCloseWhenChangeTab);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onCloseWhenChangeTab);
+    };
+  }, []);
 
   return (
     <Item>
@@ -61,6 +76,8 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
               return (
                 <Box
                   component={isOverflowing ? CustomTooltip : Box}
+                  closeTooltip={isCloseAllTooltip}
+                  setIsCloseTooltip={() => setIsCloseAllTooltip(true)}
                   key={index}
                   title={isOverflowing ? item.displayName || getShortHash(item.fingerprint) || "" : null}
                 >
@@ -254,18 +271,16 @@ const Chip = styled(Box)(({ theme }) => {
 
 export const TimeLockChip: React.FC<{ isOpen: boolean | null }> = ({ isOpen }) => {
   if (isOpen) {
-    return <ChipContainer Icon={OpenTimeLock} message="Open" variant="success" titleTooltip="Current status: Open" />;
+    return <ChipContainer Icon={OpenTimeLock} message="Open" variant="success" />;
   }
-  return (
-    <ChipContainer Icon={LockedTimelock} message="Locked" variant="warning" titleTooltip="Current status: Locked" />
-  );
+  return <ChipContainer Icon={LockedTimelock} message="Locked" variant="warning" />;
 };
 
 export const MultiSigChip: React.FC<{ isMultiSig: boolean }> = ({ isMultiSig }) => {
   if (isMultiSig) {
-    return <ChipContainer Icon={SigNative} message="Multi-Sig" variant="info" titleTooltip="Multi-sig" />;
+    return <ChipContainer Icon={SigNative} message="Multi-Sig" variant="info" />;
   }
-  return <ChipContainer Icon={SigNative} message="Single-Sig" variant="info" titleTooltip="Single-Sig" />;
+  return <ChipContainer Icon={SigNative} message="Single-Sig" variant="info" />;
 };
 
 export const ChipContainer: React.FC<{
