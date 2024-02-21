@@ -12,12 +12,12 @@ import {
   UnderlineText
 } from "./styles";
 
-export interface ExplanDropdownProps {
+export interface ExplainationDropdownProps {
   title: string;
   content?: React.ReactNode;
   children?: React.ReactNode;
 }
-const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, children }) => {
+const ExplainationDropdown: React.FC<ExplainationDropdownProps> = ({ title, content, children }) => {
   const theme = useTheme();
   return (
     <StyledAccordion>
@@ -40,4 +40,4 @@ const ExplanDropdown: React.FC<ExplanDropdownProps> = ({ title, content, childre
   );
 };
 
-export default ExplanDropdown;
+export default ExplainationDropdown;

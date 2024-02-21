@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import CustomModal from "src/components/commons/CustomModal";
 
 import CompiledCodeDataCard from "../common/CompiledCodeDataCard";
-import ExplanDropdown from "../common/ExplanDropdown";
+import ExplainationDropdown from "../common/ExplainationDropdown";
 import { ModalContent } from "./styles";
 
 type Data = { title: string; value?: string };
@@ -27,12 +27,12 @@ const CompiledCodeModal: React.FC<CompiledCodeModalProps> = ({ open = false, onC
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        <ExplanDropdown title={t("explain.compiledCode")}>
+        <ExplainationDropdown title={t("explain.compiledCode")}>
           <Stack direction={"column"} gap={2}>
             <Box>{t("explain.compiledCode.desc")}</Box>
             <Box>{t("explain.compiledCode.desc2")}</Box>
           </Stack>
-        </ExplanDropdown>
+        </ExplainationDropdown>
         <Box flex={1}>
           <Grid container spacing={2}>
             {data &&
