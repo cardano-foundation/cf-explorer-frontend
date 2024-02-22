@@ -107,7 +107,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip
-            title={<BoxTooltip>{typeof r.value === "string" ? r.value : JSON.stringify(r.value)}</BoxTooltip>}
+            title={<BoxTooltip>{typeof r.value === "object" ? JSON.stringify(r.value) : r.value}</BoxTooltip>}
           >
             <Typography
               textOverflow="ellipsis"
@@ -117,7 +117,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
               maxWidth={120}
               fontSize={14}
             >
-              {typeof r.value === "string" ? r.value : JSON.stringify(r.value)}
+              {typeof r.value === "object" && r.value !== null ? JSON.stringify(r.value) : r.value}
             </Typography>
           </CustomTooltip>
         )
@@ -174,12 +174,11 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
   return (
     <CustomModal
       modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
-      maxWidth={920}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel data-testid="cip25-modal-title">
+        <CIPLabel data-testid="token-CIP25Compliance">
           <span>{t("cip25.modal.title")}</span>
           <ButtonContainer>
             <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
@@ -188,8 +187,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       }
     >
       <ModalContent>
-        <CIPModalDesc data-testid="cip25-modal-subtitle">{t("cip25.modal.subtitle")}</CIPModalDesc>
-
+        <CIPModalDesc>{t("cip25.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (
