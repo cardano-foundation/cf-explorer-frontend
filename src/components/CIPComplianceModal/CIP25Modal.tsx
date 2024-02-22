@@ -174,12 +174,11 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
   return (
     <CustomModal
       modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
-      maxWidth={920}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel data-testid="cip25-modal-title">
+        <CIPLabel data-testid="token-CIP25Compliance">
           <span>{t("cip25.modal.title")}</span>
           <ButtonContainer>
             <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
@@ -188,8 +187,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       }
     >
       <ModalContent>
-        <CIPModalDesc data-testid="cip25-modal-subtitle">{t("cip25.modal.subtitle")}</CIPModalDesc>
-
+        <CIPModalDesc>{t("cip25.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (

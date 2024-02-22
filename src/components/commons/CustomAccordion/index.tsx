@@ -42,7 +42,7 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
       if (newExpanded) {
         setTimeout(() => {
           tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 0);
+        }, 100);
         tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
     };
