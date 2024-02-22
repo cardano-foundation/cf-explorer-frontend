@@ -158,7 +158,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={typeof r.value === "object" ? JSON.stringify(r.value) : r.value}>
+          <CustomTooltip title={typeof r.value === "object" && r.value !== null ? JSON.stringify(r.value) : r.value}>
             <Typography
               textOverflow="ellipsis"
               overflow="hidden"
@@ -167,7 +167,7 @@ const CIP60Modal: React.FC<TCIP60ComplianceModalProps> = (props) => {
               maxWidth={120}
               fontSize={14}
             >
-              {typeof r.value === "object" ? JSON.stringify(r.value) : r.value}
+              {typeof r.value === "object" && r.value !== null ? JSON.stringify(r.value) : r.value}
             </Typography>
           </CustomTooltip>
         );
