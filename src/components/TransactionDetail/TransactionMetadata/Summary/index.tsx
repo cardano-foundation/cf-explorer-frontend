@@ -237,7 +237,7 @@ const SummaryItems = ({
                 }}
                 sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
                 sx={{
-                  minWidth: matches ? "160px" : "220px",
+                  minWidth: matches ? "160px" : "249px",
                   background: (theme) => theme.palette.primary[100]
                 }}
                 hideValue
@@ -332,7 +332,7 @@ const SummaryItems = ({
                 truncateAddress={matches ? { firstPart: 8, lastPart: 6 } : undefined}
                 sxBox={{
                   flexWrap: "nowrap",
-                  minWidth: matches ? "160px" : "220px"
+                  minWidth: matches ? "160px" : "241px"
                 }}
                 sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
                 sx={{ minWidth: matches ? "160px" : "220px", background: (theme) => theme.palette.primary[100] }}
