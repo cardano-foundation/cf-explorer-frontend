@@ -19,7 +19,8 @@ import {
   CIPPropertyTable,
   TokenLabel,
   ButtonContainer,
-  CIPLabel
+  CIPLabel,
+  BoxTooltip
 } from "./styles";
 import ViewAllButtonExternal from "../commons/ViewAllButtonExternal";
 
@@ -105,19 +106,19 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={r.value}>
-            <CustomTooltip title={r.value}>
-              <Typography
-                textOverflow="ellipsis"
-                overflow="hidden"
-                whiteSpace="nowrap"
-                display="inline-block"
-                maxWidth={120}
-                fontSize={14}
-              >
-                {r.value}
-              </Typography>
-            </CustomTooltip>
+          <CustomTooltip
+            title={<BoxTooltip>{typeof r.value === "string" ? r.value : JSON.stringify(r.value)}</BoxTooltip>}
+          >
+            <Typography
+              textOverflow="ellipsis"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              display="inline-block"
+              maxWidth={120}
+              fontSize={14}
+            >
+              {typeof r.value === "string" ? r.value : JSON.stringify(r.value)}
+            </Typography>
           </CustomTooltip>
         )
     },
