@@ -107,7 +107,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
           </CustomTooltip>
         ) : (
           <CustomTooltip
-            title={<BoxTooltip>{typeof r.value === "string" ? r.value : JSON.stringify(r.value)}</BoxTooltip>}
+            title={<BoxTooltip>{typeof r.value === "object" ? JSON.stringify(r.value) : r.value}</BoxTooltip>}
           >
             <Typography
               textOverflow="ellipsis"
@@ -117,7 +117,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
               maxWidth={120}
               fontSize={14}
             >
-              {typeof r.value === "string" ? r.value : JSON.stringify(r.value)}
+              {typeof r.value === "object" && r.value !== null ? JSON.stringify(r.value) : r.value}
             </Typography>
           </CustomTooltip>
         )
