@@ -198,9 +198,11 @@ export const TokenLink: React.FC<{
           color={({ palette }) => palette.secondary.main}
           sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%", ...sxTokenName }}
         >
-          <CustomTooltip title={token?.assetName || token?.assetId}>
-            <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
-          </CustomTooltip>
+          <Box color={({ palette }) => palette.secondary.main}>
+            <CustomTooltip title={token?.assetName || token?.assetId}>
+              <span>{renderTokenName(token)}</span>
+            </CustomTooltip>
+          </Box>
         </Box>
         <Box display={"flex"} alignItems={"center"} className="BBB">
           {!hideValue ? (
