@@ -1009,7 +1009,8 @@
   "bolnisi.titleModal": "Georgian Wine",
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
+  "bolnisi.verifyError": "Verification Unavailable",
+  "account.myProfile": "My Profile",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
-  "token.metadataCheck": "Metadata Check",
-  "bolnisi.verifyError": "Verification Unavailable"
+  "token.metadataCheck": "Metadata Check"
 }
