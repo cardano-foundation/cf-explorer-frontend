@@ -235,11 +235,11 @@ const SummaryItems = ({
                 isSuccess={!isFailed}
                 sxBox={{
                   flexWrap: "nowrap",
-                  minWidth: matches ? "160px" : "220px"
+                  minWidth: matches ? "160px" : "100%"
                 }}
                 sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
                 sx={{
-                  minWidth: matches ? "160px" : "249px",
+                  minWidth: matches ? "160px" : "100%",
                   background: (theme) => theme.palette.primary[100]
                 }}
                 hideValue
@@ -334,10 +334,10 @@ const SummaryItems = ({
                 truncateAddress={matches ? { firstPart: 8, lastPart: 6 } : undefined}
                 sxBox={{
                   flexWrap: "nowrap",
-                  minWidth: matches ? "160px" : "241px"
+                  minWidth: matches ? "160px" : "100%"
                 }}
                 sxTokenName={{ minWidth: matches ? "100px" : "165px" }}
-                sx={{ minWidth: matches ? "160px" : "220px", background: (theme) => theme.palette.primary[100] }}
+                sx={{ minWidth: matches ? "160px" : "100%", background: (theme) => theme.palette.primary[100] }}
                 hideValue
               />
             </Box>
