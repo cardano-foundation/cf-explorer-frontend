@@ -18,11 +18,16 @@ export const CustomTooltip = (props: Props) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (props?.closeTooltip) {
+    const onCloseWhenChangeTab = () => {
       setOpenTooltip(false);
-      props?.setIsCloseTooltip?.(false);
-    }
-  }, [props?.closeTooltip]);
+    };
+
+    document.addEventListener("visibilitychange", onCloseWhenChangeTab);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onCloseWhenChangeTab);
+    };
+  }, []);
 
   const handleOpenTooltip = () => {
     setOpenTooltip(true);
