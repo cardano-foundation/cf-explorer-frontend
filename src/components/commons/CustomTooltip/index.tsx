@@ -19,9 +19,7 @@ export const CustomTooltip = (props: Props) => {
 
   useEffect(() => {
     const onCloseWhenChangeTab = () => {
-      if (document.visibilityState === "hidden") {
-        setOpenTooltip(false);
-      }
+      setOpenTooltip(false);
     };
 
     document.addEventListener("visibilitychange", onCloseWhenChangeTab);
