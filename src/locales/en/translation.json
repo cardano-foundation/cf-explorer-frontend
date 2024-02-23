@@ -793,7 +793,7 @@
   "explain.maxEpoch": "Maximum number of epochs within which a pool can be announced to retire",
   "explain.optimalPoolCount": "Target number of pools (\"k\"). Impacts saturation threshold",
   "explain.influence": "Influence Factor. Governs how much impact the pledge has on rewards.",
-  "explain.monetaryExpandRate": "Monetary expansion rate per epoch. Governs the rewards that are returned from reserves to the ecosystem (treasury",
+  "explain.monetaryExpandRate": "Monetary expansion rate per epoch. Governs the rewards that are returned from reserves to the ecosystem (treasury, stake pools and delegators).",
   "explain.treasuryGrowthRate": "Treasury rate (0.2 = 20%). Proportion of total rewards allocated to treasury each epoch before remaining rewards are distributed to pools.",
   "explain.decentralisation": "Level of decentralisation. Starts at 1. Block production is fully decentralised when this reaches 0.",
   "explain.entropy": "Should additional entropy be included in the initial phases. This provides additional certainty that the blockchain has not been compromised by the seed key holders. Redundant once the system is sufficiently decentralised.",
