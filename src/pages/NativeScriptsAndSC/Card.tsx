@@ -271,18 +271,16 @@ const Chip = styled(Box)(({ theme }) => {
 
 export const TimeLockChip: React.FC<{ isOpen: boolean | null }> = ({ isOpen }) => {
   if (isOpen) {
-    return <ChipContainer Icon={OpenTimeLock} message="Open" variant="success" titleTooltip="Current status: Open" />;
+    return <ChipContainer Icon={OpenTimeLock} message="Open" variant="success" />;
   }
-  return (
-    <ChipContainer Icon={LockedTimelock} message="Locked" variant="warning" titleTooltip="Current status: Locked" />
-  );
+  return <ChipContainer Icon={LockedTimelock} message="Locked" variant="warning" />;
 };
 
 export const MultiSigChip: React.FC<{ isMultiSig: boolean }> = ({ isMultiSig }) => {
   if (isMultiSig) {
-    return <ChipContainer Icon={SigNative} message="Multi-Sig" variant="info" titleTooltip="Multi-sig" />;
+    return <ChipContainer Icon={SigNative} message="Multi-Sig" variant="info" />;
   }
-  return <ChipContainer Icon={SigNative} message="Single-Sig" variant="info" titleTooltip="Single-Sig" />;
+  return <ChipContainer Icon={SigNative} message="Single-Sig" variant="info" />;
 };
 
 export const ChipContainer: React.FC<{

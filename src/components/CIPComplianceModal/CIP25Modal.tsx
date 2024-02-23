@@ -19,7 +19,8 @@ import {
   CIPPropertyTable,
   TokenLabel,
   ButtonContainer,
-  CIPLabel
+  CIPLabel,
+  BoxTooltip
 } from "./styles";
 import ViewAllButtonExternal from "../commons/ViewAllButtonExternal";
 
@@ -105,19 +106,19 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
             </Typography>
           </CustomTooltip>
         ) : (
-          <CustomTooltip title={r.value}>
-            <CustomTooltip title={r.value}>
-              <Typography
-                textOverflow="ellipsis"
-                overflow="hidden"
-                whiteSpace="nowrap"
-                display="inline-block"
-                maxWidth={120}
-                fontSize={14}
-              >
-                {r.value}
-              </Typography>
-            </CustomTooltip>
+          <CustomTooltip
+            title={<BoxTooltip>{typeof r.value === "object" ? JSON.stringify(r.value) : r.value}</BoxTooltip>}
+          >
+            <Typography
+              textOverflow="ellipsis"
+              overflow="hidden"
+              whiteSpace="nowrap"
+              display="inline-block"
+              maxWidth={120}
+              fontSize={14}
+            >
+              {typeof r.value === "object" && r.value !== null ? JSON.stringify(r.value) : r.value}
+            </Typography>
           </CustomTooltip>
         )
     },
@@ -173,12 +174,11 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
   return (
     <CustomModal
       modalContainerProps={{ style: { maxWidth: "min(1000px, 98vw)" } }}
-      maxWidth={920}
       open={props.open}
       style={{ maxHeight: "unset" }}
       onClose={props.onClose}
       title={
-        <CIPLabel data-testid="cip25-modal-title">
+        <CIPLabel data-testid="token-CIP25Compliance">
           <span>{t("cip25.modal.title")}</span>
           <ButtonContainer>
             <ViewAllButtonExternal tooltipTitle={t("cip25.viewDocs")} to={CIP25_DOCS_URL} />
@@ -187,8 +187,7 @@ const CIP25Modal: React.FC<TCIP25ModalProps> = (props) => {
       }
     >
       <ModalContent>
-        <CIPModalDesc data-testid="cip25-modal-subtitle">{t("cip25.modal.subtitle")}</CIPModalDesc>
-
+        <CIPModalDesc>{t("cip25.modal.subtitle")}</CIPModalDesc>
         {tokenMaps.map((token, index) => (
           <React.Fragment key={index}>
             {token.tokenName && (

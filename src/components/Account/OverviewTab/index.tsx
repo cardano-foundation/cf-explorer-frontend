@@ -98,7 +98,7 @@ const OverviewTab = () => {
       />
       <RowItem
         label={t("account.lastLogin")}
-        value={moment(userData?.lastLogin).format("MM/DD/YYYY hh:mm:ss")}
+        value={moment(userData?.lastLogin).format("MM/DD/YYYY HH:mm:ss")}
         isTablet={isTablet}
       />
       {openModal && <ConnectWalletModal open={openModal} setOpen={setOpenModal} />}

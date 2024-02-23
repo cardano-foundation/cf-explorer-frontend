@@ -65,7 +65,6 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       </Drawer>
       <MainContainer id="main">
         <Main ref={mainRef} component="main" open={sidebar ? 1 : 0}>
-          <Header />
           {NETWORK === NETWORKS.sanchonet && (
             <Box
               alignItems={"center"}
@@ -90,6 +89,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
               </Box>
             </Box>
           )}
+          <Header />
           {children}
           {matchesBreakpoint && <Footer />}
         </Main>
