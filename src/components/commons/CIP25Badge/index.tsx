@@ -21,7 +21,7 @@ const CIP25Badge: React.FC<TCIP25BadgeProps> = ({ type, tooltipTitle, onClick })
         {type === "success" ? (
           <CheckedCIPIcon data-testid="check-CIP" />
         ) : type === "warning" ? (
-          <WarningCIPIcon />
+          <WarningCIPIcon data-testid="warning-CIP" />
         ) : (
           <CheckNotRequiredCIPIcon data-testid="warning-CIP" />
         )}

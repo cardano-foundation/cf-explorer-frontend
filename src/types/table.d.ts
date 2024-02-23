@@ -56,6 +56,7 @@ export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[] | null;
   screen?: string;
+  screen?: string;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;
