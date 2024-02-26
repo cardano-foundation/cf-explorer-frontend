@@ -28,8 +28,6 @@ export const SystemLoader = () => {
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
   const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
   const { data: epochSummary } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
-  const { data: usdMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=usd`);
-  const { data: btcMarket } = useFetch<CardanoMarket[]>(`${API.MARKETS}?currency=btc`);
   const socket = useRef<WebSocket | null>(null);
 
   const { data: dataBookmark } = useFetch<string[]>(
