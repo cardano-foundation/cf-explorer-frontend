@@ -56,7 +56,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const theme = useTheme();
   const { isMobile } = useScreen();
-  const { data, loading } = useFetch<StakeAnalyticsBalance>(
+  const { data, loading, initialized } = useFetch<StakeAnalyticsBalance>(
     stakeAddress ? `${API.STAKE.ANALYTICS_BALANCE}/${stakeAddress}/${rangeTime}` : "",
     undefined,
     false,
@@ -164,18 +164,23 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     if (loading || loadingReward) {
       return <SkeletonUI variant="rectangular" style={{ height: "400px" }} />;
     }
-    if (convertRewardChart?.length === 0 && tab === "REWARD") {
+
+    if (initialized && data && !!data?.data && convertDataChart?.length === 0) {
+      return <SkeletonUI variant="rectangular" style={{ height: "400px" }} />;
+    }
+
+    if (convertDataChart?.length === 0 && initialized && tab === "BALANCE") {
       return (
         <Box>
-          <NotAvailable />
+          <NoRecord />
         </Box>
       );
     }
 
-    if (convertDataChart?.length === 0 && tab === "BALANCE") {
+    if (convertRewardChart?.length === 0 && tab === "REWARD") {
       return (
         <Box>
-          <NoRecord />
+          <NotAvailable />
         </Box>
       );
     }
