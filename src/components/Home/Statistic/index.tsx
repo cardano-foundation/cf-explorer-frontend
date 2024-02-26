@@ -36,7 +36,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
-import useFetchInterval from "src/commons/hooks/useFetchInterval";
+import useFetchIntervalFromCoinGecko from "src/commons/hooks/useFetchIntervalFromCoinGecko";
 
 import {
   AdaPrice,
@@ -91,13 +91,11 @@ const HomeStatistic = () => {
   const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
 
-  const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchInterval<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=btc`,
-    `${API.MARKETS}?currency=btc`
+  const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=btc`
   );
-  const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchInterval<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=usd`,
-    `${API.MARKETS}?currency=usd`
+  const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=usd`
   );
 
   const btcMarket = useMemo(() => {
