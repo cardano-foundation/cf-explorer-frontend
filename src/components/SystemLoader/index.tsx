@@ -87,14 +87,6 @@ export const SystemLoader = () => {
   }, [currentEpoch]);
 
   useEffect(() => {
-    if (usdMarket?.[0]) setUsdMarket({ ...usdMarket[0], last_updated: new Date().toString() });
-  }, [usdMarket]);
-
-  useEffect(() => {
-    if (btcMarket?.[0]) setBtcMarket({ ...btcMarket[0], last_updated: new Date().toString() });
-  }, [btcMarket]);
-
-  useEffect(() => {
     if (dataBookmark) setBookmark(dataBookmark);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(dataBookmark)]);
