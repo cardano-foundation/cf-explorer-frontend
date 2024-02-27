@@ -10,7 +10,6 @@
     "@mui/lab": "^5.0.0-alpha.111",
     "@mui/material": "^5.10.16",
     "@mui/styled-engine-sc": "^5.10.16",
-    "@playwright/test": "^1.39.0",
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -109,6 +108,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@cucumber/cucumber": "^10.3.1",
+    "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.41.2",
     "@testing-library/dom": "^9.3.3",
     "@testing-library/user-event": "^13.5.0",
     "@types/lodash": "^4.14.195",
@@ -126,6 +128,7 @@
     "husky": "^8.0.3",
     "kill-port": "^2.0.1",
     "lint-staged": "^13.2.3",
+    "playwright-bdd": "^5.7.1",
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
     "wait-on": "^7.0.1"

@@ -1,13 +1,17 @@
 import { defineConfig, devices } from "@playwright/test";
+import { defineBddConfig } from "playwright-bdd";
 
 import "dotenv/config";
-import { Path } from "./playwright/constants/path.constants";
 import { returnBooleanForHeadless } from "./playwright/utils/parse";
 
 const viewport = { width: 1400, height: 1500 };
 
+const testDir = defineBddConfig({
+  paths: ["playwright/tests/features/*.feature"],
+  require: ["playwright/tests/steps/**/*.ts"]
+});
 export default defineConfig({
-  testDir: "./playwright/tests",
+  testDir,
   reporter: [
     ["allure-playwright"],
     ["list"],
@@ -39,29 +43,22 @@ export default defineConfig({
 
   projects: [
     {
-      name: "setup",
-      testMatch: /.*\.setup\.ts/,
-      outputDir: "./.reports/.empty-test-results"
-    },
-    {
       name: "chrome",
+      testDir,
       outputDir: "./.reports/chrome/test-results",
       use: {
         ...devices["Desktop Chrome"],
-        storageState: Path.StorageStateForUser,
         viewport: viewport
-      },
-      dependencies: ["setup"]
+      }
     },
     {
       name: "firefox",
+      testDir,
       outputDir: "./.reports/firefox/test-results",
       use: {
         ...devices["Desktop Firefox"],
-        storageState: Path.StorageStateForUser,
         viewport: viewport
-      },
-      dependencies: ["setup"]
+      }
     }
   ]
 });

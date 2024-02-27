@@ -15,6 +15,34 @@ export function signUp(page: Page) {
     await page.goto("/sign-up");
   };
 
+  const enterEmail = async (email: string) => {
+    await emailInput.fill(email);
+  };
+
+  const confirmEmail = async (email: string) => {
+    await confirmEmailInput.fill(email);
+  };
+
+  const enterPassword = async (password: string) => {
+    await passwordInput.fill(password);
+  };
+
+  const confirmPassword = async (password: string) => {
+    await confirmPasswordInput.fill(password);
+  };
+
+  const registerAs = async (email: string, password: string) => {
+    await enterEmail(email);
+    await confirmEmail(email);
+    await enterPassword(password);
+    await confirmPassword(password);
+  };
+
+  const acceptTermsAndConditionsAndSignUp = async () => {
+    await termsAndConditionsCheckbox.check();
+    await signUpButton.click();
+  };
+
   const assertItLoads = async () => {
     await assert(page).pageTitle("Sign Up | Cardano Blockchain Explorer");
     await expect(backArrowText).toBeVisible();
@@ -26,8 +54,20 @@ export function signUp(page: Page) {
     await expect(signUpButton).toBeVisible();
   };
 
+  const assertSignUpIsEnable = async (enabled: boolean) => {
+    if (enabled) await expect(signUpButton).toBeEnabled();
+    else await expect(signUpButton).toBeDisabled();
+  };
+
   return {
     assertItLoads,
+    enterEmail,
+    confirmEmail,
+    enterPassword,
+    confirmPassword,
+    registerAs,
+    acceptTermsAndConditionsAndSignUp,
+    assertSignUpIsEnable,
     goTo
   };
 }

@@ -10,6 +10,8 @@
 .auth/
 .logs/
 .reports/
+allure-results
+**/.features-gen/**/*.spec.js
 
 # production
 /build

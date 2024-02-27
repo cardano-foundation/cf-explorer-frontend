@@ -13,7 +13,7 @@ export function forgotPassword(page: Page) {
   };
 
   const assertItLoads = async () => {
-    await assert(page).pageTitle("Forgot Password");
+    await assert(page).pageTitle("Forgot password");
     await expect(signInLink).toBeVisible();
     await expect(backArrowText).toBeVisible();
     await expect(emailInput).toBeVisible();
