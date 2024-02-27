@@ -42,6 +42,13 @@ const BolnisiWineDrawer = () => {
     return "";
   };
 
+  const getWineAddress = (wineryId: string) => {
+    if (wineryName && wineryName[`${wineryId}`]) {
+      return wineryName[`${wineryId}`].address;
+    }
+    return "";
+  };
+
   useEffect(() => {
     if (wineryId) {
       setOpenDrawer(true);
@@ -137,7 +144,7 @@ const BolnisiWineDrawer = () => {
                 <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
                   <BolsiniAddress fill={theme.palette.secondary.light} />
                   <Box component={"span"} pl={0.5} fontSize={14} color={theme.palette.secondary.light} lineHeight={1}>
-                    Sulkhan-Saba Orbeliani 79, Bolnisi
+                    {getWineAddress(wineryId)}
                   </Box>
                 </Box>
               </Box>
