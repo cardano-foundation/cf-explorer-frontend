@@ -56,7 +56,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IStakeKey) => {
     setOnDetailView(true);
-    setSelected(r.txHash);
+    setSelected(r.stakeKey);
     setStakeKey(r.stakeKey);
   };
 
@@ -119,7 +119,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
             </StyledLink>
           </CustomTooltip>
 
-          {selected === r.txHash && <SelectedIcon />}
+          {selected === r.stakeKey && <SelectedIcon />}
         </>
       )
     }
@@ -152,7 +152,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               handleCloseDetailView: handleClose
             }}
             onClickRow={openDetail}
-            rowKey="txHash"
+            rowKey="stakeKey"
             selected={selected}
             showTabView
             tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
