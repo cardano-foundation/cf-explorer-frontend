@@ -92,7 +92,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
           to={{ pathname: details.delegation(pool.poolView), state: { fromPath: history.location.pathname } }}
         >
           <CustomTooltip title={pool.poolName || pool.poolView || ""}>
-            <Box component={"span"}>{pool.poolName || getShortHash(pool.poolView)}</Box>
+            <Box component={"span"}>
+              {pool.poolName?.startsWith("pool")
+                ? getShortHash(pool.poolName)
+                : pool.poolName || getShortHash(pool.poolView)}
+            </Box>
           </CustomTooltip>
         </StyledPoolLink>
       )
