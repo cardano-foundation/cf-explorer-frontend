@@ -61,7 +61,11 @@ const OperatorReward = () => {
         <HoldContainer onClick={() => setOpenModal(true)} ref={SPOHolderRef}>
           <HoldBoxTitle>{t("common.rewardAccount")}</HoldBoxTitle>
           <SPOHolderBox
-            data={{ poolName: data?.poolName, poolView: data?.poolView, stakeKeys: data?.rewardAccounts }}
+            data={{
+              poolName: getShortHash(data?.poolName),
+              poolView: data?.poolView,
+              stakeKeys: data?.rewardAccounts
+            }}
           />
         </HoldContainer>
         <DrawPath paths={paths} />
