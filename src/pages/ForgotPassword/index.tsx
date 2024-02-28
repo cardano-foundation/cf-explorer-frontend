@@ -256,7 +256,7 @@ export default function ForgotPassword() {
             </WrapForm>
           ) : (
             <WrapForm>
-              <Label>{t("message.submitResetPassword")}.</Label>
+              <Label>{t("message.submitResetPassword")}</Label>
             </WrapForm>
           )}
         </FormGroup>
