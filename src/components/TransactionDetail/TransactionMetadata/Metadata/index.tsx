@@ -611,6 +611,12 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
               }
               return "";
             };
+            const getWineAddress = (wineryId: string) => {
+              if (wineryName && wineryName[`${wineryId}`]) {
+                return wineryName[`${wineryId}`].address;
+              }
+              return "";
+            };
 
             return (
               <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
@@ -660,7 +666,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                             color={theme.palette.secondary.light}
                             lineHeight={1}
                           >
-                            Sulkhan-Saba Orbeliani 79, Bolnisi
+                            {getWineAddress(winery.wineryId)}
                           </Box>
                         </Box>
                       </Box>
