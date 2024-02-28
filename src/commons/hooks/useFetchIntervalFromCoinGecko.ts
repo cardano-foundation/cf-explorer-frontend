@@ -38,23 +38,10 @@ const useFetchInterval = <T>(
         setError(null);
         setInitialized(true);
       } catch (error) {
-        if (urlAlt) {
-          defaultAxios
-            .get(urlAlt, {
-              signal: abortSignal?.signal
-            })
-            .then((res) => {
-              setData(res?.data as T);
-            })
-            .catch(() => {
-              setData(null);
-            });
-        } else {
-          setInitialized(true);
-          setData(null);
-          if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
-          else if (typeof error === "string") setError(error);
-        }
+        setInitialized(true);
+        setData(null);
+        if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
+        else if (typeof error === "string") setError(error);
       }
       lastFetch.current = Date.now();
       if (needLoading) setLoading(false);
