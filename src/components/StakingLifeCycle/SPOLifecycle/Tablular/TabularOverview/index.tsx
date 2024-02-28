@@ -176,7 +176,7 @@ const TabularOverview: React.FC = () => {
                       value={ownerAccountValue}
                       postfix={5}
                       isNoLimitPixel={true}
-                      sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 75px)" }}
+                      sxFirstPart={{ maxWidth: isMobile ? "calc(100% - 50px)" : "calc(100% - 85px)" }}
                     />
                   </ClickAbleLink>
                 </CustomTooltip>
