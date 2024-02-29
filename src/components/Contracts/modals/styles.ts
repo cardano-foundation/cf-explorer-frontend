@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
+import { Box, List, ListItem, ListItemText, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const ModalContent = styled(Box)`
@@ -7,10 +7,13 @@ export const ModalContent = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 70vh;
+  max-height: 70dvh;
   padding: 4px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    max-height: 70vh;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
@@ -19,7 +22,33 @@ export const ModalContent = styled(Box)`
     background: transparent;
   }
   &:hover {
-    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;
+
+export const SlotContainer = styled(Box)`
+  flex: 1;
+  overflow: auto;
+  min-height: 20vh;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    max-height: 70dvh;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
     &::-webkit-scrollbar-thumb {
       background: ${({ theme }) => theme.palette.secondary.light};
     }
@@ -95,5 +124,47 @@ export const FoldCardValue = styled(Box)`
   & span {
     font-weight: 400;
     line-break: anywhere;
+  }
+`;
+
+export const TitleReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontWeight: "bold",
+  fontSize: 16
+}));
+export const ValueReference = styled(Box)(({ theme }) => ({
+  color: theme.palette.secondary.light,
+  fontSize: 16,
+  marginTop: 4
+}));
+export const UTXOReference = styled(Link)(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  fontSize: 16,
+  fontWeight: "bold"
+}));
+export const ExternalLink = styled("a")(({ theme }) => ({
+  color: `${theme.palette.primary.main} !important`,
+  textDecoration: "underline !important"
+}));
+
+export const Index = styled(Typography)`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const UTXOWapper = styled(Box)<{ index?: number }>`
+  position: relative;
+  &::after {
+    content: ${({ index }) => `"#${index}"`};
+    display: inline-block;
+    position: absolute;
+    width: 40px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.palette.secondary.light};
+    top: 3px;
+    right: 16px;
+    cursor: unset;
   }
 `;

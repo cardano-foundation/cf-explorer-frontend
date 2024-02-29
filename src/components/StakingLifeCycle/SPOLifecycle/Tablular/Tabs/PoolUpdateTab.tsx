@@ -1,7 +1,8 @@
 import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
@@ -13,6 +14,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import { AdaValue } from "src/components/commons/ADAValue";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { PoolUpdateModal } from "../../PoolUpdates/PoolUpdateModal";
 import { ClickAbleLink } from "./styles";
@@ -21,13 +23,11 @@ const PoolUpdateTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { poolId = "" } = useParams<{ poolId: string }>();
-  const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
-  const [params, setParams] = useState({
-    page: 0,
-    size: 50
-  });
+  const history = useHistory();
 
-  const [sort, setSort] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
+
+  const { pageInfo, setSort } = usePageInfo();
 
   const columns: Column<PoolUpdateDetail>[] = [
     {
@@ -64,7 +64,7 @@ const PoolUpdateTab = () => {
       render(data) {
         return (
           <ClickAbleLink onClick={() => setSelectedValue(data)}>
-            <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+            <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
           </ClickAbleLink>
         );
       }
@@ -72,8 +72,7 @@ const PoolUpdateTab = () => {
   ];
 
   const fetchData = useFetchList<PoolUpdateDetail>(poolId ? API.SPO_LIFECYCLE.POOL_UPDATE_LIST(poolId) : "", {
-    ...params,
-    sort
+    ...pageInfo
   });
 
   return (
@@ -84,9 +83,11 @@ const PoolUpdateTab = () => {
         columns={columns}
         total={{ title: t("common.poolUpdate"), count: fetchData.total }}
         pagination={{
-          ...params,
+          ...pageInfo,
           total: fetchData.total,
-          onChange: (page, size) => setParams({ page: page - 1, size })
+          onChange: (page, size) => {
+            history.replace({ search: stringify({ ...pageInfo, page, size }) });
+          }
         }}
       />
     </Box>

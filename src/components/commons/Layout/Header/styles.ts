@@ -25,7 +25,7 @@ export const HeaderBox = styled(Container)<{ home: number }>`
 `;
 
 export const HeaderTop = styled("div")(({ theme }) => ({
-  zIndex: 1300,
+  zIndex: 99,
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
@@ -137,8 +137,10 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
   "& .MuiButtonBase-root": {
     width: 60,
     paddingLeft: 0,
+    backgroundColor: "transparent!important",
     paddingRight: theme.isDark ? 0 : "9px"
   },
+
   "& .MuiSwitch-track": {
     background: theme.isDark ? `${theme.palette.secondary[0]} !important` : theme.palette.primary[100],
     opacity: `1 !important`,
@@ -170,6 +172,7 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
       right: "5%"
     }
   },
+
   "& .MuiSwitch-thumb": {
     boxShadow: "none",
     width: 24,
@@ -205,7 +208,7 @@ export const SwitchMode = styled(Switch)(({ theme }) => ({
 }));
 
 export const WrapButtonSelect = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down(355)]: {
+  [theme.breakpoints.down("md")]: {
     display: "none"
   }
 }));

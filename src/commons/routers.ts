@@ -8,7 +8,7 @@ export const routers = {
   BLOCK_LIST: "/blocks",
   BLOCK_DETAIL: "/block/:blockId",
   TRANSACTION_LIST: "/transactions",
-  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?",
+  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?/:wineryId?",
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
   DELEGATION_POOLS: "/pools",
@@ -28,6 +28,9 @@ export const routers = {
   STAKE_DETAIL: "/stake-address/:stakeId/:tabActive?",
   CONTRACT_LIST: "/contracts",
   CONTRACT_DETAIL: "/contracts/:address/:tabActive?",
+  SMART_CONTRACT: "/smart-contract/:address/:tabActive?",
+  NATIVE_SCRIPTS_AND_SC: "/native-scripts-sc/:tabActive?",
+  NATIVE_SCRIPT_DETAIL: "/native-script/:id/:tabActive?",
   POLICY_DETAIL: "/policy/:policyId",
   NFT_DETAIL: "/nft/:nftId",
   TOP_DELEGATOR: "/top-delegator",
@@ -40,11 +43,12 @@ export const routers = {
   STAKING_LIFECYCLE: "/staking-lifecycle/:tab?",
   DELEGATOR_LIFECYCLE: "/staking-lifecycle/delegator/:stakeId/:mode?/:tab?/:txHash?",
   SPO_LIFECYCLE: "/staking-lifecycle/spo/:poolId/:mode?/:tab?/:txHash?",
-  REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId",
-  REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId",
+  REPORT_GENERATED_STAKING_DETAIL: "/staking-lifecycle/staking-report-generated/:reportId/:tabActive?",
+  REPORT_GENERATED_POOL_DETAIL: "/staking-lifecycle/pool-report-generated/:reportId/:tabActive?",
   POLICY: "/privacy-policy",
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
+  SMARTCONTRACT_DETAIL: "/smartcontract/:id",
   NOT_FOUND: "/*"
 } as const;
 
@@ -55,8 +59,10 @@ export const lists = {
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
-  transaction: (trxHash?: string, tab = "summary") =>
-    routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "").replace(":tabActive?", tab),
+  transaction: (trxHash?: string, tab = "summary", wineryId = "") =>
+    routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "")
+      .replace(":tabActive?", tab)
+      .replace(":wineryId?", wineryId),
   epoch: (epochId?: number | string) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
   delegation: (poolId?: number | string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}` ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
@@ -69,6 +75,11 @@ export const details = {
   policyDetail: (policyId?: string) => routers.POLICY_DETAIL.replace(":policyId", policyId ?? ""),
   contract: (address?: string, tab = "transaction") =>
     routers.CONTRACT_DETAIL.replace(":address", address ?? "").replace(":tabActive?", tab),
+  smartContract: (address?: string, tab = "transactions") =>
+    routers.SMART_CONTRACT.replace(":address", address ?? "").replace(":tabActive?", tab),
+  nativeScriptsAndSC: (tab = "native-scripts") => routers.NATIVE_SCRIPTS_AND_SC.replace(":tabActive?", tab),
+  nativeScriptDetail: (id?: string, tabActive = "mintingBurningPolicy") =>
+    routers.NATIVE_SCRIPT_DETAIL.replace(":id", id ?? "").replace(":tabActive", tabActive),
   staking: (stakeId: string, mode: ViewMode = "timeline", tab: DelegationStep = "registration", txHash?: string) =>
     routers.DELEGATOR_LIFECYCLE.replace(":stakeId", stakeId)
       .replace(":mode?", mode)
@@ -79,9 +90,13 @@ export const details = {
       .replace(":mode?", mode)
       .replace(":tab?", tab)
       .replace(":txHash?", txHash ?? ""),
-  generated_staking_detail: (reportId: string) =>
-    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId),
-  generated_pool_detail: (reportId: string) => routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId)
+  generated_staking_detail: (reportId: string, tabActive = "registration") =>
+    routers.REPORT_GENERATED_STAKING_DETAIL.replace(":reportId", reportId).replace(":tabActive", tabActive),
+  generated_pool_detail: (reportId: string, tabActive = "registration") =>
+    routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId).replace(":tabActive", tabActive),
+  smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
+  nativeScript: (address?: string, tab = "transaction") =>
+    routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab)
 };
 
 export const listRouters = [

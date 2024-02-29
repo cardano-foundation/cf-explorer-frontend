@@ -33,8 +33,8 @@ const ToastContainer: React.FC = () => {
       case "error": {
         return {
           title: getTitle(title, t("message.error.title")),
-          color: theme.palette.error[700],
-          background: theme.palette.error[100]
+          color: theme.isDark ? theme.palette.error[800] : theme.palette.error[100],
+          background: theme.isDark ? theme.palette.error[100] : theme.palette.error[700]
         };
       }
       case "success": {
@@ -62,7 +62,7 @@ const ToastContainer: React.FC = () => {
   };
   const getColor = (severity: AlertProps["severity"]) => {
     if (severity === "error") {
-      return theme.isDark ? theme.palette.error[700] : theme.palette.error[800];
+      return theme.isDark ? theme.palette.error[800] : theme.palette.error[100];
     }
     if (severity === "success") {
       return theme.palette.success[800];
@@ -82,14 +82,14 @@ const ToastContainer: React.FC = () => {
               data-testid="toast-container"
               key={idx}
               iconMapping={{
-                error: <MdOutlineErrorOutline color={theme.palette.error[700]} />,
+                error: <MdOutlineErrorOutline color={getColor(severity)} />,
                 success: <MdOutlineCheckCircleOutline color={theme.palette.success[800]} />,
                 info: <MdInfoOutline color={theme.palette.info.main} />,
                 warning: <MdOutlineWarningAmber color={theme.palette.warning[800]} />
               }}
               action={
                 <IconButton color="inherit" size="small">
-                  <IoMdClose color={theme.palette.secondary.light} />
+                  <IoMdClose color={getColor(severity)} />
                 </IconButton>
               }
               severity={severity}
@@ -100,8 +100,8 @@ const ToastContainer: React.FC = () => {
               onClick={() => removeToast(id)}
               icon={!title || undefined}
             >
-              {title && <StyledTitle>{title}</StyledTitle>}
-              <Box color={() => getColor(severity)} display={"inline"}>
+              {title && <StyledTitle color={getColor(severity)}>{title}</StyledTitle>}
+              <Box color={getColor(severity)} display={"inline"}>
                 {message}
               </Box>
             </StyledAlert>

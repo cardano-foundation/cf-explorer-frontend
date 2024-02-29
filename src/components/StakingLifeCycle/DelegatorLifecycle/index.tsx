@@ -16,8 +16,8 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import {
   DelegationProcessDescription,
@@ -98,7 +98,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
+      icon: <RegistrationIcon data-testid="registration" width={"25px"} height={"25px"} />,
       title: t("slc.registrationCertificate"),
       component: <Registration />,
       description: (
@@ -137,7 +137,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       keyCheckShow: "hashRewards"
     },
     {
-      icon: <RewardsWithdrawalIcon width={"25px"} height={"25px"} />,
+      icon: <RewardsWithdrawalIcon data-testid="withdrawal-icon" width={"25px"} height={"25px"} />,
       title: t("slc.rewardsWithdrawal"),
       component: <RewardsWithdrawal />,
       description: (
@@ -198,6 +198,7 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
       history.replace(details.staking(stakeId, "timeline", step.key));
     }
   };
+
   return (
     <Box>
       <Box display={"flex"} justifyContent={"space-between"} sx={{ overflowX: "auto" }}>
@@ -208,7 +209,13 @@ const DelegatorLifecycle = ({ currentStep, setCurrentStep, tabsRenderConfig }: P
               id={`step-${idx}`}
               key={idx}
               component={tabsRenderConfig[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={tabsRenderConfig[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
+              title={
+                tabsRenderConfig[step.keyCheckShow]
+                  ? undefined
+                  : tabsRenderConfig[step.keyCheckShow] != null
+                  ? t("common.noRecordAtTime")
+                  : t("common.N/A")
+              }
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background

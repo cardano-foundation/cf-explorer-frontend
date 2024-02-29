@@ -22,17 +22,18 @@ const Contract: React.FC<ContractProps> = ({ hash, detail }) => {
     <PopperStyled
       placement="top"
       render={({ handleClick }) => (
-        <PolygonContainer ref={anchorEl}>
+        <PolygonContainer
+          ref={anchorEl}
+          onClick={() =>
+            typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
+          }
+        >
           {theme.isDark ? <PolygonDarkIcon /> : <Polygon />}
           <PolygonContent>
             <Typography fontWeight={500} color={theme.palette.primary.main}>
               {t("contract.title")}
             </Typography>
-            <CircleBox
-              onClick={() =>
-                typeof anchorEl !== "function" && anchorEl?.current && handleClick(anchorEl.current as HTMLElement)
-              }
-            >
+            <CircleBox>
               <CustomIcon
                 icon={PoundSign}
                 height={23}

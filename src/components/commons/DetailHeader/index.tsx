@@ -21,31 +21,31 @@ import Bookmark from "../BookmarkIcon";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
 import {
+  AllowSearchButton,
   BackButton,
   BackText,
+  CardItem,
+  DetailLabelSkeleton,
+  DetailsInfo,
+  DetailValueSkeleton,
+  EpochDetail,
   EpochNumber,
   EpochText,
   HeaderContainer,
+  HeaderDetailContainer,
   HeaderStatus,
   HeaderTitle,
-  HeaderDetailContainer,
-  DetailsInfo,
-  SlotLeader,
-  SlotLeaderValue,
   HeaderTitleSkeleton,
-  DetailLabelSkeleton,
-  DetailValueSkeleton,
   IconSkeleton,
+  SlotLeader,
   SlotLeaderTitle,
-  ValueCard,
-  CardItem,
+  SlotLeaderValue,
   StakeKeyStatus,
-  AllowSearchButton,
-  StyledSelect,
   StyledMenuItem,
-  WrapHeader,
-  EpochDetail,
-  TimeDuration
+  StyledSelect,
+  TimeDuration,
+  ValueCard,
+  WrapHeader
 } from "./styles";
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
@@ -56,11 +56,12 @@ interface TokenInfo {
   assetQuantity?: number;
   metadata?: { decimals?: number };
 }
+
 export interface DetailHeaderProps {
   type: Bookmark["type"];
   bookmarkData?: string;
   loading: boolean;
-  title: number | string;
+  title: React.ReactNode;
   lastUpdated?: number;
   hash?: string;
   transactionStatus?: TransactionStatus;
@@ -79,6 +80,7 @@ export interface DetailHeaderProps {
   }[];
   isHideButtonBack?: boolean;
   isClickAble?: boolean;
+  redirectAction?: React.ReactNode;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -95,7 +97,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     stakeKeyStatus,
     isHideButtonBack,
     lastUpdated,
-    isClickAble
+    isClickAble,
+    redirectAction
   } = props;
 
   const history = useHistory();
@@ -201,6 +204,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 {stakeKeyStatus === "ACTIVE" ? t("status.active") : t("status.deActivated")}
               </StakeKeyStatus>
             )}
+            {redirectAction && <Box marginLeft={"auto"}>{redirectAction}</Box>}
           </HeaderContainer>
           {hash && (
             <SlotLeader>
@@ -326,7 +330,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                           }}
                           key={index}
                         >
-                          <CustomTooltip title={item.assetName}>
+                          <CustomTooltip title={item.assetName || item.assetId}>
                             <Box
                               color={({ palette }) => palette.secondary.main}
                               mr={2}
@@ -367,6 +371,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     </HeaderDetailContainer>
   );
 };
+
 interface BufferListProps {
   numberOfItems: number;
   wide: number;

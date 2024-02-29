@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es5",
-    "lib": ["es5", "dom", "dom.iterable", "esnext"],
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,8 +16,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["cypress", "node"],
-    "noImplicitAny": true
+    "types": ["cypress", "node", "vite/client", "vite-plugin-svgr/client"],
+    "noImplicitAny": true,
+    "downlevelIteration": true
   },
   "paths": {
     "src/*": ["./*"]

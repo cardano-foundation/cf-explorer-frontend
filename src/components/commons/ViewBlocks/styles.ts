@@ -6,6 +6,7 @@ export const SquareBox = styled(Box)`
   width: 100%;
   max-width: 138px;
   aspect-ratio: 1/1;
+  cursor: pointer;
 
   display: flex;
   align-items: center;
@@ -13,6 +14,11 @@ export const SquareBox = styled(Box)`
   flex-direction: column;
   border-radius: 8px;
   gap: 12px;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const PrimaryText = styled(Typography)`
@@ -32,17 +38,28 @@ export const CircleBox = styled(Box)<{ bgColor?: string }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${(props) => props.bgColor ?? props.theme.palette.primary.dark};
+  }
 `;
 
 export const CircleBoxOutline = styled(CircleBox)`
   box-sizing: border-box;
   background-color: ${(props) =>
     props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+
+  &:hover {
+    background-color: ${(props) =>
+      props.theme.isDark ? props.theme.palette.secondary[100] : props.theme.palette.common.white};
+  }
 `;
 
 export const PolygonContainer = styled(Box)`
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 `;
 
 export const PolygonContent = styled(Box)`
@@ -69,6 +86,11 @@ export const CompiledCodeButton = styled(Box)`
   width: 100%;
   max-width: 170px;
   white-space: nowrap;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const CustomBadge = styled("span")<{ bgColor?: string; color?: string }>`
@@ -123,9 +145,7 @@ export const MintContainer = styled(Box)<{ isMobile?: number }>`
   max-width: 920px;
   flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   ${(props) => props.theme.breakpoints.down("lg")} {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+    max-width: unset;
     gap: 60px;
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -144,7 +164,6 @@ export const MiddleBox = styled(Box)`
 
 export const RightBox = styled(Box)`
   ${({ theme }) => theme.breakpoints.down("lg")} {
-    width: 100%;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -169,7 +188,8 @@ export const MintBlueBox = styled(BlueBox)<{ isBurned?: boolean }>(({ isBurned, 
       : theme.palette.secondary[0]
     : isBurned
     ? theme.palette.primary[200]
-    : theme.palette.common.white
+    : theme.palette.common.white,
+  padding: "unset"
 }));
 
 export const MintRrounded = styled(Rrounded)`
@@ -180,10 +200,13 @@ export const MintRrounded = styled(Rrounded)`
 
 export const SpendContainer = styled(MintContainer)<{ isMobile?: number }>`
   width: 100%;
-  max-width: 780px;
+  max-width: 920px;
   justify-content: space-between;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-wrap: nowrap;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-direction: column !important;
   }
   flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
   gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};
@@ -206,6 +229,12 @@ export const LongButton = styled("button")`
   gap: 12px;
   width: 100%;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const SpendRounded = styled(Rrounded)`
@@ -230,15 +259,39 @@ export const RewardContainer = styled(MintContainer)`
   justify-content: center;
   align-items: center;
 `;
-export const Center = styled(Box)<{ isMoble?: number }>`
-  max-width: 620px;
+export const RewardViewContainer = styled(Box)<{ isMobile?: number }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+  height: max-content;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 920px;
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  ${(props) => props.theme.breakpoints.down("lg")} {
+    max-width: unset;
+    gap: 60px;
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+  }
+`;
+
+export const Center = styled(Box)<{ isMobile?: number }>`
+  max-width: 900px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: ${({ isMoble }) => (isMoble ? "column" : "row")};
-  gap: ${({ isMoble }) => (isMoble ? "60px" : "unset")};
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};
   ${({ theme }) => theme.breakpoints.down("sm")} {
+    flex-direction: column;
+    gap: 60px;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     flex-direction: column;
     gap: 60px;
   }
@@ -276,3 +329,11 @@ export const CertRrounded = styled(Rrounded)(({ theme }) => ({
     width: "280"
   }
 }));
+
+export const OutputsUTXOLink = styled(Typography)`
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline !important;
+  color: ${({ theme }) => theme.palette.primary.main} !important;
+  cursor: pointer;
+`;

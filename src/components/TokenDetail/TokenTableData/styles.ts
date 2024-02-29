@@ -1,4 +1,4 @@
-import { Box, Select, styled } from "@mui/material";
+import { Box, Select, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledSelect = styled(Select)`
@@ -107,8 +107,9 @@ export const ViewJson = styled(Box)(({ theme }) => ({
   backgroundColor: `${theme.palette.secondary[0]}`,
   borderRadius: 10,
   padding: theme.spacing(2),
-  marginBottom: theme.spacing(3),
   maxHeight: "50vh",
+  wordBreak: "break-all",
+  background: theme.isDark ? theme.palette.common.dark : theme.palette.primary[100],
   [theme.breakpoints.up("md")]: {
     "& .MuiSvgIcon-root": {
       display: "none !important"
@@ -146,3 +147,63 @@ export const TimeDuration = styled("small")(({ theme }) => ({
   textAlign: "left",
   marginTop: "5px"
 }));
+
+export const MetaDataWraper = styled(Box)`
+  background-color: transparent;
+`;
+
+export const CIPHeader = styled(Box)`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+`;
+
+export const CIPHeaderTitle = styled(Box)`
+  font-size: 14px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+export const ModalContent = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  max-height: 72dvh;
+  height: auto;
+  box-sizing: border-box;
+  width: 100%;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;
+
+export const OtherPropetiesContent = styled(Box)`
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0])};
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 6px;
+  margin-top: 14px;
+  margin-bottom: 30px;
+`;
+
+export const OtherPropetiesDesc = styled(Typography)`
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600])} !important;
+`;

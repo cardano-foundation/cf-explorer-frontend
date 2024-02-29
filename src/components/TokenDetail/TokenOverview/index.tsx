@@ -16,6 +16,7 @@ import {
   formatNumberDivByDecimals,
   getShortHash,
   numberWithCommas,
+  formatNumberTotalSupply,
   tokenRegistry
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
@@ -41,6 +42,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
   const [policyId, setPolicyId] = useState("");
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
   const { txCountRealtime } = useContext(OverviewMetadataTokenContext);
+
   const listItem = [
     {
       title: (
@@ -69,11 +71,11 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
     },
     {
       title: <WrapTitle>{t("common.totalSupply")}</WrapTitle>,
-      value: <Box component={"span"}>{formatNumberDivByDecimals(data?.supply, decimalToken)}</Box>,
+      value: <Box component={"span"}>{formatNumberTotalSupply(data?.supply, decimalToken)}</Box>,
       icon: SlotIcon
     },
     {
-      title: <WrapTitle>{t("glossary.policyId")}</WrapTitle>,
+      title: <WrapTitle>{t("glossary.scriptHash")}</WrapTitle>,
       icon: FileGuard,
       strokeColor: "#000",
       value: (

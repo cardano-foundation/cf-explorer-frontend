@@ -1,39 +1,39 @@
-import { useHistory, useParams } from "react-router";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { CircularProgress, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router";
 
-import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
-import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
-import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { details } from "src/commons/routers";
 import useAuth from "src/commons/hooks/useAuth";
-import { API } from "src/commons/utils/api";
 import useFetch from "src/commons/hooks/useFetch";
-import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
-import NoRecord from "src/components/commons/NoRecord";
 import { ChartMode, TableMode } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import ReportComposerModal from "src/components/StakingLifeCycle/DelegatorLifecycle/ReportComposerModal";
+import SPOLifecycleComponent from "src/components/StakingLifeCycle/SPOLifecycle";
+import PoolDetailContext from "src/components/StakingLifeCycle/SPOLifecycle/PoolDetailContext";
+import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import NoRecord from "src/components/commons/NoRecord";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 
 import {
+  AddressLine,
   BoxContainerStyled,
   BoxItemStyled,
-  LabelSwitch,
   BoxSwitchContainer,
-  SwitchGroup,
   ButtonReport,
   ButtonSwitch,
+  Label,
+  LabelSwitch,
   LifeCycleHeader,
   LifeCycleTitle,
+  ReportButtonContainer,
   StakeId,
-  AddressLine,
   StyledContainer,
-  Label,
-  ReportButtonContainer
+  SwitchGroup
 } from "./styles";
 
 interface Params {
@@ -73,7 +73,12 @@ const SPOLifecycle = () => {
     deregistration: "isDeRegistration"
   };
 
-  const { data, error, initialized } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
+  const {
+    data,
+    error,
+    initialized,
+    loading: loadingInitialData
+  } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
   const { data: renderTabsSPO, loading: loadingListTabs } = useFetch<ListTabResponseSPO>(
     API.SPO_LIFECYCLE.TABS(poolId)
   );
@@ -106,9 +111,6 @@ const SPOLifecycle = () => {
     history.push(details.spo(poolId, newMode, validTab));
   };
 
-  if (!initialized && !error) return null;
-  if (error || !data || !data.poolId) return <NoRecord />;
-
   const checkDisableGenReport = () => {
     if (!isLoggedIn) return true;
     if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return false;
@@ -120,6 +122,17 @@ const SPOLifecycle = () => {
     if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
     return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
   };
+
+  if (loadingInitialData) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!initialized && !error) return null;
+  if (error || !data || !data.poolId) return <NoRecord />;
 
   return (
     <PoolDetailContext.Provider value={data}>
@@ -144,12 +157,12 @@ const SPOLifecycle = () => {
               <SwitchGroup>
                 <ButtonSwitch active={+(validMode === "timeline")} onClick={() => changeMode("timeline")}>
                   <TableMode
-                    fill={validMode === "timeline" ? theme.palette.common.white : theme.palette.secondary.light}
+                    fill={validMode === "timeline" ? theme.palette.secondary[0] : theme.palette.secondary["light"]}
                   />
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
                   <ChartMode
-                    fill={validMode === "tabular" ? theme.palette.common.white : theme.palette.secondary.light}
+                    fill={validMode === "tabular" ? theme.palette.secondary[0] : theme.palette.secondary["light"]}
                   />
                 </ButtonSwitch>
               </SwitchGroup>
@@ -163,7 +176,7 @@ const SPOLifecycle = () => {
             </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
-        {loadingListTabs && <CircularProgress color="success" />}
+        {loadingListTabs && <CircularProgress />}
         {renderTabsSPO && !loadingListTabs && (
           <>
             {validMode === "timeline" ? (

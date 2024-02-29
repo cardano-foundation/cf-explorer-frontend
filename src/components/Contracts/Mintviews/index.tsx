@@ -1,30 +1,28 @@
-import { useMemo, useRef, useState } from "react";
 import { useTheme } from "@mui/material";
+import { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
+import { details } from "src/commons/routers";
+import { formatNumberDivByDecimals, isAssetId } from "src/commons/utils/helper";
 import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
-import {
-  Rrounded,
-  MiddleBox,
-  MintContainer,
-  RightBox,
-  MintBlueBox,
-  MintRrounded
-} from "src/components/commons/ViewBlocks/styles";
-import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
-import Contract from "src/components/commons/ViewBlocks/Contract";
 import Assets from "src/components/commons/ViewBlocks/Assets";
-import PolicyID from "src/components/commons/ViewBlocks/PolicyID";
-import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
 import Burn from "src/components/commons/ViewBlocks/Burn";
-import { details } from "src/commons/routers";
-import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
-import { useScreen } from "src/commons/hooks/useScreen";
+import CompiledCode from "src/components/commons/ViewBlocks/CompiledCode";
+import Contract from "src/components/commons/ViewBlocks/Contract";
+import Redeemer from "src/components/commons/ViewBlocks/Redeemer";
+import {
+  MiddleBox,
+  MintBlueBox,
+  MintContainer,
+  MintRrounded,
+  RightBox
+} from "src/components/commons/ViewBlocks/styles";
 
 import AssetsModal from "../modals/AssetsModal";
-import RedeemerModal from "../modals/RedeemerModal";
 import CompiledCodeModal from "../modals/CompiledCodeModal";
+import RedeemerModal from "../modals/RedeemerModal";
 
 export interface MintviewsProps {
   isBurned?: boolean;
@@ -61,19 +59,15 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         end: rightBoxRef,
         startPosition: {
           0: ["center", "bottom"],
-          sm: ["center", "bottom"],
-          lg: ["right", "middle"]
+          sm: ["right", "middle"]
         },
         endPosition: {
           0: ["center", "top"],
-          sm: ["right", "top"],
-          lg: ["left", "middle"]
+          sm: ["left", "middle"]
         },
-        arrow: { 0: "top", sm: "top", lg: "left" },
-        fold: { sm: "none" },
-        startOffset: { 0: [0], sm: [0, 0] },
-        endOffset: { 0: [0, -16], sm: [0, -10], lg: [-12, 0] },
-        autoAlign: { 0: "none", sm: "start-vertical", lg: "none" }
+        arrow: { 0: "top", sm: "left" },
+        startOffset: { 0: [0] },
+        endOffset: { 0: [0, -16], sm: [-12, 0] }
       }
     ];
   }, []);
@@ -110,23 +104,58 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
   const mintedAssetsData = useMemo(() => {
     const mintingTokens = (data?.mintingTokens as IContractItemTx["mintingTokens"]) || [];
     return mintingTokens.map((item) => ({
-      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
+      title: item.displayName ? item.displayName : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
-      link: item.fingerprint
+      link: item.fingerprint,
+      showTooltip: !item.displayName || isAssetId(item.displayName)
     }));
   }, [data, screen.isMobile]);
 
   const burnedAssetsData = useMemo(() => {
     const burningTokens = (data?.burningTokens as IContractItemTx["burningTokens"]) || [];
     return burningTokens.map((item) => ({
-      title: item.displayName || screen.isMobile ? getShortHash(item.fingerprint) : item.fingerprint,
+      title: item.displayName ? item.displayName : item.fingerprint,
       value: formatNumberDivByDecimals(item.quantity, item?.metadata?.decimals || 0),
-      link: item.fingerprint
+      link: item.fingerprint,
+      showTooltip: !item.displayName || isAssetId(item.displayName)
     }));
   }, [data, screen]);
   const isMint = data?.mintingTokens && data.mintingTokens?.length > 0;
   return (
     <MintContainer isMobile={+!!isMobile}>
+      <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
+      <MiddleBox ref={middleBoxRef}>
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
+        <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
+      </MiddleBox>
+
+      {isBurned ? (
+        <RightBox ref={rightBoxRef}>
+          {isMint ? (
+            <MintBlueBox isBurned={isBurned}>
+              <MintRrounded>
+                <Assets
+                  onClick={() => setOpenAssets(!openAssets)}
+                  total={data?.mintingTokens?.length}
+                  isBurned={isBurned}
+                />
+                <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+              </MintRrounded>
+            </MintBlueBox>
+          ) : (
+            <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
+          )}
+        </RightBox>
+      ) : (
+        <RightBox ref={rightBoxRef}>
+          <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
+        </RightBox>
+      )}
+      <DrawPath
+        paths={isMobile ? mobilePaths : paths}
+        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
+        style={{ zIndex: 0 }}
+      />
       <AssetsModal
         isBurnType={true}
         open={openAssets}
@@ -159,47 +188,6 @@ const Mintviews: React.FC<MintviewsProps> = ({ isBurned = false, data, isMobile 
         ]}
         open={openCompiledCode}
         onClose={() => setOpenCompiledCode(false)}
-      />
-      <Redeemer ref={redeemerRef} onClick={() => setOpenRedeemer(!openRedeemer)} />
-      <MiddleBox ref={middleBoxRef}>
-        <Contract hash={data?.scriptHash} detail={details.policyDetail} />
-        <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
-      </MiddleBox>
-      {isBurned ? (
-        <RightBox ref={rightBoxRef}>
-          <MintBlueBox isBurned={isBurned}>
-            <MintRrounded>
-              {isMint ? (
-                <>
-                  <Assets
-                    onClick={() => setOpenAssets(!openAssets)}
-                    total={data?.mintingTokens?.length}
-                    isBurned={isBurned}
-                  />
-                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-                </>
-              ) : (
-                <>
-                  <Burn total={data?.burningTokens?.length} onClick={() => setOpenBurnedAssets(!openBurnedAssets)} />
-                  <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
-                </>
-              )}
-            </MintRrounded>
-            {isMint && <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />}
-          </MintBlueBox>
-        </RightBox>
-      ) : (
-        <MintBlueBox ref={rightBoxRef}>
-          <Rrounded>
-            <Assets onClick={() => setOpenAssets(!openAssets)} total={data?.mintingTokens?.length} />
-            <PolicyID hash={data?.scriptHash} detail={details.policyDetail} />
-          </Rrounded>
-        </MintBlueBox>
-      )}
-      <DrawPath
-        paths={isMobile ? mobilePaths : paths}
-        lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[700] : theme.palette.secondary.light }}
-        style={{ zIndex: 0 }}
       />
     </MintContainer>
   );

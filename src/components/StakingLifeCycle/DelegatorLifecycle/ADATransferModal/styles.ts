@@ -65,9 +65,9 @@ export const Status = styled("span")<{ status: WalletActivityIF["status"] }>`
   text-transform: uppercase;
   color: ${({ status, theme }) =>
     status === "SUCCESS"
-      ? theme.palette.success[700]
+      ? theme.palette.success[800]
       : status === "FAIL"
-      ? theme.palette.error[700]
+      ? theme.palette.error[800]
       : theme.palette.warning[800]};
   background-color: ${({ status, theme }) =>
     status === "SUCCESS"

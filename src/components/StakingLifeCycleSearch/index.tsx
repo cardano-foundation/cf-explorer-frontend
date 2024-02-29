@@ -4,7 +4,7 @@ import { Box, useTheme } from "@mui/material";
 import { useKey } from "react-use";
 import { useTranslation } from "react-i18next";
 
-import { HeaderSearchIconComponent, WhiteSearchIcon } from "src/commons/resources";
+import { HeaderSearchIconComponent, WhiteSearchIconComponent } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import InfoGraphicModal from "src/components/InfoGraphicModal";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -13,6 +13,7 @@ import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import dataMainnet from "src/commons/configs/mainnet.json";
+import dataSanchonet from "src/commons/configs/sanchonet.json";
 import defaultAxios from "src/commons/utils/axios";
 
 import {
@@ -22,7 +23,6 @@ import {
   SearchContainer,
   StyledInput,
   SubmitButton,
-  Image,
   SearchButton,
   TextOR,
   ExampleBox,
@@ -41,6 +41,7 @@ enum BROWSE_VALUES {
 import CustomIcon from "../commons/CustomIcon";
 
 const isMainnet = NETWORK === NETWORKS.mainnet;
+const isSanchonet = NETWORK === NETWORKS.sanchonet;
 
 const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
@@ -128,7 +129,12 @@ const StakingLifeCycleSearch = () => {
 
   const handleSelect = (value: string) => {
     if (value === BROWSE_VALUES.DELEGATOR) {
-      const listStakeAddress = isMainnet ? dataMainnet.stakeAddresses : delegators.map(({ stakeKey }) => stakeKey);
+      const listStakeAddress = isMainnet
+        ? dataMainnet.stakeAddresses
+        : isSanchonet
+        ? dataSanchonet.stakeAddresses
+        : delegators.map(({ stakeKey }) => stakeKey);
+
       const rndIndex = getRandomInt(listStakeAddress.length);
       history.push(details.staking(listStakeAddress[rndIndex]));
     } else {
@@ -163,6 +169,7 @@ const StakingLifeCycleSearch = () => {
       <Box>
         <SearchContainer mx={"auto"}>
           <StyledInput
+            type="search"
             placeholder={t("slc.typeStakeOrPool")}
             onChange={(e) => {
               setValue(e.target.value.trim());
@@ -191,7 +198,13 @@ const StakingLifeCycleSearch = () => {
       <InfoGraphicModal open={openInfoModal} onClose={() => setOpenInfoModal(false)} />
       <ExampleBox bgcolor={"blue"}>
         <SearchButton onClick={hanldeSearch}>
-          <Image src={WhiteSearchIcon} alt="Search button" /> {t("common.search")}
+          <CustomIcon
+            icon={WhiteSearchIconComponent}
+            fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0]}
+            height={20}
+            width={20}
+          />
+          {t("common.search")}
         </SearchButton>
         <TextOR>{t("common.or")}</TextOR>
         <DropdownMenu options={BROWSER_OPTIONS} title="Browse" handleSelect={handleSelect} />

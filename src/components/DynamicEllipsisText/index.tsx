@@ -2,13 +2,14 @@ import { Box, SxProps, Theme, styled } from "@mui/material";
 import { useEffect, useId, useRef, useState } from "react";
 
 import CopyButton from "src/components/commons/CopyButton";
-import { getShortHash } from "src/commons/utils/helper";
+import { getShortHash, truncateCustom } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomTooltip from "../commons/CustomTooltip";
 
-const Container = styled(Box)`
+const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   display: inline-block;
-  white-space: nowrap;
+  white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
   overflow: hidden;
   width: 100%;
   text-align: left;
@@ -24,7 +25,7 @@ const SubPart = styled("span")`
 
 const FirstPart = styled(SubPart)`
   max-width: calc(100% - 130px);
-  min-width: 95px;
+  min-width: 50px;
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
@@ -40,10 +41,13 @@ const StyledAfterElm = styled(Box)`
   display: inline-block;
   vertical-align: bottom;
   margin-left: 10px;
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    margin-left: 3px;
+  }
 `;
 
 // The number of pixels required to display the shortened address in one row
-const MIN_PIXEL = 180;
+const MIN_PIXEL = 120;
 
 const DynamicEllipsisText = ({
   value,
@@ -53,7 +57,10 @@ const DynamicEllipsisText = ({
   isTooltip,
   sxFirstPart,
   sxLastPart,
-  sx
+  sx,
+  customTruncateFold,
+  isNoLimitPixel,
+  whiteSpace
 }: {
   value: string;
   postfix?: number;
@@ -63,10 +70,15 @@ const DynamicEllipsisText = ({
   sxFirstPart?: SxProps<Theme>;
   sxLastPart?: SxProps<Theme>;
   sx?: SxProps<Theme>;
+  customTruncateFold?: [number, number];
+  isNoLimitPixel?: boolean;
+  whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);
 
   const [isMin, setIsMin] = useState<boolean>(false);
+  const { isGalaxyFoldSmall } = useScreen();
+  const [openTooltip, setOpenTooltip] = useState(false);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
@@ -90,30 +102,74 @@ const DynamicEllipsisText = ({
     };
   }, [isMin]);
 
+  const handleClose = () => {
+    setOpenTooltip(false);
+  };
+
+  const handleOpen = () => {
+    setOpenTooltip(true);
+  };
+
   const firstPart = value?.slice(0, value?.length - postfix);
   const lastPart = value?.slice(-postfix);
 
-  if (isMin) {
+  if (isMin && !isNoLimitPixel) {
     return (
-      <ContainerShortHand id={randomIdRef.current} data-testId="ellipsis-text">
-        {getShortHash(value)} {isCopy && <CopyButton text={value} />}
+      <ContainerShortHand>
+        <CustomTooltip title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}>
+          <ContainerShortHand id={randomIdRef.current} data-testid="ellipsis-text" sx={sx}>
+            {customTruncateFold?.length === 2 && isGalaxyFoldSmall
+              ? truncateCustom(value, customTruncateFold[0], customTruncateFold[1])
+              : getShortHash(value)}
+          </ContainerShortHand>
+        </CustomTooltip>
+        {isCopy && <CopyButton text={value} />}
         {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
       </ContainerShortHand>
     );
   }
 
   return (
-    <Container id={randomIdRef.current} sx={sx}>
-      <CustomTooltip title={isTooltip ? value : ""}>
-        <Box component={"span"} data-testId="ellipsis-text">
+    <Container id={randomIdRef.current} sx={sx} whiteSpace={whiteSpace}>
+      <CustomTooltip
+        open={openTooltip}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}
+      >
+        <Box component={"span"} data-testid="ellipsis-text">
           <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
         </Box>
       </CustomTooltip>
-      {isCopy && <CopyButton text={value} data-testId="copy-button" />}
+      {isCopy && <CopyButton text={value} data-testid="copy-button" />}
       {afterElm && <StyledAfterElm className="after-dynamic-text">{afterElm}</StyledAfterElm>}
     </Container>
   );
 };
 
 export default DynamicEllipsisText;
+
+export const ScrollTooltipContent = styled(Box)`
+  max-height: 40vh;
+  overflow: auto;
+  padding: 0 ${({ theme }) => theme.spacing(1)};
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.palette.primary[100]};
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.palette.secondary.light};
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;

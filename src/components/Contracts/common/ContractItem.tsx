@@ -3,12 +3,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useScreen } from "src/commons/hooks/useScreen";
-import { InfoIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledLink } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { Uppercase } from "src/components/commons/CustomText/styles";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
 import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
 
@@ -35,27 +35,27 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     switch (data.purpose) {
       case "SPEND":
         return {
-          value: data.address,
+          value: data.scriptHash,
           explain: t("explain.spend.desc"),
-          detail: details.contract
+          detail: details.smartContract
         };
       case "MINT":
         return {
           value: data.scriptHash,
           explain: t("explain.mint.desc"),
-          detail: details.policyDetail
+          detail: details.smartContract
         };
       case "CERT":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.cert.desc"),
-          detail: details.stake
+          detail: details.smartContract
         };
       case "REWARD":
         return {
-          value: data.stakeAddress,
+          value: data.scriptHash,
           explain: t("explain.reward.desc"),
-          detail: details.stake
+          detail: details.smartContract
         };
     }
   }, [data]);
@@ -69,7 +69,7 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
   return (
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
-        <WrapLabel>{t("contract.address")}:</WrapLabel>
+        <WrapLabel>{t("glossary.contract")}:</WrapLabel>
         <StyledLink
           style={{
             fontWeight: "500",
@@ -97,11 +97,15 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         )}
         {isMobile || isTablet ? (
           <CustomTooltip title={contractAddress?.explain} open={open}>
-            <InfoIcon ref={containerRef} onClick={() => setOpen(!open)} />
+            <Box typeof="span" ref={containerRef}>
+              <InfoSolidIcon onClick={() => setOpen(!open)} />
+            </Box>
           </CustomTooltip>
         ) : (
           <CustomTooltip title={contractAddress?.explain}>
-            <InfoIcon />
+            <Box typeof="span">
+              <InfoSolidIcon />
+            </Box>
           </CustomTooltip>
         )}
       </Box>

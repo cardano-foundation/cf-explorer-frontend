@@ -145,11 +145,32 @@ interface IContractItemTx {
   utxoHash?: string;
   utxoIndex?: number;
   redeemerCertType?: "DELEGATION" | "STAKE_DEREGISTRATION";
+  referenceInputs?: ReferenceInput[];
 }
-
+interface ReferenceInput {
+  address: string;
+  index: number;
+  script: string;
+  scriptHash: string;
+  txHash: string;
+  value: number;
+  datumHash: string;
+  datum: string;
+  scriptType: string;
+}
 interface DMetadata {
   decimals: number;
 }
+
+type TTCIPProperties = {
+  index: string;
+  property: string;
+  format: string;
+  value: string;
+  valid: boolean;
+  valueFormat?: string;
+  checkNotRequired?: boolean;
+};
 
 interface Transaction {
   tx: {
@@ -235,7 +256,69 @@ interface Transaction {
   metadata: {
     label: number;
     value: string;
+    metadataCIP20: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
+    metadataCIP83: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
+    metadataCIP25: CIP;
+    metadataCIP60: CIP;
+    metadataBolnisi: {
+      cid: string;
+      cidVerified: boolean;
+      externalApiAvailable: boolean;
+      wineryData: WineryData[];
+    };
   }[];
+}
+
+interface WineryData {
+  pkeyVerified: boolean;
+  wineryId: string;
+  lots: BolnisiWineLots[];
+  externalApiAvailable: boolean;
+}
+interface BolnisiWineLots {
+  offChainData: {
+    bottling_date: string;
+    bottling_location: string;
+    country_of_origin: string;
+    fermentation_duration: string;
+    fermentation_vessel: string;
+    harvest_date: string;
+    harvest_location: string;
+    lot_number: string;
+    number_of_bottles: number;
+    origin: string;
+    pressing_date: string;
+    processing_location: string;
+    produced_by: string;
+    producer_address: string;
+    producer_latitude: number;
+    producer_longitude: number;
+    storage_vessel: string;
+    varietal_name: string;
+    vintage_year: number;
+    wine_color: string;
+    wine_name: string;
+    wine_type: string;
+  };
+  signatureVerified: boolean;
+}
+
+interface CIP {
+  tokenMap?: TokenMap;
+  valid?: boolean;
+  version?: TTCIP25Properties;
+}
+
+interface TokenMap
+  extends Record<
+    string,
+    {
+      optionalProperties: TTCIP25Properties[];
+      requireProperties: TTCIP25Properties[];
+      tokenName: string;
+    }
+  > {
+  valid?: boolean;
 }
 
 interface CollateralResponses {

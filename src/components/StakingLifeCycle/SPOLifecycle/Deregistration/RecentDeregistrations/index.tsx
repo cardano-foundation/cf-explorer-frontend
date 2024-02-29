@@ -69,8 +69,10 @@ const RecentDeregistrations: React.FC<Props> = ({ onSelect, setShowBackButton })
           </WrapFilterDescription>
           <CustomFilter
             filterValue={params}
-            onChange={(params) => {
-              setParams(params);
+            onSubmit={(params) => {
+              if (params) {
+                setParams(params);
+              }
               setPageInfo((pre) => ({ ...pre, page: 0 }));
             }}
             searchLabel={t("common.searchTx")}

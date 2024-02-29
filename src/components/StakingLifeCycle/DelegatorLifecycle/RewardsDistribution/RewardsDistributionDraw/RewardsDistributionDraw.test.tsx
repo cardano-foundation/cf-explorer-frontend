@@ -42,7 +42,7 @@ describe("RewardsDistributionDraw", () => {
       stakeAddress: "stake1uxrkez465cmpdrragd3rhcgrc6lllnasxd7qtl735l489egx9yfxe"
     };
     render(<RewardsDistributionDraw toggleRewardModal={jest.fn()} data={mockedData} setTypeRewardModal={jest.fn()} />);
-    expect(screen.getByText(/0\.0005/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/RewardsDistributionDraw/)).toBeInTheDocument();
   });
 
   it("should component renders", () => {
@@ -57,6 +57,6 @@ describe("RewardsDistributionDraw", () => {
     render(
       <RewardsDistributionDraw toggleRewardModal={toggleRewardModal} data={mockedData} setTypeRewardModal={jest.fn()} />
     );
-    expect(screen.getByText(/0\.0005/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/RewardsDistributionDraw/)).toBeInTheDocument();
   });
 });

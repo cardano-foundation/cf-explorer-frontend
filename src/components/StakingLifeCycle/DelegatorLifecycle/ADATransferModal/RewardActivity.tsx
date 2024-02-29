@@ -73,7 +73,7 @@ const RewardActivity: React.FC = () => {
 
   return (
     <Box>
-      <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable || 0} stake={stakeId} />
+      <UserInfo acitve="reward" total={fetchData.total} reward={data?.rewardAvailable} stake={stakeId} />
       <StyledTable
         {...fetchData}
         columns={columns}

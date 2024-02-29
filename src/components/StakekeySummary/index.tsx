@@ -79,9 +79,9 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
   const columns: Column<IReportStaking>[] = [
     {
       title: t("createdAt"),
-      key: "createdAt",
-      sort({ sortValue }) {
-        onSort?.(sortValue ? `id,${sortValue}` : "");
+      key: "id",
+      sort({ columnKey, sortValue }) {
+        onSort?.(sortValue ? `${columnKey},${sortValue}` : "");
       },
       render(data) {
         return formatDateTimeLocal(data.createdAt);
@@ -202,7 +202,7 @@ const Status = styled("span")<{ status: string }>`
     switch (status) {
       case "EXPIRED":
       case "FAILED":
-        return theme.palette.error[700];
+        return theme.palette.error[800];
       case "GENERATED":
         return theme.palette.success[800];
       case "IN_PROGRESS":

@@ -1,6 +1,7 @@
-import { useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import { OutlineEye } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -17,6 +18,7 @@ import {
   SpendRounded
 } from "src/components/commons/ViewBlocks/styles";
 import { details } from "src/commons/routers";
+import Outputs from "src/components/commons/ViewBlocks/Outputs";
 
 import RedeemerModal from "../modals/RedeemerModal";
 import DatumModal from "../modals/DatumModal";
@@ -29,8 +31,10 @@ interface SpendViewProps {
 
 const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
   const theme = useTheme();
+  const { trxHash = "" } = useParams<{ trxHash: string }>();
   const leftBoxRef = useRef(null);
   const rightBoxRef = useRef(null);
+  const outputBoxRef = useRef(null);
   const [openRedeemer, setOpenRedeemer] = useState(false);
   const [openDatum, setOpenDatum] = useState(false);
   const [openCompiledCode, setOpenCompiledCode] = useState(false);
@@ -40,12 +44,22 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       {
         start: leftBoxRef,
         end: rightBoxRef,
-        startPosition: { 0: ["center", "bottom"], sm: ["right", "middle"] },
-        endPosition: { 0: ["center", "top"], sm: ["left", "middle"] },
-        arrow: { 0: "top", sm: "left" },
+        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        arrow: { 0: "top", lg: "left" },
         fold: { sm: "horizontal", lg: "none" },
-        startOffset: { 0: [0, 0], sm: [0, 0] },
-        endOffset: { 0: [0, -16], sm: [0, 0] }
+        startOffset: { 0: [0, 0], lg: [0, 0] },
+        endOffset: { 0: [0, -16], lg: [0, 0] }
+      },
+      {
+        start: rightBoxRef,
+        end: outputBoxRef,
+        startPosition: { 0: ["center", "bottom"], lg: ["right", "middle"] },
+        endPosition: { 0: ["center", "top"], lg: ["left", "middle"] },
+        arrow: { 0: "top", lg: "left" },
+        fold: { sm: "horizontal", lg: "none" },
+        startOffset: { 0: [0, 0], lg: [0, 0] },
+        endOffset: { 0: [0, -16], lg: [0, 0] }
       }
     ];
   }, []);
@@ -96,21 +110,19 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       <SpendBlueBox ref={leftBoxRef}>
         <UTXO hash={data?.utxoHash} index={data?.utxoIndex} detail={details.transaction} />
         <SpendRounded>
-          <LongButton>
+          <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
             {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}
-              onClick={() => setOpenRedeemer(!openRedeemer)}
               icon={OutlineEye}
               width={22}
               fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}
             />
           </LongButton>
-          <LongButton>
-            Datum
+          <LongButton onClick={() => setOpenDatum(!openDatum)}>
+            {t("contract.datum")}
             <CustomIcon
               style={{ cursor: "pointer" }}
-              onClick={() => setOpenDatum(!openDatum)}
               icon={OutlineEye}
               width={22}
               fill={theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white}
@@ -119,9 +131,12 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
         </SpendRounded>
       </SpendBlueBox>
       <MiddleBox ref={rightBoxRef}>
-        <Contract hash={data?.address} detail={details.address} />
+        <Contract hash={data?.scriptHash} detail={details.smartContract} />
         <CompiledCode onClick={() => setOpenCompiledCode(!openCompiledCode)} />
       </MiddleBox>
+      <Box ref={outputBoxRef}>
+        <Outputs title="View UTXO tab" link={details.transaction(trxHash, "utxOs")} />
+      </Box>
       <DrawPath
         paths={isMobile ? mobilePaths : paths}
         lineStyle={{ stroke: theme.isDark ? theme.palette.secondary[600] : theme.palette.secondary.light }}

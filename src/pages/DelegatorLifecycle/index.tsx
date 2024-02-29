@@ -1,4 +1,4 @@
-import { CircularProgress, useTheme } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
@@ -75,14 +75,19 @@ const DelegatorLifecycle = () => {
   const theme = useTheme();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { isLoggedIn } = useAuth();
-  const { data, error, initialized } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
+  const {
+    data,
+    error,
+    initialized,
+    loading: loadingInitialData
+  } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
   const { data: listTabs, loading: loadingListTabs } = useFetch<ListStakeKeyResponse>(
     API.STAKE_LIFECYCLE.TABS(stakeId)
   );
   const { data: dataReportLimit } = useFetch<IReportLimit>(API.REPORT.REPORT_LIMIT);
 
   useEffect(() => {
-    if (listTabs && listTabs[tabsValid[tab]]) {
+    if (listTabs && listTabs[tabsValid[tab] as keyof ListStakeKeyResponse]) {
       setCurrentStep(tabList[validTab]);
       return;
     }
@@ -100,9 +105,6 @@ const DelegatorLifecycle = () => {
     if (mode === newMode) return;
     history.push(details.staking(stakeId, newMode, validTab));
   };
-  if (!initialized && !error) return null;
-
-  if (error || !data) return <NoRecord />;
 
   const checkDisableGenReport = () => {
     if (!isLoggedIn) return true;
@@ -115,9 +117,27 @@ const DelegatorLifecycle = () => {
     if (dataReportLimit?.limitPer24hours === ROLE_ELEVATED_GEN_REPORT) return "";
     return t("message.report.limitGenerate", { time: dataReportLimit?.limitPer24hours || 0 });
   };
+  const distributeTotal = listTabs as unknown as DistributionTotal;
+
+  if (loadingInitialData) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (!initialized && !error) return null;
+
+  if (error || !data) return <NoRecord />;
 
   return (
-    <DelegatorDetailContext.Provider value={data}>
+    <DelegatorDetailContext.Provider
+      value={{
+        ...data,
+        totalDelegatorRewards: distributeTotal?.totalDelegatorRewards || 0,
+        totalOperatorRewards: distributeTotal?.totalOperatorRewards || 0
+      }}
+    >
       <StyledContainer>
         <BoxContainerStyled>
           <LifeCycleHeader sidebar={+sidebar}>
@@ -144,6 +164,7 @@ const DelegatorLifecycle = () => {
                 </ButtonSwitch>
                 <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
                   <ChartMode
+                    data-testid="chartmode"
                     fill={validMode === "tabular" ? theme.palette.secondary[0] : theme.palette.secondary.light}
                   />
                 </ButtonSwitch>
@@ -158,7 +179,7 @@ const DelegatorLifecycle = () => {
             </CustomTooltip>
           </BoxItemStyled>
         </BoxContainerStyled>
-        {loadingListTabs && <CircularProgress color="success" />}
+        {loadingListTabs && <CircularProgress />}
 
         {!loadingListTabs && listTabs && (
           <>

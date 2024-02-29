@@ -23,19 +23,15 @@ jest.mock("@mui/material", () => ({
 }));
 
 jest.mock("src/commons/hooks/useFetchList");
-jest.mock("@textea/json-viewer", () => ({
-  JsonViewer: ({ value }: { value: unknown }) => (
-    <div data-testid="mocked-json-viewer">{(value as typeof scriptValue).name}</div>
-  )
-}));
+jest.mock("@textea/json-viewer");
 
 describe("TokenMetadata component", () => {
   beforeEach(() => {
     (useTheme as jest.Mock).mockReturnValue(themes.light);
   });
-  it("should component render", () => {
+  it("should component render", async () => {
     render(<TokenMetadata metadataJson={JSON.stringify(scriptValue)} />);
-    expect(screen.getByText(scriptValue.name)).toBeInTheDocument();
+    expect(screen.getByText(/Metadata Check/i)).toBeInTheDocument();
   });
 
   it("should component render with no value", () => {

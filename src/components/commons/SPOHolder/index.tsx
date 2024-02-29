@@ -36,7 +36,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
       <SPOTitle>{t("common.spo")}</SPOTitle>
       <Box>
         <CustomTooltip title={poolName}>
-          <PoolName> {poolName}</PoolName>
+          <PoolName>{poolName}</PoolName>
         </CustomTooltip>
         <CustomTooltip
           wOpacity={false}
@@ -56,7 +56,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
                 <Box fontSize="1.125rem" color={({ palette }) => palette.secondary.light}>
                   {t("common.poolId")}:
                 </Box>
-                <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "")}</PoolNamePopup>
+                <PoolNamePopup to={details.delegation(poolView)}>{getShortHash(poolView || "", 8)}</PoolNamePopup>
                 <CopyButton text={poolView} />
               </Box>
               <Box display={"flex"} alignItems={"center"}>
@@ -76,7 +76,7 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
               SPOInfoRef?.current && history.push(details.delegation(poolView));
             }}
           >
-            <SPOInfo fill={theme.palette.primary.main} />
+            <SPOInfo fill={theme.palette.primary.main} data-testid="spo-info" />
           </ButtonSPO>
         </CustomTooltip>
         <CustomTooltip
@@ -94,10 +94,10 @@ export const SPOHolder: React.FC<ISPOProps> = forwardRef(({ data, ...props }, bo
           title={
             rewardAccounts.length > 0 && (
               <StakeKeyItemList>
-                {rewardAccounts.map((item) => (
-                  <StakeKeyItem key={item}>
+                {rewardAccounts.map((item, idx) => (
+                  <StakeKeyItem key={"stakeyItem" + idx}>
                     <SPOKey fill={theme.palette.primary.main} />
-                    <PoolNamePopup to={details.stake(item)}>{getShortHash(item)}</PoolNamePopup>
+                    <PoolNamePopup to={details.stake(item)}>{getShortHash(item, 8)}</PoolNamePopup>
                     <CopyButton text={item} />
                   </StakeKeyItem>
                 ))}
@@ -147,7 +147,8 @@ export const PoolName = styled(Box)(({ theme }) => ({
   maxWidth: "70%",
   whiteSpace: "nowrap",
   overflow: "hidden",
-  textOverflow: "ellipsis"
+  textOverflow: "ellipsis",
+  height: 24
 }));
 export const ButtonSPO = styled(Box)(() => ({
   position: "absolute",
@@ -166,5 +167,6 @@ export const PoolNamePopup = styled(Link)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
   flex: 1,
-  textAlign: "left"
+  textAlign: "left",
+  pointerEvents: "auto"
 }));

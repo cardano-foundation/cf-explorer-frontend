@@ -13,6 +13,7 @@ const Button = styled(IconButton)`
   width: 23px;
   height: 23px;
   font-size: var(--font-size-text-large);
+  pointer-events: auto;
 `;
 
 interface CopyButtonProps extends IconButtonProps {
@@ -28,6 +29,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (copied) {
@@ -47,7 +49,14 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
     }
   };
   return (
-    <CustomTooltip placement={placement || "top"} title={copied ? "Copied" : "Copy"} enterTouchDelay={0}>
+    <CustomTooltip
+      open={open}
+      onClose={() => setOpen(false)}
+      onOpen={() => setOpen(true)}
+      placement={placement || "top"}
+      title={copied ? "Copied" : "Copy"}
+      enterTouchDelay={0}
+    >
       <Button {...props} onClick={onCopy}>
         {children ||
           (copied ? (

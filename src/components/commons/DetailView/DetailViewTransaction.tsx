@@ -9,7 +9,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import {
   CubeIconComponent,
   DelegationHistoryMainIcon,
-  DelegationIconUrl,
+  DelegationIconComponent,
   FileEditIcon,
   GitCommitIcon,
   InstantaneousHistoryComponent,
@@ -29,6 +29,7 @@ import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 
+import { CustomNumberBadge } from "../CustomNumberBadge";
 import ADAicon from "../ADAIcon";
 import CopyButton from "../CopyButton";
 import CustomIcon from "../CustomIcon";
@@ -107,7 +108,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
     {
       key: "delegations",
       label: t("tab.delegations"),
-      icon: <DetailLinkImage src={DelegationIconUrl} alt="contact" />
+      icon: <DelegationIconComponent />
     },
     { key: "mints", label: t("tab.minting"), icon: <MintingIconComponent /> },
     {
@@ -130,8 +131,8 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
       label: t("glossary.instantaneousRewards"),
       icon: <InstantaneousHistoryComponent />
     },
-    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> },
-    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> }
+    { key: "signersInformation", label: t("tab.signersInformation"), icon: <GitCommitIcon /> },
+    { key: "metadata", label: t("glossary.metadata"), icon: <MetadataIconTx /> }
   ];
 
   const renderContent = () => {
@@ -338,7 +339,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                       <DetailLinkIcon>{icon}</DetailLinkIcon>
                       <DetailLinkName>
                         {label}
-                        {Array.isArray(value) ? `(${value.length})` : null}
+                        <CustomNumberBadge value={Array.isArray(value) ? value.length : null} />
                       </DetailLinkName>
                     </DetailLabel>
                     <DetailValue>

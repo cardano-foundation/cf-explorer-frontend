@@ -34,6 +34,8 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   const { isTablet } = useScreen();
 
   const isActiveMenu = (href: string, isSpecialPath?: boolean): boolean => {
+    if ((href === "/" && pathname.includes("reset-password")) || (href === "/" && pathname.includes("verify-email")))
+      return true;
     if (href === pathname) return true;
     if (pathname.split("/").length > 2 && href.includes(pathname.split("/")[1])) {
       if (isSpecialPath) return href === specialPath;
@@ -68,7 +70,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     setActive(sidebar ? active || currentActive : null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebar, specialPath]);
+  }, [sidebar, specialPath, pathname]);
 
   useEffect(() => {
     if (pathname === "/") setActive(null);

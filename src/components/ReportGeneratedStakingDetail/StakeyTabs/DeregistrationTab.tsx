@@ -1,13 +1,14 @@
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { EyeIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -15,6 +16,7 @@ import { StyledLink } from "src/components/share/styled";
 import { DeregistrationCertificateModal } from "src/components/commons/DeregistrationCertificateModal";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
@@ -23,12 +25,11 @@ const DeregistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const { reportId } = useParams<{ reportId: string }>();
-  const { search } = useLocation();
   const [openModal, setOpenModal] = useState(false);
   const { stakeKey } = useContext(StakingDetailContext);
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [sort, setSort] = useState<string>("");
+  const { pageInfo, setSort } = usePageInfo();
+
   const columns: Column<DeregistrationItem>[] = [
     {
       title: t("glossary.txHash"),
@@ -77,7 +78,7 @@ const DeregistrationTab = () => {
       minWidth: "120px",
       render: () => (
         <IconButton onClick={() => setOpenModal(true)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon data-testid="eye-icon" icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
         </IconButton>
       )
     }
@@ -85,7 +86,7 @@ const DeregistrationTab = () => {
 
   const fetchData = useFetchList<DeregistrationItem>(
     reportId ? API.REPORT.SREPORT_DETAIL_DEGEGISTRATIONS(reportId) : "",
-    { ...pageInfo, sort }
+    { ...pageInfo }
   );
 
   return (
@@ -96,8 +97,9 @@ const DeregistrationTab = () => {
         total={{ title: t("common.total"), count: fetchData.total }}
         pagination={{
           ...pageInfo,
+          page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo({ ...pageInfo, page: page - 1, size })
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
         onClickRow={(e, r: DeregistrationItem) => history.push(details.transaction(r.txHash))}
       />

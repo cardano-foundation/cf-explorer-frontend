@@ -1,19 +1,21 @@
 /* eslint-disable no-case-declarations */
-import React, { FormEvent, useState, useEffect, useCallback } from "react";
-import { Backdrop, Box, SelectChangeEvent, CircularProgress, useTheme } from "@mui/material";
+import { Backdrop, Box, CircularProgress, SelectChangeEvent, useTheme } from "@mui/material";
+import axios from "axios";
+import { isEmpty, isNil, isObject, omitBy } from "lodash";
 import { stringify } from "qs";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiChevronDown } from "react-icons/bi";
 import { GoChevronRight } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
-import { isNil, isObject, omitBy } from "lodash";
-import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
-import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
+import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 
@@ -36,7 +38,7 @@ interface FormValues {
 interface Option {
   value: FilterParams;
   label: React.ReactNode;
-  paths?: (typeof routers)[keyof typeof routers][];
+  paths?: ((typeof routers)[keyof typeof routers] | "ADA_hanlde")[];
   detail?: (typeof details)[keyof typeof details];
 }
 const intitalValue: FormValues = {
@@ -50,7 +52,7 @@ const URL_FETCH_DETAIL = {
   txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
   addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
   stake: (stake: string) => `${API.STAKE.DETAIL}/${stake}`,
-  policies: (policy: string) => `${API.POLICY}/${policy}`
+  policies: (policy: string) => `${API.SCRIPTS_SEARCH}/${policy}`
 };
 
 interface Props extends RouteComponentProps {
@@ -61,25 +63,29 @@ interface Props extends RouteComponentProps {
 
 interface IResponseSearchAll {
   epoch?: number;
-  block?: "string";
-  tx?: "string";
+  block?: string;
+  tx?: string;
   token?: {
-    name: "string";
-    fingerprint: "string";
+    name: string;
+    fingerprint: string;
   };
   validTokenName?: boolean;
   address?: {
-    address: "string";
+    address: string;
     stakeAddress: true;
     paymentAddress: true;
   };
   pool?: {
-    name: "string";
-    poolId: "string";
-    icon: "string";
+    name: string;
+    poolId: string;
+    icon: string;
   };
   validPoolName?: true;
-  policy?: "string";
+  script: {
+    scriptHash?: string;
+    nativeScript?: boolean;
+    smartContract?: boolean;
+  };
 }
 const RESULT_SIZE = 5;
 
@@ -93,6 +99,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [dataSearchTokensAndPools, setDataSearchTokensAndPools] = useState<
     TokensSearch[] | DelegationPool[] | undefined
   >();
+  const [ADAHandleOption, setADAHanldeOption] = useState<
+    { stakeAddress: string; paymentAddress: string } | undefined
+  >();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
@@ -120,6 +130,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.transactions"),
       paths: [routers.TRANSACTION_LIST, routers.TRANSACTION_DETAIL],
       detail: details.transaction
+    },
+    {
+      value: "ADAHanlde",
+      label: t("filter.ADAHanlde"),
+      paths: ["ADA_hanlde"],
+      detail: details.address
     },
     {
       value: "tokens",
@@ -155,11 +171,19 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     },
     {
       value: "policies",
-      label: t("filter.policyId"),
-      paths: [routers.POLICY_DETAIL],
+      label: t("filter.scriptHash"),
+      paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
     }
   ];
+
+  const adaHandleSearch = async (query: string) => {
+    try {
+      return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
+    } catch (error) {
+      return {};
+    }
+  };
 
   const showResultNotFound = () => {
     setError(t("message.noResultsFound"));
@@ -171,12 +195,70 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const handleSearchAll = async (query: string) => {
     try {
       setLoading(true);
-      const res = await defaultAxios.get(API.SEARCH_ALL(query));
+      const res = await defaultAxios.get(API.SEARCH_ALL(query?.trim()));
+      const adaHanlde = await adaHandleSearch(search?.trim());
+
+      setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (keyDetail) {
-        handleRedirectDetail(keyDetail, res?.data);
+
+      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "" && !adaHanlde) {
+        throw new Error();
       }
+
+      if (adaHanlde && adaHanlde !== null) {
+        if (
+          adaHanlde &&
+          (!keyDetail || keyDetail === "address") &&
+          res.data &&
+          !res.data.validPoolName &&
+          !res.data.validTokenName
+        ) {
+          handleSetSearchValueDefault();
+          setLoading(false);
+          callback?.();
+          setShowOption(false);
+          const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+          if (adaHanlde?.stakeAddress) {
+            history.push(`${details.stake(adaHanldeSearch)}`);
+            return;
+          }
+          if (adaHanlde?.paymentAddress) {
+            history.push(`${details.address(adaHanldeSearch)}`);
+            return;
+          }
+        }
+      }
+
+      if (!adaHanlde.paymentAddress) {
+        if (keyDetail) {
+          callback?.();
+          handleSetSearchValueDefault();
+          handleRedirectDetail(keyDetail, res?.data);
+          setLoading(false);
+          setShowOption(false);
+          return;
+        }
+
+        if (!res?.data?.validPoolName && res?.data?.validTokenName) {
+          history.push(
+            `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((search || "").trim().toLocaleLowerCase())}`
+          );
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
+
+        if (res?.data?.validPoolName && !res?.data?.validTokenName) {
+          history.push(routers.DELEGATION_POOLS, {
+            tickerNameSearch: encodeURIComponent((search || "").trim().toLocaleLowerCase())
+          });
+          setShowOption(false);
+          setLoading(false);
+          return;
+        }
+      }
+
       setShowOption(true);
       setLoading(false);
     } catch {
@@ -210,20 +292,30 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       case "tx":
         history.push(details.transaction(data?.tx as string));
         return;
-      case "policy":
-        history.push(details.policyDetail(data?.policy as string));
-        return;
+      case "script":
+        if (data?.script?.nativeScript) {
+          history.push(details.nativeScriptDetail(data?.script?.scriptHash as string));
+          return;
+        } else {
+          history.push(details.smartContract(data?.script?.scriptHash as string));
+          return;
+        }
       default:
     }
   };
 
   const getKeyIfOnlyOneNonNullResult = (data: IResponseSearchAll | undefined) => {
-    if (data?.validTokenName && data?.validPoolName) return "";
+    if (data?.validTokenName && data?.validPoolName) {
+      return "";
+    }
 
     let count = 0;
     let keyName = "";
     for (const key in data) {
-      if (!["validTokenName", "validPoolName"].includes(key) && !!data[key as keyof IResponseSearchAll]) {
+      if (
+        !["validTokenName", "validPoolName", "isNativeScript"].includes(key) &&
+        !!data[key as keyof IResponseSearchAll]
+      ) {
         count++;
         keyName = key;
       }
@@ -234,7 +326,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const FetchSearchTokensAndPools = async (query: string, filter: FilterParams) => {
     try {
       setLoading(true);
-      const search: { query?: string; search?: string } = {};
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const entries = urlParams.entries();
+      const params = Object.fromEntries(entries);
+      const search: { query?: string; search?: string; retired?: boolean } = { ...params };
+
       if (filter === "tokens") {
         search.query = query.trim();
       } else {
@@ -245,18 +342,27 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
+
       setDataSearchTokensAndPools(res?.data && res?.data?.data ? res?.data?.data : undefined);
       if (res?.data && res.data?.totalItems > 0) {
         if (filter === "tokens") {
-          res.data?.totalItems === 1
-            ? history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)))
-            : history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+          if (res.data?.totalItems === 1) {
+            history.push(details.token(encodeURIComponent((res?.data?.data[0] as TokensSearch)?.fingerprint)));
+          } else {
+            history.push(`${routers.TOKEN_LIST}?tokenName=${(search.query || "").toLocaleLowerCase()}`);
+          }
+          handleSetSearchValueDefault();
+          callback?.();
         } else {
-          res.data?.totalItems === 1
-            ? history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId))
-            : history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (search.search || "").toLocaleLowerCase()
-              });
+          if (res.data?.totalItems === 1) {
+            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+          } else {
+            history.push(routers.DELEGATION_POOLS, {
+              tickerNameSearch: (search.search || "").toLocaleLowerCase()
+            });
+          }
+          callback?.();
+          handleSetSearchValueDefault();
         }
       } else {
         setShowOption(true);
@@ -277,9 +383,19 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   }, [search, filter]);
 
   const currentPath = history.location.pathname.split("/")[1];
-
   const checkIncludesPath = useCallback(
-    (paths: Option["paths"]) => paths?.find((path) => path?.split("/")[1] === currentPath),
+    (paths: Option["paths"]) =>
+      paths?.find((path) => {
+        const address = history.location.pathname.split("/")[2] || "";
+        if (
+          (routers.ADDRESS_DETAIL.includes(currentPath) || routers.STAKE_DETAIL.includes(currentPath)) &&
+          address.startsWith("$") &&
+          path === "ADA_hanlde"
+        ) {
+          return true;
+        }
+        return path?.split("/")[1] === currentPath;
+      }),
     [currentPath]
   );
 
@@ -289,27 +405,80 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setError("");
     setShowErrorMobile?.(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues]);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues, history.location.pathname]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
     const option = options.find((item) => item.value === (filterParams || filter));
 
-    if (!["all", "tokens", "delegations/pool-detail-header"].includes(option?.value || "")) {
+    if (option?.value === "policies") {
+      try {
+        setLoading(true);
+        const url = URL_FETCH_DETAIL["policies"](search);
+        await defaultAxios
+          .get(url)
+          .then((res) => res.data)
+          .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
+            callback?.();
+            if (data.nativeScript) {
+              history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
+              handleSetSearchValueDefault();
+            }
+            if (data.smartContract) {
+              history.push(details.smartContract(data.scriptHash || "associated"));
+              handleSetSearchValueDefault();
+            }
+          });
+        setShowOption(false);
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (option?.value === "ADAHanlde") {
+      setLoading(true);
+      try {
+        const dataHanlde = await adaHandleSearch(search);
+        if (Object.keys(dataHanlde)?.length === 0) {
+          throw new Error();
+        }
+        if (dataHanlde) {
+          handleSetSearchValueDefault();
+          callback?.();
+          const adaHanldeSearch = search.startsWith("$") ? search : `$${search}`;
+          if (dataHanlde.stakeAddress) {
+            history.push(`${details.stake(adaHanldeSearch)}`);
+          } else {
+            history.push(`${details.address(adaHanldeSearch)}`);
+          }
+        } else {
+          showResultNotFound();
+          setShowOption(true);
+          return;
+        }
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      setLoading(false);
+      return;
+    }
+
+    if (!["all", "tokens", "delegations/pool-detail-header", "addresses"].includes(option?.value || "")) {
       setLoading(true);
       let url = "";
 
-      if (option?.value === "addresses") {
-        if (search.trim().startsWith("stake")) {
-          url = URL_FETCH_DETAIL["stake"](search);
-        } else {
-          url = URL_FETCH_DETAIL["addresses"](search);
-        }
-      } else {
-        url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
-          ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
-          : "";
-      }
+      url = URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL]
+        ? URL_FETCH_DETAIL[option?.value as keyof typeof URL_FETCH_DETAIL](search as never)
+        : "";
 
       try {
         await defaultAxios.get(url);
@@ -321,13 +490,40 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         setLoading(false);
       }
     }
+    if (option?.value === "addresses") {
+      try {
+        if (search.startsWith("stake")) {
+          await defaultAxios.get(URL_FETCH_DETAIL["stake"](search)).then((data) => data.data);
+        } else {
+          await defaultAxios.get(URL_FETCH_DETAIL["addresses"](search)).then((data) => data.data);
+        }
+        callback?.();
+        if (search.startsWith("stake")) {
+          history.push(details.stake(search));
+          handleSetSearchValueDefault();
+          callback?.();
+          return;
+        }
+        history.push(details.address(search));
+        handleSetSearchValueDefault();
+      } catch (error) {
+        showResultNotFound();
+        setShowOption(true);
+        return;
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (option?.value === "lifecycle") {
       if (search.startsWith("stake")) {
         history.push(details.staking(search, "timeline"));
+        handleSetSearchValueDefault();
         callback?.();
       } else if (search.startsWith("pool")) {
         history.push(details.spo(search, "timeline"));
+        handleSetSearchValueDefault();
         callback?.();
       } else {
         showResultNotFound();
@@ -346,30 +542,17 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       return;
     }
 
-    if (option?.value === "addresses") {
-      if (search.startsWith("stake")) {
-        history.push(details.stake(search));
-        callback?.();
-        return;
-      }
-      history.push(details.address(search));
-    }
-
     callback?.();
 
     if (option?.value === "blocks") {
       history.push(details.block(search.trim()));
+      handleSetSearchValueDefault();
       callback?.();
       return;
     }
     if (option?.value === "epochs") {
       history.push(details.epoch(search.trim()));
-      callback?.();
-      return;
-    }
-
-    if (option?.value === "all" && search.startsWith("stake")) {
-      history.push(details.stake(search));
+      handleSetSearchValueDefault();
       callback?.();
       return;
     }
@@ -382,10 +565,14 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
   };
 
+  const handleSetSearchValueDefault = () => {
+    setValues(({ filter }) => ({ filter, search: "" }));
+  };
   const handleChangeFilter = (e: SelectChangeEvent<unknown>) => {
     setValues({ search, filter: e.target.value as Option["value"] });
     setError("");
     setShowErrorMobile?.(false);
+    setADAHanldeOption(undefined);
   };
 
   const handleChangeSearch = (e?: React.ChangeEvent) => {
@@ -394,6 +581,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     setShowErrorMobile?.(false);
     onFocus((e?.target as HTMLInputElement)?.value);
     setDataSearchAll(undefined);
+    setADAHanldeOption(undefined);
   };
   const onFocus = (newValue?: string) => {
     if (!isNaN(+(newValue ?? search)) && (newValue ?? search) && filter === "all") {
@@ -462,6 +650,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       />
       {showOption && (
         <OptionsSearch
+          handleSetSearchValueDefault={handleSetSearchValueDefault}
           showResultNotFound={showResultNotFound}
           error={error}
           home={home}
@@ -472,6 +661,8 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           data={dataSearchAll}
           setShowOption={setShowOption}
           dataSearchTokensAndPools={dataSearchTokensAndPools}
+          ADAHandleOption={ADAHandleOption}
+          callback={callback}
         />
       )}
       {loading && search ? (
@@ -499,13 +690,21 @@ interface OptionProps {
   show: boolean;
   home: boolean;
   value: string;
+  callback?: () => void;
   error: string;
   data?: IResponseSearchAll;
   dataSearchTokensAndPools?: TokensSearch[] | DelegationPool[];
   showResultNotFound: () => void;
   setShowOption: (show: boolean) => void;
+  handleSetSearchValueDefault: () => void;
   filter: FilterParams;
   totalResult: number;
+  ADAHandleOption:
+    | {
+        stakeAddress: string;
+        paymentAddress: string;
+      }
+    | undefined;
 }
 
 export const OptionsSearch = ({
@@ -518,25 +717,35 @@ export const OptionsSearch = ({
   setShowOption,
   filter,
   dataSearchTokensAndPools,
-  totalResult
+  totalResult,
+  ADAHandleOption,
+  handleSetSearchValueDefault,
+  callback
 }: OptionProps) => {
   const history = useHistory();
   const listOptionsTokensAndPools = dataSearchTokensAndPools?.map((i) => {
+    const renderName = () => {
+      if (filter === "tokens") {
+        return (
+          <ValueOption>
+            {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
+              ? getShortHash((i as TokensSearch)?.fingerprint || "")
+              : (i as TokensSearch)?.displayName}
+          </ValueOption>
+        );
+      }
+      if (filter === "delegations/pool-detail-header") {
+        return (
+          <ValueOption>
+            {(i as DelegationPool)?.poolName || getShortHash((i as DelegationPool)?.poolId || "")}
+          </ValueOption>
+        );
+      }
+    };
     return {
       suggestText: (
         <Box>
-          Search for a {filter === "tokens" ? "token" : "pool"}{" "}
-          {filter === "tokens" ? (
-            <ValueOption>
-              {(i as TokensSearch)?.displayName?.startsWith("asset") && (i as TokensSearch)?.displayName.length > 43
-                ? getShortHash((i as TokensSearch)?.fingerprint || "")
-                : (i as TokensSearch)?.displayName}
-            </ValueOption>
-          ) : (
-            <ValueOption>
-              {(i as DelegationPool)?.poolName || getShortHash((i as DelegationPool)?.poolId || "")}
-            </ValueOption>
-          )}
+          Search for a {filter === "tokens" ? "token" : "pool"} {renderName()}
         </Box>
       ),
       cb: () =>
@@ -573,8 +782,8 @@ export const OptionsSearch = ({
               };
             case "address":
               const addressLink = objValue?.stakeAddress
-                ? details.stake((value || "").trim().toLocaleLowerCase())
-                : details.address((value || "").trim().toLocaleLowerCase());
+                ? `${details.stake((value || "").trim().toLocaleLowerCase())}&isAddress=true`
+                : `${details.address((value || "").trim().toLocaleLowerCase())}&isAddress=true`;
               return {
                 suggestText: "Search for an Address by",
                 cb: () => history.push(addressLink),
@@ -584,13 +793,23 @@ export const OptionsSearch = ({
               if (data.validTokenName) {
                 if (data.token) {
                   return {
-                    suggestText: "Search for a Token by",
+                    suggestText: (
+                      <Box>
+                        Search {""}
+                        <ValueOption>{getShortHash(value || "")}</ValueOption> in Tokens
+                      </Box>
+                    ),
                     cb: () => history.push(details.token(data?.token?.fingerprint)),
                     formatter: getShortHash
                   };
                 }
                 return {
-                  suggestText: "Search for a Token by",
+                  suggestText: (
+                    <Box>
+                      Search {""}
+                      <ValueOption>{getShortHash(value || "")}</ValueOption> in Tokens
+                    </Box>
+                  ),
                   cb: () =>
                     history.push(
                       `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
@@ -603,13 +822,23 @@ export const OptionsSearch = ({
               if (data?.validPoolName) {
                 if (data.pool) {
                   return {
-                    suggestText: "Search for a Pool by",
+                    suggestText: (
+                      <Box>
+                        Search {""}
+                        <ValueOption>{getShortHash(value || "")}</ValueOption> in Pools
+                      </Box>
+                    ),
                     cb: () => history.push(details.delegation(data?.pool?.poolId)),
                     formatter: getShortHash
                   };
                 }
                 return {
-                  suggestText: "Search for a Pool by",
+                  suggestText: (
+                    <Box>
+                      Search {""}
+                      <ValueOption>{getShortHash(value || "")}</ValueOption> in Pools
+                    </Box>
+                  ),
                   cb: () =>
                     history.push(routers.DELEGATION_POOLS, {
                       tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
@@ -618,11 +847,76 @@ export const OptionsSearch = ({
                 };
               }
               return;
+            case "pool": {
+              if (data.validPoolName) return;
+              if (data?.pool) {
+                return {
+                  suggestText: (
+                    <Box>
+                      Search {""}
+                      <ValueOption>{getShortHash(value || "")}</ValueOption> in Pools
+                    </Box>
+                  ),
+                  cb: () => {
+                    history.push(details.delegation(data?.pool?.poolId));
+                  },
+                  formatter: getShortHash,
+                  value: data.pool && data.pool?.name ? data.pool.name : ""
+                };
+              }
+              return {
+                suggestText: (
+                  <Box>
+                    Search {""}
+                    <ValueOption>{getShortHash(value || "")}</ValueOption> in Pools
+                  </Box>
+                ),
+                cb: () =>
+                  history.push(routers.DELEGATION_POOLS, {
+                    tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
+                  }),
+                formatter: getShortHash,
+                value: data.pool && data.pool?.name ? data.pool.name : ""
+              };
+            }
+            case "token": {
+              if (data.validTokenName) return;
+              if (data?.token) {
+                return {
+                  suggestText: (
+                    <Box>
+                      Search {""}
+                      <ValueOption>{getShortHash(value || "")}</ValueOption> in Tokens
+                    </Box>
+                  ),
+                  cb: () => history.push(details.token(data?.token?.fingerprint)),
+                  formatter: getShortHash,
+                  value: data.token && data.token?.name ? data.token?.name : ""
+                };
+              }
+
+              return {
+                suggestText: (
+                  <Box>
+                    Search {""}
+                    <ValueOption>{getShortHash(value || "")}</ValueOption> in Tokens
+                  </Box>
+                ),
+                cb: () =>
+                  history.push(
+                    `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((value || "").trim().toLocaleLowerCase())}`
+                  ),
+                formatter: getShortHash,
+                value: data.token && data.token?.name ? data.token?.name : ""
+              };
+            }
             case "policy":
               return {
                 suggestText: "Search for a Policy by",
                 cb: () =>
-                  history.push(details.policyDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))),
+                  history.push(
+                    details.nativeScriptDetail(encodeURIComponent((value || "").trim().toLocaleLowerCase()))
+                  ),
                 formatter: getShortHash
               };
           }
@@ -631,8 +925,15 @@ export const OptionsSearch = ({
     [];
 
   useEffect(() => {
-    if (listOptions.length === 0 && isObject(data) && Object.keys(data).length > 0 && filter === "all")
+    if (
+      listOptions.length === 0 &&
+      isObject(data) &&
+      Object.keys(data || {})?.length > 0 &&
+      filter === "all" &&
+      !ADAHandleOption
+    ) {
       showResultNotFound();
+    }
     if (
       (listOptionsTokensAndPools || []).length === 0 &&
       dataSearchTokensAndPools &&
@@ -649,7 +950,7 @@ export const OptionsSearch = ({
             {(listOptionsTokensAndPools || [])?.map((item, i: number) => {
               return (
                 <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                  <Box>{item?.suggestText} </Box>
+                  <Box textAlign={"left"}>{item?.suggestText} </Box>
                   <GoChevronRight />
                 </Option>
               );
@@ -658,6 +959,8 @@ export const OptionsSearch = ({
               <Option
                 onClick={() => {
                   setShowOption(false);
+                  handleSetSearchValueDefault();
+                  callback?.();
                   filter === "tokens"
                     ? history.push(`${routers.TOKEN_LIST}?tokenName=${(value || "").toLocaleLowerCase()}`)
                     : history.push(routers.DELEGATION_POOLS, {
@@ -694,14 +997,49 @@ export const OptionsSearch = ({
         <>
           {listOptions.map((item, i: number) => {
             return (
-              <Option key={i} onClick={() => item?.cb?.()} data-testid="option-search-epoch">
-                <Box>
-                  {item?.suggestText} <ValueOption> {item?.formatter?.(value) || value}</ValueOption>
+              <Option
+                key={i}
+                onClick={() => {
+                  setShowOption(false);
+                  handleSetSearchValueDefault();
+                  item?.cb?.();
+                  callback?.();
+                }}
+                data-testid="option-search-epoch"
+              >
+                <Box textAlign={"left"}>
+                  {item?.suggestText}
+                  {typeof item?.suggestText === "string" && (
+                    <ValueOption> {item?.formatter?.(item?.value || value) || item?.value || value}</ValueOption>
+                  )}
                 </Box>
                 <GoChevronRight />
               </Option>
             );
           })}
+          {ADAHandleOption && (
+            <Option
+              key="ADAHandleOption"
+              data-testid="option-search-epoch"
+              onClick={() => {
+                setShowOption(false);
+                handleSetSearchValueDefault();
+                callback?.();
+                const adaHanldeSearch = value.startsWith("$") ? value : `$${value}`;
+                if (ADAHandleOption?.stakeAddress) {
+                  history.push(`${details.stake(adaHanldeSearch)}`);
+                } else {
+                  history.push(`${details.address(adaHanldeSearch)}`);
+                }
+              }}
+            >
+              <Box textAlign={"left"} data-testid="option-ada-hanlde">
+                Search {""} <ValueOption>{value.length > 15 ? getShortHash(value) : value || ""}</ValueOption> in ADA
+                handle
+              </Box>
+              <GoChevronRight />
+            </Option>
+          )}
         </>
       ) : (
         <Box component={Option} color={({ palette }) => palette.error[700]} justifyContent={"center"}>

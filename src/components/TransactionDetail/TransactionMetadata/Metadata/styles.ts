@@ -1,11 +1,15 @@
-import { alpha, Box, styled } from "@mui/material";
+import { alpha, Box, Button, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import Card from "src/components/commons/Card";
 
 export const Wrapper = styled(Box)`
   background: ${(props) => props.theme.palette.secondary[0]};
   padding: 25px;
-  border: 1px solid ${({ theme }) => (theme.isDark ? theme.palette.primary[200] : theme.palette.secondary[700])};
   border-radius: ${({ theme }) => theme.spacing(2)};
+  ${({ theme }) => theme.breakpoints.down(355)} {
+    padding: 8px;
+  }
 `;
 export const Header = styled(Box)`
   display: flex;
@@ -49,28 +53,49 @@ export const AddressLink = styled(Link)`
 export const RowMetadata = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginBottom: theme.spacing(1)
+  marginBottom: theme.spacing(1),
+  [theme.breakpoints.down("sm")]: {
+    display: "grid",
+    gridTemplateColumns: `50px 86px 60px auto`,
+    gridRowGap: 6
+  }
 }));
 export const Title = styled(Box)(({ theme }) => ({
-  width: "200px",
+  width: "150px",
   textAlign: "left",
-  color: theme.palette.secondary.light
+  color: theme.palette.secondary.light,
+  [theme.breakpoints.down("sm")]: {
+    gridColumn: "1/3",
+    gridRow: "1/2",
+    width: "unset"
+  }
 }));
+
+export const JSONTitle = styled(Title)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    grid-column: 1/1;
+  }
+`;
+
 export const TitleValue = styled(Box)(({ theme }) => ({
-  width: "100%",
   textAlign: "left",
-  color: theme.palette.secondary.main
+  color: theme.palette.secondary.main,
+  [theme.breakpoints.down("sm")]: {
+    gridColumn: "3/3",
+    gridRow: "1/2"
+  }
 }));
 export const Value = styled(Box)(({ theme }) => ({
   wordBreak: "break-word",
-  width: "100%",
+  flex: 1,
   textAlign: "left",
   background: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   padding: `${theme.spacing(2)} 50px ${theme.spacing(2)} ${theme.spacing(1)}`,
   minHeight: 40,
   position: "relative",
   display: "flex",
-  alignItems: "center"
+  alignItems: "center",
+  boxSizing: "border-box"
 }));
 export const ValueText = styled(Box)(({ theme }) => ({
   maxHeight: "4em",
@@ -83,9 +108,11 @@ export const ValueText = styled(Box)(({ theme }) => ({
   paddingRight: theme.spacing(1)
 }));
 
-export const MetaDataValue = styled(ValueText)(({ theme }) => ({
-  color: theme.palette.secondary.main
-}));
+// export const MetaDataValue = styled(ValueText)(({ theme }) => ({
+//   color: theme.palette.secondary.main,
+//   flex: 1,
+//   width: "unset"
+// }));
 
 export const ViewAllImage = styled("img")`
   width: 16px;
@@ -102,7 +129,231 @@ export const StyledButton = styled(Box)`
   border-radius: 5px;
   position: absolute;
   right: ${({ theme }) => theme.spacing(2)};
-  top: ${({ theme }) => theme.spacing(2)};
+  top: 50%;
+  transform: translateY(-50%);
+  background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
+  &:hover {
+    background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};
+  }
+`;
+
+export const CIPHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  gap: 8,
+  justifyContent: "flex-end",
+  flex: 1,
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+    justifyContent: "flex-start"
+  }
+}));
+
+export const CIPChips = styled(Box)`
+  display: flex;
+  gap: 8px;
+`;
+
+export const CIPHeaderTitle = styled(Box)`
+  font-size: 14px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const JSONValue = styled(Value)`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    grid-column: 2 / spam;
+    width: unset;
+  }
+`;
+
+export const MetadataWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  boxSizing: "border-box",
+  padding: "0 25px",
+  margin: "25px 0px",
+  fontSize: "16px",
+  [theme.breakpoints.down(355)]: {
+    padding: `0 ${theme.spacing(1)}`
+  }
+}));
+
+export const MetadataHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  flexWrap: "wrap",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    gap: theme.spacing(1),
+    alignItems: "flex-start"
+  }
+}));
+
+export const MetadataContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: { flexDirection: "column" },
+  ":last-child": { marginBottom: 0 }
+}));
+
+export const MetadataTitle = styled(Box)`
+  width: 180px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
+export const MetadataJSONTitle = styled(MetadataTitle)`
+  ${({ theme }) => theme.breakpoints.down(430)} {
+    min-width: unset;
+    margin-right: 14px;
+  }
+`;
+
+export const MetaDataValue = styled(Box)`
+  box-sizing: border-box;
+  color: ${({ theme }) => theme.palette.secondary.main};
+`;
+
+export const MetaDataJSONValue = styled(MetaDataValue)<{ hasViewButton?: boolean }>(({ theme, hasViewButton }) => ({
+  flex: 1,
+  display: hasViewButton ? "inline-flex" : "inline-block",
+  justifyContent: "space-between",
+  overflowWrap: "anywhere",
+  padding: "16px",
+  boxSizing: "border-box",
+  backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  borderRadius: "6px",
+  position: "relative",
+  gap: hasViewButton ? "12px" : "0px"
+}));
+
+export const MetaDataJSONValueText = styled(MetaDataValue)`
+  position: relative;
+  max-height: 4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
+export const DecryptButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
+  color: theme.palette.secondary[0],
+  fontWeight: "bold",
+  fontSize: 14,
+  padding: theme.spacing(1, 2),
+  background: theme.palette.primary.main,
+  borderRadius: theme.spacing(1),
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[0]
+  }
+}));
+
+export const BadgeContainer = styled(Box)`
+  border-radius: 13px;
+  background-color: ${({ theme }) => theme.palette.warning[100]};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 26px;
+  border: 1px solid ${({ theme }) => theme.palette.warning[700]};
+  gap: 6px;
+  padding-right: 8px;
+  box-sizing: border-box;
+  min-width: 78px;
+  cursor: pointer;
+`;
+
+export const CIPLabel = styled(Typography)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" | "Warning" }>`
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 31px;
+  width: min-content;
+  gap: 6px;
+  padding-left: 3px;
+  padding-right: 8px;
+  font-size: 12px;
+  box-sizing: border-box;
+  user-select: none;
+  color: ${({ theme }) => theme.palette.secondary.light};
+  background-color: ${({ theme, type }) => {
+    switch (type) {
+      case "Verified":
+        return theme.palette.success[100];
+      case "Warning":
+        return theme.palette.warning[100];
+      default:
+        return theme.palette.error[100];
+    }
+  }};
+  border: 1px solid
+    ${({ theme, type }) => {
+      switch (type) {
+        case "Verified":
+          return theme.palette.success[800];
+        case "Warning":
+          return theme.palette.warning[700];
+        default:
+          return theme.palette.error[800];
+      }
+    }};
+`;
+
+export const ItemBolnisi = styled(Card)`
+  padding: ${({ theme }) => theme.spacing(2)};
+  position: relative;
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
+  box-shadow: 2px 2px 10px 0px #43465633;
+  &:hover {
+    box-shadow: ${({ theme }) =>
+      theme.isDark ? ` 2px 2px 10px 0px ${theme.palette.secondary[100]}` : theme.shadow.cardHover};
+  }
+`;
+
+export const ViewWineButton = styled(Button)(({ theme }) => ({
+  width: "100%",
+  textTransform: "capitalize",
+  fontWeight: "bold",
+  fontSize: 16,
+  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
+  background: theme.palette.primary.main,
+  ":hover": {
+    background: theme.palette.primary.dark
+  },
+  ":disabled": {
+    background: theme.palette.secondary[600],
+    color: theme.palette.secondary[100]
+  }
+}));
+
+export const ContentIdentifiers = styled(Box)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const ViewAllButton = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  cursor: pointer;
   background: ${(props) => alpha(props.theme.palette.primary.main, 0.1)};
   &:hover {
     background: ${(props) => alpha(props.theme.palette.primary.main, 0.3)};

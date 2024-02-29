@@ -26,7 +26,8 @@ const token: IToken = {
   numberOfHolders: 50,
   tokenType: "ERC20",
   tokenLastActivity: "2023-07-20T10:00:00Z",
-  metadataJson: JSON.stringify(tokenMetadata)
+  metadataJson: JSON.stringify(tokenMetadata),
+  policyIsNativeScript: false
 };
 
 jest.mock("src/commons/hooks/useFetch");
@@ -44,7 +45,6 @@ describe("TokenDetail page", () => {
     expect(screen.getByText(/number of holders/i)).toBeInTheDocument();
     expect(screen.getByText(/total volume/i)).toBeInTheDocument();
     expect(screen.getByText(/volume 24h/i)).toBeInTheDocument();
-    expect(screen.getByText(/created at/i)).toBeInTheDocument();
     expect(screen.getByText(/token last activity/i)).toBeInTheDocument();
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     ["1d", "1w", "1m", "3m"].forEach((item) => {

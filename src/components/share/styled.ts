@@ -45,7 +45,8 @@ export const StyledLabelInput = styled(FormLabel)`
 export const StyledDarkLoadingButton = styled(LoadingButton)`
   padding: 10px 20px;
   min-width: 150px;
-  background: ${(props) => props.theme.palette.primary.main};
+  background: ${(props) =>
+    props.theme.isDark ? props.theme.palette.primary.main : props.theme.palette.secondary.main};
   border: none;
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-text);
@@ -55,7 +56,8 @@ export const StyledDarkLoadingButton = styled(LoadingButton)`
   font-weight: var(--font-weight-bold);
   text-transform: unset;
   &:hover {
-    background: ${(props) => props.theme.palette.primary.main};
+    background: ${(props) =>
+      props.theme.isDark ? props.theme.palette.primary.main : props.theme.palette.secondary.main};
   }
   &:disabled {
     color: white;
@@ -78,6 +80,11 @@ export const TruncateSubTitleContainer = styled(Box)(({ theme }) => ({
     maxWidth: "40vw"
   },
   [theme.breakpoints.up("lg")]: {
-    minWidth: "50vw"
+    "@media (min-width: 1200px) and (max-width: 2400px)": {
+      minWidth: "50vw"
+    },
+    "@media (max-width: 1200px)": {
+      minWidth: "initial"
+    }
   }
 }));

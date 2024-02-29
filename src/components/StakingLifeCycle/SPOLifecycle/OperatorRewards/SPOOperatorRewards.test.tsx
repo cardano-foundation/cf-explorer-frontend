@@ -30,8 +30,8 @@ describe("OperatorRewards component", () => {
   });
   it("should component render", () => {
     render(<OperatorReward />);
-    expect(screen.getByText(/operator rewards/i)).toBeInTheDocument();
-    expect(screen.getByText(/spoinfo\.svg/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reward Account/i)).toBeInTheDocument();
+    expect(screen.getByTestId("spo-info")).toBeInTheDocument();
   });
 
   it("should component render with data", () => {

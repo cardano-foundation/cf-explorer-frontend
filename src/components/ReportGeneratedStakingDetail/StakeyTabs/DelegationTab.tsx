@@ -1,20 +1,21 @@
 import { useContext, useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { Box, IconButton, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
-import { FilterParams } from "src/components/commons/CustomFilter";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import { EyeIcon } from "src/commons/resources";
 import { DelegationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Delegation";
 import CustomIcon from "src/components/commons/CustomIcon";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
@@ -25,17 +26,13 @@ const DelegationTab = () => {
   const [selected, setSelected] = useState<string>("");
   const { stakeKey } = useContext(StakingDetailContext);
   const { reportId } = useParams<{ reportId: string }>();
-  const { search } = useLocation();
   const history = useHistory();
-  const [pageInfo, setPageInfo] = useState(() => getPageInfo(search));
-  const [sort, setSort] = useState<string>("");
-  const [params] = useState<FilterParams>({});
+  const { pageInfo, setSort } = usePageInfo();
+
   const fetchData = useFetchList<DelegationItem>(reportId ? API.REPORT.SREPORT_DETAIL_DELEGATIONS(reportId) : "", {
-    ...pageInfo,
-    ...params,
-    txHash: params.search,
-    sort: sort || params.sort
+    ...pageInfo
   });
+
   const { total } = fetchData;
   const columns: Column<DelegationItem>[] = [
     {
@@ -79,7 +76,7 @@ const DelegationTab = () => {
       minWidth: "120px",
       render: (r) => (
         <IconButton onClick={() => setSelected(r.txHash)}>
-          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} />
+          <CustomIcon icon={EyeIcon} stroke={theme.palette.secondary.light} width={20} data-testid="eye-icon" />
         </IconButton>
       )
     }
@@ -102,7 +99,7 @@ const DelegationTab = () => {
           ...pageInfo,
           page: pageInfo.page,
           total: fetchData.total,
-          onChange: (page, size) => setPageInfo((pre) => ({ ...pre, page: page - 1, size }))
+          onChange: (page, size) => history.replace({ search: stringify({ ...pageInfo, page, size }) })
         }}
         onClickRow={(e, r: DelegationItem) => history.push(details.transaction(r.txHash))}
       />

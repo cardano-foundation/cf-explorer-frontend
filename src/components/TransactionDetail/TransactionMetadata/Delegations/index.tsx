@@ -2,12 +2,13 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
 import { UpGreenUtxoDarkmode } from "src/commons/resources";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 
-import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper } from "./styles";
+import { AddressLink, Header, ItemContainer, StatusIcon, StyledItem, Wrapper, EllipsisContainer } from "./styles";
 
 interface DelegationProps {
   data: Transaction["delegations"] | null;
@@ -16,31 +17,52 @@ interface DelegationProps {
 const Delegations: React.FC<DelegationProps> = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const { isMobile } = useScreen();
   return (
     <Wrapper>
       <Header>{t("common.stakeAddress")}</Header>
       {data?.map((item) => (
-        <StyledItem key={item.address} overflow={"auto"}>
+        <StyledItem key={item.address}>
           <ItemContainer>
-            <Box display="flex" alignItems="center">
-              <Box width={50}>
+            <Box display="flex" alignItems="center" flex={1}>
+              <Box width={isMobile ? 42 : 50}>
                 <StatusIcon src={theme.isDark ? UpGreenUtxoDarkmode : sendImg} alt="wallet icon" />
               </Box>
               <Box width={"100%"}>
-                <Box maxWidth={"80vw"}>
-                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
-                    {t("glossary.from")}:
-                  </Box>
-                  <AddressLink to={details.stake(item.address)}>
-                    <DynamicEllipsisText value={item.address || ""} isCopy isTooltip />
+                <Box
+                  component={"span"}
+                  color={({ palette }) => palette.secondary.light}
+                  mr={1}
+                  display={"flex"}
+                  alignItems={"center"}
+                >
+                  {t("glossary.from")}:&nbsp;
+                  <AddressLink to={details.stake(item.address)} style={{ width: "100%" }}>
+                    <EllipsisContainer>
+                      <DynamicEllipsisText
+                        value={item.address || ""}
+                        isCopy
+                        isTooltip
+                        customTruncateFold={[5, 6]}
+                        postfix={5}
+                      />
+                    </EllipsisContainer>
                   </AddressLink>
                 </Box>
-                <Box maxWidth={"80vw"}>
-                  <Box component={"span"} color={({ palette }) => palette.secondary.light} mr={1}>
-                    {t("common.poolID")}:
+                <Box display={"flex"} alignItems={"center"}>
+                  <Box component={"span"} color={({ palette }) => palette.secondary.light} minWidth={"fit-content"}>
+                    {t("common.poolID")}:&nbsp;
                   </Box>
-                  <AddressLink to={details.delegation(item.poolId)}>
-                    <DynamicEllipsisText value={item.address || ""} isCopy isTooltip />
+                  <AddressLink to={details.delegation(item.poolId)} style={{ width: "100%" }}>
+                    <EllipsisContainer>
+                      <DynamicEllipsisText
+                        value={item.poolId || ""}
+                        isCopy
+                        isTooltip
+                        customTruncateFold={[5, 6]}
+                        postfix={5}
+                      />
+                    </EllipsisContainer>
                   </AddressLink>
                 </Box>
               </Box>

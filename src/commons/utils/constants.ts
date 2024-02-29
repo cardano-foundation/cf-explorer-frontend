@@ -11,7 +11,8 @@ export const STORAGE_KEYS = {
 export enum NETWORKS {
   mainnet = "mainnet",
   preprod = "preprod",
-  preview = "preview"
+  preview = "preview",
+  sanchonet = "sanchonet"
 }
 
 export const SUPPORTED_WALLETS: Wallet[] = [
@@ -67,18 +68,21 @@ export const NETWORK_NAMES = JSON.parse(
 export enum NETWORK_TYPES {
   mainnet = "MAIN_NET",
   preprod = "PRE_PROD",
-  preview = "PREVIEW"
+  preview = "PREVIEW",
+  sanchonet = "SANCHONET"
 }
 export const FRONT_END_NETWORK = {
   mainnet: process.env.REACT_APP_MAINNET_APP_URL || get(window, "env.REACT_APP_MAINNET_APP_URL"),
   preprod: process.env.REACT_APP_PREPROD_APP_URL || get(window, "env.REACT_APP_PREPROD_APP_URL"),
-  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL")
+  preview: process.env.REACT_APP_PREVIEW_APP_URL || get(window, "env.REACT_APP_PREVIEW_APP_URL"),
+  sanchonet: process.env.REACT_APP_SANCHONET_APP_URL || get(window, "env.REACT_APP_SANCHONET_APP_URL")
 };
 
 export const NETWORK: NETWORKS =
   (process.env.REACT_APP_NETWORK as NETWORKS) || get(window, "env.REACT_APP_NETWORK") || NETWORKS.mainnet;
 
-export const MAX_SLOT_EPOCH = NETWORK?.toLowerCase() === NETWORKS.preview ? 86400 : 432000;
+export const MAX_SLOT_EPOCH =
+  NETWORK?.toLowerCase() === NETWORKS.preview || NETWORK?.toLowerCase() === NETWORKS.sanchonet ? 86400 : 432000;
 
 export enum TRANSACTION_STATUS {
   FAILED = "FAILED",
@@ -96,6 +100,18 @@ export enum STAKE_KEY_STATUS {
   DEACTIVATED = "DEACTIVATED"
 }
 
+export enum POOL_STATUS {
+  ACTIVE = "ACTIVE",
+  RETIRED = "RETIRED",
+  RETIRING = "RETIRING"
+}
+
+export enum POOL_ACTION_TYPE {
+  POOL_REGISTRATION = "POOL_REGISTRATION",
+  POOL_UPDATE = "POOL_UPDATE",
+  POOL_DE_REGISTRATION = "POOL_DEREGISTRATION"
+}
+
 export enum RECEIVED_REWARDS {
   LEADER = "LEADER",
   MEMBER = "MEMBER",
@@ -103,12 +119,15 @@ export enum RECEIVED_REWARDS {
 }
 
 export const AUTH_API_URL = process.env.REACT_APP_AUTH_API_URL || get(window, "env.REACT_APP_AUTH_API_URL");
+export const ADA_HANDLE_API = process.env.REACT_APP_ADA_HANDLE_API || get(window, "env.REACT_APP_ADA_HANDLE_API");
 export const API_URL = process.env.REACT_APP_API_URL || get(window, "env.REACT_APP_API_URL");
+export const API_ADA_HANDLE_API = process.env.REACT_APP_ADA_HANDLE_API || get(window, "env.REACT_APP_ADA_HANDLE_API");
 export const WS_URL = process.env.REACT_APP_WS_URL || get(window, "env.REACT_APP_WS_URL");
 export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(window, "env.REACT_APP_CARDANO_NEWS_URL");
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
+export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",
@@ -155,7 +174,8 @@ export enum ACCOUNT_ERROR {
   SCRIPT_NOT_FOUND = "404-SCRIPT_NOT_FOUND",
   FETCH_REWARD_ERROR = "500-FETCH_REWARD_ERROR",
   TIME_RANGE_ILLEGAL = "400-TIME_RANGE_ILLEGAL",
-  REPORT_LIMIT_REACHED = "400-REPORT_LIMIT_REACHED"
+  REPORT_LIMIT_REACHED = "400-REPORT_LIMIT_REACHED",
+  SERVER_UNKNOWN_ERROR = "common.severUnknownErrorMsg"
 }
 
 export const PROTOCOL_TYPE = {
@@ -232,3 +252,22 @@ export enum OPTIONS_CHART_ANALYTICS {
 }
 
 export const ROLE_ELEVATED_GEN_REPORT = -1;
+
+export enum SCRIPT_TYPE {
+  MULTISIG = "MULTISIG",
+  TIMELOCK = "TIMELOCK",
+  PLUTUSV1 = "PLUTUSV1",
+  PLUTUSV2 = "PLUTUSV2"
+}
+
+export const ScriptTypeLabel = {
+  [SCRIPT_TYPE.MULTISIG]: "Multisig",
+  [SCRIPT_TYPE.TIMELOCK]: "Timelock",
+  [SCRIPT_TYPE.PLUTUSV1]: "Plutus v1",
+  [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
+};
+
+export const CIP20_DOCS_URL = "https://cips.cardano.org/cip/CIP-0020";
+export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
+export const CIP60_DOCS_URL = "https://cips.cardano.org/cip/CIP-0060";
+export const CIP83_DOCS_URL = "https://cips.cardano.org/cip/CIP-0083";

@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import { WalletIconRewardGreen, WalletIconRewardGreenDark } from "src/commons/re
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { RECEIVED_REWARDS, REWARD_TYPES, REWARD_TYPES_LABEL } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import ADAicon from "../commons/ADAIcon";
 import StyledModal from "../commons/StyledModal";
@@ -25,12 +25,16 @@ import {
   RewardBalanceTitle,
   TableContainer
 } from "./styles";
+import DelegatorDetailContext from "../StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
+import CustomTooltip from "../commons/CustomTooltip";
 
 interface ReceivedReward {
   amount: string;
   epoch: number;
   time: string;
   type: string;
+  poolView: string;
+  poolHash: string;
 }
 
 export interface ReceivedRewardsModalProps {
@@ -42,6 +46,7 @@ export interface ReceivedRewardsModalProps {
 
 const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = false, onClose, reward = 0, type }) => {
   const { t } = useTranslation();
+  const contextData = useContext(DelegatorDetailContext);
   const [params, setParams] = useState({ page: 0, size: 50 });
   const { stakeId = "" } = useParams<{ stakeId: string }>();
   const [sort, setSort] = useState<string>("");
@@ -79,10 +84,21 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     },
     {
-      key: "time",
+      key: "poolId",
+      title: t("common.poolId"),
+      render(data) {
+        return (
+          <CustomTooltip title={data.poolView}>
+            <EpochRow to={details.delegation(data.poolView)}>{getShortHash(data.poolView)}</EpochRow>
+          </CustomTooltip>
+        );
+      }
+    },
+    {
+      key: "id",
       title: t("common.Date"),
-      sort: ({ sortValue }) => {
-        sortValue ? setSort(`id,${sortValue}`) : setSort("");
+      sort: ({ sortValue, columnKey }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
         return <Box>{formatDateTimeLocal(data.time)}</Box>;
@@ -96,35 +112,46 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
       }
     }
   ];
-
+  const getTotal = () => {
+    if (type === RECEIVED_REWARDS.LEADER) {
+      return contextData?.totalOperatorRewards || 0;
+    } else if (type === RECEIVED_REWARDS.MEMBER) {
+      return contextData?.totalDelegatorRewards || 0;
+    }
+    return reward;
+  };
   return (
     <StyledModal
       open={open}
       handleCloseModal={() => {
         onClose?.();
+        setParams({ page: 0, size: 50 });
       }}
       width={600}
     >
       <ModalContainer>
         <ModalTitle>
           {type === RECEIVED_REWARDS.LEADER
-            ? t("glossary.operatorReward")
+            ? t("common.TotalOperatorRewardsReceived")
             : type === RECEIVED_REWARDS.MEMBER
-            ? t("slc.delegator.reward")
+            ? t("common.TotalDelegatorRewardsReceived")
             : t("glossary.receivedRewared")}
         </ModalTitle>
         <ModalContent>
-          {type == RECEIVED_REWARDS.ALL ? (
-            <RewardBalanceHeader>
-              <RewardBalance>
-                {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
-                <RewardBalanceTitle>
-                  {t("glossary.rewardBalance")}: {formatADAFull(reward)}
-                </RewardBalanceTitle>
-                <ADAicon />
-              </RewardBalance>
-            </RewardBalanceHeader>
-          ) : null}
+          <RewardBalanceHeader>
+            <RewardBalance>
+              {theme.isDark ? <WalletIconRewardGreenDark /> : <WalletIconRewardGreen />}
+              <RewardBalanceTitle>
+                <Box display={"inline-block"}>
+                  {type === RECEIVED_REWARDS.ALL ? t("slc.totalRewardsReceived") : t("slc.amountReceived")}:{" "}
+                  <Box display={"inline-block"} mr={1}>
+                    {formatADAFull(getTotal())}
+                  </Box>
+                  <ADAicon />
+                </Box>
+              </RewardBalanceTitle>
+            </RewardBalance>
+          </RewardBalanceHeader>
           <TableContainer>
             <Table
               {...fetchData}

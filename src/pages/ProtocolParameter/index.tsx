@@ -20,9 +20,11 @@ import { ImArrowDown2, ImArrowUp2 } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useList, useUpdateEffect } from "react-use";
+import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { DateRangeIcon, FilterIcon, InfoIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons/resources";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
@@ -54,6 +56,7 @@ import {
   StyledDropdownItem,
   TextDescription
 } from "./styles";
+import TxsProtocolModal from "./TxsProtocolModal";
 
 interface IProtocolParamVertical {
   name: string;
@@ -134,7 +137,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -196,7 +199,7 @@ const ProtocolParameter: React.FC = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -333,8 +336,12 @@ export const ProtocolParameterHistory = () => {
   const theme = useTheme();
   const [initing, setIniting] = useState(true);
   const [filterParams, setFilterParams] = useState<string[]>([]);
+  const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+
+  const { currentEpoch } = useSelector(({ system }: RootState) => system);
+  const currentEpochNo = currentEpoch?.no || 0;
   const historyUrlBase = PROTOCOL_PARAMETER.HISTORY;
   let historyUrlParams = "";
   if (filterParams.length === 0 || filterParams.length === TOTAL_PARAMETER) {
@@ -353,6 +360,7 @@ export const ProtocolParameterHistory = () => {
 
   const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
   const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
+  const [isShowUpcomingEpoch, setIsShowUpcomingEpoch] = useState<boolean>(false);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
     [key: string]: string;
@@ -366,9 +374,13 @@ export const ProtocolParameterHistory = () => {
   const [resetFilter, setResetFilter] = useState<boolean>(false);
   const [sortTimeFilter, setSortTimeFilter] = useState<"FirstLast" | "LastFirst" | "">("");
   const [totalEpoch, setTotalEpoch] = useState<number>(0);
+
   const getTitleColumn = (data: ProtocolHistory | null) => {
     data &&
-      (data.epochChanges || [])?.map(({ endEpoch, startEpoch }) => {
+      (data.epochChanges || [])?.map(({ endEpoch, startEpoch }, index) => {
+        if (index === 0 && isShowUpcomingEpoch) {
+          return pushColumnTitle(`${t("glossary.upcomingEpoch")} ${startEpoch}`);
+        }
         return endEpoch === startEpoch
           ? pushColumnTitle(`${t("glossary.epoch")} ${startEpoch}`)
           : pushColumnTitle(`${t("glossary.epoch")} ${endEpoch} - ${startEpoch}`);
@@ -406,15 +418,18 @@ export const ProtocolParameterHistory = () => {
                   : 0
                 : 0
             }
+            onClick={() => {
+              setSelectTxs(r[t as ProtocolTypeKey]?.transactionHashs || null);
+            }}
             component={["UPDATED", "ADDED"].includes(r[t as ProtocolTypeKey]?.status as string) ? Link : Box}
             to={
-              r[t as ProtocolTypeKey]?.transactionHash
-                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHash, "protocols")
+              r[t as ProtocolTypeKey]?.transactionHashs && r[t as ProtocolTypeKey]?.transactionHashs.length === 1
+                ? details.transaction(r[t as ProtocolTypeKey]?.transactionHashs[0], "protocols")
                 : "#"
             }
           >
-            {r[t as ProtocolTypeKey]?.status === "ADDED" ||
-            (r[t as ProtocolTypeKey]?.status === "UPDATED" && !r[t as ProtocolTypeKey]?.transactionHash) ? (
+            {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
+            !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
                 <Box>
                   {r[t as ProtocolTypeKey]
@@ -463,7 +478,7 @@ export const ProtocolParameterHistory = () => {
                   })
                 }
               >
-                <InfoIcon style={{ cursor: "pointer" }} />
+                <InfoSolidIcon />
               </Box>
             )}
           </Box>
@@ -490,6 +505,21 @@ export const ProtocolParameterHistory = () => {
       setColumnsTable([...columnsFull]);
     }
   }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
+
+  useEffect(() => {
+    if (dataHistory && dataHistory?.epochChanges?.length > 0) {
+      setIsShowUpcomingEpoch(currentEpochNo < dataHistory?.epochChanges[0].endEpoch);
+    }
+  }, [dataHistory, currentEpochNo, dataHistory?.epochChanges?.length]);
+
+  useEffect(() => {
+    if (dataHistory) {
+      clear();
+      clearColumnTitle();
+      getTitleColumn(dataHistory);
+      getDataColumn(dataHistory);
+    }
+  }, [isShowUpcomingEpoch]);
 
   useUpdateEffect(() => {
     setDataTable([...dataHistoryMapping].slice(1));
@@ -550,7 +580,9 @@ export const ProtocolParameterHistory = () => {
                 </Box>
               }
             >
-              <InfoIcon style={{ cursor: "pointer" }} />
+              <span>
+                <InfoSolidIcon />
+              </span>
             </CustomTooltip>
           </Box>
         }
@@ -634,7 +666,13 @@ export const ProtocolParameterHistory = () => {
           <></>
         )}
         {columnsTable?.length > 1 && initialized && (
-          <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+          <TableStyled
+            minHeight={"unset"}
+            maxHeight={"unset"}
+            columns={columnsTable}
+            data={dataTable}
+            loading={loading}
+          />
         )}
       </Card>
       <ExplainerTextModal
@@ -642,6 +680,7 @@ export const ProtocolParameterHistory = () => {
         handleCloseModal={() => setExplainerText(null)}
         explainerText={explainerText || { content: "", title: "" }}
       />
+      <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>
   );
 };
@@ -721,7 +760,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.latestFirst")}
                 </Box>
               </Box>
-              {sort === "LastFirst" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {sort === "LastFirst" && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
           <ButtonFilter onClick={() => setSort("FirstLast")}>
@@ -732,19 +771,24 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.firstLatest")}
                 </Box>
               </Box>
-              {sort === "FirstLast" && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {sort === "FirstLast" && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
           <ButtonFilter onClick={() => setShowDaterange(true)}>
             <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={DateRangeIcon} fill={theme.palette.secondary.main} height={18} />
+                <CustomIcon
+                  data-testid="date-range"
+                  icon={DateRangeIcon}
+                  fill={theme.palette.secondary.main}
+                  height={18}
+                />
                 <Box ml={1} color={({ palette }) => palette.secondary.main}>
                   {" "}
                   {t("filter.daterange")}
                 </Box>
               </Box>
-              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={16} color={theme.palette.secondary.main} />}
+              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
             </Box>
           </ButtonFilter>
 

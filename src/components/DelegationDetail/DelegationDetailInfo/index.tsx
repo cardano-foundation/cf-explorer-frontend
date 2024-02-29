@@ -15,7 +15,7 @@ import {
   UserIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatPercent, truncateCustom } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import BookmarkButton from "src/components/commons/BookmarkIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -34,6 +34,7 @@ import {
   FlexGap10,
   HeaderContainer,
   HeaderDetailContainer,
+  HeaderStatus,
   HeaderTitle,
   HeaderTitleSkeleton,
   InfoTitle,
@@ -51,6 +52,7 @@ import {
   StyledTitle,
   TimeDuration
 } from "./styles";
+import ToStakeLifCycleButton from "../../StakingLifeCycle/ToStakeLifeCycleButton";
 
 export interface IDelegationDetailInfo {
   data: DelegationOverview | null;
@@ -62,12 +64,11 @@ export interface IDelegationDetailInfo {
 const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, poolId, lastUpdated }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { width } = useScreen();
+  const { width, isGalaxyFoldSmall } = useScreen();
   const history = useHistory();
   const [isErrorImage, setIsErrorImage] = useState(false);
   const [isOpenReward, setOpenReward] = useState<boolean>(false);
   const [isOpenOwner, setOpenOwner] = useState<boolean>(false);
-  const { isGalaxyFoldSmall } = useScreen();
 
   if (loading) {
     return (
@@ -93,6 +94,28 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
   const isPoolName = !!data?.poolName;
 
+  interface HeaderBookmarkProps {
+    justifyStyle: string;
+  }
+
+  const HeaderBookmark: React.FC<HeaderBookmarkProps> = ({ justifyStyle }) => {
+    return (
+      <Box display="flex" alignItems="center" justifyContent={justifyStyle} flex="1">
+        <Box display="flex" alignItems="center" width={"100%"}>
+          <Box marginLeft={isPoolName ? 0 : 3}>
+            <BookmarkButton keyword={poolId} type="POOL" />
+          </Box>
+          <Box marginLeft={width < 400 ? 0 : 1}>
+            <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
+          </Box>
+          <Box marginLeft={"auto"}>
+            <ToStakeLifCycleButton address={poolId} from={"poolDetail"} />
+          </Box>
+        </Box>
+      </Box>
+    );
+  };
+
   return (
     <HeaderDetailContainer>
       <BackButton onClick={history.goBack}>
@@ -100,38 +123,42 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
         <BackText>{t("common.back")}</BackText>
       </BackButton>
       <HeaderContainer>
-        <Box display={"flex"} alignItems={"center"}>
+        <Box display={"flex"} alignItems={"center"} width={"inherit"}>
+          {data?.logoUrl && !isErrorImage && (
+            <Box
+              bgcolor={theme.palette.common.white}
+              border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
+              borderRadius={1}
+              justifySelf="end"
+              marginRight="10px"
+              component="img"
+              src={data?.logoUrl || ""}
+              width="64px"
+              onError={(e) => {
+                if (e.type === "error") setIsErrorImage(true);
+              }}
+            />
+          )}
           <CustomTooltip title={data?.poolName || poolId}>
             <HeaderTitle>
-              {isPoolName ? (
+              {data?.poolName ? (
                 data?.poolName
-              ) : width < 400 ? (
-                truncateCustom(poolId, 4, 4)
               ) : (
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={poolId} sxFirstPart={{ maxWidth: "calc(100% - 160px)" }} />
+                  <DynamicEllipsisText
+                    value={data?.poolName || poolId}
+                    sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
+                    postfix={5}
+                    isNoLimitPixel={true}
+                  />
                 </TruncateSubTitleContainer>
               )}
             </HeaderTitle>
           </CustomTooltip>
-          <Box marginLeft={isPoolName ? 0 : 3}>
-            <BookmarkButton keyword={poolId} type="POOL" />
-          </Box>
+          {width > 600 && <HeaderBookmark justifyStyle={"space-between"} />}
         </Box>
-        {data?.logoUrl && !isErrorImage && (
-          <Box
-            bgcolor={theme.palette.common.white}
-            border={`1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`}
-            borderRadius={1}
-            component={"img"}
-            src={data?.logoUrl || ""}
-            width={"64px"}
-            onError={(e) => {
-              if (e.type === "error") setIsErrorImage(true);
-            }}
-          />
-        )}
       </HeaderContainer>
+      {width < 600 && <HeaderBookmark justifyStyle={"flex-end"} />}
       <PoolId>
         <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
         <Link to={details.delegation(data?.poolView)}>
@@ -200,7 +227,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       style={{ fontFamily: "var(--font-family-text)" }}
                       color={(theme) => `${theme.palette.primary.main} !important`}
                     >
-                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip />
+                      <DynamicEllipsisText value={data?.rewardAccounts[0] || ""} isCopy isTooltip whiteSpace="normal" />
                     </Box>
                   </>
                 ) : (
@@ -241,7 +268,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                       to={details.stake(data?.ownerAccounts[0] || "")}
                       style={{ fontFamily: "var(--font-family-text)" }}
                     >
-                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip />
+                      <DynamicEllipsisText value={data?.ownerAccounts[0] || ""} isCopy isTooltip whiteSpace="normal" />
                     </Box>
                   ) : (
                     ""
@@ -275,14 +302,23 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={DropIconComponent} />
+            <CustomIcon
+              fill={theme.palette.secondary.light}
+              height={24}
+              icon={DropIconComponent}
+              style={{ marginTop: "5px" }}
+            />
             <InfoTitle>
               <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
             <InfoValue sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
-                {formatADAFull(data?.poolSize)}
-                <ADAicon />
+                {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.N/A")}
+                {data?.poolSize != null ? (
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
+                ) : null}
               </FlexGap10>
             </InfoValue>
           </Item>
@@ -292,10 +328,16 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
             <InfoValue>
-              <FlexGap10>
-                {formatADAFull(data?.stakeLimit)}
-                <ADAicon />
-              </FlexGap10>
+              {data?.stakeLimit != null ? (
+                <FlexGap10>
+                  {formatADAFull(data?.stakeLimit)}
+                  <Box width={16}>
+                    <ADAicon />
+                  </Box>
+                </FlexGap10>
+              ) : (
+                <FlexGap10>{t("common.N/A")}</FlexGap10>
+              )}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
@@ -316,18 +358,22 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 display="flex"
                 flexDirection={isGalaxyFoldSmall ? "column" : "row"}
                 justifyContent="space-between"
-                alignItems={isGalaxyFoldSmall ? "flex-start" : "flex-end"}
-                marginTop="9px"
+                alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
+                marginTop="17px"
+                gap={"4px"}
               >
                 <Box
                   component={"span"}
-                  mt={1}
                   color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
                 >
                   {t("saturation")}
                 </Box>
-                <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                {data?.saturation != null ? (
+                  <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                ) : (
+                  <FlexGap10> {t("common.N/A")}</FlexGap10>
+                )}
               </Box>
             </InfoValue>
           </Item>

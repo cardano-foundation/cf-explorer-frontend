@@ -4,11 +4,17 @@ import { Box, styled, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
-import { DeredistrationIcon, OperatorRewardIcon, PoolUpdateIcon, RegistrationIcon } from "src/commons/resources";
+import {
+  DeredistrationIcon,
+  OperatorRewardIcon,
+  PoolUpdateIcon,
+  RegistrationIcon,
+  WalletOutlineIconComponent
+} from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { ReactComponent as WalletIcon } from "src/commons/resources/icons/WalletOutline.svg";
 import { IPoolReportList } from "src/types/report";
+import { details } from "src/commons/routers";
 
 import StakeTab from "../TabularView/StakeTab";
 import DeregsitrationTab from "./PoolTabs/DeregsitrationTab";
@@ -35,7 +41,7 @@ export const ReportGeneratedPoolDetailContext = createContext({ reportName: "", 
 const ReportGeneratedPoolDetailTabs = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { reportId } = useParams<{ reportId: string }>();
+  const { reportId, tabActive } = useParams<{ reportId: string; tabActive: string }>();
   const history = useHistory();
   const reportDetail = useFetch<IPoolReportList>(API.REPORT.POOL_REPORTED_DETAIL(reportId));
   const poolTabs: ITab[] = [
@@ -79,7 +85,7 @@ const ReportGeneratedPoolDetailTabs = () => {
     const tabs = [
       ...poolTabs,
       {
-        icon: WalletIcon,
+        icon: WalletOutlineIconComponent,
         label: t("common.poolSize"),
         key: "poolSize",
         mappingKey: "poolSize",
@@ -91,7 +97,9 @@ const ReportGeneratedPoolDetailTabs = () => {
     return tabs.filter((tab) => events.includes(tab.mappingKey));
   }, [events]);
 
-  const initTab = useMemo(() => (displayedTabs.length ? displayedTabs[0].key : undefined), [displayedTabs]);
+  const onChangeTab = (tab: string) => {
+    history.replace(details.generated_pool_detail(reportId, tab));
+  };
 
   if ((reportDetail.initialized && !reportDetail.data) || reportDetail.error) {
     return <NoRecord />;
@@ -125,7 +133,7 @@ const ReportGeneratedPoolDetailTabs = () => {
                 {`${reportDetail.data?.reportHistory.reportName}`.replaceAll("-", " ")}{" "}
               </Headline>
             </CustomTooltip>
-            <StakeTab tabs={displayedTabs} initTab={initTab} />
+            <StakeTab tabs={displayedTabs} tabActive={tabActive} onChangeTab={onChangeTab} />
           </>
         )}
       </ReportGeneratedPoolDetailContext.Provider>

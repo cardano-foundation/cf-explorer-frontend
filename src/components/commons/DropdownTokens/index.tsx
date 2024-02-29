@@ -36,6 +36,9 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
   const history = useHistory();
   const isSend = tokens[0].assetQuantity < 0;
   const theme = useTheme();
+  const hasLongTokenName = tokens.some(
+    (token) => token.assetName?.length > 20 || (!token.assetName && token.assetId.length > 20)
+  );
   const handleClickItem = (link: string) => {
     history.push(link);
   };
@@ -107,18 +110,27 @@ const DropdownTokens: React.FC<IDropdownTokens> = ({
       {tokens.map((token, idx) => {
         const isNegative = token.assetQuantity <= 0;
         const tokenName = token.assetName || token.assetId;
-        const shortTokenName = getShortHash(tokenName);
-        const isTokenNameLong = tokenName.length > 20;
+        const shortTokenName = getShortHash(tokenName, tokenName.length > 20 ? 16 : 10);
         return (
-          <OptionSelect key={idx} onClick={() => handleClickItem(details.token(token?.assetId))}>
+          <OptionSelect
+            key={idx}
+            onClick={() => handleClickItem(details.token(token?.assetId))}
+            sx={
+              hasLongTokenName
+                ? {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    minHeight: "unset",
+                    height: "auto"
+                  }
+                : {}
+            }
+          >
             <Box color={({ palette }) => palette.secondary.main}>
-              {isTokenNameLong ? (
-                <CustomTooltip title={tokenName} placement="top">
-                  <Box>{shortTokenName}</Box>
-                </CustomTooltip>
-              ) : (
-                tokenName
-              )}
+              <CustomTooltip title={tokenName} placement="top">
+                <Box>{shortTokenName || tokenName}</Box>
+              </CustomTooltip>
             </Box>
             <Box
               fontWeight={"bold"}
@@ -142,8 +154,11 @@ export const TokenLink: React.FC<{
   isSuccess?: boolean;
   isSummary?: boolean;
   sx?: SxProps<Theme>;
+  sxBox?: SxProps<Theme>;
+  sxTokenName?: SxProps<Theme>;
   hideValue?: boolean;
-}> = ({ token, isSuccess, sx, hideValue, isSummary }) => {
+  truncateAddress?: { firstPart: number; lastPart: number };
+}> = ({ token, isSuccess, sx, hideValue, isSummary, sxBox = {}, sxTokenName = {}, truncateAddress }) => {
   const theme = useTheme();
 
   const renderTokenName = (token: Token) => {
@@ -151,16 +166,14 @@ export const TokenLink: React.FC<{
     let elm: React.ReactElement | string;
     if (tokenName) {
       if (tokenName.length > 20) {
-        elm = (
-          <CustomTooltip title={tokenName}>
-            <>{getShortHash(tokenName)}</>
-          </CustomTooltip>
-        );
+        if (truncateAddress) {
+          elm = getShortHash(tokenName, truncateAddress.firstPart, truncateAddress.lastPart);
+        } else elm = getShortHash(tokenName);
       } else {
         elm = tokenName;
       }
     } else {
-      elm = <DynamicEllipsisText value={token.assetId} isTooltip />;
+      elm = <DynamicEllipsisText value={token.assetId} />;
     }
     return elm;
   };
@@ -171,19 +184,23 @@ export const TokenLink: React.FC<{
         component={Link}
         to={details.token(token.assetId)}
         display={"flex"}
+        flexWrap={"wrap"}
         alignItems={"center"}
         justifyContent={"space-between"}
         pl={1}
         width={"100%"}
         height={38}
         flex={1}
+        sx={sxBox}
       >
         <Box
           mr={1}
           color={({ palette }) => palette.secondary.main}
-          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%" }}
+          sx={{ overflow: "hidden", textOverflow: "ellipsis", maxWidth: "90%", ...sxTokenName }}
         >
-          <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
+          <CustomTooltip title={token?.assetName || token?.assetId}>
+            <Box color={({ palette }) => palette.secondary.main}>{renderTokenName(token)}</Box>
+          </CustomTooltip>
         </Box>
         <Box display={"flex"} alignItems={"center"}>
           {!hideValue ? (

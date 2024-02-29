@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
 
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
+import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import Card from "src/components/commons/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import CardAddress from "src/components/share/CardAddress";
@@ -18,18 +19,24 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import { BackButton, BackText, RedirectButton, StyledBoxCard, TimeDuration, TitleText, WrapHeader } from "./styles";
 
 interface Props {
   data: WalletAddress | null;
   loading: boolean;
+  adaHanldeData?: {
+    stakeAddress: string;
+    paymentAddress: string;
+  } | null;
 }
-const AddressHeader: React.FC<Props> = ({ data, loading }) => {
+const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const adaRate = useSelector(({ system }: RootState) => system.adaRate);
+  const { address } = useParams<{ address: string }>();
 
   const {
     data: dataStake,
@@ -66,9 +73,16 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     {
       title: t("drawer.totalStake"),
       value: (
-        <Box>
-          {formatADAFull(dataStake?.totalStake)}&nbsp;
+        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+          {formatADAFull(dataStake?.totalStake)}
           <ADAicon />
+          {NETWORK === NETWORKS.sanchonet && (
+            <CustomTooltip placement="top-start" title={t("sanchonet.toltipTotalStake")}>
+              <Box display={"inline-block"}>
+                <InfoSolidIcon />
+              </Box>
+            </CustomTooltip>
+          )}
         </Box>
       )
     },
@@ -93,12 +107,15 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
     },
     {
       title: t("glossary.rewardBalance"),
-      value: (
-        <Box>
-          {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
-          <ADAicon />
-        </Box>
-      )
+      value:
+        dataStake?.rewardAvailable != null ? (
+          <Box>
+            {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
+            <ADAicon />
+          </Box>
+        ) : (
+          t("common.notAvailable")
+        )
     }
   ];
 
@@ -110,17 +127,48 @@ const AddressHeader: React.FC<Props> = ({ data, loading }) => {
           <BackText>{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
-          <Box component={"h2"} lineHeight={1} mt={2} display={"flex"} alignItems={"center"}>
-            <TitleText>{t("address.title.addressDetail")}</TitleText>
-            <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+          <Box
+            textAlign={"left"}
+            component={"h2"}
+            lineHeight={1}
+            mt={2}
+            display={"flex"}
+            alignItems={"center"}
+            flexWrap={"wrap"}
+          >
+            <TitleText>
+              {adaHanldeData ? (
+                <Box sx={{ wordBreak: "break-all" }} textTransform={"lowercase"}>
+                  <CustomTooltip title={t("address.title.ADAHanlde")}>
+                    <Box display={"inline-block"}>{address.startsWith("$") ? address : `$${address}`} </Box>
+                  </CustomTooltip>
+                  <Box display={"inline-block"}>
+                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+                  </Box>
+                </Box>
+              ) : (
+                <Box data-testid="address-detail-title">
+                  {t("address.title.addressDetail")}
+                  <Box display={"inline-block"}>
+                    <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
+                  </Box>
+                </Box>
+              )}
+            </TitleText>
           </Box>
-          {data?.isContract && (
+          {(data?.associatedSmartContract || data?.associatedNativeScript) && (
             <RedirectButton
               width={isMobile ? "100%" : "auto"}
               component={Button}
-              onClick={() => history.push(details.contract(data?.address))}
+              onClick={() =>
+                history.push(
+                  data.associatedSmartContract
+                    ? details.smartContract(data?.scriptHash || "")
+                    : details.nativeScriptDetail(data?.scriptHash || "")
+                )
+              }
             >
-              {t("address.viewContractDetail")}
+              {data.associatedSmartContract ? t("address.viewContractDetail") : t("address.viewNativeScriptDetail")}
             </RedirectButton>
           )}
         </Box>

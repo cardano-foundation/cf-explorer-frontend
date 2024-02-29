@@ -37,14 +37,15 @@ describe("DeregsitrationTab component", () => {
 
   it("should component render", () => {
     render(<DeregsitrationTab />);
+    screen.logTestingPlaygroundURL();
     expect(screen.getByRole("link", { name: mockData.txHash })).toBeInTheDocument();
-    expect(screen.getByRole("cell", { name: mockData.time, hidden: true }));
-    expect(screen.getByRole("button", { name: /eye\.svg/i, hidden: true })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: /transaction hash/i }));
+    expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
   });
 
   it("should DeregistrationCertificateModal open", () => {
     render(<DeregsitrationTab />);
-    fireEvent.click(screen.getByRole("button", { name: /eye\.svg/i }));
+    fireEvent.click(screen.getByTestId("eye-icon"));
     expect(screen.getByText(/deregistration certificate/i)).toBeInTheDocument();
     expect(screen.getByText(/retirement in epoch/i)).toBeInTheDocument();
   });
@@ -74,7 +75,7 @@ describe("PoolRegistrationTab component", () => {
 
   it("should RegistrationCertificateModal open", () => {
     render(<PoolRegistrationTab />);
-    fireEvent.click(screen.getByRole("button", { name: /eye\.svg/i }));
+    fireEvent.click(screen.getByTestId("eye-icon"));
     expect(screen.getByText(/pool registration certificate/i)).toBeInTheDocument();
     expect(screen.getByText(/transaction id/i)).toBeInTheDocument();
     expect(screen.getByText(/pool id/i)).toBeInTheDocument();
@@ -160,12 +161,12 @@ describe("ProtocolUpdateTab component", () => {
     render(<ProtocolUpdateTab />);
     expect(screen.getByRole("link", { name: mockData.txHash })).toBeInTheDocument();
     expect(screen.getByRole("cell", { name: formatDateTimeLocal(mockData.time) })).toBeInTheDocument();
-    expect(screen.getByRole("cell", { name: /eye\.svg/i })).toBeInTheDocument();
+    expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
   });
 
   it("should PoolUpdateModal open ", () => {
     render(<ProtocolUpdateTab />);
-    fireEvent.click(screen.getByText(/eye\.svg/i));
+    fireEvent.click(screen.getByTestId("eye-icon"));
     expect(screen.getByText(/transaction id/i)).toBeInTheDocument();
     expect(screen.getByText(/reward account/i)).toBeInTheDocument();
   });

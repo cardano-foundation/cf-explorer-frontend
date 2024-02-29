@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Switch, Typography, styled, Box } from "@mui/material";
 
 export const UnderlineText = styled(Typography)`
   text-decoration-line: underline;
@@ -7,30 +7,8 @@ export const UnderlineText = styled(Typography)`
   cursor: pointer;
 `;
 
-export const ExplanDropdownHeader = styled(Box)`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
-  width: 100%;
-`;
-
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;
-`;
-
-export const ExplanDropdownContainer = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  box-sizing: border-box;
-  width: 100%;
-  gap: 20px;
-`;
-
-export const ExplanDropdownContent = styled(Box)`
-  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const DataCardBox = styled(Box)`
@@ -49,6 +27,11 @@ export const DataTitle = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
+export const SwitchLabel = styled(Typography)`
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
+  font-weight: 400;
+`;
+
 export const DataValue = styled(Typography)`
   font-weight: 400;
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
@@ -57,6 +40,7 @@ export const DataValue = styled(Typography)`
   line-break: anywhere;
   max-height: 40vh;
   overflow: auto;
+  padding-right: 10px;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -100,7 +84,7 @@ export const CLCardContaienr = styled(Box)`
     width: 100%;
     display: flex;
     gap: 4px;
-    align-items: center;
+    align-items: flex-start;
   }
 `;
 
@@ -116,10 +100,132 @@ export const CLButton = styled("button")`
   border-radius: 8px;
   cursor: pointer;
   font-family: "Roboto", monospace;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
 `;
 
 export const WrapLabel = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   color: theme.palette.secondary.light,
   textAlign: "left"
+}));
+
+export const DataReferenceValue = styled(Typography)`
+  font-weight: 400;
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
+  font-feature-settings: "clig" off, "liga" off;
+  line-height: normal;
+  line-break: anywhere;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  &:hover {
+    border-radius: 8px 0px 0px 8px;
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.palette.secondary.light};
+    }
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.palette.primary[100]};
+    }
+  }
+`;
+
+export const StyledAccordion = styled(Accordion)`
+  background: transparent;
+  box-shadow: none;
+
+  &.muiaccordion-root:last-of-type: {
+    box-shadow: none;
+  }
+`;
+
+export const StyledAccordionSummary = styled(AccordionSummary)`
+  padding-left: 0;
+  padding-right: 0;
+  min-height: unset;
+
+  & > div:first-child {
+    margin: 0;
+  }
+`;
+
+export const StyledAccordionDetails = styled(AccordionDetails)`
+  padding-left: 0;
+  padding-right: 0;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
+
+export const SwitchContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "space-between",
+    width: "100%"
+  }
+}));
+
+export const DataCardHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginBottom: "4px",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    alignItems: "flex-start"
+  }
+}));
+
+export const ViewSwitcher = styled(Switch)(({ theme }) => ({
+  width: theme.spacing(7),
+  height: theme.spacing(4),
+  boxSizing: "border-box",
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: 4,
+    transitionDuration: "300ms",
+    color: theme.palette.secondary[600],
+    "&.Mui-checked": {
+      transform: `translateX(${theme.spacing(3)})`,
+      color: theme.isDark ? theme.palette.secondary["main"] : theme.palette.primary[100],
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.primary["main"],
+        opacity: 1,
+        border: 0
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5
+      }
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color: theme.isDark ? theme.palette.grey[600] : theme.palette.grey[500]
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.isDark ? 0.3 : 0.7
+    }
+  },
+  "& .MuiSwitch-thumb": {
+    width: 24,
+    height: 24
+  },
+  "& .MuiSwitch-track": {
+    backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500
+    }),
+    borderRadius: theme.spacing(2),
+    border: `1px solid ${theme.palette.grey["A100"]}`,
+    boxSizing: "border-box"
+  }
 }));

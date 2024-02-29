@@ -3,11 +3,11 @@ import React from "react";
 
 import SolidInfoIcon from "src/commons/resources/images/solid-info.png";
 
-const InfoSolidIcon: React.FC<{ onClick: () => void; width?: string; height?: string }> = ({
-  width = "24px",
-  height = "24px",
-  ...rest
-}) => {
+const InfoSolidIcon: React.FC<{
+  onClick?: (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => void;
+  width?: string;
+  height?: string;
+}> = ({ width = "24px", height = "24px", ...rest }) => {
   return <Image src={SolidInfoIcon} alt="solld info" {...rest} width={width} height={height} />;
 };
 

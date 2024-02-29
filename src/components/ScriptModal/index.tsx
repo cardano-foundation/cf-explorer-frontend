@@ -1,12 +1,14 @@
 import { Box, useTheme } from "@mui/material";
 import { JsonViewer } from "@textea/json-viewer";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import CopyButton from "src/components/commons/CopyButton";
 import StyledModal from "src/components/commons/StyledModal";
+import useDisableJsonKey from "src/commons/hooks/useDisableJsonKey";
 
 import { CommonSkeleton } from "../commons/CustomSkeleton";
 import { ButtonLink, ViewJson } from "./styles";
@@ -16,10 +18,21 @@ interface ScriptModalProps {
   onClose: () => void;
   policy: string;
 }
+
+type TScriptHashDetail = {
+  policyId: string;
+  nativeScript: boolean;
+  smartContract: boolean;
+  totalToken: number;
+  policyScript: string;
+};
 const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
   const { t } = useTranslation();
-  const { data, loading } = useFetch<PolicyDetail>(policy && `${API.POLICY}/${policy && policy}`);
+  const { data, loading } = useFetch<TScriptHashDetail>(API.TOKEN.POLICIES(policy ? policy : ""));
   const theme = useTheme();
+  useEffect(() => trigger(), [props.open]);
+  const { keyRenderer, trigger } = useDisableJsonKey(data);
+
   return (
     <StyledModal open={props.open} handleCloseModal={props.onClose} contentStyle={{ overflowY: "hidden" }}>
       <Box data-testid="modal-testid" height={"100%"}>
@@ -30,7 +43,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           fontWeight="bold"
           fontFamily={'"Roboto", sans-serif '}
         >
-          {t("common.policyID")}
+          {t("common.scriptHash")}
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={2} mt={2}>
           {loading ? (
@@ -48,7 +61,15 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
           ) : (
             <>
               <Box>
-                <ButtonLink to={details.policyDetail(data?.policyId || "")}>{data?.policyId || ""}</ButtonLink>
+                <ButtonLink
+                  to={
+                    data?.nativeScript
+                      ? details.nativeScriptDetail(data?.policyId)
+                      : details.smartContract(data?.policyId)
+                  }
+                >
+                  {data?.policyId || ""}
+                </ButtonLink>
                 <CopyButton text={data?.policyId || ""} />
               </Box>
               <Box>
@@ -80,6 +101,7 @@ const ScriptModal: React.FC<ScriptModalProps> = ({ policy, ...props }) => {
                       collapseStringsAfterLength={false}
                       rootName={false}
                       theme={theme.isDark ? "dark" : "light"}
+                      keyRenderer={keyRenderer}
                     />
                   ) : (
                     <Box textAlign={"center"} py={2} color={({ palette }) => palette.secondary.light}>

@@ -83,7 +83,7 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
 
   const stepper: StepperProps[] = [
     {
-      icon: <RegistrationIcon width={"25px"} height={"25px"} />,
+      icon: <RegistrationIcon data-testid="registration" width={"25px"} height={"25px"} />,
       title: t("common.registration"),
       component: <Registration />,
       description: (
@@ -178,7 +178,13 @@ const SPOLifecycle = ({ currentStep, setCurrentStep, renderTabsSPO }: Props) => 
               id={`step-${idx}`}
               key={idx}
               component={renderTabsSPO[step.keyCheckShow] ? "span" : CustomTooltip}
-              title={renderTabsSPO[step.keyCheckShow] ? undefined : t("common.noRecordAtTime")}
+              title={
+                renderTabsSPO[step.keyCheckShow]
+                  ? undefined
+                  : renderTabsSPO[step.keyCheckShow] !== null
+                  ? t("common.noRecordAtTime")
+                  : t("common.N/A")
+              }
               onClick={() => handleChangeTab(step, idx)}
               sx={{
                 borderColor: colorProps.background

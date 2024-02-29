@@ -19,10 +19,6 @@ export interface ContractSideView {
 const ContractSideView: React.FC<ContractSideView> = ({ data, txHash, handleClose }) => {
   const { t } = useTranslation();
 
-  const linkToPage = () => {
-    if (txHash) return details.transaction(txHash);
-    return data?.address ? details.contract(data.address) : details.policyDetail(data?.scriptHash);
-  };
   return (
     <ContractSideViewContainer>
       <ContractSideViewHeader>
@@ -37,10 +33,8 @@ const ContractSideView: React.FC<ContractSideView> = ({ data, txHash, handleClos
           ) : null}
         </ContractHeader>
         <TxHash>
-          <Link to={linkToPage()}>
-            <ContractAddress data-testid={`contract-hash-${txHash || data?.address || data?.scriptHash}`}>
-              {txHash || data?.address || data?.scriptHash}
-            </ContractAddress>
+          <Link to={details.smartContract(data?.scriptHash || "")}>
+            <ContractAddress data-testid={`contract-hash-${data?.scriptHash}`}>{data?.scriptHash}</ContractAddress>
           </Link>
         </TxHash>
       </ContractSideViewHeader>
