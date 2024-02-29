@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
-import BigNumber from "bignumber.js";
-import moment from "moment";
-import { useSelector } from "react-redux";
+import { useMemo } from "react";
 import { Link as LinkDom } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import moment from "moment";
+import BigNumber from "bignumber.js";
+import { Box } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -23,7 +23,7 @@ import {
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { API_GECKO, EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -31,11 +31,12 @@ import {
   getDurationUnits,
   numberWithCommas
 } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
-import ADAicon from "src/components/commons/ADAIcon";
-import FormNowMessage from "src/components/commons/FormNowMessage";
+import useFetchInterval from "src/commons/hooks/useFetchInterval";
 
 import {
   AdaPrice,
@@ -73,26 +74,45 @@ const MILION = 10 ** 6;
 
 const MAX_PERCENT_SHOW_LAST_BAR = 89;
 const MIN_PERCENT_SHOW_FIRST_BAR = 9;
-
 const HomeStatistic = () => {
   const { t } = useTranslation();
-  const { currentEpoch, usdMarket, btcMarket, blockNo } = useSelector(({ system }: RootState) => system);
-
+  const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
-  const { total_supply: total = 1 } = usdMarket || {};
   const { liveStake = 0, activeStake = 1 } = data || {};
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
-  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
-  const progress = moment(currentEpoch?.endTime).isAfter(moment())
+  const progress = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
   const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
+
+  const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchInterval<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=btc`,
+    `${API.MARKETS}?currency=btc`
+  );
+  const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchInterval<dataFromCoinGecko>(
+    `${API_GECKO}?ids=cardano&vs_currency=usd`,
+    `${API.MARKETS}?currency=usd`
+  );
+
+  const btcMarket = useMemo(() => {
+    if (btcData?.length === 0) return null;
+    return btcData?.[0] || null;
+  }, [btcData]);
+
+  const usdMarket = useMemo(() => {
+    if (usdData?.length === 0) return null;
+    return usdData?.[0] || null;
+  }, [usdData]);
+
+  const { total_supply: total = 1 } = usdMarket || {};
+
+  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
@@ -105,35 +125,6 @@ const HomeStatistic = () => {
 
   const { isGalaxyFoldSmall } = useScreen();
   const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
-
-  const marketcap = useRef<{ last_updated: string; market_cap: number }>({
-    last_updated: "",
-    market_cap: 0
-  });
-  const priceBTC = useRef<number>(0);
-  const [usdLatestUpdated, setUsdLastUpdated] = useState<string>("");
-
-  useEffect(() => {
-    setUsdLastUpdated(usdMarket?.last_updated || "");
-  }, [usdMarket?.last_updated]);
-
-  useEffect(() => {
-    if (Number(usdMarket?.market_cap) !== Number(marketcap.current.market_cap)) {
-      marketcap.current = {
-        market_cap: usdMarket?.market_cap || 0,
-        last_updated: usdMarket?.last_updated || ""
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usdMarket?.market_cap]);
-
-  useEffect(() => {
-    if (Number(btcMarket?.current_price) !== priceBTC.current) {
-      priceBTC.current = Number(btcMarket?.current_price);
-      setUsdLastUpdated(btcMarket?.last_updated || "");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [btcMarket?.current_price, marketcap.current]);
 
   return (
     <StatisticContainer
@@ -178,7 +169,7 @@ const HomeStatistic = () => {
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={usdLatestUpdated} />
+                    <FormNowMessage time={lastUpdatedUsd} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -204,7 +195,7 @@ const HomeStatistic = () => {
                 <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={marketcap.current.last_updated} />
+                    <FormNowMessage time={lastUpdatedBtcData} />
                   </TimeDuration>
                 </Content>
               </WrapCardContent>
@@ -235,7 +226,7 @@ const HomeStatistic = () => {
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
-                      {moment(currentEpoch?.endTime).isAfter(moment())
+                      {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
                         ? numberWithCommas(currentEpoch?.slot)
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}

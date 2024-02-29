@@ -1,10 +1,12 @@
 import { ClickAwayListener, Tooltip, TooltipProps, useTheme } from "@mui/material";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
 interface Props extends TooltipProps {
   wOpacity?: boolean;
+  closeTooltip?: boolean;
+  setIsCloseTooltip?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CustomTooltip = (props: Props) => {
@@ -14,6 +16,18 @@ export const CustomTooltip = (props: Props) => {
   const theme = useTheme();
   const { isMobile } = useScreen();
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onCloseWhenChangeTab = () => {
+      setOpenTooltip(false);
+    };
+
+    document.addEventListener("visibilitychange", onCloseWhenChangeTab);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onCloseWhenChangeTab);
+    };
+  }, []);
 
   const handleOpenTooltip = () => {
     setOpenTooltip(true);
