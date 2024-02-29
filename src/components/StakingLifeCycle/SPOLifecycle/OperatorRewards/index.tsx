@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, getShortHash, getShortHashXs } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import CustomModal from "src/components/commons/CustomModal";
@@ -39,6 +39,7 @@ const OperatorReward = () => {
   const { data } = useFetch<PoolInfo>(API.SPO_LIFECYCLE.SPO_POOL_INFO(poolId));
   const SPOHolderRef = useRef(null);
   const cardanoBlockchainRef = useRef(null);
+  const { isGalaxyFoldSmall } = useScreen();
 
   const paths = useMemo((): LineArrowItem[] => {
     return [
@@ -62,7 +63,7 @@ const OperatorReward = () => {
           <HoldBoxTitle>{t("common.rewardAccount")}</HoldBoxTitle>
           <SPOHolderBox
             data={{
-              poolName: getShortHash(data?.poolName),
+              poolName: isGalaxyFoldSmall ? getShortHashXs(data?.poolName) : getShortHash(data?.poolName),
               poolView: data?.poolView,
               stakeKeys: data?.rewardAccounts
             }}

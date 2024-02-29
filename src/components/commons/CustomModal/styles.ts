@@ -50,7 +50,7 @@ export const WrapTitle = styled(Box)(({ theme }) => ({
   position: "relative",
   zIndex: 2,
   [theme.breakpoints.down("sm")]: {
-    maxWidth: " 100% - 40px)",
+    maxWidth: "calc(100% - 40px)",
     fontSize: 20,
     lineHeight: "23px"
   }
