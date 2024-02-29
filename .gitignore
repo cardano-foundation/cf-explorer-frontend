@@ -21,7 +21,7 @@ allure-results
 .env
 .env.local
 .env.development.local
-.env.test.localH
+.env.test.local
 .env.production.local
 env.global.js
 
