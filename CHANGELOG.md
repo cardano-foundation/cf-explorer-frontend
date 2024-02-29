@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.8.0...v0.9.0) (2024-02-29)
+
+
+### Bug Fixes
+
+* ADAE-1800 hide tooltip when change tab ([cc25aa4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cc25aa41d65c99c25d178082cf9213c893be1706))
+* add env coingecko ([1bcb8f1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1bcb8f1ba382e8306a801b1da6f7b891307b0468))
+* add tag for tooltip ([b18c30b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b18c30b1697a9b87a2668f103a71a92acb4795a9))
+* change position tooltip and change width box token ([d1d7013](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d1d70137b2b444d4d13345510850da9fc21ab8a4))
+* conflict 0.9.0 ([94c5d31](https://github.com/cardano-foundation/cf-explorer-frontend/commit/94c5d31c2c11ef3e0b62113da5d175b34e702d2a))
+* fix tooltip close ([d18fd0f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d18fd0f5d32ca9f0b54c924408871b27408c76c4))
+* hide tooltip ([8b91f88](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8b91f88087fff88f42eb8f5fcc26bd75928a0f10))
+* hide tooltip when change tab ([28a7bd8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/28a7bd8b616dcae68a271a84305d0501482a2def))
+* list output scroll bar ([35cc844](https://github.com/cardano-foundation/cf-explorer-frontend/commit/35cc844756d6bbe25149dcd1f27a70eec6a7d1f2))
+* merge conflicts ([28f4f33](https://github.com/cardano-foundation/cf-explorer-frontend/commit/28f4f3323fbf2d9a0d5c8542c21da5da56919147))
+* MET-1918 fix fetch data ([8d8017b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8d8017bfa014e3d5dc635f6364c1ec0f703d44c3))
+* MET-1918 fix fetch data ([b96d9e0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b96d9e02bf5a72ed62f1c6de86b5636526af99ba))
+* MET-1918 fix fetch data ([12c5bc0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/12c5bc0de9b9439791524bfc676bb14262f94633))
+* MET-1955 fix show epoch incorrect ([0675eac](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0675eac5fd32e81b80d66cb02137ad4945ddff66))
+* MET-1982 remove tooptip in native script ([fae2b5e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fae2b5e362d0f863abbb0a77be31ff8af7f8ada2))
+* MET-1983 protocol explainer text cut off ([2abb2a9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2abb2a9c3741994d3aa154d9c3d512da02f8b6ef))
+* MET-1992 update position notice ([c89b5a1](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c89b5a1e6e86b9fa765b7ba87ec2f29f2b3a95f6))
+* miss value search when sort ([c2d853b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c2d853b767396f0c42fe3db53dda57e23fa17218))
+* resolve comment in PR [#3014](https://github.com/cardano-foundation/cf-explorer-frontend/issues/3014) ([fe82549](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fe82549578b6e66c1978531f991236acc62de2c9))
+* show cip25 ([9c70d4a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9c70d4a7af7bed3d60a85d74af86b6819dd453ab))
+* show wrong time format ([bbbfa91](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bbbfa91aa992a01ba50223c3e3faa69acdf8f1d3))
+* sort wrong when click icon search ([1a0568c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1a0568c09c2183aae57f9bcf73fc805e2f33bd60))
+* update show cip 60 ([c19f501](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c19f501e1dd9e978a29ba0288fcc25286e081eef))
+* update ui token box ([cc6ce4d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cc6ce4d9d916378d7957ffc1f3170175ac24dc17))
+
 ## 0.8.0 (2024-02-16)
 
 
