@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
 
@@ -103,82 +102,78 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
-              <CustomTooltip key={index} title={tooltipTitle} placement="right">
-                {href ? (
-                  <ListItem
-                    button
-                    onClick={() => setActive(null)}
-                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                    {...(isExternalLink(href)
-                      ? { component: "a", href, target: "_blank" }
-                      : { component: Link, to: href })}
-                    selected={isActiveMenu(href)}
-                    sx={(theme) => ({
-                      ...itemStyle(theme, sidebar),
-                      ...(isActiveMenu(href)
+              {href ? (
+                <ListItem
+                  button
+                  onClick={() => setActive(null)}
+                  data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                  {...(isExternalLink(href)
+                    ? { component: "a", href, target: "_blank" }
+                    : { component: Link, to: href })}
+                  selected={isActiveMenu(href)}
+                  sx={(theme) => ({
+                    ...itemStyle(theme, sidebar),
+                    ...(isActiveMenu(href)
+                      ? {
+                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                          color: (theme) => theme.palette.secondary[0]
+                        }
+                      : { color: (theme) => theme.palette.secondary.light }),
+                    fontWeight: "bold !important",
+                    ":hover": isActiveMenu(href)
+                      ? {
+                          backgroundColor: `${theme.palette.primary.dark}  !important`
+                        }
+                      : { backgroundColor: `${theme.palette.primary[200]} !important` }
+                  })}
+                >
+                  {icon ? <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} /> : null}
+                  <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                  onClick={() => children?.length && handleOpen(`menu-${index}`)}
+                  sx={(theme) => ({
+                    ...itemStyle(theme, sidebar),
+                    ...(`menu-${index}` === currentActive
+                      ? {
+                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                          color: (theme) => theme.palette.secondary[0]
+                        }
+                      : { color: (theme) => theme.palette.secondary.light }),
+                    fontWeight: "bold !important",
+                    ":hover":
+                      `menu-${index}` === currentActive
                         ? {
-                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                            color: (theme) => theme.palette.secondary[0]
-                          }
-                        : { color: (theme) => theme.palette.secondary.light }),
-                      fontWeight: "bold !important",
-                      ":hover": isActiveMenu(href)
-                        ? {
-                            backgroundColor: `${theme.palette.primary.dark}  !important`
+                            backgroundColor: `${theme.palette.primary.dark} !important`
                           }
                         : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                    })}
-                  >
-                    {icon ? (
-                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
-                    ) : null}
-                    <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
-                  </ListItem>
-                ) : (
-                  <ListItem
-                    button
-                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                    onClick={() => children?.length && handleOpen(`menu-${index}`)}
-                    sx={(theme) => ({
-                      ...itemStyle(theme, sidebar),
-                      ...(`menu-${index}` === currentActive
-                        ? {
-                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                            color: (theme) => theme.palette.secondary[0]
-                          }
-                        : { color: (theme) => theme.palette.secondary.light }),
-                      fontWeight: "bold !important",
-                      ":hover":
-                        `menu-${index}` === currentActive
-                          ? {
-                              backgroundColor: `${theme.palette.primary.dark} !important`
-                            }
-                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                    })}
-                  >
-                    {icon ? (
-                      <MenuIcon
-                        src={icon}
-                        alt={title}
-                        iconOnly={+!sidebar}
-                        active={+(`menu-${index}` === currentActive)}
-                      />
-                    ) : null}
-                    <MenuText
-                      primary={title}
-                      open={+sidebar}
+                  })}
+                >
+                  {icon ? (
+                    <MenuIcon
+                      src={icon}
+                      alt={title}
+                      iconOnly={+!sidebar}
                       active={+(`menu-${index}` === currentActive)}
-                      disable={+!!tooltipTitle}
                     />
+                  ) : null}
+                  <MenuText
+                    primary={title}
+                    open={+sidebar}
+                    active={+(`menu-${index}` === currentActive)}
+                    disable={+!!tooltipTitle}
+                  />
 
-                    {sidebar && children?.length ? (
-                      <IconMenu component={"span"}>
-                        {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
-                      </IconMenu>
-                    ) : null}
-                  </ListItem>
-                )}
-              </CustomTooltip>
+                  {sidebar && children?.length ? (
+                    <IconMenu component={"span"}>
+                      {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                    </IconMenu>
+                  ) : null}
+                </ListItem>
+              )}
               {children?.length ? (
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
@@ -235,73 +230,68 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
         })}
         <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
-          const { href, key, children, icon, tooltip } = item;
+          const { href, key, children, icon } = item;
           const title = t(key || "");
-          const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
           return (
             <React.Fragment key={index}>
-              <CustomTooltip key={index} title={tooltipTitle} placement="right">
-                {href ? (
-                  <ListItem
-                    button
-                    {...(isExternalLink(href)
-                      ? { component: "a", href, target: "_blank" }
-                      : { component: Link, to: href })}
-                    selected={isActiveMenu(href)}
-                    sx={(theme) => ({
-                      ...itemStyle(theme, sidebar),
-                      ...(isActiveMenu(href)
-                        ? {
-                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                            color: (theme) => `${theme.palette.secondary[0]} !important`
-                          }
-                        : { color: (theme) => theme.palette.secondary.light }),
-                      ":hover": isActiveMenu(href)
+              {href ? (
+                <ListItem
+                  button
+                  {...(isExternalLink(href)
+                    ? { component: "a", href, target: "_blank" }
+                    : { component: Link, to: href })}
+                  selected={isActiveMenu(href)}
+                  sx={(theme) => ({
+                    ...itemStyle(theme, sidebar),
+                    ...(isActiveMenu(href)
+                      ? {
+                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                          color: (theme) => `${theme.palette.secondary[0]} !important`
+                        }
+                      : { color: (theme) => theme.palette.secondary.light }),
+                    ":hover": isActiveMenu(href)
+                      ? {
+                          backgroundColor: `${theme.palette.primary.dark} !important`
+                        }
+                      : { backgroundColor: `${theme.palette.primary[200]} !important` }
+                  })}
+                >
+                  {icon ? <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} /> : null}
+                  <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  onClick={() => handleOpen(`footer-${index}`)}
+                  sx={(theme) => ({
+                    ...itemStyle(theme, sidebar),
+                    ...(`footer-${index}` === active
+                      ? {
+                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                          color: (theme) => theme.palette.secondary[0]
+                        }
+                      : { color: (theme) => theme.palette.secondary.light }),
+                    fontWeight: "bold !important",
+                    ":hover":
+                      `footer-${index}` === active
                         ? {
                             backgroundColor: `${theme.palette.primary.dark} !important`
                           }
                         : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                    })}
-                  >
-                    {icon ? (
-                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
-                    ) : null}
-                    <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
-                  </ListItem>
-                ) : (
-                  <ListItem
-                    button
-                    onClick={() => handleOpen(`footer-${index}`)}
-                    sx={(theme) => ({
-                      ...itemStyle(theme, sidebar),
-                      ...(`footer-${index}` === active
-                        ? {
-                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                            color: (theme) => theme.palette.secondary[0]
-                          }
-                        : { color: (theme) => theme.palette.secondary.light }),
-                      fontWeight: "bold !important",
-                      ":hover":
-                        `footer-${index}` === active
-                          ? {
-                              backgroundColor: `${theme.palette.primary.dark} !important`
-                            }
-                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                    })}
-                  >
-                    {icon ? (
-                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+(`footer-${index}` === active)} />
-                    ) : null}
-                    <MenuText primary={title} open={+sidebar} active={+(`footer-${index}` === active)} />
-                    {sidebar &&
-                      (children?.length ? (
-                        <IconMenu component={"span"}>
-                          {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
-                        </IconMenu>
-                      ) : null)}
-                  </ListItem>
-                )}
-              </CustomTooltip>
+                  })}
+                >
+                  {icon ? (
+                    <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+(`footer-${index}` === active)} />
+                  ) : null}
+                  <MenuText primary={title} open={+sidebar} active={+(`footer-${index}` === active)} />
+                  {sidebar &&
+                    (children?.length ? (
+                      <IconMenu component={"span"}>
+                        {`footer-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                      </IconMenu>
+                    ) : null)}
+                </ListItem>
+              )}
               {children?.length ? (
                 <Collapse in={`footer-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
