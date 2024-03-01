@@ -45,6 +45,7 @@ const DelegationLists: React.FC = () => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
+    setValue("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
