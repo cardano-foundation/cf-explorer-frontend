@@ -47,4 +47,10 @@ export const LimitCell = styled(Box)`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  ${({ theme }) => theme.breakpoints.between("xs", "sm")} {
+    max-width: 120px;
+  }
+  ${({ theme }) => theme.breakpoints.between("sm", "md")} {
+    max-width: 220px;
+  }
 `;
