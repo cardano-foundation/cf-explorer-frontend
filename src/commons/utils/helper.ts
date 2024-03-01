@@ -31,6 +31,10 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
 
+export const getShortValue = (address = "", length = 50) => {
+  return address.slice(0, length);
+};
+
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {

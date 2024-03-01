@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Column } from "src/components/commons/Table";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { getShortValue } from "src/commons/utils/helper";
 
 import { LimitCell, TableProtocol, UpdatedValue, Wrapper } from "./styles";
 
@@ -39,7 +40,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               onClick={() => r.protocol === "costModel" && setCostModelScript(r.oldValue?.toString() || "")}
               color={({ palette }) => (r.protocol === "costModel" ? palette.primary.main : "unset")}
             >
-              <LimitCell> {r.oldValue}</LimitCell>
+              <LimitCell>{getShortValue(r.oldValue?.toString())}</LimitCell>
             </UpdatedValue>
           </CustomTooltip>
         );
@@ -59,7 +60,7 @@ const ProtocolUpdate: React.FC<IProps> = ({ data }) => {
               onClick={() => r.protocol === "costModel" && setCostModelScript(r.value?.toString() || "")}
               color={({ palette }) => (r.protocol === "costModel" ? palette.primary.main : "unset")}
             >
-              <LimitCell>{r.value}</LimitCell>
+              <LimitCell>{getShortValue(r.value?.toString())}</LimitCell>
             </UpdatedValue>
           </CustomTooltip>
         );
