@@ -42,9 +42,16 @@ export const Wrapper = styled(Box)(({ theme }) => ({
 
 export const LimitCell = styled(Box)`
   display: inline-block;
-  width: 100%;
-  max-width: 320px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  ${({ theme }) => theme.breakpoints.between("xs", "sm")} {
+    max-width: 120px;
+  }
+  ${({ theme }) => theme.breakpoints.between("sm", "md")} {
+    max-width: 220px;
+  }
 `;
