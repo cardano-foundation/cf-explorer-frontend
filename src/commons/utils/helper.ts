@@ -30,6 +30,9 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   if (address?.length <= 18) return address;
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
+export const getShortValue = (address = "", length = 50) => {
+  return address.slice(0, length);
+};
 
 export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
