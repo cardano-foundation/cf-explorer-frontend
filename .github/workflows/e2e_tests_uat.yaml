@@ -1,4 +1,4 @@
-name: Run E2E Tests on Integration Environment
+name: Run E2E Tests on UAT Environment
 on:
   push:
     branches:
@@ -43,7 +43,7 @@ jobs:
         run: npm run build
 
       - name: 👻 Add empty env.global.js file
-        run: touch build/static/js/env.global.js
+        run: touch build/assets/env.global.js
 
       - name: 🎳 Run tests
         uses: cypress-io/github-action@v6
