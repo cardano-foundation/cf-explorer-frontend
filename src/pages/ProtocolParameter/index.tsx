@@ -233,7 +233,7 @@ const ProtocolParameter: React.FC = () => {
               textOverflow={"ellipsis"}
               color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
-              {getShortValue(r.value)}
+              {getShortValue(r.value?.toString())}
             </Box>
           </Box>
         );
