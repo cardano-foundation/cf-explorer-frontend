@@ -28,7 +28,7 @@ import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortValue } from "src/commons/utils/helper";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
@@ -233,7 +233,7 @@ const ProtocolParameter: React.FC = () => {
               textOverflow={"ellipsis"}
               color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
-              {r.value}
+              {getShortValue(r.value)}
             </Box>
           </Box>
         );
