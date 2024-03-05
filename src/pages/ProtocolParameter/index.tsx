@@ -499,9 +499,19 @@ export const ProtocolParameterHistory = () => {
     }
   }, [JSON.stringify(dataHistory)]);
 
+  const newCostModel = dataHistory?.costModel.map((item): TProtocolItem => {
+    return {
+      ...item,
+      value: getShortValue(item.value?.toString() || "")
+    };
+  }) as TProtocolItem[];
+
   useUpdateEffect(() => {
-    if (columnTitle) {
-      getDataColumn(dataHistory);
+    if (columnTitle && dataHistory) {
+      getDataColumn({
+        ...dataHistory,
+        costModel: newCostModel
+      });
       setColumnsTable([...columnsFull]);
     }
   }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
