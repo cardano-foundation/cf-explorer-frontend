@@ -18,8 +18,5 @@ jobs:
         with:
           node-version: 16
 
-      - name: 🧘‍♀️ Download dependencies
-        run: npm ci
-
       - name: 🎳 Run tests
-        run: npm run test:jest:ci
+        run: npm run test
