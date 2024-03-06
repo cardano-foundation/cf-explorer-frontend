@@ -37,7 +37,12 @@ export const UpdatedValue = styled(Box)(() => ({
 export const Wrapper = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   borderRadius: theme.spacing(2),
-  overflow: "hidden"
+  overflow: "hidden",
+  "& .table-wrapper": {
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "8px"
+    }
+  }
 }));
 
 export const LimitCell = styled(Box)`

@@ -28,7 +28,7 @@ import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { PROTOCOL_TYPE } from "src/commons/utils/constants";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortValue } from "src/commons/utils/helper";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
@@ -100,7 +100,7 @@ const ProtocolParameter: React.FC = () => {
         >;
         return {
           name,
-          value: name === "costModel" ? JSON.stringify(valueObject) : convertedObj?.value,
+          value: name === "costModel" ? getShortValue(JSON.stringify(valueObject)) : convertedObj?.value,
           epochNo: convertedObj?.epochNo,
           time: convertedObj?.time
         };
@@ -171,7 +171,7 @@ const ProtocolParameter: React.FC = () => {
               textOverflow={"ellipsis"}
               color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
-              {r.value}
+              {getShortValue(r.value?.toString())}
             </Box>
           </Box>
         );
@@ -233,7 +233,7 @@ const ProtocolParameter: React.FC = () => {
               textOverflow={"ellipsis"}
               color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
-              {r.value}
+              {getShortValue(r.value?.toString())}
             </Box>
           </Box>
         );
@@ -499,9 +499,19 @@ export const ProtocolParameterHistory = () => {
     }
   }, [JSON.stringify(dataHistory)]);
 
+  const newCostModel = dataHistory?.costModel.map((item): TProtocolItem => {
+    return {
+      ...item,
+      value: getShortValue(item.value?.toString() || "")
+    };
+  }) as TProtocolItem[];
+
   useUpdateEffect(() => {
-    if (columnTitle) {
-      getDataColumn(dataHistory);
+    if (columnTitle && dataHistory) {
+      getDataColumn({
+        ...dataHistory,
+        costModel: newCostModel
+      });
       setColumnsTable([...columnsFull]);
     }
   }, [JSON.stringify(columnTitle), JSON.stringify(dataHistory)]);
