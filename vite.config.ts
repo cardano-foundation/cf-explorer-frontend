@@ -62,7 +62,8 @@ export default defineConfig(({ mode }) => {
       assetsInlineLimit: 0,
       rollupOptions: {
         plugins: [rollupNodePolyFill()] as any
-      }
+      },
+      outDir: "build"
     }
   };
 });
