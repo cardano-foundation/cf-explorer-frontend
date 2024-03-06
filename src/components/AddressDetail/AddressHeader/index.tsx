@@ -62,7 +62,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
       )
     },
     {
-      title: t("glossary.adaValue"),
+      title: t("glossary.usdValue"),
       value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
     },
     {
