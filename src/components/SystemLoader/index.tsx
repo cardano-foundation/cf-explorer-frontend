@@ -6,6 +6,7 @@ import useAuth from "src/commons/hooks/useAuth";
 import useFetch from "src/commons/hooks/useFetch";
 import { API, USER_API } from "src/commons/utils/api";
 import {
+  API_GECKO,
   BOLNISI_NAME_API,
   EVENT_TYPES,
   MAX_SLOT_EPOCH,
@@ -27,12 +28,29 @@ export const SystemLoader = () => {
   const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
   const { data: epochSummary } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
   const socket = useRef<WebSocket | null>(null);
+  const [, setBtcDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("btcData", null);
+  const [, setUsdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
 
   const { data: dataBookmark } = useFetch<string[]>(
     isLoggedIn ? `${USER_API.BOOKMARK}?network=${NETWORK_TYPES[NETWORK]}` : "",
     undefined,
     true
   );
+
+  const { data: btcData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
+  const { data: usdData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
+
+  useEffect(() => {
+    if (btcData && btcData?.length > 0) {
+      setBtcDataLocal(btcData?.[0] || null);
+    }
+  }, [btcData]);
+
+  useEffect(() => {
+    if (usdData && usdData?.length > 0) {
+      setUsdDataLocal(usdData?.[0]);
+    }
+  }, [usdData]);
 
   const fetchWineName = () => {
     if (BOLNISI_NAME_API) {
