@@ -499,7 +499,7 @@ export const ProtocolParameterHistory = () => {
     }
   }, [JSON.stringify(dataHistory)]);
 
-  const newCostModel = dataHistory?.costModel.map((item): TProtocolItem => {
+  const newCostModel = dataHistory?.costModel?.map((item): TProtocolItem => {
     return {
       ...item,
       value: getShortValue(item.value?.toString() || "")
@@ -510,7 +510,7 @@ export const ProtocolParameterHistory = () => {
     if (columnTitle && dataHistory) {
       getDataColumn({
         ...dataHistory,
-        costModel: newCostModel
+        costModel: newCostModel || []
       });
       setColumnsTable([...columnsFull]);
     }
