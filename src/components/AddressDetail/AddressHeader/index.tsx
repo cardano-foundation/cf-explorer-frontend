@@ -4,6 +4,7 @@ import { Grid, Box, useTheme, Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { useTranslation } from "react-i18next";
+import { useLocalStorage } from "react-use";
 
 import { exchangeADAToUSD, formatADAFull, getShortHash } from "src/commons/utils/helper";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
@@ -32,10 +33,11 @@ interface Props {
   } | null;
 }
 const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
+  const [usdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
   const { t } = useTranslation();
   const [stakeKey, setStakeKey] = useState("");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-  const adaRate = useSelector(({ system }: RootState) => system.adaRate);
+  const adaRate = usdDataLocal ? usdDataLocal.current_price : 0;
   const { address } = useParams<{ address: string }>();
 
   const {
