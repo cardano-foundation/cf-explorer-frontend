@@ -16,9 +16,7 @@ import {
 import {
   setBlockKey,
   setBlockNo,
-  setBtcMarket,
   setCurrentEpoch as setStoreCurrentEpoch,
-  setUsdMarket,
   setWineryName,
   setWineryNameLoading
 } from "src/stores/system";
@@ -112,12 +110,6 @@ export const SystemLoader = () => {
               setBlockNo(data.payload.blockNo);
               if (data.payload.hasTx) setBlockKey(data.payload.blockHash);
               setCurrentEpoch(data.payload.epochSummary);
-              break;
-            case EVENT_TYPES.CURRENT_PRICE_USD:
-              if (data.payload[0]) setUsdMarket({ ...data.payload[0], last_updated: new Date().toString() });
-              break;
-            case EVENT_TYPES.CURRENT_PRICE_BTC:
-              if (data.payload[0]) setBtcMarket({ ...data.payload[0], last_updated: new Date().toString() });
               break;
             default:
               break;

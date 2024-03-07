@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import moment from "moment";
 import BigNumber from "bignumber.js";
 import { Box } from "@mui/material";
+import { useLocalStorage } from "react-use";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -90,25 +91,37 @@ const HomeStatistic = () => {
   const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
+  const [btcDataLocal, setBtcDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("btcData", null);
+  const [usdDataLocal, setUsdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
 
-  const { data: btcData, lastUpdated: lastUpdatedBtcData } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=btc`
-  );
-  const { data: usdData, lastUpdated: lastUpdatedUsd } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(
-    `${API_GECKO}?ids=cardano&vs_currency=usd`
-  );
+  const {
+    data: btcData,
+    lastUpdated: lastUpdatedBtcData,
+    loading: loadingBtcData
+  } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
+  const {
+    data: usdData,
+    lastUpdated: lastUpdatedUsd,
+    loading: loadingUsdData
+  } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
 
   const btcMarket = useMemo(() => {
     if (btcData?.length === 0) return null;
+    if (btcData && btcData?.length > 0) {
+      setBtcDataLocal(btcData?.[0] || null);
+    }
     return btcData?.[0] || null;
   }, [btcData]);
 
   const usdMarket = useMemo(() => {
     if (usdData?.length === 0) return null;
+    if (usdData && usdData?.length > 0) {
+      setUsdDataLocal(usdData?.[0]);
+    }
     return usdData?.[0] || null;
   }, [usdData]);
 
-  const { total_supply: total = 1 } = usdMarket || {};
+  const { total_supply: total = 1 } = usdMarket || usdDataLocal || {};
 
   const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
@@ -122,7 +135,7 @@ const HomeStatistic = () => {
   const epochFinishText = `Finishes in ${humanized}`;
 
   const { isGalaxyFoldSmall } = useScreen();
-  const sign = Math.sign(BigNumber(usdMarket?.price_change_percentage_24h || 0).toNumber());
+  const sign = Math.sign(BigNumber((usdMarket || usdDataLocal)?.price_change_percentage_24h || 0).toNumber());
 
   return (
     <StatisticContainer
@@ -133,7 +146,7 @@ const HomeStatistic = () => {
       data-testid="home-statistic"
     >
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket && btcMarket ? (
+        {(usdMarket || usdDataLocal) && (btcMarket || btcDataLocal) && !loadingBtcData && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
@@ -154,16 +167,16 @@ const HomeStatistic = () => {
                     height={30}
                   />
                   <Box ml={1}>
-                    <Title data-testid="ada-current-price">${usdMarket.current_price}</Title>
+                    <Title data-testid="ada-current-price">${(usdMarket || usdDataLocal)?.current_price || 0}</Title>
                   </Box>
                 </Box>
                 <Content gap="5px 15px">
                   <RateWithIcon
                     data-testid="ada-twenty-four-hr-price-change"
-                    value={usdMarket.price_change_percentage_24h}
+                    value={(usdMarket || usdDataLocal)?.price_change_percentage_24h || 0}
                     showIcon={false}
                   />
-                  <AdaPrice data-testid="ada-price-in-btc">{btcMarket.current_price} BTC</AdaPrice>
+                  <AdaPrice data-testid="ada-price-in-btc">{(btcMarket || btcDataLocal)?.current_price} BTC</AdaPrice>
                 </Content>
                 <Content>
                   <TimeDuration data-testid="last-update-ada-price">
@@ -178,7 +191,7 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {usdMarket ? (
+        {(usdMarket || usdDataLocal) && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
             <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
               <WrapCardContent>
@@ -190,7 +203,9 @@ const HomeStatistic = () => {
                   />
                   <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
                 </Box>
-                <Title data-testid="market-cap-value">${numberWithCommas(usdMarket.market_cap)}</Title>
+                <Title data-testid="market-cap-value">
+                  ${numberWithCommas((usdMarket || usdDataLocal)?.market_cap)}
+                </Title>
                 <Content>
                   <TimeDuration data-testid="last-update-market-cap">
                     <FormNowMessage time={lastUpdatedBtcData} />
@@ -263,7 +278,7 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {data && usdMarket ? (
+        {data && (usdMarket || usdDataLocal) ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
             <Item data-testid="live-stake-box" themeMode={themeMode}>
               <VerticalContent>
