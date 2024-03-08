@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.9.0...v0.9.0) (2024-03-04)
+
+
+### Bug Fixes
+
+* build folder was renamed due to vitejs default folder dist ([7aaf9a8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7aaf9a81f748ac10afc5a6e37d1997040019a229))
+* change of path and delete some files ([bbd8872](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bbd887290eda2b4e59533a340c84cd131df5bcda))
+
 ## [0.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.8.0...v0.9.0) (2024-02-29)
 
 
