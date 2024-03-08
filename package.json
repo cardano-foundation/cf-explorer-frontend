@@ -1,6 +1,6 @@
 {
   "name": "explorer",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet": "^0.2.5",
