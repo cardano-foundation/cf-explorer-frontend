@@ -30,7 +30,7 @@ const mockProps: IDropdownTokens = {
 describe("DropdownTokens component", () => {
   it("should component render", () => {
     render(<DropdownTokens {...mockProps} />);
-    expect(screen.getByRole("button", { name: /view tokens/i })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: /view tokens/i })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { hidden: true })).toBeInTheDocument();
     expect((screen.getByRole("textbox", { hidden: true }) as HTMLInputElement).value).toBe("default");
   });

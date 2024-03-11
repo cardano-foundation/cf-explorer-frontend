@@ -58,7 +58,11 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       ),
       value: (
         <CustomTooltip sx={{ width: "unset" }} title={delegateTooltip}>
-          <StyledLinkTo isTo={!!data?.pool} to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}>
+          <StyledLinkTo
+            isto={!!data?.pool}
+            data-testid="stake-link-pool"
+            to={data?.pool?.poolId ? details.delegation(data?.pool?.poolId) : "#"}
+          >
             {!hasTicketOrPoolName ? <TitleNoPool>{delegateTo}</TitleNoPool> : <TitleValue>{delegateTo}</TitleValue>}
           </StyledLinkTo>
         </CustomTooltip>
