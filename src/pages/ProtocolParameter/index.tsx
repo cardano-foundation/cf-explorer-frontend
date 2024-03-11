@@ -100,7 +100,7 @@ const ProtocolParameter: React.FC = () => {
         >;
         return {
           name,
-          value: name === "costModel" ? getShortValue(JSON.stringify(valueObject)) : convertedObj?.value,
+          value: name === "costModel" ? JSON.stringify(valueObject) : convertedObj?.value,
           epochNo: convertedObj?.epochNo,
           time: convertedObj?.time
         };
