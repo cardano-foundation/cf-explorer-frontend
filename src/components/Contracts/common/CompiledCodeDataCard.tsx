@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { decodeFlatUplcToObject } from "@cardano-foundation/cf-flat-decoder-ts";
 
+import { parseNestedParenthesesToObject } from "src/commons/utils/helper";
 import { UPLCProgram } from "src/types/uplc";
 
 import UPLCTree from "../UPLCTree";
@@ -24,16 +24,33 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
   const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
   const [uplc, setUplc] = useState<UPLCProgram>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const str = (window as any).decodeUPLC(`${value}`);
 
-  useEffect(() => {
-    const data = decodeFlatUplcToObject(value ? `${value}` : "");
+  const version = str
+    .substring(0, str.indexOf("["))
+    .trim()
+    .slice(11, (str || "").length);
+
+  const parseVersion = (versionString: string) => {
+    const parts = versionString.split(".");
+    return {
+      major: parseInt(parts[0], 10),
+      minor: parseInt(parts[1], 10),
+      patch: parseInt(parts[2], 10)
+    };
+  };
+
+  const programStr = str.substring(str.indexOf("["), str.lastIndexOf("]") + 1);
+
+  useMemo(() => {
     const uplcData = {
-      ...data,
-      program: data.data
+      version: parseVersion(version),
+      program: parseNestedParenthesesToObject(programStr)
     };
     /* eslint-disable @typescript-eslint/no-explicit-any */
     setUplc(uplcData as any);
-  }, [value]);
+  }, [programStr]);
 
   return (
     <DataCardBox>
