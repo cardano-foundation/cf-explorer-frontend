@@ -396,3 +396,59 @@ export function decryptCardanoMessage(encrypted_msg: string, passphrase = "carda
     throw new Error("Invalid passphrase");
   }
 }
+
+const removeSpacesBetweenParentheses = (str: string): string => {
+  const result = str.replace(/\(\s+|\s+\)/g, (match) => match.trim());
+
+  // keep space beetween two text
+  return result.replace(/(\w+)\s+(\w+)/g, "$1 $2");
+};
+
+const convertSquareBracketsToParentheses = (str: string): string => {
+  return str.replaceAll("[", "(").replaceAll("]", ")").replaceAll("\n", "");
+  // return str.replace(/[\[\]\n]+/g, (match) => {
+  //   if (match === "\n" || match === "\r\n") return ""; // Remove newlines
+  //   return match.trim() === "[" ? "(" : ")";
+  // });
+};
+
+export const parseNestedParenthesesToObject = (str: string): TreeNode => {
+  str = removeSpacesBetweenParentheses(convertSquareBracketsToParentheses(str));
+  const stack: TreeNode[] = [];
+  let current: TreeNode | undefined;
+  let autoInc = 0;
+
+  for (const char of str) {
+    if (char === "(") {
+      const newNode: TreeNode = { id: autoInc++ };
+      if (current) {
+        if (!current.data) {
+          current.data = [];
+        }
+        current.data.push(newNode);
+        current.text = current.text?.trim();
+        if (!current.text) {
+          delete current.text;
+        }
+        stack.push(current);
+      }
+      current = newNode;
+    } else if (char === ")") {
+      if (stack.length > 0) {
+        current = stack.pop();
+      }
+    } else {
+      if (!current) {
+        current = { id: autoInc++ };
+      }
+      current.text = (current.text || "") + char;
+    }
+  }
+
+  return current || {};
+};
+export interface TreeNode {
+  id?: number;
+  text?: string;
+  data?: TreeNode[];
+}
