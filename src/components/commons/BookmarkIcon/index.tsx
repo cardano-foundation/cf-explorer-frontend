@@ -4,7 +4,7 @@ import { Box, CircularProgress, IconButton, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import { addBookmark, deleteBookmark } from "src/commons/utils/userRequest";
+import { addBookmark, deleteBookmark, getAllBookmarks } from "src/commons/utils/userRequest";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
 import useToast from "src/commons/hooks/useToast";
 import useAuth from "src/commons/hooks/useAuth";
@@ -21,7 +21,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const { openSyncBookmarkModal = false } = useSelector(({ user }: RootState) => user);
 
   const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmark", []);
-  const [bookmark, setBookmark] = useState((bookmarks || []).find((r) => r?.keyword === `${keyword}`));
+  const [, setBookmark] = useState((bookmarks || []).find((r) => r?.keyword === `${keyword}`));
   const theme = useTheme();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -32,12 +32,13 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSyncBookmarkModal, bookmarks, keyword]);
-
+  const existsInBookmarks = bookmarks?.some((item) => item.keyword === keyword && item.type === type);
+  // console.log(type, bookmarks, bookmark, existsInBookmarks, keyword, type);
   const updateBookmark = async () => {
     if (!isLoggedIn) return;
     try {
       setLoading(true);
-      if (!bookmark) {
+      if (!existsInBookmarks) {
         if ((bookmarks || [])?.length < 2000) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const { data, response }: any = await addBookmark({
@@ -81,6 +82,8 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
     } finally {
       setLoading(false);
     }
+    const { data: dataBookmarks } = await getAllBookmarks(NETWORK_TYPES[NETWORK]);
+    setBookmarks(dataBookmarks);
   };
 
   const renderBookmark = () => {
@@ -94,7 +97,7 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
         </CustomTooltip>
       );
     }
-    if (bookmark) {
+    if (existsInBookmarks) {
       return <Bookmarked fill={theme.palette.success[700]} />;
     }
     return <BookmarkIcon fill={theme.palette.secondary.main} />;
