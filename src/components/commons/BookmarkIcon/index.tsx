@@ -26,14 +26,15 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({ keyword, type }) => {
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
+  const existsInBookmarks = bookmarks?.some((item) => item.keyword === keyword && item.type === type);
+
   useEffect(() => {
     setBookmark(
       (JSON.parse(localStorage.getItem("bookmark") || "[]") || []).find((r: Bookmark) => r?.keyword === `${keyword}`)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openSyncBookmarkModal, bookmarks, keyword]);
-  const existsInBookmarks = bookmarks?.some((item) => item.keyword === keyword && item.type === type);
-  // console.log(type, bookmarks, bookmark, existsInBookmarks, keyword, type);
+
   const updateBookmark = async () => {
     if (!isLoggedIn) return;
     try {
