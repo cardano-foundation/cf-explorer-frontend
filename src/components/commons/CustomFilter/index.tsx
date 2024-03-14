@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
+import { pick } from "lodash";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -169,6 +170,7 @@ const CustomFilter: React.FC<Props> = (props) => {
     }
     setOpen(false);
     setSearch("");
+    history.replace({ search: stringify(pick({ page, size }, ["page", "size", "retired"])) });
   };
 
   const filterOptions = options.filter((item) => !excludes.includes(item.value));
