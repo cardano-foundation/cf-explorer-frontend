@@ -37,35 +37,27 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: ExchangeIcon,
       hideHeader: true,
       title: (
-        <EpochNumber sx={{ mt: `${currentEpochData?.status === "SYNCING" ? "30px" : ""}` }}>
+        <EpochNumber>
           <Box component={"span"}>{currentEpochData?.no}</Box>
         </EpochNumber>
       ),
       value: (
         <Box display={"flex"} alignItems="center" justifyContent={"center"}>
-          {currentEpochData?.status === "SYNCING" ? (
-            <Box>
-              <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
-                {EPOCH_STATUS_MAPPING[EPOCH_STATUS[currentEpochData?.status]]}
-              </Status>
-            </Box>
-          ) : (
-            <ProgressCircle
-              size={100}
-              pathLineCap="butt"
-              pathWidth={6}
-              trailWidth={6}
-              percent={Number(progress)}
-              trailOpacity={1}
-            >
-              <EpochProgress
-                status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
-              >{`${progress}%`}</EpochProgress>
-              <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
-                {EPOCH_STATUS_MAPPING[EPOCH_STATUS[currentEpochData?.status]]}
-              </Status>
-            </ProgressCircle>
-          )}
+          <ProgressCircle
+            size={100}
+            pathLineCap="butt"
+            pathWidth={6}
+            trailWidth={6}
+            percent={Number(progress)}
+            trailOpacity={1}
+          >
+            <EpochProgress
+              status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
+            >{`${progress}%`}</EpochProgress>
+            <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
+              {EPOCH_STATUS_MAPPING[EPOCH_STATUS[currentEpochData?.status]]}
+            </Status>
+          </ProgressCircle>
         </Box>
       )
     },

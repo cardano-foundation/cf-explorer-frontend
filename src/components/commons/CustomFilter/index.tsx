@@ -3,7 +3,10 @@ import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { useHistory } from "react-router-dom";
+import { stringify } from "qs";
 
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   ArrowFromBottomIcon,
   ArrowFromTopIcon,
@@ -12,7 +15,6 @@ import {
   HeaderSearchIconComponent,
   ResetIcon
 } from "src/commons/resources";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 import CustomIcon from "../CustomIcon";
 import { Option } from "../Filter";
@@ -42,11 +44,13 @@ export interface Props {
   sortKey?: string;
   excludes?: string[];
   searchLabel: string;
+  page?: number;
+  size?: number;
 }
 
 const CustomFilter: React.FC<Props> = (props) => {
   const { t } = useTranslation();
-  const { onSubmit, filterValue, sortKey = "time", excludes = [], searchLabel } = props;
+  const { onSubmit, filterValue, sortKey = "time", excludes = [], searchLabel, page, size } = props;
 
   const [open, setOpen] = useState(false);
   const [openDateRange, setOpenDateRange] = useState(false);
@@ -57,6 +61,7 @@ const CustomFilter: React.FC<Props> = (props) => {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const theme = useTheme();
   const { isMobile } = useScreen();
+  const history = useHistory();
 
   const options: Option[] = [
     {
@@ -225,6 +230,7 @@ const CustomFilter: React.FC<Props> = (props) => {
                 onClick={() => {
                   if (onSubmit) {
                     onSubmit?.({ ...params, search: search });
+                    history.replace({ search: stringify({ page, size, sort: params?.sort }) });
                     setOpenSearch(false);
                     setOpen(false);
                   }
