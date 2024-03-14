@@ -69,9 +69,7 @@ const MinttingBurningPolicy = () => {
           <Box display={"flex"} flexWrap={"wrap"}>
             <TimeLockChip isOpen={isOpen} />
             <MultiSigChip isMultiSig={(keyHashes || []).length > 1} />
-            {isOneTimeMint && (
-              <ChipContainer Icon={NativeOneMint} message="One Time Mint" variant="info" titleTooltip="One Time Mint" />
-            )}
+            {isOneTimeMint && <ChipContainer Icon={NativeOneMint} message="One Time Mint" variant="info" />}
           </Box>
         </MintCard>
       </ItemMint>
