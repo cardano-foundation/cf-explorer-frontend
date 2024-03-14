@@ -9,7 +9,6 @@ export const ModalContent = styled(Box)`
   gap: 12px;
   max-height: 70dvh;
   padding: 4px;
-  overflow: auto;
 
   &::-webkit-scrollbar {
     width: 5px;
