@@ -38,7 +38,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       hideHeader: true,
       title: (
         <EpochNumber>
-          <Box component={"span"}>{currentEpochData?.no}</Box>
+          {currentEpochData?.status !== t("common.epoch.cyncing").toUpperCase() && (
+            <Box component={"span"}>{currentEpochData?.no}</Box>
+          )}
         </EpochNumber>
       ),
       value: (
@@ -51,9 +53,14 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             percent={Number(progress)}
             trailOpacity={1}
           >
-            <EpochProgress
-              status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
-            >{`${progress}%`}</EpochProgress>
+            {currentEpochData?.status === t("common.epoch.cyncing").toUpperCase() ? (
+              currentEpochData?.no
+            ) : (
+              <EpochProgress
+                status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
+              >{`${progress}%`}</EpochProgress>
+            )}
+
             <Status status={currentEpochData?.status as keyof typeof EPOCH_STATUS}>
               {EPOCH_STATUS_MAPPING[EPOCH_STATUS[currentEpochData?.status]]}
             </Status>
