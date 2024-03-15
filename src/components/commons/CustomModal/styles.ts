@@ -58,7 +58,7 @@ export const WrapTitle = styled(Box)(({ theme }) => ({
 
 export const ContentContainer = styled(Box)(({ theme }) => ({
   maxWidth: "min(90vw, 1200px)",
-  maxHeight: "min(90vh, 800px)",
+  maxHeight: "min(90vh, 1100px)",
   overflowY: "auto",
   "&::-webkit-scrollbar": {
     width: "5px",
