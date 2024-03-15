@@ -38,7 +38,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       hideHeader: true,
       title: (
         <EpochNumber>
-          {currentEpochData?.status !== "SYNCING" && <Box component={"span"}>{currentEpochData?.no}</Box>}
+          {currentEpochData?.status !== EPOCH_STATUS.SYNCING.toUpperCase() && (
+            <Box component={"span"}>{currentEpochData?.no}</Box>
+          )}
         </EpochNumber>
       ),
       value: (
@@ -51,7 +53,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
             percent={Number(progress)}
             trailOpacity={1}
           >
-            {currentEpochData?.status === "SYNCING" ? (
+            {currentEpochData?.status === EPOCH_STATUS.SYNCING.toUpperCase() ? (
               currentEpochData?.no
             ) : (
               <EpochProgress
