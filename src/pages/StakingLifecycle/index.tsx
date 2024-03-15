@@ -126,7 +126,7 @@ const StakingLifecycle: React.FC = () => {
             sortKey="id"
             filterValue={params}
             onSubmit={setParams}
-            searchLabel={t("Search report name")}
+            searchLabel={t("report.searchLabel")}
             page={page}
             size={size}
           />
