@@ -323,6 +323,7 @@
   "certificatesHistory.txHash": "Tx Hash",
   "certificatesHistory.block": "Block",
   "certificatesHistory.absoluteSlot": "Absolute Slot",
+  "governanceVotes": "Governance Votes",
   "common.action": "Action",
   "blocks": "Blocks",
   "stakeAmount": "Stake Amount",
@@ -1013,5 +1014,5 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-  "account.myProfile":"My Profile"
+  "account.myProfile": "My Profile"
 }

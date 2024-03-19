@@ -118,6 +118,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
                 </Box>
               );
             })}
+
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
             <Box
               display={"block"}
@@ -284,15 +285,15 @@ export const MultiSigChip: React.FC<{ isMultiSig: boolean }> = ({ isMultiSig }) 
 };
 
 export const ChipContainer: React.FC<{
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
-  message?: string;
+  Icon?: string | FunctionComponent<SVGProps<SVGSVGElement>>;
+  message?: string | JSX.Element;
   titleTooltip?: string;
-  variant?: "success" | "warning" | "info";
+  variant?: "success" | "warning" | "info" | "error" | "infoStrong";
   messageColor?: string;
 }> = ({ Icon, message, variant, titleTooltip, messageColor }) => {
   const theme = useTheme();
 
-  const color = (variant?: "success" | "warning" | "info") => {
+  const color = (variant?: "success" | "warning" | "info" | "error" | "infoStrong") => {
     switch (variant) {
       case "success":
         return theme.palette.success[700];
@@ -300,12 +301,16 @@ export const ChipContainer: React.FC<{
         return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
       case "warning":
         return theme.palette.warning[700];
+      case "error":
+        return theme.palette.error[700];
+      case "infoStrong":
+        return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
       default:
         return theme.palette.success[700];
     }
   };
 
-  const backgroundColor = (variant?: "success" | "warning" | "info") => {
+  const backgroundColor = (variant?: "success" | "warning" | "info" | "error" | "infoStrong") => {
     switch (variant) {
       case "success":
         return theme.palette.success[100];
@@ -313,6 +318,10 @@ export const ChipContainer: React.FC<{
         return theme.palette.primary[100];
       case "warning":
         return theme.palette.warning[100];
+      case "error":
+        return theme.palette.error[100];
+      case "infoStrong":
+        return theme.palette.primary[200];
       default:
         return theme.palette.success[100];
     }

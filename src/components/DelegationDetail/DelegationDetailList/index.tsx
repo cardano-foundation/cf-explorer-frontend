@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, useTheme } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, ButtonGroup, Grid, Typography, useTheme } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -12,25 +12,30 @@ import {
   PoolUpdateHistory,
   PoolResgistrationHistoryDark,
   PoolUpdateHistoryDark,
-  PoolDeresgistrationHistoryDark
+  PoolDeresgistrationHistoryDark,
+  ArrowLeftWhiteIcon
 } from "src/commons/resources";
 import {
   formatADAFull,
   formatDateTimeLocal,
+  getPageInfo,
   getShortHash,
   numberWithCommas,
   removeDuplicate
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import Table, { Column } from "src/components/commons/Table";
+import Table, { Column, FooterTable } from "src/components/commons/Table";
 import ADAicon from "src/components/commons/ADAIcon";
+import CardGovernanceVotes from "src/components/commons/CardGovernanceVotes";
 
-import { StyledLink } from "./styles";
+import { StyledLink, Tab } from "./styles";
+
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
   page: number;
   size: number;
+  voteId?: number | string;
 }
 
 const DelegationEpochList = ({
@@ -335,4 +340,87 @@ const DelegationCertificatesHistory = ({
   );
 };
 
-export { DelegationEpochList, DelegationStakingDelegatorsList, DelegationCertificatesHistory };
+const governanceVotesData = [
+  { vote: "yes", status: "enacted" },
+  { vote: "no", status: "ballot" },
+  { vote: "abstain", status: "ratified" },
+  { vote: "none", status: "enacted" }
+];
+
+const DelegationGovernanceVotes = () => {
+  const { search } = useLocation();
+  const query = parse(search.split("?")[1]);
+  const history = useHistory();
+  const pageInfo = getPageInfo<{ isMultiSig?: string; openTimeLocked?: string }>(search);
+
+  const [tab, setTab] = useState<string>("pool");
+
+  const setQuery = (query: Query) => {
+    history.replace({ search: stringify(query) }, history.location.state);
+  };
+
+  return (
+    <>
+      {query.voteId ? (
+        <>
+          <Box display="flex" alignItems="center">
+            <Button variant="text" onClick={() => setQuery({ tab: "governanceVotes", page: 1, size: 50 })}>
+              <ArrowLeftWhiteIcon />
+            </Button>
+            <Typography m="auto" fontSize="32px" fontWeight={600} lineHeight="28px">
+              Governance Action Voting Name
+            </Typography>
+          </Box>
+          <Box textAlign="center">
+            <ButtonGroup variant="outlined" aria-label="Basic button group">
+              <Tab sx={{ background: tab ? "#D6E2FF" : "" }} onClick={() => setTab("")}>
+                Pool Name
+              </Tab>
+              <Tab sx={{ background: !tab ? "#D6E2FF" : "" }} onClick={() => setTab("")}>
+                Overall Vote
+              </Tab>
+            </ButtonGroup>
+          </Box>
+        </>
+      ) : (
+        <Grid container spacing={"20px"} pt="23px">
+          {governanceVotesData.map((value, index) => (
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              key={index}
+              onClick={() => {
+                setQuery({
+                  tab: query.tab,
+                  voteId: "1",
+                  page: 1,
+                  size: 50
+                });
+              }}
+            >
+              <CardGovernanceVotes data={value} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+      <FooterTable
+        pagination={{
+          ...pageInfo,
+          size: 3,
+          total: 12 || 0
+        }}
+        total={{ count: 12 || 0, title: "" }}
+        loading={false}
+      />
+    </>
+  );
+};
+
+export {
+  DelegationEpochList,
+  DelegationStakingDelegatorsList,
+  DelegationCertificatesHistory,
+  DelegationGovernanceVotes
+};
