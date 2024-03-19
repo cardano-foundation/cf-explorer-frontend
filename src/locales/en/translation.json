@@ -1014,5 +1014,9 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-  "account.myProfile": "My Profile"
+  "account.myProfile": "My Profile",
+  "pool.actionType": "Action Type",
+  "pool.votingPower": "Voting Power",
+  "pool.treasury": "Treasury Withdrawal",
+  "pool.status": "Status"
 }

@@ -9,5 +9,5 @@ export const StyledLink = styled(Link)`
 export const Tab = styled(Button)<{ isActive?: number }>`
   color: ${(props) => props.theme.palette.primary.main} !important;
   padding: 16px 24px;
-  border: 1px solid #d6e2ff;
+  border: 1px solid ${(props) => props.theme.palette.primary[200]};
 `;

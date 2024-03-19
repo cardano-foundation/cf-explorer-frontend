@@ -288,40 +288,37 @@ export const ChipContainer: React.FC<{
   Icon?: string | FunctionComponent<SVGProps<SVGSVGElement>>;
   message?: string | JSX.Element;
   titleTooltip?: string;
-  variant?: "success" | "warning" | "info" | "error" | "infoStrong";
+  variant?: "success" | "warning" | "info" | "error";
   messageColor?: string;
 }> = ({ Icon, message, variant, titleTooltip, messageColor }) => {
   const theme = useTheme();
 
-  const color = (variant?: "success" | "warning" | "info" | "error" | "infoStrong") => {
+  const color = (variant?: "success" | "warning" | "info" | "error") => {
     switch (variant) {
       case "success":
         return theme.palette.success[700];
       case "info":
-        return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
+        return theme.isDark ? theme.palette.primary[500] : theme.palette.primary.main;
       case "warning":
         return theme.palette.warning[700];
       case "error":
         return theme.palette.error[700];
-      case "infoStrong":
-        return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
       default:
         return theme.palette.success[700];
     }
   };
 
-  const backgroundColor = (variant?: "success" | "warning" | "info" | "error" | "infoStrong") => {
+  const backgroundColor = (variant?: "success" | "warning" | "info" | "error") => {
     switch (variant) {
       case "success":
         return theme.palette.success[100];
       case "info":
-        return theme.palette.primary[100];
+        return theme.palette.primary[200];
       case "warning":
         return theme.palette.warning[100];
       case "error":
         return theme.palette.error[100];
-      case "infoStrong":
-        return theme.palette.primary[200];
+
       default:
         return theme.palette.success[100];
     }

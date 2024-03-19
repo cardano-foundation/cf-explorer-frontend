@@ -1,5 +1,6 @@
 import { Box, Grid, Stack, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
@@ -16,6 +17,7 @@ interface ICardGovernanceVotes {
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
   const { status, vote } = data;
   const theme = useTheme();
+  const { t } = useTranslation();
   return (
     <CardGovernanceVote>
       <Grid container justifyContent="space-between">
@@ -32,10 +34,10 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
                 color={theme.palette.secondary.light}
                 paddingRight="8px"
               >
-                Action Type:
+                {t("pool.actionType")}:
               </Typography>
               <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
-                Treasury Withdrawal
+                {t("pool.treasury")}
               </Typography>
             </Box>
             <Box display="flex" alignItems="center">
@@ -46,7 +48,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
                 color={theme.palette.secondary.light}
                 paddingRight="8px"
               >
-                Status:
+                {t("pool.status")}:
               </Typography>
               <GovernanceStatus status={status} />
             </Box>
@@ -58,7 +60,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
                 color={theme.palette.secondary.light}
                 paddingRight="8px"
               >
-                Voting Power:
+                {t("pool.votingPower")}:
               </Typography>
               <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
                 1,893,565.321 ADA
@@ -86,10 +88,10 @@ const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
       case "abstain":
         return [VotesAbstainIcon, "warning"];
       case "none":
-        return [VotesNoneIcon, "infoStrong"];
+        return [VotesNoneIcon, "info"];
 
       default:
-        return [VotesYesIcon, "infoStrong"];
+        return [VotesYesIcon, "info"];
     }
   };
 
@@ -117,7 +119,7 @@ const GovernanceStatus: React.FC<{ status: string }> = ({ status }) => {
       case "ballot":
         return "warning";
       case "enacted":
-        return "infoStrong";
+        return "info";
 
       default:
         return "info";

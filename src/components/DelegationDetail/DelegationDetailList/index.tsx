@@ -352,6 +352,7 @@ const DelegationGovernanceVotes = () => {
   const query = parse(search.split("?")[1]);
   const history = useHistory();
   const pageInfo = getPageInfo<{ isMultiSig?: string; openTimeLocked?: string }>(search);
+  const theme = useTheme();
 
   const [tab, setTab] = useState<string>("pool");
 
@@ -373,10 +374,10 @@ const DelegationGovernanceVotes = () => {
           </Box>
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <Tab sx={{ background: tab ? "#D6E2FF" : "" }} onClick={() => setTab("")}>
+              <Tab sx={{ background: tab ? theme.palette.primary[200] : "" }} onClick={() => setTab("")}>
                 Pool Name
               </Tab>
-              <Tab sx={{ background: !tab ? "#D6E2FF" : "" }} onClick={() => setTab("")}>
+              <Tab sx={{ background: !tab ? theme.palette.primary[200] : "" }} onClick={() => setTab("")}>
                 Overall Vote
               </Tab>
             </ButtonGroup>

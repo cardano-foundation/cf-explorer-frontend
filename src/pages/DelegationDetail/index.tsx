@@ -200,6 +200,21 @@ const DelegationDetail: React.FC = () => {
     setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
   };
 
+  const getLastUpdatedTime = () => {
+    switch (tab) {
+      case "epochs":
+        return fetchDataEpochs.lastUpdated;
+      case "delegators":
+        return fetchDataDelegators.lastUpdated;
+      case "certificatesHistory":
+        return fetchDataCertificatesHistory.lastUpdated;
+      case "governanceVotes":
+        return fetchDataGovernanceVotes.lastUpdated;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Container>
       <DelegationDetailInfo data={data} loading={loading} poolId={poolId} lastUpdated={lastUpdated} />
@@ -237,18 +252,7 @@ const DelegationDetail: React.FC = () => {
             <AccordionDetails>
               {!query.voteId && (
                 <TimeDuration sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <FormNowMessage
-                    time={
-                      (tab === "epochs"
-                        ? fetchDataEpochs
-                        : tab === "delegators"
-                        ? fetchDataDelegators
-                        : tab === "certificatesHistory"
-                        ? fetchDataCertificatesHistory
-                        : fetchDataGovernanceVotes
-                      ).lastUpdated
-                    }
-                  />
+                  <FormNowMessage time={getLastUpdatedTime()} />
                   <Box>{tab === "governanceVotes" && <CustomFilter searchLabel={""} />}</Box>
                 </TimeDuration>
               )}
