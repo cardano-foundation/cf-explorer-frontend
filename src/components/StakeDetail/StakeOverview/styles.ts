@@ -20,8 +20,8 @@ export const StyledLink = styled(Link)`
   display: inline-block;
 `;
 
-export const StyledLinkTo = styled(StyledLink)<{ isTo: boolean }>(({ theme, isTo }) => ({
-  color: isTo ? `${theme.palette.primary.main} !important` : `${theme.palette.error[700]} !important`
+export const StyledLinkTo = styled(StyledLink)<{ isto: boolean }>(({ theme, isto }) => ({
+  color: isto ? `${theme.palette.primary.main} !important` : `${theme.palette.error[700]} !important`
 }));
 
 export const BackButton = styled(Link)`
