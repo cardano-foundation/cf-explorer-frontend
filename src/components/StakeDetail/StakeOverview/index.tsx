@@ -46,6 +46,7 @@ const StakeOverview: React.FC<Props> = ({ data, loading, lastUpdated, adaHanldeD
       ? `${tickerName}${tickerName && poolName ? " - " : ""}${poolName}`
       : getShortHash(poolId)
     : t("drawer.notDelegatedToAnyPool");
+
   const listOverview = [
     {
       icon: delegatedIcon,
