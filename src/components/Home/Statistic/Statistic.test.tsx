@@ -97,21 +97,21 @@ describe("HomeStatistic", () => {
     const mockUseSelector = useSelector as jest.Mock;
     mockUseFetch.mockReturnValue({ data: mockStakeAnalytis });
 
-    jest.mock("src/commons/hooks/useFetchInterval", () => ({
-      useFetchInterval: jest.fn((url) => {
-        if (url.includes("btc")) {
-          return {
-            data: mockBTCMarket,
-            lastUpdated: "2024-03-19T00:00:00Z"
-          };
-        } else if (url.includes("usd")) {
-          return {
-            data: mockUSDMarket,
-            lastUpdated: "2024-03-19T00:00:00Z"
-          };
-        }
-      })
-    }));
+    // jest.mock("src/commons/hooks/useFetchInterval", () => ({
+    //   useFetchInterval: jest.fn((url) => {
+    //     if (url.includes("btc")) {
+    //       return {
+    //         data: mockBTCMarket,
+    //         lastUpdated: "2024-03-19T00:00:00Z"
+    //       };
+    //     } else if (url.includes("usd")) {
+    //       return {
+    //         data: mockUSDMarket,
+    //         lastUpdated: "2024-03-19T00:00:00Z"
+    //       };
+    //     }
+    //   })
+    // }));
 
     mockUseSelector.mockReturnValue({
       currentEpoch: mockCurrentEpoch,
