@@ -47,12 +47,11 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
+  const tab: TabPoolDetail | "" = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-
   useEffect(() => {
     if (Object.keys(query).length === 0) {
       setQuery({ tab: "epochs", page: 1, size: 50 });
@@ -140,7 +139,11 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -175,7 +178,6 @@ const DelegationDetail: React.FC = () => {
   ];
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
-
   const needBorderRadius = (currentKey: string) => {
     if (!tab) return "0";
     const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
@@ -189,7 +191,7 @@ const DelegationDetail: React.FC = () => {
       if (newExpanded) {
         setTimeout(() => {
           tableRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 100);
+        }, 150);
         // Remove the event listener after the scroll
         tableRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
