@@ -271,7 +271,9 @@ const DelegationCertificatesHistory = ({
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+              {getShortHash(data.txHash || "")}
+            </StyledLink>
           </CustomTooltip>
         )
     },
@@ -291,7 +293,7 @@ const DelegationCertificatesHistory = ({
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
