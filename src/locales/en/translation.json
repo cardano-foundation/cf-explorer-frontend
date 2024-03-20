@@ -507,7 +507,8 @@
   "common.poolhash": "Pool hash",
   "common.poolHomepage": "Homepage",
   "common.poolDescription": "Description",
-  "common.poolName": "Pool Name ",
+  "common.poolName": "Pool Name",
+  "common.overall": "Overall Vote",
   "glossary.epoch": "Epoch",
   "glossary.upcomingEpoch": "Upcoming Epoch",
   "common.rewardAccount": "Reward Account",
@@ -559,6 +560,7 @@
   "common.poolSize": "Pool size",
   "common.yes": "Yes",
   "common.no": "No",
+  "common.abstain": "Abstain",
   "common.poolReportByEvent": "Pool Report by event",
   "common.select as required": "Select as required",
   "common.all": "All",
@@ -1020,6 +1022,14 @@
   "pool.votingPower": "Voting Power",
   "pool.treasury": "Treasury Withdrawal",
   "pool.status": "Status",
+  "pool.actionId": "Governance Action ID",
+  "pool.vote": "Vote",
+  "pool.votes": "Votes",
+  "pool.currentStatus": "Current Status",
+  "pool.votingPowerADA": "Voting Power ADA",
+  "pool.submission": "Submission Date",
+  "pool.expiryDate": "Expiry Date",
+  "pool.anchorText": "Anchor Text"
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check"
 }
