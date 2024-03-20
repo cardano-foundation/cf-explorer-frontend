@@ -37,7 +37,7 @@ import {
 } from "./styles";
 import { StyledDropdownItem } from "../ProtocolParameter/styles";
 
-const TRX_PURPOSE = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE", "PROPOSING", "VOTING"];
+const TRX_PURPOSE = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE", "PROPOSE", "VOTE"];
 
 const TabSmartContracts = () => {
   const { search, pathname } = useLocation();
@@ -224,7 +224,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE", "PROPOSING", "VOTING"];
+  const transactionPurpose = TRX_PURPOSE;
   const transactionPurposeI18n: Record<string, string> = {
     ANY: t("smartContract.selectAll"),
     SPEND: t("smartContract.spend"),
@@ -232,8 +232,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     REWARD: t("smartContract.reward"),
     CERT: t("smartContract.cert"),
     NO_TX_PURPOSE: t("smartContract.noTransactionPurpose"),
-    VOTING: t("smartContract.voting"),
-    PROPOSING: t("smartContract.proposing")
+    VOTE: t("smartContract.voting"),
+    PROPOSE: t("smartContract.proposing")
   };
   const handleChooseVersion = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVersion((event.target as HTMLInputElement).value);
