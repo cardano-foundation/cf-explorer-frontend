@@ -1016,7 +1016,7 @@
   "pool.actionType": "Action Type",
   "pool.votingPower": "Voting Power",
   "pool.treasury": "Treasury Withdrawal",
-  "pool.status": "Status"
+  "pool.status": "Status",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check"
 }
