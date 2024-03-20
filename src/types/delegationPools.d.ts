@@ -104,4 +104,4 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "governanceVotes" | "";

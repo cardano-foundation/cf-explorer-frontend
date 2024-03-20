@@ -200,6 +200,12 @@ import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
+import VotesIcon from "./icons/votes.svg?react";
+import VotesYesIcon from "./icons/voteYes.svg?react";
+import VotesNoIcon from "./icons/voteNo.svg?react";
+import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
+import VotesNoneIcon from "./icons/voteNone.svg?react";
+import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -402,7 +408,13 @@ export {
   LightModeMobile,
   DarkModeMobile,
   VerifiedIcon,
-  InvalidIcon
+  InvalidIcon,
+  VotesIcon,
+  VotesYesIcon,
+  VotesNoIcon,
+  VotesAbstainIcon,
+  VotesNoneIcon,
+  ArrowLeftWhiteIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
