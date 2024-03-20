@@ -954,10 +954,13 @@
   "smartContract.selectAll": "Select All",
   "smartContract.plutusv1": "Plutus V1",
   "smartContract.plutusv2": "Plutus V2",
+  "smartContract.plutusv3": "Plutus V3",
   "smartContract.spend": "Spend",
   "smartContract.mint": "Mint(Burn)",
   "smartContract.reward": "Reward",
   "smartContract.cert": "Cert",
+  "smartContract.voting": "Voting",
+  "smartContract.proposing": "Proposing",
   "smartContract.noTransactionPurpose": "No Transaction Purpose",
   "nativeScript.timeLock": "Time-Lock",
   "nativeScript.timeLocked": "Time-Locked",
@@ -1013,5 +1016,5 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-  "account.myProfile":"My Profile"
+  "account.myProfile": "My Profile"
 }
