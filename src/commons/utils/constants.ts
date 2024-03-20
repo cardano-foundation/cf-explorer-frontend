@@ -240,10 +240,11 @@ export const HOTJAR_HJID = process.env.REACT_APP_HOTJAR_HJID;
 export const HOTJAR_HJSV = process.env.REACT_APP_HOTJAR_HJSV;
 
 export enum APP_LANGUAGES {
-  ENGLISH = "en"
+  ENGLISH = "en",
+  FRENCH = "fr"
 }
 
-export const SUPPORTED_LANGUAGES = ["en"];
+export const SUPPORTED_LANGUAGES = ["en", "fr"];
 
 export enum OPTIONS_CHART_ANALYTICS {
   ONE_DAY = "ONE_DAY",
@@ -258,14 +259,16 @@ export enum SCRIPT_TYPE {
   MULTISIG = "MULTISIG",
   TIMELOCK = "TIMELOCK",
   PLUTUSV1 = "PLUTUSV1",
-  PLUTUSV2 = "PLUTUSV2"
+  PLUTUSV2 = "PLUTUSV2",
+  PLUTUSV3 = "PLUTUSV3"
 }
 
 export const ScriptTypeLabel = {
   [SCRIPT_TYPE.MULTISIG]: "Multisig",
   [SCRIPT_TYPE.TIMELOCK]: "Timelock",
   [SCRIPT_TYPE.PLUTUSV1]: "Plutus v1",
-  [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2"
+  [SCRIPT_TYPE.PLUTUSV2]: "Plutus v2",
+  [SCRIPT_TYPE.PLUTUSV3]: "Plutus v3"
 };
 
 export const CIP20_DOCS_URL = "https://cips.cardano.org/cip/CIP-0020";

@@ -11,7 +11,7 @@ describe("SidebarMenu", () => {
     render(<SidebarMenu />);
     expect(screen.getByText(/blockchain/i)).toBeInTheDocument();
     expect(screen.getByText(/operational certificates/i)).toBeInTheDocument();
-    expect(screen.getByText(/browse/i)).toBeInTheDocument();
+    expect(screen.getByText(/discover cardano/i)).toBeInTheDocument();
   });
 
   it("should component route to next page", () => {
