@@ -78,7 +78,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
 
 export default CardGovernanceVotes;
 
-const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
+export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
   const renderStatus = (key: string) => {
     switch (key) {
       case "yes":
@@ -110,11 +110,11 @@ const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
   );
 };
 
-const GovernanceStatus: React.FC<{ status: string }> = ({ status }) => {
+export const GovernanceStatus: React.FC<{ status: string }> = ({ status }) => {
   const theme = useTheme();
   const renderStatus = (key: string) => {
     switch (key) {
-      case "RATIFIED":
+      case "ratified":
         return "success";
       case "ballot":
         return "warning";

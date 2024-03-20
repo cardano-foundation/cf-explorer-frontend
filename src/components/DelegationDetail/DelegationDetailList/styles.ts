@@ -10,4 +10,5 @@ export const Tab = styled(Button)<{ isActive?: number }>`
   color: ${(props) => props.theme.palette.primary.main} !important;
   padding: 16px 24px;
   border: 1px solid ${(props) => props.theme.palette.primary[200]};
+  margin-right: 1px;
 `;
