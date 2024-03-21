@@ -651,7 +651,7 @@ const VoteBar = ({
       }
       placement="right"
     >
-      <Box sx={{ background: color }} height={`${percentage}px`} width="36px" />
+      <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
     </LightTooltip>
     <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
       {label}
