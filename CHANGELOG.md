@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.0.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.9.0...v1.0.0) (2024-03-21)
+
+
+### Bug Fixes
+
+* ada value to usd value as label error ([9a805eb](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9a805eb79c30786e9ff4503feba4482330375317))
+* add to string for value ([cc38f04](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cc38f04c08975859fa8d2fffd9cbfce153bf3e21))
+* block click on textarea ([a43823f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a43823fd6ba4fc2f0aa6629218d9ab3207e12cff))
+* build folder was renamed due to vitejs default folder dist ([7aaf9a8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7aaf9a81f748ac10afc5a6e37d1997040019a229))
+* change data modal protocol ([1b9370a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1b9370ae63e25e983e464f95643a00dd1e5fcd52))
+* change of path and delete some files ([bbd8872](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bbd887290eda2b4e59533a340c84cd131df5bcda))
+* change of test run ([81573b0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/81573b0bd5bc3cdc3af7706faf018f4b8c74bed0))
+* change of test run ([91fc8d5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/91fc8d5860b7bff4482deb34077a03e1c2d0ee1b))
+* connect wallet version increment ([ce00ecc](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ce00eccc2abf363aa37882ae6883f389b54d9076))
+* display data histories on ios ([b7d12a8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b7d12a806994781b5d04b97225cfcee58d16b4ba))
+* display data histories on ios ([aca5d00](https://github.com/cardano-foundation/cf-explorer-frontend/commit/aca5d00dc6d8cb6b9b89badc51cf64c2928f07f4))
+* display value cost model in ios ([95d8b3a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/95d8b3a26f812342519f9e7751a016d3d91a56d2))
+* dont pass newCostModel without costModel ([bff7627](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bff7627d5195d0a8062a4bb405c7596e32221236))
+* error when filter protocol parameter ([8dbcbc9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8dbcbc9cb0b7af291a54510b90e9b1f0e4548d62))
+* fix display protocol data ([e415cf4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e415cf452e46e692e51d1efb270509752095b7e7))
+* fix display protocol parameter updates ([2385a21](https://github.com/cardano-foundation/cf-explorer-frontend/commit/2385a21171ade8f6787307908ca4d900cbec479e))
+* merge with 1.0.0 ([f9fd204](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f9fd2046ce2de7f79658c7e7b583b2fc0d7cd511))
+* MET 1972 epoch status display is incorrect while syncing ([f5e3d28](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f5e3d28cb494b2e5d439f60b8ce7f5f936a8ceee))
+* MET-1896 move lib folder ([5788c2b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5788c2b442d6c02c08b4eb695b9f1c35bda57dd0))
+* MET-1896 update UPLC ([e7e2b3c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e7e2b3c810f86ac8c24bc33a740ff5d2abb4bdfb))
+* MET-1991 calc price in adress detail ([e53c5e6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e53c5e6fb9fba55c4afedca5c9f48c6761e16e8c))
+* MET-1991 save ADA price to local ([5138225](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5138225fbb02f9400ab46627c580539ccd68118d))
+* remove params when reset data ([1f2ad13](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1f2ad13f31664c90043055e4d21c5f4e6c6f619c))
+* remove scroll on ModalContent ([74b1d92](https://github.com/cardano-foundation/cf-explorer-frontend/commit/74b1d92fedb2811aa349168bfa4ac58a4989da42))
+* remove tooltip ([4887ba6](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4887ba68c2105cb24294e837e89a319c72ffc0a5))
+* sync sort table on staking lifecycle ([6db1666](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6db1666e084f93f28c29b823aac92f3aba6a6271))
+* update bookmark logic ([3398a7a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3398a7a328ff2c33c271d921b61dd936f9f70bde))
+* update logic display circle on epoch ([295739c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/295739cba1bbe599f5f6f15803f6b68311689f2b))
+* update logic display status epoch ([ccd7a2c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ccd7a2c8dc8bc07bbc4c1ab36ce523ac3c5296c8))
+* update max height of modal ([f22939a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f22939a38c8210d351918ea153a98ca161389d77))
+* update min height custom modal ([df60ef0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/df60ef06cd4574a578e91a9901437c26b45f26bd))
+* update padding bottom table in mobile ([4e6a5fa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4e6a5fa73e2e705e9f859a3e58d8f0b281331de9))
+* update width select token mobile ([87a0d23](https://github.com/cardano-foundation/cf-explorer-frontend/commit/87a0d2353dc83da02a912b0c853319d2f7a77249))
+
 ## [0.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.9.0...v0.9.0) (2024-03-04)
 
 
