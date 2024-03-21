@@ -122,7 +122,14 @@ const StakingLifecycle: React.FC = () => {
           <WrapFilterDescription>
             {t("common.showing")} {totalResult} {totalResult <= 1 ? t("common.result") : t("common.results")}
           </WrapFilterDescription>
-          <CustomFilter sortKey="id" filterValue={params} onSubmit={setParams} searchLabel={t("Search report name")} />
+          <CustomFilter
+            sortKey="id"
+            filterValue={params}
+            onSubmit={setParams}
+            searchLabel={t("report.searchLabel")}
+            page={page}
+            size={size}
+          />
         </FilterHead>
       </TitleHead>
       <TabContext value={validTab}>

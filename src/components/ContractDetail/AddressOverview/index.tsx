@@ -63,7 +63,7 @@ const AddressOverview: React.FC<Props> = ({ data, loading, lastUpdated }) => {
         </StyledAAmount>
       )
     },
-    { title: t("glossary.adaValue"), value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
+    { title: t("glossary.usdValue"), value: exchangeADAToUSD(data?.balance || 0, adaRate, true) },
     {
       value: <TokenAutocomplete address={data?.address || ""} />
     }

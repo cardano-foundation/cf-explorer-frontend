@@ -23,7 +23,8 @@ const useDisableJsonKey = (data: unknown): { trigger: () => void; keyRenderer: J
     return <Box data-row-id="json-row" />;
   };
   keyRenderer.when = ({ path }) => {
-    const num = Number(path[path.length - 1]);
+    const newNum = path.filter((i) => typeof i === "number");
+    const num = Number(newNum[newNum.length - 1]);
     return !isNaN(num) && num < MAX_INDEX;
   };
   return { keyRenderer, trigger };

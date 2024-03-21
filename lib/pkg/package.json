@@ -1,0 +1,17 @@
+{
+  "name": "uplc-js",
+  "collaborators": [
+    "sotatek"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "uplc_js_bg.wasm",
+    "uplc_js.js",
+    "uplc_js.d.ts"
+  ],
+  "module": "uplc_js.js",
+  "types": "uplc_js.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

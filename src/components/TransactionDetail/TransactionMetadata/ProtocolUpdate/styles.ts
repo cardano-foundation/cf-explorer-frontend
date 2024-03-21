@@ -37,7 +37,12 @@ export const UpdatedValue = styled(Box)(() => ({
 export const Wrapper = styled(Box)(({ theme }) => ({
   border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
   borderRadius: theme.spacing(2),
-  overflow: "hidden"
+  overflow: "hidden",
+  "& .table-wrapper": {
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: "8px"
+    }
+  }
 }));
 
 export const LimitCell = styled(Box)`
@@ -47,4 +52,10 @@ export const LimitCell = styled(Box)`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  ${({ theme }) => theme.breakpoints.between("xs", "sm")} {
+    max-width: 120px;
+  }
+  ${({ theme }) => theme.breakpoints.between("sm", "md")} {
+    max-width: 220px;
+  }
 `;

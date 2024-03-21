@@ -3,14 +3,11 @@ declare type ValueOf<T> = T[keyof T];
 declare type SpecialPath = ValueOf<typeof import("src/commons/routers").routers>;
 
 declare interface SystemStoreType {
-  adaRate: number;
-  usdMarket: CardanoMarket | null;
-  btcMarket: CardanoMarket | null;
   currentEpoch: EpochCurrentType | null;
   blockNo?: number;
   blockKey?: number | string;
   specialPath: SpecialPath | null;
-  wineryName?: Record<string, Record<"name", string>> | null;
+  wineryName?: Record<string, Record<"name" | "address", string>> | null;
   wineryNameLoading?: boolean;
 }
 

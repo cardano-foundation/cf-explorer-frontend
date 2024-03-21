@@ -17,7 +17,7 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
     if (!uplc) return [];
     const nodeIds = ["root"];
     let currentLevel = 1;
-    const maxLevel = 3;
+    const maxLevel = 2;
 
     // Get nodeIds with bread first search
     const queue: UPLCData[] = [];

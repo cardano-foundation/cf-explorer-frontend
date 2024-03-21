@@ -184,7 +184,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           }));
         }
         return (
-          <Box display={"flex"} alignItems={"center"} maxWidth={{ xs: "200px", md: "250px" }} flexWrap="wrap">
+          <Box display={"flex"} alignItems={"center"} maxWidth={{ xs: "240px", md: "250px" }} flexWrap="wrap">
             {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens tokens={tokens} type={type} hideInputLabel isSuccess={true} />

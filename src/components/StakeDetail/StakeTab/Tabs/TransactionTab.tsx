@@ -16,6 +16,7 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { Img, StyledContainer, StyledLink } from "./styles";
 
@@ -44,6 +45,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(url, pageInfo);
   const theme = useTheme();
+  const { isMobile } = useScreen();
 
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     let parent: Element | null = e.target as Element;
@@ -191,7 +193,12 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
           }));
         }
         return (
-          <Box display={"flex"} alignItems={"center"} maxWidth={{ xs: "200px", md: "250px" }} flexWrap="wrap">
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            maxWidth={{ xs: isMobile ? "100%" : "200px", md: "250px" }}
+            flexWrap="wrap"
+          >
             {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens isSuccess={true} tokens={tokens} type={type} hideInputLabel hideMathChar />

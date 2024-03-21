@@ -26,6 +26,14 @@ export const getShortHash = (address = "", firstpart?: number, lastPart?: number
     : "";
 };
 
+export const getShortHashXs = (address = "", firstpart?: number, lastPart?: number) => {
+  if (address?.length <= 18) return address;
+  return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
+};
+export const getShortValue = (address = "", length = 50) => {
+  return address.slice(0, length);
+};
+
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
@@ -387,4 +395,60 @@ export function decryptCardanoMessage(encrypted_msg: string, passphrase = "carda
   } catch (error) {
     throw new Error("Invalid passphrase");
   }
+}
+
+const removeSpacesBetweenParentheses = (str: string): string => {
+  const result = str.replace(/\(\s+|\s+\)/g, (match) => match.trim());
+
+  // keep space beetween two text
+  return result.replace(/(\w+)\s+(\w+)/g, "$1 $2");
+};
+
+const convertSquareBracketsToParentheses = (str: string): string => {
+  return str.replaceAll("[", "(").replaceAll("]", ")").replaceAll("\n", "");
+  // return str.replace(/[\[\]\n]+/g, (match) => {
+  //   if (match === "\n" || match === "\r\n") return ""; // Remove newlines
+  //   return match.trim() === "[" ? "(" : ")";
+  // });
+};
+
+export const parseNestedParenthesesToObject = (str: string): TreeNode => {
+  str = removeSpacesBetweenParentheses(convertSquareBracketsToParentheses(str));
+  const stack: TreeNode[] = [];
+  let current: TreeNode | undefined;
+  let autoInc = 0;
+
+  for (const char of str) {
+    if (char === "(") {
+      const newNode: TreeNode = { id: autoInc++ };
+      if (current) {
+        if (!current.data) {
+          current.data = [];
+        }
+        current.data.push(newNode);
+        current.text = current.text?.trim();
+        if (!current.text) {
+          delete current.text;
+        }
+        stack.push(current);
+      }
+      current = newNode;
+    } else if (char === ")") {
+      if (stack.length > 0) {
+        current = stack.pop();
+      }
+    } else {
+      if (!current) {
+        current = { id: autoInc++ };
+      }
+      current.text = (current.text || "") + char;
+    }
+  }
+
+  return current || {};
+};
+export interface TreeNode {
+  id?: number;
+  text?: string;
+  data?: TreeNode[];
 }
