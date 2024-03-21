@@ -49,7 +49,7 @@ export const routers = {
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
   SMARTCONTRACT_DETAIL: "/smartcontract/:id",
-  DREP_DETAILS: "/drep/:poolId",
+  DREP_DETAILS: "/drep/:drepId",
   NOT_FOUND: "/*"
 } as const;
 
