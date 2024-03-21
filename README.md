@@ -101,6 +101,93 @@ On opening Cypress, your testing journey begins with the Launchpad. Its job is t
 To run e2e test with all specs, try this command:
 `npm run cypress:run`
 
+## Web automation test with Playwright
+
+### Pre-installed on local:
+
+- [allure commandline](https://docs.qameta.io/allure-report/#_installing_a_commandline)
+- npm and node js
+- add .env to root folder with APPLICATION_URL property pointing to chosen environment e.g.
+
+```
+APPLICATION_URL=https://beta.explorer.cardano.org/en
+API_URL=<url>
+USERNAME=<login>
+PASSWORD=<password>
+# in what mode playwright should run the browser, by default true
+HEADLESS= true or false 
+```
+
+### Test run in local:
+
+1. Install all packages locally
+
+```
+npm install
+```
+
+2. Install browsers
+
+```
+npx playwright install
+```
+
+3. Run tests for chosen project e.g.
+
+```
+npm run chrome
+```
+
+or
+
+```
+npm run firefox
+```
+
+---
+
+### Test run with allure report
+
+1. Run tests in root folder
+
+```
+ALLURE_RESULTS_DIR=.reports/chrome/allure-results npx playwright test --project='chrome'
+```
+
+- there is also shorter command from package.json scripts to run all tests
+
+```
+npm run chrome
+```
+
+- to run specific feature test indicate full path to feature file
+
+```
+npm run chrome playwright/tests/features/sing-up.feature
+```
+
+- to run specific scenario for a feature add tag **@only** to the scenario and generate test changes:
+
+```
+npx bddgen
+npm run chrome playwright/tests/features/sing-up.feature
+```
+
+- more examples and documentation [here](https://vitalets.github.io/playwright-bdd/#/installation)
+
+2. Generate report
+
+```
+allure generate .reports/chrome/allure-results -o .reports/chrome/allure-report --clean
+```
+
+3. Open report
+
+```
+allure open .reports/chrome/allure-report
+```
+
+
 ## Build into production
 
 Execute  `npm run build`
