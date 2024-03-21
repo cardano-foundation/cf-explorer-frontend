@@ -294,7 +294,7 @@ const DelegationCertificatesHistory = ({
       title: t("common.slot"),
       key: "slot",
       minWidth: "90px",
-      render: (data) => <>{data.epochSlotNo}</>
+      render: (data) => <>{data.epochSlotNo || data.slotNo}</>
     },
     {
       title: t("certificatesHistory.absoluteSlot"),
