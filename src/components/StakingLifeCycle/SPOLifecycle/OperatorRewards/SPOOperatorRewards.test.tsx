@@ -39,6 +39,6 @@ describe("OperatorRewards component", () => {
       data: mockData
     });
     render(<OperatorReward />);
-    expect(screen.getByText(/a cardanoland pool acl/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reward Account/i)).toBeInTheDocument();
   });
 });

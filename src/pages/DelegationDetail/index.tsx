@@ -15,18 +15,20 @@ import DelegationDetailChart from "src/components/DelegationDetail/DelegationDet
 import {
   DelegationCertificatesHistory,
   DelegationEpochList,
+  DelegationGovernanceVotes,
   DelegationStakingDelegatorsList
 } from "src/components/DelegationDetail/DelegationDetailList";
 import useFetchList from "src/commons/hooks/useFetchList";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
-import { StakingDelegators, StakeKeyHistoryIcon, TimelineIconComponent } from "src/commons/resources";
+import { StakingDelegators, StakeKeyHistoryIcon, TimelineIconComponent, VotesIcon } from "src/commons/resources";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import { getPageInfo } from "src/commons/utils/helper";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import { POOL_STATUS } from "src/commons/utils/constants";
+import CustomFilter from "src/components/commons/CustomFilter";
 
 import { TimeDuration, TitleTab } from "./styles";
 
@@ -34,9 +36,10 @@ interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
   page: number;
   size: number;
+  voteId?: string | number;
 }
 
-const TABS: TabPoolDetail[] = ["epochs", "delegators", "certificatesHistory"];
+const TABS: TabPoolDetail[] = ["epochs", "delegators", "certificatesHistory", "governanceVotes"];
 
 const DelegationDetail: React.FC = () => {
   const { t } = useTranslation();
@@ -44,12 +47,11 @@ const DelegationDetail: React.FC = () => {
   const { search, state } = useLocation<{ fromPath?: SpecialPath }>();
   const history = useHistory();
   const query = parse(search.split("?")[1]);
-  const tab: TabPoolDetail = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
+  const tab: TabPoolDetail | "" = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
-
   useEffect(() => {
     if (Object.keys(query).length === 0) {
       setQuery({ tab: "epochs", page: 1, size: 50 });
@@ -99,6 +101,13 @@ const DelegationDetail: React.FC = () => {
     tab === "certificatesHistory" ? blockKey : undefined
   );
 
+  const fetchDataGovernanceVotes = useFetchList<CertificateHistory>(
+    `${API.POOL_CERTIFICATES_HISTORY}/${poolId}`,
+    { ...pageInfo },
+    false,
+    tab === "governanceVotes" ? blockKey : undefined
+  );
+
   useEffect(() => {
     document.title = `Delegation Pool ${poolId} | Cardano Blockchain Explorer`;
     window.scrollTo(0, 0);
@@ -130,7 +139,11 @@ const DelegationDetail: React.FC = () => {
       icon: StakeKeyHistoryIcon,
       label: t("epoch"),
       key: "epochs",
-      component: <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+      component: (
+        <div ref={tableRef}>
+          <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -151,11 +164,20 @@ const DelegationDetail: React.FC = () => {
           <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
         </div>
       )
+    },
+    {
+      icon: VotesIcon,
+      label: t("governanceVotes"),
+      key: "governanceVotes",
+      component: (
+        <div ref={tableRef}>
+          <DelegationGovernanceVotes />
+        </div>
+      )
     }
   ];
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
-
   const needBorderRadius = (currentKey: string) => {
     if (!tab) return "0";
     const indexCurrent = tabs.findIndex((item) => item.key === currentKey);
@@ -169,7 +191,7 @@ const DelegationDetail: React.FC = () => {
       if (newExpanded) {
         setTimeout(() => {
           tableRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 100);
+        }, 150);
         // Remove the event listener after the scroll
         tableRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
@@ -178,6 +200,21 @@ const DelegationDetail: React.FC = () => {
     // Attach the transitionend event listener to wait for the expansion animation
     tableRef?.current?.addEventListener("transitionend", handleTransitionEnd);
     setQuery({ tab: newExpanded ? panel : "", page: 1, size: 50 });
+  };
+
+  const getLastUpdatedTime = () => {
+    switch (tab) {
+      case "epochs":
+        return fetchDataEpochs.lastUpdated;
+      case "delegators":
+        return fetchDataDelegators.lastUpdated;
+      case "certificatesHistory":
+        return fetchDataCertificatesHistory.lastUpdated;
+      case "governanceVotes":
+        return fetchDataGovernanceVotes.lastUpdated;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -215,18 +252,13 @@ const DelegationDetail: React.FC = () => {
               </TitleTab>
             </AccordionSummary>
             <AccordionDetails>
-              <TimeDuration>
-                <FormNowMessage
-                  time={
-                    (tab === "epochs"
-                      ? fetchDataEpochs
-                      : tab === "delegators"
-                      ? fetchDataDelegators
-                      : fetchDataCertificatesHistory
-                    ).lastUpdated
-                  }
-                />
-              </TimeDuration>
+              {!query.voteId && (
+                <TimeDuration sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <FormNowMessage time={getLastUpdatedTime()} />
+                  <Box>{tab === "governanceVotes" && <CustomFilter searchLabel={""} />}</Box>
+                </TimeDuration>
+              )}
+
               {component}
             </AccordionDetails>
           </StyledAccordion>

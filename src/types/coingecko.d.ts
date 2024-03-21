@@ -6,6 +6,25 @@ interface CardanoMarket {
   total_supply: number;
   circulating_supply: number;
   last_updated: string;
+  ath: number;
+  ath_change_percentage: number;
+  ath_date: string;
+  atl: number;
+  atl_change_percentage: number;
+  atl_date: string;
+  fully_diluted_valuation: number;
+  high_24h: number;
+  id: string;
+  image: string;
+  low_24h: number;
+  market_cap_change_24h: string;
+  market_cap_change_percentage_24h: number;
+  market_cap_rank: number;
+  max_supply: number;
+  name: string;
+  roi: null;
+  symbol: string;
+  total_volume: number;
 }
 
 type dataFromCoinGecko = Array<{

@@ -214,7 +214,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={hash} isCopy />
+                  <DynamicEllipsisText value={hash} isCopy isSeparateCopyIcon isTooltip />
                 </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
