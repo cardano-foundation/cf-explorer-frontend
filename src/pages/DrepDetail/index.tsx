@@ -265,7 +265,7 @@ const DrepAccordion = () => {
           </AccordionSummary>
           <AccordionDetails>
             <TimeDuration>
-              <FormNowMessage time={"08/25/2024 13:39:41"} />
+              <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
             </TimeDuration>
             {component}
           </AccordionDetails>
