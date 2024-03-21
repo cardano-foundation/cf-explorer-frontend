@@ -23,7 +23,12 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
       <Grid container justifyContent="space-between">
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box maxWidth="400px">
-            <Typography fontWeight={600} fontSize="24px" lineHeight="28px" color={theme.palette.secondary.main}>
+            <Typography
+              fontWeight={600}
+              fontSize="24px"
+              lineHeight="28px"
+              color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+            >
               Governance Action Voting Name
             </Typography>
           </Box>
