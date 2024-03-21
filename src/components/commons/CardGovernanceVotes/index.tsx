@@ -21,56 +21,58 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
   return (
     <CardGovernanceVote>
       <Grid container justifyContent="space-between">
-        <Box maxWidth="400px">
-          <Typography fontWeight={600} fontSize="24px" lineHeight="28px">
-            Governance Action Voting Name
-          </Typography>
-          <Stack paddingTop="24px" spacing={"14px"}>
-            <Box display="flex" alignItems="center">
-              <Typography
-                fontWeight={600}
-                fontSize="16px"
-                lineHeight="18.75px"
-                color={theme.palette.secondary.light}
-                paddingRight="8px"
-              >
-                {t("pool.actionType")}:
-              </Typography>
-              <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
-                {t("pool.treasury")}
-              </Typography>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Typography
-                fontWeight={600}
-                fontSize="16px"
-                lineHeight="18.75px"
-                color={theme.palette.secondary.light}
-                paddingRight="8px"
-              >
-                {t("pool.status")}:
-              </Typography>
-              <GovernanceStatus status={status} />
-            </Box>
-            <Box display="flex" alignItems="center">
-              <Typography
-                fontWeight={600}
-                fontSize="16px"
-                lineHeight="18.75px"
-                color={theme.palette.secondary.light}
-                paddingRight="8px"
-              >
-                {t("pool.votingPower")}:
-              </Typography>
-              <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
-                1,893,565.321 ADA
-              </Typography>
-            </Box>
-          </Stack>
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <Box maxWidth="400px">
+            <Typography fontWeight={600} fontSize="24px" lineHeight="28px">
+              Governance Action Voting Name
+            </Typography>
+          </Box>
+          <div>
+            <VoteStatus status={vote} />
+          </div>
         </Box>
-        <div>
-          <VoteStatus status={vote} />
-        </div>
+        <Stack paddingTop="24px" spacing={"14px"}>
+          <Box display="flex" alignItems="center">
+            <Typography
+              fontWeight={600}
+              fontSize="16px"
+              lineHeight="18.75px"
+              color={theme.palette.secondary.light}
+              paddingRight="8px"
+            >
+              {t("pool.actionType")}:
+            </Typography>
+            <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
+              {t("pool.treasury")}
+            </Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Typography
+              fontWeight={600}
+              fontSize="16px"
+              lineHeight="18.75px"
+              color={theme.palette.secondary.light}
+              paddingRight="8px"
+            >
+              {t("pool.status")}:
+            </Typography>
+            <GovernanceStatus status={status} />
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Typography
+              fontWeight={600}
+              fontSize="16px"
+              lineHeight="18.75px"
+              color={theme.palette.secondary.light}
+              paddingRight="8px"
+            >
+              {t("pool.votingPower")}:
+            </Typography>
+            <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
+              1,893,565.321 ADA
+            </Typography>
+          </Box>
+        </Stack>
       </Grid>
     </CardGovernanceVote>
   );

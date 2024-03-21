@@ -1029,7 +1029,7 @@
   "pool.votingPowerADA": "Voting Power ADA",
   "pool.submission": "Submission Date",
   "pool.expiryDate": "Expiry Date",
-  "pool.anchorText": "Anchor Text"
+  "pool.anchorText": "Anchor Text",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check"
 }
