@@ -223,6 +223,7 @@ import ExpiryIcon from "./icons/expiry-date.svg?react";
 import AnchorTextIcon from "./icons/anchor-text.svg?react";
 import BlackWarningIcon from "./icons/warning-black.svg?react";
 import BlackCircleIcon from "./icons/black-cirle-copy.svg?react";
+import DropdownIcon from "./icons/dropdown.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -448,7 +449,8 @@ export {
   ExpiryIcon,
   AnchorTextIcon,
   BlackWarningIcon,
-  BlackCircleIcon
+  BlackCircleIcon,
+  DropdownIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
