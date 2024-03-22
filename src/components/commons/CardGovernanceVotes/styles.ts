@@ -2,9 +2,10 @@ import { Box, Typography, styled } from "@mui/material";
 
 export const CardGovernanceVote = styled(Box)`
   padding: 20px;
-  border-radius: "8px";
+  border-radius: 8px;
   cursor: pointer;
   box-shadow: 2px 2px 10px 0px #43465633;
+  background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : "")};
   &:hover {
     box-shadow: ${({ theme }) =>
       theme.isDark ? ` 2px 2px 10px 0px ${theme.palette.secondary[100]}` : theme.shadow.cardHover};
