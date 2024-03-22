@@ -72,6 +72,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  isSeparateCopyIcon?: boolean;
   whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);

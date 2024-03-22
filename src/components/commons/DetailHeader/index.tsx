@@ -62,13 +62,15 @@ export interface DetailHeaderProps {
   bookmarkData?: string;
   loading: boolean;
   title: React.ReactNode;
+  subTitle?: React.ReactNode;
   lastUpdated?: number;
   hash?: string;
   transactionStatus?: TransactionStatus;
   stakeKeyStatus?: StakeStatus;
   epoch?: DetailHeaderBlock | null;
-  listItem: {
+  listItem?: {
     icon?: React.FunctionComponent<React.SVGAttributes<SVGElement>> | string;
+    sizeIcon?: number;
     title: React.ReactNode;
     value?: React.ReactNode;
     strokeColor?: string;
@@ -98,7 +100,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     isHideButtonBack,
     lastUpdated,
     isClickAble,
-    redirectAction
+    redirectAction,
+    subTitle
   } = props;
 
   const history = useHistory();
@@ -128,7 +131,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
 
   const hashLabel = getHashLabel();
 
-  const numberOfItems = listItem.length;
+  const numberOfItems = (listItem || [])?.length;
   const itemOnRow = isDetailToken ? 5 : 4;
 
   const handleClickItem = (link: string) => {
@@ -211,10 +214,15 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={hash} isCopy />
+                  <DynamicEllipsisText value={hash} isCopy isSeparateCopyIcon isTooltip />
                 </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
+          )}
+          {subTitle && (
+            <Box mb={"10px"} fontSize={14} color={theme.palette.secondary.main}>
+              {subTitle}
+            </Box>
           )}
           <TimeDuration>
             <FormNowMessage time={lastUpdated} />
@@ -249,7 +257,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         )}
       </WrapHeader>
       <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
-        {listItem.map((item, index) => {
+        {(listItem || [])?.map((item, index) => {
           const keyItem = item.key || "";
           return (
             <CardItem
@@ -272,7 +280,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                       fill={!item.strokeColor ? theme.palette.secondary.main : ""}
                       stroke={item.strokeColor ? theme.palette.secondary.main : ""}
                       icon={item.icon}
-                      height={22}
+                      height={item?.sizeIcon || 22}
                     />
                   )
                 ) : null}

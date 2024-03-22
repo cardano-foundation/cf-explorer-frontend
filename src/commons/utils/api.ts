@@ -31,6 +31,7 @@ export const API = {
   SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
+  DREP_CERTIFICATES_HISTORY: "dreps/:drepId/certificates-history",
 
   TOKEN: {
     LIST: "tokens",

@@ -37,6 +37,8 @@ import {
 } from "./styles";
 import { StyledDropdownItem } from "../ProtocolParameter/styles";
 
+const TRX_PURPOSE = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE", "PROPOSE", "VOTE"];
+
 const TabSmartContracts = () => {
   const { search, pathname } = useLocation();
   const history = useHistory();
@@ -47,7 +49,7 @@ const TabSmartContracts = () => {
   const [filterOption, { push: pushFilterOption, removeAt: removeAtFilterOption, clear }] = useList<string>(
     (pageInfo.txPurpose || "").split(",").length === 0 ||
       ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
-      ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
+      ? TRX_PURPOSE
       : (pageInfo.txPurpose || "").split(",")
   );
 
@@ -72,7 +74,7 @@ const TabSmartContracts = () => {
     pushFilterOption(
       ...((pageInfo.txPurpose || "").split(",").length === 0 ||
       ((pageInfo.txPurpose || "").split(",").length === 1 && (pageInfo.txPurpose || "").split(",")[0] === "")
-        ? ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"]
+        ? TRX_PURPOSE
         : (pageInfo.txPurpose || "").split(","))
     );
   }, [JSON.stringify(pageInfo), pathname]);
@@ -104,7 +106,7 @@ const TabSmartContracts = () => {
     if (fetchData.loading) {
       return (
         <Box component={Grid} container spacing={2}>
-          {[...new Array(size)].map((_, idx) => (
+          {[...new Array(size).fill(0)].map((_, idx) => (
             <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box component={Skeleton} variant="rectangular" height={"145px"} borderRadius={2} />
             </Grid>
@@ -222,14 +224,16 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState<string | false>("");
-  const transactionPurpose = ["SPEND", "MINT", "CERT", "REWARD", "NO_TX_PURPOSE"];
+  const transactionPurpose = TRX_PURPOSE;
   const transactionPurposeI18n: Record<string, string> = {
     ANY: t("smartContract.selectAll"),
     SPEND: t("smartContract.spend"),
     MINT: t("smartContract.mint"),
     REWARD: t("smartContract.reward"),
     CERT: t("smartContract.cert"),
-    NO_TX_PURPOSE: t("smartContract.noTransactionPurpose")
+    NO_TX_PURPOSE: t("smartContract.noTransactionPurpose"),
+    VOTE: t("smartContract.voting"),
+    PROPOSE: t("smartContract.proposing")
   };
   const handleChooseVersion = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVersion((event.target as HTMLInputElement).value);
@@ -299,6 +303,17 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   />
                 }
                 label={<Box lineHeight={1}>{t("smartContract.plutusv2")}</Box>}
+              />
+              <FormControlLabel
+                value="PLUTUSV3"
+                control={
+                  <Radio
+                    sx={{
+                      color: theme.palette.secondary.light
+                    }}
+                  />
+                }
+                label={<Box lineHeight={1}>{t("smartContract.plutusv3")}</Box>}
               />
             </RadioGroup>
           </AccordionDetailsFilter>

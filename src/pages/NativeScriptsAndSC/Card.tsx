@@ -118,6 +118,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
                 </Box>
               );
             })}
+
           {(data.numberOfTokens || 0) > (data.tokens || []).length && (
             <Box
               display={"block"}
@@ -155,7 +156,8 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {
     PLUTUSV1: "Plutus V1",
-    PLUTUSV2: "Plutus V2"
+    PLUTUSV2: "Plutus V2",
+    PLUTUSV3: "Plutus V3"
   };
 
   return (
@@ -284,35 +286,40 @@ export const MultiSigChip: React.FC<{ isMultiSig: boolean }> = ({ isMultiSig }) 
 };
 
 export const ChipContainer: React.FC<{
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
-  message?: string;
+  Icon?: string | FunctionComponent<SVGProps<SVGSVGElement>>;
+  message?: string | JSX.Element;
   titleTooltip?: string;
-  variant?: "success" | "warning" | "info";
+  variant?: "success" | "warning" | "info" | "error";
   messageColor?: string;
 }> = ({ Icon, message, variant, titleTooltip, messageColor }) => {
   const theme = useTheme();
 
-  const color = (variant?: "success" | "warning" | "info") => {
+  const color = (variant?: "success" | "warning" | "info" | "error") => {
     switch (variant) {
       case "success":
         return theme.palette.success[700];
       case "info":
-        return theme.isDark ? theme.palette.primary[500] : theme.palette.secondary[600];
+        return theme.isDark ? theme.palette.primary[500] : theme.palette.primary.main;
       case "warning":
         return theme.palette.warning[700];
+      case "error":
+        return theme.palette.error[700];
       default:
         return theme.palette.success[700];
     }
   };
 
-  const backgroundColor = (variant?: "success" | "warning" | "info") => {
+  const backgroundColor = (variant?: "success" | "warning" | "info" | "error") => {
     switch (variant) {
       case "success":
         return theme.palette.success[100];
       case "info":
-        return theme.palette.primary[100];
+        return theme.palette.primary[200];
       case "warning":
         return theme.palette.warning[100];
+      case "error":
+        return theme.palette.error[100];
+
       default:
         return theme.palette.success[100];
     }
