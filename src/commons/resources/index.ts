@@ -199,6 +199,13 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import DescriptonDrepIcon from "./icons/descriptonDrep.svg?react";
+import CreateDrepIcon from "./icons/createdrep.svg?react";
+import ActiveVoteIcon from "./icons/activeVote.svg?react";
+import LiveStakeDrepIcon from "./icons/liveStake.svg?react";
+import DelegatorsDrepIcon from "./icons/delegatorsDrep.svg?react";
+import LifetimeVoteDrepIcon from "./icons/liifetimeVoteDrep.svg?react";
+import governanceVotesIcon from "./icons/governanceVotes.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
 import VotesIcon from "./icons/votes.svg?react";
 import VotesYesIcon from "./icons/voteYes.svg?react";
@@ -420,6 +427,13 @@ export {
   DarkModeMobile,
   VerifiedIcon,
   InvalidIcon,
+  DescriptonDrepIcon,
+  CreateDrepIcon,
+  ActiveVoteIcon,
+  LiveStakeDrepIcon,
+  DelegatorsDrepIcon,
+  LifetimeVoteDrepIcon,
+  governanceVotesIcon,
   VotesIcon,
   VotesYesIcon,
   VotesNoIcon,

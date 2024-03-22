@@ -1,27 +1,29 @@
-import styled from "@emotion/styled";
+import React, { useState } from "react";
 import {
   Box,
+  useTheme,
+  styled,
   Button,
+  Typography,
   ButtonGroup,
-  Chip,
   Grid,
   TableBody,
   Table as TableMui,
   TableRow,
-  Tooltip,
   TooltipProps,
-  Typography,
+  Tooltip,
   tooltipClasses,
-  useTheme,
   TableCell,
   TableContainer,
-  TableHead
+  TableHead,
+  Chip
 } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
+import { DREP_ACTION_TYPE, POOL_ACTION_TYPE } from "src/commons/utils/constants";
+import { details } from "src/commons/routers";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -43,8 +45,6 @@ import {
   VotesYesIcon,
   VotingPowerIcon
 } from "src/commons/resources";
-import { details } from "src/commons/routers";
-import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -277,24 +277,26 @@ const DelegationCertificatesHistory = ({
     history.replace({ search: stringify(query) }, history.location.state);
   };
 
-  const renderAction = (type: POOL_ACTION_TYPE) => {
-    if (type === POOL_ACTION_TYPE.POOL_REGISTRATION) {
+  const renderAction = (type: POOL_ACTION_TYPE | DREP_ACTION_TYPE) => {
+    if (type === POOL_ACTION_TYPE.POOL_REGISTRATION || type === DREP_ACTION_TYPE.REG_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Registration">
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Drep Registration"}>
           {theme.isDark ? <PoolResgistrationHistoryDark /> : <PoolResgistrationHistory />}
         </CustomTooltip>
       );
     }
-    if (type === POOL_ACTION_TYPE.POOL_UPDATE) {
+    if (type === POOL_ACTION_TYPE.POOL_UPDATE || type === DREP_ACTION_TYPE.UPDATE_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Update">
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Drep Update"}>
           {theme.isDark ? <PoolUpdateHistoryDark /> : <PoolUpdateHistory />}
         </CustomTooltip>
       );
     }
-    if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION) {
+    if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION || type === DREP_ACTION_TYPE.UNREG_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Deregistration">
+        <CustomTooltip
+          title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Drep Deregistration"}
+        >
           {theme.isDark ? <PoolDeresgistrationHistoryDark /> : <PoolDeresgistrationHistory />}
         </CustomTooltip>
       );
@@ -337,13 +339,15 @@ const DelegationCertificatesHistory = ({
       title: t("common.slot"),
       key: "slot",
       minWidth: "90px",
-      render: (data) => <>{data.epochSlotNo}</>
+      render: (data) => <>{data.epochSlotNo || data.slotNo}</>
     },
     {
       title: t("certificatesHistory.absoluteSlot"),
       key: "absoluteSlot",
       minWidth: "130px",
-      render: (data) => <>{data.slotNo}</>
+      render: (data) => {
+        return <>{data.slotNo}</>;
+      }
     },
     {
       title: t("common.action"),
@@ -352,8 +356,8 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions &&
-              removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE, idx) => (
+            {(data.actions || data.actionTypes) &&
+              removeDuplicate(data.actions || data.actionTypes).map((action: POOL_ACTION_TYPE, idx) => (
                 <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>
               ))}
           </Box>
