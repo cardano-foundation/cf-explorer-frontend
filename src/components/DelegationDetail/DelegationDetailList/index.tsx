@@ -428,7 +428,13 @@ const DelegationGovernanceVotes = () => {
           >
             <ArrowLeftWhiteIcon />
           </Button>
-          <Typography m="auto" fontSize="32px" fontWeight={600} lineHeight="28px">
+          <Typography
+            m="auto"
+            fontSize="32px"
+            fontWeight={600}
+            lineHeight="28px"
+            color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+          >
             Governance Action Voting Name
           </Typography>
         </Box>
@@ -438,7 +444,14 @@ const DelegationGovernanceVotes = () => {
             <TabButton tabName="overall">{t("common.overall")}</TabButton>
           </ButtonGroup>
           <Box display="flex" justifyContent="center">
-            <Typography fontSize="14px" fontWeight={400} lineHeight="16.41px" pt="16px" width="400px">
+            <Typography
+              fontSize="14px"
+              fontWeight={400}
+              lineHeight="16.41px"
+              pt="16px"
+              width="400px"
+              color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+            >
               {tab === "pool"
                 ? "The vote cast on the blockchain by Pool Name."
                 : "Votes cast on the blockchain by Delegated Representatives (DReps), Stake Pool Operators (SPOs), and members of the Constitutional Committee."}
