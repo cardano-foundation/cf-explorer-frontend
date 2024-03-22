@@ -30,6 +30,7 @@ import {
   FilterIcon,
   GovernanceIdIcon,
   RepeatVotesIcon,
+  ResetIcon,
   StakeKeyHistoryIcon,
   StakingDelegators,
   TimelineIconComponent,
@@ -51,6 +52,7 @@ import {
 import DelegationDetailOverview from "src/components/DelegationDetail/DelegationDetailOverview";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
+import { ApplyFilterButton } from "src/components/commons/CustomFilter/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import NoRecord from "src/components/commons/NoRecord";
@@ -367,7 +369,13 @@ const FilterGovernanceVotes: React.FC = () => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const currentStatusList = [t("pool.any"), t("pool.open"), t("pool.ratified"), t("pool.enacted"), t("pool.dropped")];
+  const currentStatusList = [
+    { value: "open", text: t("pool.any") },
+    { value: "any", text: t("pool.open") },
+    { value: "ratified", text: t("pool.ratified") },
+    { value: "enacted", text: t("pool.enacted") },
+    { value: "dropped", text: t("pool.dropped") }
+  ];
   const voteList = [t("pool.any"), t("pool.yes"), t("pool.no"), t("pool.abstain"), t("pool.none")];
   const actionTypeList = [
     t("pool.typeMotion"),
@@ -532,10 +540,11 @@ const FilterGovernanceVotes: React.FC = () => {
               // value={openTimeLocked}
               // onChange={handleChooseTimeLoked}
             >
-              {currentStatusList.map((value) => (
+              {currentStatusList.map((i) => (
                 <FormControlLabel
-                  key={value}
-                  value={value}
+                  key={i.value}
+                  value={i.value}
+                  defaultValue={"any"}
                   control={
                     <Radio
                       sx={{
@@ -553,7 +562,7 @@ const FilterGovernanceVotes: React.FC = () => {
                       textOverflow="ellipsis"
                       maxWidth="15rem"
                     >
-                      {value}
+                      {i.text}
                     </Typography>
                   }
                 />
@@ -644,6 +653,33 @@ const FilterGovernanceVotes: React.FC = () => {
             </Box>
           </Box>
         </AccordionSummary>
+        <Box my={1} p="0px 16px">
+          <ApplyFilterButton
+            data-testid="apply-filters"
+            // onClick={() => {
+            //   if (onSubmit) {
+            //     onSubmit?.({ ...params, search: search });
+            //     history.replace({ search: stringify({ page, size, sort: params?.sort }) });
+            //     setOpenSearch(false);
+            //     setOpen(false);
+            //   }
+            // }}
+          >
+            {t("common.applyFilters")}
+          </ApplyFilterButton>
+        </Box>
+        <Box
+          component={Button}
+          width={"100%"}
+          textTransform={"capitalize"}
+          display={"flex"}
+          alignItems={"center"}
+          color={({ palette }) => `${palette.primary.main} !important`}
+          // onClick={handleReset}
+        >
+          <Box mr={1}>{t("common.reset")}</Box>
+          <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+        </Box>
       </Box>
     </FilterContainer>
   );

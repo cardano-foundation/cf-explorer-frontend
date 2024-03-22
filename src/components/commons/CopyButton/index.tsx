@@ -22,10 +22,21 @@ interface CopyButtonProps extends IconButtonProps {
   className?: string;
   children?: React.ReactNode;
   customIcon?: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  height?: number;
+  fill?: string;
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, customIcon, ...props }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({
+  text = "",
+  height,
+  onClick,
+  fill,
+  children,
+  placement,
+  customIcon,
+  ...props
+}) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
   const [open, setOpen] = useState<boolean>(false);
@@ -66,7 +77,11 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
               style={{ verticalAlign: "text-bottom", scale: "2", height: 16 }}
             />
           ) : (
-            <CustomIcon fill={theme.palette.secondary.light} icon={customIcon || CopyIconSquare} height={16} />
+            <CustomIcon
+              fill={fill ? fill : theme.palette.secondary.light}
+              icon={customIcon || CopyIconSquare}
+              height={height ? height : 16}
+            />
           ))}
       </Button>
     </CustomTooltip>
