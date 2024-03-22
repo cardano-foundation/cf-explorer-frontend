@@ -237,23 +237,21 @@ const DelegationCertificatesHistory = ({
   const renderAction = (type: POOL_ACTION_TYPE | DREP_ACTION_TYPE) => {
     if (type === POOL_ACTION_TYPE.POOL_REGISTRATION || type === DREP_ACTION_TYPE.REG_DREP_CERT) {
       return (
-        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Drep Registration"}>
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Registration"}>
           {theme.isDark ? <PoolResgistrationHistoryDark /> : <PoolResgistrationHistory />}
         </CustomTooltip>
       );
     }
     if (type === POOL_ACTION_TYPE.POOL_UPDATE || type === DREP_ACTION_TYPE.UPDATE_DREP_CERT) {
       return (
-        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Drep Update"}>
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Delegation"}>
           {theme.isDark ? <PoolUpdateHistoryDark /> : <PoolUpdateHistory />}
         </CustomTooltip>
       );
     }
     if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION || type === DREP_ACTION_TYPE.UNREG_DREP_CERT) {
       return (
-        <CustomTooltip
-          title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Drep Deregistration"}
-        >
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Retirement"}>
           {theme.isDark ? <PoolDeresgistrationHistoryDark /> : <PoolDeresgistrationHistory />}
         </CustomTooltip>
       );

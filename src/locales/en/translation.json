@@ -558,6 +558,7 @@
   "common.poolSize": "Pool size",
   "common.yes": "Yes",
   "common.no": "No",
+  "common.abstain": "Abstain",
   "common.poolReportByEvent": "Pool Report by event",
   "common.select as required": "Select as required",
   "common.all": "All",

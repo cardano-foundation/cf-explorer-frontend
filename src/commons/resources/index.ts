@@ -207,6 +207,10 @@ import DelegatorsDrepIcon from "./icons/delegatorsDrep.svg?react";
 import LifetimeVoteDrepIcon from "./icons/liifetimeVoteDrep.svg?react";
 import governanceVotesIcon from "./icons/governanceVotes.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
+import VotesYesIcon from "./icons/voteYes.svg?react";
+import VotesNoIcon from "./icons/voteNo.svg?react";
+import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
+import DropdownIcon from "./icons/dropdown.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -415,7 +419,11 @@ export {
   LiveStakeDrepIcon,
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
-  governanceVotesIcon
+  governanceVotesIcon,
+  VotesYesIcon,
+  VotesNoIcon,
+  VotesAbstainIcon,
+  DropdownIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
