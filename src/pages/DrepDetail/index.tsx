@@ -69,9 +69,6 @@ const DrepDetail = () => {
   const history = useHistory();
 
   const [typeVote, setTypeVote] = useState("ALL");
-  const handleChange = (event) => {
-    setTypeVote(event.target.value);
-  };
   const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote}`
@@ -147,7 +144,9 @@ const DrepDetail = () => {
           </TitleCard>
           <StyledSelect
             value={typeVote}
-            onChange={handleChange}
+            onChange={(event) => {
+              setTypeVote(event.target?.value as string);
+            }}
             size="small"
             IconComponent={DropdownIcon}
             sx={{
