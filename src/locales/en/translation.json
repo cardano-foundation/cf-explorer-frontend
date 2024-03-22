@@ -307,6 +307,8 @@
   "saturation": "Saturation",
   "fixedCost": "Fixed Cost",
   "margin": "Margin",
+  "votingPower": "Voting Power",
+  "governanceParticipationRate": "Governance Participation Rate",
   "declaredPledge": "Declared Pledge",
   "epochBlocks": "Epoch Blocks",
   "lifetimeBlocks": "Lifetime Blocks",
@@ -1013,5 +1015,5 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-  "account.myProfile":"My Profile"
+  "account.myProfile": "My Profile"
 }
