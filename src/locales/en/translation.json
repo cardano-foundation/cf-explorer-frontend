@@ -307,6 +307,8 @@
   "saturation": "Saturation",
   "fixedCost": "Fixed Cost",
   "margin": "Margin",
+  "votingPower": "Voting Power",
+  "governanceParticipationRate": "Governance Participation Rate",
   "declaredPledge": "Declared Pledge",
   "epochBlocks": "Epoch Blocks",
   "lifetimeBlocks": "Lifetime Blocks",
