@@ -1020,5 +1020,6 @@
   "drep.votingParticipation": "Voting Participation",
   "drep.lifetimeVotes": "Lifetime Votes",
   "drep.governanceVotes": "Governance Votes",
-  "drep.certificatesHistory": "Drep Certificates History"
+  "drep.certificatesHistory": "Drep Certificates History",
+  "status.inActive": "INACTIVE"
 }

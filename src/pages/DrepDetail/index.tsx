@@ -2,8 +2,19 @@ import { useEffect, useRef } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AccordionDetails, AccordionSummary, Box, useTheme } from "@mui/material";
+import {
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Tooltip,
+  TooltipProps,
+  Typography,
+  styled,
+  tooltipClasses,
+  useTheme
+} from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { t } from "i18next";
 
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -26,11 +37,23 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { getPageInfo } from "src/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import {
+  BackButton,
+  BackText,
+  HeaderDetailContainer
+} from "src/components/DelegationDetail/DelegationDetailInfo/styles";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import { StyledContainer, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
 const DrepDetail = () => {
+  const { drepId } = useParams<{ drepId: string }>();
+  const theme = useTheme();
+  const history = useHistory();
+  const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+
   const listOverview = [
     {
       icon: DescriptonDrepIcon,
@@ -40,7 +63,7 @@ const DrepDetail = () => {
           {t("drep.des")}
         </TitleCard>
       ),
-      value: <ValueCard>Whatever the anchor text string is for this action</ValueCard>
+      value: <ValueCard>{data?.anchorUrl}</ValueCard>
     },
     {
       icon: CreateDrepIcon,
@@ -50,7 +73,7 @@ const DrepDetail = () => {
           {t("createdAt")}
         </TitleCard>
       ),
-      value: <ValueCard>08/25/2024 13:39:41</ValueCard>
+      value: <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
     },
     {
       icon: ActiveVoteIcon,
@@ -60,7 +83,7 @@ const DrepDetail = () => {
           {t("drep.activeVoteStake")}
         </TitleCard>
       ),
-      value: <ValueCard>893,565.321 ADA</ValueCard>
+      value: <ValueCard>{formatADA(data?.activeVoteStake || 0)} ADA</ValueCard>
     },
     {
       icon: LiveStakeDrepIcon,
@@ -70,7 +93,7 @@ const DrepDetail = () => {
           {t("drep.liveStake")}
         </TitleCard>
       ),
-      value: <ValueCard>893,565.321 ADA</ValueCard>
+      value: <ValueCard>{formatADA(data?.liveStake || 0)} ADA</ValueCard>
     },
     {
       icon: DelegatorsDrepIcon,
@@ -80,7 +103,7 @@ const DrepDetail = () => {
           {t("glossary.delegators")}
         </TitleCard>
       ),
-      value: <ValueCard>50</ValueCard>
+      value: <ValueCard>{data?.delegators} </ValueCard>
     },
     {
       icon: CreateDrepIcon,
@@ -90,7 +113,7 @@ const DrepDetail = () => {
           {t("drep.votingParticipation")}
         </TitleCard>
       ),
-      value: <ValueCard>70%</ValueCard>
+      value: <ValueCard>{data?.votingParticipation}%</ValueCard>
     },
     {
       icon: LifetimeVoteDrepIcon,
@@ -100,10 +123,34 @@ const DrepDetail = () => {
           {t("drep.lifetimeVotes")}
         </TitleCard>
       ),
-      value: `1`
+      value: (
+        <Box>
+          <VoteRate />
+        </Box>
+      )
     }
   ];
-
+  if (loading) {
+    return (
+      <StyledContainer>
+        <HeaderDetailContainer>
+          <BackButton onClick={history.goBack}>
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
+            <BackText>{t("common.back")}</BackText>
+          </BackButton>
+          <Box borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={80} width="100%" />
+          </Box>
+          <Box mt={2} borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={250} width="100%" />
+          </Box>
+          <Box mt={4} borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={250} width="100%" />
+          </Box>
+        </HeaderDetailContainer>
+      </StyledContainer>
+    );
+  }
   return (
     <StyledContainer>
       <DetailHeader
@@ -112,8 +159,8 @@ const DrepDetail = () => {
         loading={false}
         listItem={listOverview}
         bookmarkData={"1"}
-        subTitle="Type: Pre-Defined Drep"
-        stakeKeyStatus="ACTIVE"
+        subTitle={`Type: ${data?.type || ""}`}
+        stakeKeyStatus={data?.status}
       />
       <DrepAccordion />
     </StyledContainer>
@@ -274,3 +321,74 @@ const DrepAccordion = () => {
     </Box>
   );
 };
+
+const VoteRate = () => {
+  const theme = useTheme();
+
+  return (
+    <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
+      <VoteBar
+        percentage={93}
+        color={theme.palette.success[700]}
+        // icon={<VotesYesIcon />}
+        label={t("common.yes")}
+      />
+      <VoteBar
+        percentage={7}
+        color={theme.palette.warning[700]}
+        // icon={<VotesAbstainIcon />}
+        label={t("common.abstain")}
+      />
+      <VoteBar
+        percentage={0}
+        color={theme.palette.error[700]}
+        //  icon={<VotesNoIcon />}
+        label={t("common.no")}
+      />
+    </Box>
+  );
+};
+
+const VoteBar = ({
+  percentage,
+  color,
+  icon,
+  label
+}: {
+  percentage: number;
+  color: string;
+  icon?: JSX.Element;
+  label: string;
+}) => (
+  <Box display="flex" flexDirection="column" alignItems="center">
+    <Typography fontSize="10px" fontWeight={400}>
+      {percentage}%
+    </Typography>
+    <LightTooltip
+      title={
+        <Box height="39px" display="flex" alignItems="center" gap="8px">
+          {icon}
+          <Typography fontSize="12px" fontWeight={600}>
+            3,443,875.343 ADA (94%)
+          </Typography>
+        </Box>
+      }
+      placement="right"
+    >
+      <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
+    </LightTooltip>
+    <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
+      {label}
+    </Typography>
+  </Box>
+);
+
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.primary[200],
+    color: "rgba(0, 0, 0, 0.87)",
+    fontSize: 11
+  }
+}));
