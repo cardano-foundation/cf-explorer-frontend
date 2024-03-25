@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.0.0...v1.0.0) (2024-03-25)
+
+
+### Features
+
+* fixed publish job configuration to prevent from running when dependabot trigger build ([f710f9f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f710f9ff3b38828b4f2d034313a32d05b15d75b6))
+
 ## [1.0.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v0.9.0...v1.0.0) (2024-03-21)
 
 
