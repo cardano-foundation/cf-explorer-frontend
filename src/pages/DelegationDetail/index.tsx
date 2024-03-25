@@ -6,9 +6,9 @@ import {
   Radio,
   RadioGroup,
   Switch,
-  Tooltip,
   Typography,
-  useTheme
+  useTheme,
+  Menu
 } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -78,7 +78,6 @@ const DelegationDetail: React.FC = () => {
   const query = parse(search.split("?")[1]);
   const tab: TabPoolDetail | "" = TABS.includes(query.tab as TabPoolDetail) ? (query.tab as TabPoolDetail) : "";
   const pageInfo = getPageInfo(search);
-  const [showFilter, setShowFiter] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
@@ -285,54 +284,7 @@ const DelegationDetail: React.FC = () => {
               {!query.voteId && (
                 <TimeDuration sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <FormNowMessage time={getLastUpdatedTime()} />
-                  <Box>
-                    {tab === "governanceVotes" && (
-                      <Box
-                      // onBlur={() => {
-                      //   setShowFiter(false);
-                      // }}
-                      >
-                        <Box position={"relative"} mb={2} textAlign={"right"}>
-                          <Box
-                            component={Button}
-                            variant="text"
-                            px={2}
-                            textTransform={"capitalize"}
-                            bgcolor={({ palette, mode }) =>
-                              mode === "dark" ? palette.secondary[100] : palette.primary[200]
-                            }
-                            border={({ palette, mode }) =>
-                              `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`
-                            }
-                            onClick={() => setShowFiter(!showFilter)}
-                            sx={{
-                              ":hover": {
-                                bgcolor:
-                                  theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
-                              }
-                            }}
-                          >
-                            <CustomIcon
-                              icon={FilterIcon}
-                              fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
-                              height={18}
-                            />
-                            <Box
-                              ml={1}
-                              whiteSpace={"nowrap"}
-                              fontWeight={"bold"}
-                              color={({ palette, mode }) =>
-                                mode === "dark" ? palette.primary.main : palette.secondary.light
-                              }
-                            >
-                              {t("common.filter")}
-                            </Box>
-                          </Box>
-                          {showFilter && <FilterGovernanceVotes />}
-                        </Box>
-                      </Box>
-                    )}
-                  </Box>
+                  <Box>{tab === "governanceVotes" && <FilterGovernanceVotes />}</Box>
                 </TimeDuration>
               )}
 
@@ -370,317 +322,383 @@ const FilterGovernanceVotes: React.FC = () => {
   };
 
   const currentStatusList = [
-    { value: "open", text: t("pool.any") },
-    { value: "any", text: t("pool.open") },
+    { value: "any", text: t("pool.any") },
+    { value: "open", text: t("pool.open") },
     { value: "ratified", text: t("pool.ratified") },
     { value: "enacted", text: t("pool.enacted") },
     { value: "dropped", text: t("pool.dropped") }
   ];
-  const voteList = [t("pool.any"), t("pool.yes"), t("pool.no"), t("pool.abstain"), t("pool.none")];
-  const actionTypeList = [
-    t("pool.typeMotion"),
-    t("pool.typeConstitutional"),
-    t("pool.typeUpdate"),
-    t("pool.typeHardFork"),
-    t("pool.typeProtocol"),
-    t("pool.typeTreasury"),
-    t("pool.typeInfo")
+
+  const voteList = [
+    { value: "any", text: t("pool.any") },
+    { value: "yes", text: t("pool.yes") },
+    { value: "no", text: t("pool.no") },
+    { value: "abstain", text: t("pool.abstain") },
+    { value: "none", text: t("pool.none") }
   ];
 
-  return (
-    <FilterContainer>
-      <Box display={"flex"} flexDirection={"column"}>
-        <Box component={ButtonSort} p="0px 16px" height="48px">
-          <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
-            <Box display="flex">
-              <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
-              <Typography fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                {t("pool.repeatVotes")}
-              </Typography>
-            </Box>
-            <Switch defaultChecked />
-          </Box>
-          {/* {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />} */}
-        </Box>
-        <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
-          <AccordionSummary>
-            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={GovernanceIdIcon} fill={theme.palette.secondary.light} height={18} />
-                <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("pool.actionId")}
-                </Box>
-              </Box>
-              <Box>
-                {expanded === "action-id" ? (
-                  <IoIosArrowUp color={theme.palette.secondary.main} />
-                ) : (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                )}
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetailsFilter sx={{ background: "unset" }}>
-            <StyledInput
-              // inputRef={inputRef}
-              placeholder={"Search ID"}
-              value={search}
-              onChange={({ target: { value } }) => setSearch(value)}
-            />
-          </AccordionDetailsFilter>
-        </AccordionContainer>
-        <AccordionContainer expanded={expanded === "anchor-text"} onChange={handleChange("anchor-text")}>
-          <AccordionSummary>
-            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={AnchorTextIcon} fill={theme.palette.secondary.light} height={18} />
-                <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("pool.anchorText")}
-                </Box>
-              </Box>
-              <Box>
-                {expanded === "anchor-text" ? (
-                  <IoIosArrowUp color={theme.palette.secondary.main} />
-                ) : (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                )}
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetailsFilter sx={{ background: "unset" }}>
-            <Box sx={{ p: "0px 16px" }}>
-              <TextareaAutosize
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder={t("pool.searchAnchorText")}
-              />
-            </Box>
-          </AccordionDetailsFilter>
-        </AccordionContainer>
-        <AccordionContainer expanded={expanded === "action-type"} onChange={handleChange("action-type")}>
-          <AccordionSummary>
-            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={ActionTypeIcon} fill={theme.palette.secondary.main} height={18} />
-                <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("pool.actionType")}
-                </Box>
-              </Box>
-              <Box>
-                {expanded === "action-type" ? (
-                  <IoIosArrowUp color={theme.palette.secondary.main} />
-                ) : (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                )}
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetailsFilter>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ p: "0px 16px" }}
-              // value={openTimeLocked}
-              // onChange={handleChooseTimeLoked}
-            >
-              {actionTypeList.map((value) => (
-                <FormControlLabel
-                  key={value}
-                  value={value}
-                  control={
-                    <Radio
-                      sx={{
-                        color: theme.palette.secondary.light
-                      }}
-                    />
-                  }
-                  label={
-                    <Tooltip title={value} placement="top">
-                      <Typography
-                        fontSize="16px"
-                        fontWeight={400}
-                        lineHeight={1}
-                        noWrap
-                        overflow="hidden"
-                        textOverflow="ellipsis"
-                        maxWidth="15rem"
-                      >
-                        {value}
-                      </Typography>
-                    </Tooltip>
-                  }
-                />
-              ))}
-            </RadioGroup>
-          </AccordionDetailsFilter>
-        </AccordionContainer>
-        <AccordionContainer expanded={expanded === "current-status"} onChange={handleChange("current-status")}>
-          <AccordionSummary>
-            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={18} />
-                <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("pool.currentStatus")}
-                </Box>
-              </Box>
-              <Box>
-                {expanded === "current-status" ? (
-                  <IoIosArrowUp color={theme.palette.secondary.main} />
-                ) : (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                )}
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetailsFilter>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ p: "0px 16px" }}
-              // value={openTimeLocked}
-              // onChange={handleChooseTimeLoked}
-            >
-              {currentStatusList.map((i) => (
-                <FormControlLabel
-                  key={i.value}
-                  value={i.value}
-                  defaultValue={"any"}
-                  control={
-                    <Radio
-                      sx={{
-                        color: theme.palette.secondary.light
-                      }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      fontSize="16px"
-                      fontWeight={400}
-                      lineHeight={1}
-                      noWrap
-                      overflow="hidden"
-                      textOverflow="ellipsis"
-                      maxWidth="15rem"
-                    >
-                      {i.text}
-                    </Typography>
-                  }
-                />
-              ))}
-            </RadioGroup>
-          </AccordionDetailsFilter>
-        </AccordionContainer>
-        <AccordionContainer expanded={expanded === "vote"} onChange={handleChange("vote")}>
-          <AccordionSummary>
-            <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-              <Box display={"flex"} alignItems={"center"}>
-                <CustomIcon icon={VoteIcon} fill={theme.palette.secondary.main} height={18} />
-                <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
-                  {t("pool.vote")}
-                </Box>
-              </Box>
-              <Box>
-                {expanded === "vote" ? (
-                  <IoIosArrowUp color={theme.palette.secondary.main} />
-                ) : (
-                  <IoIosArrowDown color={theme.palette.secondary.main} />
-                )}
-              </Box>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetailsFilter>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              sx={{ p: "0px 16px" }}
-              // value={openTimeLocked}
-              // onChange={handleChooseTimeLoked}
-            >
-              {voteList.map((value) => (
-                <FormControlLabel
-                  key={value}
-                  value={value}
-                  control={
-                    <Radio
-                      sx={{
-                        color: theme.palette.secondary.light
-                      }}
-                    />
-                  }
-                  label={
-                    <Typography
-                      fontSize="16px"
-                      fontWeight={400}
-                      lineHeight={1}
-                      noWrap
-                      overflow="hidden"
-                      textOverflow="ellipsis"
-                      maxWidth="15rem"
-                    >
-                      {value}
-                    </Typography>
-                  }
-                />
-              ))}
-            </RadioGroup>
-          </AccordionDetailsFilter>
-        </AccordionContainer>
-        <AccordionSummary>
-          <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-            <Box display={"flex"} alignItems={"center"}>
-              <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={18} />
-              <Box
-                fontSize="16px"
-                ml={1}
-                color={({ palette }) => palette.secondary.main}
-                onClick={() => setOpenDateRange(true)}
-              >
-                {t("pool.dateRange")}
-              </Box>
+  const actionTypeList = [
+    { value: "any", text: t("pool.any") },
+    { value: "motion", text: t("pool.typeMotion") },
+    { value: "constitutional", text: t("pool.typeConstitutional") },
+    { value: "update", text: t("pool.typeUpdate") },
+    { value: "hardWork", text: t("pool.typeHardFork") },
+    { value: "protocol", text: t("pool.typeProtocol") },
+    { value: "treasury", text: t("pool.typeTreasury") },
+    { value: "info", text: t("pool.typeInfo") }
+  ];
 
-              <DateRangeModal
-                open={openDateRange}
-                value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
-                onDateRangeChange={({ fromDate, toDate }) => {
-                  setParams?.({
-                    ...params,
-                    fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
-                    toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
-                  });
-                }}
-                onClose={() => setOpenDateRange(false)}
-              />
-            </Box>
-          </Box>
-        </AccordionSummary>
-        <Box my={1} p="0px 16px">
-          <ApplyFilterButton
-            data-testid="apply-filters"
-            // onClick={() => {
-            //   if (onSubmit) {
-            //     onSubmit?.({ ...params, search: search });
-            //     history.replace({ search: stringify({ page, size, sort: params?.sort }) });
-            //     setOpenSearch(false);
-            //     setOpen(false);
-            //   }
-            // }}
-          >
-            {t("common.applyFilters")}
-          </ApplyFilterButton>
-        </Box>
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <Box
+        component={Button}
+        variant="text"
+        px={2}
+        textTransform={"capitalize"}
+        bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[100] : palette.primary[200])}
+        border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+        onClick={handleClick}
+        sx={{
+          ":hover": {
+            bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
+          }
+        }}
+      >
+        <CustomIcon
+          icon={FilterIcon}
+          fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+          height={18}
+        />
         <Box
-          component={Button}
-          width={"100%"}
-          textTransform={"capitalize"}
-          display={"flex"}
-          alignItems={"center"}
-          color={({ palette }) => `${palette.primary.main} !important`}
-          // onClick={handleReset}
+          ml={1}
+          whiteSpace={"nowrap"}
+          fontWeight={"bold"}
+          color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
         >
-          <Box mr={1}>{t("common.reset")}</Box>
-          <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+          {t("common.filter")}
         </Box>
       </Box>
-    </FilterContainer>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            background: "unset !important"
+          }
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <FilterContainer>
+          <Box display={"flex"} flexDirection={"column"}>
+            <Box component={ButtonSort} p="0px 16px" height="48px">
+              <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
+                <Box display="flex">
+                  <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
+                  <Typography fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                    {t("pool.repeatVotes")}
+                  </Typography>
+                </Box>
+                <Switch defaultChecked />
+              </Box>
+              {/* {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />} */}
+            </Box>
+            <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <CustomIcon icon={GovernanceIdIcon} fill={theme.palette.secondary.light} height={18} />
+                    <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      {t("pool.actionId")}
+                    </Box>
+                  </Box>
+                  <Box>
+                    {expanded === "action-id" ? (
+                      <IoIosArrowUp color={theme.palette.secondary.main} />
+                    ) : (
+                      <IoIosArrowDown color={theme.palette.secondary.main} />
+                    )}
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetailsFilter sx={{ background: "unset" }}>
+                <StyledInput
+                  // inputRef={inputRef}
+                  placeholder={"Search ID"}
+                  value={search}
+                  onChange={({ target: { value } }) => setSearch(value)}
+                />
+              </AccordionDetailsFilter>
+            </AccordionContainer>
+            <AccordionContainer expanded={expanded === "anchor-text"} onChange={handleChange("anchor-text")}>
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <CustomIcon icon={AnchorTextIcon} fill={theme.palette.secondary.light} height={18} />
+                    <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      {t("pool.anchorText")}
+                    </Box>
+                  </Box>
+                  <Box>
+                    {expanded === "anchor-text" ? (
+                      <IoIosArrowUp color={theme.palette.secondary.main} />
+                    ) : (
+                      <IoIosArrowDown color={theme.palette.secondary.main} />
+                    )}
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetailsFilter sx={{ background: "unset" }}>
+                <Box sx={{ p: "0px 16px" }}>
+                  <TextareaAutosize
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder={t("pool.searchAnchorText")}
+                  />
+                </Box>
+              </AccordionDetailsFilter>
+            </AccordionContainer>
+            <AccordionContainer expanded={expanded === "action-type"} onChange={handleChange("action-type")}>
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <CustomIcon icon={ActionTypeIcon} fill={theme.palette.secondary.main} height={18} />
+                    <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      {t("pool.actionType")}
+                    </Box>
+                  </Box>
+                  <Box>
+                    {expanded === "action-type" ? (
+                      <IoIosArrowUp color={theme.palette.secondary.main} />
+                    ) : (
+                      <IoIosArrowDown color={theme.palette.secondary.main} />
+                    )}
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetailsFilter
+                sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
+              >
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  sx={{ p: "0px 16px" }}
+                  // value={openTimeLocked}
+                  // onChange={handleChooseTimeLoked}
+                >
+                  {actionTypeList.map((i) => (
+                    <FormControlLabel
+                      key={i.value}
+                      value={i.value}
+                      checked={i.value === "any"}
+                      control={
+                        <Radio
+                          sx={{
+                            color: theme.palette.secondary.light
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography
+                          fontSize="16px"
+                          fontWeight={400}
+                          lineHeight={1}
+                          noWrap
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          maxWidth="15rem"
+                        >
+                          {i.text}
+                        </Typography>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
+              </AccordionDetailsFilter>
+            </AccordionContainer>
+            <AccordionContainer expanded={expanded === "current-status"} onChange={handleChange("current-status")}>
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={18} />
+                    <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      {t("pool.currentStatus")}
+                    </Box>
+                  </Box>
+                  <Box>
+                    {expanded === "current-status" ? (
+                      <IoIosArrowUp color={theme.palette.secondary.main} />
+                    ) : (
+                      <IoIosArrowDown color={theme.palette.secondary.main} />
+                    )}
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetailsFilter>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  sx={{ p: "0px 16px" }}
+                  // value={openTimeLocked}
+                  // onChange={handleChooseTimeLoked}
+                >
+                  {currentStatusList.map((i) => (
+                    <FormControlLabel
+                      key={i.value}
+                      value={i.value}
+                      checked={i.value === "any"}
+                      control={
+                        <Radio
+                          sx={{
+                            color: theme.palette.secondary.light
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography
+                          fontSize="16px"
+                          fontWeight={400}
+                          lineHeight={1}
+                          noWrap
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          maxWidth="15rem"
+                        >
+                          {i.text}
+                        </Typography>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
+              </AccordionDetailsFilter>
+            </AccordionContainer>
+            <AccordionContainer expanded={expanded === "vote"} onChange={handleChange("vote")}>
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <CustomIcon icon={VoteIcon} fill={theme.palette.secondary.main} height={18} />
+                    <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      {t("pool.vote")}
+                    </Box>
+                  </Box>
+                  <Box>
+                    {expanded === "vote" ? (
+                      <IoIosArrowUp color={theme.palette.secondary.main} />
+                    ) : (
+                      <IoIosArrowDown color={theme.palette.secondary.main} />
+                    )}
+                  </Box>
+                </Box>
+              </AccordionSummary>
+              <AccordionDetailsFilter>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  sx={{ p: "0px 16px" }}
+                  // value={openTimeLocked}
+                  // onChange={handleChooseTimeLoked}
+                >
+                  {voteList.map((i) => (
+                    <FormControlLabel
+                      key={i.value}
+                      value={i.value}
+                      checked={i.value === "any"}
+                      control={
+                        <Radio
+                          sx={{
+                            color: theme.palette.secondary.light
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography
+                          fontSize="16px"
+                          fontWeight={400}
+                          lineHeight={1}
+                          noWrap
+                          overflow="hidden"
+                          textOverflow="ellipsis"
+                          maxWidth="15rem"
+                        >
+                          {i.text}
+                        </Typography>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
+              </AccordionDetailsFilter>
+            </AccordionContainer>
+            <AccordionSummary>
+              <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                <Box display={"flex"} alignItems={"center"}>
+                  <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={18} />
+                  <Box
+                    fontSize="16px"
+                    ml={1}
+                    color={({ palette }) => palette.secondary.main}
+                    onClick={() => setOpenDateRange(true)}
+                  >
+                    {t("pool.dateRange")}
+                  </Box>
+
+                  <DateRangeModal
+                    open={openDateRange}
+                    value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
+                    onDateRangeChange={({ fromDate, toDate }) => {
+                      setParams?.({
+                        ...params,
+                        fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
+                        toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
+                      });
+                    }}
+                    onClose={() => setOpenDateRange(false)}
+                  />
+                </Box>
+              </Box>
+            </AccordionSummary>
+            <Box my={1} p="0px 16px">
+              <ApplyFilterButton
+                data-testid="apply-filters"
+                // onClick={() => {
+                //   if (onSubmit) {
+                //     onSubmit?.({ ...params, search: search });
+                //     history.replace({ search: stringify({ page, size, sort: params?.sort }) });
+                //     setOpenSearch(false);
+                //     setOpen(false);
+                //   }
+                // }}
+              >
+                {t("common.applyFilters")}
+              </ApplyFilterButton>
+            </Box>
+            <Box
+              component={Button}
+              width={"100%"}
+              textTransform={"capitalize"}
+              display={"flex"}
+              alignItems={"center"}
+              color={({ palette }) => `${palette.primary.main} !important`}
+              // onClick={handleReset}
+            >
+              <Box mr={1}>{t("common.reset")}</Box>
+              <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+            </Box>
+          </Box>
+        </FilterContainer>
+      </Menu>
+    </>
   );
 };
