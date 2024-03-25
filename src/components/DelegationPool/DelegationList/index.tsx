@@ -141,7 +141,7 @@ const DelegationLists: React.FC = () => {
       title: t("votingPower") + " ",
       key: "votingPower",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.votingPower)}`,
+      render: (r) => `${r.votingPower}`,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
