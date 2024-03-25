@@ -208,7 +208,7 @@ const DelegationStakingDelegatorsList = ({
         total: total
       }}
       onClickRow={(e, r) => {
-        history.push(details.stake(r.view));
+        history.push(details.stake(r.view || r.stakeAddress));
       }}
     />
   );

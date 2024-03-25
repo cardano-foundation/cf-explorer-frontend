@@ -50,6 +50,9 @@ import {
   HeaderDetailContainer
 } from "src/components/DelegationDetail/DelegationDetailInfo/styles";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
@@ -69,6 +72,7 @@ const DrepDetail = () => {
   const { drepId } = useParams<{ drepId: string }>();
   const theme = useTheme();
   const history = useHistory();
+  const { width } = useScreen();
 
   const [typeVote, setTypeVote] = useState("Default");
   const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
@@ -238,7 +242,17 @@ const DrepDetail = () => {
     <StyledContainer>
       <DetailHeader
         type="DREP"
-        title="Drep ID"
+        title={
+          <TruncateSubTitleContainer>
+            <DynamicEllipsisText
+              value={data?.drepId || ""}
+              sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 70px)" }}
+              postfix={5}
+              isNoLimitPixel={true}
+              isTooltip
+            />
+          </TruncateSubTitleContainer>
+        }
         loading={false}
         listItem={listOverview}
         bookmarkData={"1"}
