@@ -1018,9 +1018,6 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-<<<<<<< HEAD
-  "account.myProfile": "My Profile"
-=======
   "account.myProfile": "My Profile",
   "drep.des": "Description (Anchor Text)",
   "drep.activeVoteStake": "Active Voting Stake",
@@ -1065,5 +1062,4 @@
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check",
   "status.inActive": "INACTIVE"
->>>>>>> dev-test
 }
