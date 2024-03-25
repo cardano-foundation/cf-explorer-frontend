@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -53,7 +54,8 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
 const voteOption = [
-  { title: "Action Type", value: "ALL" },
+  { title: "Action Type", value: "Default" },
+  { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
   { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
   { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
@@ -68,10 +70,10 @@ const DrepDetail = () => {
   const theme = useTheme();
   const history = useHistory();
 
-  const [typeVote, setTypeVote] = useState("ALL");
+  const [typeVote, setTypeVote] = useState("Default");
   const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
-    `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote}`
+    `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
   const listOverview = [
     {
@@ -150,8 +152,9 @@ const DrepDetail = () => {
             size="small"
             IconComponent={DropdownIcon}
             sx={{
+              bgcolor: theme.palette.primary[100],
               maxWidth: "200px",
-              [theme.breakpoints.down("md")]: { maxWidth: 140 }
+              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
             }}
             MenuProps={{
               style: { zIndex: 1303 },
@@ -162,22 +165,44 @@ const DrepDetail = () => {
               },
               PaperProps: {
                 sx: {
-                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
+                  "& .MuiMenuItem-root": {
+                    "&.Mui-selected": {
+                      backgroundColor: ({ palette }) => `${palette.secondary[0]} !important` // Màu nền cho option được chọn
+                    }
+                  }
                 }
               }
             }}
           >
-            {voteOption.map((voteType, idx) => (
-              <Box
-                component={StyledMenuItem}
-                key={idx}
-                fontSize={12}
-                color={theme.palette.secondary.light}
-                value={voteType.value}
-              >
-                {voteType.title}
-              </Box>
-            ))}
+            {voteOption.map((voteType, idx) => {
+              if (voteType.value === "Default") {
+                return (
+                  <Box
+                    component={StyledMenuItem}
+                    key={idx}
+                    fontSize={12}
+                    color={theme.palette.secondary.light}
+                    value={voteType.value}
+                    display={"none"}
+                  >
+                    {voteType.title}
+                  </Box>
+                );
+              }
+
+              return (
+                <Box
+                  component={StyledMenuItem}
+                  key={idx}
+                  fontSize={12}
+                  color={theme.palette.secondary.light}
+                  value={voteType.value}
+                >
+                  {voteType.title}
+                </Box>
+              );
+            })}
           </StyledSelect>
         </Box>
       ),
@@ -267,6 +292,12 @@ const DrepAccordion = () => {
     false,
     tab === "certificatesHistory" ? blockKey : undefined
   );
+  const fetchDataDelegator = useFetchList<StakingDelegators>(
+    API.DREP_DELEGATOR.replace(":drepId", drepId),
+    { ...pageInfo },
+    false,
+    tab === "delegators" ? blockKey : undefined
+  );
 
   const tabs: {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -286,13 +317,7 @@ const DrepAccordion = () => {
       key: "delegators",
       component: (
         <div ref={tableRef}>
-          <DelegationStakingDelegatorsList
-            data={[]}
-            loading={false}
-            total={0}
-            initialized={false}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
         </div>
       )
     },
@@ -398,7 +423,7 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
   }
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" width="100%" minHeight={150}>
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
       <VoteBar
         percentage={totalVote > 0 ? ((data?.numberOfYesVote || 0) / totalVote) * 100 : 0}
         color={theme.palette.success[700]}
