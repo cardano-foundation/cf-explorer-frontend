@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -41,7 +42,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { formatADA, formatDateTimeLocal, getPageInfo } from "src/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, formatPercent, getPageInfo } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import {
   BackButton,
@@ -53,7 +54,8 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
 const voteOption = [
-  { title: "Action Type", value: "ALL" },
+  { title: "Action Type", value: "Default" },
+  { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
   { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
   { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
@@ -68,10 +70,10 @@ const DrepDetail = () => {
   const theme = useTheme();
   const history = useHistory();
 
-  const [typeVote, setTypeVote] = useState("ALL");
+  const [typeVote, setTypeVote] = useState("Default");
   const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
-    `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote}`
+    `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
   const listOverview = [
     {
@@ -150,8 +152,9 @@ const DrepDetail = () => {
             size="small"
             IconComponent={DropdownIcon}
             sx={{
+              bgcolor: theme.palette.primary[100],
               maxWidth: "200px",
-              [theme.breakpoints.down("md")]: { maxWidth: 140 }
+              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
             }}
             MenuProps={{
               style: { zIndex: 1303 },
@@ -162,22 +165,44 @@ const DrepDetail = () => {
               },
               PaperProps: {
                 sx: {
-                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
+                  "& .MuiMenuItem-root": {
+                    "&.Mui-selected": {
+                      backgroundColor: ({ palette }) => `${palette.secondary[0]} !important` // Màu nền cho option được chọn
+                    }
+                  }
                 }
               }
             }}
           >
-            {voteOption.map((voteType, idx) => (
-              <Box
-                component={StyledMenuItem}
-                key={idx}
-                fontSize={12}
-                color={theme.palette.secondary.light}
-                value={voteType.value}
-              >
-                {voteType.title}
-              </Box>
-            ))}
+            {voteOption.map((voteType, idx) => {
+              if (voteType.value === "Default") {
+                return (
+                  <Box
+                    component={StyledMenuItem}
+                    key={idx}
+                    fontSize={12}
+                    color={theme.palette.secondary.light}
+                    value={voteType.value}
+                    display={"none"}
+                  >
+                    {voteType.title}
+                  </Box>
+                );
+              }
+
+              return (
+                <Box
+                  component={StyledMenuItem}
+                  key={idx}
+                  fontSize={12}
+                  color={theme.palette.secondary.light}
+                  value={voteType.value}
+                >
+                  {voteType.title}
+                </Box>
+              );
+            })}
           </StyledSelect>
         </Box>
       ),
@@ -267,6 +292,12 @@ const DrepAccordion = () => {
     false,
     tab === "certificatesHistory" ? blockKey : undefined
   );
+  const fetchDataDelegator = useFetchList<StakingDelegators>(
+    API.DREP_DELEGATOR.replace(":drepId", drepId),
+    { ...pageInfo },
+    false,
+    tab === "delegators" ? blockKey : undefined
+  );
 
   const tabs: {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -286,13 +317,7 @@ const DrepAccordion = () => {
       key: "delegators",
       component: (
         <div ref={tableRef}>
-          <DelegationStakingDelegatorsList
-            data={[]}
-            loading={false}
-            total={0}
-            initialized={false}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
         </div>
       )
     },
@@ -398,23 +423,32 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
   }
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" width="100%" minHeight={150}>
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
       <VoteBar
-        percentage={totalVote > 0 ? ((data?.numberOfYesVote || 0) / totalVote) * 100 : 0}
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
         numberVote={data?.numberOfYesVote || 0}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
-        percentage={totalVote > 0 ? ((data?.numberOfAbstainVotes || 0) / totalVote) * 100 : 0}
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
         color={theme.palette.warning[700]}
         numberVote={data?.numberOfAbstainVotes || 0}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
       <VoteBar
-        percentage={totalVote > 0 ? ((data?.numberOfNoVotes || 0) / totalVote) * 100 : 0}
+        percentage={
+          totalVote > 0
+            ? formatPercent(
+                (100 -
+                  (+formatPercent((data?.numberOfYesVote || 0) / totalVote).split("%")[0] +
+                    +formatPercent((data?.numberOfAbstainVotes || 0) / totalVote).split("%")[0])) /
+                  100
+              )
+            : 0
+        }
         color={theme.palette.error[700]}
         numberVote={data?.numberOfNoVotes || 0}
         icon={<VotesNoIcon />}
@@ -431,7 +465,7 @@ const VoteBar = ({
   label,
   numberVote
 }: {
-  percentage: number;
+  percentage: string | number;
   numberVote: number;
   color: string;
   icon?: JSX.Element;
@@ -439,20 +473,26 @@ const VoteBar = ({
 }) => (
   <Box display="flex" flexDirection="column" alignItems="center">
     <Typography fontSize="10px" fontWeight={400}>
-      {percentage}%
+      {percentage}
     </Typography>
     <LightTooltip
       title={
         <Box height="39px" display="flex" alignItems="center" gap="8px">
           {icon}
           <Typography fontSize="12px" fontWeight={600}>
-            {numberVote} ({percentage}%)
+            {numberVote} ({percentage})
           </Typography>
         </Box>
       }
       placement="right"
     >
-      <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
+      <Box
+        sx={{ background: color }}
+        height={`${
+          +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
+        }px`}
+        width="36px"
+      />
     </LightTooltip>
     <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
       {label}

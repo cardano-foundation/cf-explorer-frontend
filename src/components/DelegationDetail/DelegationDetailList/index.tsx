@@ -195,12 +195,14 @@ const DelegationStakingDelegatorsList = ({
       key: "delegator",
       minWidth: "50px",
       render: (data) =>
-        data.view && (
+        (data.view || data.stakeAddress) && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.stake(data.view)}>{getShortHash(data.view || "")}</StyledLink>
+            <CustomTooltip title={data.view || data.stakeAddress || ""}>
+              <StyledLink to={details.stake(data.view || data.stakeAddress)}>
+                {getShortHash(data.view || data.stakeAddress || "")}
+              </StyledLink>
             </CustomTooltip>
-            <CopyButton text={data.view || ""} />
+            <CopyButton text={data.view || data.stakeAddress || ""} />
           </div>
         )
     },
@@ -220,7 +222,7 @@ const DelegationStakingDelegatorsList = ({
       title: t("stakedTime"),
       key: "stakedTime",
       minWidth: "120px",
-      render: (data) => formatDateTimeLocal(data.time || "")
+      render: (data) => formatDateTimeLocal(data.time || data.createdAt || "")
     },
     {
       title: (
@@ -344,7 +346,7 @@ const DelegationCertificatesHistory = ({
       key: "absoluteSlot",
       minWidth: "130px",
       render: (data) => {
-        return <>{data.slotNo}</>;
+        return <>{data.absoluteSlot || data.slotNo}</>;
       }
     },
     {

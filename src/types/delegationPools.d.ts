@@ -67,9 +67,11 @@ interface DelegationEpoch {
 }
 interface StakingDelegators {
   address: string;
+  stakeAddress: string;
   view: string;
   totalStake: number;
   time: string;
+  createdAt: string;
   fee: number;
 }
 
@@ -81,6 +83,7 @@ interface CertificateHistory {
   actions: PoolActionType[];
   actionTypes: DrepActionType[];
   epochNo: number;
+  absoluteSlot: number;
   createdAt: string;
 }
 
