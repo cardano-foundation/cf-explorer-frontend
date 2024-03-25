@@ -1,5 +1,4 @@
 import { Box, useTheme } from "@mui/material";
-import { get } from "lodash";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -23,7 +22,6 @@ import {
   SearchContainer,
   ShowRetiredPools,
   StyledInput,
-  StyledLinearProgress,
   SubmitButton,
   TopSearchContainer
 } from "./styles";
@@ -63,14 +61,14 @@ const DelegationLists: React.FC = () => {
     }
   }, [fetchData.initialized, history]);
 
-  const columns: Column<Delegators & { adaFake: number; feeFake: number }>[] = [
+  const columns: Column<Delegators>[] = [
     {
       title: t("glossary.pool"),
       key: "poolName",
       minWidth: "200px",
       maxWidth: "200px",
       render: (r) => (
-        <CustomTooltip title={r.poolName || r.poolId}>
+        <CustomTooltip title={r.tickerName || ""}>
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
               {r.poolName || `${getShortHash(r.poolId)}`}
@@ -78,15 +76,6 @@ const DelegationLists: React.FC = () => {
           </PoolName>
         </CustomTooltip>
       )
-    },
-    {
-      title: t("common.ticker") + " ",
-      key: "tickerName",
-      minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.tickerName}</Box>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
     },
     {
       title: (
@@ -116,32 +105,16 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: t("glossary.saturation"),
-      minWidth: "200px",
+      minWidth: "120px",
       key: "saturation",
       render: (r) =>
         r.saturation != null ? (
-          <Box display="flex" alignItems="center" justifyContent={"end"}>
-            <Box component={"span"} mr={1}>
-              {formatPercent(r.saturation / 100) || `0%`}
-            </Box>
-            <StyledLinearProgress
-              variant="determinate"
-              saturation={r.saturation}
-              value={r.saturation > 100 ? 100 : get(r, "saturation", 0)}
-            />
+          <Box component={"span"} mr={1}>
+            {formatPercent(r.saturation / 100) || `0%`}
           </Box>
         ) : (
           t("common.N/A")
         ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: t("glossary.numberOfDelegators"),
-      minWidth: "200px",
-      key: "numberDelegators",
-      render: (r) => <Box component={"span"}>{r.numberDelegators || 0}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
@@ -165,28 +138,19 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: (
-        <Box component={"span"} sx={{ textWrap: "nowrap" }}>
-          {t("glossary.fixedCost")} (<ADAicon />)
-        </Box>
-      ),
-      key: "pu.fixedCost",
+      title: t("votingPower") + " ",
+      key: "votingPower",
       minWidth: "120px",
-      render: (r) => (
-        <Box component="span">
-          {formatADAFull(r.feeAmount)}&nbsp;
-          <ADAicon />
-        </Box>
-      ),
+      render: (r) => `${r.votingPower}`,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: t("margin") + " ",
-      key: "margin",
+      title: t("governanceParticipationRate") + " ",
+      key: "governanceParticipationRate",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.feePercent)}`,
+      render: (r) => `${formatPercent(r.governanceParticipationRate)}`,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
