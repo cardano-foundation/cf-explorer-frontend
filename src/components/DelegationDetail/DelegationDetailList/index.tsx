@@ -7,10 +7,16 @@ import {
   Typography,
   ButtonGroup,
   Grid,
-  Chip,
+  TableBody,
+  Table as TableMui,
+  TableRow,
   TooltipProps,
   Tooltip,
-  tooltipClasses
+  tooltipClasses,
+  TableCell,
+  TableContainer,
+  TableHead,
+  Chip
 } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
@@ -50,9 +56,10 @@ import {
 import ADAicon from "src/components/commons/ADAIcon";
 import CardGovernanceVotes, { GovernanceStatus, VoteStatus } from "src/components/commons/CardGovernanceVotes";
 import CopyButton from "src/components/commons/CopyButton";
+import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column, FooterTable } from "src/components/commons/Table";
-import CustomIcon from "src/components/commons/CustomIcon";
+import CustomModal from "src/components/commons/CustomModal";
 
 import { DataContainer, InfoTitle, InfoValue, Item, StyledGrid, StyledTitle } from "../DelegationDetailInfo/styles";
 import { StyledLink, Tab } from "./styles";
@@ -405,7 +412,9 @@ const DelegationGovernanceVotes = () => {
       sx={{
         borderRadius: tabName === "pool" ? "8px 0px 0px 8px !important" : "0px 8px 8px 0px !important",
         background: tab === tabName ? theme.palette.primary[200] : "",
-        border: `1px solid ${tab === tabName ? theme.palette.primary.main : theme.palette.primary[200]} !important`
+        border: `1px solid ${tab === tabName ? theme.palette.primary.main : theme.palette.primary[200]} !important`,
+        color: `${tab === tabName ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
+        fontWeight: 600
       }}
       onClick={() => handleTabChange(tabName)}
     >
@@ -488,11 +497,12 @@ const DelegationGovernanceVotes = () => {
       <FooterTable
         pagination={{
           ...pageInfo,
-          size: 3,
+          size: 6,
           total: 12 || 0
         }}
         total={{ count: 12 || 0, title: "" }}
         loading={false}
+        optionList={[6, 9, 12]}
       />
     </>
   );
@@ -507,7 +517,11 @@ export {
 
 const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
   const theme = useTheme();
+  const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const { t } = useTranslation();
+  const [selectVote, setSelectVote] = useState<string>("");
+
+  const listVotes = ["SPOs", "DRops", "CC"];
 
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
@@ -521,14 +535,31 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
             <StyledTitle>{t("pool.actionId")}</StyledTitle>
           </InfoTitle>
           <InfoValue>
-            <Chip
+            <Box
+              display="flex"
+              alignItems="center"
+              gap="8px"
+              borderRadius="20px"
               sx={{
                 background: theme.palette.primary[100],
-                border: `1px solid ${theme.palette.secondary[600]}`
+                border: `1px solid ${theme.palette.secondary[600]}`,
+                width: "fit-content",
+                p: "3px 2px 3px 12px"
               }}
-              label="1231..2312"
-              icon={<BlackCircleIcon />}
-            />
+            >
+              <CustomTooltip title="d32493b1231232131203989bd">
+                <Typography fontSize="12px" fontWeight="500" lineHeight="14.52px">
+                  d32493b...03989bd
+                </Typography>
+              </CustomTooltip>
+              <CopyButton
+                text={"1232312111111111111ádasdasdasdas1111111111"}
+                customIcon={BlackCircleIcon}
+                data-testid="copy-button"
+                height={24}
+                fill={theme.palette.secondary[0]}
+              />
+            </Box>
           </InfoValue>
         </Item>
         <Item item xs={6} md={3} top={1}>
@@ -556,25 +587,45 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
             <StyledTitle>{tab === "pool" ? t("pool.vote") : t("pool.votes")}</StyledTitle>
             {tab !== "pool" && (
               <Box display="flex" gap="8px">
-                <Chip
-                  sx={{
-                    background: theme.palette.primary[100],
-                    border: `1px solid ${theme.palette.secondary[600]}`
-                  }}
-                  label="SPOs"
-                />
-                <Chip
-                  sx={{
-                    background: theme.palette.primary[100],
-                    border: `1px solid ${theme.palette.secondary[600]}`
-                  }}
-                  label="x"
-                />
+                {(selectVote ? listVotes.slice(0, 1) : listVotes).map((i) => (
+                  <Chip
+                    key={i}
+                    sx={{
+                      background: theme.palette.primary[100],
+                      border: `1px solid ${theme.palette.secondary[600]}`,
+                      color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                    }}
+                    label={selectVote || i}
+                    onClick={() => setSelectVote(i)}
+                  />
+                ))}
+                {selectVote && (
+                  <Chip
+                    sx={{
+                      background: theme.palette.primary[100],
+                      border: `1px solid ${theme.palette.secondary[600]}`,
+                      color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                    }}
+                    onClick={() => setSelectVote("")}
+                    label="x"
+                  />
+                )}
               </Box>
             )}
           </InfoTitle>
           <InfoValue width={`${tab === "pool" ? "fit-content" : "100%"}`}>
-            {tab === "pool" ? <VoteStatus status={"yes"} /> : <VoteRate />}
+            {tab === "pool" ? (
+              <Box
+                sx={{ cursor: "pointer" }}
+                onClick={() => {
+                  setOpenHistoryVoteModal(true);
+                }}
+              >
+                <VoteStatus status={"yes"} />
+              </Box>
+            ) : (
+              <VoteRate />
+            )}
           </InfoValue>
         </Item>
         <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
@@ -616,7 +667,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>4th Feb 2024</InfoValue>
+          <InfoValue>08/25/2024</InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
@@ -626,6 +677,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
           <InfoValue>Whatever the anchor text string is for this action</InfoValue>
         </Item>
       </StyledGrid>
+      <VoteHistoryModal open={openHistoryVoteModal} onClose={() => setOpenHistoryVoteModal(false)} />
     </DataContainer>
   );
 };
@@ -650,29 +702,36 @@ const VoteBar = ({
   color: string;
   icon: JSX.Element;
   label: string;
-}) => (
-  <Box display="flex" flexDirection="column" alignItems="center">
-    <Typography fontSize="10px" fontWeight={400}>
-      {percentage}%
-    </Typography>
-    <LightTooltip
-      title={
-        <Box height="39px" display="flex" alignItems="center" gap="8px">
-          {icon}
-          <Typography fontSize="12px" fontWeight={600}>
-            3,443,875.343 ADA (94%)
-          </Typography>
-        </Box>
-      }
-      placement="right"
-    >
-      <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
-    </LightTooltip>
-    <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
-      {label}
-    </Typography>
-  </Box>
-);
+}) => {
+  const theme = useTheme();
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Typography fontSize="10px" fontWeight={400}>
+        {percentage}%
+      </Typography>
+      <LightTooltip
+        title={
+          <Box height="39px" display="flex" alignItems="center" gap="8px">
+            {icon}
+            <Typography
+              fontSize="12px"
+              fontWeight={600}
+              color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+            >
+              3,443,875.343 ADA (94%)
+            </Typography>
+          </Box>
+        }
+        placement="top"
+      >
+        <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
+      </LightTooltip>
+      <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
+        {label}
+      </Typography>
+    </Box>
+  );
+};
 
 const VoteRate = () => {
   const { t } = useTranslation();
@@ -689,5 +748,101 @@ const VoteRate = () => {
       />
       <VoteBar percentage={0} color={theme.palette.error[700]} icon={<VotesNoIcon />} label={t("common.no")} />
     </Box>
+  );
+};
+
+export interface VoteHistoryProps {
+  onClose?: () => void;
+  open: boolean;
+}
+
+const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  function createData(no: string, vote: string, time: string) {
+    return { no, vote, time };
+  }
+
+  const rows = [
+    createData("1", "yes", "02/13/2024 13:39:41"),
+    createData("2", "no", "02/11/2024 10:25:27"),
+    createData("3", "yes", "02/10/2024 19:45:12")
+  ];
+
+  return (
+    <CustomModal open={open} onClose={() => onClose?.()} title={t("pool.votingHistory")} width={500}>
+      <Box display="flex" alignItems="center" gap="12px" pb="25.5px">
+        <Typography
+          fontSize="24px"
+          color={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
+        >
+          {t("pool.currentVote")}:
+        </Typography>{" "}
+        <VoteStatus status={"yes"} />
+      </Box>
+      <TableContainer sx={{ p: "0px 10px", background: theme.isDark ? "" : theme.palette.secondary[0] }}>
+        <TableMui aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  padding: "9px",
+                  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                }}
+                padding="none"
+              >
+                #
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                }}
+                padding="none"
+              >
+                {t("pool.vote")}
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontWeight: 700,
+                  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                }}
+                padding="none"
+              >
+                {t("common.timestamp")}
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.no} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell
+                  sx={{
+                    padding: "11px",
+                    color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                  }}
+                  padding="none"
+                >
+                  {row.no}
+                </TableCell>
+                <TableCell padding="none">
+                  <Box width="fit-content" mt="8px">
+                    <VoteStatus status={row.vote} />
+                  </Box>
+                </TableCell>
+                <TableCell
+                  sx={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
+                  padding="none"
+                >
+                  {row.time}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableMui>
+      </TableContainer>
+    </CustomModal>
   );
 };

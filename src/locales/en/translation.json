@@ -1058,6 +1058,8 @@
   "pool.typeInfo": "Info",
   "pool.dateRange": "Date Range",
   "pool.repeatVotes": "Repeat Votes",
+  "pool.votingHistory": "Voting History",
+  "pool.currentVote": "Current Vote",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check",
   "status.inActive": "INACTIVE"

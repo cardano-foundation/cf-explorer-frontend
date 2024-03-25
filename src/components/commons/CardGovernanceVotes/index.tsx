@@ -27,7 +27,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               fontWeight={600}
               fontSize="24px"
               lineHeight="28px"
-              color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+              color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.main}
             >
               Governance Action Voting Name
             </Typography>
