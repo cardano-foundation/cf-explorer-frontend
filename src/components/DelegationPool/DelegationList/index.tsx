@@ -141,7 +141,7 @@ const DelegationLists: React.FC = () => {
       title: t("votingPower") + " ",
       key: "votingPower",
       minWidth: "120px",
-      render: (r) => `${r.votingPower}`,
+      render: (r) => (r.votingPower != null ? `${r.votingPower}` : t("common.N/A")),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
@@ -150,7 +150,8 @@ const DelegationLists: React.FC = () => {
       title: t("governanceParticipationRate") + " ",
       key: "governanceParticipationRate",
       minWidth: "120px",
-      render: (r) => `${formatPercent(r.governanceParticipationRate)}`,
+      render: (r) =>
+        r.governanceParticipationRate != null ? `${formatPercent(r.governanceParticipationRate)}` : t("common.N/A"),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
