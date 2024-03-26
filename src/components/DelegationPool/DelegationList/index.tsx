@@ -34,10 +34,11 @@ const DelegationLists: React.FC = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
-  const [isShowRetired, setIsRetired] = useState(!!pageInfo.retired);
+  const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
 
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+
   useEffect(() => {
     if (tickerNameSearch !== search) history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
     if (tickerNameSearch) {
