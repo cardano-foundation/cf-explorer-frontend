@@ -155,7 +155,8 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {
     PLUTUSV1: "Plutus V1",
-    PLUTUSV2: "Plutus V2"
+    PLUTUSV2: "Plutus V2",
+    PLUTUSV3: "Plutus V3"
   };
 
   return (
