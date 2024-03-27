@@ -147,13 +147,6 @@ const NoticeModal = ({ ...props }: { open: boolean; handleCloseModal: () => void
           >
             {t("notice.value.b2")}
           </li>
-          <li
-            style={{
-              listStyle: "disc"
-            }}
-          >
-            {t("notice.value.c")}
-          </li>
         </List>
       </Box>
     </StyledModal>

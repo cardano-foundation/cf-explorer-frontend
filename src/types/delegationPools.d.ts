@@ -84,6 +84,7 @@ interface CertificateHistory {
   epochNo: number;
   absoluteSlot: number;
   createdAt: string;
+  actionTypes: string;
 }
 
 interface AnalyticsDelegators {
@@ -109,5 +110,5 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "";
 type TabDrepDetail = "delegators" | "certificatesHistory" | "governanceVotes" | "";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "governanceVotes" | "";

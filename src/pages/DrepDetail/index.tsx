@@ -103,7 +103,12 @@ const DrepDetail = () => {
           </Box>
           {data?.anchorUrl && (
             <Box position={"relative"}>
-              <Box component={"a"} href="" target="_blank" color={`${theme.palette.primary.main} !important`}>
+              <Box
+                component={"a"}
+                href={data?.anchorUrl}
+                target="_blank"
+                color={`${theme.palette.primary.main} !important`}
+              >
                 <DynamicEllipsisText
                   value={data?.anchorUrl || ""}
                   sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}

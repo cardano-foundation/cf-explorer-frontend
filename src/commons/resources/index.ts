@@ -212,6 +212,20 @@ import VotesNoIcon from "./icons/voteNo.svg?react";
 import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
 import DropdownIcon from "./icons/dropdown.svg?react";
 import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
+import VotesIcon from "./icons/votes.svg?react";
+import VotesNoneIcon from "./icons/voteNone.svg?react";
+import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
+import GovernanceIdIcon from "./icons/governanceId.svg?react";
+import ActionTypeIcon from "./icons/action-type.svg?react";
+import VoteIcon from "./icons/vote.svg?react";
+import CurrentStatusIcon from "./icons/current-status.svg?react";
+import VotingPowerIcon from "./icons/voting-power.svg?react";
+import SubmissionDateIcon from "./icons/submission-date.svg?react";
+import ExpiryIcon from "./icons/expiry-date.svg?react";
+import AnchorTextIcon from "./icons/anchor-text.svg?react";
+import BlackWarningIcon from "./icons/warning-black.svg?react";
+import BlackCircleIcon from "./icons/black-cirle-copy.svg?react";
+import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -421,11 +435,25 @@ export {
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
   governanceVotesIcon,
+  DisclaimerIcon,
+  DropdownIcon,
+  VotesIcon,
   VotesYesIcon,
   VotesNoIcon,
   VotesAbstainIcon,
-  DisclaimerIcon,
-  DropdownIcon
+  VotesNoneIcon,
+  ArrowLeftWhiteIcon,
+  GovernanceIdIcon,
+  ActionTypeIcon,
+  VoteIcon,
+  CurrentStatusIcon,
+  VotingPowerIcon,
+  SubmissionDateIcon,
+  ExpiryIcon,
+  AnchorTextIcon,
+  BlackWarningIcon,
+  BlackCircleIcon,
+  RepeatVotesIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

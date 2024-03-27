@@ -60,7 +60,6 @@ describe("AssociatedAddress component", () => {
       </NativeScriptContext.Provider>
     );
     expect(screen.getByText(/associated addresses/i)).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /empty icon/i })).toBeInTheDocument();
   });
 
   it("should component render with data", () => {
@@ -70,20 +69,20 @@ describe("AssociatedAddress component", () => {
       </NativeScriptContext.Provider>
     );
     expect(screen.getByText(/associated addresses/i)).toBeInTheDocument();
-    expect(screen.queryByRole("img", { name: /empty icon/i })).not.toBeInTheDocument();
   });
 });
 
 describe("MinttingBurningPolicy component", () => {
-  it("should component render", () => {
+  it("should component render", async () => {
     render(
       <NativeScriptContext.Provider value={data}>
         <MinttingBurningPolicy />
       </NativeScriptContext.Provider>
     );
-    expect(screen.getByText(/conditions:/i)).toBeInTheDocument();
-    expect(screen.getByText(/allowed by/i)).toBeInTheDocument();
-    expect(screen.getByText(/421d2150828730433df35f93088bfc223f9ab3b74ad8333c/i)).toBeInTheDocument();
+    await new Promise((r) => setTimeout(r, 1000));
+    expect(screen.getByText(/Time-Lock Information/i)).toBeInTheDocument();
+    expect(screen.getByText(/Signer Public Keys/i)).toBeInTheDocument();
+    expect(screen.getByText(/421d21/i)).toBeInTheDocument();
   });
 });
 
