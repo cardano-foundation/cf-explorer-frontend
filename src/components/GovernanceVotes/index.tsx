@@ -264,7 +264,7 @@ const GovernanceVotesDetail: React.FC<{
           onClick={() => {
             setQuery({
               tab: "governanceVotes",
-              page: 0,
+              page: 1,
               size: 6,
               actionType: STATUS_VOTE.ALL,
               actionStatus: STATUS_VOTE.ANY,
@@ -711,7 +711,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     handleClose();
     history.replace({
       search: stringify({
-        page: 0,
+        page: 1,
         size: 6,
         tab: "governanceVotes",
         actionType: STATUS_VOTE.ALL,
@@ -727,7 +727,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     setQuery({
       tab: query.tab,
       isRepeatVote: params?.isRepeatVote,
-      page: 0,
+      page: 1,
       size: 6,
       id: params?.id,
       anchorText: params?.anchorText,
