@@ -1,6 +1,7 @@
 interface DrepOverview {
   activeVoteStake: number;
   anchorUrl: string;
+  anchorHash: string;
   createdAt: string;
   delegators: number;
   drepHash: string;

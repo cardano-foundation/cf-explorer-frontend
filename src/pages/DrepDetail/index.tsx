@@ -32,7 +32,8 @@ import {
   VotesYesIcon,
   VotesAbstainIcon,
   VotesNoIcon,
-  DropdownIcon
+  DropdownIcon,
+  DisclaimerIcon
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -53,6 +54,7 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
@@ -88,7 +90,50 @@ const DrepDetail = () => {
           {t("drep.des")}
         </TitleCard>
       ),
-      value: <ValueCard>{data?.anchorUrl}</ValueCard>
+      value: (
+        <ValueCard>
+          <Box>
+            <DynamicEllipsisText
+              value={data?.anchorHash || ""}
+              sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+              postfix={5}
+              isNoLimitPixel={true}
+              isTooltip
+            />
+          </Box>
+          {data?.anchorUrl && (
+            <Box position={"relative"}>
+              <Box component={"a"} href="" target="_blank" color={`${theme.palette.primary.main} !important`}>
+                <DynamicEllipsisText
+                  value={data?.anchorUrl || ""}
+                  sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                  postfix={5}
+                  isNoLimitPixel={true}
+                  isTooltip
+                />
+              </Box>
+              <Box
+                position={"absolute"}
+                right={0}
+                top={"50%"}
+                sx={{ transform: "translateY(-50%)" }}
+                flex={1}
+                component={CustomTooltip}
+                title={
+                  <Box>
+                    <Box fontWeight={"bold"} component={"span"}>
+                      Disclaimer:{" "}
+                    </Box>
+                    {t("drep.disclaimer")}
+                  </Box>
+                }
+              >
+                <DisclaimerIcon fill={theme.palette.primary.main} />
+              </Box>
+            </Box>
+          )}
+        </ValueCard>
+      )
     },
     {
       icon: CreateDrepIcon,
