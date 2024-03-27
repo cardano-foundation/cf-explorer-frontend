@@ -1,11 +1,11 @@
-import { Box, Grid, Stack, Tooltip, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
-import { GovernanceVote } from "src/components/DelegationDetail/DelegationDetailList";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { GovernanceVote } from "src/components/GovernanceVotes";
 
 import { CardGovernanceVote, StatusContainer } from "./styles";
 
@@ -34,11 +34,12 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
   };
   return (
     <CardGovernanceVote>
-      <Grid container justifyContent="space-between">
+      <Box p={2}>
         <Box display="flex" justifyContent="space-between" width="100%">
-          <Box maxWidth="400px">
+          <Box maxWidth="400px" flex={1}>
             <Tooltip title={txHash} placement="top" arrow>
               <Typography
+                sx={{ wordBreak: "break-word" }}
                 fontWeight={600}
                 fontSize="24px"
                 lineHeight="28px"
@@ -94,7 +95,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
             </Typography>
           </Box>
         </Stack>
-      </Grid>
+      </Box>
     </CardGovernanceVote>
   );
 };
@@ -123,9 +124,9 @@ export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
     <ChipContainer
       Icon={typeStatus[0]}
       message={
-        <Typography textTransform="uppercase" fontSize="12px" fontWeight={500}>
+        <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
           {status ? status : t("pool.none")}
-        </Typography>
+        </Box>
       }
       variant={typeStatus[1] as "success" | "warning" | "info" | "error"}
     />
