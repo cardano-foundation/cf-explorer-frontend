@@ -992,6 +992,7 @@
   "CIP83.decryptMessage": "Decrypt Message",
   "CIP83.passphrase": "Passphrase",
   "CIP83.notSupportEnc": "Encryption Method Not Supported",
+  "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "smartContract.plutusDes.title": "What Are Plutus Scripts?",
   "smartContract.plutusDes.desc1": "Plutus is the native smart contract language for Cardano.",
   "smartContract.plutusDes.desc2": "is the initial version of Plutus, introduced in the Alonzo hard fork",
@@ -1066,7 +1067,6 @@
   "pool.Infor": "Infor",
   "pool.tabPool": "The vote cast on the blockchain by Pool Name.",
   "pool.overall": "Votes cast on the blockchain by Delegated Representatives (DReps), Stake Pool Operators (SPOs), and members of the Constitutional Committee.",
-  "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check",
   "status.inActive": "INACTIVE"
 }
