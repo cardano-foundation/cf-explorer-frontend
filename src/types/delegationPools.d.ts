@@ -85,6 +85,7 @@ interface CertificateHistory {
   epochNo: number;
   absoluteSlot: number;
   createdAt: string;
+  actionTypes: string;
 }
 
 interface AnalyticsDelegators {

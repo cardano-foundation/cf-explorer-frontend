@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import QueryString, { parse, stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Button,
@@ -17,10 +21,6 @@ import {
   tooltipClasses,
   useTheme
 } from "@mui/material";
-import QueryString, { parse, stringify } from "qs";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useHistory, useLocation } from "react-router-dom";
 
 import {
   ActionTypeIcon,
@@ -629,13 +629,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
                   {getShortHash(data?.txHash)}
                 </Typography>
               </CustomTooltip>
-              <CopyButton
-                text={data?.txHash}
-                customIcon={BlackCircleIcon}
-                data-testid="copy-button"
-                height={24}
-                fill={theme.palette.secondary[0]}
-              />
+              <CopyButton text={data?.txHash} customIcon={BlackCircleIcon} data-testid="copy-button" />
             </Box>
           </InfoValue>
         </Item>
