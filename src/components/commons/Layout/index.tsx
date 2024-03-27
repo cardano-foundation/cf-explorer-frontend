@@ -1,21 +1,21 @@
-import { Box, Button, useTheme, useMediaQuery, List } from "@mui/material";
-import { t } from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Box, Button, useTheme, List } from "@mui/material";
+import { t } from "i18next";
 
-import { useScreen } from "src/commons/hooks/useScreen";
-import { Notice } from "src/commons/resources";
-import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
+import { useScreen } from "src/commons/hooks/useScreen";
+import { Notice } from "src/commons/resources";
 
-import StyledModal from "../StyledModal";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import { Drawer, Layout, Main, BackDrop, MainContainer } from "./styles";
 import ToggleSidebar from "./ToggleSidebar";
-import { BackDrop, Drawer, Layout, Main, MainContainer } from "./styles";
+import StyledModal from "../StyledModal";
 
 interface Props {
   children: React.ReactNode;
@@ -27,14 +27,11 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const lastPath = useRef<string>(history.location.pathname);
   const { isTablet } = useScreen();
   const theme = useTheme();
-  const mainRef = useRef<HTMLDivElement | null>(null);
-  const matchesBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     const unlisten = history.listen(() => {
       lastPath.current = history.location.pathname;
       setOnDetailView(false);
-      mainRef.current?.scrollTo(0, 0);
     });
     return () => {
       unlisten();
@@ -64,7 +61,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer id="main">
-        <Main ref={mainRef} component="main" open={sidebar ? 1 : 0}>
+        <Main component="main" open={sidebar ? 1 : 0}>
           {NETWORK === NETWORKS.sanchonet && (
             <Box
               alignItems={"center"}
@@ -91,9 +88,8 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
           )}
           <Header />
           {children}
-          {matchesBreakpoint && <Footer />}
         </Main>
-        {!matchesBreakpoint && <Footer />}
+        <Footer />
         <NoticeModal open={openNoticeModal} handleCloseModal={() => setOpenNoticeModal(false)} />
       </MainContainer>
     </Layout>
@@ -146,13 +142,6 @@ const NoticeModal = ({ ...props }: { open: boolean; handleCloseModal: () => void
             }}
           >
             {t("notice.value.b2")}
-          </li>
-          <li
-            style={{
-              listStyle: "disc"
-            }}
-          >
-            {t("notice.value.c")}
           </li>
         </List>
       </Box>

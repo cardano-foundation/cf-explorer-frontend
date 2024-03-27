@@ -13,20 +13,21 @@ interface OverViewDelegation {
 }
 
 interface Delegators {
+  id: number;
   poolId: string;
   poolName: string;
+  tickerName: string;
   poolSize: number;
-  reward: number;
-  feePercent: number;
-  feeAmount: number;
   pledge: number;
   saturation: number;
-  stakeLimit;
-  numberDelegators?: number;
-  lifetimeBlock?: number;
-  lifetimeRos?: number;
-  epochBlock?: number;
-  tickerName?: string;
+  stakeLimit: number;
+  reserves: number;
+  epochBlock: number;
+  lifetimeBlock: number;
+  votingPower: number;
+  governanceParticipationRate: number;
+  retired: boolean;
+  kparam: number;
 }
 
 interface DelegationOverview {
@@ -109,5 +110,5 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "";
 type TabDrepDetail = "delegators" | "certificatesHistory" | "governanceVotes" | "";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "governanceVotes" | "";
