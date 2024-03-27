@@ -30,6 +30,10 @@ export const API = {
   POLICY: "policies",
   SCRIPTS_SEARCH: "scripts/search",
   POOL: "pools",
+  POOL_CERTIFICATE: {
+    POOL: "gov-actions",
+    POOL_DETAIL: (poolId: string) => `gov-actions/${poolId}/voting-procedure-detail`
+  },
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
   DREP_CERTIFICATES_HISTORY: "dreps/:drepId/certificates-history",
   DREP_OVERVIEW: "dreps/:drepId/drep-details",

@@ -1,29 +1,27 @@
-import React, { useState } from "react";
 import {
   Box,
-  useTheme,
-  styled,
   Button,
-  Typography,
   ButtonGroup,
+  Chip,
   Grid,
   TableBody,
-  Table as TableMui,
-  TableRow,
-  TooltipProps,
-  Tooltip,
-  tooltipClasses,
   TableCell,
   TableContainer,
   TableHead,
-  Chip
+  Table as TableMui,
+  TableRow,
+  Tooltip,
+  TooltipProps,
+  Typography,
+  styled,
+  tooltipClasses,
+  useTheme
 } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { DREP_ACTION_TYPE, POOL_ACTION_TYPE } from "src/commons/utils/constants";
-import { details } from "src/commons/routers";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -45,10 +43,12 @@ import {
   VotesYesIcon,
   VotingPowerIcon
 } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
+import { DREP_ACTION_TYPE, POOL_ACTION_TYPE } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
-  getPageInfo,
   getShortHash,
   numberWithCommas,
   removeDuplicate
@@ -57,9 +57,10 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CardGovernanceVotes, { GovernanceStatus, VoteStatus } from "src/components/commons/CardGovernanceVotes";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
+import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column, FooterTable } from "src/components/commons/Table";
-import CustomModal from "src/components/commons/CustomModal";
+import useFetch from "src/commons/hooks/useFetch";
 
 import { DataContainer, InfoTitle, InfoValue, Item, StyledGrid, StyledTitle } from "../DelegationDetailInfo/styles";
 import { StyledLink, Tab } from "./styles";
@@ -69,11 +70,52 @@ interface Query {
   page: number;
   size: number;
   voteId?: number | string;
+  actionType?: string;
+  actionStatus?: string;
+  voteType?: string;
+  voterType?: string;
+  isRepeatVote?: boolean;
 }
 
 interface TabButtonProps {
   tabName: string;
   children: React.ReactNode;
+}
+
+export interface GovernanceVote {
+  index: number;
+  status: string;
+  txHash: string;
+  type: string;
+  vote: string;
+  votingPower: string;
+}
+
+export interface GovernanceVoteDetail {
+  txHash: string;
+  index: number;
+  govActionType: string;
+  anchorHash: string;
+  anchorUrl: string;
+  voterType?: string;
+  details: {
+    type: string;
+    govActionId: string | null;
+    quorumThreshold: number;
+    membersForRemoval: string[];
+    newMembersAndTerms: Record<string, number>;
+  };
+  voteType: string;
+  voterHash: string | null;
+  status: string | null;
+  votingPower: number | null;
+  submissionDate: string;
+  expiryDate: string;
+  historyVotes: {
+    no: number | null;
+    vote: string;
+    timestamp: string;
+  }[];
 }
 
 const DelegationEpochList = ({
@@ -384,18 +426,19 @@ const DelegationCertificatesHistory = ({
   );
 };
 
-const governanceVotesData = [
-  { vote: "yes", status: "enacted" },
-  { vote: "no", status: "ballot" },
-  { vote: "abstain", status: "ratified" },
-  { vote: "none", status: "enacted" }
-];
+interface DelegationGovernanceVotesProps {
+  data: GovernanceVote[] | null;
+  loading: boolean;
+  initialized: boolean;
+  total: number;
+  poolHash?: string;
+}
 
-const DelegationGovernanceVotes = () => {
+const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ data, total, poolHash }) => {
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
+  // const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const history = useHistory();
-  const pageInfo = getPageInfo<{ isMultiSig?: string; openTimeLocked?: string }>(search);
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -423,15 +466,46 @@ const DelegationGovernanceVotes = () => {
       {children}
     </Tab>
   );
+  const fetchDataGovernanceVotesDetail = useFetch<GovernanceVoteDetail>(
+    `${API.POOL_CERTIFICATE.POOL_DETAIL(poolHash || "")}?${stringify({
+      txHash: query.voteId,
+      index: 0,
+      voterType: "STAKING_POOL_KEY_HASH"
+    })}`
+  );
 
   if (query.voteId) {
+    const actionType = (type: string) => {
+      switch (type) {
+        case "UPDATE_COMMITTEE":
+          return t("pool.normalState");
+        case "HARD_FORK_INITIATION_ACTION":
+          return t("pool.harkFork");
+        case "NO_CONFIDENCE":
+          return t("pool.typeMotion");
+        case "INFO_ACTION":
+          return t("pool.Infor");
+
+        default:
+          break;
+      }
+    };
     return (
       <>
         <Box display="flex" alignItems="center">
           <Button
             variant="text"
             onClick={() => {
-              setQuery({ tab: "governanceVotes", page: 1, size: 50 });
+              setQuery({
+                tab: "governanceVotes",
+                page: Number(query.page),
+                size: Number(query.size),
+                actionType: "ALL",
+                actionStatus: "ANY",
+                voteType: "ANY",
+                voterType: "STAKING_POOL_KEY_HASH",
+                isRepeatVote: false
+              });
               setTab("pool");
             }}
           >
@@ -444,7 +518,8 @@ const DelegationGovernanceVotes = () => {
             lineHeight="28px"
             color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
           >
-            Governance Action Voting Name
+            {actionType(fetchDataGovernanceVotesDetail.data?.govActionType || "")} #
+            {fetchDataGovernanceVotesDetail.data?.index}
           </Typography>
         </Box>
         <Box textAlign="center">
@@ -467,7 +542,7 @@ const DelegationGovernanceVotes = () => {
             </Typography>
           </Box>
         </Box>
-        <GovernanceVotesDetail tab={tab} />
+        <GovernanceVotesDetail tab={tab} data={fetchDataGovernanceVotesDetail.data} />
       </>
     );
   }
@@ -475,7 +550,7 @@ const DelegationGovernanceVotes = () => {
   return (
     <>
       <Grid container spacing={"20px"} pt="23px">
-        {governanceVotesData.map((value, index) => (
+        {data?.map((value, index) => (
           <Grid
             item
             xs={12}
@@ -485,9 +560,9 @@ const DelegationGovernanceVotes = () => {
             onClick={() => {
               setQuery({
                 tab: query.tab,
-                voteId: "1",
-                page: 1,
-                size: 50
+                voteId: value.txHash,
+                page: Number(query.page),
+                size: Number(query.size)
               });
             }}
           >
@@ -495,14 +570,11 @@ const DelegationGovernanceVotes = () => {
           </Grid>
         ))}
       </Grid>
-
       <FooterTable
         pagination={{
-          ...pageInfo,
-          size: 6,
-          total: 12 || 0
+          total,
+          onChange: (page, size) => history.replace({ search: stringify({ ...query, page, size }) })
         }}
-        total={{ count: 12 || 0, title: "" }}
         loading={false}
         optionList={[6, 9, 12]}
       />
@@ -517,14 +589,12 @@ export {
   DelegationStakingDelegatorsList
 };
 
-const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
+const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail | null }> = ({ tab, data }) => {
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const { t } = useTranslation();
   const [selectVote, setSelectVote] = useState<string>("");
-
   const listVotes = ["SPOs", "DRops", "CC"];
-
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
       <StyledGrid container>
@@ -549,9 +619,9 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
                 p: "3px 2px 3px 12px"
               }}
             >
-              <CustomTooltip title="d32493b1231232131203989bd">
-                <Typography fontSize="12px" fontWeight="500" lineHeight="14.52px">
-                  d32493b...03989bd
+              <CustomTooltip title={data?.txHash}>
+                <Typography fontSize="12px" fontWeight="500" lineHeight="14.52px" color={theme.palette.secondary[600]}>
+                  {getShortHash(data?.txHash)}
                 </Typography>
               </CustomTooltip>
               <CopyButton
@@ -572,7 +642,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
           <InfoTitle paddingTop="2px" paddingBottom="3px">
             <StyledTitle>{t("pool.actionType")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>{t("pool.treasury")}</InfoValue>
+          <InfoValue>{data?.govActionType}</InfoValue>
         </Item>
         <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
           <Box display="flex" justifyContent="space-between">
@@ -623,7 +693,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
                   setOpenHistoryVoteModal(true);
                 }}
               >
-                <VoteStatus status={"yes"} />
+                <VoteStatus status={data?.voteType || ""} />
               </Box>
             ) : (
               <VoteRate />
@@ -640,7 +710,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
               <StyledTitle>{t("pool.currentStatus")}</StyledTitle>
 
               <InfoValue width="fit-content" mt={"8px"}>
-                <GovernanceStatus status={"enacted"} />
+                <GovernanceStatus status={status} />
               </InfoValue>
             </Box>
           </InfoTitle>
@@ -655,21 +725,23 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.votingPowerADA")}</StyledTitle>
           </InfoTitle>
-          <InfoValue sx={{ wordBreak: "break-word" }}>1,893,565.321 ADA</InfoValue>
+          <InfoValue sx={{ wordBreak: "break-word" }}>
+            {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
+          </InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.submission")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>08/25/2024 13:39:41</InfoValue>
+          <InfoValue>{data?.submissionDate}</InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>08/25/2024</InfoValue>
+          <InfoValue>{data?.expiryDate}</InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
@@ -679,7 +751,11 @@ const GovernanceVotesDetail: React.FC<{ tab: string }> = ({ tab }) => {
           <InfoValue>Whatever the anchor text string is for this action</InfoValue>
         </Item>
       </StyledGrid>
-      <VoteHistoryModal open={openHistoryVoteModal} onClose={() => setOpenHistoryVoteModal(false)} />
+      <VoteHistoryModal
+        data={data?.historyVotes}
+        open={openHistoryVoteModal}
+        onClose={() => setOpenHistoryVoteModal(false)}
+      />
     </DataContainer>
   );
 };
@@ -756,21 +832,12 @@ const VoteRate = () => {
 export interface VoteHistoryProps {
   onClose?: () => void;
   open: boolean;
+  data?: { no: number | null; vote: string; timestamp: string }[];
 }
 
-const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
+const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-
-  function createData(no: string, vote: string, time: string) {
-    return { no, vote, time };
-  }
-
-  const rows = [
-    createData("1", "yes", "02/13/2024 13:39:41"),
-    createData("2", "no", "02/11/2024 10:25:27"),
-    createData("3", "yes", "02/10/2024 19:45:12")
-  ];
 
   return (
     <CustomModal open={open} onClose={() => onClose?.()} title={t("pool.votingHistory")} width={500}>
@@ -781,7 +848,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
         >
           {t("pool.currentVote")}:
         </Typography>{" "}
-        <VoteStatus status={"yes"} />
+        <VoteStatus status={(data && data[0].vote) || ""} />
       </Box>
       <TableContainer sx={{ p: "0px 10px", background: theme.isDark ? "" : theme.palette.secondary[0] }}>
         <TableMui aria-label="simple table">
@@ -818,7 +885,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data?.map((row, index) => (
               <TableRow key={row.no} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell
                   sx={{
@@ -827,7 +894,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
                   }}
                   padding="none"
                 >
-                  {row.no}
+                  {index + 1}
                 </TableCell>
                 <TableCell padding="none">
                   <Box width="fit-content" mt="8px">
@@ -838,7 +905,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open }) => {
                   sx={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
                   padding="none"
                 >
-                  {row.time}
+                  {row.timestamp}
                 </TableCell>
               </TableRow>
             ))}
