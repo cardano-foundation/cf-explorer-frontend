@@ -45,7 +45,13 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { DREP_ACTION_TYPE, POOL_ACTION_TYPE } from "src/commons/utils/constants";
+import {
+  DREP_ACTION_TYPE,
+  POOLS_ACTION_TYPE,
+  POOLS_VOTE_TYPE,
+  POOL_ACTION_TYPE,
+  STATUS_VOTE
+} from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -470,20 +476,20 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
     `${API.POOL_CERTIFICATE.POOL_DETAIL(poolHash || "")}?${stringify({
       txHash: query.voteId,
       index: 0,
-      voterType: "STAKING_POOL_KEY_HASH"
+      voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH
     })}`
   );
 
   if (query.voteId) {
     const actionType = (type: string) => {
       switch (type) {
-        case "UPDATE_COMMITTEE":
+        case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
           return t("pool.normalState");
-        case "HARD_FORK_INITIATION_ACTION":
+        case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
           return t("pool.harkFork");
-        case "NO_CONFIDENCE":
+        case POOLS_ACTION_TYPE.NO_CONFIDENCE:
           return t("pool.typeMotion");
-        case "INFO_ACTION":
+        case POOLS_ACTION_TYPE.INFO_ACTION:
           return t("pool.Infor");
 
         default:
@@ -498,12 +504,12 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
             onClick={() => {
               setQuery({
                 tab: "governanceVotes",
-                page: Number(query.page),
-                size: Number(query.size),
-                actionType: "ALL",
-                actionStatus: "ANY",
-                voteType: "ANY",
-                voterType: "STAKING_POOL_KEY_HASH",
+                page: 0,
+                size: 6,
+                actionType: STATUS_VOTE.ALL,
+                actionStatus: STATUS_VOTE.ANY,
+                voteType: STATUS_VOTE.ANY,
+                voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH,
                 isRepeatVote: false
               });
               setTab("pool");
@@ -536,9 +542,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
               width="400px"
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {tab === "pool"
-                ? "The vote cast on the blockchain by Pool Name."
-                : "Votes cast on the blockchain by Delegated Representatives (DReps), Stake Pool Operators (SPOs), and members of the Constitutional Committee."}
+              {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
             </Typography>
           </Box>
         </Box>
@@ -572,6 +576,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
       </Grid>
       <FooterTable
         pagination={{
+          size: Number(query.size),
           total,
           onChange: (page, size) => history.replace({ search: stringify({ ...query, page, size }) })
         }}
@@ -625,7 +630,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
                 </Typography>
               </CustomTooltip>
               <CopyButton
-                text={"1232312111111111111ádasdasdasdas1111111111"}
+                text={data?.txHash}
                 customIcon={BlackCircleIcon}
                 data-testid="copy-button"
                 height={24}

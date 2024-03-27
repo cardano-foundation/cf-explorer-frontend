@@ -40,7 +40,7 @@ import {
 } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { POOL_STATUS } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, POOLS_VOTE_TYPE, POOL_STATUS, STATUS_VOTE } from "src/commons/utils/constants";
 import { getPageInfo } from "src/commons/utils/helper";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
@@ -246,11 +246,11 @@ const DelegationDetail: React.FC = () => {
     setQuery({
       tab: newExpanded ? panel : "",
       page: 0,
-      size: 50,
-      actionType: "ALL",
-      actionStatus: "ANY",
-      voteType: "ANY",
-      voterType: "STAKING_POOL_KEY_HASH",
+      size: panel === "governanceVotes" ? 6 : 50,
+      actionType: STATUS_VOTE.ALL,
+      actionStatus: STATUS_VOTE.ANY,
+      voteType: STATUS_VOTE.ANY,
+      voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH,
       isRepeatVote: false
     });
   };
@@ -327,6 +327,12 @@ export interface FilterParams {
   fromDate?: string;
   toDate?: string;
   search?: string;
+  id?: string;
+  isRepeatVote?: boolean;
+  actionType?: string;
+  anchorText?: string;
+  currentStatus?: string;
+  vote?: string;
 }
 
 export interface FilterGovernanceVotes {
@@ -339,14 +345,18 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const { t } = useTranslation();
   const history = useHistory();
   const [expanded, setExpanded] = useState<string | false>("");
-  const [isRepeatVote, setIsRepeatVote] = useState<boolean>(false);
-  const [id, setId] = useState<string | number>("");
-  const [anchorText, setAnchorText] = useState<string | number>("");
-  const [actionType, setActionType] = useState<string>("ALL");
-  const [currentStatus, setCurrentStatus] = useState<string>("ANY");
-  const [vote, setVote] = useState<string>("ANY");
   const [openDateRange, setOpenDateRange] = useState<boolean>(false);
-  const filterValue = { sort: "ASC", fromDate: "", toDate: "", search: "" };
+  const filterValue = {
+    sort: "ASC",
+    id: "",
+    anchorText: "",
+    isRepeatVote: false,
+    actionType: STATUS_VOTE.ALL,
+    currentStatus: STATUS_VOTE.ANY,
+    vote: STATUS_VOTE.ANY,
+    fromDate: "",
+    toDate: ""
+  };
 
   const [params, setParams] = useState<FilterParams | null>(filterValue || {});
 
@@ -363,10 +373,11 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         size: 6,
         isRepeatVote: false,
         tab: "governanceVotes",
-        actionType: "ALL",
-        actionStatus: "ANY",
-        voteType: "ANY",
-        voterType: "STAKING_POOL_KEY_HASH"
+        id: "",
+        actionType: STATUS_VOTE.ALL,
+        actionStatus: STATUS_VOTE.ANY,
+        voteType: STATUS_VOTE.ANY,
+        voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH
       })
     });
   };
@@ -375,42 +386,42 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     setExpanded(false);
     setQuery({
       tab: query.tab,
-      isRepeatVote: isRepeatVote,
+      isRepeatVote: params?.isRepeatVote,
       page: 0,
       size: 6,
-      id: id,
-      anchorText: anchorText,
-      actionType: actionType,
-      actionStatus: currentStatus,
-      voterType: "STAKING_POOL_KEY_HASH",
-      voteType: vote,
+      id: params?.id,
+      anchorText: params?.anchorText,
+      actionType: params?.actionType,
+      actionStatus: params?.currentStatus,
+      voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH,
+      voteType: params?.vote,
       ...(params?.fromDate && { fromDate: params.fromDate }),
       ...(params?.toDate && { toDate: params.toDate })
     });
   };
 
   const currentStatusList = [
-    { value: "ANY", text: t("pool.any") },
-    { value: "OPEN_BALLOT", text: t("pool.open") },
-    { value: "RATIFIED", text: t("pool.ratified") },
-    { value: "EXPIRED", text: t("common.expired") },
-    { value: "ENACTED", text: t("pool.enacted") }
+    { value: STATUS_VOTE.ANY, text: t("pool.any") },
+    { value: STATUS_VOTE.OPEN_BALLOT, text: t("pool.open") },
+    { value: STATUS_VOTE.RATIFIED, text: t("pool.ratified") },
+    { value: STATUS_VOTE.EXPIRED, text: t("common.expired") },
+    { value: STATUS_VOTE.ENACTED, text: t("pool.enacted") }
   ];
 
   const voteList = [
-    { value: "ANY", text: t("pool.any") },
-    { value: "YES", text: t("pool.yes") },
-    { value: "NO", text: t("pool.no") },
-    { value: "ABSTAIN", text: t("pool.abstain") },
-    { value: "NONE", text: t("pool.none") }
+    { value: STATUS_VOTE.ANY, text: t("pool.any") },
+    { value: STATUS_VOTE.YES, text: t("pool.yes") },
+    { value: STATUS_VOTE.NO, text: t("pool.no") },
+    { value: STATUS_VOTE.ABSTAIN, text: t("pool.abstain") },
+    { value: STATUS_VOTE.NONE, text: t("pool.none") }
   ];
 
   const actionTypeList = [
-    { value: "ALL", text: t("pool.any") },
-    { value: "NO_CONFIDENCE", text: t("pool.typeMotion") },
-    { value: "UPDATE_COMMITTEE", text: t("pool.typeConstitutional") },
-    { value: "HARD_FORK_INITIATION_ACTION", text: t("pool.typeHardFork") },
-    { value: "INFO_ACTION", text: t("pool.typeInfo") }
+    { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
+    { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
+    { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
+    { value: POOLS_ACTION_TYPE.INFO_ACTION, text: t("pool.typeInfo") }
   ];
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -464,7 +475,11 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
-                  <Switch defaultChecked checked={isRepeatVote} onChange={(e) => setIsRepeatVote(e.target.checked)} />
+                  <Switch
+                    defaultChecked
+                    checked={params?.isRepeatVote}
+                    onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
+                  />
                 </Box>
                 {/* {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />} */}
               </Box>
@@ -490,8 +505,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <StyledInput
                     // inputRef={inputRef}
                     placeholder={"Search ID"}
-                    value={id}
-                    onChange={({ target: { value } }) => setId(value)}
+                    value={params?.id}
+                    onChange={({ target: { value } }) => setParams({ ...params, id: value })}
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
@@ -516,8 +531,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box sx={{ p: "0px 16px" }}>
                     <TextareaAutosize
-                      value={anchorText}
-                      onChange={(e) => setAnchorText(e.target.value)}
+                      value={params?.anchorText}
+                      onChange={(e) => setParams({ ...params, anchorText: e.target.value })}
                       placeholder={t("pool.searchAnchorText")}
                     />
                   </Box>
@@ -548,14 +563,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
-                    value={actionType}
-                    onChange={(e) => setActionType(e.target.value)}
+                    value={params?.actionType}
+                    onChange={(e) => setParams({ ...params, actionType: e.target.value })}
                   >
                     {actionTypeList.map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === actionType}
+                        checked={i.value === params?.actionType}
                         control={
                           <Radio
                             sx={{
@@ -604,14 +619,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
-                    value={currentStatus}
-                    onChange={(e) => setCurrentStatus(e.target.value)}
+                    value={params?.currentStatus}
+                    onChange={(e) => setParams({ ...params, currentStatus: e.target.value })}
                   >
                     {currentStatusList.map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === currentStatus}
+                        checked={i.value === params?.currentStatus}
                         control={
                           <Radio
                             sx={{
@@ -660,14 +675,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
-                    value={vote}
-                    onChange={(e) => setVote(e.target.value)}
+                    value={params?.vote}
+                    onChange={(e) => setParams({ ...params, vote: e.target.value })}
                   >
                     {voteList.map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === vote}
+                        checked={i.value === params?.vote}
                         control={
                           <Radio
                             sx={{
