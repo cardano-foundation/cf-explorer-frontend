@@ -55,6 +55,8 @@ import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { VOTE_TYPE } from "src/commons/utils/constants";
+import DelegationGovernanceVotes from "src/components/GovernanceVotes";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
@@ -351,13 +353,14 @@ const DrepAccordion = () => {
   };
 
   const fetchDataCertificatesHistory = useFetchList<CertificateHistory>(
-    API.DREP_CERTIFICATES_HISTORY.replace(":drepId", drepId),
+    tab === "certificatesHistory" ? API.DREP_CERTIFICATES_HISTORY.replace(":drepId", drepId) : "",
     { ...pageInfo },
     false,
     tab === "certificatesHistory" ? blockKey : undefined
   );
+
   const fetchDataDelegator = useFetchList<StakingDelegators>(
-    API.DREP_DELEGATOR.replace(":drepId", drepId),
+    tab === "delegators" ? API.DREP_DELEGATOR.replace(":drepId", drepId) : "",
     { ...pageInfo },
     false,
     tab === "delegators" ? blockKey : undefined
@@ -373,7 +376,11 @@ const DrepAccordion = () => {
       icon: governanceVotesIcon,
       label: t("drep.governanceVotes"),
       key: "governanceVotes",
-      component: <div ref={tableRef}>Governance Votes</div>
+      component: (
+        <div ref={tableRef}>
+          <DelegationGovernanceVotes hash={drepId} type={VOTE_TYPE.DREP_KEY_HASH} />
+        </div>
+      )
     },
     {
       icon: StakingDelegators,
@@ -458,9 +465,11 @@ const DrepAccordion = () => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>
-            <TimeDuration>
-              <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
-            </TimeDuration>
+            {tab != "governanceVotes" && (
+              <TimeDuration>
+                <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
+              </TimeDuration>
+            )}
             {component}
           </AccordionDetails>
         </StyledAccordion>
