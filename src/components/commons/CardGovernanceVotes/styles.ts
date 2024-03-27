@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 export const CardGovernanceVote = styled(Box)`
   padding: 20px;
@@ -17,10 +17,4 @@ export const StatusContainer = styled(Box)`
     margin: unset !important;
     border-radius: 20px;
   }
-`;
-
-export const CIPLabel = styled(Typography)`
-  font-size: 12px;
-  text-transform: uppercase;
-  color: ${({ theme }) => (theme.isDark ? theme.palette.common.white : theme.palette.common.black)};
 `;
