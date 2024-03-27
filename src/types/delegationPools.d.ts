@@ -13,20 +13,21 @@ interface OverViewDelegation {
 }
 
 interface Delegators {
+  id: number;
   poolId: string;
   poolName: string;
+  tickerName: string;
   poolSize: number;
-  reward: number;
-  feePercent: number;
-  feeAmount: number;
   pledge: number;
   saturation: number;
-  stakeLimit;
-  numberDelegators?: number;
-  lifetimeBlock?: number;
-  lifetimeRos?: number;
-  epochBlock?: number;
-  tickerName?: string;
+  stakeLimit: number;
+  reserves: number;
+  epochBlock: number;
+  lifetimeBlock: number;
+  votingPower: number;
+  governanceParticipationRate: number;
+  retired: boolean;
+  kparam: number;
 }
 
 interface DelegationOverview {
@@ -66,9 +67,11 @@ interface DelegationEpoch {
 }
 interface StakingDelegators {
   address: string;
+  stakeAddress: string;
   view: string;
   totalStake: number;
   time: string;
+  createdAt: string;
   fee: number;
 }
 
@@ -80,7 +83,9 @@ interface CertificateHistory {
   actions: PoolActionType[];
   actionTypes: DrepActionType[];
   epochNo: number;
+  absoluteSlot: number;
   createdAt: string;
+  actionTypes: string;
 }
 
 interface AnalyticsDelegators {

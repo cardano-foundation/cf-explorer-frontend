@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import QueryString, { parse, stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Button,
@@ -18,12 +22,14 @@ import {
   useTheme,
   Link
 } from "@mui/material";
+
 import QueryString, { parse, stringify } from "qs";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
 import { JsonViewer } from "@textea/json-viewer";
+
 
 import {
   ActionTypeIcon,
@@ -264,12 +270,14 @@ const DelegationStakingDelegatorsList = ({
       key: "delegator",
       minWidth: "50px",
       render: (data) =>
-        data.view && (
+        (data.view || data.stakeAddress) && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.stake(data.view)}>{getShortHash(data.view || "")}</StyledLink>
+            <CustomTooltip title={data.view || data.stakeAddress || ""}>
+              <StyledLink to={details.stake(data.view || data.stakeAddress)}>
+                {getShortHash(data.view || data.stakeAddress || "")}
+              </StyledLink>
             </CustomTooltip>
-            <CopyButton text={data.view || ""} />
+            <CopyButton text={data.view || data.stakeAddress || ""} />
           </div>
         )
     },
@@ -289,7 +297,7 @@ const DelegationStakingDelegatorsList = ({
       title: t("stakedTime"),
       key: "stakedTime",
       minWidth: "120px",
-      render: (data) => formatDateTimeLocal(data.time || "")
+      render: (data) => formatDateTimeLocal(data.time || data.createdAt || "")
     },
     {
       title: (
@@ -318,7 +326,7 @@ const DelegationStakingDelegatorsList = ({
         total: total
       }}
       onClickRow={(e, r) => {
-        history.push(details.stake(r.view));
+        history.push(details.stake(r.view || r.stakeAddress));
       }}
     />
   );
@@ -349,23 +357,21 @@ const DelegationCertificatesHistory = ({
   const renderAction = (type: POOL_ACTION_TYPE | DREP_ACTION_TYPE) => {
     if (type === POOL_ACTION_TYPE.POOL_REGISTRATION || type === DREP_ACTION_TYPE.REG_DREP_CERT) {
       return (
-        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Drep Registration"}>
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Registration"}>
           {theme.isDark ? <PoolResgistrationHistoryDark /> : <PoolResgistrationHistory />}
         </CustomTooltip>
       );
     }
     if (type === POOL_ACTION_TYPE.POOL_UPDATE || type === DREP_ACTION_TYPE.UPDATE_DREP_CERT) {
       return (
-        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Drep Update"}>
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Delegation"}>
           {theme.isDark ? <PoolUpdateHistoryDark /> : <PoolUpdateHistory />}
         </CustomTooltip>
       );
     }
     if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION || type === DREP_ACTION_TYPE.UNREG_DREP_CERT) {
       return (
-        <CustomTooltip
-          title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Drep Deregistration"}
-        >
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Retirement"}>
           {theme.isDark ? <PoolDeresgistrationHistoryDark /> : <PoolDeresgistrationHistory />}
         </CustomTooltip>
       );
@@ -415,7 +421,7 @@ const DelegationCertificatesHistory = ({
       key: "absoluteSlot",
       minWidth: "130px",
       render: (data) => {
-        return <>{data.slotNo}</>;
+        return <>{data.absoluteSlot || data.slotNo}</>;
       }
     },
     {
@@ -699,13 +705,7 @@ const GovernanceVotesDetail: React.FC<{
                   {getShortHash(data?.txHash)}
                 </Typography>
               </CustomTooltip>
-              <CopyButton
-                text={data?.txHash}
-                customIcon={BlackCircleIcon}
-                data-testid="copy-button"
-                height={24}
-                fill={theme.palette.secondary[0]}
-              />
+              <CopyButton text={data?.txHash} customIcon={BlackCircleIcon} data-testid="copy-button" />
             </Box>
           </InfoValue>
         </Item>

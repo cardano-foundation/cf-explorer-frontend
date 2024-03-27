@@ -37,6 +37,9 @@ export const API = {
   },
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
   DREP_CERTIFICATES_HISTORY: "dreps/:drepId/certificates-history",
+  DREP_OVERVIEW: "dreps/:drepId/drep-details",
+  DREP_OVERVIEW_CHART: "dreps/:drepId/vote-procedure-chart",
+  DREP_DELEGATOR: "dreps/:drepId/get-delegation",
 
   TOKEN: {
     LIST: "tokens",

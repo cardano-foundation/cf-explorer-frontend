@@ -1,9 +1,21 @@
-import { useEffect, useRef } from "react";
+/// <reference types="vite-plugin-svgr/client" />
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { AccordionDetails, AccordionSummary, Box, useTheme } from "@mui/material";
+import {
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Tooltip,
+  TooltipProps,
+  Typography,
+  styled,
+  tooltipClasses,
+  useTheme
+} from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
+import { HiArrowLongLeft } from "react-icons/hi2";
 import { t } from "i18next";
 
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -16,7 +28,12 @@ import {
   LifetimeVoteDrepIcon,
   StakingDelegators,
   TimelineIconComponent,
-  governanceVotesIcon
+  governanceVotesIcon,
+  VotesYesIcon,
+  VotesAbstainIcon,
+  VotesNoIcon,
+  DropdownIcon,
+  DisclaimerIcon
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -26,11 +43,44 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { getPageInfo } from "src/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, formatPercent, getPageInfo } from "src/commons/utils/helper";
+import useFetch from "src/commons/hooks/useFetch";
+import {
+  BackButton,
+  BackText,
+  HeaderDetailContainer
+} from "src/components/DelegationDetail/DelegationDetailInfo/styles";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { useScreen } from "src/commons/hooks/useScreen";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 
-import { StyledContainer, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
+import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
+
+const voteOption = [
+  { title: "Action Type", value: "Default" },
+  { title: "All", value: "ALL" },
+  { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
+  { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
+  { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
+  { title: "Hard-Fork Initiation", value: "HARD_FORK_INITIATION_ACTION" },
+  { title: "Protocol Parameter Changes", value: "PARAMETER_CHANGE_ACTION" },
+  { title: "Treasury Withdrawals", value: "TREASURY_WITHDRAWALS_ACTION" },
+  { title: "Info", value: "INFO_ACTION" }
+];
 
 const DrepDetail = () => {
+  const { drepId } = useParams<{ drepId: string }>();
+  const theme = useTheme();
+  const history = useHistory();
+  const { width } = useScreen();
+
+  const [typeVote, setTypeVote] = useState("Default");
+  const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+  const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
+    `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
+  );
   const listOverview = [
     {
       icon: DescriptonDrepIcon,
@@ -40,7 +90,55 @@ const DrepDetail = () => {
           {t("drep.des")}
         </TitleCard>
       ),
-      value: <ValueCard>Whatever the anchor text string is for this action</ValueCard>
+      value: (
+        <ValueCard>
+          <Box>
+            <DynamicEllipsisText
+              value={data?.anchorHash || ""}
+              sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+              postfix={5}
+              isNoLimitPixel={true}
+              isTooltip
+            />
+          </Box>
+          {data?.anchorUrl && (
+            <Box position={"relative"}>
+              <Box
+                component={"a"}
+                href={data?.anchorUrl}
+                target="_blank"
+                color={`${theme.palette.primary.main} !important`}
+              >
+                <DynamicEllipsisText
+                  value={data?.anchorUrl || ""}
+                  sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                  postfix={5}
+                  isNoLimitPixel={true}
+                  isTooltip
+                />
+              </Box>
+              <Box
+                position={"absolute"}
+                right={0}
+                top={"50%"}
+                sx={{ transform: "translateY(-50%)" }}
+                flex={1}
+                component={CustomTooltip}
+                title={
+                  <Box>
+                    <Box fontWeight={"bold"} component={"span"}>
+                      Disclaimer:{" "}
+                    </Box>
+                    {t("drep.disclaimer")}
+                  </Box>
+                }
+              >
+                <DisclaimerIcon fill={theme.palette.primary.main} />
+              </Box>
+            </Box>
+          )}
+        </ValueCard>
+      )
     },
     {
       icon: CreateDrepIcon,
@@ -50,7 +148,7 @@ const DrepDetail = () => {
           {t("createdAt")}
         </TitleCard>
       ),
-      value: <ValueCard>08/25/2024 13:39:41</ValueCard>
+      value: <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
     },
     {
       icon: ActiveVoteIcon,
@@ -60,7 +158,7 @@ const DrepDetail = () => {
           {t("drep.activeVoteStake")}
         </TitleCard>
       ),
-      value: <ValueCard>893,565.321 ADA</ValueCard>
+      value: <ValueCard>{formatADA(data?.activeVoteStake || 0)} ADA</ValueCard>
     },
     {
       icon: LiveStakeDrepIcon,
@@ -70,7 +168,7 @@ const DrepDetail = () => {
           {t("drep.liveStake")}
         </TitleCard>
       ),
-      value: <ValueCard>893,565.321 ADA</ValueCard>
+      value: <ValueCard>{formatADA(data?.liveStake || 0)} ADA</ValueCard>
     },
     {
       icon: DelegatorsDrepIcon,
@@ -80,7 +178,7 @@ const DrepDetail = () => {
           {t("glossary.delegators")}
         </TitleCard>
       ),
-      value: <ValueCard>50</ValueCard>
+      value: <ValueCard>{data?.delegators} </ValueCard>
     },
     {
       icon: CreateDrepIcon,
@@ -90,30 +188,126 @@ const DrepDetail = () => {
           {t("drep.votingParticipation")}
         </TitleCard>
       ),
-      value: <ValueCard>70%</ValueCard>
+      value: <ValueCard>{data?.votingParticipation}%</ValueCard>
     },
     {
       icon: LifetimeVoteDrepIcon,
       sizeIcon: 26,
       title: (
-        <TitleCard display={"flex"} alignItems="center">
-          {t("drep.lifetimeVotes")}
-        </TitleCard>
+        <Box display={"flex"} alignItems={"center"} gap={2} justifyContent={"space-between"} flexWrap={"wrap"}>
+          <TitleCard display={"flex"} alignItems="center">
+            {t("drep.lifetimeVotes")}
+          </TitleCard>
+          <StyledSelect
+            value={typeVote}
+            onChange={(event) => {
+              setTypeVote(event.target?.value as string);
+            }}
+            size="small"
+            IconComponent={DropdownIcon}
+            sx={{
+              bgcolor: theme.palette.primary[100],
+              maxWidth: "200px",
+              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
+            }}
+            MenuProps={{
+              style: { zIndex: 1303 },
+              MenuListProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                }
+              },
+              PaperProps: {
+                sx: {
+                  bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
+                  "& .MuiMenuItem-root": {
+                    "&.Mui-selected": {
+                      backgroundColor: ({ palette }) => `${palette.secondary[0]} !important` // Màu nền cho option được chọn
+                    }
+                  }
+                }
+              }
+            }}
+          >
+            {voteOption.map((voteType, idx) => {
+              if (voteType.value === "Default") {
+                return (
+                  <Box
+                    component={StyledMenuItem}
+                    key={idx}
+                    fontSize={12}
+                    color={theme.palette.secondary.light}
+                    value={voteType.value}
+                    display={"none"}
+                  >
+                    {voteType.title}
+                  </Box>
+                );
+              }
+
+              return (
+                <Box
+                  component={StyledMenuItem}
+                  key={idx}
+                  fontSize={12}
+                  color={theme.palette.secondary.light}
+                  value={voteType.value}
+                >
+                  {voteType.title}
+                </Box>
+              );
+            })}
+          </StyledSelect>
+        </Box>
       ),
-      value: `1`
+      value: (
+        <Box>
+          <VoteRate data={dataChard} loading={loadingChard} />
+        </Box>
+      )
     }
   ];
-
+  if (loading) {
+    return (
+      <StyledContainer>
+        <HeaderDetailContainer>
+          <BackButton onClick={history.goBack}>
+            <HiArrowLongLeft color={theme.palette.secondary.light} />
+            <BackText>{t("common.back")}</BackText>
+          </BackButton>
+          <Box borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={80} width="100%" />
+          </Box>
+          <Box mt={2} borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={250} width="100%" />
+          </Box>
+          <Box mt={4} borderRadius={4} overflow="hidden">
+            <CommonSkeleton variant="rectangular" height={250} width="100%" />
+          </Box>
+        </HeaderDetailContainer>
+      </StyledContainer>
+    );
+  }
   return (
     <StyledContainer>
       <DetailHeader
         type="DREP"
-        title="Drep ID"
+        title={
+          <TruncateSubTitleContainer>
+            <DynamicEllipsisText
+              value={data?.drepId || ""}
+              sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 70px)" }}
+              postfix={5}
+              isNoLimitPixel={true}
+              isTooltip
+            />
+          </TruncateSubTitleContainer>
+        }
         loading={false}
         listItem={listOverview}
         bookmarkData={"1"}
-        subTitle="Type: Pre-Defined Drep"
-        stakeKeyStatus="ACTIVE"
+        subTitle={`Type: ${data?.type || ""}`}
+        stakeKeyStatus={data?.status}
       />
       <DrepAccordion />
     </StyledContainer>
@@ -162,6 +356,12 @@ const DrepAccordion = () => {
     false,
     tab === "certificatesHistory" ? blockKey : undefined
   );
+  const fetchDataDelegator = useFetchList<StakingDelegators>(
+    API.DREP_DELEGATOR.replace(":drepId", drepId),
+    { ...pageInfo },
+    false,
+    tab === "delegators" ? blockKey : undefined
+  );
 
   const tabs: {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -181,13 +381,7 @@ const DrepAccordion = () => {
       key: "delegators",
       component: (
         <div ref={tableRef}>
-          <DelegationStakingDelegatorsList
-            data={[]}
-            loading={false}
-            total={0}
-            initialized={false}
-            scrollEffect={scrollEffect}
-          />
+          <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
         </div>
       )
     },
@@ -274,3 +468,108 @@ const DrepAccordion = () => {
     </Box>
   );
 };
+
+const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
+  const theme = useTheme();
+  const totalVote = useMemo(() => {
+    if (data) {
+      return (data?.numberOfAbstainVotes || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfYesVote || 0);
+    }
+    return 0;
+  }, [JSON.stringify(data)]);
+
+  if (loading) {
+    return (
+      <Box borderRadius={4} overflow="hidden" height={150}>
+        <CommonSkeleton variant="rectangular" height={250} width="100%" />
+      </Box>
+    );
+  }
+
+  return (
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
+      <VoteBar
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
+        color={theme.palette.success[700]}
+        numberVote={data?.numberOfYesVote || 0}
+        icon={<VotesYesIcon />}
+        label={t("common.yes")}
+      />
+      <VoteBar
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
+        color={theme.palette.warning[700]}
+        numberVote={data?.numberOfAbstainVotes || 0}
+        icon={<VotesAbstainIcon />}
+        label={t("common.abstain")}
+      />
+      <VoteBar
+        percentage={
+          totalVote > 0
+            ? formatPercent(
+                (100 -
+                  (+formatPercent((data?.numberOfYesVote || 0) / totalVote).split("%")[0] +
+                    +formatPercent((data?.numberOfAbstainVotes || 0) / totalVote).split("%")[0])) /
+                  100
+              )
+            : 0
+        }
+        color={theme.palette.error[700]}
+        numberVote={data?.numberOfNoVotes || 0}
+        icon={<VotesNoIcon />}
+        label={t("common.no")}
+      />
+    </Box>
+  );
+};
+
+const VoteBar = ({
+  percentage,
+  color,
+  icon,
+  label,
+  numberVote
+}: {
+  percentage: string | number;
+  numberVote: number;
+  color: string;
+  icon?: JSX.Element;
+  label: string;
+}) => (
+  <Box display="flex" flexDirection="column" alignItems="center">
+    <Typography fontSize="10px" fontWeight={400}>
+      {percentage}
+    </Typography>
+    <LightTooltip
+      title={
+        <Box height="39px" display="flex" alignItems="center" gap="8px">
+          {icon}
+          <Typography fontSize="12px" fontWeight={600}>
+            {numberVote} ({percentage})
+          </Typography>
+        </Box>
+      }
+      placement="right"
+    >
+      <Box
+        sx={{ background: color }}
+        height={`${
+          +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
+        }px`}
+        width="36px"
+      />
+    </LightTooltip>
+    <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
+      {label}
+    </Typography>
+  </Box>
+);
+
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.primary[200],
+    color: "rgba(0, 0, 0, 0.87)",
+    fontSize: 11
+  }
+}));
