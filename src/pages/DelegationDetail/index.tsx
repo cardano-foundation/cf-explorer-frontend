@@ -69,7 +69,7 @@ interface Query {
   page: number;
   size: number;
   voteId?: string | number;
-  id?: string | number;
+  governanceActionTxHash?: string | number;
   anchorText?: string | number;
   actionType?: string;
   currentStatus?: string;
@@ -247,6 +247,7 @@ const DelegationDetail: React.FC = () => {
       tab: newExpanded ? panel : "",
       page: 0,
       size: panel === "governanceVotes" ? 6 : 50,
+      governanceActionTxHash: "",
       actionType: STATUS_VOTE.ALL,
       actionStatus: STATUS_VOTE.ANY,
       voteType: STATUS_VOTE.ANY,
@@ -373,7 +374,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         size: 6,
         isRepeatVote: false,
         tab: "governanceVotes",
-        id: "",
+        governanceActionTxHash: "",
         actionType: STATUS_VOTE.ALL,
         actionStatus: STATUS_VOTE.ANY,
         voteType: STATUS_VOTE.ANY,
@@ -389,7 +390,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       isRepeatVote: params?.isRepeatVote,
       page: 0,
       size: 6,
-      id: params?.id,
+      governanceActionTxHash: params?.id,
       anchorText: params?.anchorText,
       actionType: params?.actionType,
       actionStatus: params?.currentStatus,

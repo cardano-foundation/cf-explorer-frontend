@@ -15,12 +15,15 @@ import {
   Typography,
   styled,
   tooltipClasses,
-  useTheme
+  useTheme,
+  Link
 } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
+import moment from "moment";
+import { JsonViewer } from "@textea/json-viewer";
 
 import {
   ActionTypeIcon,
@@ -56,6 +59,7 @@ import {
   formatADAFull,
   formatDateTimeLocal,
   getShortHash,
+  getShortNumber,
   numberWithCommas,
   removeDuplicate
 } from "src/commons/utils/helper";
@@ -67,6 +71,7 @@ import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column, FooterTable } from "src/components/commons/Table";
 import useFetch from "src/commons/hooks/useFetch";
+import { ViewJson } from "src/components/ScriptModal/styles";
 
 import { DataContainer, InfoTitle, InfoValue, Item, StyledGrid, StyledTitle } from "../DelegationDetailInfo/styles";
 import { StyledLink, Tab } from "./styles";
@@ -76,6 +81,7 @@ interface Query {
   page: number;
   size: number;
   voteId?: number | string;
+  governanceActionTxHash?: string;
   actionType?: string;
   actionStatus?: string;
   voteType?: string;
@@ -95,6 +101,21 @@ export interface GovernanceVote {
   type: string;
   vote: string;
   votingPower: string;
+}
+interface GovernanceVoteChart {
+  txHash: string | null;
+  index: number | null;
+  numberOfYesVote: number;
+  numberOfNoVotes: number;
+  numberOfAbstainVotes: number;
+  votingChartsList: VotingChart[];
+}
+
+interface VotingChart {
+  voterType: string;
+  numberOfYesVote: number;
+  numberOfNoVotes: number;
+  numberOfAbstainVotes: number;
 }
 
 export interface GovernanceVoteDetail {
@@ -472,11 +493,19 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
       {children}
     </Tab>
   );
+
   const fetchDataGovernanceVotesDetail = useFetch<GovernanceVoteDetail>(
     `${API.POOL_CERTIFICATE.POOL_DETAIL(poolHash || "")}?${stringify({
       txHash: query.voteId,
       index: 0,
       voterType: POOLS_VOTE_TYPE.STAKING_POOL_KEY_HASH
+    })}`
+  );
+
+  const fetchDataGovernanceChart = useFetch<GovernanceVoteChart>(
+    `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
+      txHash: query.voteId,
+      index: 0
     })}`
   );
 
@@ -506,6 +535,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
                 tab: "governanceVotes",
                 page: 0,
                 size: 6,
+                governanceActionTxHash: "",
                 actionType: STATUS_VOTE.ALL,
                 actionStatus: STATUS_VOTE.ANY,
                 voteType: STATUS_VOTE.ANY,
@@ -546,7 +576,11 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ d
             </Typography>
           </Box>
         </Box>
-        <GovernanceVotesDetail tab={tab} data={fetchDataGovernanceVotesDetail.data} />
+        <GovernanceVotesDetail
+          tab={tab}
+          data={fetchDataGovernanceVotesDetail.data}
+          dataChart={fetchDataGovernanceChart.data}
+        />
       </>
     );
   }
@@ -594,12 +628,48 @@ export {
   DelegationStakingDelegatorsList
 };
 
-const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail | null }> = ({ tab, data }) => {
+const GovernanceVotesDetail: React.FC<{
+  tab: string;
+  data: GovernanceVoteDetail | null;
+  dataChart: GovernanceVoteChart | null;
+}> = ({ tab, data, dataChart }) => {
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
+  const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const { t } = useTranslation();
   const [selectVote, setSelectVote] = useState<string>("");
   const listVotes = ["SPOs", "DRops", "CC"];
+
+  const filterDataChart = (selectVote: string) => {
+    switch (selectVote) {
+      case "SPOs":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "STAKING_POOL_KEY_HASH")[0];
+      case "DRops":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "DREP_KEY_HASH")[0];
+      case "CC":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH")[0];
+
+      default:
+        return dataChart;
+    }
+  };
+
+  const actionType = (type: string) => {
+    switch (type) {
+      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
+        return t("pool.normalState");
+      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
+        return t("pool.harkFork");
+      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
+        return t("pool.typeMotion");
+      case POOLS_ACTION_TYPE.INFO_ACTION:
+        return t("pool.Infor");
+
+      default:
+        break;
+    }
+  };
+
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
       <StyledGrid container>
@@ -647,7 +717,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
           <InfoTitle paddingTop="2px" paddingBottom="3px">
             <StyledTitle>{t("pool.actionType")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>{data?.govActionType}</InfoValue>
+          <InfoValue>{actionType(data?.govActionType || "")}</InfoValue>
         </Item>
         <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
           <Box display="flex" justifyContent="space-between">
@@ -673,7 +743,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     label={selectVote || i}
-                    onClick={() => setSelectVote(i)}
+                    onClick={() => setSelectVote(selectVote ? "" : i)}
                   />
                 ))}
                 {selectVote && (
@@ -701,7 +771,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
                 <VoteStatus status={data?.voteType || ""} />
               </Box>
             ) : (
-              <VoteRate />
+              <VoteRate data={filterDataChart(selectVote)} />
             )}
           </InfoValue>
         </Item>
@@ -715,7 +785,7 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
               <StyledTitle>{t("pool.currentStatus")}</StyledTitle>
 
               <InfoValue width="fit-content" mt={"8px"}>
-                <GovernanceStatus status={status} />
+                <GovernanceStatus status={data?.status || ""} />
               </InfoValue>
             </Box>
           </InfoTitle>
@@ -739,27 +809,45 @@ const GovernanceVotesDetail: React.FC<{ tab: string; data: GovernanceVoteDetail 
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.submission")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>{data?.submissionDate}</InfoValue>
+          <InfoValue>{moment(data?.submissionDate).format("MM/DD/YYYY HH:mm:ss")}</InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>{data?.expiryDate}</InfoValue>
+          <InfoValue>{moment(data?.expiryDate).format("DD/MM/YYYY")}</InfoValue>
         </Item>
         <Item item xs={6} md={3}>
           <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
           <InfoTitle paddingBottom="3px">
             <StyledTitle>{t("pool.anchorText")}</StyledTitle>
           </InfoTitle>
-          <InfoValue>Whatever the anchor text string is for this action</InfoValue>
+          <InfoValue>
+            <Button
+              onClick={() => {
+                setOpenActionMetadataModal(true);
+              }}
+              fullWidth
+              sx={{ height: "51px" }}
+              variant="outlined"
+            >
+              {t("common.viewDetails")}
+            </Button>
+          </InfoValue>
         </Item>
       </StyledGrid>
       <VoteHistoryModal
         data={data?.historyVotes}
         open={openHistoryVoteModal}
         onClose={() => setOpenHistoryVoteModal(false)}
+      />
+      <ActionMetadataModal
+        data={data?.details}
+        anchorHash={data?.anchorHash}
+        anchorUrl={data?.anchorUrl}
+        open={openActionMetadataModal}
+        onClose={() => setOpenActionMetadataModal(false)}
       />
     </DataContainer>
   );
@@ -790,7 +878,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
-        {percentage}%
+        {!percentage ? "0" : percentage}%
       </Typography>
       <LightTooltip
         title={
@@ -807,7 +895,7 @@ const VoteBar = ({
         }
         placement="top"
       >
-        <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
+        <Box sx={{ background: color }} height={`${!percentage ? 0.5 : percentage}px`} width="36px" />
       </LightTooltip>
       <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
         {label}
@@ -816,20 +904,36 @@ const VoteBar = ({
   );
 };
 
-const VoteRate = () => {
+const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const totalVotes = Number(
+    (data?.numberOfYesVote || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfAbstainVotes || 0)
+  );
+  const yesPercentage = ((data?.numberOfYesVote || 0) / totalVotes) * 100;
+  const noPercentage = ((data?.numberOfNoVotes || 0) / totalVotes) * 100;
+  const abstainPercentage = ((data?.numberOfAbstainVotes || 0) / totalVotes) * 100;
 
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
-      <VoteBar percentage={93} color={theme.palette.success[700]} icon={<VotesYesIcon />} label={t("common.yes")} />
       <VoteBar
-        percentage={7}
+        percentage={getShortNumber(yesPercentage)}
+        color={theme.palette.success[700]}
+        icon={<VotesYesIcon />}
+        label={t("common.yes")}
+      />
+      <VoteBar
+        percentage={getShortNumber(abstainPercentage)}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
-      <VoteBar percentage={0} color={theme.palette.error[700]} icon={<VotesNoIcon />} label={t("common.no")} />
+      <VoteBar
+        percentage={getShortNumber(noPercentage)}
+        color={theme.palette.error[700]}
+        icon={<VotesNoIcon />}
+        label={t("common.no")}
+      />
     </Box>
   );
 };
@@ -917,6 +1021,89 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
           </TableBody>
         </TableMui>
       </TableContainer>
+    </CustomModal>
+  );
+};
+
+interface ActionMetadataProps {
+  onClose?: () => void;
+  open: boolean;
+  anchorHash?: string;
+  anchorUrl?: string;
+  data?: {
+    type: string;
+    govActionId: string | null;
+    quorumThreshold: number;
+    membersForRemoval: string[];
+    newMembersAndTerms: Record<string, number>;
+  };
+}
+
+const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, data, anchorHash, anchorUrl }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  return (
+    <CustomModal
+      open={open}
+      onClose={() => onClose?.()}
+      title={t("pool.actionMetadata")}
+      width={500}
+      sx={{ position: "relative", height: "70vh" }}
+    >
+      <Box display="block" pb="15px">
+        <Typography fontSize="16px" color={theme.palette.secondary.main}>
+          {t("pool.anchor")}:
+        </Typography>{" "}
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="24px"
+          mt="20px"
+          p="24px"
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], wordWrap: "break-word" }}
+        >
+          <Typography fontSize="16px" color={theme.palette.secondary.light}>
+            {anchorHash}
+          </Typography>
+          <Typography
+            component={Link}
+            fontSize="16px"
+            color="#0033AD !important"
+            fontWeight="700"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={anchorUrl || "/"}
+          >
+            {anchorUrl}
+          </Typography>
+        </Box>
+      </Box>
+      <Box display="block" pb="25.5px">
+        <Typography fontSize="16px">{t("pool.metadata")}:</Typography>{" "}
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="24px"
+          mt="20px"
+          p="24px"
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], position: "absolute" }}
+        >
+          <ViewJson maxHeight={"70vh"}>
+            <JsonViewer
+              value={data}
+              displayObjectSize={false}
+              displayDataTypes={false}
+              enableClipboard={false}
+              collapseStringsAfterLength={false}
+              rootName={false}
+              theme={theme.isDark ? "dark" : "light"}
+              // keyRenderer={keyRenderer}
+              style={{ wordBreak: "break-word", width: "98%", pointerEvents: "none" }}
+            />
+          </ViewJson>
+        </Box>
+      </Box>
     </CustomModal>
   );
 };

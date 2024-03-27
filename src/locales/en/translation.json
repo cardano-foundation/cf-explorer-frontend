@@ -1064,6 +1064,9 @@
   "pool.Infor": "Infor",
   "pool.tabPool": "The vote cast on the blockchain by Pool Name.",
   "pool.overall": "Votes cast on the blockchain by Delegated Representatives (DReps), Stake Pool Operators (SPOs), and members of the Constitutional Committee.",
+  "pool.actionMetadata": "Governance Action Metadata",
+  "pool.anchor": "Anchor",
+  "pool.metadata": "Metadata",
   "CIP83.noticeAutoDecrypt": "If the default passphrase “cardano” is used, the message will be decrypted automatically",
   "token.metadataCheck": "Metadata Check"
 }
