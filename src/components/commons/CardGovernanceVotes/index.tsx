@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { GovernanceVote } from "src/components/DelegationDetail/DelegationDetailList";
+import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 
 import { CardGovernanceVote, StatusContainer } from "./styles";
 
@@ -18,13 +19,13 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
   const { t } = useTranslation();
   const actionType = (type: string) => {
     switch (type) {
-      case "UPDATE_COMMITTEE":
+      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
         return t("pool.normalState");
-      case "HARD_FORK_INITIATION_ACTION":
+      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
         return t("pool.harkFork");
-      case "NO_CONFIDENCE":
+      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
         return t("pool.typeMotion");
-      case "INFO_ACTION":
+      case POOLS_ACTION_TYPE.INFO_ACTION:
         return t("pool.Infor");
 
       default:
@@ -104,11 +105,11 @@ export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
   const { t } = useTranslation();
   const renderStatus = (key: string) => {
     switch (key) {
-      case "YES":
+      case STATUS_VOTE.YES:
         return [VotesYesIcon, "success"];
-      case "NO":
+      case STATUS_VOTE.NO:
         return [VotesNoIcon, "error"];
-      case "ABSTAIN":
+      case STATUS_VOTE.ABSTAIN:
         return [VotesAbstainIcon, "warning"];
 
       default:
@@ -133,13 +134,15 @@ export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
 
 export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
+
   const renderStatus = (key: string) => {
     switch (key) {
-      case "ratified":
+      case STATUS_VOTE.RATIFIED:
         return "success";
-      case "OPEN":
+      case STATUS_VOTE.OPEN:
         return "warning";
-      case "enacted":
+      case STATUS_VOTE.ENACTED:
         return "info";
 
       default:
@@ -160,7 +163,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
             lineHeight="23px"
             color={theme.palette.secondary.light}
           >
-            {status === "OPEN" ? "Open Ballot" : !status ? "N/A" : status}
+            {status === STATUS_VOTE.OPEN ? "Open Ballot" : !status ? t("common.N/A") : status}
           </Typography>
         }
         variant={typeStatus as "success" | "warning" | "info" | "error"}
