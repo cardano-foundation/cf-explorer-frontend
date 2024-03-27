@@ -79,6 +79,7 @@ interface CertificateHistory {
   actions: PoolActionType[];
   epochNo: number;
   createdAt: string;
+  actionTypes: string;
 }
 
 interface AnalyticsDelegators {
@@ -104,4 +105,4 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "governanceVotes" | "";
