@@ -48,7 +48,8 @@ import {
   DelegationCertificatesHistory,
   DelegationEpochList,
   DelegationGovernanceVotes,
-  DelegationStakingDelegatorsList
+  DelegationStakingDelegatorsList,
+  GovernanceVote
 } from "src/components/DelegationDetail/DelegationDetailList";
 import DelegationDetailOverview from "src/components/DelegationDetail/DelegationDetailOverview";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";

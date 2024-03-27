@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
+import { GovernanceVote } from "src/components/DelegationDetail/DelegationDetailList";
 
 import { CardGovernanceVote, StatusContainer } from "./styles";
 
