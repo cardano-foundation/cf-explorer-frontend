@@ -211,6 +211,7 @@ import VotesYesIcon from "./icons/voteYes.svg?react";
 import VotesNoIcon from "./icons/voteNo.svg?react";
 import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
 import DropdownIcon from "./icons/dropdown.svg?react";
+import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -423,6 +424,7 @@ export {
   VotesYesIcon,
   VotesNoIcon,
   VotesAbstainIcon,
+  DisclaimerIcon,
   DropdownIcon
 };
 
