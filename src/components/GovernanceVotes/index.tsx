@@ -56,14 +56,12 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-
 import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
-
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
@@ -260,22 +258,6 @@ const GovernanceVotesDetail: React.FC<{
 
       default:
         return dataChart;
-    }
-  };
-
-  const actionType = (type: string) => {
-    switch (type) {
-      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
-        return t("pool.normalState");
-      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
-        return t("pool.harkFork");
-      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
-        return t("pool.typeMotion");
-      case POOLS_ACTION_TYPE.INFO_ACTION:
-        return t("pool.Infor");
-
-      default:
-        break;
     }
   };
 
@@ -771,7 +753,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
       onClose={() => onClose?.()}
       title={t("pool.actionMetadata")}
       width={500}
-      sx={{ position: "relative", height: "70vh" }}
+      sx={{ maxHeight: "70vh" }}
     >
       <Box display="block" pb="15px">
         <Typography fontSize="16px" color={theme.palette.secondary.main}>
@@ -809,7 +791,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           gap="24px"
           mt="20px"
           p="24px"
-          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], position: "absolute" }}
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0] }}
         >
           <ViewJson maxHeight={"70vh"}>
             <JsonViewer
