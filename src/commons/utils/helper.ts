@@ -200,6 +200,11 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 export const formatDateTime = (date: string) => {
   return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
+
+export const formatDate = (date: string) => {
+  return moment(date).format("DD/MM/YYYY");
+};
+
 export const formatDateTimeLocal = (date: string) => {
   return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
 };

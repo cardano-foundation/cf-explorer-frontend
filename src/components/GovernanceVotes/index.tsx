@@ -56,7 +56,7 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-import { getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, { GovernanceStatus, VoteStatus } from "src/components/commons/CardGovernanceVotes";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -487,14 +487,14 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.submission")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{moment(data?.submissionDate).format("MM/DD/YYYY HH:mm:ss")}</InfoValue>
+            <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{moment(data?.expiryDate).format("DD/MM/YYYY")}</InfoValue>
+            <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
