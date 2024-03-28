@@ -175,7 +175,7 @@ const DelegationDetail: React.FC = () => {
       key: "governanceVotes",
       component: (
         <div ref={tableRef}>
-          <DelegationGovernanceVotes hash={poolId || ""} type={VOTE_TYPE.DREP_KEY_HASH} />
+          <DelegationGovernanceVotes hash={poolId || ""} type={VOTE_TYPE.STAKING_POOL_KEY_HASH} />
         </div>
       )
     }
