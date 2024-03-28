@@ -205,6 +205,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
       <FooterTable
         pagination={{
           size: Number(query.voteSize || 6),
+          page: query.page ? Number(query.page || 1) - 1 : 0,
           total,
           onChange: (page, size) => history.replace({ search: stringify({ ...query, page, voteSize: size }) })
         }}
