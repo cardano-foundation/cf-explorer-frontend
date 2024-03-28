@@ -56,7 +56,7 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-import { formatDate, formatDateTime, formatDateYMD, getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
@@ -947,8 +947,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       actionStatus: params?.currentStatus,
       voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
       voteType: params?.vote,
-      ...(params?.fromDate && { fromDate: formatDateYMD(params.fromDate || "") }),
-      ...(params?.toDate && { toDate: formatDateYMD(params.toDate || "") })
+      ...(params?.fromDate && { fromDate: params.fromDate || "" }),
+      ...(params?.toDate && { toDate: params.toDate || "" })
     });
   };
 
