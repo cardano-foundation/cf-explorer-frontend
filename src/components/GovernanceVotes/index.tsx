@@ -56,7 +56,7 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDate, formatDateTime, formatDateYMD, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
@@ -129,7 +129,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
       actionStatus: (query.actionStatus as string) || "ANY",
       voteType: (query.voteType as string) || "ANY",
       isRepeatVote: query?.isRepeatVote === "true" ? (query.isRepeatVote as string) : undefined,
-      governanceActionTxHash: (query.id as string) || undefined,
+      governanceActionTxHash: (query.governanceActionTxHash as string) || undefined,
       anchorText: (query.anchorText as string) || undefined,
       fromDate: (query.fromDate as string) || undefined,
       toDate: (query.toDate as string) || undefined,
@@ -257,7 +257,7 @@ const GovernanceVotesDetail: React.FC<{
     switch (selectVote) {
       case "SPOs":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "STAKING_POOL_KEY_HASH")[0];
-      case "DRops":
+      case "DReps":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "DREP_KEY_HASH")[0];
       case "CC":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH")[0];
@@ -295,7 +295,7 @@ const GovernanceVotesDetail: React.FC<{
     );
   };
 
-  const listVotes = ["SPOs", "DRops", "CC"];
+  const listVotes = ["SPOs", "DReps", "CC"];
   return (
     <Box>
       <Box display="flex" alignItems="baseline">
@@ -422,8 +422,10 @@ const GovernanceVotesDetail: React.FC<{
                     <Chip
                       key={i}
                       sx={{
-                        background: theme.palette.primary[100],
-                        border: `1px solid ${theme.palette.secondary[600]}`,
+                        fontWeight: 500,
+                        fontSize: "12px",
+                        background: selectVote ? theme.palette.primary[200] : theme.palette.primary[100],
+                        border: `1px solid ${selectVote ? theme.palette.primary.main : theme.palette.secondary[600]}`,
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       label={selectVote || i}
@@ -449,7 +451,7 @@ const GovernanceVotesDetail: React.FC<{
                 <Box
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    data?.historyVotes && setOpenHistoryVoteModal(true);
+                    setOpenHistoryVoteModal(true);
                   }}
                 >
                   <VoteStatus status={data?.voteType || ""} />
@@ -572,12 +574,14 @@ const VoteBar = ({
   percentage,
   color,
   icon,
-  label
+  label,
+  numberVote
 }: {
   percentage: number;
   color: string;
   icon: JSX.Element;
   label: string;
+  numberVote: number;
 }) => {
   const theme = useTheme();
   return (
@@ -594,7 +598,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              3,443,875.343 ADA (94%)
+              {numberVote} ({percentage})%
             </Typography>
           </Box>
         }
@@ -627,18 +631,21 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
       <VoteBar
+        numberVote={data?.numberOfYesVote || 0}
         percentage={getShortNumber(yesPercentage)}
         color={theme.palette.success[700]}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
+        numberVote={data?.numberOfAbstainVotes || 0}
         percentage={getShortNumber(abstainPercentage)}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
       <VoteBar
+        numberVote={data?.numberOfNoVotes || 0}
         percentage={getShortNumber(noPercentage)}
         color={theme.palette.error[700]}
         icon={<VotesNoIcon />}
@@ -746,6 +753,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
               </TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {data?.map((row, index) => (
               <TableRow key={row.no} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -773,6 +781,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
             ))}
           </TableBody>
         </TableMui>
+        {!data && <NoRecord padding={`0 !important`} />}
       </TableContainer>
     </CustomModal>
   );
@@ -877,7 +886,7 @@ export interface FilterParams {
   fromDate?: string;
   toDate?: string;
   search?: string;
-  id?: string;
+  governanceActionTxHash?: string;
   isRepeatVote?: boolean;
   actionType?: string;
   anchorText?: string;
@@ -892,7 +901,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const [openDateRange, setOpenDateRange] = useState<boolean>(false);
   const filterValue = {
     sort: "ASC",
-    id: "",
+    governanceActionTxHash: "",
     anchorText: "",
     isRepeatVote: false,
     actionType: STATUS_VOTE.ALL,
@@ -932,14 +941,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       isRepeatVote: params?.isRepeatVote,
       page: 1,
       size: 6,
-      governanceActionTxHash: params?.id,
+      governanceActionTxHash: params?.governanceActionTxHash,
       anchorText: params?.anchorText,
       actionType: params?.actionType,
       actionStatus: params?.currentStatus,
       voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
       voteType: params?.vote,
-      ...(params?.fromDate && { fromDate: params.fromDate }),
-      ...(params?.toDate && { toDate: params.toDate })
+      ...(params?.fromDate && { fromDate: formatDateYMD(params.fromDate || "") }),
+      ...(params?.toDate && { toDate: formatDateYMD(params.toDate || "") })
     });
   };
 
@@ -1035,7 +1044,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
                 </Box>
-                {/* {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />} */}
               </Box>
               <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
                 <AccordionSummary>
@@ -1057,10 +1065,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
-                    // inputRef={inputRef}
+                    sx={{ width: "100% !important" }}
                     placeholder={"Search ID"}
-                    value={params?.id}
-                    onChange={({ target: { value } }) => setParams({ ...params, id: value })}
+                    value={params?.governanceActionTxHash}
+                    onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
