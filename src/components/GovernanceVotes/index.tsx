@@ -98,7 +98,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   const [params, setParams] = useState({});
   useEffect(() => {
     setParams({
-      page: query?.page ? +query?.page - 1 : 0,
+      page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.voteSize || "") || 6,
       actionType: (query.actionType as string) || "ALL",
       actionStatus: (query.actionStatus as string) || "ANY",
