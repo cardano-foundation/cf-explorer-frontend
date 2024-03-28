@@ -1018,6 +1018,7 @@
   "pool.typeUpdate": "Update to the Constitutional or proposal policy",
   "pool.typeHardFork": "Hard-Fork Initiation",
   "pool.typeProtocol": "Protocol Parameter Changes",
+
   "pool.typeTreasury": "Treasury Withdrawals",
   "pool.typeInfo": "Info",
   "pool.dateRange": "Date Range",
@@ -1060,6 +1061,9 @@
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
   "account.myProfile": "My Profile",
+  "drep.updateConstitution": "Update to the Constitution",
+  "drep.protocolChange": "Protocol Parameter Changes",
+  "drep.treasuryWithdrawals": "Treasury Withdrawals",
   "drep.des": "DRep Metadata",
   "drep.activeVoteStake": "Active Voting Stake",
   "drep.liveStake": "Live Stake",

@@ -1,6 +1,7 @@
 import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
@@ -13,25 +14,22 @@ interface ICardGovernanceVotes {
   data: GovernanceVote;
 }
 
+export const actionTypeListDrep = [
+  { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
+  { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
+  { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
+  { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.updateConstitution") },
+  { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
+  { value: POOLS_ACTION_TYPE.PARAMETER_CHANGE_ACTION, text: t("drep.protocolChange") },
+  { value: POOLS_ACTION_TYPE.TREASURY_WITHDRAWALS_ACTION, text: t("drep.treasuryWithdrawals") },
+  { value: POOLS_ACTION_TYPE.INFO_ACTION, text: t("pool.typeInfo") }
+];
+
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { index, status, txHash, type, vote, votingPower } = data;
+  const { status, txHash, type, vote, votingPower } = data;
   const theme = useTheme();
   const { t } = useTranslation();
-  const actionType = (type: string) => {
-    switch (type) {
-      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
-        return t("pool.normalState");
-      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
-        return t("pool.harkFork");
-      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
-        return t("pool.typeMotion");
-      case POOLS_ACTION_TYPE.INFO_ACTION:
-        return t("pool.Infor");
 
-      default:
-        break;
-    }
-  };
   return (
     <CardGovernanceVote>
       <Box p={2}>
@@ -45,7 +43,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
                 lineHeight="28px"
                 color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.main}
               >
-                {actionType(type)} #{index}
+                {actionTypeListDrep.find((action) => action.value === type)?.text}
               </Typography>
             </Tooltip>
           </Box>
@@ -65,7 +63,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               {t("pool.actionType")}:
             </Typography>
             <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
-              {actionType(type)}
+              {actionTypeListDrep.find((action) => action.value === type)?.text}
             </Typography>
           </Box>
           <Box display="flex" alignItems="center">
