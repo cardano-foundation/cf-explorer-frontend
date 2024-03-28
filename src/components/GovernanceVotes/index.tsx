@@ -55,7 +55,11 @@ import {
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
-import CardGovernanceVotes, { GovernanceStatus, VoteStatus } from "src/components/commons/CardGovernanceVotes";
+import CardGovernanceVotes, {
+  GovernanceStatus,
+  VoteStatus,
+  actionTypeListDrep
+} from "src/components/commons/CardGovernanceVotes";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
@@ -173,7 +177,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
-        <FilterGovernanceVotes setQuery={setQuery} query={query} />
+        <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
       </Box>
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
@@ -216,22 +220,6 @@ const GovernanceVotesDetail: React.FC<{
   const [tab, setTab] = useState<string>("pool");
   const handleTabChange = (newTab: string) => {
     setTab(newTab);
-  };
-
-  const actionType = (type: string) => {
-    switch (type) {
-      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
-        return t("pool.normalState");
-      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
-        return t("pool.harkFork");
-      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
-        return t("pool.typeMotion");
-      case POOLS_ACTION_TYPE.INFO_ACTION:
-        return t("pool.Infor");
-
-      default:
-        break;
-    }
   };
 
   const TabButton: React.FC<TabButtonProps> = ({ tabName, title }) => {
@@ -284,7 +272,7 @@ const GovernanceVotesDetail: React.FC<{
           lineHeight="28px"
           color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
         >
-          {actionType(data?.govActionType || "")} #{data?.index}
+          {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}
         </Typography>
       </Box>
       <Box textAlign="center">
@@ -350,7 +338,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingTop="2px" paddingBottom="3px">
               <StyledTitle>{t("pool.actionType")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.govActionType}</InfoValue>
+            <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <Box display="flex" justifyContent="space-between">
@@ -669,6 +657,7 @@ interface FilterGovernanceVotes {
   query: ParsedQs;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setQuery: (query: any) => void;
+  voterType: string;
 }
 export interface FilterParams {
   sort?: string;
@@ -682,7 +671,7 @@ export interface FilterParams {
   currentStatus?: string;
   vote?: string;
 }
-const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuery }) => {
+const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuery, voterType }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const history = useHistory();
@@ -717,7 +706,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         actionType: STATUS_VOTE.ALL,
         actionStatus: STATUS_VOTE.ANY,
         voteType: STATUS_VOTE.ANY,
-        voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH
+        voterType: voterType
       })
     });
   };
@@ -756,7 +745,17 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     { value: STATUS_VOTE.NONE, text: t("pool.none") }
   ];
 
-  const actionTypeList = [
+  const actionTypeListDrep = [
+    { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
+    { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
+    { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.updateConstitution") },
+    { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
+    { value: POOLS_ACTION_TYPE.PARAMETER_CHANGE_ACTION, text: t("drep.protocolChange") },
+    { value: POOLS_ACTION_TYPE.TREASURY_WITHDRAWALS_ACTION, text: t("drep.treasuryWithdrawals") },
+    { value: POOLS_ACTION_TYPE.INFO_ACTION, text: t("pool.typeInfo") }
+  ];
+  const actionTypeListPools = [
     { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
     { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
@@ -906,7 +905,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     value={params?.actionType}
                     onChange={(e) => setParams({ ...params, actionType: e.target.value })}
                   >
-                    {actionTypeList.map((i) => (
+                    {(voterType === VOTE_TYPE.DREP_KEY_HASH ? actionTypeListDrep : actionTypeListPools).map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}

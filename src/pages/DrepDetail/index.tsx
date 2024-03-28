@@ -190,7 +190,9 @@ const DrepDetail = () => {
           {t("drep.votingParticipation")}
         </TitleCard>
       ),
-      value: <ValueCard>{data?.votingParticipation}%</ValueCard>
+      value: (
+        <ValueCard>{data?.votingParticipation !== null ? `${data?.votingParticipation}%` : t("common.N/A")}</ValueCard>
+      )
     },
     {
       icon: LifetimeVoteDrepIcon,
