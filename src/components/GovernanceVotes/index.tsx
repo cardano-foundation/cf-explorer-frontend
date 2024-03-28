@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ParsedQs, parse, stringify } from "qs";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   AccordionSummary,
@@ -89,6 +89,7 @@ import {
 } from "../DelegationDetail/DelegationDetailInfo/styles";
 import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
+import DynamicEllipsisText from "../DynamicEllipsisText";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -203,6 +204,8 @@ const GovernanceVotesDetail: React.FC<{
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const { t } = useTranslation();
+  const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
+
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setQuery = (query: any) => {
@@ -222,7 +225,7 @@ const GovernanceVotesDetail: React.FC<{
     setTab(newTab);
   };
 
-  const TabButton: React.FC<TabButtonProps> = ({ tabName, title }) => {
+  const TabButton: React.FC<TabButtonProps> = ({ tabName, title, children }) => {
     return (
       <Box
         component={Button}
@@ -239,6 +242,7 @@ const GovernanceVotesDetail: React.FC<{
         onClick={() => handleTabChange(tabName)}
       >
         <>{title}</>
+        <>{children}</>
       </Box>
     );
   };
@@ -277,7 +281,16 @@ const GovernanceVotesDetail: React.FC<{
       </Box>
       <Box textAlign="center">
         <ButtonGroup variant="outlined" aria-label="Basic button group">
-          <TabButton tabName="pool" title={t("common.poolName")} />
+          <TabButton tabName="pool">
+            <Box width={85}>
+              <DynamicEllipsisText
+                postfix={4}
+                isNoLimitPixel={true}
+                isTooltip
+                value={data?.poolName || poolId || drepId || ""}
+              />
+            </Box>
+          </TabButton>
           <TabButton tabName="overall" title={t("common.overall")} />
         </ButtonGroup>
         <Box display="flex" justifyContent="center">
@@ -406,7 +419,7 @@ const GovernanceVotesDetail: React.FC<{
                 <StyledTitle>{t("pool.currentStatus")}</StyledTitle>
 
                 <InfoValue width="fit-content" mt={"8px"}>
-                  <GovernanceStatus status={status} />
+                  <GovernanceStatus status={data?.status || ""} />
                 </InfoValue>
               </Box>
             </InfoTitle>
@@ -560,6 +573,7 @@ export interface GovernanceVoteDetail {
   status: string | null;
   votingPower: number | null;
   submissionDate: string;
+  poolName: string | null;
   expiryDate: string;
   historyVotes: {
     no: number | null;
@@ -651,7 +665,8 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
 
 interface TabButtonProps {
   tabName: string;
-  title: string;
+  title?: string;
+  children?: React.ReactNode;
 }
 interface FilterGovernanceVotes {
   query: ParsedQs;
@@ -748,8 +763,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const actionTypeListDrep = [
     { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
-    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
-    { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.updateConstitution") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.updateConstitution") },
+    { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.typeConstitutional") },
     { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
     { value: POOLS_ACTION_TYPE.PARAMETER_CHANGE_ACTION, text: t("drep.protocolChange") },
     { value: POOLS_ACTION_TYPE.TREASURY_WITHDRAWALS_ACTION, text: t("drep.treasuryWithdrawals") },
@@ -758,7 +773,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const actionTypeListPools = [
     { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
-    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.updateConstitution") },
     { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
     { value: POOLS_ACTION_TYPE.INFO_ACTION, text: t("pool.typeInfo") }
   ];
