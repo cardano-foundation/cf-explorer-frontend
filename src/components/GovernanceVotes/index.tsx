@@ -56,7 +56,7 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDate, formatDateTime, formatDateYMD, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
@@ -93,6 +93,7 @@ import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { HashName } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -128,7 +129,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
       actionStatus: (query.actionStatus as string) || "ANY",
       voteType: (query.voteType as string) || "ANY",
       isRepeatVote: query?.isRepeatVote === "true" ? (query.isRepeatVote as string) : undefined,
-      governanceActionTxHash: (query.id as string) || undefined,
+      governanceActionTxHash: (query.governanceActionTxHash as string) || undefined,
       anchorText: (query.anchorText as string) || undefined,
       fromDate: (query.fromDate as string) || undefined,
       toDate: (query.toDate as string) || undefined,
@@ -207,7 +208,6 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
           size: Number(query.voteSize || 6),
           page: query.page ? Number(query.page || 1) - 1 : 0,
           total,
-          page: query.page ? Number(query.page || 1) - 1 : 0,
           onChange: (page, size) => history.replace({ search: stringify({ ...query, page, voteSize: size }) })
         }}
         total={{ count: total || 0, title: "" }}
@@ -257,7 +257,7 @@ const GovernanceVotesDetail: React.FC<{
     switch (selectVote) {
       case "SPOs":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "STAKING_POOL_KEY_HASH")[0];
-      case "DRops":
+      case "DReps":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "DREP_KEY_HASH")[0];
       case "CC":
         return dataChart?.votingChartsList.filter((i) => i.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH")[0];
@@ -279,6 +279,7 @@ const GovernanceVotesDetail: React.FC<{
         textTransform={"capitalize"}
         p={2.5}
         py={1.5}
+        mr={"1px"}
         sx={{
           borderRadius: tabName === "pool" ? "8px 0px 0px 8px !important" : "0px 8px 8px 0px !important",
           background: tab === tabName ? theme.palette.primary[200] : "",
@@ -294,10 +295,10 @@ const GovernanceVotesDetail: React.FC<{
     );
   };
 
-  const listVotes = ["SPOs", "DRops", "CC"];
+  const listVotes = ["SPOs", "DReps", "CC"];
   return (
     <Box>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="baseline">
         <Button
           variant="text"
           onClick={() => {
@@ -317,43 +318,38 @@ const GovernanceVotesDetail: React.FC<{
         >
           <ArrowLeftWhiteIcon />
         </Button>
-        <Typography
-          m="auto"
-          fontSize="32px"
-          fontWeight={600}
-          lineHeight="28px"
-          color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-        >
-          {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}
-        </Typography>
-      </Box>
-      <Box textAlign="center">
-        <ButtonGroup variant="outlined" aria-label="Basic button group">
-          <TabButton tabName="pool">
-            <Box width={85}>
-              <DynamicEllipsisText
-                postfix={4}
-                isNoLimitPixel={true}
-                isTooltip
-                value={data?.poolName || poolId || drepId || ""}
-              />
+        <Box m="auto">
+          <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+          <Box textAlign="center">
+            <ButtonGroup variant="outlined" aria-label="Basic button group">
+              <TabButton tabName="pool">
+                <Box width={85}>
+                  <DynamicEllipsisText
+                    postfix={4}
+                    isNoLimitPixel={true}
+                    isTooltip
+                    value={data?.poolName || poolId || drepId || ""}
+                  />
+                </Box>
+              </TabButton>
+              <TabButton tabName="overall" title={t("common.overall")} />
+            </ButtonGroup>
+            <Box display="flex" justifyContent="center">
+              <Typography
+                fontSize="14px"
+                fontWeight={400}
+                lineHeight="16.41px"
+                pt="16px"
+                width="400px"
+                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+              >
+                {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
+              </Typography>
             </Box>
-          </TabButton>
-          <TabButton tabName="overall" title={t("common.overall")} />
-        </ButtonGroup>
-        <Box display="flex" justifyContent="center">
-          <Typography
-            fontSize="14px"
-            fontWeight={400}
-            lineHeight="16.41px"
-            pt="16px"
-            width="400px"
-            color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-          >
-            {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
-          </Typography>
+          </Box>
         </Box>
       </Box>
+
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
@@ -384,10 +380,16 @@ const GovernanceVotesDetail: React.FC<{
                     lineHeight="14.52px"
                     color={theme.palette.secondary[600]}
                   >
-                    {getShortHash(data?.txHash)}
+                    {getShortHash(data?.txHash)} #{data?.index}
                   </Typography>
                 </CustomTooltip>
-                <CopyButton text={data?.txHash} customIcon={BlackCircleIcon} data-testid="copy-button" />
+                <CopyButton
+                  text={data?.txHash}
+                  customIcon={BlackCircleIcon}
+                  data-testid="copy-button"
+                  height={23}
+                  fill="theme.palette.secondary.light"
+                />
               </Box>
             </InfoValue>
           </Item>
@@ -420,8 +422,10 @@ const GovernanceVotesDetail: React.FC<{
                     <Chip
                       key={i}
                       sx={{
-                        background: theme.palette.primary[100],
-                        border: `1px solid ${theme.palette.secondary[600]}`,
+                        fontWeight: 500,
+                        fontSize: "12px",
+                        background: selectVote ? theme.palette.primary[200] : theme.palette.primary[100],
+                        border: `1px solid ${selectVote ? theme.palette.primary.main : theme.palette.secondary[600]}`,
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       label={selectVote || i}
@@ -473,35 +477,48 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon
-              fill={theme.palette.secondary.light}
-              height={27}
-              icon={VotingPowerIcon}
-              style={{ marginTop: "5px" }}
-            />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon
+                fill={theme.palette.secondary.light}
+                height={27}
+                icon={VotingPowerIcon}
+                style={{ marginTop: "5px" }}
+              />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.votingPowerADA")}</StyledTitle>
             </InfoTitle>
+
             <InfoValue sx={{ wordBreak: "break-word" }}>
               {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.submission")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.anchorText")}</StyledTitle>
             </InfoTitle>
@@ -511,7 +528,14 @@ const GovernanceVotesDetail: React.FC<{
                   setOpenActionMetadataModal(true);
                 }}
                 fullWidth
-                sx={{ height: "51px" }}
+                sx={{
+                  height: "51px",
+                  border: `2px solid ${theme.palette.primary[200]}`,
+                  textTransform: "capitalize",
+                  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
+                  fontWeight: 500,
+                  fontSize: "16px"
+                }}
                 variant="outlined"
               >
                 {t("common.viewDetails")}
@@ -550,12 +574,14 @@ const VoteBar = ({
   percentage,
   color,
   icon,
-  label
+  label,
+  numberVote
 }: {
   percentage: number;
   color: string;
   icon: JSX.Element;
   label: string;
+  numberVote: number;
 }) => {
   const theme = useTheme();
   return (
@@ -572,13 +598,17 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              3,443,875.343 ADA (94%)
+              {numberVote} ({percentage})%
             </Typography>
           </Box>
         }
         placement="top"
       >
-        <Box sx={{ background: color }} height={`${!percentage ? 0.5 : percentage}px`} width="36px" />
+        <Box
+          sx={{ background: color, borderRadius: "8px" }}
+          height={`${!percentage ? 0.5 : percentage}px`}
+          width="36px"
+        />
       </LightTooltip>
       <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
         {label}
@@ -601,18 +631,21 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
       <VoteBar
+        numberVote={data?.numberOfYesVote || 0}
         percentage={getShortNumber(yesPercentage)}
         color={theme.palette.success[700]}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
+        numberVote={data?.numberOfAbstainVotes || 0}
         percentage={getShortNumber(abstainPercentage)}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
       <VoteBar
+        numberVote={data?.numberOfNoVotes || 0}
         percentage={getShortNumber(noPercentage)}
         color={theme.palette.error[700]}
         icon={<VotesNoIcon />}
@@ -670,7 +703,13 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
   const theme = useTheme();
 
   return (
-    <CustomModal open={open} onClose={() => onClose?.()} title={t("pool.votingHistory")} width={500}>
+    <CustomModal
+      open={open}
+      onClose={() => onClose?.()}
+      title={t("pool.votingHistory")}
+      width={500}
+      sx={{ overflow: "hidden" }}
+    >
       <Box display="flex" alignItems="center" gap="12px" pb="25.5px">
         <Typography
           fontSize="24px"
@@ -714,6 +753,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
               </TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {data?.map((row, index) => (
               <TableRow key={row.no} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -741,6 +781,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
             ))}
           </TableBody>
         </TableMui>
+        {!data && <NoRecord padding={`0 !important`} />}
       </TableContainer>
     </CustomModal>
   );
@@ -845,7 +886,7 @@ export interface FilterParams {
   fromDate?: string;
   toDate?: string;
   search?: string;
-  id?: string;
+  governanceActionTxHash?: string;
   isRepeatVote?: boolean;
   actionType?: string;
   anchorText?: string;
@@ -860,7 +901,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const [openDateRange, setOpenDateRange] = useState<boolean>(false);
   const filterValue = {
     sort: "ASC",
-    id: "",
+    governanceActionTxHash: "",
     anchorText: "",
     isRepeatVote: false,
     actionType: STATUS_VOTE.ALL,
@@ -900,14 +941,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       isRepeatVote: params?.isRepeatVote,
       page: 1,
       size: 6,
-      governanceActionTxHash: params?.id,
+      governanceActionTxHash: params?.governanceActionTxHash,
       anchorText: params?.anchorText,
       actionType: params?.actionType,
       actionStatus: params?.currentStatus,
       voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
       voteType: params?.vote,
-      ...(params?.fromDate && { fromDate: params.fromDate }),
-      ...(params?.toDate && { toDate: params.toDate })
+      ...(params?.fromDate && { fromDate: formatDateYMD(params.fromDate || "") }),
+      ...(params?.toDate && { toDate: formatDateYMD(params.toDate || "") })
     });
   };
 
@@ -977,6 +1018,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         />
         <Box
           ml={1}
+          position={"relative"}
           whiteSpace={"nowrap"}
           fontWeight={"bold"}
           color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
@@ -1002,7 +1044,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
                 </Box>
-                {/* {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />} */}
               </Box>
               <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
                 <AccordionSummary>
@@ -1024,10 +1065,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
-                    // inputRef={inputRef}
+                    sx={{ width: "100% !important" }}
                     placeholder={"Search ID"}
-                    value={params?.id}
-                    onChange={({ target: { value } }) => setParams({ ...params, id: value })}
+                    value={params?.governanceActionTxHash}
+                    onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
