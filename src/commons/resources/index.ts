@@ -207,10 +207,12 @@ import DelegatorsDrepIcon from "./icons/delegatorsDrep.svg?react";
 import LifetimeVoteDrepIcon from "./icons/liifetimeVoteDrep.svg?react";
 import governanceVotesIcon from "./icons/governanceVotes.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
-import VotesIcon from "./icons/votes.svg?react";
 import VotesYesIcon from "./icons/voteYes.svg?react";
 import VotesNoIcon from "./icons/voteNo.svg?react";
 import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
+import DropdownIcon from "./icons/dropdown.svg?react";
+import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
+import VotesIcon from "./icons/votes.svg?react";
 import VotesNoneIcon from "./icons/voteNone.svg?react";
 import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
 import GovernanceIdIcon from "./icons/governanceId.svg?react";
@@ -433,6 +435,8 @@ export {
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
   governanceVotesIcon,
+  DisclaimerIcon,
+  DropdownIcon,
   VotesIcon,
   VotesYesIcon,
   VotesNoIcon,

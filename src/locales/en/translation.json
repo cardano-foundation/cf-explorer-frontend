@@ -506,7 +506,8 @@
   "common.poolhash": "Pool hash",
   "common.poolHomepage": "Homepage",
   "common.poolDescription": "Description",
-  "common.poolName": "Pool Name ",
+  "common.poolName": "Pool Name",
+  "common.overall": "Overall Vote",
   "glossary.epoch": "Epoch",
   "glossary.upcomingEpoch": "Upcoming Epoch",
   "common.rewardAccount": "Reward Account",
@@ -558,6 +559,7 @@
   "common.poolSize": "Pool size",
   "common.yes": "Yes",
   "common.no": "No",
+  "common.abstain": "Abstain",
   "common.poolReportByEvent": "Pool Report by event",
   "common.select as required": "Select as required",
   "common.all": "All",
@@ -1054,5 +1056,14 @@
   "bolnisi.verifyErrorTooltip": "A connection to the verification service could not be established.",
   "bolnisi.verifyErrorTooltipTryAgain": "Please, refresh the page to try again.",
   "bolnisi.verifyError": "Verification Unavailable",
-  "account.myProfile": "My Profile"
+  "account.myProfile": "My Profile",
+  "drep.des": "DRep Metadata",
+  "drep.activeVoteStake": "Active Voting Stake",
+  "drep.liveStake": "Live Stake",
+  "drep.votingParticipation": "Voting Participation",
+  "drep.lifetimeVotes": "Lifetime Votes",
+  "drep.governanceVotes": "Governance Votes",
+  "drep.certificatesHistory": "Drep Certificates History",
+  "drep.disclaimer": "Please be aware that by clicking the external links, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
+  "status.inActive": "INACTIVE"
 }
