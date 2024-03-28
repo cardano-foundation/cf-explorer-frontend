@@ -92,6 +92,7 @@ import {
 import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
 import { ViewJson } from "../ScriptModal/styles";
+import { HashName } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -273,6 +274,7 @@ const GovernanceVotesDetail: React.FC<{
         textTransform={"capitalize"}
         p={2.5}
         py={1.5}
+        mr={"1px"}
         sx={{
           borderRadius: tabName === "pool" ? "8px 0px 0px 8px !important" : "0px 8px 8px 0px !important",
           background: tab === tabName ? theme.palette.primary[200] : "",
@@ -290,7 +292,7 @@ const GovernanceVotesDetail: React.FC<{
   const listVotes = ["SPOs", "DRops", "CC"];
   return (
     <Box>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="baseline">
         <Button
           variant="text"
           onClick={() => {
@@ -310,34 +312,29 @@ const GovernanceVotesDetail: React.FC<{
         >
           <ArrowLeftWhiteIcon />
         </Button>
-        <Typography
-          m="auto"
-          fontSize="32px"
-          fontWeight={600}
-          lineHeight="28px"
-          color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-        >
-          {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}
-        </Typography>
-      </Box>
-      <Box textAlign="center">
-        <ButtonGroup variant="outlined" aria-label="Basic button group">
-          <TabButton tabName="pool" title={t("common.poolName")} />
-          <TabButton tabName="overall" title={t("common.overall")} />
-        </ButtonGroup>
-        <Box display="flex" justifyContent="center">
-          <Typography
-            fontSize="14px"
-            fontWeight={400}
-            lineHeight="16.41px"
-            pt="16px"
-            width="400px"
-            color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-          >
-            {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
-          </Typography>
+        <Box m="auto">
+          <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+          <Box textAlign="center">
+            <ButtonGroup variant="outlined" aria-label="Basic button group">
+              <TabButton tabName="pool" title={t("common.poolName")} />
+              <TabButton tabName="overall" title={t("common.overall")} />
+            </ButtonGroup>
+            <Box display="flex" justifyContent="center">
+              <Typography
+                fontSize="14px"
+                fontWeight={400}
+                lineHeight="16.41px"
+                pt="16px"
+                width="400px"
+                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+              >
+                {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
+              </Typography>
+            </Box>
+          </Box>
         </Box>
       </Box>
+
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
@@ -368,10 +365,16 @@ const GovernanceVotesDetail: React.FC<{
                     lineHeight="14.52px"
                     color={theme.palette.secondary[600]}
                   >
-                    {getShortHash(data?.txHash)}
+                    {getShortHash(data?.txHash)} #{data?.index}
                   </Typography>
                 </CustomTooltip>
-                <CopyButton text={data?.txHash} customIcon={BlackCircleIcon} data-testid="copy-button" />
+                <CopyButton
+                  text={data?.txHash}
+                  customIcon={BlackCircleIcon}
+                  data-testid="copy-button"
+                  height={23}
+                  fill="theme.palette.secondary.light"
+                />
               </Box>
             </InfoValue>
           </Item>
@@ -431,7 +434,7 @@ const GovernanceVotesDetail: React.FC<{
                 <Box
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    setOpenHistoryVoteModal(true);
+                    data?.historyVotes && setOpenHistoryVoteModal(true);
                   }}
                 >
                   <VoteStatus status={data?.voteType || ""} />
@@ -457,35 +460,48 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon
-              fill={theme.palette.secondary.light}
-              height={27}
-              icon={VotingPowerIcon}
-              style={{ marginTop: "5px" }}
-            />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon
+                fill={theme.palette.secondary.light}
+                height={27}
+                icon={VotingPowerIcon}
+                style={{ marginTop: "5px" }}
+              />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.votingPowerADA")}</StyledTitle>
             </InfoTitle>
+
             <InfoValue sx={{ wordBreak: "break-word" }}>
               {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.submission")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
+            <Box display="flex" justifyContent="space-between">
+              <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
+              <BlackWarningIcon />
+            </Box>
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.anchorText")}</StyledTitle>
             </InfoTitle>
@@ -495,7 +511,14 @@ const GovernanceVotesDetail: React.FC<{
                   setOpenActionMetadataModal(true);
                 }}
                 fullWidth
-                sx={{ height: "51px" }}
+                sx={{
+                  height: "51px",
+                  border: `2px solid ${theme.palette.primary[200]}`,
+                  textTransform: "capitalize",
+                  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
+                  fontWeight: 500,
+                  fontSize: "16px"
+                }}
                 variant="outlined"
               >
                 {t("common.viewDetails")}
@@ -562,7 +585,11 @@ const VoteBar = ({
         }
         placement="top"
       >
-        <Box sx={{ background: color }} height={`${!percentage ? 0.5 : percentage}px`} width="36px" />
+        <Box
+          sx={{ background: color, borderRadius: "8px" }}
+          height={`${!percentage ? 0.5 : percentage}px`}
+          width="36px"
+        />
       </LightTooltip>
       <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
         {label}
@@ -653,7 +680,13 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
   const theme = useTheme();
 
   return (
-    <CustomModal open={open} onClose={() => onClose?.()} title={t("pool.votingHistory")} width={500}>
+    <CustomModal
+      open={open}
+      onClose={() => onClose?.()}
+      title={t("pool.votingHistory")}
+      width={500}
+      sx={{ overflow: "hidden" }}
+    >
       <Box display="flex" alignItems="center" gap="12px" pb="25.5px">
         <Typography
           fontSize="24px"
@@ -959,6 +992,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         />
         <Box
           ml={1}
+          position={"relative"}
           whiteSpace={"nowrap"}
           fontWeight={"bold"}
           color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
