@@ -191,7 +191,9 @@ const DrepDetail = () => {
         </TitleCard>
       ),
       value: (
-        <ValueCard>{data?.votingParticipation !== null ? `${data?.votingParticipation}%` : t("common.N/A")}</ValueCard>
+        <ValueCard>
+          {data?.votingParticipation !== null ? `${formatPercent(data?.votingParticipation)}` : t("common.N/A")}
+        </ValueCard>
       )
     },
     {
