@@ -768,7 +768,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
       onClose={() => onClose?.()}
       title={t("pool.actionMetadata")}
       width={500}
-      sx={{ position: "relative", height: "70vh" }}
+      sx={{ maxHeight: "70vh" }}
     >
       <Box display="block" pb="15px">
         <Typography fontSize="16px" color={theme.palette.secondary.main}>
@@ -806,7 +806,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           gap="24px"
           mt="20px"
           p="24px"
-          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], position: "absolute" }}
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0] }}
         >
           <ViewJson maxHeight={"70vh"}>
             <JsonViewer
