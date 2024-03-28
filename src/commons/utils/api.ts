@@ -32,6 +32,7 @@ export const API = {
   POOL: "pools",
   POOL_CERTIFICATE: {
     POOL: "gov-actions",
+    POOL_CHART: "gov-actions/voting-chart",
     POOL_DETAIL: (poolId: string) => `gov-actions/${poolId}/voting-procedure-detail`
   },
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
