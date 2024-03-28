@@ -27,11 +27,13 @@ import {
   styled,
   tooltipClasses,
   useTheme,
-  ClickAwayListener
+  ClickAwayListener,
+  Link
 } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import moment from "moment";
 import { isUndefined, omitBy } from "lodash";
+import { JsonViewer } from "@textea/json-viewer";
 
 import {
   ActionTypeIcon,
@@ -54,12 +56,14 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
-import { getShortHash } from "src/commons/utils/helper";
+
+import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
+
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
@@ -89,10 +93,27 @@ import {
 } from "../DelegationDetail/DelegationDetailInfo/styles";
 import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
+import { ViewJson } from "../ScriptModal/styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
   type: VOTE_TYPE.DREP_KEY_HASH | VOTE_TYPE.STAKING_POOL_KEY_HASH;
+}
+
+interface GovernanceVoteChart {
+  txHash: string | null;
+  index: number | null;
+  numberOfYesVote: number;
+  numberOfNoVotes: number;
+  numberOfAbstainVotes: number;
+  votingChartsList: VotingChart[];
+}
+
+interface VotingChart {
+  voterType: string;
+  numberOfYesVote: number;
+  numberOfNoVotes: number;
+  numberOfAbstainVotes: number;
 }
 
 const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ hash, type }) => {
@@ -115,11 +136,13 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
       voterType: type
     });
   }, [JSON.stringify(query)]);
+
   const { data, total, lastUpdated, loading, initialized } = useFetchList<GovernanceVote>(
     `${API.POOL_CERTIFICATE.POOL}/${hash}`,
     omitBy(params, isUndefined),
     false
   );
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setQuery = (query: any) => {
     history.replace({ search: stringify(query) }, history.location.state);
@@ -202,6 +225,7 @@ const GovernanceVotesDetail: React.FC<{
 }> = ({ hash, voteId, type }) => {
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
+  const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const { t } = useTranslation();
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -217,6 +241,44 @@ const GovernanceVotesDetail: React.FC<{
       voterType: type
     })}`
   );
+
+  const { data: dataChart } = useFetch<GovernanceVoteChart>(
+    `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
+      txHash: voteId,
+      index: 0
+    })}`
+  );
+
+  const filterDataChart = (selectVote: string) => {
+    switch (selectVote) {
+      case "SPOs":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "STAKING_POOL_KEY_HASH")[0];
+      case "DRops":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "DREP_KEY_HASH")[0];
+      case "CC":
+        return dataChart?.votingChartsList.filter((i) => i.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH")[0];
+
+      default:
+        return dataChart;
+    }
+  };
+
+  const actionType = (type: string) => {
+    switch (type) {
+      case POOLS_ACTION_TYPE.UPDATE_COMMITTEE:
+        return t("pool.normalState");
+      case POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION:
+        return t("pool.harkFork");
+      case POOLS_ACTION_TYPE.NO_CONFIDENCE:
+        return t("pool.typeMotion");
+      case POOLS_ACTION_TYPE.INFO_ACTION:
+        return t("pool.Infor");
+
+      default:
+        break;
+    }
+  };
+
   const [tab, setTab] = useState<string>("pool");
   const handleTabChange = (newTab: string) => {
     setTab(newTab);
@@ -254,6 +316,7 @@ const GovernanceVotesDetail: React.FC<{
               tab: "governanceVotes",
               page: 1,
               size: 6,
+              governanceActionTxHash: "",
               actionType: STATUS_VOTE.ALL,
               actionStatus: STATUS_VOTE.ANY,
               voteType: STATUS_VOTE.ANY,
@@ -364,7 +427,7 @@ const GovernanceVotesDetail: React.FC<{
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       label={selectVote || i}
-                      onClick={() => setSelectVote(i)}
+                      onClick={() => setSelectVote(selectVote ? "" : i)}
                     />
                   ))}
                   {selectVote && (
@@ -392,7 +455,7 @@ const GovernanceVotesDetail: React.FC<{
                   <VoteStatus status={data?.voteType || ""} />
                 </Box>
               ) : (
-                <VoteRate />
+                <VoteRate data={filterDataChart(selectVote)} />
               )}
             </InfoValue>
           </Item>
@@ -406,7 +469,7 @@ const GovernanceVotesDetail: React.FC<{
                 <StyledTitle>{t("pool.currentStatus")}</StyledTitle>
 
                 <InfoValue width="fit-content" mt={"8px"}>
-                  <GovernanceStatus status={status} />
+                  <GovernanceStatus status={data?.status || ""} />
                 </InfoValue>
               </Box>
             </InfoTitle>
@@ -430,27 +493,45 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.submission")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.submissionDate}</InfoValue>
+            <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.expiryDate}</InfoValue>
+            <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.anchorText")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>Whatever the anchor text string is for this action</InfoValue>
+            <InfoValue>
+              <Button
+                onClick={() => {
+                  setOpenActionMetadataModal(true);
+                }}
+                fullWidth
+                sx={{ height: "51px" }}
+                variant="outlined"
+              >
+                {t("common.viewDetails")}
+              </Button>
+            </InfoValue>
           </Item>
         </StyledGrid>
         <VoteHistoryModal
           data={data?.historyVotes}
           open={openHistoryVoteModal}
           onClose={() => setOpenHistoryVoteModal(false)}
+        />
+        <ActionMetadataModal
+          data={data?.details}
+          anchorHash={data?.anchorHash}
+          anchorUrl={data?.anchorUrl}
+          open={openActionMetadataModal}
+          onClose={() => setOpenActionMetadataModal(false)}
         />
       </DataContainer>
     </Box>
@@ -482,7 +563,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
-        {percentage}%
+        {!percentage ? "0" : percentage}%
       </Typography>
       <LightTooltip
         title={
@@ -499,7 +580,7 @@ const VoteBar = ({
         }
         placement="top"
       >
-        <Box sx={{ background: color }} height={`${percentage === 0 ? 0.5 : percentage}px`} width="36px" />
+        <Box sx={{ background: color }} height={`${!percentage ? 0.5 : percentage}px`} width="36px" />
       </LightTooltip>
       <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
         {label}
@@ -508,20 +589,37 @@ const VoteBar = ({
   );
 };
 
-const VoteRate = () => {
+const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
+  const totalVotes = Number(
+    (data?.numberOfYesVote || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfAbstainVotes || 0)
+  );
+  const yesPercentage = ((data?.numberOfYesVote || 0) / totalVotes) * 100;
+  const noPercentage = ((data?.numberOfNoVotes || 0) / totalVotes) * 100;
+  const abstainPercentage = ((data?.numberOfAbstainVotes || 0) / totalVotes) * 100;
+
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
-      <VoteBar percentage={93} color={theme.palette.success[700]} icon={<VotesYesIcon />} label={t("common.yes")} />
       <VoteBar
-        percentage={7}
+        percentage={getShortNumber(yesPercentage)}
+        color={theme.palette.success[700]}
+        icon={<VotesYesIcon />}
+        label={t("common.yes")}
+      />
+      <VoteBar
+        percentage={getShortNumber(abstainPercentage)}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
-      <VoteBar percentage={0} color={theme.palette.error[700]} icon={<VotesNoIcon />} label={t("common.no")} />
+      <VoteBar
+        percentage={getShortNumber(noPercentage)}
+        color={theme.palette.error[700]}
+        icon={<VotesNoIcon />}
+        label={t("common.no")}
+      />
     </Box>
   );
 };
@@ -649,6 +747,89 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
   );
 };
 
+interface ActionMetadataProps {
+  onClose?: () => void;
+  open: boolean;
+  anchorHash?: string;
+  anchorUrl?: string;
+  data?: {
+    type: string;
+    govActionId: string | null;
+    quorumThreshold: number;
+    membersForRemoval: string[];
+    newMembersAndTerms: Record<string, number>;
+  };
+}
+
+const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, data, anchorHash, anchorUrl }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  return (
+    <CustomModal
+      open={open}
+      onClose={() => onClose?.()}
+      title={t("pool.actionMetadata")}
+      width={500}
+      sx={{ position: "relative", height: "70vh" }}
+    >
+      <Box display="block" pb="15px">
+        <Typography fontSize="16px" color={theme.palette.secondary.main}>
+          {t("pool.anchor")}:
+        </Typography>{" "}
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="24px"
+          mt="20px"
+          p="24px"
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], wordWrap: "break-word" }}
+        >
+          <Typography fontSize="16px" color={theme.palette.secondary.light}>
+            {anchorHash}
+          </Typography>
+          <Typography
+            component={Link}
+            fontSize="16px"
+            color="#0033AD !important"
+            fontWeight="700"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={anchorUrl || "/"}
+          >
+            {anchorUrl}
+          </Typography>
+        </Box>
+      </Box>
+      <Box display="block" pb="25.5px">
+        <Typography fontSize="16px">{t("pool.metadata")}:</Typography>{" "}
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="24px"
+          mt="20px"
+          p="24px"
+          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], position: "absolute" }}
+        >
+          <ViewJson maxHeight={"70vh"}>
+            <JsonViewer
+              value={data}
+              displayObjectSize={false}
+              displayDataTypes={false}
+              enableClipboard={false}
+              collapseStringsAfterLength={false}
+              rootName={false}
+              theme={theme.isDark ? "dark" : "light"}
+              // keyRenderer={keyRenderer}
+              style={{ wordBreak: "break-word", width: "98%", pointerEvents: "none" }}
+            />
+          </ViewJson>
+        </Box>
+      </Box>
+    </CustomModal>
+  );
+};
+
 interface TabButtonProps {
   tabName: string;
   title: string;
@@ -703,6 +884,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         page: 1,
         size: 6,
         tab: "governanceVotes",
+        governanceActionTxHash: "",
         actionType: STATUS_VOTE.ALL,
         actionStatus: STATUS_VOTE.ANY,
         voteType: STATUS_VOTE.ANY,
@@ -718,7 +900,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       isRepeatVote: params?.isRepeatVote,
       page: 1,
       size: 6,
-      id: params?.id,
+      governanceActionTxHash: params?.id,
       anchorText: params?.anchorText,
       actionType: params?.actionType,
       actionStatus: params?.currentStatus,
