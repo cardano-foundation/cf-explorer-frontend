@@ -42,6 +42,7 @@ import {
   BlackCircleIcon,
   BlackWarningIcon,
   CurrentStatusIcon,
+  DisclaimerIcon,
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
@@ -780,7 +781,7 @@ interface ActionMetadataProps {
 const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, data, anchorHash, anchorUrl }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-
+  const [openModal, setOpenModal] = useState(false);
   return (
     <CustomModal
       open={open}
@@ -804,21 +805,37 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           <Typography fontSize="16px" color={theme.palette.secondary.light}>
             {anchorHash}
           </Typography>
-          <Typography
-            component={Link}
+          <Box
+            component={Typography}
             fontSize="16px"
             color="#0033AD !important"
             fontWeight="700"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={anchorUrl || "/"}
+            onClick={() => setOpenModal(true)}
+            sx={{ cursor: "pointer" }}
           >
             {anchorUrl}
-          </Typography>
+            <Box
+              ml={1}
+              sx={{ transform: "translateY(3px)" }}
+              component={CustomTooltip}
+              title={
+                <Box>
+                  <Box fontWeight={"bold"} component={"span"}>
+                    Disclaimer:{" "}
+                  </Box>
+                  {t("drep.disclaimer")}
+                </Box>
+              }
+            >
+              <DisclaimerIcon fill={theme.palette.primary.main} />
+            </Box>
+          </Box>
         </Box>
       </Box>
-      <Box display="block" pb="25.5px">
-        <Typography fontSize="16px">{t("pool.metadata")}:</Typography>{" "}
+      <Box display="block">
+        <Typography fontSize="16px" color={theme.palette.secondary.main}>
+          {t("pool.metadata")}:
+        </Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -840,6 +857,41 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
               style={{ wordBreak: "break-word", width: "98%", pointerEvents: "none" }}
             />
           </ViewJson>
+        </Box>
+      </Box>
+      <ActionMetadataModalConfirm open={openModal} anchorUrl={anchorUrl} onClose={() => setOpenModal(false)} />
+    </CustomModal>
+  );
+};
+
+const ActionMetadataModalConfirm: React.FC<{
+  onClose: () => void;
+  open: boolean;
+  anchorUrl?: string;
+}> = ({ anchorUrl, ...props }) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  return (
+    <CustomModal {...props} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
+      <Box display="block" pb="15px">
+        <Box fontSize={16} color={theme.palette.secondary.main}>
+          {t("drep.disclaimer.des1")}
+        </Box>
+        <Box fontSize={16} color={theme.palette.secondary.main} my={2}>
+          {t("drep.disclaimer.des2")}
+        </Box>
+        <Box
+          component={Link}
+          sx={{ textDecoration: "underline !important" }}
+          fontSize="16px"
+          color={`${theme.palette.primary.main} !important`}
+          fontWeight="700"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={anchorUrl || "/"}
+        >
+          Proceed to External Link
         </Box>
       </Box>
     </CustomModal>
