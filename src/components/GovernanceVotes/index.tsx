@@ -63,7 +63,7 @@ import CardGovernanceVotes, {
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
-import { formatDate, formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
@@ -433,7 +433,7 @@ const GovernanceVotesDetail: React.FC<{
                       sx={{
                         background: theme.palette.primary[100],
                         border: `1px solid ${theme.palette.secondary[600]}`,
-                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                        color: selectVote ? theme.palette.secondary.main : theme.palette.secondary[600]
                       }}
                       label={selectVote || i}
                       onClick={() => setSelectVote(selectVote ? "" : i)}
@@ -444,7 +444,7 @@ const GovernanceVotesDetail: React.FC<{
                       sx={{
                         background: theme.palette.primary[100],
                         border: `1px solid ${theme.palette.secondary[600]}`,
-                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                        color: theme.palette.secondary[600]
                       }}
                       onClick={() => setSelectVote("")}
                       label="x"
@@ -469,7 +469,7 @@ const GovernanceVotesDetail: React.FC<{
                       <ChipContainer
                         Icon={historyIcon}
                         message={
-                          <Box component={Typography} textTransform="uppercase" fontSize="1px" fontWeight={500}>
+                          <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
                             History
                           </Box>
                         }
@@ -524,7 +524,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
+            <InfoValue>{formatDateTime(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
