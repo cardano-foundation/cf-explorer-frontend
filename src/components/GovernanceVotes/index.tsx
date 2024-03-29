@@ -285,12 +285,16 @@ const GovernanceVotesDetail: React.FC<{
         <ButtonGroup variant="outlined" aria-label="Basic button group">
           <TabButton tabName="pool">
             <Box width={85}>
-              <DynamicEllipsisText
-                postfix={4}
-                isNoLimitPixel={true}
-                isTooltip
-                value={data?.poolName || poolId || drepId || ""}
-              />
+              {data?.poolName && data.poolName.length < 10 ? (
+                data.poolName
+              ) : (
+                <DynamicEllipsisText
+                  postfix={4}
+                  isNoLimitPixel={true}
+                  isTooltip
+                  value={data?.poolName || poolId || drepId || ""}
+                />
+              )}
             </Box>
           </TabButton>
           <TabButton tabName="overall" title={t("common.overall")} />
