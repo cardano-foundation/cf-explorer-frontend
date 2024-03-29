@@ -38,6 +38,7 @@ interface Query {
   voteId?: string | number;
   id?: string | number;
   anchorText?: string | number;
+  governanceActionTxHash?: string | number;
   actionType?: string;
   currentStatus?: string;
   vote?: string;
@@ -207,6 +208,7 @@ const DelegationDetail: React.FC = () => {
       tab: newExpanded ? panel : "",
       page: 0,
       size: panel === "governanceVotes" ? 6 : 50,
+      governanceActionTxHash: "",
       actionType: STATUS_VOTE.ALL,
       actionStatus: STATUS_VOTE.ANY,
       voteType: STATUS_VOTE.ANY,
