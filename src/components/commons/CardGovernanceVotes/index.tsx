@@ -139,7 +139,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
     switch (key) {
       case STATUS_VOTE.RATIFIED:
         return "success";
-      case STATUS_VOTE.OPEN:
+      case STATUS_VOTE.OPEN_BALLOT:
         return "warning";
       case STATUS_VOTE.ENACTED:
         return "info";
@@ -162,7 +162,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
             lineHeight="23px"
             color={theme.palette.secondary.light}
           >
-            {status === STATUS_VOTE.OPEN ? "Open Ballot" : !status ? t("common.N/A") : status}
+            {status === STATUS_VOTE.OPEN_BALLOT ? t("pool.open") : !status ? t("common.N/A") : status}
           </Typography>
         }
         variant={typeStatus as "success" | "warning" | "info" | "error"}
