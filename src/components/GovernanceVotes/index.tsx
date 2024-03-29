@@ -1066,7 +1066,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
-                    sx={{ width: "100% !important" }}
+                    sx={{
+                      width: "100% !important",
+                      color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                    }}
                     placeholder={"Search ID"}
                     value={params?.governanceActionTxHash}
                     onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
