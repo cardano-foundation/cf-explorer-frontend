@@ -30,6 +30,7 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   if (address?.length <= 18) return address;
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
+
 export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
 };
@@ -200,12 +201,13 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 export const formatDateTime = (date: string) => {
   return moment(date).format("MM/DD/YYYY HH:mm:ss");
 };
-export const formatDateTimeLocal = (date: string) => {
-  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
-};
 
 export const formatDate = (date: string) => {
   return moment(date).format("DD/MM/YYYY");
+};
+
+export const formatDateTimeLocal = (date: string) => {
+  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
@@ -270,7 +272,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 
