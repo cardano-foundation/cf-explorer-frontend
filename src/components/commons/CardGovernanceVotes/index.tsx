@@ -3,7 +3,7 @@ import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
-import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
+import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon, repeatVoteIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
@@ -26,7 +26,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { status, txHash, type, vote, votingPower, index } = data;
+  const { status, txHash, type, vote, votingPower, index, isRepeatVote } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -42,7 +42,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
             </Tooltip>
           </Box>
           <>
-            <VoteStatus status={vote} />
+            <VoteStatus status={vote} isRepeatVote={isRepeatVote} />
           </>
         </Box>
         <Stack paddingTop="24px" spacing={"14px"}>
@@ -94,12 +94,16 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
 
 export default CardGovernanceVotes;
 
-export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
+export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = ({ status, isRepeatVote = false }) => {
   const { t } = useTranslation();
   const renderStatus = (key: string) => {
     switch (key) {
       case STATUS_VOTE.YES:
-        return [VotesYesIcon, "success"];
+        if (isRepeatVote) {
+          return [repeatVoteIcon, "success"];
+        } else {
+          return [VotesYesIcon, "success"];
+        }
       case STATUS_VOTE.NO:
         return [VotesNoIcon, "error"];
       case STATUS_VOTE.ABSTAIN:

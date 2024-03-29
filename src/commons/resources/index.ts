@@ -227,6 +227,7 @@ import DropdownIcon from "./icons/dropdown.svg?react";
 import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
 import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
 import historyIcon from "./icons/history.svg?react";
+import repeatVoteIcon from "./icons/repeatVote.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -455,6 +456,7 @@ export {
   ExpiryIcon,
   AnchorTextIcon,
   BlackWarningIcon,
+  repeatVoteIcon,
   BlackCircleIcon,
   RepeatVotesIcon
 };
