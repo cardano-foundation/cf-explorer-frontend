@@ -226,7 +226,7 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   top: "calc(100% + 10px)",
   right: 0,
   borderRadius: theme.spacing(1),
-  boxShadow: "2px 2px 10px 0px #43465633",
+  boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
     width: 265,
     left: "0"
