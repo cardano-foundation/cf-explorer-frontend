@@ -455,8 +455,10 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue width={`${tab === "pool" ? "fit-content" : "100%"}`}>
               {tab === "pool" ? (
-                <Box display={"flex"} alignItems={"center"} gap={1}>
-                  <VoteStatus status={data?.voteType || ""} />
+                <Box display={"flex"} alignItems={"center"} gap={1} flexWrap={"wrap"}>
+                  <Box>
+                    <VoteStatus status={data?.voteType || ""} />
+                  </Box>
                   {data?.historyVotes && data?.historyVotes.length > 1 && (
                     <Box
                       sx={{ cursor: "pointer" }}
@@ -467,7 +469,7 @@ const GovernanceVotesDetail: React.FC<{
                       <ChipContainer
                         Icon={historyIcon}
                         message={
-                          <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
+                          <Box component={Typography} textTransform="uppercase" fontSize="1px" fontWeight={500}>
                             History
                           </Box>
                         }
@@ -659,6 +661,7 @@ export interface GovernanceVote {
   type: string;
   vote: string;
   votingPower: string;
+  isRepeatVote: boolean;
 }
 
 export interface GovernanceVoteDetail {
@@ -704,7 +707,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
         </Typography>{" "}
         <VoteStatus status={(data && data[0].vote) || ""} />
       </Box>
-      <TableContainer sx={{ p: "0px 10px", background: theme.isDark ? "" : theme.palette.secondary[0] }}>
+      <TableContainer sx={{ p: "0px 10px", background: theme.isDark ? "" : theme.palette.secondary[0], width: "auto" }}>
         <TableMui aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -759,7 +762,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
                   sx={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
                   padding="none"
                 >
-                  {row.timestamp}
+                  {formatDateTime(row.timestamp)}
                 </TableCell>
               </TableRow>
             ))}
@@ -806,26 +809,33 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           gap="24px"
           mt="20px"
           p="24px"
-          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], wordWrap: "break-word" }}
+          borderRadius={"10px"}
+          sx={{
+            background: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
+            wordWrap: "break-word"
+          }}
         >
           <Typography fontSize="16px" color={theme.palette.secondary.light}>
             {anchorHash}
           </Typography>
-          <Box
-            component={Typography}
-            fontSize="16px"
-            color="#0033AD !important"
-            fontWeight="700"
-            onClick={() => setOpenModal(true)}
-            sx={{ cursor: "pointer" }}
-          >
-            {anchorUrl}
+          <Box>
+            <Box
+              display={"inline"}
+              component={Typography}
+              fontSize="16px"
+              color={`${theme.palette.primary.main} !important`}
+              fontWeight="700"
+              onClick={() => setOpenModal(true)}
+              sx={{ cursor: "pointer" }}
+            >
+              {anchorUrl}
+            </Box>
             <Box
               ml={1}
               sx={{ transform: "translateY(3px)" }}
               component={CustomTooltip}
               title={
-                <Box>
+                <Box textAlign={"left"}>
                   <Box fontWeight={"bold"} component={"span"}>
                     Disclaimer:{" "}
                   </Box>
@@ -845,9 +855,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
         <Box
           display="flex"
           flexDirection="column"
-          gap="24px"
-          mt="20px"
-          p="24px"
+          mt={2}
           sx={{ background: theme.isDark ? "" : theme.palette.secondary[0] }}
         >
           <ViewJson maxHeight={"70vh"}>
