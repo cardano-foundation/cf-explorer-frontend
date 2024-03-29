@@ -853,7 +853,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           </Typography>
         </Box>
       </Box>
-      <Box display="block" pb="25.5px">
+      <Box display="block">
         <Typography fontSize="16px" color={theme.palette.secondary.main}>
           {t("pool.metadata")}:
         </Typography>{" "}

@@ -59,7 +59,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               {actionTypeListDrep.find((action) => action.value === type)?.text}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center" flexShrink="wrap">
+          <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
               fontWeight={600}
               fontSize="16px"
