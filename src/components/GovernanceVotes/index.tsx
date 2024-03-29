@@ -50,7 +50,8 @@ import {
   VotesAbstainIcon,
   VotesNoIcon,
   VotesYesIcon,
-  VotingPowerIcon
+  VotingPowerIcon,
+  historyIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
@@ -76,6 +77,7 @@ import {
 import { StyledInput } from "src/components/share/styled";
 import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
 import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
+import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
 
@@ -402,13 +404,26 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue width={`${tab === "pool" ? "fit-content" : "100%"}`}>
               {tab === "pool" ? (
-                <Box
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setOpenHistoryVoteModal(true);
-                  }}
-                >
+                <Box display={"flex"} alignItems={"center"} gap={1}>
                   <VoteStatus status={data?.voteType || ""} />
+                  {data?.historyVotes && data?.historyVotes.length > 1 && (
+                    <Box
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setOpenHistoryVoteModal(true);
+                      }}
+                    >
+                      <ChipContainer
+                        Icon={historyIcon}
+                        message={
+                          <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
+                            History
+                          </Box>
+                        }
+                        variant={"gray"}
+                      />
+                    </Box>
+                  )}
                 </Box>
               ) : (
                 <VoteRate />
