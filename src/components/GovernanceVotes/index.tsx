@@ -488,7 +488,7 @@ const GovernanceVotesDetail: React.FC<{
                       <ChipContainer
                         Icon={historyIcon}
                         message={
-                          <Box component={Typography} textTransform="uppercase" fontSize="1px" fontWeight={500}>
+                          <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
                             History
                           </Box>
                         }
