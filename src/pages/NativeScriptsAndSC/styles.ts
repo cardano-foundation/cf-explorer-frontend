@@ -211,21 +211,35 @@ export const StyledTabAssociated = styled(Box)(() => ({
   overflowY: "scroll"
 }));
 
+export const FilterWrapper = styled(Box)`
+  background: ${({ theme }) => theme.palette.secondary[0]};
+  position: relative;
+  display: inline-flex;
+  border-radius: 5px;
+`;
+
 export const FilterContainer = styled(Box)(({ theme }) => ({
-  width: 300,
+  width: "300px",
   backgroundColor: theme.palette.secondary[0],
   zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
   right: 0,
   borderRadius: theme.spacing(1),
-  boxShadow: "2px 2px 10px 0px #43465633",
+  boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
-    width: "calc(100% - 30px)"
+    width: 230,
+    left: "21"
   },
+
+  "& .MuiAccordion-root::before": {
+    position: "unset !important"
+  },
+
   ":hover": {
     backgroundColor: theme.palette.secondary[0]
   },
+
   ":after": {
     content: "''",
     display: "block",

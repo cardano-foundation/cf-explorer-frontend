@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
 import Card from "../Card";
 
@@ -20,3 +20,17 @@ export const StatusContainer = styled(Box)`
     border-radius: 20px;
   }
 `;
+
+export const TitleCard = styled(Typography)(({ theme }) => ({
+  paddingRight: "3px",
+  wordBreak: "break-word",
+  fontWeight: 600,
+  lineHeight: "28px",
+  color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
+  [theme.breakpoints.down("lg")]: {
+    fontSize: "24px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "16px"
+  }
+}));
