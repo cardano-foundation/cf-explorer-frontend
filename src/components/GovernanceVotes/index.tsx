@@ -51,7 +51,8 @@ import {
   VotesAbstainIcon,
   VotesNoIcon,
   VotesYesIcon,
-  VotingPowerIcon
+  VotingPowerIcon,
+  historyIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
@@ -78,6 +79,7 @@ import {
 import { StyledInput } from "src/components/share/styled";
 import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
 import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
+import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
 
@@ -329,12 +331,16 @@ const GovernanceVotesDetail: React.FC<{
             <ButtonGroup variant="outlined" aria-label="Basic button group">
               <TabButton tabName="pool">
                 <Box width={85}>
-                  <DynamicEllipsisText
-                    postfix={4}
-                    isNoLimitPixel={true}
-                    isTooltip
-                    value={data?.poolName || poolId || drepId || ""}
-                  />
+                  {data?.poolName && data.poolName.length < 10 ? (
+                    data.poolName
+                  ) : (
+                    <DynamicEllipsisText
+                      postfix={4}
+                      isNoLimitPixel={true}
+                      isTooltip
+                      value={data?.poolName || poolId || drepId || ""}
+                    />
+                  )}
                 </Box>
               </TabButton>
               <TabButton tabName="overall" title={t("common.overall")} />
@@ -453,13 +459,26 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue width={`${tab === "pool" ? "fit-content" : "100%"}`}>
               {tab === "pool" ? (
-                <Box
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setOpenHistoryVoteModal(true);
-                  }}
-                >
+                <Box display={"flex"} alignItems={"center"} gap={1}>
                   <VoteStatus status={data?.voteType || ""} />
+                  {data?.historyVotes && data?.historyVotes.length > 1 && (
+                    <Box
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setOpenHistoryVoteModal(true);
+                      }}
+                    >
+                      <ChipContainer
+                        Icon={historyIcon}
+                        message={
+                          <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
+                            History
+                          </Box>
+                        }
+                        variant={"gray"}
+                      />
+                    </Box>
+                  )}
                 </Box>
               ) : (
                 <VoteRate data={filterDataChart(selectVote)} />
