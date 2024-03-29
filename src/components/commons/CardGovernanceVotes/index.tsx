@@ -13,6 +13,7 @@ import { CardGovernanceVote, StatusContainer } from "./styles";
 interface ICardGovernanceVotes {
   data: GovernanceVote;
 }
+
 export const actionTypeListDrep = [
   { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
   { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
@@ -25,7 +26,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { index, status, txHash, type, vote, votingPower } = data;
+  const { status, txHash, type, vote, votingPower, index } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
