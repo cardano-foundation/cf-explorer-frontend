@@ -246,7 +246,7 @@ const GovernanceVotesDetail: React.FC<{
   };
 
   const [selectVote, setSelectVote] = useState<string>("");
-  const { data } = useFetch<GovernanceVoteDetail>(
+  const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
       txHash: voteId,
       index: 0,
@@ -302,7 +302,12 @@ const GovernanceVotesDetail: React.FC<{
     );
   };
 
-  const listVotes = ["SPOs", "DReps", "CC"];
+  const listVotes = ["SPOs", "DRops", "CC"];
+
+  if (loading || !initialized) {
+    return <Box component={Skeleton} variant="rectangular" height={"400px"} borderRadius={2} />;
+  }
+
   return (
     <Box>
       <Box display="flex" alignItems="baseline">
@@ -330,11 +335,12 @@ const GovernanceVotesDetail: React.FC<{
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
               <TabButton tabName="pool">
-                <Box width={85} textTransform={"lowercase"}>
+                <Box width={85}>
                   {data?.poolName && data.poolName.length < 10 ? (
                     data.poolName
                   ) : (
                     <DynamicEllipsisText
+                      sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
                       postfix={4}
                       isNoLimitPixel={true}
                       isTooltip

@@ -410,7 +410,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.total > 10 ? (
+      {pagination?.total && pagination.total > (pagination?.size || 10) ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
