@@ -330,7 +330,7 @@ const GovernanceVotesDetail: React.FC<{
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
               <TabButton tabName="pool">
-                <Box width={85}>
+                <Box width={85} textTransform={"lowercase"}>
                   {data?.poolName && data.poolName.length < 10 ? (
                     data.poolName
                   ) : (
