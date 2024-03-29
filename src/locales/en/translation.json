@@ -1014,9 +1014,12 @@
   "pool.abstain": "Abstain",
   "pool.none": "None",
   "pool.typeMotion": "Motion of No-Confidence",
-  "pool.typeConstitutional": "Constitutional Committee",
+  "pool.typeConstitutional": "Constitutional Committe Updates",
   "pool.typeUpdate": "Update to the Constitutional or proposal policy",
   "pool.typeHardFork": "Hard-Fork Initiation",
+  "drep.updateConstitution": "Update to the Constitution",
+  "drep.protocolChange": "Protocol Parameter Changes",
+  "drep.treasuryWithdrawals": "Treasury Withdrawals",
   "pool.typeProtocol": "Protocol Parameter Changes",
 
   "pool.typeTreasury": "Treasury Withdrawals",

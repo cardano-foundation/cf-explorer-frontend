@@ -1,5 +1,5 @@
-import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
@@ -26,7 +26,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { status, txHash, type, vote, votingPower } = data;
+  const { status, txHash, type, vote, votingPower, index } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -43,7 +43,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
                 lineHeight="28px"
                 color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.main}
               >
-                {actionTypeListDrep.find((action) => action.value === type)?.text}
+                {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
               </Typography>
             </Tooltip>
           </Box>
