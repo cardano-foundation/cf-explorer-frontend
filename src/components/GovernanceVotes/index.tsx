@@ -360,7 +360,11 @@ const GovernanceVotesDetail: React.FC<{
                 width="400px"
                 color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
               >
-                {tab === "pool" ? t("pool.tabPool") : t("pool.overall")}
+                {tab === "pool"
+                  ? type === VOTE_TYPE.DREP_KEY_HASH
+                    ? t("pool.tabPoolDrep")
+                    : t("pool.tabPool")
+                  : t("pool.overall")}
               </Typography>
             </Box>
           </Box>
@@ -398,7 +402,7 @@ const GovernanceVotesDetail: React.FC<{
                     color={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]}
                   >
                     {isGalaxyFoldSmall
-                      ? getShortHash(data?.txHash, 4, 3)
+                      ? getShortHash(data?.txHash, 1, 1)
                       : isMobile
                       ? getShortHash(data?.txHash, 5, 4)
                       : getShortHash(data?.txHash)}
@@ -492,7 +496,9 @@ const GovernanceVotesDetail: React.FC<{
                   )}
                 </Box>
               ) : (
-                <VoteRate data={filterDataChart(selectVote)} />
+                <Box pr="2px">
+                  <VoteRate data={filterDataChart(selectVote)} />
+                </Box>
               )}
             </InfoValue>
           </Item>
@@ -646,7 +652,12 @@ const VoteBar = ({
           width={isGalaxyFoldSmall ? "24px" : "36px"}
         />
       </LightTooltip>
-      <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
+      <Typography
+        fontSize={`${isGalaxyFoldSmall ? "12px" : "14px"}`}
+        fontWeight={400}
+        pt="4px"
+        textTransform="uppercase"
+      >
         {label}
       </Typography>
     </Box>
@@ -665,7 +676,7 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   const abstainPercentage = ((data?.numberOfAbstainVotes || 0) / totalVotes) * 100;
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" width="100%">
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%">
       <VoteBar
         percentage={getShortNumber(yesPercentage)}
         color={theme.palette.success[700]}
@@ -1153,7 +1164,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
                     sx={{
-                      p: "0px 16px",
+                      p: "0px 12px",
                       width: "100% !important",
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
@@ -1183,7 +1194,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box sx={{ p: "0px 16px" }}>
+                  <Box sx={{ p: "0px 12px" }}>
                     <TextareaAutosize
                       value={params?.anchorText}
                       onChange={(e) => setParams({ ...params, anchorText: e.target.value })}
