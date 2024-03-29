@@ -1036,6 +1036,7 @@
   "pool.harkFork": "Hard-fork initiation",
   "pool.Infor": "Infor",
   "pool.tabPool": "The vote cast on the blockchain by Pool Name.",
+  "pool.tabPoolDrep": "The vote cast on the blockchain by Drep.",
   "pool.overall": "Votes cast on the blockchain by Delegated Representatives (DReps), Stake Pool Operators (SPOs), and members of the Constitutional Committee.",
   "pool.actionMetadata": "Governance Action Metadata",
   "pool.anchor": "Anchor",
