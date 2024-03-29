@@ -219,7 +219,7 @@ export const FilterWrapper = styled(Box)`
 `;
 
 export const FilterContainer = styled(Box)(({ theme }) => ({
-  width: "300px !important",
+  width: "300px",
   backgroundColor: theme.palette.secondary[0],
   zIndex: 15,
   position: "absolute",
@@ -228,13 +228,18 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
-    width: 265,
-    left: "0"
+    width: 230,
+    left: "21"
+  },
+
+  "& .MuiAccordion-root::before": {
+    position: "unset !important"
   },
 
   ":hover": {
     backgroundColor: theme.palette.secondary[0]
   },
+
   ":after": {
     content: "''",
     display: "block",
@@ -245,11 +250,7 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     right: "36px",
     width: "14px",
     height: "16px",
-    transform: "rotate(45deg)",
-    [theme.breakpoints.down("sm")]: {
-      right: "0",
-      left: "32px"
-    }
+    transform: "rotate(45deg)"
   }
 }));
 

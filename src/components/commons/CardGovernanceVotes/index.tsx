@@ -8,7 +8,7 @@ import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
 
-import { CardGovernanceVote, StatusContainer } from "./styles";
+import { CardGovernanceVote, StatusContainer, TitleCard } from "./styles";
 
 interface ICardGovernanceVotes {
   data: GovernanceVote;
@@ -36,15 +36,9 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box maxWidth="400px" flex={1}>
             <Tooltip title={txHash} placement="top" arrow>
-              <Typography
-                sx={{ wordBreak: "break-word" }}
-                fontWeight={600}
-                fontSize="24px"
-                lineHeight="28px"
-                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.main}
-              >
+              <TitleCard>
                 {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
-              </Typography>
+              </TitleCard>
             </Tooltip>
           </Box>
           <>
@@ -52,7 +46,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
           </>
         </Box>
         <Stack paddingTop="24px" spacing={"14px"}>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap={"wrap"}>
             <Typography
               fontWeight={600}
               fontSize="16px"
@@ -66,7 +60,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               {actionTypeListDrep.find((action) => action.value === type)?.text}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
               fontWeight={600}
               fontSize="16px"
@@ -78,7 +72,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
             </Typography>
             <GovernanceStatus status={status} />
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
               fontWeight={600}
               fontSize="16px"

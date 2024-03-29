@@ -83,6 +83,7 @@ import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomF
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   DataContainer,
@@ -199,12 +200,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
 
   return (
     <>
-      <Box
-        display={{ sm: "flex", xs: "block" }}
-        flexWrap={"wrap"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
+      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
         <TimeDuration>
           <FormNowMessage time={lastUpdated} />
         </TimeDuration>
@@ -237,6 +233,7 @@ const GovernanceVotesDetail: React.FC<{
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const { t } = useTranslation();
+  const { isGalaxyFoldSmall, isMobile } = useScreen();
   const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
 
   const history = useHistory();
@@ -310,28 +307,31 @@ const GovernanceVotesDetail: React.FC<{
 
   return (
     <Box>
-      <Box display="flex" alignItems="baseline">
-        <Button
-          variant="text"
-          onClick={() => {
-            setQuery({
-              tab: "governanceVotes",
-              page: 1,
-              size: 6,
-              governanceActionTxHash: "",
-              actionType: STATUS_VOTE.ALL,
-              actionStatus: STATUS_VOTE.ANY,
-              voteType: STATUS_VOTE.ANY,
-              voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
-              isRepeatVote: false
-            });
-            setTab("pool");
-          }}
-        >
-          <ArrowLeftWhiteIcon />
-        </Button>
+      <Box display="block" alignItems="baseline">
         <Box m="auto">
-          <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+          <Box position="relative">
+            <Button
+              sx={{ position: "absolute", bottom: 1 }}
+              variant="text"
+              onClick={() => {
+                setQuery({
+                  tab: "governanceVotes",
+                  page: 1,
+                  size: 6,
+                  governanceActionTxHash: "",
+                  actionType: STATUS_VOTE.ALL,
+                  actionStatus: STATUS_VOTE.ANY,
+                  voteType: STATUS_VOTE.ANY,
+                  voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
+                  isRepeatVote: false
+                });
+                setTab("pool");
+              }}
+            >
+              <ArrowLeftWhiteIcon />
+            </Button>
+            <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+          </Box>
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
               <TabButton tabName="pool">
@@ -370,7 +370,7 @@ const GovernanceVotesDetail: React.FC<{
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -384,7 +384,7 @@ const GovernanceVotesDetail: React.FC<{
                 gap="8px"
                 borderRadius="20px"
                 sx={{
-                  background: theme.palette.primary[100],
+                  background: theme.isDark ? theme.palette.primary[500] : theme.palette.primary[100],
                   border: `1px solid ${theme.palette.secondary[600]}`,
                   width: "fit-content",
                   p: "3px 2px 3px 12px"
@@ -395,9 +395,14 @@ const GovernanceVotesDetail: React.FC<{
                     fontSize="12px"
                     fontWeight="500"
                     lineHeight="14.52px"
-                    color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary[600]}
+                    color={theme.isDark ? theme.palette.secondary.light : theme.palette.secondary[600]}
                   >
-                    {getShortHash(data?.txHash)} #{data?.index}
+                    {isGalaxyFoldSmall
+                      ? getShortHash(data?.txHash, 4, 3)
+                      : isMobile
+                      ? getShortHash(data?.txHash, 5, 4)
+                      : getShortHash(data?.txHash)}
+                    #{data?.index}
                   </Typography>
                 </CustomTooltip>
                 <CopyButton
@@ -411,7 +416,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -421,7 +426,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -434,7 +439,7 @@ const GovernanceVotesDetail: React.FC<{
             >
               <StyledTitle>{tab === "pool" ? t("pool.vote") : t("pool.votes")}</StyledTitle>
               {tab !== "pool" && (
-                <Box display="flex" gap="8px">
+                <Box display="flex" gap="8px" flexWrap="inherit">
                   {(selectVote ? listVotes.slice(0, 1) : listVotes).map((i) => (
                     <Chip
                       key={i}
@@ -492,7 +497,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -507,7 +512,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon
                 fill={theme.palette.secondary.light}
                 height={27}
@@ -525,7 +530,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -535,7 +540,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -545,7 +550,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDate(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
               <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
               <BlackWarningIcon />
             </Box>
@@ -560,11 +565,12 @@ const GovernanceVotesDetail: React.FC<{
                 fullWidth
                 sx={{
                   height: "51px",
+                  borderRadius: "8px",
                   border: `2px solid ${theme.palette.primary[200]}`,
                   textTransform: "capitalize",
                   color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
                   fontWeight: 500,
-                  fontSize: "16px"
+                  fontSize: `${isMobile ? "12px" : "16px"}`
                 }}
                 variant="outlined"
               >
@@ -613,6 +619,7 @@ const VoteBar = ({
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { isGalaxyFoldSmall } = useScreen();
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
@@ -636,7 +643,7 @@ const VoteBar = ({
         <Box
           sx={{ background: color, borderRadius: "8px" }}
           height={`${!percentage ? 0.5 : percentage}px`}
-          width="36px"
+          width={isGalaxyFoldSmall ? "24px" : "36px"}
         />
       </LightTooltip>
       <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
@@ -849,7 +856,11 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           gap="24px"
           mt="20px"
           p="24px"
-          sx={{ background: theme.isDark ? "" : theme.palette.secondary[0], wordWrap: "break-word" }}
+          borderRadius="8px"
+          sx={{
+            background: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
+            wordWrap: "break-word"
+          }}
         >
           <Typography fontSize="16px" color={theme.palette.secondary.light}>
             {anchorHash}
@@ -890,7 +901,6 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           flexDirection="column"
           gap="24px"
           mt="20px"
-          p="24px"
           sx={{ background: theme.isDark ? "" : theme.palette.secondary[0] }}
         >
           <ViewJson maxHeight={"70vh"}>
@@ -1143,6 +1153,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
                     sx={{
+                      p: "0px 16px",
                       width: "100% !important",
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
