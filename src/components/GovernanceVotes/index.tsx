@@ -126,6 +126,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   const history = useHistory();
   const query = parse(search.split("?")[1]);
   const [params, setParams] = useState({});
+  const [index, setIndex] = useState<number | undefined>();
   useEffect(() => {
     setParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
@@ -156,7 +157,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   if (query.voteId) {
     return (
       <>
-        <GovernanceVotesDetail hash={hash} voteId={(query?.voteId as string) || ""} type={type} />
+        <GovernanceVotesDetail hash={hash} voteId={(query?.voteId as string) || ""} index={index} type={type} />
       </>
     );
   }
@@ -184,6 +185,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             lg={4}
             key={index}
             onClick={() => {
+              setIndex(value.index);
               setQuery({
                 tab: query.tab,
                 voteId: value.txHash,
@@ -229,7 +231,8 @@ const GovernanceVotesDetail: React.FC<{
   hash: string;
   voteId: string;
   type: string;
-}> = ({ hash, voteId, type }) => {
+  index?: number;
+}> = ({ hash, voteId, type, index }) => {
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
@@ -249,7 +252,7 @@ const GovernanceVotesDetail: React.FC<{
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
       txHash: voteId,
-      index: 0,
+      index: index || 0,
       voterType: type
     })}`
   );
@@ -257,7 +260,7 @@ const GovernanceVotesDetail: React.FC<{
   const { data: dataChart } = useFetch<GovernanceVoteChart>(
     `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
       txHash: voteId,
-      index: 0
+      index: index || 0
     })}`
   );
 
@@ -1103,7 +1106,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   ];
 
   const actionTypeListDrep = [
-    { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
+    { value: POOLS_ACTION_TYPE.ALL, text: t("common.all") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
     { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
     { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.updateConstitution") },
