@@ -230,6 +230,8 @@ const GovernanceVotesDetail: React.FC<{
   const theme = useTheme();
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState(false);
+
   const { t } = useTranslation();
   const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
 
@@ -555,8 +557,10 @@ const GovernanceVotesDetail: React.FC<{
           anchorHash={data?.anchorHash}
           anchorUrl={data?.anchorUrl}
           open={openActionMetadataModal}
+          setOpenModal={setOpenModal}
           onClose={() => setOpenActionMetadataModal(false)}
         />
+        <ActionMetadataModalConfirm open={openModal} anchorUrl={data?.anchorUrl} onClose={() => setOpenModal(false)} />
       </DataContainer>
     </Box>
   );
@@ -775,6 +779,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
 
 interface ActionMetadataProps {
   onClose?: () => void;
+  setOpenModal: (open: boolean) => void;
   open: boolean;
   anchorHash?: string;
   anchorUrl?: string;
@@ -787,10 +792,17 @@ interface ActionMetadataProps {
   };
 }
 
-const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, data, anchorHash, anchorUrl }) => {
+const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
+  onClose,
+  open,
+  data,
+  anchorHash,
+  anchorUrl,
+  setOpenModal
+}) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [openModal, setOpenModal] = useState(false);
+
   return (
     <CustomModal
       open={open}
@@ -825,7 +837,10 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
               fontSize="16px"
               color={`${theme.palette.primary.main} !important`}
               fontWeight="700"
-              onClick={() => setOpenModal(true)}
+              onClick={() => {
+                setOpenModal(true);
+                onClose?.();
+              }}
               sx={{ cursor: "pointer" }}
             >
               {anchorUrl}
@@ -873,21 +888,20 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({ onClose, open, dat
           </ViewJson>
         </Box>
       </Box>
-      <ActionMetadataModalConfirm open={openModal} anchorUrl={anchorUrl} onClose={() => setOpenModal(false)} />
     </CustomModal>
   );
 };
 
-const ActionMetadataModalConfirm: React.FC<{
+export const ActionMetadataModalConfirm: React.FC<{
   onClose: () => void;
   open: boolean;
   anchorUrl?: string;
-}> = ({ anchorUrl, ...props }) => {
+}> = ({ anchorUrl, open, onClose }) => {
   const { t } = useTranslation();
   const theme = useTheme();
 
   return (
-    <CustomModal {...props} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
+    <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
       <Box display="block" pb="15px">
         <Box fontSize={16} color={theme.palette.secondary.main}>
           {t("drep.disclaimer.des1")}

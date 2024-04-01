@@ -56,7 +56,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { VOTE_TYPE } from "src/commons/utils/constants";
-import DelegationGovernanceVotes from "src/components/GovernanceVotes";
+import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 
@@ -79,6 +79,7 @@ const DrepDetail = () => {
   const { width } = useScreen();
 
   const [typeVote, setTypeVote] = useState("Default");
+  const [openModal, setOpenModal] = useState(false);
   const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
@@ -104,24 +105,23 @@ const DrepDetail = () => {
             />
           </Box>
           {data?.anchorUrl && (
-            <Box position={"relative"}>
-              <Box
-                component={"a"}
-                href={data?.anchorUrl}
-                target="_blank"
-                color={`${theme.palette.primary.main} !important`}
-              >
-                <DynamicEllipsisText
-                  value={data?.anchorUrl || ""}
-                  sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
-                  postfix={5}
-                  isNoLimitPixel={true}
-                  isTooltip
-                />
-              </Box>
+            <Box
+              position={"relative"}
+              component={"span"}
+              onClick={() => setOpenModal(true)}
+              color={`${theme.palette.primary.main} !important`}
+            >
+              <DynamicEllipsisText
+                value={data?.anchorUrl || ""}
+                sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                postfix={5}
+                sx={{ width: "fit-content", cursor: "pointer" }}
+                isNoLimitPixel={true}
+                isTooltip
+              />
               <Box
                 position={"absolute"}
-                right={0}
+                right={"-14px"}
                 top={"50%"}
                 sx={{ transform: "translateY(-50%)" }}
                 flex={1}
@@ -139,6 +139,11 @@ const DrepDetail = () => {
               </Box>
             </Box>
           )}
+          <ActionMetadataModalConfirm
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            anchorUrl={data?.anchorUrl || ""}
+          />
         </ValueCard>
       )
     },
