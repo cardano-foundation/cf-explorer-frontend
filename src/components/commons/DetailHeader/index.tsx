@@ -104,6 +104,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     subTitle
   } = props;
 
+  const { isMobile } = useScreen();
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch, sidebar } = useSelector(({ system, user }: RootState) => ({
@@ -218,13 +219,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               {hashLabel ? <SlotLeaderTitle>{hashLabel}: </SlotLeaderTitle> : ""}
               <SlotLeaderValue sidebar={sidebar}>
                 <TruncateSubTitleContainer>
-                  <DynamicEllipsisText value={hash} isCopy />
+                  <DynamicEllipsisText value={hash} isCopy isSeparateCopyIcon isTooltip />
                 </TruncateSubTitleContainer>
               </SlotLeaderValue>
             </SlotLeader>
           )}
           {subTitle && (
-            <Box mb={"10px"} fontSize={14} color={theme.palette.secondary.main}>
+            <Box mb={"10px"} fontSize={14} color={theme.palette.secondary.main} pt={isMobile ? "10px" : ""}>
               {subTitle}
             </Box>
           )}

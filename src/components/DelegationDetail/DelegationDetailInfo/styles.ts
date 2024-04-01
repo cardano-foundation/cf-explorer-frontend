@@ -202,7 +202,6 @@ export const InfoTitle = styled(Box)`
   flex-wrap: wrap;
   margin-top: 14px;
   margin-bottom: 5px;
-  cursor: pointer;
 `;
 
 export const StyledTitle = styled("span")`
