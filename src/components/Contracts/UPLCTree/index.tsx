@@ -11,7 +11,10 @@ export interface UPLCTreeProps {
 }
 
 export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
-  const label = useMemo(() => `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}`, [uplc]);
+  const label = useMemo(
+    () => (uplc.version.major ? `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}` : ""),
+    [uplc]
+  );
   const theme = useTheme();
   const getExpandedNodeIds = () => {
     if (!uplc) return [];
@@ -21,9 +24,10 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
 
     // Get nodeIds with bread first search
     const queue: UPLCData[] = [];
-    uplc.program.data.forEach((it) => {
-      queue.push(it);
-    });
+    uplc.program &&
+      (uplc.program.data || [])?.forEach((it) => {
+        queue.push(it);
+      });
     while (queue.length > 0) {
       currentLevel++;
       if (currentLevel >= maxLevel) break;
