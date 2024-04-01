@@ -924,7 +924,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
               sx={{ transform: "translateY(3px)" }}
               component={CustomTooltip}
               title={
-                <Box textAlign={"left"}>
+                <Box textAlign={"left"} width={"min(80vw, 300px)"}>
                   <Box fontWeight={"bold"} component={"span"}>
                     Disclaimer:{" "}
                   </Box>
