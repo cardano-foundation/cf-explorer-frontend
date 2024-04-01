@@ -457,9 +457,17 @@ const GovernanceVotesDetail: React.FC<{
                       sx={{
                         fontWeight: 500,
                         fontSize: "12px",
-                        background: selectVote ? theme.palette.primary[200] : theme.palette.primary[100],
+                        background: selectVote
+                          ? theme.palette.primary[200]
+                          : theme.isDark
+                          ? theme.palette.primary[500]
+                          : theme.palette.primary[100],
                         border: `1px solid ${selectVote ? theme.palette.primary.main : theme.palette.secondary[600]}`,
-                        color: selectVote ? theme.palette.secondary.main : theme.palette.secondary[600]
+                        color: selectVote
+                          ? theme.palette.secondary.main
+                          : theme.isDark
+                          ? theme.palette.secondary.main
+                          : theme.palette.secondary[600]
                       }}
                       label={selectVote || i}
                       onClick={() => setSelectVote(selectVote ? "" : i)}
@@ -468,9 +476,9 @@ const GovernanceVotesDetail: React.FC<{
                   {selectVote && (
                     <Chip
                       sx={{
-                        background: theme.palette.primary[100],
+                        background: theme.isDark ? theme.palette.primary[500] : theme.palette.primary[100],
                         border: `1px solid ${theme.palette.secondary[600]}`,
-                        color: theme.palette.secondary[600]
+                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary[600]
                       }}
                       onClick={() => setSelectVote("")}
                       label="x"
@@ -1437,6 +1445,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   onClick={() => {
                     handleFilter();
                   }}
+                  disabled={JSON.stringify(filterValue) === JSON.stringify(params)}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
