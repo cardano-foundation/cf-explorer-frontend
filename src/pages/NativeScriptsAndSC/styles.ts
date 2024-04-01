@@ -244,7 +244,7 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     content: "''",
     display: "block",
     background: theme.palette.secondary[0],
-    zIndex: 9,
+    zIndex: -1,
     position: "absolute",
     top: "-6px",
     right: "36px",

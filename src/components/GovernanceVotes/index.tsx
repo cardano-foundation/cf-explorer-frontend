@@ -31,8 +31,9 @@ import {
 } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import moment from "moment";
-import { isUndefined, omitBy } from "lodash";
+import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
 import {
   ActionTypeIcon,
@@ -332,7 +333,9 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon />
             </Button>
-            <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+            <HashName>
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
+            </HashName>
           </Box>
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
@@ -344,6 +347,8 @@ const GovernanceVotesDetail: React.FC<{
                     <DynamicEllipsisText
                       sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
                       postfix={4}
+                      sxLastPart={{ textTransform: "none" }}
+                      sxFirstPart={{ textTransform: "none" }}
                       isNoLimitPixel={true}
                       isTooltip
                       value={data?.poolName || poolId || drepId || ""}
@@ -1039,6 +1044,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(filterValue);
     history.replace({
       search: stringify({
         page: 1,
@@ -1409,21 +1415,21 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     >
                       {t("pool.dateRange")}
                     </Box>
-
-                    <DateRangeModal
-                      open={openDateRange}
-                      value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
-                      onDateRangeChange={({ fromDate, toDate }) => {
-                        setParams?.({
-                          ...params,
-                          fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
-                          toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
-                        });
-                      }}
-                      onClose={() => setOpenDateRange(false)}
-                    />
                   </Box>
+                  {!isEmpty(params?.fromDate) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
                 </Box>
+                <DateRangeModal
+                  open={openDateRange}
+                  value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
+                  onDateRangeChange={({ fromDate, toDate }) => {
+                    setParams?.({
+                      ...params,
+                      fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
+                      toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
+                    });
+                  }}
+                  onClose={() => setOpenDateRange(false)}
+                />
               </AccordionSummary>
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
