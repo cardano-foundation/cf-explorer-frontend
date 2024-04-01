@@ -331,7 +331,9 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
-            <HashName>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</HashName>
+            <HashName>
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
+            </HashName>
           </Box>
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
