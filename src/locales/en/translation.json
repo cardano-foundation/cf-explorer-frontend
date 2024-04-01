@@ -1034,6 +1034,8 @@
   "pool.actionMetadata": "Governance Action Metadata",
   "pool.anchor": "Anchor",
   "pool.metadata": "Metadata",
+  "pool.metadataSearch": "Metadata Search",
+  "pool.searchMetadata": "Search Metadata",
   "smartContract.plutusDes.title": "What Are Plutus Scripts?",
   "smartContract.plutusDes.desc1": "Plutus is the native smart contract language for Cardano.",
   "smartContract.plutusDes.desc2": "is the initial version of Plutus, introduced in the Alonzo hard fork",

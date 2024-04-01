@@ -228,8 +228,23 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   boxShadow: "2px 2px 10px 0px #43465633",
   [theme.breakpoints.down("sm")]: {
-    width: 230,
-    left: "21"
+    width: 250,
+    right: -17,
+    "& p": {
+      fontSize: "13px"
+    },
+    "& .MuiAccordionSummary-content > div": {
+      fontSize: "13px"
+    }
+  },
+
+  "& .Mui-expanded": {
+    margin: "0 !important"
+  },
+
+  "& .MuiAccordionSummary-gutters": {
+    height: "48px !important",
+    minHeight: "48px !important"
   },
 
   "& .MuiAccordion-root::before": {
