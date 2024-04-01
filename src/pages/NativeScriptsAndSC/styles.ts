@@ -219,14 +219,14 @@ export const FilterWrapper = styled(Box)`
 `;
 
 export const FilterContainer = styled(Box)(({ theme }) => ({
-  width: 300,
+  width: "300px",
   backgroundColor: theme.palette.secondary[0],
   zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
   right: 0,
   borderRadius: theme.spacing(1),
-  boxShadow: "2px 2px 10px 0px #43465633",
+  boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
     width: 250,
     right: -17,
@@ -259,7 +259,7 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     content: "''",
     display: "block",
     background: theme.palette.secondary[0],
-    zIndex: 9,
+    zIndex: -1,
     position: "absolute",
     top: "-6px",
     right: "36px",

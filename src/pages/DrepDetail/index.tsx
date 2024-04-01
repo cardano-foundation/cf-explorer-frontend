@@ -17,6 +17,7 @@ import {
 import QueryString, { parse, stringify } from "qs";
 import { HiArrowLongLeft } from "react-icons/hi2";
 import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import DetailHeader from "src/components/commons/DetailHeader";
 import {
@@ -515,14 +516,12 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
-        numberVote={data?.numberOfYesVote || 0}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
         color={theme.palette.warning[700]}
-        numberVote={data?.numberOfAbstainVotes || 0}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
@@ -538,7 +537,6 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
             : 0
         }
         color={theme.palette.error[700]}
-        numberVote={data?.numberOfNoVotes || 0}
         icon={<VotesNoIcon />}
         label={t("common.no")}
       />
@@ -550,43 +548,44 @@ const VoteBar = ({
   percentage,
   color,
   icon,
-  label,
-  numberVote
+  label
 }: {
   percentage: string | number;
-  numberVote: number;
   color: string;
   icon?: JSX.Element;
   label: string;
-}) => (
-  <Box display="flex" flexDirection="column" alignItems="center">
-    <Typography fontSize="10px" fontWeight={400}>
-      {percentage}
-    </Typography>
-    <LightTooltip
-      title={
-        <Box height="39px" display="flex" alignItems="center" gap="8px">
-          {icon}
-          <Typography fontSize="12px" fontWeight={600}>
-            {numberVote} ({percentage})
-          </Typography>
-        </Box>
-      }
-      placement="right"
-    >
-      <Box
-        sx={{ background: color }}
-        height={`${
-          +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
-        }px`}
-        width="36px"
-      />
-    </LightTooltip>
-    <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
-      {label}
-    </Typography>
-  </Box>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center">
+      <Typography fontSize="10px" fontWeight={400}>
+        {percentage}
+      </Typography>
+      <LightTooltip
+        title={
+          <Box height="39px" display="flex" alignItems="center" gap="8px">
+            {icon}
+            <Typography fontSize="12px" fontWeight={600}>
+              {t("common.N/A")} ({percentage})
+            </Typography>
+          </Box>
+        }
+        placement="right"
+      >
+        <Box
+          sx={{ background: color }}
+          height={`${
+            +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
+          }px`}
+          width="36px"
+        />
+      </LightTooltip>
+      <Typography fontSize="14px" fontWeight={400} pt="4px" textTransform="uppercase">
+        {label}
+      </Typography>
+    </Box>
+  );
+};
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
