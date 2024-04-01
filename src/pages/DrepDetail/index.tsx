@@ -115,7 +115,7 @@ const DrepDetail = () => {
                 value={data?.anchorUrl || ""}
                 sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
                 postfix={5}
-                sx={{ width: "fit-content", cursor: "pointer" }}
+                sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
                 isNoLimitPixel={true}
                 isTooltip
               />
@@ -165,7 +165,11 @@ const DrepDetail = () => {
           {t("drep.activeVoteStake")}
         </TitleCard>
       ),
-      value: <ValueCard>{formatADA(data?.activeVoteStake || 0)} ADA</ValueCard>
+      value: (
+        <ValueCard>
+          {data?.liveStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
+        </ValueCard>
+      )
     },
     {
       icon: LiveStakeDrepIcon,
@@ -175,7 +179,9 @@ const DrepDetail = () => {
           {t("drep.liveStake")}
         </TitleCard>
       ),
-      value: <ValueCard>{formatADA(data?.liveStake || 0)} ADA</ValueCard>
+      value: (
+        <ValueCard>{data?.liveStake !== null ? `${formatADA(data?.liveStake || 0)} ADA` : t("common.N/A")} </ValueCard>
+      )
     },
     {
       icon: DelegatorsDrepIcon,
