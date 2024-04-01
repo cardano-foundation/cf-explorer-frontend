@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ParsedQs, parse, stringify } from "qs";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -63,7 +63,7 @@ import CardGovernanceVotes, {
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
-import { formatDateTime, getShortHash, getShortNumber } from "src/commons/utils/helper";
+import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
@@ -632,7 +632,7 @@ const VoteBar = ({
   icon,
   label
 }: {
-  percentage: number;
+  percentage: number | string;
   color: string;
   icon: JSX.Element;
   label: string;
@@ -643,7 +643,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
-        {!percentage ? "0" : percentage}%
+        {!percentage ? "0" : percentage}
       </Typography>
       <LightTooltip
         title={
@@ -661,8 +661,10 @@ const VoteBar = ({
         placement="top"
       >
         <Box
-          sx={{ background: color, borderRadius: "8px" }}
-          height={`${!percentage ? 0.5 : percentage}px`}
+          sx={{ background: color }}
+          height={`${
+            +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
+          }px`}
           width={isGalaxyFoldSmall ? "24px" : "36px"}
         />
       </LightTooltip>
@@ -682,29 +684,38 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const totalVotes = Number(
-    (data?.numberOfYesVote || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfAbstainVotes || 0)
-  );
-  const yesPercentage = ((data?.numberOfYesVote || 0) / totalVotes) * 100;
-  const noPercentage = ((data?.numberOfNoVotes || 0) / totalVotes) * 100;
-  const abstainPercentage = ((data?.numberOfAbstainVotes || 0) / totalVotes) * 100;
+  const totalVote = useMemo(() => {
+    if (data) {
+      return (data?.numberOfAbstainVotes || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfYesVote || 0);
+    }
+    return 0;
+  }, [JSON.stringify(data)]);
 
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%">
       <VoteBar
-        percentage={getShortNumber(yesPercentage)}
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
-        percentage={getShortNumber(abstainPercentage)}
+        percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
       <VoteBar
-        percentage={getShortNumber(noPercentage)}
+        percentage={
+          totalVote > 0
+            ? formatPercent(
+                (100 -
+                  (+formatPercent((data?.numberOfYesVote || 0) / totalVote).split("%")[0] +
+                    +formatPercent((data?.numberOfAbstainVotes || 0) / totalVote).split("%")[0])) /
+                  100
+              )
+            : 0
+        }
         color={theme.palette.error[700]}
         icon={<VotesNoIcon />}
         label={t("common.no")}
