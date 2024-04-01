@@ -186,12 +186,17 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             key={index}
             onClick={() => {
               setIndex(value.index);
-              setQuery({
-                tab: query.tab,
-                voteId: value.txHash,
-                page: Number(query.page),
-                voteSize: Number(query.size)
-              });
+              history.push(
+                {
+                  search: stringify({
+                    tab: query.tab,
+                    voteId: value.txHash,
+                    page: Number(query.page),
+                    voteSize: Number(query.size)
+                  })
+                },
+                history.location.state
+              );
             }}
           >
             <CardGovernanceVotes data={value} />
@@ -244,9 +249,6 @@ const GovernanceVotesDetail: React.FC<{
 
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setQuery = (query: any) => {
-    history.replace({ search: stringify(query) }, history.location.state);
-  };
 
   const [selectVote, setSelectVote] = useState<string>("");
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
@@ -319,17 +321,7 @@ const GovernanceVotesDetail: React.FC<{
             <Box
               sx={{ position: "absolute", top: isGalaxyFoldSmall ? -2 : -9, minHeight: "unset", cursor: "pointer" }}
               onClick={() => {
-                setQuery({
-                  tab: "governanceVotes",
-                  page: 1,
-                  size: 6,
-                  governanceActionTxHash: "",
-                  actionType: STATUS_VOTE.ALL,
-                  actionStatus: STATUS_VOTE.ANY,
-                  voteType: STATUS_VOTE.ANY,
-                  voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
-                  isRepeatVote: false
-                });
+                history.goBack();
                 setTab("pool");
               }}
             >
