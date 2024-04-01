@@ -1013,8 +1013,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const actionTypeListDrep = [
     { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
-    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("drep.updateConstitution") },
-    { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("pool.typeConstitutional") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
+    { value: POOLS_ACTION_TYPE.NEW_CONSTITUTION, text: t("drep.updateConstitution") },
     { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
     { value: POOLS_ACTION_TYPE.PARAMETER_CHANGE_ACTION, text: t("drep.protocolChange") },
     { value: POOLS_ACTION_TYPE.TREASURY_WITHDRAWALS_ACTION, text: t("drep.treasuryWithdrawals") },
@@ -1023,7 +1023,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const actionTypeListPools = [
     { value: POOLS_ACTION_TYPE.ALL, text: t("pool.any") },
     { value: POOLS_ACTION_TYPE.NO_CONFIDENCE, text: t("pool.typeMotion") },
-    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("drep.updateConstitution") },
+    { value: POOLS_ACTION_TYPE.UPDATE_COMMITTEE, text: t("pool.typeConstitutional") },
     { value: POOLS_ACTION_TYPE.HARD_FORK_INITIATION_ACTION, text: t("pool.typeHardFork") },
     { value: POOLS_ACTION_TYPE.INFO_ACTION, text: t("pool.typeInfo") }
   ];
