@@ -19,7 +19,14 @@ export interface CompiledCodeDataCardProps {
   value?: string | number;
   title: string;
 }
-
+function findSecondIndex(str: string, char: string) {
+  const firstIndex = str.indexOf(char);
+  if (firstIndex === -1) {
+    return -1; // Character not found
+  }
+  const secondIndex = str.indexOf(char, firstIndex + 1);
+  return secondIndex;
+}
 const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, title }) => {
   const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
@@ -28,7 +35,7 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
   const str = (window as any).decodeUPLC(`${value}`);
 
   const version = str
-    .substring(0, str.indexOf("["))
+    .substring(0, findSecondIndex(str, "("))
     .trim()
     .slice(11, (str || "").length);
 
@@ -41,7 +48,7 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
     };
   };
 
-  const programStr = str.substring(str.indexOf("["), str.lastIndexOf("]") + 1);
+  const programStr = str.substring(str.indexOf("("), str.lastIndexOf(")"));
 
   useMemo(() => {
     const uplcData = {
