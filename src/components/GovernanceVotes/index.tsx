@@ -375,7 +375,7 @@ const GovernanceVotesDetail: React.FC<{
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between" pr={"5px"}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -421,7 +421,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -431,13 +431,14 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
             <InfoTitle
               paddingTop="2px"
               paddingBottom="3px"
+              paddingRight="5px"
               display="flex"
               justifyContent="space-between"
               alignItems="center !important"
@@ -507,14 +508,14 @@ const GovernanceVotesDetail: React.FC<{
                   )}
                 </Box>
               ) : (
-                <Box pr="2px">
+                <Box pr="5px">
                   <VoteRate data={filterDataChart(selectVote)} />
                 </Box>
               )}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -529,7 +530,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon
                 fill={theme.palette.secondary.light}
                 height={27}
@@ -547,7 +548,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -557,7 +558,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -567,7 +568,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDateTime(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
               <BlackWarningIcon />
             </Box>
