@@ -186,12 +186,17 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             key={index}
             onClick={() => {
               setIndex(value.index);
-              setQuery({
-                tab: query.tab,
-                voteId: value.txHash,
-                page: Number(query.page),
-                voteSize: Number(query.size)
-              });
+              history.push(
+                {
+                  search: stringify({
+                    tab: query.tab,
+                    voteId: value.txHash,
+                    page: Number(query.page),
+                    voteSize: Number(query.size)
+                  })
+                },
+                history.location.state
+              );
             }}
           >
             <CardGovernanceVotes data={value} />
@@ -244,9 +249,6 @@ const GovernanceVotesDetail: React.FC<{
 
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setQuery = (query: any) => {
-    history.replace({ search: stringify(query) }, history.location.state);
-  };
 
   const [selectVote, setSelectVote] = useState<string>("");
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
@@ -316,26 +318,15 @@ const GovernanceVotesDetail: React.FC<{
       <Box display="block" alignItems="baseline">
         <Box m="auto">
           <Box position="relative">
-            <Button
-              sx={{ position: "absolute", bottom: 1 }}
-              variant="text"
+            <Box
+              sx={{ position: "absolute", top: isGalaxyFoldSmall ? -2 : -9, minHeight: "unset", cursor: "pointer" }}
               onClick={() => {
-                setQuery({
-                  tab: "governanceVotes",
-                  page: 1,
-                  size: 6,
-                  governanceActionTxHash: "",
-                  actionType: STATUS_VOTE.ALL,
-                  actionStatus: STATUS_VOTE.ANY,
-                  voteType: STATUS_VOTE.ANY,
-                  voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
-                  isRepeatVote: false
-                });
+                history.goBack();
                 setTab("pool");
               }}
             >
-              <ArrowLeftWhiteIcon />
-            </Button>
+              <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
+            </Box>
             <HashName>
               {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
             </HashName>
@@ -384,7 +375,7 @@ const GovernanceVotesDetail: React.FC<{
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr={"5px"}>
               <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -430,7 +421,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -440,13 +431,14 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
             <InfoTitle
               paddingTop="2px"
               paddingBottom="3px"
+              paddingRight="5px"
               display="flex"
               justifyContent="space-between"
               alignItems="center !important"
@@ -516,14 +508,14 @@ const GovernanceVotesDetail: React.FC<{
                   )}
                 </Box>
               ) : (
-                <Box pr="2px">
+                <Box pr="5px">
                   <VoteRate data={filterDataChart(selectVote)} />
                 </Box>
               )}
             </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
               <BlackWarningIcon />
             </Box>
@@ -538,7 +530,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon
                 fill={theme.palette.secondary.light}
                 height={27}
@@ -556,7 +548,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -566,7 +558,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
             </Box>
@@ -576,7 +568,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoValue>{formatDateTime(data?.expiryDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
+            <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
               <BlackWarningIcon />
             </Box>
@@ -889,9 +881,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
       sx={{ maxHeight: "70vh" }}
     >
       <Box display="block" pb="15px">
-        <Typography fontSize="16px" color={theme.palette.secondary.main}>
-          {t("pool.anchor")}:
-        </Typography>{" "}
+        <Typography color={theme.palette.secondary.main}>{t("pool.anchor")}:</Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -941,9 +931,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
         </Box>
       </Box>
       <Box display="block">
-        <Typography fontSize="16px" color={theme.palette.secondary.main}>
-          {t("pool.metadata")}:
-        </Typography>{" "}
+        <Typography color={theme.palette.secondary.main}>{t("pool.metadata")}:</Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -1172,7 +1160,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
                   <Box display="flex">
                     <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
-                    <Typography fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                    <Typography ml={1} color={({ palette }) => palette.secondary.main}>
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
@@ -1188,7 +1176,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={GovernanceIdIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.actionId")}
                       </Box>
                     </Box>
@@ -1220,7 +1208,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={AnchorTextIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.metadataSearch")}
                       </Box>
                     </Box>
@@ -1249,7 +1237,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={ActionTypeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.actionType")}
                       </Box>
                     </Box>
@@ -1307,7 +1295,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.currentStatus")}
                       </Box>
                     </Box>
@@ -1363,7 +1351,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={VoteIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.vote")}
                       </Box>
                     </Box>
@@ -1418,12 +1406,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={18} />
-                    <Box
-                      fontSize="16px"
-                      ml={1}
-                      color={({ palette }) => palette.secondary.main}
-                      onClick={() => setOpenDateRange(true)}
-                    >
+                    <Box ml={1} color={({ palette }) => palette.secondary.main} onClick={() => setOpenDateRange(true)}>
                       {t("pool.dateRange")}
                     </Box>
                   </Box>
