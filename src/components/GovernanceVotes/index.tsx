@@ -654,7 +654,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {t("common.N/A")} ({percentage})%
+              {t("common.N/A")} ({percentage})
             </Typography>
           </Box>
         }
