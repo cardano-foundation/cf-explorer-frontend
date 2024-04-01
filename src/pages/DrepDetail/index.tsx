@@ -127,7 +127,7 @@ const DrepDetail = () => {
                 flex={1}
                 component={CustomTooltip}
                 title={
-                  <Box>
+                  <Box textAlign={"left"}>
                     <Box fontWeight={"bold"} component={"span"}>
                       Disclaimer:{" "}
                     </Box>
