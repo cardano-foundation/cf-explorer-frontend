@@ -643,7 +643,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
-        {!percentage ? "0" : percentage}%
+        {!percentage ? "0" : percentage}
       </Typography>
       <LightTooltip
         title={
@@ -654,7 +654,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {t("common.N/A")} ({percentage})%
+              {t("common.N/A")} ({percentage})
             </Typography>
           </Box>
         }
