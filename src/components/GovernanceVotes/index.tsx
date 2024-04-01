@@ -434,9 +434,7 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingTop="2px" paddingBottom="3px">
               <StyledTitle>{t("pool.actionType")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>
-              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
-            </InfoValue>
+            <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <Box display="flex" justifyContent="space-between" pr={isMobile ? "5px" : ""}>
