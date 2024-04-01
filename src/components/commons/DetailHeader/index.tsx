@@ -104,6 +104,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     subTitle
   } = props;
 
+  const { isMobile } = useScreen();
   const history = useHistory();
   const theme = useTheme();
   const { currentEpoch, sidebar } = useSelector(({ system, user }: RootState) => ({
@@ -224,7 +225,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </SlotLeader>
           )}
           {subTitle && (
-            <Box mb={"10px"} fontSize={14} color={theme.palette.secondary.main}>
+            <Box mb={"10px"} fontSize={14} color={theme.palette.secondary.main} pt={isMobile ? "10px" : ""}>
               {subTitle}
             </Box>
           )}
