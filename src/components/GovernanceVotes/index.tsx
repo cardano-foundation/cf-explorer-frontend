@@ -13,7 +13,6 @@ import {
   Radio,
   RadioGroup,
   Skeleton,
-  Switch,
   TableBody,
   TableCell,
   TableContainer,
@@ -98,7 +97,7 @@ import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
-import { HashName } from "./styles";
+import { AntSwitch, HashName } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -643,7 +642,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography fontSize="10px" fontWeight={400}>
-        {!percentage ? "0" : percentage}%
+        {!percentage ? "0" : percentage}
       </Typography>
       <LightTooltip
         title={
@@ -654,7 +653,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {t("common.N/A")} ({percentage})%
+              {t("common.N/A")} ({percentage})
             </Typography>
           </Box>
         }
@@ -1175,8 +1174,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
-                  <Switch
-                    defaultChecked
+                  <AntSwitch
                     checked={params?.isRepeatVote}
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
