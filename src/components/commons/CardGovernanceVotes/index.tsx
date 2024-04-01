@@ -1,14 +1,14 @@
-import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
-import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon } from "src/commons/resources";
+import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon, RepeatVotesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
 
-import { CardGovernanceVote, StatusContainer } from "./styles";
+import { CardGovernanceVote, StatusContainer, TitleCard } from "./styles";
 
 interface ICardGovernanceVotes {
   data: GovernanceVote;
@@ -26,7 +26,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { status, txHash, type, vote, votingPower } = data;
+  const { status, txHash, type, vote, votingPower, index, isRepeatVote } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -36,23 +36,17 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box maxWidth="400px" flex={1}>
             <Tooltip title={txHash} placement="top" arrow>
-              <Typography
-                sx={{ wordBreak: "break-word" }}
-                fontWeight={600}
-                fontSize="24px"
-                lineHeight="28px"
-                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.main}
-              >
-                {actionTypeListDrep.find((action) => action.value === type)?.text}
-              </Typography>
+              <TitleCard>
+                {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
+              </TitleCard>
             </Tooltip>
           </Box>
           <>
-            <VoteStatus status={vote} />
+            <VoteStatus status={vote} isRepeatVote={isRepeatVote} />
           </>
         </Box>
         <Stack paddingTop="24px" spacing={"14px"}>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap={"wrap"}>
             <Typography
               fontWeight={600}
               fontSize="16px"
@@ -66,7 +60,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               {actionTypeListDrep.find((action) => action.value === type)?.text}
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
               fontWeight={600}
               fontSize="16px"
@@ -78,7 +72,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
             </Typography>
             <GovernanceStatus status={status} />
           </Box>
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
               fontWeight={600}
               fontSize="16px"
@@ -100,12 +94,16 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
 
 export default CardGovernanceVotes;
 
-export const VoteStatus: React.FC<{ status: string }> = ({ status }) => {
+export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = ({ status, isRepeatVote = false }) => {
   const { t } = useTranslation();
   const renderStatus = (key: string) => {
     switch (key) {
       case STATUS_VOTE.YES:
-        return [VotesYesIcon, "success"];
+        if (isRepeatVote) {
+          return [RepeatVotesIcon, "success"];
+        } else {
+          return [VotesYesIcon, "success"];
+        }
       case STATUS_VOTE.NO:
         return [VotesNoIcon, "error"];
       case STATUS_VOTE.ABSTAIN:
@@ -139,7 +137,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
     switch (key) {
       case STATUS_VOTE.RATIFIED:
         return "success";
-      case STATUS_VOTE.OPEN:
+      case STATUS_VOTE.OPEN_BALLOT:
         return "warning";
       case STATUS_VOTE.ENACTED:
         return "info";
@@ -162,7 +160,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
             lineHeight="23px"
             color={theme.palette.secondary.light}
           >
-            {status === STATUS_VOTE.OPEN ? "Open Ballot" : !status ? t("common.N/A") : status}
+            {status === STATUS_VOTE.OPEN_BALLOT ? t("pool.open") : !status ? t("common.N/A") : status}
           </Typography>
         }
         variant={typeStatus as "success" | "warning" | "info" | "error"}

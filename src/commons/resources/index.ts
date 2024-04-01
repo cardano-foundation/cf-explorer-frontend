@@ -226,6 +226,8 @@ import AnchorTextIcon from "./icons/anchor-text.svg?react";
 import BlackWarningIcon from "./icons/warning-black.svg?react";
 import BlackCircleIcon from "./icons/black-cirle-copy.svg?react";
 import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
+import historyIcon from "./icons/history.svg?react";
+import repeatVoteIcon from "./icons/repeatVote.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -446,12 +448,14 @@ export {
   GovernanceIdIcon,
   ActionTypeIcon,
   VoteIcon,
+  historyIcon,
   CurrentStatusIcon,
   VotingPowerIcon,
   SubmissionDateIcon,
   ExpiryIcon,
   AnchorTextIcon,
   BlackWarningIcon,
+  repeatVoteIcon,
   BlackCircleIcon,
   RepeatVotesIcon
 };
