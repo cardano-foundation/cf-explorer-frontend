@@ -74,6 +74,7 @@ const secondary = {
   800: "#FFFFFF",
   light: "#434656",
   main: "#24262E",
+  background: "#BDBFCB",
   contrastText: COMMON.white,
   900: "#eff1f8"
 };
@@ -87,6 +88,7 @@ const secondaryDark = {
   800: "#BDBFCB",
   light: "#D6E2FF",
   main: "#F6F9FF",
+  background: "#BDBFCB",
   contrastText: COMMON.white,
   900: "#19191d"
 };

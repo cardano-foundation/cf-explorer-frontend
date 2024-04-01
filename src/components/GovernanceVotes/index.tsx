@@ -1,19 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { ParsedQs, parse, stringify } from "qs";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import {
   AccordionSummary,
   Box,
   Button,
   ButtonGroup,
   Chip,
+  ClickAwayListener,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
-  Switch,
   TableBody,
   TableCell,
   TableContainer,
@@ -25,16 +22,21 @@ import {
   Typography,
   styled,
   tooltipClasses,
-  useTheme,
-  ClickAwayListener,
-  Link
+  useTheme
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
+import { ParsedQs, parse, stringify } from "qs";
+import React, { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
+import useFetch from "src/commons/hooks/useFetch";
+import useFetchList from "src/commons/hooks/useFetchList";
+import { useScreen } from "src/commons/hooks/useScreen";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -57,19 +59,23 @@ import {
   historyIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
+import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
-import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
+import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import FormNowMessage from "src/components/commons/FormNowMessage";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
+import { StyledInput } from "src/components/share/styled";
+import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
+import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -78,13 +84,6 @@ import {
   FilterContainer,
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
-import { StyledInput } from "src/components/share/styled";
-import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
-import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
-import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
-import FormNowMessage from "src/components/commons/FormNowMessage";
-import useFetch from "src/commons/hooks/useFetch";
-import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   DataContainer,
@@ -94,11 +93,11 @@ import {
   StyledGrid,
   StyledTitle
 } from "../DelegationDetail/DelegationDetailInfo/styles";
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
-import { HashName } from "./styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
+import { AntSwitch, HashName } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -1179,8 +1178,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
-                  <Switch
-                    defaultChecked
+                  <AntSwitch
                     checked={params?.isRepeatVote}
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
