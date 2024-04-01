@@ -301,7 +301,7 @@ const GovernanceVotesDetail: React.FC<{
     );
   };
 
-  const listVotes = ["SPOs", "DRops", "CC"];
+  const listVotes = ["SPOs", "DReps", "CC"];
 
   if (loading || !initialized) {
     return <Box component={Skeleton} variant="rectangular" height={"400px"} borderRadius={2} />;
