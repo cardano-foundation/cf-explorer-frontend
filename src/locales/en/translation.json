@@ -1017,11 +1017,7 @@
   "pool.typeConstitutional": "Constitutional Committe Updates",
   "pool.typeUpdate": "Update to the Constitutional or proposal policy",
   "pool.typeHardFork": "Hard-Fork Initiation",
-  "drep.updateConstitution": "Update to the Constitution",
-  "drep.protocolChange": "Protocol Parameter Changes",
-  "drep.treasuryWithdrawals": "Treasury Withdrawals",
   "pool.typeProtocol": "Protocol Parameter Changes",
-
   "pool.typeTreasury": "Treasury Withdrawals",
   "pool.typeInfo": "Info",
   "pool.dateRange": "Date Range",
@@ -1076,5 +1072,7 @@
   "drep.governanceVotes": "Governance Votes",
   "drep.certificatesHistory": "Drep Certificates History",
   "drep.disclaimer": "Please be aware that by clicking the external links, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
+  "drep.disclaimer.des1": "Please be aware that by clicking the link below, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
+  "drep.disclaimer.des2": "By clicking the link, you acknowledge that you understand the risks associated with visiting external sites and agree to proceed at your own discretion.",
   "status.inActive": "INACTIVE"
 }

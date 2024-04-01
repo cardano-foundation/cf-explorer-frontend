@@ -29,7 +29,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import { setSpecialPath } from "src/stores/system";
 import DelegationGovernanceVotes from "src/components/GovernanceVotes";
 
-import { TitleTab } from "./styles";
+import { TimeDuration, TitleTab } from "./styles";
 
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
@@ -265,7 +265,11 @@ const DelegationDetail: React.FC = () => {
               </TitleTab>
             </AccordionSummary>
             <AccordionDetails>
-              {tab != "governanceVotes" && <FormNowMessage time={getLastUpdatedTime()} />}
+              {tab != "governanceVotes" && (
+                <TimeDuration>
+                  <FormNowMessage time={getLastUpdatedTime()} />
+                </TimeDuration>
+              )}
               {component}
             </AccordionDetails>
           </StyledAccordion>
