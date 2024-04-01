@@ -1,19 +1,19 @@
 import React from "react";
-import { Box, useTheme } from "@mui/material";
 import QueryString, { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Box, useTheme } from "@mui/material";
 
-import { POOL_ACTION_TYPE } from "src/commons/utils/constants";
-import { details } from "src/commons/routers";
 import {
-  PoolResgistrationHistory,
   PoolDeresgistrationHistory,
-  PoolUpdateHistory,
+  PoolDeresgistrationHistoryDark,
+  PoolResgistrationHistory,
   PoolResgistrationHistoryDark,
-  PoolUpdateHistoryDark,
-  PoolDeresgistrationHistoryDark
+  PoolUpdateHistory,
+  PoolUpdateHistoryDark
 } from "src/commons/resources";
+import { details } from "src/commons/routers";
+import { DREP_ACTION_TYPE, POOL_ACTION_TYPE } from "src/commons/utils/constants";
 import {
   formatADAFull,
   formatDateTimeLocal,
@@ -21,16 +21,23 @@ import {
   numberWithCommas,
   removeDuplicate
 } from "src/commons/utils/helper";
+import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
-import ADAicon from "src/components/commons/ADAIcon";
 
 import { StyledLink } from "./styles";
+
 interface Query {
   tab: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[] | undefined;
   page: number;
   size: number;
+  voteId?: number | string;
+  actionType?: string;
+  actionStatus?: string;
+  voteType?: string;
+  voterType?: string;
+  isRepeatVote?: boolean;
 }
 
 const DelegationEpochList = ({
@@ -152,12 +159,14 @@ const DelegationStakingDelegatorsList = ({
       key: "delegator",
       minWidth: "50px",
       render: (data) =>
-        data.view && (
+        (data.view || data.stakeAddress) && (
           <div style={{ display: "flex", alignItems: "center" }}>
-            <CustomTooltip title={data.view || ""}>
-              <StyledLink to={details.stake(data.view)}>{getShortHash(data.view || "")}</StyledLink>
+            <CustomTooltip title={data.view || data.stakeAddress || ""}>
+              <StyledLink to={details.stake(data.view || data.stakeAddress)}>
+                {getShortHash(data.view || data.stakeAddress || "")}
+              </StyledLink>
             </CustomTooltip>
-            <CopyButton text={data.view || ""} />
+            <CopyButton text={data.view || data.stakeAddress || ""} />
           </div>
         )
     },
@@ -177,7 +186,7 @@ const DelegationStakingDelegatorsList = ({
       title: t("stakedTime"),
       key: "stakedTime",
       minWidth: "120px",
-      render: (data) => formatDateTimeLocal(data.time || "")
+      render: (data) => formatDateTimeLocal(data.time || data.createdAt || "")
     },
     {
       title: (
@@ -206,7 +215,7 @@ const DelegationStakingDelegatorsList = ({
         total: total
       }}
       onClickRow={(e, r) => {
-        history.push(details.stake(r.view));
+        history.push(details.stake(r.view || r.stakeAddress));
       }}
     />
   );
@@ -234,24 +243,24 @@ const DelegationCertificatesHistory = ({
     history.replace({ search: stringify(query) }, history.location.state);
   };
 
-  const renderAction = (type: POOL_ACTION_TYPE) => {
-    if (type === POOL_ACTION_TYPE.POOL_REGISTRATION) {
+  const renderAction = (type: POOL_ACTION_TYPE | DREP_ACTION_TYPE) => {
+    if (type === POOL_ACTION_TYPE.POOL_REGISTRATION || type === DREP_ACTION_TYPE.REG_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Registration">
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_REGISTRATION ? "Pool Registration" : "Registration"}>
           {theme.isDark ? <PoolResgistrationHistoryDark /> : <PoolResgistrationHistory />}
         </CustomTooltip>
       );
     }
-    if (type === POOL_ACTION_TYPE.POOL_UPDATE) {
+    if (type === POOL_ACTION_TYPE.POOL_UPDATE || type === DREP_ACTION_TYPE.UPDATE_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Update">
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_UPDATE ? "Pool Update" : "Delegation"}>
           {theme.isDark ? <PoolUpdateHistoryDark /> : <PoolUpdateHistory />}
         </CustomTooltip>
       );
     }
-    if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION) {
+    if (type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION || type === DREP_ACTION_TYPE.UNREG_DREP_CERT) {
       return (
-        <CustomTooltip title="Pool Deregistration">
+        <CustomTooltip title={type === POOL_ACTION_TYPE.POOL_DE_REGISTRATION ? "Pool Deregistration" : "Retirement"}>
           {theme.isDark ? <PoolDeresgistrationHistoryDark /> : <PoolDeresgistrationHistory />}
         </CustomTooltip>
       );
@@ -266,7 +275,9 @@ const DelegationCertificatesHistory = ({
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.transaction(data.txHash)}>{getShortHash(data.txHash || "")}</StyledLink>
+            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+              {getShortHash(data.txHash || "")}
+            </StyledLink>
           </CustomTooltip>
         )
     },
@@ -286,19 +297,21 @@ const DelegationCertificatesHistory = ({
       title: t("epoch"),
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.block(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
     },
     {
       title: t("common.slot"),
       key: "slot",
       minWidth: "90px",
-      render: (data) => <>{data.epochSlotNo}</>
+      render: (data) => <>{data.epochSlotNo || data.slotNo}</>
     },
     {
       title: t("certificatesHistory.absoluteSlot"),
       key: "absoluteSlot",
       minWidth: "130px",
-      render: (data) => <>{data.slotNo}</>
+      render: (data) => {
+        return <>{data.absoluteSlot || data.slotNo}</>;
+      }
     },
     {
       title: t("common.action"),
@@ -307,8 +320,8 @@ const DelegationCertificatesHistory = ({
       render: (data) => {
         return (
           <Box display={"flex"} gap={2}>
-            {data.actions &&
-              removeDuplicate(data.actions).map((action: POOL_ACTION_TYPE, idx) => (
+            {(data.actions || data.actionTypes) &&
+              removeDuplicate(data.actions || data.actionTypes).map((action: POOL_ACTION_TYPE, idx) => (
                 <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>
               ))}
           </Box>
@@ -335,4 +348,4 @@ const DelegationCertificatesHistory = ({
   );
 };
 
-export { DelegationEpochList, DelegationStakingDelegatorsList, DelegationCertificatesHistory };
+export { DelegationCertificatesHistory, DelegationEpochList, DelegationStakingDelegatorsList };

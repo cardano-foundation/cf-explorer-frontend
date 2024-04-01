@@ -199,7 +199,35 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import DescriptonDrepIcon from "./icons/descriptonDrep.svg?react";
+import CreateDrepIcon from "./icons/createdrep.svg?react";
+import ActiveVoteIcon from "./icons/activeVote.svg?react";
+import LiveStakeDrepIcon from "./icons/liveStake.svg?react";
+import DelegatorsDrepIcon from "./icons/delegatorsDrep.svg?react";
+import LifetimeVoteDrepIcon from "./icons/liifetimeVoteDrep.svg?react";
+import governanceVotesIcon from "./icons/governanceVotes.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
+import VotesYesIcon from "./icons/voteYes.svg?react";
+import VotesNoIcon from "./icons/voteNo.svg?react";
+import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
+import DropdownIcon from "./icons/dropdown.svg?react";
+import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
+import VotesIcon from "./icons/votes.svg?react";
+import VotesNoneIcon from "./icons/voteNone.svg?react";
+import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
+import GovernanceIdIcon from "./icons/governanceId.svg?react";
+import ActionTypeIcon from "./icons/action-type.svg?react";
+import VoteIcon from "./icons/vote.svg?react";
+import CurrentStatusIcon from "./icons/current-status.svg?react";
+import VotingPowerIcon from "./icons/voting-power.svg?react";
+import SubmissionDateIcon from "./icons/submission-date.svg?react";
+import ExpiryIcon from "./icons/expiry-date.svg?react";
+import AnchorTextIcon from "./icons/anchor-text.svg?react";
+import BlackWarningIcon from "./icons/warning-black.svg?react";
+import BlackCircleIcon from "./icons/black-cirle-copy.svg?react";
+import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
+import historyIcon from "./icons/history.svg?react";
+import repeatVoteIcon from "./icons/repeatVote.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -401,7 +429,35 @@ export {
   LightModeMobile,
   DarkModeMobile,
   VerifiedIcon,
-  InvalidIcon
+  InvalidIcon,
+  DescriptonDrepIcon,
+  CreateDrepIcon,
+  ActiveVoteIcon,
+  LiveStakeDrepIcon,
+  DelegatorsDrepIcon,
+  LifetimeVoteDrepIcon,
+  governanceVotesIcon,
+  DisclaimerIcon,
+  DropdownIcon,
+  VotesIcon,
+  VotesYesIcon,
+  VotesNoIcon,
+  VotesAbstainIcon,
+  VotesNoneIcon,
+  ArrowLeftWhiteIcon,
+  GovernanceIdIcon,
+  ActionTypeIcon,
+  VoteIcon,
+  historyIcon,
+  CurrentStatusIcon,
+  VotingPowerIcon,
+  SubmissionDateIcon,
+  ExpiryIcon,
+  AnchorTextIcon,
+  BlackWarningIcon,
+  repeatVoteIcon,
+  BlackCircleIcon,
+  RepeatVotesIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

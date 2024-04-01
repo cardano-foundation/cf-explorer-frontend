@@ -34,6 +34,10 @@ export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
 };
 
+export const getShortNumber = (number = 0, length = 3) => {
+  return Number(number.toFixed(length));
+};
+
 export const LARGE_NUMBER_ABBREVIATIONS = ["", "K", "M", "B", "T", "q", "Q", "s", "S"];
 
 export const formatPrice = (value?: string | number, abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS): string => {
@@ -198,6 +202,10 @@ export const formatDateTime = (date: string) => {
 };
 export const formatDateTimeLocal = (date: string) => {
   return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
+};
+
+export const formatDate = (date: string) => {
+  return moment(date).format("DD/MM/YYYY");
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {

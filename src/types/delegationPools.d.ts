@@ -1,5 +1,6 @@
 type PoolStatus = import("src/commons/utils/constants").POOL_STATUS;
 type PoolActionType = import("src/commons/utils/constants").POOL_ACTION_TYPE;
+type DrepActionType = import("src/commons/utils/constants").DREP_ACTION_TYPE;
 
 interface OverViewDelegation {
   countDownEndTime: number;
@@ -66,9 +67,11 @@ interface DelegationEpoch {
 }
 interface StakingDelegators {
   address: string;
+  stakeAddress: string;
   view: string;
   totalStake: number;
   time: string;
+  createdAt: string;
   fee: number;
 }
 
@@ -78,8 +81,11 @@ interface CertificateHistory {
   epochSlotNo: number;
   slotNo: number;
   actions: PoolActionType[];
+  actionTypes: DrepActionType[];
   epochNo: number;
+  absoluteSlot: number;
   createdAt: string;
+  actionTypes: string;
 }
 
 interface AnalyticsDelegators {
@@ -105,4 +111,5 @@ interface AnalyticsDelegators {
   };
 }
 
-type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "";
+type TabDrepDetail = "delegators" | "certificatesHistory" | "governanceVotes" | "";
+type TabPoolDetail = "epochs" | "delegators" | "certificatesHistory" | "governanceVotes" | "";

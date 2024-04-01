@@ -354,7 +354,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">
-        {pagination?.total && pagination.total > 10 ? (
+        {pagination?.total ? (
           <Box display="flex" alignItems="center">
             <SelectMui
               open={open}
@@ -410,7 +410,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.total > 10 ? (
+      {pagination?.total && pagination.total > pagination.size ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
