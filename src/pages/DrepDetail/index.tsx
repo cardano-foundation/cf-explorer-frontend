@@ -44,7 +44,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { formatADA, formatDateTimeLocal, formatPercent, getPageInfo } from "src/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, formatPercent, getPageInfo, getShortNumber } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import {
   BackButton,
@@ -514,28 +514,19 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
       <VoteBar
-        percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
+        percentage={totalVote > 0 ? getShortNumber((Number(data?.numberOfYesVote) * 100 || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
       />
       <VoteBar
-        percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
+        percentage={totalVote > 0 ? getShortNumber((Number(data?.numberOfAbstainVotes) * 100 || 0) / totalVote) : 0}
         color={theme.palette.warning[700]}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
       />
       <VoteBar
-        percentage={
-          totalVote > 0
-            ? formatPercent(
-                (100 -
-                  (+formatPercent((data?.numberOfYesVote || 0) / totalVote).split("%")[0] +
-                    +formatPercent((data?.numberOfAbstainVotes || 0) / totalVote).split("%")[0])) /
-                  100
-              )
-            : 0
-        }
+        percentage={totalVote > 0 ? getShortNumber((Number(data?.numberOfNoVotes) * 100 || 0) / totalVote) : 0}
         color={theme.palette.error[700]}
         icon={<VotesNoIcon />}
         label={t("common.no")}

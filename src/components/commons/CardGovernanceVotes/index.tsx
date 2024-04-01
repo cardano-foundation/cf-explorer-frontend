@@ -3,7 +3,14 @@ import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
-import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon, multiYesIcon } from "src/commons/resources";
+import {
+  VotesAbstainIcon,
+  VotesNoIcon,
+  VotesNoneIcon,
+  VotesYesIcon,
+  multiNoneIcon,
+  multiYesIcon
+} from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
@@ -99,18 +106,16 @@ export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = 
   const renderStatus = (key: string) => {
     switch (key) {
       case STATUS_VOTE.YES:
-        if (isRepeatVote) {
-          return [multiYesIcon, "success"];
-        } else {
-          return [VotesYesIcon, "success"];
-        }
+        return [isRepeatVote ? multiYesIcon : VotesYesIcon, "success"];
+
       case STATUS_VOTE.NO:
-        return [VotesNoIcon, "error"];
+        return [isRepeatVote ? multiNoneIcon : VotesNoIcon, "error"];
+
       case STATUS_VOTE.ABSTAIN:
-        return [VotesAbstainIcon, "warning"];
+        return [isRepeatVote ? multiYesIcon : VotesAbstainIcon, "warning"];
 
       default:
-        return [VotesNoneIcon, "info"];
+        return [isRepeatVote ? multiNoneIcon : VotesNoneIcon, "info"];
     }
   };
 
