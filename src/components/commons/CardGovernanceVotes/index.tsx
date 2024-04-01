@@ -3,7 +3,7 @@ import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
-import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon, repeatVoteIcon } from "src/commons/resources";
+import { VotesAbstainIcon, VotesNoIcon, VotesNoneIcon, VotesYesIcon, RepeatVotesIcon } from "src/commons/resources";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
@@ -100,7 +100,7 @@ export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = 
     switch (key) {
       case STATUS_VOTE.YES:
         if (isRepeatVote) {
-          return [repeatVoteIcon, "success"];
+          return [RepeatVotesIcon, "success"];
         } else {
           return [VotesYesIcon, "success"];
         }
