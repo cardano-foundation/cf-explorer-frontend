@@ -31,8 +31,13 @@ const CompiledCodeDataCard: React.FC<CompiledCodeDataCardProps> = ({ value, titl
   const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
   const [uplc, setUplc] = useState<UPLCProgram>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const str = (window as any).decodeUPLC(`${value}`);
+  let str = "";
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    str = (window as any).decodeUPLC(`${value}`);
+  } catch (error) {
+    /* empty */
+  }
 
   const version = str
     .substring(0, findSecondIndex(str, "("))
