@@ -3,6 +3,7 @@ import { useTheme } from "@emotion/react";
 
 import { CloseSquareIcon, MinusSquareIcon, PlusSquareIcon } from "src/commons/resources";
 import { UPLCData, UPLCProgram } from "src/types/uplc";
+import NotAvailable from "src/components/commons/NotAvailable";
 
 import { StyledTreeItem, TreeContainer } from "./styles";
 
@@ -42,6 +43,14 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
     }
     return nodeIds;
   };
+
+  if (!uplc.version.major) {
+    return (
+      <>
+        <NotAvailable />
+      </>
+    );
+  }
 
   return (
     <TreeContainer
