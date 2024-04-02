@@ -45,8 +45,17 @@ const CopyButton: React.FC<CopyButtonProps> = ({
   useEffect(() => {
     if (copied) {
       const timeout = setTimeout(() => {
-        setCopied(false);
+        setOpen(false);
       }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [copied]);
+
+  useEffect(() => {
+    if (copied) {
+      const timeout = setTimeout(() => {
+        setCopied(false);
+      }, 2500);
       return () => clearTimeout(timeout);
     }
   }, [copied]);
