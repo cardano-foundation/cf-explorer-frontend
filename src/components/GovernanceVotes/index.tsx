@@ -296,7 +296,10 @@ const GovernanceVotesDetail: React.FC<{
           background: tab === tabName ? theme.palette.primary[200] : "",
           border: `1px solid ${tab === tabName ? theme.palette.primary.main : theme.palette.primary[200]} !important`,
           color: `${tab === tabName ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
-          fontWeight: 600
+          fontWeight: 600,
+          "&:hover": {
+            background: theme.palette.primary[200]
+          }
         }}
         onClick={() => handleTabChange(tabName)}
       >
@@ -461,7 +464,10 @@ const GovernanceVotesDetail: React.FC<{
                           ? theme.palette.secondary.main
                           : theme.isDark
                           ? theme.palette.secondary.main
-                          : theme.palette.secondary[600]
+                          : theme.palette.secondary[600],
+                        "&:hover": {
+                          background: theme.palette.primary[200]
+                        }
                       }}
                       label={selectVote || i}
                       onClick={() => setSelectVote(selectVote ? "" : i)}

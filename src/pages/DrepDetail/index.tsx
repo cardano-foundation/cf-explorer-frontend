@@ -102,7 +102,7 @@ const DrepDetail = () => {
               sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
               postfix={5}
               isNoLimitPixel={true}
-              isTooltip
+              isTooltip={(data?.anchorHash && !!data?.anchorHash.length) || undefined}
             />
           </Box>
           {data?.anchorUrl && (

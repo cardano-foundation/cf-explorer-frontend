@@ -65,6 +65,12 @@ const Sidebar: React.FC = () => {
               border={`2px solid ${muiTheme.isDark ? muiTheme.palette.primary[100] : muiTheme.palette.primary.main} `}
               borderRadius={"8px"}
               fontSize={16}
+              sx={{
+                "&:hover": {
+                  background: muiTheme.isDark ? "transparent" : muiTheme.palette.primary[200],
+                  border: `2px solid ${muiTheme.palette.primary.main}`
+                }
+              }}
             >
               <Box
                 component={LightModeMobile}
