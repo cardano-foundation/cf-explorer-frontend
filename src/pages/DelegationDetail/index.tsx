@@ -172,7 +172,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: VotesIcon,
-      label: t("governanceVotes"),
+      label: t("drep.governanceVotes"),
       key: "governanceVotes",
       component: (
         <div ref={tableRef}>
