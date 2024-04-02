@@ -121,7 +121,7 @@ const DrepDetail = () => {
               />
               <Box
                 position={"absolute"}
-                right={"-14px"}
+                right={"-4px"}
                 top={"50%"}
                 sx={{ transform: "translateY(-50%)" }}
                 flex={1}
@@ -575,7 +575,7 @@ const VoteBar = ({
       placement="right"
     >
       <Box
-        sx={{ background: color }}
+        sx={{ background: color, borderRadius: "4px" }}
         height={`${
           +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
         }px`}

@@ -660,7 +660,7 @@ const VoteBar = ({
         placement="top"
       >
         <Box
-          sx={{ background: color }}
+          sx={{ background: color, borderRadius: "4px" }}
           height={`${
             +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
           }px`}
