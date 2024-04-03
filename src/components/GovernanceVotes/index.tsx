@@ -41,7 +41,6 @@ import {
   BlackCircleIcon,
   BlackWarningIcon,
   CurrentStatusIcon,
-  DisclaimerIcon,
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
@@ -921,21 +920,6 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
               sx={{ cursor: "pointer" }}
             >
               {anchorUrl}
-            </Box>
-            <Box
-              ml={1}
-              sx={{ transform: "translateY(3px)" }}
-              component={CustomTooltip}
-              title={
-                <Box textAlign={"left"} width={"min(80vw, 300px)"}>
-                  <Box fontWeight={"bold"} component={"span"}>
-                    Disclaimer:{" "}
-                  </Box>
-                  {t("drep.disclaimer")}
-                </Box>
-              }
-            >
-              <DisclaimerIcon fill={theme.palette.primary.main} />
             </Box>
           </Box>
         </Box>

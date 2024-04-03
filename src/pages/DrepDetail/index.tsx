@@ -32,8 +32,7 @@ import {
   VotesYesIcon,
   VotesAbstainIcon,
   VotesNoIcon,
-  DropdownIcon,
-  DisclaimerIcon
+  DropdownIcon
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -54,7 +53,6 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 
@@ -119,24 +117,6 @@ const DrepDetail = () => {
                 isNoLimitPixel={true}
                 isTooltip
               />
-              <Box
-                position={"absolute"}
-                right={"-4px"}
-                top={"50%"}
-                sx={{ transform: "translateY(-50%)" }}
-                flex={1}
-                component={CustomTooltip}
-                title={
-                  <Box textAlign={"left"}>
-                    <Box fontWeight={"bold"} component={"span"}>
-                      Disclaimer:{" "}
-                    </Box>
-                    {t("drep.disclaimer")}
-                  </Box>
-                }
-              >
-                <DisclaimerIcon fill={theme.palette.primary.main} />
-              </Box>
             </Box>
           )}
           <ActionMetadataModalConfirm
