@@ -1,4 +1,4 @@
-name: Run Jest Tests
+name: Run Unit Tests
 on:
   pull_request:
     types: [opened, synchronize]
@@ -16,7 +16,7 @@ jobs:
       - name: 🫡 Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - name: 🧘‍♀️ Download dependencies
         run: npm ci
