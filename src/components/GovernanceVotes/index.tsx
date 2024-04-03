@@ -696,7 +696,7 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   }, [JSON.stringify(data)]);
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%">
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
