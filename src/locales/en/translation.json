@@ -343,6 +343,7 @@
   "drawer.status": "Status",
   "status.active": "ACTIVE",
   "status.deactivated": "DEACTIVATED",
+  "status.retired": "RETIRED",
   "drawer.rewardAvailable": "Reward available",
   "drawer.withDrawn": "Reward withdrawn",
   "drawer.delegatedTo": "Delegated to",

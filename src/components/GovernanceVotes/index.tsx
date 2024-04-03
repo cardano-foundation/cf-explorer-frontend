@@ -1260,7 +1260,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.actionType}
+                        checked={
+                          params?.actionType ? i.value === params?.actionType : POOLS_ACTION_TYPE.ALL === i.value
+                        }
                         control={
                           <Radio
                             sx={{
@@ -1316,7 +1318,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.currentStatus}
+                        checked={
+                          params?.currentStatus ? i.value === params?.currentStatus : STATUS_VOTE.ANY === i.value
+                        }
                         control={
                           <Radio
                             sx={{
@@ -1372,7 +1376,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.vote}
+                        checked={params?.vote ? i.value === params?.vote : STATUS_VOTE.ANY === i.value}
                         control={
                           <Radio
                             sx={{

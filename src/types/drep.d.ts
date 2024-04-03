@@ -7,7 +7,7 @@ interface DrepOverview {
   drepHash: string;
   drepId: string;
   liveStake: number;
-  status: "ACTIVE" | "INACTIVE";
+  status: "ACTIVE" | "INACTIVE" | "RETIRED";
   votingParticipation: number;
   type: string;
 }
