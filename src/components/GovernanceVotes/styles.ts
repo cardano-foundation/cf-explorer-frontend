@@ -66,7 +66,7 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
 }));
 export const StyledArea = styled(InputBase)`
   .MuiInputBase-input {
-    padding: 10px 14px;
+    padding: 14px 14px;
     border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.primary[200])};
     border-radius: var(--border-radius-sm);
     box-sizing: border-box;
