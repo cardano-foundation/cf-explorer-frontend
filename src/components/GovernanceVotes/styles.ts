@@ -1,4 +1,4 @@
-import { Switch, Typography, styled } from "@mui/material";
+import { InputBase, Switch, Typography, styled } from "@mui/material";
 
 export const HashName = styled(Typography)(({ theme }) => ({
   paddingBottom: "15px",
@@ -64,3 +64,11 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
     boxSizing: "border-box"
   }
 }));
+export const StyledArea = styled(InputBase)`
+  .MuiInputBase-input {
+    padding: 14px 14px;
+    border: 1.5px solid ${({ theme, error }) => (error ? theme.palette.error.main : theme.palette.primary[200])};
+    border-radius: var(--border-radius-sm);
+    box-sizing: border-box;
+  }
+`;

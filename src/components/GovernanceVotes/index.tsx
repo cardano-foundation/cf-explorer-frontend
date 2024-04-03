@@ -78,7 +78,6 @@ import {
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
 import { StyledInput } from "src/components/share/styled";
-import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
 import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
@@ -97,7 +96,7 @@ import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
-import { AntSwitch, HashName } from "./styles";
+import { AntSwitch, HashName, StyledArea } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -175,7 +174,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && initialized && <NoRecord padding={`0 !important`} />}
+        {data && data.length === 0 && initialized && <NoRecord m="170px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -296,7 +295,10 @@ const GovernanceVotesDetail: React.FC<{
           background: tab === tabName ? theme.palette.primary[200] : "",
           border: `1px solid ${tab === tabName ? theme.palette.primary.main : theme.palette.primary[200]} !important`,
           color: `${tab === tabName ? theme.palette.primary.main : theme.palette.secondary.light} !important`,
-          fontWeight: 600
+          fontWeight: 600,
+          "&:hover": {
+            background: theme.palette.primary[200]
+          }
         }}
         onClick={() => handleTabChange(tabName)}
       >
@@ -461,7 +463,10 @@ const GovernanceVotesDetail: React.FC<{
                           ? theme.palette.secondary.main
                           : theme.isDark
                           ? theme.palette.secondary.main
-                          : theme.palette.secondary[600]
+                          : theme.palette.secondary[600],
+                        "&:hover": {
+                          background: theme.palette.primary[200]
+                        }
                       }}
                       label={selectVote || i}
                       onClick={() => setSelectVote(selectVote ? "" : i)}
@@ -691,7 +696,7 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   }, [JSON.stringify(data)]);
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%">
+    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
         color={theme.palette.success[700]}
@@ -1231,11 +1236,18 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box sx={{ p: "0px 12px" }}>
-                    <TextareaAutosize
-                      value={params?.anchorText}
-                      onChange={(e) => setParams({ ...params, anchorText: e.target.value })}
+                  <Box>
+                    <StyledArea
+                      multiline
+                      rows={3}
+                      sx={{
+                        p: "0px 12px",
+                        width: "100% !important",
+                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                      }}
                       placeholder={t("pool.searchMetadata")}
+                      value={params?.anchorText}
+                      onChange={({ target: { value } }) => setParams({ ...params, anchorText: value })}
                       onKeyPress={handleKeyPress}
                     />
                   </Box>
@@ -1317,7 +1329,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     </Box>
                   </Box>
                 </AccordionSummary>
-                <AccordionDetailsFilter>
+                <AccordionDetailsFilter
+                  sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
+                >
                   <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -1373,7 +1387,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     </Box>
                   </Box>
                 </AccordionSummary>
-                <AccordionDetailsFilter>
+                <AccordionDetailsFilter
+                  sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
+                >
                   <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
