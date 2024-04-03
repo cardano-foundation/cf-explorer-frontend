@@ -41,7 +41,6 @@ import {
   BlackCircleIcon,
   BlackWarningIcon,
   CurrentStatusIcon,
-  DisclaimerIcon,
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
@@ -341,7 +340,7 @@ const GovernanceVotesDetail: React.FC<{
                   ) : (
                     <DynamicEllipsisText
                       sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
-                      postfix={4}
+                      postfix={3}
                       sxLastPart={{ textTransform: "none" }}
                       sxFirstPart={{ textTransform: "none" }}
                       isNoLimitPixel={true}
@@ -927,21 +926,6 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
             >
               {anchorUrl}
             </Box>
-            <Box
-              ml={1}
-              sx={{ transform: "translateY(3px)" }}
-              component={CustomTooltip}
-              title={
-                <Box textAlign={"left"} width={"min(80vw, 300px)"}>
-                  <Box fontWeight={"bold"} component={"span"}>
-                    Disclaimer:{" "}
-                  </Box>
-                  {t("drep.disclaimer")}
-                </Box>
-              }
-            >
-              <DisclaimerIcon fill={theme.palette.primary.main} />
-            </Box>
           </Box>
         </Box>
       </Box>
@@ -1049,7 +1033,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     toDate: ""
   };
 
-  const [params, setParams] = useState<FilterParams | null>(filterValue || {});
+  const [params, setParams] = useState<FilterParams | null>(query || filterValue || {});
+  const [paramsFilter, setParamsFilter] = useState<FilterParams | null>(filterValue || {});
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -1059,6 +1044,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     setExpanded(false);
     setOpen(false);
     setParams(filterValue);
+    setParamsFilter(filterValue);
     history.replace({
       search: stringify({
         page: 1,
@@ -1076,6 +1062,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParamsFilter(params);
     setQuery({
       tab: query.tab,
       isRepeatVote: params?.isRepeatVote,
@@ -1285,7 +1272,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.actionType}
+                        checked={
+                          params?.actionType ? i.value === params?.actionType : POOLS_ACTION_TYPE.ALL === i.value
+                        }
                         control={
                           <Radio
                             sx={{
@@ -1343,7 +1332,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.currentStatus}
+                        checked={
+                          params?.currentStatus ? i.value === params?.currentStatus : STATUS_VOTE.ANY === i.value
+                        }
                         control={
                           <Radio
                             sx={{
@@ -1401,7 +1392,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={i.value === params?.vote}
+                        checked={params?.vote ? i.value === params?.vote : STATUS_VOTE.ANY === i.value}
                         control={
                           <Radio
                             sx={{
@@ -1456,7 +1447,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={JSON.stringify(filterValue) === JSON.stringify(params)}
+                  disabled={
+                    JSON.stringify(filterValue) === JSON.stringify(paramsFilter) &&
+                    JSON.stringify(filterValue) === JSON.stringify(params)
+                  }
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
