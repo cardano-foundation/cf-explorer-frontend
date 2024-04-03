@@ -1236,7 +1236,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box sx={{ p: "0px 12px" }}>
+                  <Box>
                     <StyledArea
                       multiline
                       rows={3}
