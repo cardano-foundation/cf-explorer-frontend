@@ -1049,7 +1049,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     toDate: ""
   };
 
-  const [params, setParams] = useState<FilterParams | null>(filterValue || {});
+  const [params, setParams] = useState<FilterParams | null>(query || filterValue || {});
+  const [paramsFilter, setParamsFilter] = useState<FilterParams | null>(filterValue || {});
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -1059,6 +1060,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     setExpanded(false);
     setOpen(false);
     setParams(filterValue);
+    setParamsFilter(filterValue);
     history.replace({
       search: stringify({
         page: 1,
@@ -1076,6 +1078,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParamsFilter(params);
     setQuery({
       tab: query.tab,
       isRepeatVote: params?.isRepeatVote,
@@ -1456,7 +1459,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={JSON.stringify(filterValue) === JSON.stringify(params)}
+                  disabled={
+                    JSON.stringify(filterValue) === JSON.stringify(paramsFilter) &&
+                    JSON.stringify(filterValue) === JSON.stringify(params)
+                  }
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
