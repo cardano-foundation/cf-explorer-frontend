@@ -74,7 +74,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import { FooterTable } from "src/components/commons/Table";
 import { StyledInput } from "src/components/share/styled";
-import { TextareaAutosize } from "src/pages/DelegationDetail/styles";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import {
   AccordionContainer,
@@ -97,7 +96,7 @@ import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
 import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
-import { AntSwitch, HashName } from "./styles";
+import { AntSwitch, HashName, StyledArea } from "./styles";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -175,7 +174,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && initialized && <NoRecord padding={`0 !important`} />}
+        {data && data.length === 0 && initialized && <NoRecord m="170px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -1238,10 +1237,17 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box sx={{ p: "0px 12px" }}>
-                    <TextareaAutosize
-                      value={params?.anchorText}
-                      onChange={(e) => setParams({ ...params, anchorText: e.target.value })}
+                    <StyledArea
+                      multiline
+                      rows={3}
+                      sx={{
+                        p: "0px 12px",
+                        width: "100% !important",
+                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+                      }}
                       placeholder={t("pool.searchMetadata")}
+                      value={params?.anchorText}
+                      onChange={({ target: { value } }) => setParams({ ...params, anchorText: value })}
                       onKeyPress={handleKeyPress}
                     />
                   </Box>
@@ -1323,7 +1329,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     </Box>
                   </Box>
                 </AccordionSummary>
-                <AccordionDetailsFilter>
+                <AccordionDetailsFilter
+                  sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
+                >
                   <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -1379,7 +1387,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     </Box>
                   </Box>
                 </AccordionSummary>
-                <AccordionDetailsFilter>
+                <AccordionDetailsFilter
+                  sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
+                >
                   <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
