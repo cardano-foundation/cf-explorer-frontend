@@ -14,6 +14,7 @@ import {
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import { POOLS_ACTION_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
 import { GovernanceVote } from "src/components/GovernanceVotes";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { CardGovernanceVote, StatusContainer, TitleCard } from "./styles";
 
@@ -135,6 +136,7 @@ export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = 
 export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { isGalaxyFoldSmall } = useScreen();
 
   const renderStatus = (key: string) => {
     switch (key) {
@@ -159,7 +161,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
           <Typography
             textTransform="uppercase"
             fontWeight={500}
-            fontSize="12px"
+            fontSize={isGalaxyFoldSmall ? "8px" : "12px"}
             lineHeight="23px"
             color={theme.palette.secondary.light}
           >
