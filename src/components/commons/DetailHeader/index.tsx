@@ -209,7 +209,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? t("status.active")
                   : stakeKeyStatus === "INACTIVE"
                   ? t("status.inActive")
-                  : t("status.deActivated")}
+                  : stakeKeyStatus === "DEACTIVATED"
+                  ? t("status.deActivated")
+                  : t("status.retired")}
               </StakeKeyStatus>
             )}
             {redirectAction && <Box marginLeft={"auto"}>{redirectAction}</Box>}
