@@ -92,6 +92,7 @@ const secondaryDark = {
   contrastText: COMMON.white,
   900: "#19191d"
 };
+
 const text = {
   primary: GREY[400],
   secondary: GREY[300],

@@ -1,3 +1,7 @@
+import React, { useEffect, useMemo, useState } from "react";
+import { ParsedQs, parse, stringify } from "qs";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   AccordionSummary,
   Box,
@@ -27,12 +31,8 @@ import {
 import { JsonViewer } from "@textea/json-viewer";
 import { isEmpty, isUndefined, omitBy } from "lodash";
 import moment from "moment";
-import { ParsedQs, parse, stringify } from "qs";
-import React, { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useHistory, useLocation, useParams } from "react-router-dom";
 
 import useFetch from "src/commons/hooks/useFetch";
 import useFetchList from "src/commons/hooks/useFetchList";
@@ -60,12 +60,12 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
-import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
+import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -897,9 +897,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
       sx={{ maxHeight: "70vh" }}
     >
       <Box display="block" pb="15px">
-        <Typography fontSize="16px" color={theme.palette.secondary.main}>
-          {t("pool.anchor")}:
-        </Typography>{" "}
+        <Typography color={theme.palette.secondary.main}>{t("pool.anchor")}:</Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -949,9 +947,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
         </Box>
       </Box>
       <Box display="block">
-        <Typography fontSize="16px" color={theme.palette.secondary.main}>
-          {t("pool.metadata")}:
-        </Typography>{" "}
+        <Typography color={theme.palette.secondary.main}>{t("pool.metadata")}:</Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -1180,7 +1176,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
                   <Box display="flex">
                     <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
-                    <Typography fontSize="16px" ml={1} color={({ palette }) => palette.secondary.main}>
+                    <Typography ml={1} color={({ palette }) => palette.secondary.main}>
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
