@@ -6,7 +6,6 @@ export const HashName = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   lineHeight: "28px",
   textAlign: "center",
-  paddingLeft: "20px",
   color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
   paddingLeft: "20px",
   [theme.breakpoints.down("lg")]: {
