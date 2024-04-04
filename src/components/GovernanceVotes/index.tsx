@@ -340,7 +340,7 @@ const GovernanceVotesDetail: React.FC<{
                   ) : (
                     <DynamicEllipsisText
                       sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
-                      postfix={4}
+                      postfix={3}
                       sxLastPart={{ textTransform: "none", direction: "ltr" }}
                       sxFirstPart={{ textTransform: "none" }}
                       isNoLimitPixel={true}
