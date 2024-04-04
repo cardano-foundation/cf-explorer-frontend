@@ -1010,8 +1010,8 @@ export interface FilterParams {
   isRepeatVote?: boolean;
   actionType?: string;
   anchorText?: string;
-  currentStatus?: string;
-  vote?: string;
+  actionStatus?: string;
+  voteType?: string;
 }
 const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuery, voterType }) => {
   const theme = useTheme();
@@ -1062,18 +1062,19 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
-      isRepeatVote: params?.isRepeatVote,
+      isRepeatVote: params?.isRepeatVote ? params?.isRepeatVote : undefined,
       page: 1,
       size: 6,
       governanceActionTxHash: params?.governanceActionTxHash,
       anchorText: params?.anchorText,
       actionType: params?.actionType,
-      actionStatus: params?.currentStatus,
+      actionStatus: params?.actionStatus,
       voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
-      voteType: params?.vote,
+      voteType: params?.voteType,
       ...(params?.fromDate && { fromDate: params.fromDate || "" }),
       ...(params?.toDate && { toDate: params.toDate || "" })
     });
@@ -1325,16 +1326,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
-                    value={params?.currentStatus}
-                    onChange={(e) => setParams({ ...params, currentStatus: e.target.value })}
+                    value={params?.actionStatus}
+                    onChange={(e) => setParams({ ...params, actionStatus: e.target.value })}
                   >
                     {currentStatusList.map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={
-                          params?.currentStatus ? i.value === params?.currentStatus : STATUS_VOTE.ANY === i.value
-                        }
+                        checked={params?.actionStatus ? i.value === params?.actionStatus : STATUS_VOTE.ANY === i.value}
                         control={
                           <Radio
                             sx={{
@@ -1385,14 +1384,14 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
-                    value={params?.vote}
-                    onChange={(e) => setParams({ ...params, vote: e.target.value })}
+                    value={params?.voteType}
+                    onChange={(e) => setParams({ ...params, voteType: e.target.value })}
                   >
                     {voteList.map((i) => (
                       <FormControlLabel
                         key={i.value}
                         value={i.value}
-                        checked={params?.vote ? i.value === params?.vote : STATUS_VOTE.ANY === i.value}
+                        checked={params?.voteType ? i.value === params?.voteType : STATUS_VOTE.ANY === i.value}
                         control={
                           <Radio
                             sx={{
