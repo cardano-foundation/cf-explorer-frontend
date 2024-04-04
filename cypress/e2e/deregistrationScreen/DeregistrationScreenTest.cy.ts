@@ -1,6 +1,6 @@
 describe("Deregistration screen", () => {
   it("User go to Staking Lifecycle and input the Stake Address, then verify the Deregistration Screen", () => {
-    const stakeAddress = "stake1uyeqqejrlf0g7d57qydvw78utfw3fv65tcxe0t69edfpdwsk8ksqy";
+    const stakeAddress = "stake1u8wfran22c8tk3jxvhzkdjfqvvn4g8gj56keq6lrw75s4wcq94rmf";
     cy.visit("/");
     cy.get('[data-testid="menu-button-staking_lifecycle"]').click();
     cy.get("input[placeholder]").type(stakeAddress).type("{enter}");
