@@ -341,7 +341,7 @@ const GovernanceVotesDetail: React.FC<{
                     <DynamicEllipsisText
                       sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
                       postfix={3}
-                      sxLastPart={{ textTransform: "none" }}
+                      sxLastPart={{ textTransform: "none", direction: "ltr" }}
                       sxFirstPart={{ textTransform: "none" }}
                       isNoLimitPixel={true}
                       isTooltip
@@ -1428,7 +1428,10 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </Box>
                 <DateRangeModal
                   open={openDateRange}
-                  value={{ fromDate: filterValue?.fromDate, toDate: filterValue?.toDate }}
+                  value={{
+                    fromDate: params?.fromDate || filterValue?.fromDate,
+                    toDate: params?.toDate || filterValue?.toDate
+                  }}
                   onDateRangeChange={({ fromDate, toDate }) => {
                     setParams?.({
                       ...params,
