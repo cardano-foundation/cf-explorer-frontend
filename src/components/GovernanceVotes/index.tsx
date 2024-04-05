@@ -1426,7 +1426,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       {t("pool.dateRange")}
                     </Box>
                   </Box>
-                  {!isEmpty(params?.fromDate) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
+                  {!isEmpty(dateRange?.fromDate) && (
+                    <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
+                  )}
                 </Box>
                 <DateRangeModal
                   open={openDateRange}
@@ -1452,7 +1454,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   }}
                   disabled={
                     JSON.stringify(filterValue) === JSON.stringify(paramsFilter) &&
-                    JSON.stringify(filterValue) === JSON.stringify(params)
+                    JSON.stringify(filterValue) === JSON.stringify(params) &&
+                    JSON.stringify(filterValue.fromDate) === JSON.stringify(dateRange.fromDate) &&
+                    JSON.stringify(filterValue.toDate) === JSON.stringify(dateRange.toDate)
                   }
                 >
                   {t("common.applyFilters")}
