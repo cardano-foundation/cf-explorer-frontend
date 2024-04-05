@@ -30,7 +30,7 @@ describe("epoch spec", () => {
   });
 
   it("redirect to correct epoch detail page", () => {
-    const epoch = "426";
+    const epoch = "80";
     cy.visit("/epochs");
     cy.get('[data-testid="search-bar"]').type(epoch).type("{enter}");
     cy.get("div").contains("Epoch details");
@@ -38,8 +38,8 @@ describe("epoch spec", () => {
   });
 
   it("should navigate to the epoch detail page", () => {
-    const epoch = "426";
-    cy.visit("/epoch/426");
+    const epoch = "80";
+    cy.visit("/epoch/80");
     cy.get("div").contains("Epoch details", { matchCase: false });
     cy.get(".css-17lbe4a").contains(epoch);
     cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Start Timestamp", {

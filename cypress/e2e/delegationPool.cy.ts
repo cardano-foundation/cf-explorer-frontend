@@ -15,10 +15,10 @@ describe("delegation pool spec", () => {
     cy.get("table tr th").contains("Pool size", { matchCase: false });
     cy.get("table tr th").contains("Declared Pledge");
     cy.get("table tr th").contains("Saturation");
-    cy.get("table tr th").contains("Number of Delegators");
     cy.get("table tr th").contains("Blocks in Epoch");
+    cy.get("table tr th").contains("Voting Power");
     cy.get("table tr th").contains("Blocks lifetime", { matchCase: false });
-    cy.get("table tr th").contains("Fixed Cost");
+    cy.get("table tr th").contains("Governance Participation Rate");
   });
 
   it("redirect to correct transaction detail page", () => {
@@ -35,13 +35,13 @@ describe("delegation pool spec", () => {
     cy.visit("/pool/pool1m06tlj2ykawzvweacgmhxj43hykczgfuynk2lqzxvshm5lq2lyq");
     cy.get("small").contains("Pool ID", { matchCase: false });
     cy.get("small ~ a").should("have.attr", "href").and("include", pool);
-    cy.get(":nth-child(1) > .css-syl2v3 > .css-vkzxw5").contains("Ticker");
-    cy.get(":nth-child(2) > .css-syl2v3 > .css-vkzxw5").contains("Created At");
-    cy.get(":nth-child(3) > .css-syl2v3 .css-vkzxw5").contains("Reward Account");
-    cy.get(":nth-child(4) > .css-syl2v3 .css-vkzxw5").contains("Owner Account");
-    cy.get(":nth-child(5) > .css-syl2v3 > .css-vkzxw5").contains("Pool size");
-    cy.get(":nth-child(6) > .css-syl2v3 > .css-vkzxw5").contains("Stake limit");
-    cy.get(":nth-child(7) > .css-syl2v3 > .css-vkzxw5").contains("Delegators");
+    cy.get(":nth-child(1) > .css-13548mp > .css-vkzxw5").contains("Ticker");
+    cy.get(":nth-child(2) > .css-13548mp > .css-vkzxw5").contains("Created At");
+    cy.get(":nth-child(3) > .css-13548mp .css-vkzxw5").contains("Reward Account");
+    cy.get(":nth-child(4) > .css-13548mp .css-vkzxw5").contains("Owner Account");
+    cy.get(":nth-child(5) > .css-13548mp > .css-vkzxw5").contains("Pool size");
+    cy.get(":nth-child(6) > .css-13548mp > .css-vkzxw5").contains("Stake limit");
+    cy.get(":nth-child(7) > .css-13548mp > .css-vkzxw5").contains("Delegators");
 
     cy.get("div > .css-27jcwj").contains("Fixed Cost");
     cy.get("div > .css-27jcwj").contains("Margin");
