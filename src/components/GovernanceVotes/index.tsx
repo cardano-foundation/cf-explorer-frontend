@@ -77,7 +77,7 @@ import {
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
 import { StyledInput } from "src/components/share/styled";
-import DateRangeModal, { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
+import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
@@ -1035,6 +1035,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
 
   const [params, setParams] = useState<FilterParams | null>(query || filterValue || {});
   const [paramsFilter, setParamsFilter] = useState<FilterParams | null>(filterValue || {});
+  const [dateRange, setDateRange] = useState<DateRange>({ fromDate: "", toDate: "" });
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -1045,6 +1046,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     setOpen(false);
     setParams(filterValue);
     setParamsFilter(filterValue);
+    setDateRange({ fromDate: "", toDate: "" });
     history.replace({
       search: stringify({
         page: 1,
@@ -1074,8 +1076,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       actionStatus: params?.actionStatus,
       voterType: VOTE_TYPE.STAKING_POOL_KEY_HASH,
       voteType: params?.voteType,
-      ...(params?.fromDate && { fromDate: params.fromDate || "" }),
-      ...(params?.toDate && { toDate: params.toDate || "" })
+      ...(dateRange?.fromDate && { fromDate: dateRange.fromDate || "" }),
+      ...(dateRange?.toDate && { toDate: dateRange.toDate || "" })
     });
   };
 
@@ -1429,17 +1431,17 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <DateRangeModal
                   open={openDateRange}
                   value={{
-                    fromDate: params?.fromDate || filterValue?.fromDate,
-                    toDate: params?.toDate || filterValue?.toDate
+                    fromDate: dateRange?.fromDate,
+                    toDate: dateRange?.toDate
                   }}
                   onDateRangeChange={({ fromDate, toDate }) => {
-                    setParams?.({
-                      ...params,
+                    setDateRange({
                       fromDate: moment(fromDate, DATETIME_PARTTEN).startOf("d").utc().format(DATETIME_PARTTEN),
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
                   onClose={() => setOpenDateRange(false)}
+                  onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>
               <Box my={1} p="0px 16px">

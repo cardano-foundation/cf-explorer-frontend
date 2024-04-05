@@ -22,10 +22,11 @@ export interface DateRangeModalProps {
   onClose?: () => void;
   onDateRangeChange: (range: DateRange) => void;
   value?: DateRange;
+  onClearValue?: ((value: React.SetStateAction<DateRange>) => void) | undefined;
   open: boolean;
 }
 
-const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open, value }) => {
+const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeChange, open, value, onClearValue }) => {
   const { t } = useTranslation();
   const [dateRange, setDateRange] = useState<IDateRange>([null, null]);
 
@@ -40,6 +41,13 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     onClose?.();
   };
 
+  const onCloseModalDateRange = () => {
+    onClose?.();
+    if (dateRange[0] === null || dateRange[1] === null) {
+      onClearValue && onClearValue({ fromDate: "", toDate: "" });
+    }
+  };
+
   return (
     <CustomModal open={open} onClose={() => onClose?.()} title={t("common.selectDateRange")} width={500}>
       <Container>
@@ -48,7 +56,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
           <WrapButton disabled={!dateRange[0] || !dateRange[1]} variant="contained" onClick={onSubmit}>
             {t("common.ok")}
           </WrapButton>
-          <Button variant="outlined" onClick={() => onClose?.()}>
+          <Button variant="outlined" onClick={onCloseModalDateRange}>
             {t("common.cancel")}
           </Button>
         </DatePickerFooter>
