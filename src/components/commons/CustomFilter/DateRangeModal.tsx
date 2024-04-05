@@ -22,7 +22,7 @@ export interface DateRangeModalProps {
   onClose?: () => void;
   onDateRangeChange: (range: DateRange) => void;
   value?: DateRange;
-  onClearValue?: ((value: React.SetStateAction<DateRange>) => void) | undefined;
+  onClearValue?: (value: React.SetStateAction<DateRange>) => void;
   open: boolean;
 }
 
