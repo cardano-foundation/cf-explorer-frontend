@@ -542,7 +542,7 @@ const VoteBar = ({
 }) => (
   <Box display="flex" flexDirection="column" alignItems="center">
     <Typography fontSize="10px" fontWeight={400}>
-      {percentage}
+      {!percentage ? "0%" : percentage}
     </Typography>
     <LightTooltip
       title={
