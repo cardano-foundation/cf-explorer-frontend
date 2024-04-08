@@ -69,7 +69,18 @@ const DelegationLists: React.FC = () => {
       minWidth: "200px",
       maxWidth: "200px",
       render: (r) => (
-        <CustomTooltip title={r.tickerName || ""}>
+        <CustomTooltip
+          title={
+            r.tickerName ? (
+              <>
+                <Box fontWeight={"bold"} component={"span"}>
+                  Ticker:{" "}
+                </Box>
+                {r.tickerName}
+              </>
+            ) : undefined
+          }
+        >
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
               {r.poolName || `${getShortHash(r.poolId)}`}

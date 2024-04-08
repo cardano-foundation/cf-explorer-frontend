@@ -34,9 +34,7 @@ import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
-import useFetch from "src/commons/hooks/useFetch";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { useScreen } from "src/commons/hooks/useScreen";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -70,10 +68,7 @@ import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/comm
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import FormNowMessage from "src/components/commons/FormNowMessage";
 import { FooterTable } from "src/components/commons/Table";
-import { StyledInput } from "src/components/share/styled";
-import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -82,6 +77,11 @@ import {
   FilterContainer,
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
+import { StyledInput } from "src/components/share/styled";
+import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
+import FormNowMessage from "src/components/commons/FormNowMessage";
+import useFetch from "src/commons/hooks/useFetch";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import {
   DataContainer,

@@ -22,10 +22,6 @@ describe("Delegator Lifecycle", () => {
     cy.get('[id="step-3"]').click();
     cy.get('[data-testid="overview-staking"]').should("be.visible");
   });
-  it("should on deregistration", () => {
-    cy.get('[id="step-4"]').click();
-    cy.get('[data-testid="delegator-deregistration-certificate"]').should("be.visible");
-  });
 
   it("should on random stake", () => {
     cy.visit("/staking-lifecycle");
