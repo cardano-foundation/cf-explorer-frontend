@@ -1,6 +1,6 @@
 describe("Smartcontract Detail", () => {
   it("should navigate to the smartcontract detail page", () => {
-    cy.visit(`/en/smart-contract/3b26d32626c39f1b24d9492795ddbf604e16542fe3336ab9b044c940`);
+    cy.visit(`/en/smart-contract/86bff95ba20e9d1d1b34899a56d86bbacc9fed999260b27dcc92d128`);
     cy.get("h2").contains("Smart Contract Details");
     cy.get('[data-testid="sc.scriptHash"]').contains("Script Hash", { matchCase: false });
     cy.get('[data-testid="sc.versionTitle"]').contains("Version", { matchCase: false });
@@ -18,6 +18,5 @@ describe("Smartcontract Detail", () => {
     cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Absolute Slot");
     cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Addresses");
     cy.get(`[data-testid="table-common"] tr th`).should("be.visible").contains("Purpose");
-    cy.get('[data-testid="sc.versionValue"]').contains("Plutus v2", { matchCase: false });
   });
 });

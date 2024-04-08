@@ -15,7 +15,7 @@ describe("transactions spec", () => {
   });
 
   it("redirect to correct transaction detail page", () => {
-    const txHash = "b87b6d4296d43480f4915cdd11a3b97f3fb48e997ea4973b922fec477808bcf6";
+    const txHash = "90c41c0e968d9c86949a2aecb18decc08da4fa0b4f756d9415b82b09e01fb6c1";
     cy.visit("/transactions");
     cy.get('[data-testid="transactions-card"]').contains("Transactions");
     cy.get('[data-testid="search-bar"]').type(txHash).type("{enter}");
@@ -24,8 +24,8 @@ describe("transactions spec", () => {
   });
 
   it("should navigate to the transaction detail page", () => {
-    const txHash = "b87b6d4296d43480f4915cdd11a3b97f3fb48e997ea4973b922fec477808bcf6";
-    cy.visit("/transaction/b87b6d4296d43480f4915cdd11a3b97f3fb48e997ea4973b922fec477808bcf6");
+    const txHash = "90c41c0e968d9c86949a2aecb18decc08da4fa0b4f756d9415b82b09e01fb6c1";
+    cy.visit("/transaction/90c41c0e968d9c86949a2aecb18decc08da4fa0b4f756d9415b82b09e01fb6c1");
     cy.get("div").contains("Transaction details");
     cy.get(".css-1kxgysv").contains(txHash);
     cy.get(":nth-child(1) > .css-13ne0mf > .css-70qvj9 > .MuiBox-root").contains("Input");
