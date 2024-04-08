@@ -946,8 +946,7 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
               collapseStringsAfterLength={false}
               rootName={false}
               theme={theme.isDark ? "dark" : "light"}
-              // keyRenderer={keyRenderer}
-              style={{ wordBreak: "break-word", width: "98%", pointerEvents: "none" }}
+              style={{ wordBreak: "break-word", width: "98%" }}
             />
           </ViewJson>
         </Box>
