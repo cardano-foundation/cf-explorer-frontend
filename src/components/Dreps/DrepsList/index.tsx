@@ -8,11 +8,12 @@ import { stringify } from "qs";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
+import ADAicon from "src/components/commons/ADAIcon";
 
 import { PoolName } from "./styles";
 
@@ -80,6 +81,18 @@ const DrepsList: React.FC = () => {
             {r.anchorHash}
           </Box>
         </CustomTooltip>
+      )
+    },
+    {
+      title: (
+        <Box component={"span"}>
+          {t("glossary.activeStake")} (<ADAicon />)
+        </Box>
+      ),
+      key: "pu.activeStake",
+      minWidth: "120px",
+      render: (r) => (
+        <Box component={"span"}>{r.activeVoteStake != null ? formatADAFull(r.activeVoteStake) : t("common.N/A")}</Box>
       )
     },
     {
