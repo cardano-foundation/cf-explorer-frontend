@@ -152,7 +152,8 @@ const DrepsOverview: React.FC = () => {
               <StyledCard.Container
                 sx={{
                   justifyContent: "space-between",
-                  [theme.breakpoints.between(1200, 1600)]: { flexWrap: "wrap" }
+                  [theme.breakpoints.between(1200, 1600)]: { flexWrap: "wrap" },
+                  [theme.breakpoints.down(300)]: { flexWrap: "wrap" }
                 }}
               >
                 <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
