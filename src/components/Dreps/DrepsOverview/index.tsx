@@ -92,7 +92,7 @@ const DrepsOverview: React.FC = () => {
       <Grid container spacing={2}>
         <Grid item lg={6} md={12} xs={12}>
           <Grid container spacing={2}>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12} sm={6}>
               <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
@@ -110,7 +110,7 @@ const DrepsOverview: React.FC = () => {
                 <StyledImg src={theme.mode === "light" ? CurentEpochPool : CurentEpochPoolDark} alt="Clock" />
               </StyledCard.ClickAble>
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12} sm={6}>
               <Box height={"100%"}>
                 <Box
                   bgcolor={(theme) => theme.palette.secondary[0]}
@@ -148,7 +148,7 @@ const DrepsOverview: React.FC = () => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12} sm={6}>
               <StyledCard.Container
                 sx={{
                   justifyContent: "space-between",
@@ -174,7 +174,7 @@ const DrepsOverview: React.FC = () => {
                 </Box>
               </StyledCard.Container>
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item md={6} xs={12} sm={6}>
               <StyledCard.Container>
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.totalDreps")}</StyledCard.Title>
