@@ -234,7 +234,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
-                    <Typography>{dataRange?.minSaturation || 0}</Typography>
+                    <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
                       data-testid="slider"
@@ -317,9 +317,9 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
-                    <Typography>{dataRange?.minGovParticipationRate || 0}</Typography>
+                    <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => formatADA(value)}
+                      valueLabelFormat={(value) => formatPercent(value)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
@@ -336,7 +336,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       min={0}
                       max={dataRange?.maxGovParticipationRate || 0}
                     />
-                    <Typography>{formatADA(dataRange?.maxGovParticipationRate) || 0}</Typography>
+                    <Typography>{formatPercent(dataRange?.maxGovParticipationRate) || `0%`}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
