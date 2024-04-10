@@ -111,8 +111,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
             {t("common.filter")}
           </Box>
         </Box>
-        <FilterContainer>
-          {open && (
+        {open && (
+          <FilterContainer>
             <Box display={"flex"} flexDirection={"column"}>
               <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
                 <AccordionSummary>
@@ -312,7 +312,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary.light} height={18} />
+                      <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary[800]} height={18} />
                       <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.poolParticipation")}
                       </Box>
@@ -420,8 +420,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
               </Box>
             </Box>
-          )}
-        </FilterContainer>
+          </FilterContainer>
+        )}
       </FilterWrapper>
     </ClickAwayListener>
   );
