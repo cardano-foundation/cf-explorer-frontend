@@ -153,7 +153,7 @@ const DrepsOverview: React.FC = () => {
                 sx={{
                   justifyContent: "space-between",
                   [theme.breakpoints.between(1200, 1600)]: { flexWrap: "wrap" },
-                  [theme.breakpoints.down(300)]: { flexWrap: "wrap" }
+                  [theme.breakpoints.down(325)]: { flexWrap: "wrap" }
                 }}
               >
                 <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
@@ -181,21 +181,22 @@ const DrepsOverview: React.FC = () => {
                   <StyledCard.Title>{t("glossary.totalDreps")}</StyledCard.Title>
                   <StyledCard.Value>{data?.totalDReps || 0}</StyledCard.Value>
                   <Box
-                    component="span"
                     sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
                     display={"flex"}
                     alignItems={"center"}
                     width={"100%"}
+                    flexWrap={"wrap"}
+                    gap={1}
                   >
-                    <Box flex={1}>
+                    <Box flex={1} minWidth={"max-content"}>
                       <PoolTitle>{t("glossary.activeDReps")}</PoolTitle>
                       <PoolValue>{data?.activeDReps || 0}</PoolValue>
                     </Box>
-                    <Box flex={1}>
+                    <Box flex={1} minWidth={"max-content"}>
                       <PoolTitle>{t("glossary.inactiveDReps")}</PoolTitle>
                       <PoolValue>{data?.inactiveDReps || 0}</PoolValue>
                     </Box>
-                    <Box flex={1}>
+                    <Box flex={1} minWidth={"max-content"}>
                       <PoolTitle>{t("glossary.retiredDReps")}</PoolTitle>
                       <PoolValue>{data?.retiredDReps || 0}</PoolValue>
                     </Box>
@@ -213,7 +214,7 @@ const DrepsOverview: React.FC = () => {
         </Grid>
         <Grid item lg={6} md={12} xs={12}>
           <StyledCard.Container>
-            <StyledCard.Content>Chart</StyledCard.Content>
+            <StyledCard.Content sx={{ minHeight: 100 }}></StyledCard.Content>
           </StyledCard.Container>
         </Grid>
       </Grid>

@@ -150,16 +150,23 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: t("votingPower") + " ",
+      title: t("votingPower"),
       key: "votingPower",
       minWidth: "120px",
-      render: (r) => (r.votingPower != null ? `${r.votingPower}` : t("common.N/A")),
+      render: (r) =>
+        r.votingPower != null ? (
+          <CustomTooltip title={`${r.votingPower * 100}%`}>
+            <Box component={"span"}>{formatPercent(r.votingPower)}</Box>
+          </CustomTooltip>
+        ) : (
+          t("common.N/A")
+        ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: t("governanceParticipationRate") + " ",
+      title: t("governanceParticipationRate"),
       key: "governanceParticipationRate",
       minWidth: "120px",
       render: (r) =>
