@@ -47,10 +47,10 @@ const DrepsList: React.FC = () => {
       key: "anchorLink",
       minWidth: "100px",
       render: (r) => (
-        <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined}>
+        <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
           <Box
             component={"a"}
-            display={"block"}
+            display={(r.anchorUrl || "").length > 20 ? "inline-block" : "inline"}
             width={"150px"}
             href={r.anchorUrl}
             target="_blank"
@@ -72,7 +72,7 @@ const DrepsList: React.FC = () => {
         <CustomTooltip title={r.anchorHash ? r.anchorHash : undefined}>
           <Box
             component={"span"}
-            display={"block"}
+            display={"inline-block"}
             width={"150px"}
             textOverflow={"ellipsis"}
             whiteSpace={"nowrap"}
