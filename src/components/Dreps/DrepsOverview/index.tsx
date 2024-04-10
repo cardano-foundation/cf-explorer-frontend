@@ -96,7 +96,9 @@ const DrepsOverview: React.FC = () => {
               <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
                   <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
-                  <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
+                  <StyledCard.Link to={details.epoch(data?.epochNo)}>
+                    {data?.epochNo || t("common.N/A")}
+                  </StyledCard.Link>
                   <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
                     {t("common.endIn")}:{" "}
                     <StyledCard.Comment>
