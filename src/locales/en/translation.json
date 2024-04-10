@@ -1019,8 +1019,6 @@
   "pool.submission": "Submission Date",
   "pool.expiryDate": "Expiry Date",
   "pool.anchorText": "Anchor Text",
-  "pool.metadataSearch": "Metadata Search",
-  "pool.searchMetadata": "Search Metadata",
   "pool.searchAnchorText": "Search Anchor Text",
   "pool.any": "Any",
   "pool.open": "Open Ballot",

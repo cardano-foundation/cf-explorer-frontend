@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,25 +7,15 @@ import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
-import { HeaderSearchIconComponent } from "src/commons/resources";
-import { details, routers } from "src/commons/routers";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomFilterMultiRange from "src/components/commons/CustomFilterMultiRange";
-import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 
-import {
-  AntSwitch,
-  PoolName,
-  SearchContainer,
-  ShowRetiredPools,
-  StyledInput,
-  SubmitButton,
-  TopSearchContainer
-} from "./styles";
+import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
 export interface PoolResponse {
   query?: string;
@@ -48,10 +38,8 @@ export interface PoolResponse {
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
-  const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
   const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
@@ -65,7 +53,6 @@ const DelegationLists: React.FC = () => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
-    setValue("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
@@ -192,38 +179,7 @@ const DelegationLists: React.FC = () => {
   ];
   return (
     <>
-      <TopSearchContainer>
-        <SearchContainer ref={tableRef}>
-          <StyledInput
-            placeholder={t("common.searchPools")}
-            onChange={(e) => setValue(e.target.value)}
-            value={value}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                setSearch(value);
-                history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-              }
-            }}
-          />
-          <SubmitButton
-            onClick={() => {
-              setSearch(value);
-              history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (value || "").toLocaleLowerCase()
-              });
-              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-            }}
-          >
-            <CustomIcon
-              data-testid="search-icon"
-              icon={HeaderSearchIconComponent}
-              fill={theme.palette.secondary[0]}
-              stroke={theme.palette.secondary.light}
-              height={22}
-              width={22}
-            />
-          </SubmitButton>
-        </SearchContainer>
+      <TopSearchContainer sx={{ justifyContent: "end" }}>
         <Box display="flex" gap="10px">
           <ShowRetiredPools>
             {t("glassary.showRetiredPools")}
