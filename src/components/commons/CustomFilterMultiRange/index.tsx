@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+import { stringify } from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -16,9 +18,10 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { formatADA, formatPercent, formatPrice } from "src/commons/utils/helper";
+import { formatADA, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import { PoolResponse } from "src/components/DelegationPool/DelegationList";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import CustomIcon from "../CustomIcon";
@@ -34,9 +37,10 @@ type IvalueRange = [number, number];
 const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setParams }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
-  const [filterParams, setFilterParams] = useState<PoolResponse>({});
+  const { pageInfo } = usePageInfo();
   const [valueRange, setValueRange] = useState<IvalueRange>([30, 50]);
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -44,16 +48,20 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
 
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
+  const [filterParams, setFilterParams] = useState<PoolResponse>(dataRange || {});
+
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
     setParams({});
+    history.push({ search: stringify({}), state: undefined });
   };
 
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
     setParams({ ...params, ...filterParams });
+    history.push({ search: stringify({ ...pageInfo, ...params }), state: undefined });
   };
 
   const handleKeyPress = (event: { key: string }) => {
@@ -366,7 +374,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minVotingPower || 0}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => formatPrice(value)}
+                      valueLabelFormat={(value) => numberWithCommas(value, 3)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
@@ -384,7 +392,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       step={0.000001}
                       max={dataRange?.maxVotingPower || 0}
                     />
-                    <Typography>{formatPrice(dataRange?.maxVotingPower) || 0}</Typography>
+                    <Typography>{numberWithCommas(dataRange?.maxVotingPower || "", 3)}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
