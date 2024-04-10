@@ -49,6 +49,7 @@ export const routers = {
   FAQ: "/faq",
   TERMS_OF_SERVICE: "/terms-of-service",
   SMARTCONTRACT_DETAIL: "/smartcontract/:id",
+  DREP_DETAILS: "/drep/:drepId",
   NOT_FOUND: "/*"
 } as const;
 
@@ -96,7 +97,8 @@ export const details = {
     routers.REPORT_GENERATED_POOL_DETAIL.replace(":reportId", reportId).replace(":tabActive", tabActive),
   smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
   nativeScript: (address?: string, tab = "transaction") =>
-    routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab)
+    routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab),
+  drep: (drepId: string) => routers.DREP_DETAILS.replace(":drepId", drepId ?? "")
 };
 
 export const listRouters = [

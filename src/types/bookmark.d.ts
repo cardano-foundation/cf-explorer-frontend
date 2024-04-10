@@ -4,7 +4,7 @@ declare interface Bookmark {
   createdDate?: string;
   id?: number;
   keyword: string;
-  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY" | "TOKEN";
+  type: "BLOCK" | "EPOCH" | "TRANSACTION" | "ADDRESS" | "POOL" | "STAKE_KEY" | "TOKEN" | "DREP";
   urlPage?: string;
   network: NETWORK_TYPES;
 }

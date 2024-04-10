@@ -198,16 +198,16 @@ const FAQ = () => {
         </TextReffer>
 
         <TextReffer>
-          <TextSubHeader>SanchoNet</TextSubHeader>
+          <TextSubHeader>Sanchonet</TextSubHeader>
         </TextReffer>
 
         <TextReffer>
-          <TitleSection> What is SanchoNet?</TitleSection>
-          SanchoNet is the testnet for rolling out governance features for the Cardano blockchain, as specified in{" "}
+          <TitleSection> What is Sanchonet?</TitleSection>
+          Sanchonet is the testnet for rolling out governance features for the Cardano blockchain, as specified in{" "}
           <LinkTo target="_blank" rel="noopener noreferrer" href="https://cips.cardano.org/cip/CIP-1694">
             CIP-1694
           </LinkTo>
-          . SanchoNet is all about developing and testing the technical components and processes required to action
+          . Sanchonet is all about developing and testing the technical components and processes required to action
           governance for Cardano within{" "}
           <LinkTo target="_blank" rel="noopener noreferrer" href="https://cips.cardano.org/cip/CIP-1694">
             CIP-1694
@@ -216,13 +216,13 @@ const FAQ = () => {
         </TextReffer>
 
         <TextReffer>
-          <TitleSection> Why the name SanchoNet?</TitleSection>
-          The name &ldquo;SanchoNet&rdquo; draws inspiration from the character Sancho Panza, Don Quixote&quot;s
+          <TitleSection> Why the name Sanchonet?</TitleSection>
+          The name &ldquo;Sanchonet&rdquo; draws inspiration from the character Sancho Panza, Don Quixote&quot;s
           companion in Miguel de Cervantes literary classic.
         </TextReffer>
 
         <TextReffer>
-          <TitleSection> Why are governance features implemented on SanchoNet currently not supported?</TitleSection>
+          <TitleSection> Why are governance features implemented on Sanchonet currently not supported?</TitleSection>
           The first release will support the Explorer features as in other existing networks (Mainnet, PreProd, Preview)
           while new features introduced with{" "}
           <LinkTo target="_blank" rel="noopener noreferrer" href="https://cips.cardano.org/cip/CIP-1694">
@@ -232,23 +232,23 @@ const FAQ = () => {
         </TextReffer>
 
         <TextReffer>
-          <TitleSection> Where can I learn more about SanchoNet?</TitleSection>
-          You can find out more about SanchoNet and learn how to participate{" "}
+          <TitleSection> Where can I learn more about Sanchonet?</TitleSection>
+          You can find out more about Sanchonet and learn how to participate{" "}
           <LinkTo target="_blank" rel="noopener noreferrer" href="https://sancho.network/">
             here
           </LinkTo>
         </TextReffer>
 
         <TextReffer>
-          <TitleSection> Who is participating in SanchoNet?</TitleSection>
-          SanchoNet is open to everyone. It also introduces two new roles: the Delegated Representatives (DReps) and the
+          <TitleSection> Who is participating in Sanchonet?</TitleSection>
+          Sanchonet is open to everyone. It also introduces two new roles: the Delegated Representatives (DReps) and the
           Constitutional Committee (CC).
         </TextReffer>
 
         <TextReffer>
           <TitleSection> Why is the Live Stake feature showing &ldquo;Not Available&rdquo;?</TitleSection>
           Live stake and rewards data is provided through a third party provider, which at present does not support
-          SanchoNet.
+          Sanchonet.
         </TextReffer>
 
         <TextReffer>

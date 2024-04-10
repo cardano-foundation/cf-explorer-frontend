@@ -10,8 +10,7 @@ describe("Sidebar component", () => {
     render(<Sidebar />);
 
     expect(screen.getByRole("link", { name: /logo cardano/i })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /browse/i })).toBeInTheDocument();
-    expect(screen.getByText(/resources/i)).toBeInTheDocument();
+    expect(screen.getByText(/discover cardano/i)).toBeInTheDocument();
   });
 
   it("should component route to dashboard route", () => {

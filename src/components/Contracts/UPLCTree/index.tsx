@@ -3,6 +3,7 @@ import { useTheme } from "@emotion/react";
 
 import { CloseSquareIcon, MinusSquareIcon, PlusSquareIcon } from "src/commons/resources";
 import { UPLCData, UPLCProgram } from "src/types/uplc";
+import NotAvailable from "src/components/commons/NotAvailable";
 
 import { StyledTreeItem, TreeContainer } from "./styles";
 
@@ -11,7 +12,10 @@ export interface UPLCTreeProps {
 }
 
 export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
-  const label = useMemo(() => `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}`, [uplc]);
+  const label = useMemo(
+    () => (uplc.version.major ? `program ${uplc.version.major}.${uplc.version.minor}.${uplc.version.patch}` : ""),
+    [uplc]
+  );
   const theme = useTheme();
   const getExpandedNodeIds = () => {
     if (!uplc) return [];
@@ -21,9 +25,10 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
 
     // Get nodeIds with bread first search
     const queue: UPLCData[] = [];
-    uplc.program.data.forEach((it) => {
-      queue.push(it);
-    });
+    uplc.program &&
+      (uplc.program.data || [])?.forEach((it) => {
+        queue.push(it);
+      });
     while (queue.length > 0) {
       currentLevel++;
       if (currentLevel >= maxLevel) break;
@@ -38,6 +43,14 @@ export const UPLCTree: React.FC<UPLCTreeProps> = ({ uplc }) => {
     }
     return nodeIds;
   };
+
+  if (!uplc.version.major) {
+    return (
+      <>
+        <NotAvailable />
+      </>
+    );
+  }
 
   return (
     <TreeContainer

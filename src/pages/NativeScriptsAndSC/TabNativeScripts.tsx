@@ -135,6 +135,7 @@ const TabNativeScripts = () => {
       </Box>
     );
   };
+
   return (
     <Box data-testid="TabNativeScripts">
       <ClickAwayListener
