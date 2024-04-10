@@ -8,8 +8,10 @@ import {
   Button,
   ButtonGroup,
   Chip,
+  ClickAwayListener,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
@@ -24,16 +26,15 @@ import {
   Typography,
   styled,
   tooltipClasses,
-  useTheme,
-  ClickAwayListener,
-  Link
+  useTheme
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -55,7 +56,7 @@ import {
   historyIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
@@ -63,11 +64,11 @@ import CardGovernanceVotes, {
 } from "src/components/commons/CardGovernanceVotes";
 import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
+import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -77,7 +78,6 @@ import {
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
 import { StyledInput } from "src/components/share/styled";
-import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
@@ -91,10 +91,10 @@ import {
   StyledGrid,
   StyledTitle
 } from "../DelegationDetail/DelegationDetailInfo/styles";
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
 
 interface DelegationGovernanceVotesProps {
@@ -374,7 +374,7 @@ const GovernanceVotesDetail: React.FC<{
 
       <DataContainer sx={{ boxShadow: "unset" }}>
         <StyledGrid container>
-          <Item item xs={6} md={3} top={1}>
+          <Item item xs={6} md={3} top={1} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr={"5px"}>
               <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
               <BlackWarningIcon />
@@ -420,7 +420,7 @@ const GovernanceVotesDetail: React.FC<{
               </Box>
             </InfoValue>
           </Item>
-          <Item item xs={6} md={3} top={1}>
+          <Item item xs={6} md={3} top={1} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
               <BlackWarningIcon />
@@ -430,7 +430,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
           </Item>
-          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative", pr: "5px !important" }}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
               <BlackWarningIcon />
@@ -517,7 +517,7 @@ const GovernanceVotesDetail: React.FC<{
               )}
             </InfoValue>
           </Item>
-          <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
+          <Item item xs={6} md={3} top={1} sx={{ position: "relative", pr: "5px !important" }} width={"100%"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
               <BlackWarningIcon />
@@ -532,7 +532,7 @@ const GovernanceVotesDetail: React.FC<{
               </Box>
             </InfoTitle>
           </Item>
-          <Item item xs={6} md={3}>
+          <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon
                 fill={theme.palette.secondary.light}
@@ -550,7 +550,7 @@ const GovernanceVotesDetail: React.FC<{
               {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
             </InfoValue>
           </Item>
-          <Item item xs={6} md={3}>
+          <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
@@ -560,7 +560,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
           </Item>
-          <Item item xs={6} md={3}>
+          <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
               <BlackWarningIcon />
@@ -570,7 +570,7 @@ const GovernanceVotesDetail: React.FC<{
             </InfoTitle>
             <InfoValue>{formatDateTime(data?.expiryDate || "")}</InfoValue>
           </Item>
-          <Item item xs={6} md={3}>
+          <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
               <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
               <BlackWarningIcon />
@@ -1063,6 +1063,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
@@ -1441,7 +1442,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
-                  onClose={() => setOpenDateRange(false)}
+                  onClose={() => {
+                    setOpenDateRange(false);
+                  }}
                   onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>
