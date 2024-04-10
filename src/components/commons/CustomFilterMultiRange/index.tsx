@@ -137,7 +137,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "saturation"} onChange={handleChange("saturation")}>
+              <AccordionContainer expanded={expanded === "poolSize"} onChange={handleChange("poolSize")}>
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -147,7 +147,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "saturation" ? (
+                      {expanded === "poolSize" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -176,7 +176,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "action-type"} onChange={handleChange("action-type")}>
+              <AccordionContainer expanded={expanded === "poolPledge"} onChange={handleChange("poolPledge")}>
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -186,7 +186,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "action-type" ? (
+                      {expanded === "poolPledge" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -214,7 +214,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "current-status"} onChange={handleChange("current-status")}>
+              <AccordionContainer expanded={expanded === "poolSaturation"} onChange={handleChange("poolSaturation")}>
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -224,7 +224,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "current-status" ? (
+                      {expanded === "poolSaturation" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -255,7 +255,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "vote"} onChange={handleChange("vote")}>
+              <AccordionContainer expanded={expanded === "poolLifetime"} onChange={handleChange("poolLifetime")}>
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -265,7 +265,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "vote" ? (
+                      {expanded === "poolLifetime" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -297,7 +297,10 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "participation"} onChange={handleChange("participation")}>
+              <AccordionContainer
+                expanded={expanded === "poolParticipation"}
+                onChange={handleChange("poolParticipation")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -307,7 +310,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "participation" ? (
+                      {expanded === "poolParticipation" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -329,18 +332,19 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                         ] || valueRange
                       }
                       onChange={(e, newValue) =>
-                        handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovernanceParticipationRate")
+                        handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
                       }
                       valueLabelDisplay="auto"
                       disableSwap
+                      step={0.000001}
                       min={0}
-                      max={dataRange?.maxGovParticipationRate || 0}
+                      max={dataRange?.maxGovParticipationRate}
                     />
-                    <Typography>{formatPercent(dataRange?.maxGovParticipationRate) || `0%`}</Typography>
+                    <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "voting-power"} onChange={handleChange("voting-power")}>
+              <AccordionContainer expanded={expanded === "poolVoting"} onChange={handleChange("poolVoting")}>
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
@@ -350,7 +354,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "voting-power" ? (
+                      {expanded === "poolVoting" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
