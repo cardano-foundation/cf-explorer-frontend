@@ -85,6 +85,7 @@ export const ShowRetiredPools = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
   gap: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 10px;
     width: 100%;
     justify-content: flex-end;
   }
