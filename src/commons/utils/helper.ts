@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
-import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
+import moment, { DurationInputArg1, DurationInputArg2 } from "moment-timezone";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
 import { createDecipheriv, pbkdf2Sync } from "crypto";
@@ -194,14 +194,29 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 };
 
 export const formatDateTime = (date: string) => {
-  return moment(date).format("MM/DD/YYYY HH:mm:ss");
+  return moment.utc(date).tz(moment.tz.guess()).format("MM/DD/YYYY HH:mm:ss");
 };
 export const formatDateTimeLocal = (date: string) => {
-  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
+  const dateFormat = new Intl.DateTimeFormat(moment().locale(), {
+    hour: "numeric",
+    minute: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    second: "2-digit",
+    hour12: false,
+    timeZone: moment.tz.guess()
+  });
+
+  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
 };
 
 export const formatDate = (date: string) => {
-  return moment(date).format("DD/MM/YYYY");
+  const dateFormat = new Intl.DateTimeFormat("en-US", {
+    timeZone: moment.tz.guess(),
+    timeZoneName: "short"
+  });
+  return dateFormat.format(moment.utc(date) as never as Date);
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
