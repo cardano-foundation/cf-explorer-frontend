@@ -18,7 +18,7 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { formatADA, formatPercent, numberWithCommas } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, numberWithCommas } from "src/commons/utils/helper";
 import { PoolResponse } from "src/components/DelegationPool/DelegationList";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
@@ -49,8 +49,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
   };
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
-  const [filterParams, setFilterParams] = useState<PoolResponse>(dataRange || {});
 
+  const [filterParams, setFilterParams] = useState<PoolResponse>(dataRange || {});
   useEffect(() => {
     setFilterParams({ ...query });
   }, [JSON.stringify(query)]);
@@ -66,7 +66,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
-    setParams({ ...params, ...filterParams, page: 1 });
+    setParams({ ...params, ...filterParams, ...pageInfo, page: 1 });
+    setFilterParams({ ...params, ...filterParams, ...pageInfo, page: 1 });
     history.push({ search: stringify({ ...pageInfo, ...filterParams, page: 1 }), state: undefined });
   };
 
@@ -173,7 +174,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minPoolSize || 0}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => formatADA(value)}
+                      valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
@@ -186,7 +187,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       min={0}
                       max={dataRange?.maxPoolSize || 0}
                     />
-                    <Typography>{formatADA(dataRange?.maxPoolSize) || 0}</Typography>
+                    <Typography>{formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
@@ -212,7 +213,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minPledge || 0}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => formatADA(value)}
+                      valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
@@ -224,7 +225,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       min={0}
                       max={dataRange?.maxPledge || 0}
                     />
-                    <Typography>{formatADA(dataRange?.maxPledge) || 0}</Typography>
+                    <Typography>{formatADA(dataRange?.maxPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
@@ -408,7 +409,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={JSON.stringify(dataRange) === JSON.stringify(filterParams)}
+                  disabled={JSON.stringify(query) === JSON.stringify(filterParams)}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>

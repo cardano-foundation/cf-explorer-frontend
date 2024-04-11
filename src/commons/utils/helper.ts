@@ -69,7 +69,8 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
-  numOfUnits = 6
+  numOfUnits = 6,
+  decimalDigits = 6
 ): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
@@ -87,7 +88,7 @@ export const formatADA = (
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
-  return numberWithCommas(realAda.toString(), 6);
+  return numberWithCommas(realAda.toString(), decimalDigits);
 };
 
 export const formatADAFull = (value?: string | number, limit = 6): string => {
