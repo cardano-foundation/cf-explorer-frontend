@@ -18,6 +18,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
 export interface PoolResponse {
+  page?: number;
   query?: string;
   poolName?: string;
   minPoolSize?: number;
@@ -203,6 +204,8 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
+        height={fetchData.data.length ? "498px" : "435px"}
+        maxHeight={fetchData.data.length ? "585px" : "435px"}
         columns={columns}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}

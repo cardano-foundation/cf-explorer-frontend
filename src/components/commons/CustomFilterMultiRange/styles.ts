@@ -107,5 +107,18 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
 
   ":hover": {
     backgroundColor: theme.palette.secondary[0]
+  },
+
+  ":after": {
+    content: "''",
+    display: "block",
+    background: theme.palette.secondary[0],
+    zIndex: -1,
+    position: "absolute",
+    top: "-6px",
+    right: "36px",
+    width: "14px",
+    height: "16px",
+    transform: "rotate(45deg)"
   }
 }));

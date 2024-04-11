@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useHistory } from "react-router-dom";
-import { stringify } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import { stringify, parse } from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -37,6 +37,8 @@ type IvalueRange = [number, number];
 const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setParams }) => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { search } = useLocation();
+  const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
@@ -45,23 +47,27 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
-
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
   const [filterParams, setFilterParams] = useState<PoolResponse>(dataRange || {});
+
+  useEffect(() => {
+    setFilterParams({ ...query });
+  }, [JSON.stringify(query)]);
 
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
     setParams({});
+    setFilterParams({});
     history.push({ search: stringify({}), state: undefined });
   };
 
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
-    setParams({ ...params, ...filterParams });
-    history.push({ search: stringify({ ...pageInfo, ...params }), state: undefined });
+    setParams({ ...params, ...filterParams, page: 1 });
+    history.push({ search: stringify({ ...pageInfo, ...filterParams, page: 1 }), state: undefined });
   };
 
   const handleKeyPress = (event: { key: string }) => {
@@ -111,8 +117,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
             {t("common.filter")}
           </Box>
         </Box>
-        <FilterContainer>
-          {open && (
+        {open && (
+          <FilterContainer>
             <Box display={"flex"} flexDirection={"column"}>
               <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
                 <AccordionSummary>
@@ -312,7 +318,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary.light} height={18} />
+                      <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary[800]} height={18} />
                       <Box ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.poolParticipation")}
                       </Box>
@@ -420,8 +426,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                 <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
               </Box>
             </Box>
-          )}
-        </FilterContainer>
+          </FilterContainer>
+        )}
       </FilterWrapper>
     </ClickAwayListener>
   );
