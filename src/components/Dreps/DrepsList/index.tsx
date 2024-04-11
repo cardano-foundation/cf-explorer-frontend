@@ -117,7 +117,7 @@ const DrepsList: React.FC = () => {
       key: "status",
       minWidth: "120px",
       render: (r) => (
-        <StakeKeyStatus status={r.status}>
+        <StakeKeyStatus status={r.status} sx={{ width: 65, display: "inline-block", textAlign: "center" }}>
           {r.status === "ACTIVE"
             ? t("status.active")
             : r.status === "INACTIVE"
