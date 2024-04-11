@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -18,23 +18,22 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, numberWithCommas } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
 import { PoolResponse } from "src/components/DelegationPool/DelegationList";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
-import CustomIcon from "../CustomIcon";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
+import CustomIcon from "../CustomIcon";
 
 interface CustomFilterMultiRange {
-  params: PoolResponse;
   setParams: Dispatch<SetStateAction<PoolResponse>>;
 }
 
 type IvalueRange = [number, number];
 
-const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setParams }) => {
+const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
@@ -49,34 +48,67 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
   };
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
+  const initParams = {
+    page: 0,
+    size: 50,
+    query: "",
+    sort: "",
+    maxPoolSize: +(dataRange?.maxPoolSize || 0),
+    minPoolSize: +(dataRange?.minPoolSize || 0),
+    minPledge: +(dataRange?.minPledge || 0),
+    maxPledge: +(dataRange?.maxPledge || 0),
+    minSaturation: +(dataRange?.minSaturation || 0),
+    maxSaturation: +(dataRange?.maxSaturation || 0),
+    minLifetimeBlock: +(dataRange?.minLifetimeBlock || 0),
+    maxLifetimeBlock: +(dataRange?.maxLifetimeBlock || 0),
+    minVotingPower: +(dataRange?.minVotingPower || 0),
+    maxVotingPower: +(dataRange?.maxVotingPower || 0),
+    minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
+    maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
+  };
+  const [filterParams, setFilterParams] = useState<PoolResponse>(initParams || {});
 
-  const [filterParams, setFilterParams] = useState<PoolResponse>(dataRange || {});
   useEffect(() => {
-    setFilterParams({ ...query });
+    setFilterParams({
+      page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
+      size: +(query?.voteSize || "") || 50,
+      query: (query?.query || "").toString(),
+      sort: (query?.sort || "").toString(),
+      maxPoolSize: +(query?.maxPoolSize || dataRange?.maxPoolSize || 0),
+      minPoolSize: +(query?.minPoolSize || dataRange?.minPoolSize || 0),
+      minPledge: +(query?.minPledge || dataRange?.minPledge || 0),
+      maxPledge: +(query?.maxPledge || dataRange?.maxPledge || 0),
+      minSaturation: +(query?.minSaturation || dataRange?.minSaturation || 0),
+      maxSaturation: +(query?.maxSaturation || dataRange?.maxSaturation || 0),
+      minLifetimeBlock: +(query?.minLifetimeBlock || dataRange?.minLifetimeBlock || 0),
+      maxLifetimeBlock: +(query?.maxLifetimeBlock || dataRange?.maxLifetimeBlock || 0),
+      minVotingPower: +(query?.minVotingPower || dataRange?.minVotingPower || 0),
+      maxVotingPower: +(query?.maxVotingPower || dataRange?.maxVotingPower || 0),
+      minGovParticipationRate: +(query?.minGovParticipationRate || dataRange?.minGovParticipationRate || 0),
+      maxGovParticipationRate: +(query?.maxGovParticipationRate || dataRange?.maxGovParticipationRate || 0)
+    });
   }, [JSON.stringify(query)]);
 
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
-    setParams({});
-    setFilterParams({});
-    history.push({ search: stringify({}), state: undefined });
+    setFilterParams(initParams);
+    setParams(initParams);
+    history.replace({ search: stringify({ page: 0, size: 50, sort: "" }), state: undefined });
   };
 
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
-    setParams({ ...params, ...filterParams, ...pageInfo, page: 1 });
-    setFilterParams({ ...params, ...filterParams, ...pageInfo, page: 1 });
-    history.push({ search: stringify({ ...pageInfo, ...filterParams, page: 1 }), state: undefined });
+    setFilterParams({ ...filterParams, ...initParams });
+    setParams({ ...filterParams });
+    history.replace({ search: stringify({ ...pageInfo, ...filterParams, page: 0 }), state: undefined });
   };
-
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
       handleFilter();
     }
   };
-
   const handleChangeValueRange = (event: Event, newValue: number | number[], minKey: string, maxKey: string) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -85,6 +117,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
     setValueRange([Math.min(min), Math.min(max)]);
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
+
+  const isDisableFilter = useMemo(() => JSON.stringify(initParams) === JSON.stringify(filterParams), [filterParams]);
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -146,7 +180,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={t("pool.poolSearchName")}
-                    value={filterParams?.query}
+                    value={filterParams?.query || query.query}
                     onChange={({ target: { value } }) => setFilterParams({ ...filterParams, query: value })}
                     onKeyPress={handleKeyPress}
                   />
@@ -381,7 +415,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minVotingPower || 0}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => numberWithCommas(value, 3)}
+                      valueLabelFormat={(value) => formatPercent(value)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
@@ -399,7 +433,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                       step={0.000001}
                       max={dataRange?.maxVotingPower || 0}
                     />
-                    <Typography>{numberWithCommas(dataRange?.maxVotingPower || "", 3)}</Typography>
+                    <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
@@ -409,7 +443,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ params, setP
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={JSON.stringify(query) === JSON.stringify(filterParams)}
+                  disabled={isDisableFilter}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>

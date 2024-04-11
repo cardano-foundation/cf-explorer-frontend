@@ -20,7 +20,8 @@ import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./sty
 export interface PoolResponse {
   page?: number;
   query?: string;
-  poolName?: string;
+  size?: number;
+  sort?: string;
   minPoolSize?: number;
   maxPoolSize?: number;
   minPledge?: number;
@@ -199,7 +200,7 @@ const DelegationLists: React.FC = () => {
               }}
             />
           </ShowRetiredPools>
-          <CustomFilterMultiRange params={params} setParams={setParams} />
+          <CustomFilterMultiRange setParams={setParams} />
         </Box>
       </TopSearchContainer>
       <Table
