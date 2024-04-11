@@ -180,7 +180,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={t("pool.poolSearchName")}
-                    value={filterParams?.query || query.query}
+                    value={filterParams?.query || ""}
                     onChange={({ target: { value } }) => setFilterParams({ ...filterParams, query: value })}
                     onKeyPress={handleKeyPress}
                   />
