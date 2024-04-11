@@ -10,7 +10,7 @@ export const StyledSkeleton = styled(CommonSkeleton)`
 `;
 
 export const StyledLinearProgress = styled(LinearProgress)`
-  margin-top: 10px;
+  margin-top: 11px;
   width: 100%;
   height: 10px;
   border-radius: 34px;

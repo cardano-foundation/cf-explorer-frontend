@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { stringify } from "qs";
@@ -14,6 +14,7 @@ import Table, { Column } from "src/components/commons/Table";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
 import ADAicon from "src/components/commons/ADAIcon";
+import { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 
 import { PoolName } from "./styles";
 
@@ -21,7 +22,7 @@ const DrepsList: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pageInfo } = usePageInfo();
-
+  const [metadataUrl, setMetadataUrl] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
@@ -49,15 +50,18 @@ const DrepsList: React.FC = () => {
       render: (r) => (
         <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
           <Box
-            component={"a"}
+            component={Button}
+            textTransform={"lowercase"}
+            fontWeight={400}
             display={(r.anchorUrl || "").length > 20 ? "inline-block" : "inline"}
             width={"150px"}
-            href={r.anchorUrl}
-            target="_blank"
             textOverflow={"ellipsis"}
             whiteSpace={"nowrap"}
             overflow={"hidden"}
             color={(theme) => `${theme.palette.primary.main} !important`}
+            onClick={() => setMetadataUrl(r.anchorUrl)}
+            disableRipple={true}
+            sx={{ ":hover": { background: "none" } }}
           >
             {`${r.anchorUrl || ""}`}
           </Box>
@@ -151,6 +155,7 @@ const DrepsList: React.FC = () => {
           }
         }}
       />
+      <ActionMetadataModalConfirm onClose={() => setMetadataUrl("")} open={!!metadataUrl} anchorUrl={metadataUrl} />
     </>
   );
 };
