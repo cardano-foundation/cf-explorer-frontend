@@ -31,7 +31,7 @@ interface CustomFilterMultiRange {
   setParams: Dispatch<SetStateAction<PoolResponse>>;
 }
 
-type IvalueRange = [number, number];
+type IValueRange = [number, number];
 
 const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams }) => {
   const theme = useTheme();
@@ -42,7 +42,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
-  const [valueRange, setValueRange] = useState<IvalueRange>([30, 50]);
+  const [valueRange, setValueRange] = useState<IValueRange>([30, 50]);
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -59,8 +59,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
     maxPledge: +(dataRange?.maxPledge || 0),
     minSaturation: +(dataRange?.minSaturation || 0),
     maxSaturation: +(dataRange?.maxSaturation || 0),
-    minLifetimeBlock: +(dataRange?.minLifetimeBlock || 0),
-    maxLifetimeBlock: +(dataRange?.maxLifetimeBlock || 0),
+    minBlockLifetime: +(dataRange?.minLifetimeBlock || 0),
+    maxBlockLifetime: +(dataRange?.maxLifetimeBlock || 0),
     minVotingPower: +(dataRange?.minVotingPower || 0),
     maxVotingPower: +(dataRange?.maxVotingPower || 0),
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
@@ -80,15 +80,14 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
       maxPledge: +(query?.maxPledge || dataRange?.maxPledge || 0),
       minSaturation: +(query?.minSaturation || dataRange?.minSaturation || 0),
       maxSaturation: +(query?.maxSaturation || dataRange?.maxSaturation || 0),
-      minLifetimeBlock: +(query?.minLifetimeBlock || dataRange?.minLifetimeBlock || 0),
-      maxLifetimeBlock: +(query?.maxLifetimeBlock || dataRange?.maxLifetimeBlock || 0),
+      minBlockLifetime: +(query?.minBlockLifetime || dataRange?.minLifetimeBlock || 0),
+      maxBlockLifetime: +(query?.maxBlockLifetime || dataRange?.maxLifetimeBlock || 0),
       minVotingPower: +(query?.minVotingPower || dataRange?.minVotingPower || 0),
       maxVotingPower: +(query?.maxVotingPower || dataRange?.maxVotingPower || 0),
       minGovParticipationRate: +(query?.minGovParticipationRate || dataRange?.minGovParticipationRate || 0),
       maxGovParticipationRate: +(query?.maxGovParticipationRate || dataRange?.maxGovParticipationRate || 0)
     });
   }, [JSON.stringify(query)]);
-
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
@@ -100,7 +99,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
-    setFilterParams({ ...filterParams, ...initParams });
+    setFilterParams({ ...initParams, ...filterParams });
     setParams({ ...filterParams });
     history.replace({ search: stringify({ ...pageInfo, ...filterParams, page: 0 }), state: undefined });
   };
@@ -211,14 +210,13 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [filterParams.minPoolSize || 0, filterParams.maxPoolSize || dataRange?.maxPoolSize || 0] ||
-                        valueRange
-                      }
+                      value={[filterParams.minPoolSize || 0, filterParams.maxPoolSize || 0] || valueRange}
+                      defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
                       valueLabelDisplay="auto"
                       disableSwap
                       min={0}
+                      step={10000000000}
                       max={dataRange?.maxPoolSize || 0}
                     />
                     <Typography>{formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
@@ -250,12 +248,12 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [filterParams.minPledge || 0, filterParams.maxPledge || dataRange?.maxPledge || 0] || valueRange
-                      }
+                      value={[filterParams.minPledge || 0, filterParams.maxPledge || 0] || valueRange}
+                      defaultValue={[filterParams.minPledge || 0, initParams.maxPledge || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPledge", "maxPledge")}
                       valueLabelDisplay="auto"
                       disableSwap
+                      step={10000000000}
                       min={0}
                       max={dataRange?.maxPledge || 0}
                     />
@@ -288,18 +286,15 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [
-                          filterParams.minSaturation || 0,
-                          filterParams.maxSaturation || dataRange?.maxSaturation || 0
-                        ] || valueRange
-                      }
+                      value={[filterParams.minSaturation || 0, filterParams.maxSaturation || 0] || valueRange}
+                      defaultValue={[filterParams.minSaturation || 0, initParams.maxSaturation || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minSaturation", "maxSaturation")}
                       valueLabelDisplay="auto"
                       disableSwap
                       min={0}
                       max={dataRange?.maxSaturation || 0}
                     />
+
                     <Typography>{formatPercent((dataRange?.maxSaturation || 0) / 100) || `0%`}</Typography>
                   </Box>
                 </AccordionDetailsFilter>
@@ -328,12 +323,8 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                     <StyledSlider
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [
-                          filterParams.minBlockLifetime || 0,
-                          filterParams.maxBlockLifetime || dataRange?.maxLifetimeBlock || 0
-                        ] || valueRange
-                      }
+                      value={[filterParams.minBlockLifetime || 0, filterParams.maxBlockLifetime || 0] || valueRange}
+                      defaultValue={[filterParams.minBlockLifetime || 0, initParams.maxBlockLifetime || 0]}
                       onChange={(e, newValue) =>
                         handleChangeValueRange(e, newValue, "minBlockLifetime", "maxBlockLifetime")
                       }
@@ -375,11 +366,13 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
                       value={
-                        [
-                          filterParams.minGovParticipationRate || 0,
-                          filterParams.maxGovParticipationRate || dataRange?.maxGovParticipationRate || 0
-                        ] || valueRange
+                        [filterParams.minGovParticipationRate || 0, filterParams.maxGovParticipationRate || 0] ||
+                        valueRange
                       }
+                      defaultValue={[
+                        filterParams.minGovParticipationRate || 0,
+                        initParams.maxGovParticipationRate || 0
+                      ]}
                       onChange={(e, newValue) =>
                         handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
                       }
@@ -413,24 +406,20 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
-                    <Typography>{dataRange?.minVotingPower || 0}</Typography>
+                    <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatPercent(value)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [
-                          filterParams.minVotingPower || 0,
-                          filterParams.maxVotingPower || dataRange?.maxVotingPower || 0
-                        ] || valueRange
-                      }
+                      value={[filterParams.minVotingPower || 0, filterParams.maxVotingPower || 0] || valueRange}
+                      defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
                       onChange={(e, newValue) =>
                         handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
                       }
                       valueLabelDisplay="auto"
                       disableSwap
                       min={0}
-                      step={0.000001}
+                      step={0.0001}
                       max={dataRange?.maxVotingPower || 0}
                     />
                     <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
