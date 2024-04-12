@@ -101,7 +101,10 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
     setOpen(false);
     setFilterParams({ ...initParams, ...filterParams });
     setParams({ ...filterParams });
-    history.replace({ search: stringify({ ...pageInfo, ...filterParams, page: 0 }), state: undefined });
+    history.replace({
+      search: stringify({ ...filterParams, size: pageInfo.size, sort: pageInfo.sort, page: 1 }),
+      state: undefined
+    });
   };
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
@@ -116,7 +119,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
     setValueRange([Math.min(min), Math.min(max)]);
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
-
   const isDisableFilter = useMemo(() => JSON.stringify(initParams) === JSON.stringify(filterParams), [filterParams]);
 
   return (
