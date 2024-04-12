@@ -80,7 +80,7 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   top: "calc(100% + 10px)",
   right: 10,
   borderRadius: theme.spacing(1),
-  boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+  boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
     width: 250,
     right: -17,

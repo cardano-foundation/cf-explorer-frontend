@@ -60,7 +60,7 @@ const DelegationLists: React.FC = () => {
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { ...pageInfo, search, isShowRetired: isShowRetired, ...params },
+    { search, isShowRetired: isShowRetired, ...params, ...pageInfo },
     false,
     blockKey
   );
