@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
@@ -19,7 +19,6 @@ import {
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
-import { PoolResponse } from "src/components/DelegationPool/DelegationList";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 
@@ -27,13 +26,28 @@ import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
 import CustomIcon from "../CustomIcon";
 
-interface CustomFilterMultiRange {
-  setParams: Dispatch<SetStateAction<PoolResponse>>;
+interface PoolResponse {
+  page?: number;
+  query?: string;
+  size?: number;
+  sort?: string;
+  minPoolSize?: number;
+  maxPoolSize?: number;
+  minPledge?: number;
+  maxPledge?: number;
+  minSaturation?: number;
+  maxSaturation?: number;
+  minBlockLifetime?: number;
+  maxBlockLifetime?: number;
+  maxLifetimeBlock?: number;
+  minLifetimeBlock?: number;
+  minVotingPower?: number;
+  maxVotingPower?: number;
+  minGovParticipationRate?: number;
+  maxGovParticipationRate?: number;
 }
 
-type IValueRange = [number, number];
-
-const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams }) => {
+const CustomFilterMultiRange: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
@@ -42,7 +56,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
-  const [valueRange, setValueRange] = useState<IValueRange>([30, 50]);
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -66,41 +79,39 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
     maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
-  const [filterParams, setFilterParams] = useState<PoolResponse>(initParams || {});
+  const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
     setFilterParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.voteSize || "") || 50,
-      query: (query?.query || "").toString(),
       sort: (query?.sort || "").toString(),
-      maxPoolSize: +(query?.maxPoolSize || dataRange?.maxPoolSize || 0),
-      minPoolSize: +(query?.minPoolSize || dataRange?.minPoolSize || 0),
-      minPledge: +(query?.minPledge || dataRange?.minPledge || 0),
-      maxPledge: +(query?.maxPledge || dataRange?.maxPledge || 0),
-      minSaturation: +(query?.minSaturation || dataRange?.minSaturation || 0),
-      maxSaturation: +(query?.maxSaturation || dataRange?.maxSaturation || 0),
-      minBlockLifetime: +(query?.minBlockLifetime || dataRange?.minLifetimeBlock || 0),
-      maxBlockLifetime: +(query?.maxBlockLifetime || dataRange?.maxLifetimeBlock || 0),
-      minVotingPower: +(query?.minVotingPower || dataRange?.minVotingPower || 0),
-      maxVotingPower: +(query?.maxVotingPower || dataRange?.maxVotingPower || 0),
-      minGovParticipationRate: +(query?.minGovParticipationRate || dataRange?.minGovParticipationRate || 0),
-      maxGovParticipationRate: +(query?.maxGovParticipationRate || dataRange?.maxGovParticipationRate || 0)
+      ...(query?.query && { query: query?.query.toString() || "" }),
+      ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
+      ...(query?.minPoolSize && { minPoolSize: +(query?.minPoolSize || 0) }),
+      ...(query?.minPledge && { minPledge: +(query?.minPledge || 0) }),
+      ...(query?.maxPledge && { maxPledge: +(query?.maxPledge || 0) }),
+      ...(query?.minSaturation && { minSaturation: +(query?.minSaturation || 0) }),
+      ...(query?.maxSaturation && { maxSaturation: +(query?.maxSaturation || 0) }),
+      ...(query?.minBlockLifetime && { minBlockLifetime: +(query?.minBlockLifetime || 0) }),
+      ...(query?.maxBlockLifetime && { maxBlockLifetime: +(query?.maxBlockLifetime || 0) }),
+      ...(query?.minVotingPower && { minVotingPower: +(query?.minVotingPower || 0) }),
+      ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) }),
+      ...(query?.minGovParticipationRate && { minGovParticipationRate: +(query?.minGovParticipationRate || 0) }),
+      ...(query?.maxGovParticipationRate && { maxGovParticipationRate: +(query?.maxGovParticipationRate || 0) })
     });
   }, [JSON.stringify(query)]);
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
-    setFilterParams(initParams);
-    setParams(initParams);
+    setFilterParams({ ...initParams });
     history.replace({ search: stringify({ page: 0, size: 50, sort: "" }), state: undefined });
   };
 
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
-    setFilterParams({ ...initParams, ...filterParams });
-    setParams({ ...filterParams });
+    setFilterParams({ ...filterParams });
     history.replace({
       search: stringify({ ...filterParams, size: pageInfo.size, sort: pageInfo.sort, page: 1 }),
       state: undefined
@@ -116,10 +127,27 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
       return;
     }
     const [min, max] = newValue || [];
-    setValueRange([Math.min(min), Math.min(max)]);
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
-  const isDisableFilter = useMemo(() => JSON.stringify(initParams) === JSON.stringify(filterParams), [filterParams]);
+  const isDisableFilter = useMemo(
+    () =>
+      (filterParams.query || "") !== initParams.query ||
+      (filterParams.maxPoolSize || initParams.maxPoolSize) !== initParams.maxPoolSize ||
+      (filterParams.minPoolSize || initParams.minPoolSize) !== initParams.minPoolSize ||
+      (filterParams.minPledge || initParams.minPledge) !== initParams.minPledge ||
+      (filterParams.minSaturation || initParams.minSaturation) !== initParams.minSaturation ||
+      (filterParams.maxSaturation || initParams.maxSaturation) !== initParams.maxSaturation ||
+      (filterParams.minBlockLifetime || initParams.minBlockLifetime) !== initParams.minBlockLifetime ||
+      (filterParams.maxBlockLifetime || initParams.maxBlockLifetime) !== initParams.maxBlockLifetime ||
+      (filterParams.minVotingPower || initParams.minVotingPower) !== initParams.minVotingPower ||
+      (filterParams.maxVotingPower || initParams.maxVotingPower) !== initParams.maxVotingPower ||
+      (filterParams.minGovParticipationRate || initParams.minGovParticipationRate) !==
+        initParams.minGovParticipationRate ||
+      (filterParams.maxGovParticipationRate || initParams.maxGovParticipationRate) !==
+        initParams.maxGovParticipationRate ||
+      (filterParams.maxPledge || initParams.maxPledge) !== initParams.maxPledge,
+    [filterParams]
+  );
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
@@ -134,7 +162,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
           onClick={() => setOpen((pre) => !pre)}
           sx={{
             ":hover": {
-              bgcolor: theme.mode === "dark" ? theme.palette.secondary.main : theme.palette.primary[200]
+              bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.secondary[100]
             }
           }}
         >
@@ -212,7 +240,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={[filterParams.minPoolSize || 0, filterParams.maxPoolSize || 0] || valueRange}
                       defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
                       valueLabelDisplay="auto"
@@ -250,7 +277,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={[filterParams.minPledge || 0, filterParams.maxPledge || 0] || valueRange}
                       defaultValue={[filterParams.minPledge || 0, initParams.maxPledge || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPledge", "maxPledge")}
                       valueLabelDisplay="auto"
@@ -288,7 +314,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={[filterParams.minSaturation || 0, filterParams.maxSaturation || 0] || valueRange}
                       defaultValue={[filterParams.minSaturation || 0, initParams.maxSaturation || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minSaturation", "maxSaturation")}
                       valueLabelDisplay="auto"
@@ -325,7 +350,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                     <StyledSlider
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={[filterParams.minBlockLifetime || 0, filterParams.maxBlockLifetime || 0] || valueRange}
                       defaultValue={[filterParams.minBlockLifetime || 0, initParams.maxBlockLifetime || 0]}
                       onChange={(e, newValue) =>
                         handleChangeValueRange(e, newValue, "minBlockLifetime", "maxBlockLifetime")
@@ -367,10 +391,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatPercent(value)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={
-                        [filterParams.minGovParticipationRate || 0, filterParams.maxGovParticipationRate || 0] ||
-                        valueRange
-                      }
                       defaultValue={[
                         filterParams.minGovParticipationRate || 0,
                         initParams.maxGovParticipationRate || 0
@@ -413,7 +433,6 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                       valueLabelFormat={(value) => formatPercent(value)}
                       data-testid="slider"
                       getAriaLabel={() => "Minimum distance"}
-                      value={[filterParams.minVotingPower || 0, filterParams.maxVotingPower || 0] || valueRange}
                       defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
                       onChange={(e, newValue) =>
                         handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
@@ -434,7 +453,7 @@ const CustomFilterMultiRange: React.FC<CustomFilterMultiRange> = ({ setParams })
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={isDisableFilter}
+                  disabled={!isDisableFilter}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>

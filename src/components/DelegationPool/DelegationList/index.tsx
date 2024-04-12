@@ -17,27 +17,6 @@ import Table, { Column } from "src/components/commons/Table";
 
 import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
-export interface PoolResponse {
-  page?: number;
-  query?: string;
-  size?: number;
-  sort?: string;
-  minPoolSize?: number;
-  maxPoolSize?: number;
-  minPledge?: number;
-  maxPledge?: number;
-  minSaturation?: number;
-  maxSaturation?: number;
-  minBlockLifetime?: number;
-  maxBlockLifetime?: number;
-  maxLifetimeBlock?: number;
-  minLifetimeBlock?: number;
-  minVotingPower?: number;
-  maxVotingPower?: number;
-  minGovParticipationRate?: number;
-  maxGovParticipationRate?: number;
-}
-
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
@@ -45,7 +24,6 @@ const DelegationLists: React.FC = () => {
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
   const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
-  const [params, setParams] = useState<PoolResponse>({});
 
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
@@ -60,10 +38,15 @@ const DelegationLists: React.FC = () => {
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { search, isShowRetired: isShowRetired, ...params, page: pageInfo.page, size: pageInfo.size, sort: pageInfo.sort },
+    {
+      search,
+      isShowRetired: isShowRetired,
+      ...pageInfo
+    },
     false,
     blockKey
   );
+
   const fromPath = history.location.pathname as SpecialPath;
 
   useEffect(() => {
@@ -200,7 +183,7 @@ const DelegationLists: React.FC = () => {
               }}
             />
           </ShowRetiredPools>
-          <CustomFilterMultiRange setParams={setParams} />
+          <CustomFilterMultiRange />
         </Box>
       </TopSearchContainer>
       <Table
