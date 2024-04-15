@@ -229,6 +229,7 @@ import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
 import historyIcon from "./icons/history.svg?react";
 import multiYesIcon from "./icons/multiyes.svg?react";
 import repeatVoteIcon from "./icons/repeatVote.svg?react";
+import SettingTimezoneIcon from "./icons/settingTimezone.svg?react";
 import multiNoneIcon from "./icons/multiNoneIcon.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -461,6 +462,7 @@ export {
   repeatVoteIcon,
   BlackCircleIcon,
   RepeatVotesIcon,
+  SettingTimezoneIcon,
   multiNoneIcon
 };
 

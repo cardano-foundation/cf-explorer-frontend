@@ -194,10 +194,14 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 };
 
 export const formatDateTime = (date: string) => {
+  if (!date) return "";
   return moment.utc(date).tz(moment.tz.guess()).format("MM/DD/YYYY HH:mm:ss");
 };
 export const formatDateTimeLocal = (date: string) => {
-  const dateFormat = new Intl.DateTimeFormat(moment().locale(), {
+  const timeZone = localStorage.getItem("timezone") || "UTC";
+  if (!date) return "";
+  // const dateFormat = new Intl.DateTimeFormat(timeZone, {
+  const dateFormat = new Intl.DateTimeFormat(timeZone === "UTC" ? "en-US" : timeZone.replace(/"/g, ""), {
     hour: "numeric",
     minute: "numeric",
     day: "2-digit",
@@ -205,13 +209,14 @@ export const formatDateTimeLocal = (date: string) => {
     year: "numeric",
     second: "2-digit",
     hour12: false,
-    timeZone: moment.tz.guess()
+    timeZone: timeZone.replace(/"/g, "") == "UTC" ? "UTC" : moment.tz.guess()
   });
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
 };
 
 export const formatDate = (date: string) => {
+  if (!date) return "";
   const dateFormat = new Intl.DateTimeFormat("en-US", {
     timeZone: moment.tz.guess(),
     timeZoneName: "short"

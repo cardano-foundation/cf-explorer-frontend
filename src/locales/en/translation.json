@@ -708,6 +708,8 @@
   "desc.RegistrationDelegatorProcessDescription.7st": "To mitigate certain economic attacks, a refundable hold is imposed on the ADA holder upon registration, which is released when the stake address is deregistered. The hold covers the costs of tracking the stake address and maintaining the corresponding rewards account, and it incentivises deregistering unused stake addresses so that the corresponding Cardano blockchain resources can be released.",
   "common.walletBalance": "Wallet balance",
   "common.total": "Total",
+  "common.timzoneFormat": "Timezone Format",
+  "common.timzoneFormat.des": "Choose between your local timezone and UTC. If you want to save these preferences you will need to be signed in.",
   "common.poolRegistration": "Pool Registration",
   "common.searchPoolDesc": "Search to explore the staking lifecycle events of a delegator or pool.",
   "common.whatCardano": "What is staking on Cardano?",
