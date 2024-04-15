@@ -14,6 +14,7 @@ const Dreps = () => {
   if (!IS_CONWAY_ERA) {
     return <NotFound />;
   }
+
   return (
     <StyledContainer>
       <OverViews />
