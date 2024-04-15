@@ -40,7 +40,10 @@ export const API = {
   DREP_OVERVIEW: "dreps/:drepId/drep-details",
   DREP_OVERVIEW_CHART: "dreps/:drepId/vote-procedure-chart",
   DREP_DELEGATOR: "dreps/:drepId/get-delegation",
-
+  DREPS_LIST: {
+    DREPS_LIST: "dreps/filter",
+    DREPS_OVERVIEW: "dreps/overview"
+  },
   TOKEN: {
     LIST: "tokens",
     TOKEN_TRX: "tokens/:tokenId/txs",
