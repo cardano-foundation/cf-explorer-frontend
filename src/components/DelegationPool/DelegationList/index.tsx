@@ -189,14 +189,14 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
+        height={fetchData.data.length ? "498px" : "435px"}
+        maxHeight={fetchData.data.length ? "585px" : "435px"}
         columns={columns.filter((col) => {
           if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
             return false;
           }
           return true;
         })}
-        height={fetchData.data.length ? "498px" : "435px"}
-        maxHeight={fetchData.data.length ? "585px" : "435px"}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
