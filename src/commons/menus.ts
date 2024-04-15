@@ -49,6 +49,7 @@ export const menus: Menu[] = [
         href: details.nativeScriptsAndSC()
       },
       { title: "Pools", key: "head.page.pool", href: routers.DELEGATION_POOLS, isSpecialPath: true },
+      { title: "Delegated Representatives", key: "head.page.drep", href: routers.DREPS, isSpecialPath: true },
       { title: "Top ADA Holders", key: "glossary.topAdaHolder", href: routers.ADDRESS_LIST }
     ]
   },

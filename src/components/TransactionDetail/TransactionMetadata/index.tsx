@@ -25,8 +25,8 @@ import {
 import { details } from "src/commons/routers";
 import { TRANSACTION_STATUS } from "src/commons/utils/constants";
 import ContractsList from "src/components/Contracts";
-import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
+import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 
 import Collaterals from "./Collaterals";
 import Delegations from "./Delegations";
