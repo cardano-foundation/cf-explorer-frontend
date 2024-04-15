@@ -15,6 +15,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import { IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import {
   AntSwitch,
@@ -150,16 +151,23 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: t("votingPower") + " ",
+      title: t("votingPower"),
       key: "votingPower",
       minWidth: "120px",
-      render: (r) => (r.votingPower != null ? `${r.votingPower}` : t("common.N/A")),
+      render: (r) =>
+        r.votingPower != null ? (
+          <CustomTooltip title={`${r.votingPower * 100}%`}>
+            <Box component={"span"}>{formatPercent(r.votingPower)}</Box>
+          </CustomTooltip>
+        ) : (
+          t("common.N/A")
+        ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: t("governanceParticipationRate") + " ",
+      title: t("governanceParticipationRate"),
       key: "governanceParticipationRate",
       minWidth: "120px",
       render: (r) =>
@@ -216,7 +224,12 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
-        columns={columns}
+        columns={columns.filter((col) => {
+          if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
+            return false;
+          }
+          return true;
+        })}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{

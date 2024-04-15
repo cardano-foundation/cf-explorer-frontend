@@ -53,10 +53,11 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { VOTE_TYPE } from "src/commons/utils/constants";
+import { IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
+import NotFound from "../NotFound";
 
 const voteOption = [
   { title: "Action Type", value: "Default" },
@@ -265,6 +266,10 @@ const DrepDetail = () => {
       )
     }
   ];
+
+  if (!IS_CONWAY_ERA) {
+    return <NotFound />;
+  }
   if (loading) {
     return (
       <StyledContainer>
