@@ -59,8 +59,7 @@ const DelegationLists: React.FC = () => {
     {
       title: t("glossary.pool"),
       key: "poolName",
-      minWidth: "200px",
-      maxWidth: "200px",
+      minWidth: "150px",
       render: (r) => (
         <CustomTooltip
           title={
@@ -75,7 +74,14 @@ const DelegationLists: React.FC = () => {
           }
         >
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
-            <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+            <Box
+              component={"span"}
+              textOverflow={"ellipsis"}
+              display={(r.poolName || r.poolId || "").length > 20 ? "inline-block" : "inline"}
+              width={"200px"}
+              whiteSpace={"nowrap"}
+              overflow={"hidden"}
+            >
               {r.poolName || `${getShortHash(r.poolId)}`}
             </Box>
           </PoolName>
@@ -188,8 +194,6 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
-        height={fetchData.data.length ? "498px" : "435px"}
-        maxHeight={fetchData.data.length ? "585px" : "435px"}
         columns={columns}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
