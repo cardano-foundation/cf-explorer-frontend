@@ -14,6 +14,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomFilterMultiRange from "src/components/commons/CustomFilterMultiRange";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
+import { IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
@@ -205,9 +206,14 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
+        columns={columns.filter((col) => {
+          if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
+            return false;
+          }
+          return true;
+        })}
         height={fetchData.data.length ? "498px" : "435px"}
         maxHeight={fetchData.data.length ? "585px" : "435px"}
-        columns={columns}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Delegators) => history.push(details.delegation(r.poolId), { fromPath })}
         pagination={{
