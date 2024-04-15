@@ -134,6 +134,8 @@ export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
 export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
 export const API_GECKO = process.env.REACT_APP_API_URL_COIN_GECKO || get(window, "env.REACT_APP_API_URL_COIN_GECKO");
+export const IS_CONWAY_ERA =
+  (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA || get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA")) === "true";
 
 export enum ACCOUNT_ERROR {
   UNKNOWN_ERROR = "CC_1",

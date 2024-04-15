@@ -27,3 +27,34 @@ interface DrepOverviewChart {
   numberOfNoVotes: number | null;
   numberOfYesVote: number | null;
 }
+
+interface OverViewDreps {
+  countDownEndTime: number;
+  delegators: number;
+  epochNo: number;
+  epochSlotNo: number;
+  liveStake: number;
+  activePools: number;
+  retiredPools: number;
+  activeStake: number;
+  totalDReps: number;
+  activeDReps: number;
+  inactiveDReps: number;
+  retiredDReps: number;
+  abstainDReps: number;
+  noConfidenceDReps: number;
+  registeredDReps: number;
+  totalAdaStaked: number;
+}
+
+interface Drep {
+  activeVoteStake: number;
+  anchorHash: string;
+  anchorUrl: string;
+  createdAt: string;
+  drepHash: string;
+  drepId: string;
+  status: "ACTIVE" | "INACTIVE" | "RETIRED";
+  updatedAt: string;
+  votingPower: number;
+}
