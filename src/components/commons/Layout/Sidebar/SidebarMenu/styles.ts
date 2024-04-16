@@ -4,7 +4,7 @@ import { SystemStyleObject } from "@mui/system";
 import { drawerWidth, drawerWidthMobile, drawerWidthTablet } from "../../styles";
 
 export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
-  height: "calc(100% - 200px)",
+  height: "calc(100% - 190px)",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
