@@ -17,6 +17,7 @@ import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import DetailHeader from "src/components/commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Output, Subtext, TitleCard } from "./styles";
 
@@ -39,7 +40,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}>{t("glossary.startTimestamp")} </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.startTime || "")
+      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.startTime || "")}</DatetimeTypeTooltip>
     },
     {
       icon: TimeIconComponent,
@@ -48,7 +49,7 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}>{t("glossary.endTimestamp")} </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.endTime || "")
+      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.endTime || "")}</DatetimeTypeTooltip>
     },
     {
       icon: OutputIcon,

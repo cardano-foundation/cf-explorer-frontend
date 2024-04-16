@@ -28,6 +28,7 @@ import DrawSkeleton from "src/components/commons/DrawSkeleton";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import { Capitalize } from "src/components/commons/CustomText/styles";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   DrawContainer,
@@ -161,7 +162,9 @@ export const RegistrationDraw = ({ toggleModal, showBackButton = false }: Props)
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

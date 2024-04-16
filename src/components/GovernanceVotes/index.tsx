@@ -62,7 +62,7 @@ import CardGovernanceVotes, {
   VoteStatus,
   actionTypeListDrep
 } from "src/components/commons/CardGovernanceVotes";
-import { formatDateTime, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -96,6 +96,7 @@ import { ViewJson } from "../ScriptModal/styles";
 import { TimeDuration } from "../TransactionLists/styles";
 import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface DelegationGovernanceVotesProps {
   hash: string;
@@ -558,7 +559,9 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.submission")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{formatDateTime(data?.submissionDate || "")}</InfoValue>
+            <InfoValue>
+              <DatetimeTypeTooltip>{formatDateTimeLocal(data?.submissionDate || "")}</DatetimeTypeTooltip>
+            </InfoValue>
           </Item>
           <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
@@ -568,7 +571,9 @@ const GovernanceVotesDetail: React.FC<{
             <InfoTitle paddingBottom="3px">
               <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{formatDateTime(data?.expiryDate || "")}</InfoValue>
+            <InfoValue>
+              <DatetimeTypeTooltip>{formatDateTimeLocal(data?.expiryDate || "")}</DatetimeTypeTooltip>
+            </InfoValue>
           </Item>
           <Item item xs={6} md={3} pr={"5px !important"}>
             <Box display="flex" justifyContent="space-between" pr="5px">
@@ -848,7 +853,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
                   sx={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
                   padding="none"
                 >
-                  {formatDateTime(row.timestamp)}
+                  <DatetimeTypeTooltip>{formatDateTimeLocal(row.timestamp)}</DatetimeTypeTooltip>
                 </TableCell>
               </TableRow>
             ))}

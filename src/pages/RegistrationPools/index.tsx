@@ -16,6 +16,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import ADAicon from "src/components/commons/ADAIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { RegistrationContainer, StakeKey, StyledLink, StyledPoolLink, TimeDuration } from "./styles";
 
@@ -59,7 +60,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: t("glossary.createdAt"),
       key: "created_at",
-      render: (pool) => <>{formatDateTimeLocal(pool.txTime || "")}</>
+      render: (pool) => <DatetimeTypeTooltip>{formatDateTimeLocal(pool.txTime || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

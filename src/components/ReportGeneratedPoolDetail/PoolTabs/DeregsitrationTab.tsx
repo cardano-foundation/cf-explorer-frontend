@@ -15,6 +15,7 @@ import { TableSubTitle } from "src/components/TabularView/StakeTab/styles";
 import { AdaValue } from "src/components/commons/ADAValue";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 
@@ -45,7 +46,7 @@ const DeregsitrationTab = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return formatDateTimeLocal(data.time);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.time)}</DatetimeTypeTooltip>;
       }
     },
     {

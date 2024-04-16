@@ -20,6 +20,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
@@ -84,7 +85,11 @@ const BlockList = () => {
       title: <Capitalize>{t("createdAt")}</Capitalize>,
       key: "time",
       minWidth: "100px",
-      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>,
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+        </DatetimeTypeTooltip>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

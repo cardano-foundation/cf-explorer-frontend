@@ -17,6 +17,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
 import { useScreen } from "src/commons/hooks/useScreen";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Img, StyledContainer, StyledLink } from "./styles";
 
@@ -108,9 +109,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       key: "created_at",
       minWidth: 120,
       render: (r) => (
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatDateTimeLocal(r.time || "")}</Box>
-        </Box>
+        <DatetimeTypeTooltip>
+          <Box display="inline-flex" alignItems="center">
+            <Box mr={1}>{formatDateTimeLocal(r.time || "")}</Box>
+          </Box>
+        </DatetimeTypeTooltip>
       )
     },
     {

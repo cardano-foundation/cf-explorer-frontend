@@ -17,6 +17,7 @@ import { DeregistrationCertificateModal } from "src/components/commons/Deregistr
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { AdaValue } from "./StakingRegistrationTab";
 import { StakingDetailContext } from "..";
@@ -45,7 +46,7 @@ const DeregistrationTab = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

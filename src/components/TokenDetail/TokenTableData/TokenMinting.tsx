@@ -9,6 +9,7 @@ import { details } from "src/commons/routers";
 import { formatAmount, formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import CustomTooltip from "../../commons/CustomTooltip";
 import Table, { Column } from "../../commons/Table";
@@ -58,7 +59,11 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
       title: t("createdAt"),
       key: "time",
       minWidth: "200px",
-      render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+        </DatetimeTypeTooltip>
+      )
     }
   ];
 

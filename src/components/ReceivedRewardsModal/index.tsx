@@ -27,6 +27,7 @@ import {
 } from "./styles";
 import DelegatorDetailContext from "../StakingLifeCycle/DelegatorLifecycle/DelegatorDetailContext";
 import CustomTooltip from "../commons/CustomTooltip";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface ReceivedReward {
   amount: string;
@@ -101,7 +102,11 @@ const ReceivedRewardsModal: React.FC<ReceivedRewardsModalProps> = ({ open = fals
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return <Box>{formatDateTimeLocal(data.time)}</Box>;
+        return (
+          <DatetimeTypeTooltip>
+            <Box>{formatDateTimeLocal(data.time)}</Box>
+          </DatetimeTypeTooltip>
+        );
       }
     },
     {

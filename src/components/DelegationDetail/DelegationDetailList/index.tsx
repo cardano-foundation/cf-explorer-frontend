@@ -25,6 +25,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CopyButton from "src/components/commons/CopyButton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "./styles";
 
@@ -186,7 +187,9 @@ const DelegationStakingDelegatorsList = ({
       title: t("stakedTime"),
       key: "stakedTime",
       minWidth: "120px",
-      render: (data) => formatDateTimeLocal(data.time || data.createdAt || "")
+      render: (data) => (
+        <DatetimeTypeTooltip> {formatDateTimeLocal(data.time || data.createdAt || "")}</DatetimeTypeTooltip>
+      )
     },
     {
       title: (
@@ -285,7 +288,7 @@ const DelegationCertificatesHistory = ({
       title: t("common.createdAt"),
       key: "createdAt",
       minWidth: "180px",
-      render: (data) => formatDateTimeLocal(data.createdAt || "")
+      render: (data) => <DatetimeTypeTooltip>{formatDateTimeLocal(data.createdAt || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("certificatesHistory.block"),

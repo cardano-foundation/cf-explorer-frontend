@@ -15,6 +15,7 @@ import usePageInfo from "src/commons/hooks/usePageInfo";
 import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
 import ADAicon from "src/components/commons/ADAIcon";
 import { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { PoolName } from "./styles";
 
@@ -130,13 +131,21 @@ const DrepsList: React.FC = () => {
       title: t("dreps.registrationDate"),
       minWidth: "100px",
       key: "registrationDate",
-      render: (r) => <Box component={"span"}>{formatDateTimeLocal(r.createdAt)}</Box>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <Box component={"span"}>{formatDateTimeLocal(r.createdAt)}</Box>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       title: t("dreps.lastUpdated"),
       key: "lastUpdated",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatDateTimeLocal(r.updatedAt)}</Box>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <Box component={"span"}>{formatDateTimeLocal(r.updatedAt)}</Box>
+        </DatetimeTypeTooltip>
+      )
     }
   ];
   return (

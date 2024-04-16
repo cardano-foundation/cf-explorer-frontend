@@ -22,6 +22,7 @@ import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/comm
 import { Img, StyledLink } from "./styles";
 import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
 import { Capitalize } from "../commons/CustomText/styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -106,7 +107,9 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       minWidth: 120,
       render: (transaction) => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
+          <DatetimeTypeTooltip>
+            <Box mr={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
+          </DatetimeTypeTooltip>
         </Box>
       )
     },

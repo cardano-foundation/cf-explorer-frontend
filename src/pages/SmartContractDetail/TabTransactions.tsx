@@ -11,6 +11,7 @@ import { API } from "src/commons/utils/api";
 import { formatDateTimeLocal, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../BlockList/styles";
 import { ButtonViewModal } from "./styles";
@@ -48,7 +49,7 @@ const TabTransactions = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "180px",
-      render: (r) => formatDateTimeLocal(r.time || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

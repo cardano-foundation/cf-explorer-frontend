@@ -16,6 +16,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   Actions,
@@ -183,7 +184,9 @@ const LatestTransactions: React.FC = () => {
                         })}
                         <RowItem>
                           <small>{t("common.createdAt")}: </small>
-                          <small>{formatDateTimeLocal(time)}</small>
+                          <DatetimeTypeTooltip>
+                            <small>{formatDateTimeLocal(time)}</small>
+                          </DatetimeTypeTooltip>
                         </RowItem>
                       </ItemDetail>
                     </Item>

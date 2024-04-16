@@ -36,7 +36,8 @@ import {
   Title,
   WrapButtonSelect
 } from "./styles";
-import SelectLanguage from "./SelectLanguage";
+import SettingTimezone from "./SettingTimezone";
+// import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -104,12 +105,19 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 }}
               />
             </WrapButtonSelect>
+
             <WrapButtonSelect>
-              <SelectLanguage />
+              <SettingTimezone />
             </WrapButtonSelect>
+
+            {/* <WrapButtonSelect>
+              <SelectLanguage />
+            </WrapButtonSelect> */}
+
             <NetworkContainer>
               <SelectNetwork />
             </NetworkContainer>
+
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
               <SearchButton onClick={handleOpenSearch} home={+home}>

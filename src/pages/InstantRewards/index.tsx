@@ -15,6 +15,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
@@ -47,7 +48,7 @@ const InstantReards = () => {
       title: t("glossary.createdAt"),
       key: "createdat",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time)
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

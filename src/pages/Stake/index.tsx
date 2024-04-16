@@ -17,6 +17,7 @@ import { API } from "src/commons/utils/api";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 import { useScreen } from "src/commons/hooks/useScreen";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledContainer, StyledLink, TimeDuration } from "./styles";
 
@@ -84,7 +85,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
     {
       title: t("glossary.createdAt"),
       key: "time",
-      render: (r) => formatDateTimeLocal(r.txTime || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.txTime || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

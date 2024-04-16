@@ -56,6 +56,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
@@ -138,7 +139,11 @@ const DrepDetail = () => {
           {t("createdAt")}
         </TitleCard>
       ),
-      value: <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
+      value: (
+        <DatetimeTypeTooltip>
+          <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: ActiveVoteIcon,

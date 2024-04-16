@@ -12,6 +12,7 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/ut
 import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import UserInfo from "./UserInfo";
 import { Amount, Status, StyledLink } from "./styles";
@@ -43,7 +44,7 @@ const WalletActivity: React.FC = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "100px",
-      render: (r) => formatDateTimeLocal(r.time || ""),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

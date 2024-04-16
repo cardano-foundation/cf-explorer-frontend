@@ -24,6 +24,7 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink, TitleCard } from "./styles";
 
@@ -178,7 +179,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <TitleCard mr={1}>{t("createdAt")}</TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.tx?.time || "")
+      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.tx?.time || "")}</DatetimeTypeTooltip>
     },
     {
       icon: TxConfirm,
