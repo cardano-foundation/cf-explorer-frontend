@@ -230,6 +230,13 @@ import historyIcon from "./icons/history.svg?react";
 import multiYesIcon from "./icons/multiyes.svg?react";
 import repeatVoteIcon from "./icons/repeatVote.svg?react";
 import multiNoneIcon from "./icons/multiNoneIcon.svg?react";
+import PoolNameIcon from "./icons/pool-name.svg?react";
+import PoolSizesIcon from "./icons/pool-size.svg?react";
+import PoolPledgeIcon from "./icons/pool-pledge.svg?react";
+import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
+import PoolBlocksIcon from "./icons/pool-block.svg?react";
+import PoolParticipationIcon from "./icons/pool-participation.svg?react";
+import PoolVotingIcon from "./icons/pool-voting.svg?react";
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -461,7 +468,14 @@ export {
   repeatVoteIcon,
   BlackCircleIcon,
   RepeatVotesIcon,
-  multiNoneIcon
+  multiNoneIcon,
+  PoolNameIcon,
+  PoolSizesIcon,
+  PoolPledgeIcon,
+  PoolSaturationIcon,
+  PoolParticipationIcon,
+  PoolBlocksIcon,
+  PoolVotingIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

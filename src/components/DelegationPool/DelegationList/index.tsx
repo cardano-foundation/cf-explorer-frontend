@@ -1,38 +1,27 @@
-import { Box, useTheme } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 import { stringify } from "qs";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { HeaderSearchIconComponent } from "src/commons/resources";
-import { details, routers } from "src/commons/routers";
+import usePageInfo from "src/commons/hooks/usePageInfo";
+import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
+import CustomFilterMultiRange from "src/components/commons/CustomFilterMultiRange";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
-import CustomIcon from "src/components/commons/CustomIcon";
-import usePageInfo from "src/commons/hooks/usePageInfo";
 import { IS_CONWAY_ERA } from "src/commons/utils/constants";
 
-import {
-  AntSwitch,
-  PoolName,
-  SearchContainer,
-  ShowRetiredPools,
-  StyledInput,
-  SubmitButton,
-  TopSearchContainer
-} from "./styles";
+import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
-  const theme = useTheme();
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const { tickerNameSearch = "" } = history.location.state || {};
-  const [value, setValue] = useState("");
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
   const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
@@ -45,16 +34,20 @@ const DelegationLists: React.FC = () => {
     if (tickerNameSearch) {
       setSearch(decodeURIComponent(tickerNameSearch));
     }
-    setValue("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { ...pageInfo, search, isShowRetired: isShowRetired },
+    {
+      search,
+      isShowRetired: isShowRetired,
+      ...pageInfo
+    },
     false,
     blockKey
   );
+
   const fromPath = history.location.pathname as SpecialPath;
 
   useEffect(() => {
@@ -67,8 +60,7 @@ const DelegationLists: React.FC = () => {
     {
       title: t("glossary.pool"),
       key: "poolName",
-      minWidth: "200px",
-      maxWidth: "200px",
+      minWidth: "150px",
       render: (r) => (
         <CustomTooltip
           title={
@@ -83,7 +75,14 @@ const DelegationLists: React.FC = () => {
           }
         >
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
-            <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+            <Box
+              component={"span"}
+              textOverflow={"ellipsis"}
+              display={(r.poolName || r.poolId || "").length > 20 ? "inline-block" : "inline"}
+              width={"200px"}
+              whiteSpace={"nowrap"}
+              overflow={"hidden"}
+            >
               {r.poolName || `${getShortHash(r.poolId)}`}
             </Box>
           </PoolName>
@@ -179,48 +178,20 @@ const DelegationLists: React.FC = () => {
   ];
   return (
     <>
-      <TopSearchContainer>
-        <SearchContainer ref={tableRef}>
-          <StyledInput
-            placeholder={t("common.searchPools")}
-            onChange={(e) => setValue(e.target.value)}
-            value={value}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                setSearch(value);
-                history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-              }
-            }}
-          />
-          <SubmitButton
-            onClick={() => {
-              setSearch(value);
-              history.push(routers.DELEGATION_POOLS, {
-                tickerNameSearch: (value || "").toLocaleLowerCase()
-              });
-              history.replace({ search: stringify({ ...pageInfo, page: 1 }) });
-            }}
-          >
-            <CustomIcon
-              data-testid="search-icon"
-              icon={HeaderSearchIconComponent}
-              fill={theme.palette.secondary[0]}
-              stroke={theme.palette.secondary.light}
-              height={22}
-              width={22}
+      <TopSearchContainer sx={{ justifyContent: "end" }}>
+        <Box display="flex" gap="10px">
+          <ShowRetiredPools>
+            {t("glassary.showRetiredPools")}
+            <AntSwitch
+              checked={isShowRetired}
+              onChange={(e) => {
+                setIsRetired(e.target.checked);
+                history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) });
+              }}
             />
-          </SubmitButton>
-        </SearchContainer>
-        <ShowRetiredPools>
-          {t("glassary.showRetiredPools")}
-          <AntSwitch
-            checked={isShowRetired}
-            onChange={(e) => {
-              setIsRetired(e.target.checked);
-              history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) });
-            }}
-          />
-        </ShowRetiredPools>
+          </ShowRetiredPools>
+          <CustomFilterMultiRange />
+        </Box>
       </TopSearchContainer>
       <Table
         {...fetchData}

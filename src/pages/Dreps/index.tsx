@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 
 import OverViews from "src/components/Dreps/DrepsOverview";
-import DelegationLists from "src/components/Dreps/DrepsList";
 import { IS_CONWAY_ERA } from "src/commons/utils/constants";
+import DrepsList from "src/components/Dreps/DrepsList";
 
-import { Horizon, StyledContainer } from "./styles";
 import NotFound from "../NotFound";
+import { Horizon, StyledContainer } from "./styles";
 
 const Dreps = () => {
   useEffect(() => {
@@ -14,11 +14,12 @@ const Dreps = () => {
   if (!IS_CONWAY_ERA) {
     return <NotFound />;
   }
+
   return (
     <StyledContainer>
       <OverViews />
       <Horizon />
-      <DelegationLists />
+      <DrepsList />
     </StyledContainer>
   );
 };

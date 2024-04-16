@@ -33,7 +33,6 @@ describe("DelegationList component", () => {
   });
   it("should component render", () => {
     render(<DelegationLists />);
-    expect(screen.getByTestId("search-icon")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /mock pool/i })).toBeInTheDocument();
   });
 

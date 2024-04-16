@@ -1137,7 +1137,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
           onClick={() => setOpen((pre) => !pre)}
           sx={{
             ":hover": {
-              bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
+              bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.secondary[100]
             }
           }}
         >
