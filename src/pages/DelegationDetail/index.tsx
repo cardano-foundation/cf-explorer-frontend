@@ -13,7 +13,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { StakeKeyHistoryIcon, StakingDelegators, TimelineIconComponent, VotesIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { VOTE_TYPE, POOL_STATUS, STATUS_VOTE } from "src/commons/utils/constants";
+import { VOTE_TYPE, POOL_STATUS, STATUS_VOTE, IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { getPageInfo } from "src/commons/utils/helper";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
@@ -180,7 +180,12 @@ const DelegationDetail: React.FC = () => {
         </div>
       )
     }
-  ];
+  ].filter((tab) => {
+    if (tab.key === "governanceVotes" && !IS_CONWAY_ERA) {
+      return false;
+    }
+    return true;
+  });
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
   const needBorderRadius = (currentKey: string) => {

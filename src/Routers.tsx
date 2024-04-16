@@ -52,6 +52,7 @@ import TransactionList from "./pages/TransactionList";
 import VerifyEmail from "./pages/VerifyEmail";
 import NativeScriptsDetailPage from "./pages/NativeScriptDetail";
 import DrepDetail from "./pages/DrepDetail";
+import Dreps from "./pages/Dreps";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -88,6 +89,7 @@ const Routes: React.FC = () => {
       <Route path={routers.EPOCH_LIST} exact component={Epoch} />
       <Route path={routers.EPOCH_DETAIL} exact component={EpochDetail} />
       <Route path={routers.DELEGATION_POOLS} exact component={DelegationPools} />
+      <Route path={routers.DREPS} exact component={Dreps} />
       <Route path={routers.DELEGATION_POOL_DETAIL} exact component={DelegationDetail} />
       <Route path={routers.POOL_CERTIFICATE} exact component={PoolsCertificate} />
       <Route path={routers.POOL_DEREGISTRATION} exact component={PoolsDeregistration} />
