@@ -22,6 +22,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
 import SelectedIcon from "src/components/commons/SelectedIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
@@ -130,9 +131,9 @@ const Tokens = () => {
       key: "time",
       minWidth: "150px",
       render: (r) => (
-        <>
+        <DatetimeTypeTooltip>
           {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(selected) === JSON.stringify(r) && <SelectedIcon />}
-        </>
+        </DatetimeTypeTooltip>
       ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");

@@ -16,6 +16,7 @@ import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { TitleCard, WrapConfirmation } from "./styles";
 
@@ -37,7 +38,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1}>{t("createdAt")} </TitleCard>
         </Box>
       ),
-      value: formatDateTimeLocal(data?.time || "")
+      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.time || "")}</DatetimeTypeTooltip>
     },
     {
       icon: TxConfirm,

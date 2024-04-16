@@ -39,6 +39,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
 import { ProtocolFixed, ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
@@ -247,7 +248,7 @@ const ProtocolParameter: React.FC = () => {
     {
       title: t("common.timestamp"),
       key: "timestamp",
-      render: (r) => (r?.time ? formatDateTimeLocal(r.time) : "")
+      render: (r) => <DatetimeTypeTooltip>{r?.time ? formatDateTimeLocal(r.time) : ""}</DatetimeTypeTooltip>
     }
   ];
 

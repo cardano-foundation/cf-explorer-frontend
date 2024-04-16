@@ -47,6 +47,7 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 type DetailViewEpochProps = {
   epochNo?: number;
@@ -230,11 +231,15 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             <Group>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.startTimestamp")}</DetailLabel>
-                <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
+                <DatetimeTypeTooltip>
+                  <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
+                </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.endTimestamp")}</DetailLabel>
-                <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
+                <DatetimeTypeTooltip>
+                  <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
+                </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.blocks")}</DetailLabel>

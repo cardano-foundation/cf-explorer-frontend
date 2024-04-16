@@ -17,6 +17,7 @@ import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 const ProtocolUpdateTab = () => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ const ProtocolUpdateTab = () => {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return formatDateTimeLocal(data.time);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.time)}</DatetimeTypeTooltip>;
       }
     },
     {

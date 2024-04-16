@@ -16,6 +16,7 @@ import SPOHolder from "src/components/commons/SPOHolder";
 import CopyButton from "src/components/commons/CopyButton";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   BoxGroup,
@@ -138,7 +139,9 @@ export const PoolUpdatesDraw = ({ poolUpdates, toggleModal, data, showBackButton
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

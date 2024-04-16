@@ -19,6 +19,7 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper, Actions, TimeDuration } from "./styles";
 
@@ -87,7 +88,11 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: t("createdAt"),
       key: "time",
       minWidth: "100px",
-      render: (r) => <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       title: t("drawer.transactions"),

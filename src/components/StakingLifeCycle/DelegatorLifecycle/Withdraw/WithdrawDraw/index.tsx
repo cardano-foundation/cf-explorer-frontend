@@ -30,6 +30,7 @@ import { StyledCopyButton } from "src/components/StakingLifeCycle/SPOLifecycle/R
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../../Registration/styles";
 import {
@@ -186,7 +187,9 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

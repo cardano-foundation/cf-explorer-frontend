@@ -11,6 +11,7 @@ import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import ADAicon from "src/components/commons/ADAIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import UserInfo from "./UserInfo";
 import { Amount, StyledLink } from "./styles";
@@ -48,7 +49,7 @@ const RewardActivity: React.FC = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "100px",
-      render: (r) => formatDateTimeLocal(r.time || ""),
+      render: (r) => <DatetimeTypeTooltip> {formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

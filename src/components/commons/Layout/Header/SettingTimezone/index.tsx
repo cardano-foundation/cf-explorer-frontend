@@ -58,7 +58,7 @@ const TimezoneCard = () => {
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
   const [timezoneLS, setTimezoneLS] = useLocalStorage("timezone", window.navigator.language);
-  const [selectedTimeZone, setSelectedTimeZone] = useState(timezoneLS);
+  const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTimeZone(event.target.value);
     setTimezoneLS(event.target.value);
@@ -109,27 +109,27 @@ const TimezoneCard = () => {
           <BlackWarningIcon />
         </Box>
       </Box>
-
-      <Box
-        py={1}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        color={theme.palette.secondary.light}
-      >
-        <Box>
-          {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC{" "}
-          {timezone.replace("0", timezone.charAt(1) === "0" ? "" : "0").split(":")[0]})
+      {zoneNameShort !== "GMT" && (
+        <Box
+          py={1}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          color={theme.palette.secondary.light}
+        >
+          <Box>
+            {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC {timezone})
+          </Box>
+          <Box>
+            {moment(Date().toString()).format("HH:mm")}
+            <Radio
+              value={window.navigator.language}
+              checked={window.navigator.language === selectedTimeZone}
+              onChange={handleChange}
+            />
+          </Box>
         </Box>
-        <Box>
-          {moment(Date().toString()).format("HH:mm")}
-          <Radio
-            value={window.navigator.language}
-            checked={window.navigator.language === selectedTimeZone}
-            onChange={handleChange}
-          />
-        </Box>
-      </Box>
+      )}
 
       <Box
         display={"flex"}

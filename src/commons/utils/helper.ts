@@ -197,11 +197,14 @@ export const formatDateTime = (date: string) => {
   if (!date) return "";
   return moment.utc(date).tz(moment.tz.guess()).format("MM/DD/YYYY HH:mm:ss");
 };
+
 export const formatDateTimeLocal = (date: string) => {
-  const timeZone = localStorage.getItem("timezone") || "UTC";
   if (!date) return "";
-  // const dateFormat = new Intl.DateTimeFormat(timeZone, {
-  const dateFormat = new Intl.DateTimeFormat(timeZone === "UTC" ? "en-US" : timeZone.replace(/"/g, ""), {
+  if (!localStorage.getItem("timezone")) {
+    return moment(moment.utc(`${date}`)).toISOString();
+  }
+  const timeZone = localStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     hour: "numeric",
     minute: "numeric",
     day: "2-digit",
@@ -209,10 +212,57 @@ export const formatDateTimeLocal = (date: string) => {
     year: "numeric",
     second: "2-digit",
     hour12: false,
-    timeZone: timeZone.replace(/"/g, "") == "UTC" ? "UTC" : moment.tz.guess()
+    timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
   });
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
+};
+export const formatDateLocal = (date: string) => {
+  if (!date) return "";
+
+  const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour12: false,
+    timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
+  });
+
+  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
+};
+
+export const formatTypeDate = () => {
+  if (!localStorage.getItem("timezone")) {
+    return moment(moment("2023/08/03 21:44:51+0000").utc())
+      .toISOString()
+      .replace("2023", "YYYY")
+      .replace("08", "MM")
+      .replace("03", "DD")
+      .replace("21", "HH")
+      .replace("44", "mm")
+      .replace("51", "ss");
+  }
+
+  const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    hour: "numeric",
+    minute: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    second: "2-digit",
+    hour12: false
+  });
+
+  return dateFormat
+    .format(moment("2023/08/03 21:44:51") as never as Date)
+    .replace("2023", "YYYY")
+    .replace("08", "MM")
+    .replace("03", "DD")
+    .replace("21", "HH")
+    .replace("44", "mm")
+    .replace("51", "ss");
 };
 
 export const formatDate = (date: string) => {

@@ -7,6 +7,7 @@ import { ChipContainer, MultiSigChip, TimeLockChip } from "src/pages/NativeScrip
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomModal from "src/components/commons/CustomModal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { CardSign, ContainerMint, ItemMint, MintCard, MintIcon, MintTitle, ViewSigner } from "./styles";
 
@@ -36,23 +37,29 @@ const MinttingBurningPolicy = () => {
     if (before && after) {
       return (
         <Box>
-          <Box display={"flex"} alignContent={"center"} gap={1}>
-            until: {isMoreThan10years(after) ? t("moreThan10Years") : formatDateTimeLocal(after)}
-          </Box>
-          <Box display={"flex"} alignContent={"center"} gap={1}>
-            as of: {isMoreThan10years(before) ? t("moreThan10Years") : formatDateTimeLocal(before)}
-          </Box>
+          <DatetimeTypeTooltip>
+            <Box display={"flex"} alignContent={"center"} gap={1}>
+              until: {isMoreThan10years(after) ? t("moreThan10Years") : formatDateTimeLocal(after)}
+            </Box>
+          </DatetimeTypeTooltip>
+          <DatetimeTypeTooltip>
+            <Box display={"flex"} alignContent={"center"} gap={1}>
+              as of: {isMoreThan10years(before) ? t("moreThan10Years") : formatDateTimeLocal(before)}
+            </Box>
+          </DatetimeTypeTooltip>
         </Box>
       );
     }
     if (before || after) {
       return (
-        <Box display={"flex"} gap={1}>
-          {before ? "as of: " : " until: "}
-          {isMoreThan10years(before ? before : after)
-            ? t("moreThan10Years")
-            : formatDateTimeLocal(before ? before : (after as string))}
-        </Box>
+        <DatetimeTypeTooltip>
+          <Box display={"flex"} gap={1}>
+            {before ? "as of: " : " until: "}
+            {isMoreThan10years(before ? before : after)
+              ? t("moreThan10Years")
+              : formatDateTimeLocal(before ? before : (after as string))}
+          </Box>
+        </DatetimeTypeTooltip>
       );
     }
     return <Box display={"flex"}>{t("common.N/A")}</Box>;

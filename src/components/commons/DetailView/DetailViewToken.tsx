@@ -47,6 +47,7 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 type DetailViewTokenProps = {
   token: IToken | null;
@@ -212,7 +213,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
-                <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
+                <DatetimeTypeTooltip>
+                  <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
+                </DatetimeTypeTooltip>
               </DetailsInfoItem>
             </Group>
             <Group>

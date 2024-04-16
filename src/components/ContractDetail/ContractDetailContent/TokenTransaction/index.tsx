@@ -14,6 +14,7 @@ import DetailViewContractHash from "src/components/commons/DetailView/DetailView
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Flex, Label, PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
@@ -60,7 +61,11 @@ const TokenTransaction: React.FC = () => {
       key: "time",
       minWidth: "180px",
 
-      render: (r) => <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       title: t("glossary.block"),

@@ -17,6 +17,7 @@ import FormNowMessage from "../commons/FormNowMessage";
 import Table, { Column } from "../commons/Table";
 import Card from "../commons/Card";
 import { Actions, StyledLink, TimeDuration } from "./styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -58,9 +59,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <Box mt={1} color={({ palette }) => palette.secondary.light}>
-            {formatDateTimeLocal(r.time || "")}
-          </Box>
+          <DatetimeTypeTooltip>
+            <Box mt={1} color={({ palette }) => palette.secondary.light}>
+              {formatDateTimeLocal(r.time || "")}
+            </Box>
+          </DatetimeTypeTooltip>
         </div>
       )
     },

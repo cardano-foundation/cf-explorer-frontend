@@ -25,6 +25,7 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   BackButton,
@@ -212,7 +213,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle>{t("createdAt")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
+            <DatetimeTypeTooltip>
+              <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
+            </DatetimeTypeTooltip>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <CustomIcon fill={theme.palette.secondary.main} height={22} icon={RewardIconComponent} />

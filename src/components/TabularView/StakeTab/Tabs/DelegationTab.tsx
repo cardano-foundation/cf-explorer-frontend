@@ -20,6 +20,7 @@ import { DelegationCertificateModal } from "src/components/StakingLifeCycle/Dele
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink, WrapperDelegationTab, WrapWalletLabel } from "../styles";
 
@@ -51,7 +52,7 @@ const DelegationTab = () => {
       title: t("createdAt"),
       key: "id",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

@@ -26,6 +26,7 @@ import DrawPath from "src/components/commons/DrawPath";
 import { LineArrowItem } from "src/components/commons/LineArrow";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   BoxGroup,
@@ -175,7 +176,9 @@ const DeregistrationDraw: React.FC<Props> = ({ toggleModal, showBackButton }) =>
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

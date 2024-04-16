@@ -69,6 +69,7 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 type DetailViewTransactionProps = {
   hash: string;
@@ -302,7 +303,9 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               )}
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
-                <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
+                <DatetimeTypeTooltip>
+                  <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
+                </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("common.status")}</DetailLabel>

@@ -17,6 +17,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
@@ -57,17 +58,23 @@ const Epoch: React.FC = () => {
       title: <Capitalize>{t("glossary.startTimestamp")}</Capitalize>,
       key: "startTime",
       minWidth: "100px",
-      render: (r) => <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       title: <Capitalize>{t("glossary.endTimestamp")}</Capitalize>,
       key: "endTime",
       minWidth: "100px",
       render: (r) => (
-        <BlueText>
-          {formatDateTimeLocal(r.endTime || "")}
-          {selected === r.no && <SelectedIcon />}
-        </BlueText>
+        <DatetimeTypeTooltip>
+          <BlueText>
+            {formatDateTimeLocal(r.endTime || "")}
+            {selected === r.no && <SelectedIcon />}
+          </BlueText>
+        </DatetimeTypeTooltip>
       )
     },
     {

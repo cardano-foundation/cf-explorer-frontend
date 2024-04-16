@@ -50,6 +50,7 @@ import {
   ViewDetailHeader,
   ViewDetailScroll
 } from "./styles";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 type DetailViewBlockProps = {
   blockNo?: number | string;
@@ -220,7 +221,9 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
-                <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
+                <DatetimeTypeTooltip>
+                  <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
+                </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
