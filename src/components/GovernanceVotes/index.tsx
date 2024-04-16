@@ -8,8 +8,10 @@ import {
   Button,
   ButtonGroup,
   Chip,
+  ClickAwayListener,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
@@ -24,16 +26,15 @@ import {
   Typography,
   styled,
   tooltipClasses,
-  useTheme,
-  ClickAwayListener,
-  Link
+  useTheme
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -55,7 +56,7 @@ import {
   historyIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
 import CardGovernanceVotes, {
   GovernanceStatus,
   VoteStatus,
@@ -63,11 +64,11 @@ import CardGovernanceVotes, {
 } from "src/components/commons/CardGovernanceVotes";
 import { formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
+import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -77,7 +78,6 @@ import {
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
 import { StyledInput } from "src/components/share/styled";
-import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
@@ -91,10 +91,10 @@ import {
   StyledGrid,
   StyledTitle
 } from "../DelegationDetail/DelegationDetailInfo/styles";
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
@@ -1068,6 +1068,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
@@ -1446,7 +1447,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
-                  onClose={() => setOpenDateRange(false)}
+                  onClose={() => {
+                    setOpenDateRange(false);
+                  }}
                   onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>

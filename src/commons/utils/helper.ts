@@ -30,6 +30,7 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   if (address?.length <= 18) return address;
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
+
 export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
 };
@@ -266,15 +267,6 @@ export const formatTypeDate = () => {
     .replace("51", "ss");
 };
 
-export const formatDate = (date: string) => {
-  if (!date) return "";
-  const dateFormat = new Intl.DateTimeFormat("en-US", {
-    timeZone: moment.tz.guess(),
-    timeZoneName: "short"
-  });
-  return dateFormat.format(moment.utc(date) as never as Date);
-};
-
 export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;
@@ -337,7 +329,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 
