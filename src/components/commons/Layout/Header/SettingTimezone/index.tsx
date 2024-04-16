@@ -23,14 +23,22 @@ export default function SettingTimezone() {
 
   return (
     <div>
-      <Button
-        aria-describedby={id}
-        type="button"
-        onClick={handleClick}
-        sx={{ border: `2px solid ${theme.palette.primary[200]}`, width: 40, minWidth: 40, height: 40, borderRadius: 2 }}
-      >
-        <SettingTimezoneIcon fill={theme.palette.secondary.light} />
-      </Button>
+      <CustomTooltip title={t("common.timzoneNotice")}>
+        <Button
+          aria-describedby={id}
+          type="button"
+          onClick={handleClick}
+          sx={{
+            border: `2px solid ${theme.palette.primary[200]}`,
+            width: 40,
+            minWidth: 40,
+            height: 40,
+            borderRadius: 2
+          }}
+        >
+          <SettingTimezoneIcon fill={theme.palette.secondary.light} />
+        </Button>
+      </CustomTooltip>
       <Popover
         id={id}
         open={open}
@@ -70,7 +78,7 @@ const TimezoneCard = () => {
       p={2}
       px={4}
       borderRadius={2}
-      width={"min(300px, 80vw)"}
+      width={"min(320px, 80vw)"}
       position={"relative"}
       bgcolor={theme.palette.secondary[0]}
       sx={{
@@ -80,7 +88,7 @@ const TimezoneCard = () => {
           background: theme.palette.secondary[0],
           position: "absolute",
           top: "-6px",
-          left: "12px",
+          left: "30px",
           width: "14px",
           height: "16px",
           transform: "rotate(45deg)"
@@ -109,27 +117,36 @@ const TimezoneCard = () => {
           <BlackWarningIcon />
         </Box>
       </Box>
-      {zoneNameShort !== "GMT" && (
+      <Box
+        component={zoneNameShort === "GMT" ? CustomTooltip : Box}
+        title={t("common.timzoneNoticeDisnable")}
+        placement="bottom"
+      >
         <Box
           py={1}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
-          color={theme.palette.secondary.light}
+          color={zoneNameShort === "GMT" ? theme.palette.secondary[600] : theme.palette.secondary.light}
         >
           <Box>
             {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC {timezone})
           </Box>
-          <Box>
+          <Box display={"flex"} alignItems={"center"} gap={1}>
             {moment(Date().toString()).format("HH:mm")}
             <Radio
+              sx={{
+                color: `${zoneNameShort === "GMT" ? theme.palette.secondary[600] : "none"} !important`,
+                p: 0
+              }}
               value={window.navigator.language}
               checked={window.navigator.language === selectedTimeZone}
               onChange={handleChange}
+              disabled={zoneNameShort === "GMT"}
             />
           </Box>
         </Box>
-      )}
+      </Box>
 
       <Box
         display={"flex"}
@@ -138,9 +155,9 @@ const TimezoneCard = () => {
         color={theme.palette.secondary.light}
       >
         <Box>UTC</Box>
-        <Box>
+        <Box display={"flex"} alignItems={"center"} gap={1}>
           {moment(Date().toString()).utc().format("HH:mm")}
-          <Radio value={"UTC"} checked={"UTC" === selectedTimeZone} onChange={handleChange} />
+          <Radio sx={{ p: 0 }} value={"UTC"} checked={"UTC" === selectedTimeZone} onChange={handleChange} />
         </Box>
       </Box>
     </Box>

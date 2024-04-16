@@ -194,11 +194,6 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
   }
 };
 
-export const formatDateTime = (date: string) => {
-  if (!date) return "";
-  return moment.utc(date).tz(moment.tz.guess()).format("MM/DD/YYYY HH:mm:ss");
-};
-
 export const formatDateTimeLocal = (date: string) => {
   if (!date) return "";
   if (!localStorage.getItem("timezone")) {
@@ -218,6 +213,7 @@ export const formatDateTimeLocal = (date: string) => {
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
 };
+
 export const formatDateLocal = (date: string) => {
   if (!date) return "";
 
@@ -264,15 +260,6 @@ export const formatTypeDate = () => {
     .replace("21", "HH")
     .replace("44", "mm")
     .replace("51", "ss");
-};
-
-export const formatDate = (date: string) => {
-  if (!date) return "";
-  const dateFormat = new Intl.DateTimeFormat("en-US", {
-    timeZone: moment.tz.guess(),
-    timeZoneName: "short"
-  });
-  return dateFormat.format(moment.utc(date) as never as Date);
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {

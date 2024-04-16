@@ -5,10 +5,11 @@ import { API } from "src/commons/utils/api";
 import StyledModal from "src/components/commons/StyledModal";
 import useFetch from "src/commons/hooks/useFetch";
 import { TProtocolItem } from "src/types/protocol";
-import { formatDateTime, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 
 import { LinkComponent, ModalTitle, StyledTableCell, StyledTableHeadCell } from "./styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 interface IProps {
   open: boolean;
   handleCloseModal: () => void;
@@ -47,7 +48,9 @@ export default function ProtocolHistoryModal({ open, protocolType, handleCloseMo
                       {getShortHash(item.transactionHashs[0])}
                     </LinkComponent>
                   </StyledTableCell>
-                  <StyledTableCell>{formatDateTime(item.time)}</StyledTableCell>
+                  <StyledTableCell>
+                    <DatetimeTypeTooltip>{formatDateTimeLocal(item.time)}</DatetimeTypeTooltip>
+                  </StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -104,7 +104,6 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 }}
               />
             </WrapButtonSelect>
-
             <WrapButtonSelect>
               <SettingTimezone />
             </WrapButtonSelect>
