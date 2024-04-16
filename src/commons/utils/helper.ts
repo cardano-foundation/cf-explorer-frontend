@@ -195,11 +195,6 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
   }
 };
 
-export const formatDateTime = (date: string) => {
-  if (!date) return "";
-  return moment.utc(date).tz(moment.tz.guess()).format("MM/DD/YYYY HH:mm:ss");
-};
-
 export const formatDateTimeLocal = (date: string) => {
   if (!date) return "";
   if (!localStorage.getItem("timezone")) {
@@ -219,6 +214,7 @@ export const formatDateTimeLocal = (date: string) => {
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
 };
+
 export const formatDateLocal = (date: string) => {
   if (!date) return "";
 

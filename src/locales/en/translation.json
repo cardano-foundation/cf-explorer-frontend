@@ -723,6 +723,8 @@
   "common.walletBalance": "Wallet balance",
   "common.total": "Total",
   "common.timzoneFormat": "Timezone Format",
+  "common.timzoneNotice": "Update your timezone preferences",
+  "common.timzoneNoticeDisnable": "Timezone already corresponds to UTC",
   "common.timzoneFormat.des": "Choose between your local timezone and UTC. If you want to save these preferences you will need to be signed in.",
   "common.poolRegistration": "Pool Registration",
   "common.searchPoolDesc": "Search to explore the staking lifecycle events of a delegator or pool.",

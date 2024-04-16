@@ -26,7 +26,8 @@ export const NavbarContainer = styled("nav")<{ vh: number }>(({ theme, vh }) => 
 
 export const WrapButtonSelect = styled(Box)(({ theme }) => ({
   display: "none",
-  [theme.breakpoints.down("md")]: {
+  marginTop: theme.spacing(1),
+  [theme.breakpoints.down("lg")]: {
     display: "flex"
   },
   padding: "0px 20px",

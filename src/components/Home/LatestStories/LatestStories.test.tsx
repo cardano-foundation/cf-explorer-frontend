@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { formatDateTime } from "src/commons/utils/helper";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import LatestStories from ".";
 
@@ -43,6 +43,6 @@ describe("LatestStories", () => {
   it("renders data in the list LatestStories", async () => {
     render(<LatestStories />);
     expect(screen.getByText(mockItem.title)).toBeInTheDocument();
-    expect(screen.getByText(formatDateTime(mockItem.news_item_content.date))).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockItem.news_item_content.date))).toBeInTheDocument();
   });
 });
