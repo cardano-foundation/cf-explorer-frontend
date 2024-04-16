@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import OverViews from "src/components/Dreps/DrepsOverview";
-import DelegationLists from "src/components/Dreps/DrepsList";
+import DrepsList from "src/components/Dreps/DrepsList";
 
 import { Horizon, StyledContainer } from "./styles";
 
@@ -14,7 +14,7 @@ const Dreps = () => {
     <StyledContainer>
       <OverViews />
       <Horizon />
-      <DelegationLists />
+      <DrepsList />
     </StyledContainer>
   );
 };
