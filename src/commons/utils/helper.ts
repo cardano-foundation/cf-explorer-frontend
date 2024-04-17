@@ -202,13 +202,13 @@ export const formatDateTimeLocal = (date: string) => {
   }
   const timeZone = localStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
-    hour: "numeric",
+    hour: "2-digit",
     minute: "numeric",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
     second: "2-digit",
-    hour12: false,
+    hourCycle: "h23",
     timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
   });
 
@@ -223,7 +223,7 @@ export const formatDateLocal = (date: string) => {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
-    hour12: false,
+    hourCycle: "h23",
     timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
   });
 
@@ -247,13 +247,13 @@ export const formatTypeDate = () => {
   const timezone = moment.tz(zoneName).format("Z");
   const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
-    hour: "numeric",
+    hour: "2-digit",
     minute: "numeric",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
-    second: "2-digit",
-    hour12: false
+    hourCycle: "h23",
+    second: "2-digit"
   });
   const timeZoneText =
     timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
