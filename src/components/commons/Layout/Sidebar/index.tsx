@@ -24,7 +24,7 @@ const Sidebar: React.FC = () => {
   const { theme } = useSelector(({ theme }: RootState) => theme);
   const { height } = useWindowSize();
 
-  const zoneName = moment.tz.guess();
+  const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zoneNameShort = moment.tz(zoneName).format("z");
   const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");

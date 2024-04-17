@@ -208,7 +208,7 @@ export const formatDateTimeLocal = (date: string) => {
     year: "numeric",
     second: "2-digit",
     hourCycle: "h23",
-    timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
+    timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
@@ -223,7 +223,7 @@ export const formatDateLocal = (date: string) => {
     month: "2-digit",
     year: "numeric",
     hourCycle: "h23",
-    timeZone: timeZone == "UTC" ? "UTC" : moment.tz.guess()
+    timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
   return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
@@ -241,7 +241,7 @@ export const formatTypeDate = () => {
       .replace("51", "ss");
   }
 
-  const zoneName = moment.tz.guess();
+  const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
   const timeZone = sessionStorage.getItem("timezone") ? sessionStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
