@@ -85,6 +85,7 @@ const TimezoneCard = () => {
   const zoneName = moment.tz.guess();
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
+
   const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
   const timezoneText = `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
@@ -127,7 +128,7 @@ const TimezoneCard = () => {
       </Box>
       <Box
         component={zoneNameShort === "GMT" ? CustomTooltip : Box}
-        title={t("common.timzoneNoticeDisnable")}
+        title={zoneNameShort === "GMT" ? t("common.timzoneNoticeDisnable") : undefined}
         placement="bottom"
       >
         <Box
