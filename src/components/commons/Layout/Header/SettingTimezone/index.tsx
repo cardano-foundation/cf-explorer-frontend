@@ -138,8 +138,8 @@ const TimezoneCard = () => {
           color={zoneNameShort === "GMT" ? theme.palette.secondary[600] : theme.palette.secondary.light}
         >
           <Box
-            component={(timezoneText || "").length > 25 ? CustomTooltip : Box}
-            title={(timezoneText || "").length > 25 ? timezoneText : undefined}
+            component={(timezoneText || "").length > 20 ? CustomTooltip : Box}
+            title={(timezoneText || "").length > 20 ? timezoneText : undefined}
           >
             <Box maxWidth={"185px"} overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"}>
               {timezoneText}
