@@ -82,7 +82,7 @@ export default function SettingTimezone() {
 const TimezoneCard = () => {
   const theme = useTheme();
 
-  const zoneName = moment.tz.guess();
+  const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
 
