@@ -247,24 +247,17 @@ export const formatTypeDate = () => {
   const timezone = moment.tz(zoneName).format("Z");
   const timeZone = sessionStorage.getItem("timezone") ? sessionStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
-    hour: "2-digit",
-    minute: "numeric",
     day: "2-digit",
     month: "2-digit",
-    year: "numeric",
-    hourCycle: "h23",
-    second: "2-digit"
+    year: "numeric"
   });
   const timeZoneText =
     timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
   return `Date format ${dateFormat
-    .format(moment("2023/08/03 21:44:51") as never as Date)
+    .format(moment("2023/08/03") as never as Date)
     .replace("2023", "YYYY")
     .replace("08", "MM")
-    .replace("03", "DD")
-    .replace("21", "HH")
-    .replace("44", "mm")
-    .replace("51", "ss")} ${timeZoneText}`;
+    .replace("03", "DD")} ${timeZoneText}`;
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {

@@ -131,7 +131,7 @@ const TimezoneCard = () => {
         placement="bottom"
       >
         <Box
-          py={2}
+          py={3}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
@@ -162,7 +162,7 @@ const TimezoneCard = () => {
       </Box>
 
       <Box
-        pb={1}
+        pb={2}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-between"}
