@@ -196,10 +196,10 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
 
 export const formatDateTimeLocal = (date: string) => {
   if (!date) return "";
-  if (!localStorage.getItem("timezone")) {
+  if (!sessionStorage.getItem("timezone")) {
     return moment(moment.utc(`${date}`)).toISOString();
   }
-  const timeZone = localStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+  const timeZone = sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     hour: "2-digit",
     minute: "numeric",
@@ -217,7 +217,7 @@ export const formatDateTimeLocal = (date: string) => {
 export const formatDateLocal = (date: string) => {
   if (!date) return "";
 
-  const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
+  const timeZone = sessionStorage.getItem("timezone") ? sessionStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     day: "2-digit",
     month: "2-digit",
@@ -230,7 +230,7 @@ export const formatDateLocal = (date: string) => {
 };
 
 export const formatTypeDate = () => {
-  if (!localStorage.getItem("timezone")) {
+  if (!sessionStorage.getItem("timezone")) {
     return moment(moment("2023/08/03 21:44:51+0000").utc())
       .toISOString()
       .replace("2023", "YYYY")
@@ -244,7 +244,7 @@ export const formatTypeDate = () => {
   const zoneName = moment.tz.guess();
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
-  const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
+  const timeZone = sessionStorage.getItem("timezone") ? sessionStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     hour: "2-digit",
     minute: "numeric",
