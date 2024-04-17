@@ -29,11 +29,28 @@ export default function SettingTimezone() {
           type="button"
           onClick={handleClick}
           sx={{
+            position: "relative",
             border: `2px solid ${theme.palette.primary[200]}`,
             width: 40,
             minWidth: 40,
             height: 40,
-            borderRadius: 2
+            borderRadius: 2,
+            ":after": {
+              content: "''",
+              display: open ? "block" : "none",
+              background: theme.palette.secondary[0],
+              position: "absolute",
+              bottom: "-20px",
+              width: "14px",
+              height: "16px",
+              zIndex: 1,
+              transform: "rotate(45deg)",
+              boxShadow:
+                "0px 5px 5px -3px rgba(0,0,0,0.1), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.1)",
+              [theme.breakpoints.down("lg")]: {
+                display: "none"
+              }
+            }
           }}
         >
           <SettingTimezoneIcon fill={theme.palette.secondary.light} />
@@ -46,7 +63,10 @@ export default function SettingTimezone() {
         onClose={handleClose}
         sx={{
           mt: 1,
-          ".MuiPaper-root": { borderRadius: "8px", bgcolor: theme.palette.secondary[0], overflow: "visible" }
+          ".MuiPaper-root": { borderRadius: "8px", bgcolor: theme.palette.secondary[0], overflow: "visible" },
+          [theme.breakpoints.down("lg")]: {
+            display: "none"
+          }
         }}
         anchorOrigin={{
           vertical: "bottom",
@@ -67,6 +87,7 @@ const TimezoneCard = () => {
   const timezone = moment.tz(zoneName).format("Z");
   const [timezoneLS, setTimezoneLS] = useLocalStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
+  const timezoneText = `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTimeZone(event.target.value);
     setTimezoneLS(event.target.value);
@@ -81,19 +102,6 @@ const TimezoneCard = () => {
       width={"min(320px, 80vw)"}
       position={"relative"}
       bgcolor={theme.palette.secondary[0]}
-      sx={{
-        ":after": {
-          content: "''",
-          display: "block",
-          background: theme.palette.secondary[0],
-          position: "absolute",
-          top: "-6px",
-          left: "30px",
-          width: "14px",
-          height: "16px",
-          transform: "rotate(45deg)"
-        }
-      }}
     >
       <Box
         display={"flex"}
@@ -123,14 +131,19 @@ const TimezoneCard = () => {
         placement="bottom"
       >
         <Box
-          py={1}
+          py={2}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
           color={zoneNameShort === "GMT" ? theme.palette.secondary[600] : theme.palette.secondary.light}
         >
-          <Box>
-            {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC {timezone})
+          <Box
+            component={(timezoneText || "").length > 25 ? CustomTooltip : Box}
+            title={(timezoneText || "").length > 25 ? timezoneText : undefined}
+          >
+            <Box maxWidth={"185px"} overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"}>
+              {timezoneText}
+            </Box>
           </Box>
           <Box display={"flex"} alignItems={"center"} gap={1}>
             {moment(Date().toString()).format("HH:mm")}
@@ -149,6 +162,7 @@ const TimezoneCard = () => {
       </Box>
 
       <Box
+        pb={1}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"space-between"}

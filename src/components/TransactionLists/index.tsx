@@ -59,11 +59,9 @@ const TransactionList: React.FC<TransactionListProps> = ({
           <CustomTooltip title={r.hash}>
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
-          <DatetimeTypeTooltip>
-            <Box mt={1} color={({ palette }) => palette.secondary.light}>
-              {formatDateTimeLocal(r.time || "")}
-            </Box>
-          </DatetimeTypeTooltip>
+          <Box mt={1} color={({ palette }) => palette.secondary.light}>
+            <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
+          </Box>
         </div>
       )
     },

@@ -7,7 +7,7 @@ import CustomTooltip from "../CustomTooltip";
 const DatetimeTypeTooltip = ({ children }: { children: React.ReactNode }) => {
   const title = formatTypeDate();
   return (
-    <CustomTooltip title={title}>
+    <CustomTooltip title={<Box>{title}</Box>}>
       <Box display={"inline-block"}>{children}</Box>
     </CustomTooltip>
   );
