@@ -50,6 +50,10 @@ const DelegationLists: React.FC = () => {
 
   const fromPath = history.location.pathname as SpecialPath;
 
+  const handleBlankSort = () => {
+    history.replace({ search: stringify({ ...pageInfo, page: 1, sort: "" }) });
+  };
+
   useEffect(() => {
     if (fetchData.initialized) {
       history.replace({ search: stringify({ ...pageInfo }), state: undefined });
@@ -99,7 +103,7 @@ const DelegationLists: React.FC = () => {
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}</Box>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -112,7 +116,7 @@ const DelegationLists: React.FC = () => {
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -128,7 +132,7 @@ const DelegationLists: React.FC = () => {
           t("common.N/A")
         ),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -137,7 +141,7 @@ const DelegationLists: React.FC = () => {
       minWidth: "120px",
       render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -146,7 +150,7 @@ const DelegationLists: React.FC = () => {
       key: "lifetimeBlock",
       render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>,
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -162,7 +166,7 @@ const DelegationLists: React.FC = () => {
           t("common.N/A")
         ),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
@@ -172,7 +176,7 @@ const DelegationLists: React.FC = () => {
       render: (r) =>
         r.governanceParticipationRate != null ? `${formatPercent(r.governanceParticipationRate)}` : t("common.N/A"),
       sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     }
   ];
