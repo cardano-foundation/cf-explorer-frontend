@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocalStorage, useWindowSize } from "react-use";
+import { useSessionStorage, useWindowSize } from "react-use";
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
 import moment from "moment";
 
@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
 
   const zoneName = moment.tz.guess();
   const zoneNameShort = moment.tz(zoneName).format("z");
-  const [timezoneLS, setTimezoneLS] = useLocalStorage("timezone", window.navigator.language);
+  const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
 
   const handleChange = (tz) => {

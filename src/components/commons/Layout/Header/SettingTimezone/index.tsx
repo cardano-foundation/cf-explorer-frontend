@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from "react";
-import { useLocalStorage } from "react-use";
+import { useSessionStorage } from "react-use";
 import { Button, useTheme, Popover, Box, Radio } from "@mui/material";
 import moment from "moment-timezone";
 import { t } from "i18next";
@@ -85,7 +85,7 @@ const TimezoneCard = () => {
   const zoneName = moment.tz.guess();
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
-  const [timezoneLS, setTimezoneLS] = useLocalStorage("timezone", window.navigator.language);
+  const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
   const timezoneText = `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
