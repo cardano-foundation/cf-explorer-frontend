@@ -4,16 +4,19 @@ import { SystemStyleObject } from "@mui/system";
 import { drawerWidth, drawerWidthMobile, drawerWidthTablet } from "../../styles";
 
 export const SidebarMenuContainer = styled(Box)(({ theme }) => ({
-  height: "calc(100% - 190px)",
+  height: "calc(100% - 60px)",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
+  [theme.breakpoints.down("lg")]: {
+    maxHeight: "calc(100% - 190px) !important"
+  },
   [theme.breakpoints.down("sm")]: {
     height: "fit-content",
-    maxHeight: "calc(100% - 180px) !important"
+    maxHeight: "calc(100% - 240px) !important"
   },
   [theme.breakpoints.down("md")]: {
-    maxHeight: "calc(100% - 160px)"
+    maxHeight: "calc(100% - 240px)"
   }
 }));
 

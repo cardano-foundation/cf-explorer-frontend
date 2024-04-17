@@ -109,7 +109,9 @@ const Sidebar: React.FC = () => {
             borderRadius={"8px"}
             fontSize={16}
           >
-            {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort}
+            <Box maxWidth={"100px"} overflow={"hidden"} textOverflow={"ellipsis"} whiteSpace={"nowrap"}>
+              {zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort}
+            </Box>
           </Box>
 
           <Box

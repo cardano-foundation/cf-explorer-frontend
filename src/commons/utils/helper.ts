@@ -241,6 +241,9 @@ export const formatTypeDate = () => {
       .replace("51", "ss");
   }
 
+  const zoneName = moment.tz.guess();
+  const zoneNameShort = moment.tz(zoneName).format("z");
+  const timezone = moment.tz(zoneName).format("Z");
   const timeZone = localStorage.getItem("timezone") ? localStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     hour: "numeric",
@@ -251,15 +254,16 @@ export const formatTypeDate = () => {
     second: "2-digit",
     hour12: false
   });
-
-  return dateFormat
+  const timeZoneText =
+    timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
+  return `Date format ${dateFormat
     .format(moment("2023/08/03 21:44:51") as never as Date)
     .replace("2023", "YYYY")
     .replace("08", "MM")
     .replace("03", "DD")
     .replace("21", "HH")
     .replace("44", "mm")
-    .replace("51", "ss");
+    .replace("51", "ss")} ${timeZoneText}`;
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {
