@@ -33,6 +33,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
       ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
       : 100;
+
   const listOverview = [
     {
       icon: ExchangeIcon,
