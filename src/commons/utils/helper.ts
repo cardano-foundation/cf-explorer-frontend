@@ -163,6 +163,7 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
   localStorage.removeItem("loginType");
+  localStorage.removeItem("userTimezone");
   localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
@@ -184,6 +185,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("refreshToken", data.refreshToken);
     localStorage.setItem("walletId", data.address);
     localStorage.setItem("email", data.email);
+    localStorage.setItem("userTimezone", data.timezone);
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
@@ -199,7 +201,12 @@ export const formatDateTimeLocal = (date: string) => {
   if (!sessionStorage.getItem("timezone")) {
     return moment(moment.utc(`${date}`)).toISOString();
   }
-  const timeZone = sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+
   const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
     hour: "2-digit",
     minute: "numeric",

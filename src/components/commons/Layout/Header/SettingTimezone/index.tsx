@@ -6,6 +6,9 @@ import { t } from "i18next";
 
 import { BlackWarningIcon, SettingTimezoneIcon } from "src/commons/resources";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import useAuth from "src/commons/hooks/useAuth";
+import { authAxios } from "src/commons/utils/axios";
+import { USER_API } from "src/commons/utils/api";
 
 export default function SettingTimezone() {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -81,18 +84,48 @@ export default function SettingTimezone() {
 
 const TimezoneCard = () => {
   const theme = useTheme();
-
+  const { isLoggedIn } = useAuth();
+  const [loading, setLoading] = useState(false);
   const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
 
   const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
-  const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
+  const [selectedTimeZone, setSelectedTimeZone] = useState(
+    isLoggedIn
+      ? `${localStorage.getItem("userTimezone")}` === "utc"
+        ? "UTC"
+        : localStorage.getItem("userTimezone") || "UTC"
+      : zoneNameShort !== "UTC"
+      ? timezoneLS
+      : "UTC"
+  );
   const timezoneText = `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedTimeZone(event.target.value);
-    setTimezoneLS(event.target.value);
-    window.location.reload();
+
+  const hanldeSetUserTimezone = async (tz: string) => {
+    setLoading(true);
+    await authAxios
+      .post(`${USER_API.SET_TIMEZONE}?timezone=${tz}`)
+      .then((res) => res.data)
+      .then((data) => {
+        if (data) {
+          setSelectedTimeZone(tz);
+          setTimezoneLS(tz);
+          localStorage.setItem("userTimezone", tz);
+          window.location.reload();
+        }
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (isLoggedIn) {
+      await hanldeSetUserTimezone(event.target.value);
+    } else {
+      setSelectedTimeZone(event.target.value);
+      setTimezoneLS(event.target.value);
+      window.location.reload();
+    }
   };
 
   return (
@@ -127,16 +160,16 @@ const TimezoneCard = () => {
         </Box>
       </Box>
       <Box
-        component={zoneNameShort === "GMT" ? CustomTooltip : Box}
-        title={zoneNameShort === "GMT" ? t("common.timzoneNoticeDisnable") : undefined}
+        component={zoneNameShort === "UTC" ? CustomTooltip : Box}
+        title={zoneNameShort === "UTC" ? t("common.timzoneNoticeDisnable") : undefined}
         placement="bottom"
       >
         <Box
-          py={3}
+          my={3}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"space-between"}
-          color={zoneNameShort === "GMT" ? theme.palette.secondary[600] : theme.palette.secondary.light}
+          color={zoneNameShort === "UTC" ? theme.palette.secondary[600] : theme.palette.secondary.light}
         >
           <Box
             component={(timezoneText || "").length > 20 ? CustomTooltip : Box}
@@ -150,13 +183,13 @@ const TimezoneCard = () => {
             {moment(Date().toString()).format("HH:mm")}
             <Radio
               sx={{
-                color: `${zoneNameShort === "GMT" ? theme.palette.secondary[600] : "none"} !important`,
+                color: `${zoneNameShort === "UTC" ? theme.palette.secondary[600] : "none"} !important`,
                 p: 0
               }}
               value={window.navigator.language}
               checked={window.navigator.language === selectedTimeZone}
               onChange={handleChange}
-              disabled={zoneNameShort === "GMT"}
+              disabled={zoneNameShort === "UTC" || loading}
             />
           </Box>
         </Box>
@@ -172,7 +205,13 @@ const TimezoneCard = () => {
         <Box>UTC</Box>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           {moment(Date().toString()).utc().format("HH:mm")}
-          <Radio sx={{ p: 0 }} value={"UTC"} checked={"UTC" === selectedTimeZone} onChange={handleChange} />
+          <Radio
+            sx={{ p: 0 }}
+            value={"UTC"}
+            checked={"UTC" === selectedTimeZone}
+            onChange={handleChange}
+            disabled={loading}
+          />
         </Box>
       </Box>
     </Box>

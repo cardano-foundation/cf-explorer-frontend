@@ -14,25 +14,58 @@ import {
 } from "src/commons/resources";
 import { setTheme } from "src/stores/theme";
 import { RootState } from "src/stores/types";
+import useAuth from "src/commons/hooks/useAuth";
+import { authAxios } from "src/commons/utils/axios";
+import { USER_API } from "src/commons/utils/api";
 
 import SelectNetwork from "../Header/SelectNetwork";
 import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, WrapButtonSelect } from "./styles";
 
 const Sidebar: React.FC = () => {
+  const { isLoggedIn } = useAuth();
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme } = useSelector(({ theme }: RootState) => theme);
+  const [loading, setLoading] = useState(false);
   const { height } = useWindowSize();
 
   const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const zoneNameShort = moment.tz(zoneName).format("z");
   const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
-  const [selectedTimeZone, setSelectedTimeZone] = useState(zoneNameShort !== "GMT" ? timezoneLS : "UTC");
+  const [selectedTimeZone, setSelectedTimeZone] = useState(
+    isLoggedIn
+      ? `${localStorage.getItem("userTimezone")}` === "utc"
+        ? "UTC"
+        : localStorage.getItem("userTimezone") || "UTC"
+      : zoneNameShort !== "UTC"
+      ? timezoneLS
+      : "UTC"
+  );
 
-  const handleChange = (tz) => {
-    setSelectedTimeZone(tz);
-    setTimezoneLS(tz);
-    window.location.reload();
+  const hanldeSetUserTimezone = async (tz: string) => {
+    setLoading(true);
+    await authAxios
+      .post(`${USER_API.SET_TIMEZONE}?timezone=${tz}`)
+      .then((res) => res.data)
+      .then((data) => {
+        if (data) {
+          setSelectedTimeZone(tz);
+          setTimezoneLS(tz);
+          localStorage.setItem("userTimezone", tz);
+          window.location.reload();
+        }
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const handleChange = async (tz: string) => {
+    if (isLoggedIn) {
+      await hanldeSetUserTimezone(tz);
+    } else {
+      setSelectedTimeZone(tz);
+      setTimezoneLS(tz);
+      window.location.reload();
+    }
   };
 
   const muiTheme = useTheme();
@@ -73,7 +106,7 @@ const Sidebar: React.FC = () => {
                 handleChange(window.navigator.language);
               }
             }}
-            disabled={zoneNameShort === "GMT"}
+            disabled={zoneNameShort === "UTC" || loading}
             color={
               window.navigator.language === selectedTimeZone
                 ? muiTheme.palette.primary.main
@@ -122,6 +155,7 @@ const Sidebar: React.FC = () => {
                 handleChange("UTC");
               }
             }}
+            disabled={loading}
             fontSize={16}
             borderRadius={"8px"}
             color={selectedTimeZone === "UTC" ? muiTheme.palette.primary.main : muiTheme.palette.secondary.light}
