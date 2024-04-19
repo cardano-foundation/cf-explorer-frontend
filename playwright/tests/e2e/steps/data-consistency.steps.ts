@@ -24,6 +24,9 @@ Given(/^An explorer user logs in into explorer portal$/, async ({ page }) => {
   await signIn(page).goTo();
   await signIn(page).loginAs(username, password);
 });
+Given(/^User goes to explorer portal$/, async ({ page }) => {
+  await dashboard(page).goTo();
+});
 Given(/^the user goes to the blocks information page$/, async ({ page }) => {
   await dashboard(page).openBlocksSection();
 });
@@ -58,6 +61,6 @@ When(/^the last finished epoch information has been requested through api servic
 Then(/^the user should see the same information fort the finished epoch that the api returns$/, async ({ page }) => {
   await epochDetailPage(page).assertLastFinishedEpochDataIsDisplayed(finishedEpochResponse);
 });
-Then(/^the start time of the active epoch should be the end time of the last finised epoch$/, async ({ page }) => {
+Then(/^the start time of the active epoch should be the end time of the last finished epoch$/, async ({ page }) => {
   await epochsDashboardPage(page).assertActiveEpochBoundaries();
 });

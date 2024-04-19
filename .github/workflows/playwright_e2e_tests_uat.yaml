@@ -1,0 +1,47 @@
+name: Playwright e2e Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "APPLICATION_URL=${{ secrets.PLAYWRIGHT_APPLICATION_URL }}" > .env
+          echo "API_URL=${{ secrets.PLAYWRIGHT_API_URL }}" >> .env
+          echo "BLOCKFROST_API_URL=${{ secrets.PLAYWRIGHT_BLOCKFROST_API_URL }}" >> .env
+          echo "BLOCKFROST_API_TOKEN=${{ secrets.PLAYWRIGHT_BLOCKFROST_API_TOKEN }}" >> .env
+          echo "KOIOS_API_URL${{ secrets.PLAYWRIGHT_KOIOS_API_URL }}" >> .env
+          echo "KOIOS_API_TOKEN=${{ secrets.PLAYWRIGHT_KOIOS_API_TOKEN }}" >> .env
+          echo "USERNAME=${{ secrets.PLAYWRIGHT_CF_EXPLORER_USERNAME }}" >> .env
+          echo "PASSWORD=${{ secrets.PLAYWRIGHT_CF_EXPLORER_PASSWORD }}" >> .env
+          echo "HEADLESS=true" >> .env
+          echo "CI=true" >> .env
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
