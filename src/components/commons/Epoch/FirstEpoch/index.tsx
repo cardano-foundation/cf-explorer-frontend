@@ -11,6 +11,7 @@ import { Status } from "src/pages/Epoch/styles";
 import { Container, Content, EpochNumber, EpochProgress, SubContent, TitleCard } from "./styles";
 import ProgressCircle from "../../ProgressCircle";
 import DetailHeader from "../../DetailHeader";
+import DatetimeTypeTooltip from "../../DatetimeTypeTooltip";
 
 interface IProps {
   data: IDataEpoch;
@@ -32,6 +33,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
       ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
       : 100;
+
   const listOverview = [
     {
       icon: ExchangeIcon,
@@ -75,7 +77,11 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> {t("glossary.startTimestamp")}</TitleCard>
         </Box>
       ),
-      value: <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
+      value: (
+        <DatetimeTypeTooltip>
+          <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: TimeIconComponent,
@@ -84,7 +90,11 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           <TitleCard mr={1}> {t("glossary.endTimestamp")}</TitleCard>
         </Box>
       ),
-      value: <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
+      value: (
+        <DatetimeTypeTooltip>
+          <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: CubeIconComponent,

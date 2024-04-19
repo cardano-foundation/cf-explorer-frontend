@@ -1,7 +1,6 @@
 import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType, isWalletInstalled } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import { Box, CircularProgress, Input } from "@mui/material";
-import moment from "moment";
 import { ReactElement, useEffect, useState } from "react";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -11,7 +10,7 @@ import { AxiosError } from "axios";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useToast from "src/commons/hooks/useToast";
 import { ACCOUNT_ERROR, NETWORK, NETWORKS, NETWORK_TYPES, SUPPORTED_WALLETS } from "src/commons/utils/constants";
-import { getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { editInfo, getInfo } from "src/commons/utils/userRequest";
 import {
   GroupFlex,
@@ -25,6 +24,7 @@ import StyledModal from "src/components/commons/StyledModal";
 import { RootState } from "src/stores/types";
 import { setUserData } from "src/stores/user";
 import { SupportedWallets, Wallet } from "src/types/user";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Label, StyledAction, StyledRowItem, Value, WrapInfoItemMobile } from "./styles";
 
@@ -98,7 +98,7 @@ const OverviewTab = () => {
       />
       <RowItem
         label={t("account.lastLogin")}
-        value={moment(userData?.lastLogin).format("MM/DD/YYYY HH:mm:ss")}
+        value={<DatetimeTypeTooltip>{formatDateTimeLocal(userData?.lastLogin || "")}</DatetimeTypeTooltip>}
         isTablet={isTablet}
       />
       {openModal && <ConnectWalletModal open={openModal} setOpen={setOpenModal} />}

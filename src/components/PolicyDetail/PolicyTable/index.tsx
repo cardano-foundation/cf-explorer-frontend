@@ -20,6 +20,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { AssetHolderIcon, TokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { LinkComponent, StyledBoxContainer, StyledTabList, TimeDuration, TitleTab } from "./styles";
 
@@ -73,7 +74,7 @@ const PolicyTable = () => {
       title: t("createdAt"),
       key: "date",
       minWidth: "150px",
-      render: (r) => formatDateTimeLocal(r.createdOn || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.createdOn || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("common.totalSupply"),

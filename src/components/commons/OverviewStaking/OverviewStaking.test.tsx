@@ -1,8 +1,7 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import moment from "moment";
 
-import { formatADAFull, getShortHash } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { render } from "src/test-utils";
 
 import OverviewStaking from ".";
@@ -37,7 +36,7 @@ describe("overview staking", () => {
       <OverviewStaking hash={item.txHash} amount={item.deposit} time={item.time} item={item} onClick={() => null} />
     );
     const element = screen.getByTestId("overview-staking-time");
-    expect(element.textContent).toEqual(moment(item.time).format("MM/DD/YYYY HH:mm:ss"));
+    expect(element.textContent).toEqual(formatDateTimeLocal(item.time));
   });
 
   test("function click button overview staking", async () => {

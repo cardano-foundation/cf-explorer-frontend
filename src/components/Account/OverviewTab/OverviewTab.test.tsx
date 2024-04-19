@@ -7,6 +7,7 @@ import { render } from "src/test-utils";
 import SignIn from "src/pages/SignIn";
 import themes from "src/themes";
 import { UserDataType } from "src/types/user";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import OverviewTab, { ConnectWalletModal, RowItem } from "./index";
 
@@ -139,7 +140,7 @@ describe("Overview Component", () => {
   it("Rendering component on PC", async () => {
     render(<OverviewTab />);
     expect(screen.getByText(mockApiData.username)).toBeInTheDocument();
-    expect(screen.getByText(mockApiData.lastLogin)).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockApiData.lastLogin))).toBeInTheDocument();
   });
 });
 

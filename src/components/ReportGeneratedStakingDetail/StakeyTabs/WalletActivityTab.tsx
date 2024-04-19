@@ -14,6 +14,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import ADAicon from "src/components/commons/ADAIcon";
 import { IADATransferReport } from "src/types/report";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 const WalletActitityTab = () => {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ const WalletActitityTab = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "100px",
-      render: (r) => formatDateTimeLocal(r.time || ""),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

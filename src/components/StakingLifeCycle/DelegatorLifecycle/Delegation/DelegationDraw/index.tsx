@@ -18,6 +18,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { Capitalize } from "src/components/commons/CustomText/styles";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   IconButtonBack,
@@ -149,7 +150,9 @@ const DelegationDraw: React.FC<IDelegationDrawProps> = ({ toggleModal, showBackB
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time)}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

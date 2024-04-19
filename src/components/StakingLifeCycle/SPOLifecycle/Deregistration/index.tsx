@@ -17,6 +17,7 @@ import { LineArrowItem } from "src/components/commons/LineArrow";
 import SPOHolder from "src/components/commons/SPOHolder";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
 import StyledModal from "src/components/commons/StyledModal";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 import RecentDeregistrations from "./RecentDeregistrations";
@@ -164,7 +165,9 @@ export const DeregistrationTimeline = ({ selected, toggleModal, showBackButton }
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(selected?.time || "")}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

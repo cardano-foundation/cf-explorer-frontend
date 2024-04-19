@@ -15,6 +15,7 @@ import Table, { Column } from "src/components/commons/Table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
@@ -48,7 +49,7 @@ const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> =
       title: t("glossary.createdAt"),
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

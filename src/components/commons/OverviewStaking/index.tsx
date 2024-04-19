@@ -7,6 +7,7 @@ import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/ut
 import { OverviewIcon, OverviewTitle, Card } from "./styles";
 import CustomIcon from "../CustomIcon";
 import ADAicon from "../ADAIcon";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 interface Props<T> {
   hash: string;
@@ -43,7 +44,9 @@ const OverviewStaking = function <T>({ item, ...props }: Props<T>) {
           <CustomIcon icon={TimerIcon} width={17} fill="currentColor" color={(theme) => theme.palette.primary.main} />
         </OverviewIcon>
         <Box marginLeft={"10px"}>
-          <OverviewTitle data-testid="overview-staking-time">{formatDateTimeLocal(time)}</OverviewTitle>
+          <DatetimeTypeTooltip>
+            <OverviewTitle data-testid="overview-staking-time">{formatDateTimeLocal(time)}</OverviewTitle>
+          </DatetimeTypeTooltip>
         </Box>
       </Box>
     </Card>

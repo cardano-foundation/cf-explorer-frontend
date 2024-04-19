@@ -13,6 +13,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 const RewardsDistributionTab = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const RewardsDistributionTab = () => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return formatDateTimeLocal(data.time);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.time)}</DatetimeTypeTooltip>;
       }
     },
     {

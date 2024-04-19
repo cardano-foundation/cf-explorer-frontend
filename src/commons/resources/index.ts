@@ -229,6 +229,7 @@ import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
 import historyIcon from "./icons/history.svg?react";
 import multiYesIcon from "./icons/multiyes.svg?react";
 import repeatVoteIcon from "./icons/repeatVote.svg?react";
+import SettingTimezoneIcon from "./icons/settingTimezone.svg?react";
 import multiNoneIcon from "./icons/multiNoneIcon.svg?react";
 import PoolNameIcon from "./icons/pool-name.svg?react";
 import PoolSizesIcon from "./icons/pool-size.svg?react";
@@ -468,6 +469,7 @@ export {
   repeatVoteIcon,
   BlackCircleIcon,
   RepeatVotesIcon,
+  SettingTimezoneIcon,
   multiNoneIcon,
   PoolNameIcon,
   PoolSizesIcon,

@@ -12,6 +12,7 @@ import Table, { Column } from "src/components/commons/Table";
 import { StyledLink } from "src/components/share/styled";
 import ADAicon from "src/components/commons/ADAIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { ADAValueLabel } from "../styles";
 
@@ -55,7 +56,7 @@ const RewardsDistributionTab = () => {
       title: t("createdAt"),
       key: "id",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>,
       sort: ({ sortValue, columnKey }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

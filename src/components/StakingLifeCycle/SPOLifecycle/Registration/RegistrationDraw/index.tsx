@@ -14,6 +14,7 @@ import CustomIcon from "src/components/commons/CustomIcon";
 import SPOHolder from "src/components/commons/SPOHolder";
 import ADAicon from "src/components/commons/ADAIcon";
 import { StyledADASymbol } from "src/components/commons/SVGIcon/styles";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledCopyButton } from "../../../SPOLifecycle/Registration/styles";
 import { StyledLink } from "../../styles";
@@ -141,7 +142,9 @@ export const RegistrationDraw = ({ selected, toggleModal, data, showBackButton }
               height={30}
               fill={theme.isDark ? theme.palette.primary.main : theme.palette.secondary.light}
             />
-            <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            <DatetimeTypeTooltip>
+              <InfoText>{formatDateTimeLocal(time || "")}</InfoText>
+            </DatetimeTypeTooltip>
           </Info>
         </InfoGroup>
       </StepInfo>

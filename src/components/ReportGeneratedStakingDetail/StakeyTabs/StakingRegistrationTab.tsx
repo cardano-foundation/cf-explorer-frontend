@@ -17,6 +17,7 @@ import { EyeIcon } from "src/commons/resources";
 import { RegistrationCertificateModal } from "src/components/StakingLifeCycle/DelegatorLifecycle/Registration";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StakingDetailContext } from "..";
 
@@ -63,7 +64,7 @@ const StakingRegistrationTab = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       },
-      render: (r) => formatDateTimeLocal(r.time)
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>
     },
     {
       title: (

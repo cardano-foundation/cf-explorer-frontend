@@ -158,5 +158,6 @@ export const API = {
 export const USER_API = {
   ACTIVITY_LOG: "user/activities-log",
   INFO: "user/info",
+  SET_TIMEZONE: "user/set-timezone",
   BOOKMARK: "bookmark/find-all-key"
 };

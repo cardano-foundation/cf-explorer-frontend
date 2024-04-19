@@ -18,6 +18,7 @@ import {
 import { LinkComponent } from "src/components/PolicyDetail/PolicyTable/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 const Token = () => {
   const { t } = useTranslation();
@@ -47,7 +48,7 @@ const Token = () => {
       title: t("createdAt"),
       key: "date",
       minWidth: "150px",
-      render: (r) => formatDateTimeLocal(r.createdOn || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.createdOn || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("common.totalSupply"),
