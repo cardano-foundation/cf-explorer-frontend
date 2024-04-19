@@ -333,7 +333,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const search: { query?: string; search?: string; retired?: boolean } = { ...params };
 
       search.query = query.trim();
-
       const url =
         filter === "tokens"
           ? `${API.TOKEN.LIST}?page=0&size=${RESULT_SIZE}&${stringify(search)}`
@@ -353,7 +352,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           callback?.();
         } else {
           if (res.data?.totalItems === 1) {
-            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+            history.push(details.delegation(search.query));
           } else {
             history.push(`${routers.DELEGATION_POOLS}?${stringify(search)}`, {
               tickerNameSearch: (search.query || "").toLocaleLowerCase()
