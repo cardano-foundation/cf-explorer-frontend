@@ -50,7 +50,6 @@ const Sidebar: React.FC = () => {
       .then((data) => {
         if (data) {
           setSelectedTimeZone(tz);
-          setTimezoneLS(tz);
           localStorage.setItem("userTimezone", tz);
           window.location.reload();
         }
