@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { isUndefined, omitBy, isNumber } from "lodash";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
@@ -37,12 +38,16 @@ const DelegationLists: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tickerNameSearch]);
 
+  const newPageInfo = omitBy(
+    pageInfo,
+    (value, key) => (isUndefined(value) && !isNumber(pageInfo[key])) || value === ""
+  );
+
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
     {
-      search,
       isShowRetired: isShowRetired,
-      ...pageInfo
+      ...newPageInfo
     },
     false,
     blockKey
@@ -51,7 +56,7 @@ const DelegationLists: React.FC = () => {
   const fromPath = history.location.pathname as SpecialPath;
 
   const handleBlankSort = () => {
-    history.replace({ search: stringify({ ...pageInfo, page: 1, sort: "" }) });
+    history.replace({ search: stringify({ ...pageInfo, page: 1, sort: undefined }) });
   };
 
   useEffect(() => {
