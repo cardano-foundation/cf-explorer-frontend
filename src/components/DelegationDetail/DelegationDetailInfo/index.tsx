@@ -201,21 +201,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <DataContainer>
         <StyledGrid container>
           <Item item xs={6} md={3} top={1}>
-            <CustomIcon fill={theme.palette.secondary.light} icon={TickerIconComponent} height={22} />
+            <CustomIcon fill={theme.palette.secondary.main} icon={TickerIconComponent} height={22} />
             <InfoTitle>
               <StyledTitle>{t("common.ticker")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={CalendarIconComponent} />
+            <CustomIcon fill={theme.palette.secondary.main} height={22} icon={CalendarIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("createdAt")}</StyledTitle>
             </InfoTitle>
             <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={RewardIconComponent} />
+            <CustomIcon fill={theme.palette.secondary.main} height={22} icon={RewardIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("rewardAccount")}</StyledTitle>
               <InfoValue mt={"4px"}>
@@ -256,7 +256,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             )}
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }} width={"100%"}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={UserIconComponent} />
+            <CustomIcon fill={theme.palette.secondary.main} height={22} icon={UserIconComponent} />
             <InfoTitle>
               <Box width={"100%"}>
                 <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
@@ -303,7 +303,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           </Item>
           <Item item xs={6} md={3}>
             <CustomIcon
-              fill={theme.palette.secondary.light}
+              fill={theme.palette.secondary.main}
               height={24}
               icon={DropIconComponent}
               style={{ marginTop: "5px" }}
@@ -323,7 +323,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={24} icon={HighestIconComponent} />
+            <CustomIcon fill={theme.palette.secondary.main} height={24} icon={HighestIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
@@ -341,7 +341,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
-            <CustomIcon fill={theme.palette.secondary.light} height={22} icon={DelegatorIconComponent} />
+            <CustomIcon fill={theme.palette.secondary.main} height={22} icon={DelegatorIconComponent} />
             <InfoTitle>
               <StyledTitle>{t("delegators")}</StyledTitle>
             </InfoTitle>

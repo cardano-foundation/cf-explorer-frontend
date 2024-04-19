@@ -73,6 +73,7 @@ export const FlexCenter = styled(Box)`
 
 export const TruncateSubTitleContainer = styled(Box)(({ theme }) => ({
   maxWidth: "70vw",
+  textTransform: "lowercase",
   [theme.breakpoints.up("sm")]: {
     maxWidth: "60vw"
   },

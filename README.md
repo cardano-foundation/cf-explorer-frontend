@@ -110,12 +110,14 @@ To run e2e test with all specs, try this command:
 - add .env to root folder with APPLICATION_URL property pointing to chosen environment e.g.
 
 ```
-APPLICATION_URL=https://beta.explorer.cardano.org/en
-API_URL=<url>
-USERNAME=<login>
-PASSWORD=<password>
-# in what mode playwright should run the browser, by default true
-HEADLESS= true or false 
+APPLICATION_URL=<Explorer env url>
+API_URL=<Explorer api url>
+BLOCKFROST_API_URL=<BlockFrost api url>
+BLOCKFROST_API_TOKEN=<BlockFrost api token>
+KOIOS_API_URL=<Koios api url>
+KOIOS_API_TOKEN=<Koios api token>
+USERNAME=<Explorer user>
+PASSWORD=<Explorer user password>
 ```
 
 ### Test run in local:

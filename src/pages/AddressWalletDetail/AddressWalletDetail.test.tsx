@@ -56,8 +56,9 @@ describe("AddressWalletDetail page", () => {
       };
     });
   });
-  it("should component render", () => {
+  it("should component render", async () => {
     render(<AddressWalletDetail />);
+    await new Promise((r) => setTimeout(r, 500));
     const heading = screen.getByRole("heading", { name: /transactions/i });
     expect(screen.getByText(/analytics/i)).toBeInTheDocument();
     expect(screen.getByText(/address details/i)).toBeInTheDocument();

@@ -160,7 +160,11 @@ const SPOLifecycle = () => {
                     fill={validMode === "timeline" ? theme.palette.secondary[0] : theme.palette.secondary["light"]}
                   />
                 </ButtonSwitch>
-                <ButtonSwitch active={+(validMode === "tabular")} onClick={() => changeMode("tabular")}>
+                <ButtonSwitch
+                  data-testid="spo.tabularMode"
+                  active={+(validMode === "tabular")}
+                  onClick={() => changeMode("tabular")}
+                >
                   <ChartMode
                     fill={validMode === "tabular" ? theme.palette.secondary[0] : theme.palette.secondary["light"]}
                   />

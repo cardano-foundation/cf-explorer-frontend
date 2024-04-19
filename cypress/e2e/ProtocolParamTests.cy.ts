@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
 describe("template spec", () => {
-  it("should navigate to the blocks page", () => {
+  it("should navigate to the protocol parameter page", () => {
     cy.visit("/");
     cy.get('[data-testid="menu-button-protocol_parameters"]').click();
     //cy.get(".css-1cv7afn").contains("Protocol parameters");
-    cy.get("button").contains("View update history");
+    cy.get("button").contains("View Update Activity");
     //Updateable Parameters table
     cy.get('[data-testid="table-common"] th:nth-child(1)').first().contains("Parameter Name");
     cy.get('[data-testid="table-common"] th:nth-child(2)').first().contains("Value");
@@ -16,9 +16,9 @@ describe("template spec", () => {
     cy.get('[data-testid="table-common"] th:nth-child(2)').last().contains("Value");
   });
 
-  it("should navigate to the blocks page", () => {
+  it("should navigate to the protocol parameter page", () => {
     cy.visit("/protocol-parameters");
     //cy.get("css-1cv7afn").contains("Protocol parameters");
-    cy.get("button").contains("View update history");
+    cy.get("button").contains("View Update Activity");
   });
 });

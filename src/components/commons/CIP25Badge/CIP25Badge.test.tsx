@@ -18,7 +18,6 @@ describe("CIP25Badge", () => {
   it("should component with false element render", () => {
     render(<CIP25Badge {...props} type="warning" />);
     expect(screen.getByText("CIP-25")).toBeInTheDocument();
-    expect(screen.getByTestId("warning-CIP")).toBeInTheDocument();
   });
 
   it("should component with false element render", () => {

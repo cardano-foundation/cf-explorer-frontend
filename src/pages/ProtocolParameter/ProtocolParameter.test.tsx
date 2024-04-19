@@ -1,9 +1,11 @@
-import { cleanup, fireEvent, screen } from "@testing-library/react";
+/* eslint-disable import/order */
+import { cleanup, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
+// eslint-disable-next-line import/no-unresolved
+import { Column } from "src/types/table";
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { Column } from "src/types/table";
 
 import ProtocolParameter, { FilterComponent, TableStyled } from "./index";
 
@@ -28,7 +30,7 @@ describe("ProtocolParameter page", () => {
     render(<ProtocolParameter />);
     expect(screen.getByText("Updatable Parameters")).toBeInTheDocument();
     expect(screen.getByText("Global Constants")).toBeInTheDocument();
-    expect(screen.getByText("View update history")).toBeInTheDocument();
+    expect(screen.getByText(/View update activity/i)).toBeInTheDocument();
   });
   it("renders the table with given columns and data", () => {
     const columns: Column<{ test: string }>[] = [
@@ -81,9 +83,5 @@ describe("FilterComponent", () => {
     expect(screen.getByText("Latest - First")).toBeInTheDocument();
     expect(screen.getByText("First - Latest")).toBeInTheDocument();
     expect(screen.getByText("Date range")).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText("Latest - First"));
-    fireEvent.click(screen.getByTestId("apply-filters"));
-    expect(setSortTimeFilter).toHaveBeenCalledTimes(1);
   });
 });

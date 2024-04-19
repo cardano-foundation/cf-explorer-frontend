@@ -1,12 +1,12 @@
+import { IconButton, IconButtonProps, TooltipProps, styled, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { IconButton, IconButtonProps, styled, TooltipProps, useTheme } from "@mui/material";
-import { useCopyToClipboard } from "react-use";
 import { BiCheckCircle } from "react-icons/bi";
+import { useCopyToClipboard } from "react-use";
 
 import { CopyIconSquare } from "src/commons/resources";
 
-import CustomTooltip from "../CustomTooltip";
 import CustomIcon from "../CustomIcon";
+import CustomTooltip from "../CustomTooltip";
 
 const Button = styled(IconButton)`
   color: ${(props) => props.theme.palette.text.primary};
@@ -22,20 +22,40 @@ interface CopyButtonProps extends IconButtonProps {
   className?: string;
   children?: React.ReactNode;
   customIcon?: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  height?: number;
+  fill?: string;
   onClick?: (e: React.MouseEvent) => void;
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, placement, customIcon, ...props }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({
+  text = "",
+  height,
+  onClick,
+  fill,
+  children,
+  placement,
+  customIcon,
+  ...props
+}) => {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState<boolean>();
+  const [open, setOpen] = useState<boolean>(false);
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      const timeout = setTimeout(() => {
+        setOpen(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [copied]);
 
   useEffect(() => {
     if (copied) {
       const timeout = setTimeout(() => {
         setCopied(false);
-      }, 2000);
+      }, 2500);
       return () => clearTimeout(timeout);
     }
   }, [copied]);
@@ -48,6 +68,7 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
       onClick?.(e);
     }
   };
+
   return (
     <CustomTooltip
       open={open}
@@ -65,7 +86,11 @@ const CopyButton: React.FC<CopyButtonProps> = ({ text = "", onClick, children, p
               style={{ verticalAlign: "text-bottom", scale: "2", height: 16 }}
             />
           ) : (
-            <CustomIcon fill={theme.palette.secondary.light} icon={customIcon || CopyIconSquare} height={16} />
+            <CustomIcon
+              fill={fill ? fill : theme.palette.secondary.light}
+              icon={customIcon || CopyIconSquare}
+              height={height ? height : 16}
+            />
           ))}
       </Button>
     </CustomTooltip>

@@ -123,6 +123,8 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
     switch (status) {
       case "ACTIVE":
         return theme.palette.success[800];
+      case "RETIRED":
+        return theme.palette.error[800];
       default:
         return theme.isDark ? theme.palette.warning[100] : theme.palette.secondary.light;
     }
@@ -131,6 +133,8 @@ export const StakeKeyStatus = styled("small")<{ status?: StakeStatus }>`
     switch (status) {
       case "ACTIVE":
         return theme.palette.success[100];
+      case "RETIRED":
+        return theme.palette.error[100];
       default:
         return theme.isDark ? theme.palette.warning[800] : alpha(theme.palette.secondary.light, 0.2);
     }
