@@ -482,17 +482,19 @@ const CustomFilterMultiRange: React.FC = () => {
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
               </Box>
-              <Box
-                component={Button}
-                width={"100%"}
-                textTransform={"capitalize"}
-                display={"flex"}
-                alignItems={"center"}
-                color={({ palette }) => `${palette.primary.main} !important`}
-                onClick={handleReset}
-              >
-                <Box mr={1}>{t("common.reset")}</Box>
-                <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+              <Box p={theme.spacing(1, 2)} mb={theme.spacing(1)}>
+                <Box
+                  component={Button}
+                  width={"100%"}
+                  textTransform={"capitalize"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  color={({ palette }) => `${palette.primary.main} !important`}
+                  onClick={handleReset}
+                >
+                  <Box mr={1}>{t("common.reset")}</Box>
+                  <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+                </Box>
               </Box>
             </Box>
           </FilterContainer>
