@@ -271,9 +271,9 @@ export const formatTypeDateTime = () => {
   if (!sessionStorage.getItem("timezone")) {
     return moment(moment("2023/08/03 21:44:51+0000").utc())
       .toISOString()
-      .replace("2023", "YYYY")
+      .replace("2023", "yyyy")
       .replace("08", "MM")
-      .replace("03", "DD")
+      .replace("03", "dd")
       .replace("21", "HH")
       .replace("44", "mm")
       .replace("51", "ss");
@@ -297,9 +297,9 @@ export const formatTypeDateTime = () => {
 
   return `${dateFormat
     .format(moment("2023/08/03 09:44:51+0000").utc() as never as Date)
-    .replace("2023", "YYYY")
+    .replace("2023", "yyyy")
     .replace("08", "MM")
-    .replace("03", "DD")}`
+    .replace("03", "dd")}`
     .replace("09", "HH")
     .replace("44", "mm")
     .replace("51", "ss");
