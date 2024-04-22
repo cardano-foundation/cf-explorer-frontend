@@ -197,7 +197,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
               );
             }}
           >
-            <CardGovernanceVotes data={value} />
+            <CardGovernanceVotes data-testid="governance.card" data={value} />
           </Grid>
         ))}
       </Box>
@@ -1134,6 +1134,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       <FilterWrapper>
         <Box
           component={Button}
+          data-testid="governance.filter"
           variant="text"
           px={2}
           textTransform={"capitalize"}
@@ -1164,26 +1165,39 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         <FilterContainer>
           {open && (
             <Box display={"flex"} flexDirection={"column"}>
-              <Box component={ButtonSort} p="0px 16px" height="48px">
+              <Box data-testid="governance.filter.repeatVotes" component={ButtonSort} p="0px 16px" height="48px">
                 <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
                   <Box display="flex">
                     <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
-                    <Typography ml={1} color={({ palette }) => palette.secondary.main}>
+                    <Typography
+                      ml={1}
+                      color={({ palette }) => palette.secondary.main}
+                      data-testid="governance.filter.repeatVotesTitle"
+                    >
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
                   <AntSwitch
+                    data-testid="governance.filter.repeatVotesValue"
                     checked={params?.isRepeatVote}
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
                 </Box>
               </Box>
-              <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
+              <AccordionContainer
+                data-testid="governance.filter.actionId"
+                expanded={expanded === "action-id"}
+                onChange={handleChange("action-id")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={GovernanceIdIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                        data-testid="governance.filter.actionIdTitle"
+                      >
                         {t("pool.actionId")}
                       </Box>
                     </Box>
@@ -1198,6 +1212,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
+                    data-testid="governance.filter.actionIdValue"
                     sx={{
                       p: "0px 12px",
                       width: "100% !important",
@@ -1210,12 +1225,20 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "anchor-text"} onChange={handleChange("anchor-text")}>
+              <AccordionContainer
+                data-testid="governance.filter.metadata"
+                expanded={expanded === "anchor-text"}
+                onChange={handleChange("anchor-text")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={AnchorTextIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.metadataTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.metadataSearch")}
                       </Box>
                     </Box>
@@ -1231,6 +1254,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box>
                     <StyledArea
+                      data-testid="governance.filter.metadataValue"
                       multiline
                       rows={3}
                       sx={{
@@ -1246,12 +1270,20 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "action-type"} onChange={handleChange("action-type")}>
+              <AccordionContainer
+                data-testid="governance.filter.actionType"
+                expanded={expanded === "action-type"}
+                onChange={handleChange("action-type")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={ActionTypeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.actionTypeTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.actionType")}
                       </Box>
                     </Box>
@@ -1268,6 +1300,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.actionTypeValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1306,12 +1339,20 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </RadioGroup>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "current-status"} onChange={handleChange("current-status")}>
+              <AccordionContainer
+                data-testid="governance.filter.currentStatus"
+                expanded={expanded === "current-status"}
+                onChange={handleChange("current-status")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.currentStatusTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.currentStatus")}
                       </Box>
                     </Box>
@@ -1328,6 +1369,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.currentStatusValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1364,12 +1406,20 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </RadioGroup>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "vote"} onChange={handleChange("vote")}>
+              <AccordionContainer
+                data-testid="governance.filter.vote"
+                expanded={expanded === "vote"}
+                onChange={handleChange("vote")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={VoteIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.voteTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.vote")}
                       </Box>
                     </Box>
@@ -1386,6 +1436,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.voteValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1422,11 +1473,16 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </RadioGroup>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionSummary>
+              <AccordionSummary data-testid="governance.filter.dataRange">
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={18} />
-                    <Box ml={1} color={({ palette }) => palette.secondary.main} onClick={() => setOpenDateRange(true)}>
+                    <Box
+                      data-testid="governance.filter.dataRangeTitle"
+                      ml={1}
+                      color={({ palette }) => palette.secondary.main}
+                      onClick={() => setOpenDateRange(true)}
+                    >
                       {t("pool.dateRange")}
                     </Box>
                   </Box>
@@ -1435,6 +1491,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   )}
                 </Box>
                 <DateRangeModal
+                  data-testid="governance.filter.dataRangeValue"
                   open={openDateRange}
                   value={{
                     fromDate: dateRange?.fromDate,
@@ -1452,7 +1509,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
               </AccordionSummary>
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
-                  data-testid="apply-filters"
+                  data-testid="governance.applyFilters"
                   onClick={() => {
                     handleFilter();
                   }}
@@ -1467,6 +1524,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </ApplyFilterButton>
               </Box>
               <Box
+                data-testid="governance.reset"
                 component={Button}
                 width={"100%"}
                 textTransform={"capitalize"}
@@ -1475,7 +1533,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 color={({ palette }) => `${palette.primary.main} !important`}
                 onClick={handleReset}
               >
-                <Box mr={1}>{t("common.reset")}</Box>
+                <Box data-testid="governance.resetTitle" mr={1}>
+                  {t("common.reset")}
+                </Box>
                 <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
               </Box>
             </Box>

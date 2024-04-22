@@ -78,9 +78,15 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
-              <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
-              <StyledCard.Link to={details.epoch(data?.epochNo)}>{data?.epochNo}</StyledCard.Link>
-              <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
+              <StyledCard.Title data-testid="delegationOverview.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
+              <StyledCard.Link data-testid="delegationOverview.epochValue" to={details.epoch(data?.epochNo)}>
+                {data?.epochNo}
+              </StyledCard.Link>
+              <Box
+                component="span"
+                data-testid="delegationOverview.endIn"
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
+              >
                 {t("common.endIn")}:{" "}
                 <StyledCard.Comment>
                   {`${days} ${days > 1 ? t("common.days") : t("common.day")} `}
@@ -103,8 +109,8 @@ const OverViews: React.FC = () => {
             >
               <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
-                  <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
-                  <StyledCard.Value>
+                  <StyledCard.Title data-testid="delegationOverview.slotTitle">{t("glossary.slot")}</StyledCard.Title>
+                  <StyledCard.Value data-testid="delegationOverview.slotValue">
                     {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
                       ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
                       : MAX_SLOT_EPOCH}
@@ -131,16 +137,23 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container sx={{ justifyContent: "space-between" }}>
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
-              <StyledCard.Title>
+              <StyledCard.Title data-testid="delegationOverview.liveStakeTitle">
                 {t("glossary.liveStake")} (<ADAicon />)
               </StyledCard.Title>
-              <CustomTooltip title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.N/A")}>
+              <CustomTooltip
+                data-testid="delegationOverview.liveStakeValue"
+                title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.N/A")}
+              >
                 <StyledCard.Value>{data?.liveStake ? formatADA(data?.liveStake) : t("common.N/A")}</StyledCard.Value>
               </CustomTooltip>
             </StyledCard.Content>
-            <StyledCard.Content style={{}}>
-              <StyledCard.Title>{t("glossary.delegators")}</StyledCard.Title>
-              <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
+            <StyledCard.Content>
+              <StyledCard.Title data-testid="delegationOverview.delegatorsTitle">
+                {t("glossary.delegators")}
+              </StyledCard.Title>
+              <StyledCard.Value data-testid="delegationOverview.delegatorsValue">
+                {numberWithCommas(data?.delegators)}
+              </StyledCard.Value>
             </StyledCard.Content>
             <Box>
               <StyledImg src={theme.mode === "light" ? LiveStakeIcon : LiveStakeDarkIcon} alt="Rocket" />
@@ -150,8 +163,10 @@ const OverViews: React.FC = () => {
         <Grid item xl={3} md={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
-              <StyledCard.Title>{t("glossary.totalPools")}</StyledCard.Title>
-              <StyledCard.Value>
+              <StyledCard.Title data-testid="delegationOverview.totalPoolsTitle">
+                {t("glossary.totalPools")}
+              </StyledCard.Title>
+              <StyledCard.Value data-testid="delegationOverview.totalPoolsValue">
                 {(data?.activePools ? +data.activePools : 0) + (data?.retiredPools ? +data.retiredPools : 0)}
               </StyledCard.Value>
               <Box
@@ -162,12 +177,12 @@ const OverViews: React.FC = () => {
                 width={"100%"}
               >
                 <Box flex={1}>
-                  <PoolTitle>{t("glossary.activePools")}</PoolTitle>
-                  <PoolValue>{data?.activePools || 0}</PoolValue>
+                  <PoolTitle data-testid="delegationOverview.activePoolsTitle">{t("glossary.activePools")}</PoolTitle>
+                  <PoolValue data-testid="delegationOverview.activePoolsValue">{data?.activePools || 0}</PoolValue>
                 </Box>
                 <Box flex={1}>
-                  <PoolTitle>{t("glossary.retiredPools")}</PoolTitle>
-                  <PoolValue>{data?.retiredPools || 0}</PoolValue>
+                  <PoolTitle data-testid="delegationOverview.retiredPoolsTitle">{t("glossary.retiredPools")}</PoolTitle>
+                  <PoolValue data-testid="delegationOverview.retiredPoolsValue">{data?.retiredPools || 0}</PoolValue>
                 </Box>
               </Box>
             </StyledCard.Content>

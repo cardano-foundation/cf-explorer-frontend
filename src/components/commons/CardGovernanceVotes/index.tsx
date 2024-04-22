@@ -61,10 +61,17 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               lineHeight="18.75px"
               color={theme.palette.secondary.light}
               paddingRight="8px"
+              data-testid="governance.card.actionTypeTitle"
             >
               {t("pool.actionType")}:
             </Typography>
-            <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
+            <Typography
+              data-testid="governance.card.actionTypeValue"
+              fontWeight={400}
+              fontSize="16px"
+              lineHeight="18.75px"
+              color={theme.palette.secondary.light}
+            >
               {actionTypeListDrep.find((action) => action.value === type)?.text}
             </Typography>
           </Box>
@@ -75,10 +82,11 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               lineHeight="18.75px"
               color={theme.palette.secondary.light}
               paddingRight="8px"
+              data-testid="governance.card.statusTitle"
             >
               {t("pool.status")}:
             </Typography>
-            <GovernanceStatus status={status} />
+            <GovernanceStatus data-testid="governance.card.statusValue" status={status} />
           </Box>
           <Box display="flex" alignItems="center" flexWrap="wrap">
             <Typography
@@ -87,10 +95,17 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
               lineHeight="18.75px"
               color={theme.palette.secondary.light}
               paddingRight="8px"
+              data-testid="governance.card.votingPowerTitle"
             >
               {t("pool.votingPower")}:
             </Typography>
-            <Typography fontWeight={400} fontSize="16px" lineHeight="18.75px" color={theme.palette.secondary.light}>
+            <Typography
+              data-testid="governance.card.votingPowerValue"
+              fontWeight={400}
+              fontSize="16px"
+              lineHeight="18.75px"
+              color={theme.palette.secondary.light}
+            >
               {votingPower ? `${votingPower} ADA` : "N/A"}
             </Typography>
           </Box>
@@ -124,7 +139,13 @@ export const VoteStatus: React.FC<{ status: string; isRepeatVote?: boolean }> = 
     <ChipContainer
       Icon={typeStatus[0]}
       message={
-        <Box component={Typography} textTransform="uppercase" fontSize="12px" fontWeight={500}>
+        <Box
+          data-testid="governance.card.status"
+          component={Typography}
+          textTransform="uppercase"
+          fontSize="12px"
+          fontWeight={500}
+        >
           {status ? status : t("pool.none")}
         </Box>
       }
@@ -164,6 +185,7 @@ export const GovernanceStatus: React.FC<{ status: string | null }> = ({ status }
             fontSize={isGalaxyFoldSmall ? "8px" : "12px"}
             lineHeight="23px"
             color={theme.palette.secondary.light}
+            data-testid="governance.card.statusDetail"
           >
             {status === STATUS_VOTE.OPEN_BALLOT ? t("pool.open") : !status ? t("common.N/A") : status}
           </Typography>

@@ -181,8 +181,9 @@ const DelegationLists: React.FC = () => {
       <TopSearchContainer sx={{ justifyContent: "end" }}>
         <Box display="flex" gap="10px">
           <ShowRetiredPools>
-            {t("glassary.showRetiredPools")}
+            <Box data-testid="delegationList.retiredPoolsTitle">{t("glassary.showRetiredPools")}</Box>
             <AntSwitch
+              data-testid="delegationList.retiredPoolsValue"
               checked={isShowRetired}
               onChange={(e) => {
                 setIsRetired(e.target.checked);
@@ -195,6 +196,7 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
+        data-testid="delegationList.table"
         columns={columns.filter((col) => {
           if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
             return false;

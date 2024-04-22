@@ -37,29 +37,43 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.startTimestamp")} </TitleCard>
+          <TitleCard data-testid="epoch.overview.startTimeTitle" mr={1}>
+            {t("glossary.startTimestamp")}{" "}
+          </TitleCard>
         </Box>
       ),
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.startTime || "")}</DatetimeTypeTooltip>
+      value: (
+        <DatetimeTypeTooltip data-testid="epoch.overview.startTimeValue">
+          {formatDateTimeLocal(data?.startTime || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.endTimestamp")} </TitleCard>
+          <TitleCard data-testid="epoch.overview.endTimeTitle" mr={1}>
+            {t("glossary.endTimestamp")}{" "}
+          </TitleCard>
         </Box>
       ),
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.endTime || "")}</DatetimeTypeTooltip>
+      value: (
+        <DatetimeTypeTooltip data-testid="epoch.overview.endTimeValue">
+          {formatDateTimeLocal(data?.endTime || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: OutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.totalOutput")}</TitleCard>
+          <TitleCard data-testid="epoch.overview.totalOutputTitle" mr={1}>
+            {t("glossary.totalOutput")}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Box data-testid="epoch.overview.totalOutputValue" component={"span"}>
           {formatADAFull(data?.outSum || 0)} <ADAicon />
         </Box>
       )
@@ -68,52 +82,60 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.blocks")}</TitleCard>
+          <TitleCard data-testid="epoch.overview.BlocksTitle" mr={1}>
+            {t("glossary.blocks")}
+          </TitleCard>
         </Box>
       ),
-      value: data?.blkCount || 0
+      value: <div data-testid="epoch.overview.BlocksValue">{data?.blkCount || 0}</div>
     },
     {
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("common.slot")}</TitleCard>
+          <TitleCard data-testid="epoch.overview.slotTitle" mr={1}>
+            {t("common.slot")}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <>
+        <div data-testid="epoch.overview.slotValue">
           {moment(formatDateTimeLocal(data?.endTime || "")).diff(moment()) > 0 ? slot : MAX_SLOT_EPOCH}
           <Subtext>/{MAX_SLOT_EPOCH}</Subtext>
-        </>
+        </div>
       )
     },
     {
       icon: User2Component,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.uniqueAccounts")}</TitleCard>
+          <TitleCard data-testid="epoch.overview.uniqueAccountsTitle" mr={1}>
+            {t("glossary.uniqueAccounts")}
+          </TitleCard>
         </Box>
       ),
-      value: data?.account
+      value: <div data-testid="epoch.overview.uniqueAccountsTitle">{data?.account}</div>
     },
     {
       icon: ExchageIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.transactionCount")}</TitleCard>
+          <TitleCard data-testid="epoch.overview.transactionCountTitle" mr={1}>
+            {t("glossary.transactionCount")}
+          </TitleCard>
         </Box>
       ),
-      value: data?.txCount
+      value: <div data-testid="epoch.overview.transactionCountValue">{data?.txCount}</div>
     },
     {
       icon: RewardIconComponent,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box data-testid="epoch.overview.rewardsDistributedTitle" display={"flex"} alignItems="center">
           <TitleCard mr={1}> {t("glossary.rewardsDistributed")}</TitleCard>
         </Box>
       ),
       value: (
-        <>
+        <div data-testid="epoch.overview.rewardsDistributedValue">
           {data?.rewardsDistributed ? (
             <Output>
               {formatADAFull(data?.rewardsDistributed)}
@@ -122,13 +144,14 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
           ) : (
             t("common.N/A")
           )}
-        </>
+        </div>
       )
     }
   ];
   return (
     <Box mb={3}>
       <DetailHeader
+        data-testid="epoch.overview.detailHeader"
         loading={loading}
         listItem={listOverview}
         type="EPOCH"

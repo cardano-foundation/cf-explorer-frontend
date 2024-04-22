@@ -125,13 +125,14 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card title={t("head.page.blocks")} underline>
+      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
         </Actions>
         <Table
+          data-testid="epoch.blockList.table"
           {...fetchData}
           columns={columns}
           total={{ title: t("common.totalBlocks"), count: fetchData.total }}
