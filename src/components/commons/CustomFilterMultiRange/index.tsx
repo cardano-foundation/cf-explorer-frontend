@@ -48,6 +48,8 @@ interface PoolResponse {
   maxGovParticipationRate?: number;
 }
 
+const defaultParams = { page: 0, size: 50, sort: "" };
+
 const CustomFilterMultiRange: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -62,6 +64,7 @@ const CustomFilterMultiRange: React.FC = () => {
   };
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
+
   const initParams = {
     page: 0,
     size: 50,
@@ -80,6 +83,7 @@ const CustomFilterMultiRange: React.FC = () => {
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
     maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
+
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
@@ -102,11 +106,12 @@ const CustomFilterMultiRange: React.FC = () => {
       ...(query?.maxGovParticipationRate && { maxGovParticipationRate: +(query?.maxGovParticipationRate || 0) })
     });
   }, [JSON.stringify(query)]);
+
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
     setFilterParams({ ...initParams });
-    history.replace({ search: stringify({ page: 0, size: 50, sort: "" }), state: undefined });
+    history.replace({ search: stringify(defaultParams), state: undefined });
   };
 
   const handleFilter = () => {
@@ -118,11 +123,13 @@ const CustomFilterMultiRange: React.FC = () => {
       state: undefined
     });
   };
+
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
       handleFilter();
     }
   };
+
   const handleChangeValueRange = (event: Event, newValue: number | number[], minKey: string, maxKey: string) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -130,6 +137,7 @@ const CustomFilterMultiRange: React.FC = () => {
     const [min, max] = newValue || [];
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
+
   const isDisableFilter = useMemo(
     () =>
       (filterParams.query || "") !== initParams.query ||
@@ -470,29 +478,30 @@ const CustomFilterMultiRange: React.FC = () => {
                   </AccordionContainer>
                 </>
               )}
-
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
                   data-testid="apply-filters"
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={!isDisableFilter}
+                  disabled={JSON.stringify(defaultParams) === JSON.stringify(filterParams) && !isDisableFilter}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
               </Box>
-              <Box
-                component={Button}
-                width={"100%"}
-                textTransform={"capitalize"}
-                display={"flex"}
-                alignItems={"center"}
-                color={({ palette }) => `${palette.primary.main} !important`}
-                onClick={handleReset}
-              >
-                <Box mr={1}>{t("common.reset")}</Box>
-                <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+              <Box p={theme.spacing(1, 2)} mb={theme.spacing(1)}>
+                <Box
+                  component={Button}
+                  width={"100%"}
+                  textTransform={"capitalize"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  color={({ palette }) => `${palette.primary.main} !important`}
+                  onClick={handleReset}
+                >
+                  <Box mr={1}>{t("common.reset")}</Box>
+                  <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+                </Box>
               </Box>
             </Box>
           </FilterContainer>
