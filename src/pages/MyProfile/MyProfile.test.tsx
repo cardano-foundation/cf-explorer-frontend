@@ -6,6 +6,7 @@ import { render, screen } from "src/test-utils";
 import SignIn from "src/pages/SignIn";
 import themes from "src/themes";
 import { UserDataType } from "src/types/user";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
 import MyProfile from "./index";
 
@@ -109,6 +110,6 @@ describe("MyProfile component", () => {
   it("rendering component on PC", () => {
     render(<MyProfile />);
     expect(screen.getByText(mockApiData.username)).toBeInTheDocument();
-    expect(screen.getByText(mockApiData.lastLogin)).toBeInTheDocument();
+    expect(screen.getByText(formatDateTimeLocal(mockApiData.lastLogin))).toBeInTheDocument();
   });
 });

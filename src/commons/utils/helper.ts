@@ -267,6 +267,44 @@ export const formatTypeDate = () => {
     .replace("03", "DD")} ${timeZoneText}`;
 };
 
+export const formatTypeDateTime = () => {
+  if (!sessionStorage.getItem("timezone")) {
+    return moment(moment("2023/08/03 21:44:51+0000").utc())
+      .toISOString()
+      .replace("2023", "YYYY")
+      .replace("08", "MM")
+      .replace("03", "DD")
+      .replace("21", "HH")
+      .replace("44", "mm")
+      .replace("51", "ss");
+  }
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    hour: "2-digit",
+    minute: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    second: "2-digit",
+    hourCycle: "h23",
+    timeZone: "UTC"
+  });
+
+  return `${dateFormat
+    .format(moment("2023/08/03 09:44:51+0000").utc() as never as Date)
+    .replace("2023", "YYYY")
+    .replace("08", "MM")
+    .replace("03", "DD")}`
+    .replace("09", "HH")
+    .replace("44", "mm")
+    .replace("51", "ss");
+};
+
 export const getEpochSlotNo = (data: IDataEpoch) => {
   if (data.status === "FINISHED") {
     return MAX_SLOT_EPOCH;

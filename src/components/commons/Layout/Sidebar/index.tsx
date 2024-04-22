@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSessionStorage, useWindowSize } from "react-use";
 import { Box, Button, ButtonGroup, useTheme } from "@mui/material";
@@ -56,6 +56,13 @@ const Sidebar: React.FC = () => {
       })
       .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    if (selectedTimeZone.toLowerCase() !== "utc") {
+      sessionStorage.setItem("timezone", window.navigator.language);
+      localStorage.setItem("userTimezone", window.navigator.language);
+    }
+  }, [window.navigator.language]);
 
   const handleChange = async (tz: string) => {
     if (isLoggedIn) {
