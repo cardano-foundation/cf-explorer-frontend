@@ -29,6 +29,31 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const theme = useTheme();
   const mainRef = useRef<HTMLDivElement | null>(null);
   const matchesBreakpoint = useMediaQuery(theme.breakpoints.down("md"));
+  const [currentLanguage, setCurrentLanguage] = useState(window.navigator.language);
+  const [currentTimeZone, setCurrentTimeZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  // reload page when change language and timezone
+  useEffect(() => {
+    const checkLanguageChange = setInterval(() => {
+      if (window.navigator.language !== currentLanguage) {
+        setCurrentLanguage(window.navigator.language);
+        window.location.reload();
+      }
+    }, 1000);
+
+    return () => clearInterval(checkLanguageChange);
+  }, [currentLanguage]);
+
+  useEffect(() => {
+    const checkTimeZoneChange = setInterval(() => {
+      const newTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (newTimeZone !== currentTimeZone) {
+        setCurrentTimeZone(newTimeZone);
+        window.location.reload();
+      }
+    }, 1000);
+
+    return () => clearInterval(checkTimeZoneChange);
+  }, [currentTimeZone]);
 
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -50,6 +75,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const handleToggle = () => {
     setSidebar(!sidebar);
   };
+
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />

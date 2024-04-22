@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import { useSessionStorage } from "react-use";
 import { Button, useTheme, Popover, Box, Radio } from "@mui/material";
 import moment from "moment-timezone";
@@ -90,17 +90,24 @@ const TimezoneCard = () => {
   const zoneNameShort = moment.tz(zoneName).format("z");
   const timezone = moment.tz(zoneName).format("Z");
 
-  const [timezoneLS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
+  const [timezoneSS, setTimezoneLS] = useSessionStorage("timezone", window.navigator.language);
   const [selectedTimeZone, setSelectedTimeZone] = useState(
     isLoggedIn
       ? `${localStorage.getItem("userTimezone")}` === "utc"
         ? "UTC"
         : localStorage.getItem("userTimezone") || "UTC"
       : zoneNameShort !== "UTC"
-      ? timezoneLS
+      ? timezoneSS
       : "UTC"
   );
   const timezoneText = `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
+
+  useEffect(() => {
+    if (selectedTimeZone.toLowerCase() !== "utc" && window.navigator.language !== timezoneSS) {
+      localStorage.setItem("userTimezone", window.navigator.language);
+      setTimezoneLS(window.navigator.language);
+    }
+  }, [window.navigator.language]);
 
   const hanldeSetUserTimezone = async (tz: string) => {
     setLoading(true);
@@ -186,7 +193,7 @@ const TimezoneCard = () => {
                 p: 0
               }}
               value={window.navigator.language}
-              checked={window.navigator.language === selectedTimeZone}
+              checked={window.navigator.language === selectedTimeZone || "UTC" !== selectedTimeZone}
               onChange={handleChange}
               disabled={zoneNameShort === "UTC" || loading}
             />

@@ -67,9 +67,7 @@ export const SystemLoader = () => {
 
   useEffect(() => {
     fetchWineName();
-    if (!sessionStorage.getItem("timezone")) {
-      sessionStorage.setItem("timezone", window.navigator.language);
-    }
+    sessionStorage.setItem("timezone", window.navigator.language);
   }, []);
 
   useEffect(() => {
