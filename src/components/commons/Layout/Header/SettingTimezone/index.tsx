@@ -104,8 +104,8 @@ const TimezoneCard = () => {
 
   useEffect(() => {
     if (selectedTimeZone.toLowerCase() !== "utc" && window.navigator.language !== timezoneSS) {
-      sessionStorage.setItem("timezone", window.navigator.language);
       localStorage.setItem("userTimezone", window.navigator.language);
+      setTimezoneLS(window.navigator.language);
     }
   }, [window.navigator.language]);
 
