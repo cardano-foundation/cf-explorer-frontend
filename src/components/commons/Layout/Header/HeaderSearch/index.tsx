@@ -843,7 +843,7 @@ export const OptionsSearch = ({
                     </Box>
                   ),
                   cb: () =>
-                    history.push(routers.DELEGATION_POOLS, {
+                    history.push(`${routers.DELEGATION_POOLS}?page=0&size=50&query=${value}`, {
                       tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
                     }),
                   formatter: getShortHash
