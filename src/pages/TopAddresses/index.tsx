@@ -52,6 +52,7 @@ const TopAddresses = () => {
             >
               {tabs?.map(({ key, icon: Icon, label }) => (
                 <Tab
+                  data-testid={`topAddresses.${key}`}
                   key={key}
                   label={
                     <Box display={"flex"} alignItems="center">
@@ -72,6 +73,7 @@ const TopAddresses = () => {
           </Box>
           {tabs.map((item) => (
             <TabPanel
+              data-testid={`topAddresses.${item.key}.children`}
               sx={{ padding: 0, borderTop: (theme) => `1px solid ${theme.palette.primary[200]}` }}
               key={item.key}
               value={item.key}

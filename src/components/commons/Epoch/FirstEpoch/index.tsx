@@ -57,6 +57,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
           >
             {currentEpochData?.status !== EPOCH_STATUS.SYNCING.toUpperCase() ? (
               <EpochProgress
+                data-testid="epoch.firstEpoch.progress"
                 status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
               >{`${progress}%`}</EpochProgress>
             ) : (
@@ -74,12 +75,16 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.startTimestamp")}</TitleCard>
+          <TitleCard data-testid="epoch.firstEpoch.startTimeTitle" mr={1}>
+            {t("glossary.startTimestamp")}
+          </TitleCard>
         </Box>
       ),
       value: (
         <DatetimeTypeTooltip>
-          <Content>{formatDateTimeLocal(currentEpochData?.startTime || "")}</Content>
+          <Content data-testid="epoch.firstEpoch.startTimeValue">
+            {formatDateTimeLocal(currentEpochData?.startTime || "")}
+          </Content>
         </DatetimeTypeTooltip>
       )
     },
@@ -87,12 +92,16 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.endTimestamp")}</TitleCard>
+          <TitleCard data-testid="epoch.firstEpoch.startTimeTitle" mr={1}>
+            {t("glossary.endTimestamp")}
+          </TitleCard>
         </Box>
       ),
       value: (
         <DatetimeTypeTooltip>
-          <Content>{formatDateTimeLocal(currentEpochData?.endTime || "")}</Content>
+          <Content data-testid="epoch.firstEpoch.startTimeValue">
+            {formatDateTimeLocal(currentEpochData?.endTime || "")}
+          </Content>
         </DatetimeTypeTooltip>
       )
     },
@@ -100,20 +109,28 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.blocks")} </TitleCard>
+          <TitleCard data-testid="epoch.firstEpoch.blocksTitle" mr={1}>
+            {t("glossary.blocks")}{" "}
+          </TitleCard>
         </Box>
       ),
-      value: <Content>{currentEpoch?.blkCount || currentEpochData?.blkCount}</Content>
+      value: (
+        <Content data-testid="epoch.firstEpoch.blocksValue">
+          {currentEpoch?.blkCount || currentEpochData?.blkCount}
+        </Content>
+      )
     },
     {
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.Slot")}</TitleCard>
+          <TitleCard data-testid="epoch.firstEpoch.slotTitle" mr={1}>
+            {t("glossary.Slot")}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <Content>
+        <Content data-testid="epoch.firstEpoch.slotValue">
           {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
             ? currentEpoch?.slot
             : MAX_SLOT_EPOCH}
@@ -125,6 +142,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   return (
     <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
       <DetailHeader
+        data-testid="epoch.firstEpoch.detailHeader"
         isClickAble={true}
         isHideButtonBack={true}
         loading={false}

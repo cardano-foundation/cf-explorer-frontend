@@ -124,7 +124,7 @@ const DynamicEllipsisText = ({
               : getShortHash(value)}
           </ContainerShortHand>
         </CustomTooltip>
-        {isCopy && <CopyButton text={value} />}
+        {isCopy && <CopyButton data-testid="copy-button" text={value} />}
         {afterElm && <StyledAfterElm>{afterElm}</StyledAfterElm>}
       </ContainerShortHand>
     );

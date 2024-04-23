@@ -363,6 +363,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 )}
               </Box>
               <Box
+                data-testid="detailHeader.title"
                 sx={{
                   my: 1,
                   [theme.breakpoints.down("md")]: {
@@ -372,7 +373,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               >
                 {item.title}
               </Box>
-              <ValueCard>{item.value}</ValueCard>
+              <ValueCard data-testid="detailHeader.value">{item.value}</ValueCard>
             </CardItem>
           );
         })}

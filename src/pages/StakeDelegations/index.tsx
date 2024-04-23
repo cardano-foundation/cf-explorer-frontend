@@ -35,45 +35,61 @@ const StakeDelegations = () => {
 
   const columns: Column<StakeDelegationItem>[] = [
     {
-      title: t("glossary.txHash"),
+      title: <div data-testid="stakeDelegations.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: "150px",
       key: "txHash",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+          <StyledLink data-testid="stakeDelegations.txHashValue" to={details.transaction(r.txHash)}>
+            {getShortHash(r.txHash)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: t("glossary.createdAt"),
+      title: <div data-testid="stakeDelegations.createdAtTitle">{t("glossary.createdAt")}</div>,
       key: "createdat",
       minWidth: "150px",
-      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>
+      render: (r) => (
+        <DatetimeTypeTooltip data-testid="stakeDelegations.createdAtValue">
+          {formatDateTimeLocal(r.time)}
+        </DatetimeTypeTooltip>
+      )
     },
     {
-      title: t("glossary.block"),
+      title: <div data-testid="stakeDelegations.blockNoTitle">{t("glossary.block")}</div>,
       key: "blockNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="stakeDelegations.blockNoValue" to={details.block(r.blockNo)}>
+          {r.blockNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.epoch"),
+      title: <div data-testid="stakeDelegations.epochNoTitle">{t("glossary.epoch")}</div>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="stakeDelegations.epochNoValue" to={details.epoch(r.epochNo)}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <div data-testid="stakeDelegations.epochSlotNoTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
-      minWidth: "50px"
+      minWidth: "50px",
+      render: (r) => <div data-testid="stakeDelegations.epochSlotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <div data-testid="stakeDelegations.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r) => <div data-testid="stakeDelegations.slotNoValue">{r.slotNo}</div>
     },
     {
-      title: t("glossary.stakeAddress"),
+      title: <div data-testid="stakeDelegations.stakeAddressTitle">{t("glossary.stakeAddress")}</div>,
       key: "stakeAddress",
       minWidth: "150px",
       render: (r) => (
@@ -81,7 +97,10 @@ const StakeDelegations = () => {
           {r.stakeKeys.slice(0, 2).map((stakeKey, idx) => (
             <Box key={idx}>
               <CustomTooltip title={stakeKey}>
-                <StyledLink to={{ pathname: details.stake(stakeKey), state: { fromPath } }}>
+                <StyledLink
+                  data-testid="stakeDelegations.stakeAddressValue"
+                  to={{ pathname: details.stake(stakeKey), state: { fromPath } }}
+                >
                   {getShortHash(stakeKey)}
                 </StyledLink>
               </CustomTooltip>
@@ -92,7 +111,7 @@ const StakeDelegations = () => {
       )
     },
     {
-      title: t("glossary.pool"),
+      title: <div data-testid="stakeDelegations.poolTitle">{t("glossary.pool")}</div>,
       key: "pool",
       minWidth: "200px",
       render: (r) => (
@@ -101,7 +120,13 @@ const StakeDelegations = () => {
             <Box key={idx}>
               <CustomTooltip title={pool.poolName || pool.poolId}>
                 <StyledLink to={details.delegation(pool.poolId)}>
-                  <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
+                  <Box
+                    data-testid="stakeDelegations.poolValue"
+                    component={"span"}
+                    textOverflow={"ellipsis"}
+                    whiteSpace={"nowrap"}
+                    overflow={"hidden"}
+                  >
                     {pool.poolName || getShortHash(pool.poolId)}
                   </Box>
                 </StyledLink>
@@ -124,6 +149,7 @@ const StakeDelegations = () => {
         </Actions>
         <Table
           {...fetchData}
+          data-testid="stakeDelegations.poolTitle"
           columns={columns}
           total={{ title: "Total Contracts", count: fetchData.total }}
           pagination={{

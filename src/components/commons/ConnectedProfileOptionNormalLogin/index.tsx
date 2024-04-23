@@ -70,7 +70,7 @@ const ConnectedProfileOptionNormalLogin: React.FC<IProps> = ({ userData }) => {
 
   return (
     <Box>
-      <StyledButton aria-describedby={id} type="button" onClick={handleClick}>
+      <StyledButton aria-describedby={id} type="button" onClick={handleClick} data-testid="header-profile">
         <Span> {username.split("@")[0]}</Span>
       </StyledButton>
       <WrapContent

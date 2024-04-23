@@ -62,58 +62,69 @@ const DelegationEpochList = ({
   };
   const columns: Column<DelegationEpoch>[] = [
     {
-      title: t("common.Epoch"),
+      title: <Box data-testid="delegationEpochList.epochTitle">{t("common.Epoch")}</Box>,
       key: "epoch",
       minWidth: "120px",
-      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="delegationEpochList.epochValue" to={details.epoch(r.epoch)}>
+          {r.epoch}
+        </StyledLink>
+      )
     },
     {
-      title: t("blocks"),
+      title: <Box data-testid="delegationEpochList.blocksTitle">{t("blocks")}</Box>,
       key: "block",
       minWidth: "120px",
-      render: (data) => numberWithCommas(data.block)
+      render: (data) => <Box data-testid="delegationEpochList.blocksTitle">{numberWithCommas(data.block)}</Box>
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box data-testid="delegationEpochList.stakeAmountTitle" component={"span"}>
           {t("stakeAmount")} (<ADAicon />)
         </Box>
       ),
       key: "stakeAmount",
       minWidth: "120px",
 
-      render: (data) => <Box component={"span"}>{formatADAFull(data.stakeAmount)}</Box>
+      render: (data) => (
+        <Box data-testid="delegationEpochList.stakeAmountValue" component={"span"}>
+          {formatADAFull(data.stakeAmount)}
+        </Box>
+      )
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box data-testid="delegationEpochList.delegatorRewardsTitle" component={"span"}>
           {t("delegatorRewards")} (<ADAicon />)
         </Box>
       ),
       key: "delegatorReward",
       minWidth: "120px",
       render: (data) => (
-        <Box component={"span"}>
+        <Box data-testid="delegationEpochList.delegatorRewardsValue" component={"span"}>
           {typeof data.delegators === "number" ? formatADAFull(data.delegators) : t("common.N/A")}
         </Box>
       )
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box data-testid="delegationEpochList.feesTitle" component={"span"}>
           {t("fees")} (<ADAicon />)
         </Box>
       ),
       key: "fees",
       minWidth: "120px",
       render: (data) => (
-        <Box component={"span"}>{typeof data.fee === "number" ? formatADAFull(data.fee) : t("common.N/A")}</Box>
+        <Box data-testid="delegationEpochList.feesValue" component={"span"}>
+          {typeof data.fee === "number" ? formatADAFull(data.fee) : t("common.N/A")}
+        </Box>
       )
     }
   ];
 
   return (
     <Table
+      data-testid="delegationEpochList.table"
       columns={columns}
       data={data}
       total={{ count: total, title: t("glossary.totalTokenList") }}
@@ -151,17 +162,17 @@ const DelegationStakingDelegatorsList = ({
   };
   const columns: Column<StakingDelegators>[] = [
     {
-      title: t("no"),
+      title: <Box data-testid="stakingDelegators.noTitle">{t("no")}</Box>,
       key: "no",
-      render: (r, idx) => idx + 1
+      render: (r, idx) => <Box data-testid="stakingDelegators.noValue">{idx + 1}</Box>
     },
     {
-      title: t("delegator"),
+      title: <Box data-testid="stakingDelegators.delegatorTitle">{t("delegator")}</Box>,
       key: "delegator",
       minWidth: "50px",
       render: (data) =>
         (data.view || data.stakeAddress) && (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div data-testid="stakingDelegators.delegatorValue" style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || data.stakeAddress || ""}>
               <StyledLink to={details.stake(data.view || data.stakeAddress)}>
                 {getShortHash(data.view || data.stakeAddress || "")}
@@ -173,38 +184,47 @@ const DelegationStakingDelegatorsList = ({
     },
     {
       title: (
-        <Box component="span">
+        <Box data-testid="stakingDelegators.totalValueTitle" component="span">
           {t("totalValue")} (<ADAicon />)
         </Box>
       ),
       key: "value",
       minWidth: "120px",
       render: (data) => (
-        <Box component={"span"}>{data.totalStake != null ? formatADAFull(data.totalStake) : t("common.N/A")}</Box>
+        <Box data-testid="stakingDelegators.totalValue" component={"span"}>
+          {data.totalStake != null ? formatADAFull(data.totalStake) : t("common.N/A")}
+        </Box>
       )
     },
     {
-      title: t("stakedTime"),
+      title: <Box data-testid="stakingDelegators.stakedTimeTitle">{t("stakedTime")}</Box>,
       key: "stakedTime",
       minWidth: "120px",
       render: (data) => (
-        <DatetimeTypeTooltip> {formatDateTimeLocal(data.time || data.createdAt || "")}</DatetimeTypeTooltip>
+        <DatetimeTypeTooltip data-testid="stakingDelegators.stakedTimeValue">
+          {formatDateTimeLocal(data.time || data.createdAt || "")}
+        </DatetimeTypeTooltip>
       )
     },
     {
       title: (
-        <Box component="span">
+        <Box data-testid="stakingDelegators.feesTitle" component="span">
           {t("fees")} (<ADAicon />)
         </Box>
       ),
       key: "fees",
       minWidth: "120px",
-      render: (data) => <Box component={"span"}>{formatADAFull(data.fee)}</Box>
+      render: (data) => (
+        <Box data-testid="stakingDelegators.feesValue" component={"span"}>
+          {formatADAFull(data.fee)}
+        </Box>
+      )
     }
   ];
 
   return (
     <Table
+      data-testid="stakingDelegators.table"
       columns={columns}
       data={data ? data : []}
       total={{ count: total, title: t("glossary.totalTokenList") }}
@@ -272,57 +292,69 @@ const DelegationCertificatesHistory = ({
 
   const columns: Column<CertificateHistory>[] = [
     {
-      title: t("certificatesHistory.txHash"),
+      title: <Box data-testid="poolHistory.txHashTitle">{t("certificatesHistory.txHash")}</Box>,
       key: "txHash",
       minWidth: "180px",
       render: (data) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink to={details.transaction(data.txHash, "poolCertificates")}>
+            <StyledLink data-testid="poolHistory.txHashValue" to={details.transaction(data.txHash, "poolCertificates")}>
               {getShortHash(data.txHash || "")}
             </StyledLink>
           </CustomTooltip>
         )
     },
     {
-      title: t("common.createdAt"),
+      title: <Box data-testid="poolHistory.createdAtTitle">{t("common.createdAt")}</Box>,
       key: "createdAt",
       minWidth: "180px",
-      render: (data) => <DatetimeTypeTooltip>{formatDateTimeLocal(data.createdAt || "")}</DatetimeTypeTooltip>
+      render: (data) => (
+        <DatetimeTypeTooltip data-testid="poolHistory.createdAtValue">
+          {formatDateTimeLocal(data.createdAt || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
-      title: t("certificatesHistory.block"),
+      title: <Box data-testid="poolHistory.blockTitle">{t("certificatesHistory.block")}</Box>,
       key: "block",
       minWidth: "100px",
-      render: (data) => <StyledLink to={details.block(data.blockNo)}>{data.blockNo}</StyledLink>
+      render: (data) => (
+        <StyledLink data-testid="poolHistory.blockValue" to={details.block(data.blockNo)}>
+          {data.blockNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("epoch"),
+      title: <Box data-testid="poolHistory.epochTitle">{t("epoch")}</Box>,
       key: "value",
       minWidth: "80px",
-      render: (data) => <StyledLink to={details.epoch(data.epochNo)}>{data.epochNo}</StyledLink>
+      render: (data) => (
+        <StyledLink data-testid="poolHistory.epochValue" to={details.epoch(data.epochNo)}>
+          {data.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("common.slot"),
+      title: <Box data-testid="poolHistory.slotTitle">{t("common.slot")}</Box>,
       key: "slot",
       minWidth: "90px",
-      render: (data) => <>{data.epochSlotNo || data.slotNo}</>
+      render: (data) => <Box data-testid="poolHistory.slotValue">{data.epochSlotNo || data.slotNo}</Box>
     },
     {
-      title: t("certificatesHistory.absoluteSlot"),
+      title: <Box data-testid="poolHistory.absoluteSlotTitle">{t("certificatesHistory.absoluteSlot")}</Box>,
       key: "absoluteSlot",
       minWidth: "130px",
       render: (data) => {
-        return <>{data.absoluteSlot || data.slotNo}</>;
+        return <Box data-testid="poolHistory.absoluteSlotTitle">{data.absoluteSlot || data.slotNo}</Box>;
       }
     },
     {
-      title: t("common.action"),
+      title: <Box data-testid="poolHistory.actionTitle">{t("common.action")}</Box>,
       key: "fees",
       minWidth: "210px",
       render: (data) => {
         return (
-          <Box display={"flex"} gap={2}>
+          <Box data-testid="poolHistory.actionValue" display={"flex"} gap={2}>
             {(data.actions || data.actionTypes) &&
               removeDuplicate(data.actions || data.actionTypes).map((action: POOL_ACTION_TYPE, idx) => (
                 <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>
@@ -335,6 +367,7 @@ const DelegationCertificatesHistory = ({
 
   return (
     <Table
+      data-testid="poolHistory.table"
       columns={columns}
       data={data ? data : []}
       total={{ count: total, title: t("glossary.totalTokenList") }}

@@ -85,7 +85,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: TxInputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1} height={24}>
+          <TitleCard data-testid="transactionOverview.inputTitle" mr={1} height={24}>
             {t("glossary.input")}{" "}
             {data?.utxOs && data?.utxOs?.inputs?.length > 1 && (
               <IconButton
@@ -102,7 +102,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: data?.utxOs && data?.utxOs?.inputs?.length > 0 && (
-        <Box position={"relative"}>
+        <Box position={"relative"} data-testid="transactionOverview.inputValue">
           <StyledLink to={details.address(data?.utxOs?.inputs[0]?.address || "")}>
             <DynamicEllipsisText
               value={data?.utxOs?.inputs[0]?.address || ""}
@@ -131,7 +131,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: TxOutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1} height={24}>
+          <TitleCard data-testid="transactionOverview.outputTitle" mr={1} height={24}>
             {t("glossary.output")}{" "}
             {data?.utxOs && data?.utxOs?.outputs?.length > 1 && (
               <IconButton
@@ -148,7 +148,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: data?.utxOs && data?.utxOs?.outputs?.length > 0 && (
-        <Box position={"relative"}>
+        <Box position={"relative"} data-testid="transactionOverview.outputValue">
           <StyledLink to={details.address(data?.utxOs?.outputs[0]?.address || "")}>
             <DynamicEllipsisText
               value={data?.utxOs?.outputs[0]?.address || ""}
@@ -175,30 +175,34 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
     {
       icon: TimeIconComponent,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box data-testid="transactionOverview.createdAtTitle" display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("createdAt")}</TitleCard>
         </Box>
       ),
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.tx?.time || "")}</DatetimeTypeTooltip>
+      value: (
+        <DatetimeTypeTooltip data-testid="transactionOverview.createdAtValue">
+          {formatDateTimeLocal(data?.tx?.time || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: TxConfirm,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box data-testid="transactionOverview.comfirmationsTitle" display={"flex"} alignItems="center">
           <TitleCard mr={1}>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</TitleCard>
         </Box>
       ),
-      value: <>{confirmation}</>
+      value: <Box data-testid="transactionOverview.comfirmationsValue">{confirmation}</Box>
     },
     {
       icon: TotalOutput,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box data-testid="transactionOverview.totalOutputTitle" display={"flex"} alignItems="center">
           <TitleCard mr={1}>{t("glossary.totalOutput")}</TitleCard>
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Box data-testid="transactionOverview.totalOutputValue" component={"span"}>
           {formatADAFull(data?.tx?.totalOutput)} <ADAicon />
         </Box>
       )
@@ -207,11 +211,13 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: ExchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
+          <TitleCard mr={1} data-testid="transactionOverview.transactionFeesTitle">
+            {t("glossary.transactionfees")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Box data-testid="transactionOverview.transactionFeesValue" component={"span"}>
           {formatADAFull(data?.tx?.fee)} <ADAicon />
         </Box>
       )
@@ -220,7 +226,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard height={24} mr={1}>
+          <TitleCard data-testid="transactionOverview.blockTitle" height={24} mr={1}>
             {t("glossary.block")}
           </TitleCard>
         </Box>
@@ -228,7 +234,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       value: (() => {
         const { blockName, tooltip } = formatNameBlockNo(data?.tx?.blockNo, data?.tx?.epochNo);
         return (
-          <StyledLink to={details.block(data?.tx?.blockNo || 0)}>
+          <StyledLink data-testid="transactionOverview.blockValue" to={details.block(data?.tx?.blockNo || 0)}>
             <CustomTooltip title={tooltip}>
               <span>{blockName}</span>
             </CustomTooltip>
@@ -239,17 +245,22 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
     {
       icon: SlotIcon,
       title: (
-        <Box display={"flex"} alignItems="center">
+        <Box data-testid="transactionOverview.slotTitle" display={"flex"} alignItems="center">
           <TitleCard height={24} mr={1} sx={{ textWrap: "nowrap" }}>
             {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
           </TitleCard>
         </Box>
       ),
-      value: `${data?.tx?.epochSlot || ""} - ${data?.tx?.slotNo || ""}`
+      value: (
+        <Box data-testid="transactionOverview.slotValue">{`${data?.tx?.epochSlot || ""} - ${
+          data?.tx?.slotNo || ""
+        }`}</Box>
+      )
     }
   ];
   return (
     <DetailHeader
+      data-testid="transactionOverview.detailHeader"
       type="TRANSACTION"
       bookmarkData={data?.tx.hash || ""}
       title={t("glossary.transactionDetailTitle")}

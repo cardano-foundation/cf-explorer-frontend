@@ -145,6 +145,7 @@ const TabNativeScripts = () => {
       >
         <Box position={"relative"} mb={2} textAlign={"right"}>
           <Box
+            data-testid="tabNativeScripts.filter"
             component={Button}
             variant="text"
             px={2}
@@ -246,7 +247,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     <FilterContainer padding={2}>
       <Box display={"flex"} flexDirection={"column"}>
         <AccordionContainer expanded={expanded === "time-locked"} onChange={handleChange("time-locked")}>
-          <AccordionSummary>
+          <AccordionSummary data-testid="tabNativeScripts.filter.timeLocked">
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <TimeLock fill={theme.palette.secondary.main} />
@@ -315,7 +316,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           expanded={expanded === "multi-sig"}
           onChange={handleChange("multi-sig")}
         >
-          <AccordionSummary>
+          <AccordionSummary data-testid="tabNativeScripts.filter.multiSig">
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <MultiSig fill={theme.palette.secondary.main} />
@@ -375,14 +376,22 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             </RadioGroup>
           </AccordionDetailsFilter>
         </AccordionContainer>
-        <Box component={ButtonSort} onClick={() => setSort("numberOfTokens,DESC")}>
+        <Box
+          component={ButtonSort}
+          data-testid="tabNativeScripts.filter.numberOfTokens"
+          onClick={() => setSort("numberOfTokens,DESC")}
+        >
           <Box display={"flex"} alignItems={"center"}>
             <SortNative fill={theme.palette.secondary.main} />
             <Box ml={1}>{t("NumberOfTokens")}</Box>
           </Box>
           {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
         </Box>
-        <Box component={ButtonSort} onClick={() => setSort("numberOfAssetHolders,DESC")}>
+        <Box
+          data-testid="tabNativeScripts.filter.numberOfAsset"
+          component={ButtonSort}
+          onClick={() => setSort("numberOfAssetHolders,DESC")}
+        >
           <Box display={"flex"} alignItems={"center"}>
             <SortNative fill={theme.palette.secondary.main} />
             <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
@@ -394,7 +403,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <Box mt={1}>
           <ApplyFilterButton
-            data-testid="apply-filters"
+            data-testid="tabNativeScripts.filter.applyFilters"
             onClick={handleApplyFilter}
             disabled={!isMultiSig && !sort && !openTimeLocked}
           >
@@ -402,6 +411,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           </ApplyFilterButton>
         </Box>
         <Box
+          data-testid="tabNativeScripts.filter.reset"
           component={Button}
           width={"100%"}
           textTransform={"capitalize"}

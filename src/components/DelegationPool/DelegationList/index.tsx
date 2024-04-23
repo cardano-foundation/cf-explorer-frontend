@@ -67,24 +67,25 @@ const DelegationLists: React.FC = () => {
 
   const columns: Column<Delegators>[] = [
     {
-      title: t("glossary.pool"),
+      title: <div data-testid="poolList.poolNameTitle">{t("glossary.pool")}</div>,
       key: "poolName",
       minWidth: "150px",
       render: (r) => (
         <CustomTooltip
           title={
             r.tickerName ? (
-              <>
+              <div>
                 <Box fontWeight={"bold"} component={"span"}>
                   Ticker:{" "}
                 </Box>
                 {r.tickerName}
-              </>
+              </div>
             ) : undefined
           }
         >
           <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
             <Box
+              data-testid="poolList.poolNameValue"
               component={"span"}
               textOverflow={"ellipsis"}
               display={(r.poolName || r.poolId || "").length > 20 ? "inline-block" : "inline"}
@@ -100,37 +101,45 @@ const DelegationLists: React.FC = () => {
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box component={"span"} data-testid="poolList.poolSizeTitle">
           {t("glossary.poolSize")} (<ADAicon />)
         </Box>
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}</Box>,
+      render: (r) => (
+        <Box component={"span"} data-testid="poolList.poolSizeValue">
+          {r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box component={"span"} data-testid="poolList.declaredPledgeTitle">
           {t("glossary.declaredPledge")} (<ADAicon />)
         </Box>
       ),
       key: "pu.pledge",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{formatADAFull(r.pledge)}</Box>,
+      render: (r) => (
+        <Box component={"span"} data-testid="poolList.declaredPledgeValue">
+          {formatADAFull(r.pledge)}
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
-      title: t("glossary.saturation"),
+      title: <div data-testid="poolList.saturationTitle">{t("glossary.saturation")}</div>,
       minWidth: "120px",
       key: "saturation",
       render: (r) =>
         r.saturation != null ? (
-          <Box component={"span"} mr={1}>
+          <Box component={"span"} mr={1} data-testid="poolList.saturationValue">
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
         ) : (
@@ -141,30 +150,38 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: t("glossary.blocksInEpoch"),
+      title: <div data-testid="poolList.blockInEpochTitle">{t("glossary.blocksInEpoch")}</div>,
       key: "epochBlock",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.epochBlock || 0}</Box>,
+      render: (r) => (
+        <Box component={"span"} data-testid="poolList.blockInEpochValue">
+          {r.epochBlock || 0}
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
-      title: t("glossary.blocksLifetime"),
+      title: <div data-testid="poolList.blockLifetimeTitle">{t("glossary.blocksLifetime")}</div>,
       minWidth: "100px",
       key: "lifetimeBlock",
-      render: (r) => <Box component={"span"}>{r.lifetimeBlock || 0}</Box>,
+      render: (r) => (
+        <Box component={"span"} data-testid="poolList.blockLifetimeValue">
+          {r.lifetimeBlock || 0}
+        </Box>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
     },
     {
-      title: t("votingPower"),
+      title: <div data-testid="poolList.votingPowerTitle">{t("votingPower")}</div>,
       key: "votingPower",
       minWidth: "120px",
       render: (r) =>
         r.votingPower != null ? (
-          <CustomTooltip title={`${r.votingPower * 100}%`}>
+          <CustomTooltip data-testid="poolList.votingPowerValue" title={`${r.votingPower * 100}%`}>
             <Box component={"span"}>{formatPercent(r.votingPower)}</Box>
           </CustomTooltip>
         ) : (
@@ -175,11 +192,14 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: t("governanceParticipationRate"),
+      title: <div data-testid="poolList.participationRateTitle">{t("governanceParticipationRate")}</div>,
       key: "governanceParticipationRate",
       minWidth: "120px",
-      render: (r) =>
-        r.governanceParticipationRate != null ? `${formatPercent(r.governanceParticipationRate)}` : t("common.N/A"),
+      render: (r) => (
+        <div data-testid="poolList.participationRateValue">
+          {r.governanceParticipationRate != null ? `${formatPercent(r.governanceParticipationRate)}` : t("common.N/A")}
+        </div>
+      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
       }
@@ -190,8 +210,9 @@ const DelegationLists: React.FC = () => {
       <TopSearchContainer sx={{ justifyContent: "end" }}>
         <Box display="flex" gap="10px">
           <ShowRetiredPools>
-            {t("glassary.showRetiredPools")}
+            <Box data-testid="delegationList.retiredPoolsTitle">{t("glassary.showRetiredPools")}</Box>
             <AntSwitch
+              data-testid="poolList.retiredValue"
               checked={isShowRetired}
               onChange={(e) => {
                 setIsRetired(e.target.checked);
@@ -204,6 +225,7 @@ const DelegationLists: React.FC = () => {
       </TopSearchContainer>
       <Table
         {...fetchData}
+        data-testid="delegationList.table"
         columns={columns.filter((col) => {
           if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
             return false;
