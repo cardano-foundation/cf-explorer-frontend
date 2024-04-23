@@ -197,7 +197,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
               );
             }}
           >
-            <CardGovernanceVotes data={value} />
+            <CardGovernanceVotes data-testid="governance.card" data={value} />
           </Grid>
         ))}
       </Box>
@@ -320,6 +320,7 @@ const GovernanceVotesDetail: React.FC<{
         <Box m="auto">
           <Box position="relative">
             <Box
+              data-testid="governance.back"
               sx={{ position: "absolute", top: isGalaxyFoldSmall ? -2 : -9, minHeight: "unset", cursor: "pointer" }}
               onClick={() => {
                 history.goBack();
@@ -328,13 +329,13 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
-            <HashName>
+            <HashName data-testid="governance.hashName">
               {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
             </HashName>
           </Box>
           <Box textAlign="center">
             <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <TabButton tabName="pool">
+              <TabButton data-testid="governance.poolTab" tabName="pool">
                 <Box width={85}>
                   {data?.poolName && data.poolName.length < 10 ? (
                     data.poolName
@@ -351,10 +352,11 @@ const GovernanceVotesDetail: React.FC<{
                   )}
                 </Box>
               </TabButton>
-              <TabButton tabName="overall" title={t("common.overall")} />
+              <TabButton data-testid="governance.overallTab" tabName="overall" title={t("common.overall")} />
             </ButtonGroup>
             <Box display="flex" justifyContent="center">
               <Typography
+                data-testid="governance.descriptionTab"
                 fontSize="14px"
                 fontWeight={400}
                 lineHeight="16.41px"
@@ -381,9 +383,9 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingTop="2px" paddingBottom="3px">
-              <StyledTitle>{t("pool.actionId")}</StyledTitle>
+              <StyledTitle data-testid="governance.actionIdTitle">{t("pool.actionId")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue data-testid="governance.actionIdValue">
               <Box
                 display="flex"
                 alignItems="center"
@@ -427,9 +429,11 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingTop="2px" paddingBottom="3px">
-              <StyledTitle>{t("pool.actionType")}</StyledTitle>
+              <StyledTitle data-testid="governance.actionTypeTitle">{t("pool.actionType")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}</InfoValue>
+            <InfoValue data-testid="governance.actionTypeValue">
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}
+            </InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative", pr: "5px !important" }}>
             <Box display="flex" justifyContent="space-between" pr="5px">
@@ -444,7 +448,9 @@ const GovernanceVotesDetail: React.FC<{
               justifyContent="space-between"
               alignItems="center !important"
             >
-              <StyledTitle>{tab === "pool" ? t("pool.vote") : t("pool.votes")}</StyledTitle>
+              <StyledTitle data-testid="governance.votesTitle">
+                {tab === "pool" ? t("pool.vote") : t("pool.votes")}
+              </StyledTitle>
               {tab !== "pool" && (
                 <Box display="flex" gap="8px" flexWrap="inherit">
                   {(selectVote ? listVotes.slice(0, 1) : listVotes).map((i) => (
@@ -486,7 +492,7 @@ const GovernanceVotesDetail: React.FC<{
                 </Box>
               )}
             </InfoTitle>
-            <InfoValue width={`${tab === "pool" ? "fit-content" : "100%"}`}>
+            <InfoValue data-testid="governance.votesValue" width={`${tab === "pool" ? "fit-content" : "100%"}`}>
               {tab === "pool" ? (
                 <Box display={"flex"} alignItems={"center"} gap={1} flexWrap={"wrap"}>
                   <Box>
@@ -525,9 +531,9 @@ const GovernanceVotesDetail: React.FC<{
             </Box>
             <InfoTitle>
               <Box width={"100%"}>
-                <StyledTitle>{t("pool.currentStatus")}</StyledTitle>
+                <StyledTitle data-testid="governance.currentStatusTitle">{t("pool.currentStatus")}</StyledTitle>
 
-                <InfoValue width="fit-content" mt={"8px"}>
+                <InfoValue data-testid="governance.currentStatusTitle" width="fit-content" mt={"8px"}>
                   <GovernanceStatus status={data?.status || ""} />
                 </InfoValue>
               </Box>
@@ -544,10 +550,10 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingBottom="3px">
-              <StyledTitle>{t("pool.votingPowerADA")}</StyledTitle>
+              <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
             </InfoTitle>
 
-            <InfoValue sx={{ wordBreak: "break-word" }}>
+            <InfoValue data-testid="governance.votingPowerValue" sx={{ wordBreak: "break-word" }}>
               {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
             </InfoValue>
           </Item>
@@ -557,9 +563,9 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingBottom="3px">
-              <StyledTitle>{t("pool.submission")}</StyledTitle>
+              <StyledTitle data-testid="governance.submissionTitle">{t("pool.submission")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue data-testid="governance.submissionValue">
               <DatetimeTypeTooltip>{formatDateTimeLocal(data?.submissionDate || "")}</DatetimeTypeTooltip>
             </InfoValue>
           </Item>
@@ -569,9 +575,9 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingBottom="3px">
-              <StyledTitle>{t("pool.expiryDate")}</StyledTitle>
+              <StyledTitle data-testid="governance.expiryDateTitle">{t("pool.expiryDate")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue data-testid="governance.expiryDateValue">
               <DatetimeTypeTooltip>{formatDateTimeLocal(data?.expiryDate || "")}</DatetimeTypeTooltip>
             </InfoValue>
           </Item>
@@ -581,10 +587,11 @@ const GovernanceVotesDetail: React.FC<{
               <BlackWarningIcon />
             </Box>
             <InfoTitle paddingBottom="3px">
-              <StyledTitle>{t("pool.actionMetadata")}</StyledTitle>
+              <StyledTitle data-testid="governance.actionMetadataTitle">{t("pool.actionMetadata")}</StyledTitle>
             </InfoTitle>
             <InfoValue>
               <Button
+                data-testid="governance.actionMetadataDetail"
                 onClick={() => {
                   setOpenActionMetadataModal(true);
                 }}
@@ -650,7 +657,7 @@ const VoteBar = ({
   const { isGalaxyFoldSmall } = useScreen();
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Typography fontSize="10px" fontWeight={400}>
+      <Typography data-testid="governance.voteBar.percent" fontSize="10px" fontWeight={400}>
         {!percentage ? "0%" : percentage}
       </Typography>
       <LightTooltip
@@ -677,6 +684,7 @@ const VoteBar = ({
         />
       </LightTooltip>
       <Typography
+        data-testid="governance.voteBar.title"
         fontSize={`${isGalaxyFoldSmall ? "12px" : "14px"}`}
         fontWeight={400}
         pt="4px"
@@ -790,18 +798,20 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
     >
       <Box display="flex" alignItems="center" gap="12px" pb="25.5px">
         <Typography
+          data-testid="governance.voteModal.currentVoteTitle"
           fontSize="24px"
           color={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
         >
           {t("pool.currentVote")}:
         </Typography>{" "}
-        <VoteStatus status={(data && data[0].vote) || ""} />
+        <VoteStatus data-testid="governance.voteModal.currentVoteValue" status={(data && data[0].vote) || ""} />
       </Box>
       <TableContainer sx={{ p: "0px 10px", background: theme.isDark ? "" : theme.palette.secondary[0], width: "auto" }}>
         <TableMui aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell
+                data-testid="governance.voteModal.noTitle"
                 sx={{
                   fontWeight: 700,
                   padding: "9px",
@@ -812,6 +822,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
                 #
               </TableCell>
               <TableCell
+                data-testid="governance.voteModal.voteTitle"
                 sx={{
                   fontWeight: 700,
                   color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
@@ -821,6 +832,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
                 {t("pool.vote")}
               </TableCell>
               <TableCell
+                data-testid="governance.voteModal.timestampTitle"
                 sx={{
                   fontWeight: 700,
                   color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
@@ -836,6 +848,7 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
             {data?.map((row, index) => (
               <TableRow key={row.no} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell
+                  data-testid="governance.voteModal.index"
                   sx={{
                     padding: "11px",
                     color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
@@ -844,12 +857,13 @@ const VoteHistoryModal: React.FC<VoteHistoryProps> = ({ onClose, open, data }) =
                 >
                   {index + 1}
                 </TableCell>
-                <TableCell padding="none">
+                <TableCell data-testid="governance.voteModal.voteStatus" padding="none">
                   <Box width="fit-content" mt="8px">
                     <VoteStatus status={row.vote} />
                   </Box>
                 </TableCell>
                 <TableCell
+                  data-testid="governance.voteModal.datetime"
                   sx={{ color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light }}
                   padding="none"
                 >
@@ -900,7 +914,9 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
       sx={{ maxHeight: "70vh" }}
     >
       <Box display="block" pb="15px">
-        <Typography color={theme.palette.secondary.main}>{t("pool.anchor")}:</Typography>{" "}
+        <Typography data-testid="governance.metadataModal.anchor" color={theme.palette.secondary.main}>
+          {t("pool.anchor")}:
+        </Typography>{" "}
         <Box
           display="flex"
           flexDirection="column"
@@ -913,11 +929,16 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
             wordWrap: "break-word"
           }}
         >
-          <Typography fontSize="16px" color={theme.palette.secondary.light}>
+          <Typography
+            data-testid="governance.metadataModal.anchorHash"
+            fontSize="16px"
+            color={theme.palette.secondary.light}
+          >
             {anchorHash}
           </Typography>
           <Box>
             <Box
+              data-testid="governance.metadataModal.anchorUrl"
               display={"inline"}
               component={Typography}
               fontSize="16px"
@@ -935,8 +956,11 @@ const ActionMetadataModal: React.FC<ActionMetadataProps> = ({
         </Box>
       </Box>
       <Box display="block">
-        <Typography color={theme.palette.secondary.main}>{t("pool.metadata")}:</Typography>{" "}
+        <Typography data-testid="governance.metadataModal.metadata" color={theme.palette.secondary.main}>
+          {t("pool.metadata")}:
+        </Typography>{" "}
         <Box
+          data-testid="governance.metadataModal.viewJson"
           display="flex"
           flexDirection="column"
           mt={2}
@@ -971,13 +995,19 @@ export const ActionMetadataModalConfirm: React.FC<{
   return (
     <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
       <Box display="block" pb="15px">
-        <Box fontSize={16} color={theme.palette.secondary.main}>
+        <Box data-testid="governance.actionMetadataModal.disclaimer" fontSize={16} color={theme.palette.secondary.main}>
           {t("drep.disclaimer.des1")}
         </Box>
-        <Box fontSize={16} color={theme.palette.secondary.main} my={2}>
+        <Box
+          data-testid="governance.actionMetadataModal.disclaimerDes"
+          fontSize={16}
+          color={theme.palette.secondary.main}
+          my={2}
+        >
           {t("drep.disclaimer.des2")}
         </Box>
         <Box
+          data-testid="governance.actionMetadataModal.externalLink"
           component={Link}
           sx={{ textDecoration: "underline !important" }}
           fontSize="16px"
@@ -1134,6 +1164,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <FilterWrapper>
         <Box
+          data-testid="governance.filter"
           component={Button}
           variant="text"
           px={2}
@@ -1165,26 +1196,35 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
         <FilterContainer>
           {open && (
             <Box display={"flex"} flexDirection={"column"}>
-              <Box component={ButtonSort} p="0px 16px" height="48px">
+              <Box data-testid="governance.filter.repeatVotes" component={ButtonSort} p="0px 16px" height="48px">
                 <Box display={"flex"} alignItems={"center"} justifyContent="space-between" width="100%">
                   <Box display="flex">
                     <CustomIcon icon={RepeatVotesIcon} fill={theme.palette.secondary.light} width={16} height={24} />
-                    <Typography ml={1} color={({ palette }) => palette.secondary.main}>
+                    <Typography
+                      data-testid="governance.filter.repeatTitle"
+                      ml={1}
+                      color={({ palette }) => palette.secondary.main}
+                    >
                       {t("pool.repeatVotes")}
                     </Typography>
                   </Box>
                   <AntSwitch
+                    data-testid="governance.filter.repeatValue"
                     checked={params?.isRepeatVote}
                     onChange={(e) => setParams({ ...params, isRepeatVote: e.target.checked })}
                   />
                 </Box>
               </Box>
               <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
-                <AccordionSummary>
+                <AccordionSummary data-testid="governance.filter.actionId">
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={GovernanceIdIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.actionIdTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.actionId")}
                       </Box>
                     </Box>
@@ -1199,6 +1239,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
+                    data-testid="governance.filter.actionIdValue"
                     sx={{
                       p: "0px 12px",
                       width: "100% !important",
@@ -1212,11 +1253,15 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer expanded={expanded === "anchor-text"} onChange={handleChange("anchor-text")}>
-                <AccordionSummary>
+                <AccordionSummary data-testid="governance.filter.metadataSearch">
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={AnchorTextIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.metadataSearchTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.metadataSearch")}
                       </Box>
                     </Box>
@@ -1232,6 +1277,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <Box>
                     <StyledArea
+                      data-testid="governance.filter.metadataSearchValue"
                       multiline
                       rows={3}
                       sx={{
@@ -1248,11 +1294,15 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer expanded={expanded === "action-type"} onChange={handleChange("action-type")}>
-                <AccordionSummary>
+                <AccordionSummary data-testid="governance.filter.actionType">
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={ActionTypeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.actionTypeTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.actionType")}
                       </Box>
                     </Box>
@@ -1269,6 +1319,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.actionTypeValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1308,11 +1359,15 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer expanded={expanded === "current-status"} onChange={handleChange("current-status")}>
-                <AccordionSummary>
+                <AccordionSummary data-testid="governance.filter.currentStatus">
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.currentStatusTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.currentStatus")}
                       </Box>
                     </Box>
@@ -1329,6 +1384,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.currentStatusValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1366,11 +1422,15 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer expanded={expanded === "vote"} onChange={handleChange("vote")}>
-                <AccordionSummary>
+                <AccordionSummary data-testid="governance.filter.vote">
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={VoteIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="governance.filter.voteTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.vote")}
                       </Box>
                     </Box>
@@ -1387,6 +1447,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
+                    data-testid="governance.filter.voteValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1423,11 +1484,16 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   </RadioGroup>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionSummary>
+              <AccordionSummary data-testid="governance.filter.dateRange">
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={18} />
-                    <Box ml={1} color={({ palette }) => palette.secondary.main} onClick={() => setOpenDateRange(true)}>
+                    <Box
+                      data-testid="governance.filter.dateRangeTitle"
+                      ml={1}
+                      color={({ palette }) => palette.secondary.main}
+                      onClick={() => setOpenDateRange(true)}
+                    >
                       {t("pool.dateRange")}
                     </Box>
                   </Box>
@@ -1436,6 +1502,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   )}
                 </Box>
                 <DateRangeModal
+                  data-testid="governance.filter.dateRangeValue"
                   open={openDateRange}
                   value={{
                     fromDate: dateRange?.fromDate,
@@ -1455,7 +1522,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
               </AccordionSummary>
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
-                  data-testid="apply-filters"
+                  data-testid="governance.applyFilters"
                   onClick={() => {
                     handleFilter();
                   }}
@@ -1470,6 +1537,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 </ApplyFilterButton>
               </Box>
               <Box
+                data-testid="governance.filter.reset"
                 component={Button}
                 width={"100%"}
                 textTransform={"capitalize"}
@@ -1478,7 +1546,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                 color={({ palette }) => `${palette.primary.main} !important`}
                 onClick={handleReset}
               >
-                <Box mr={1}>{t("common.reset")}</Box>
+                <Box data-testid="governance.resetTitle" mr={1}>
+                  {t("common.reset")}
+                </Box>
                 <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
               </Box>
             </Box>

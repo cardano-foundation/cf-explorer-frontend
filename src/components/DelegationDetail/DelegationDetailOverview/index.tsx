@@ -21,22 +21,29 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
   const overviewData = [
     {
       title: (
-        <Box component="span" sx={{ textWrap: "nowrap" }}>
+        <Box data-testid="delegationDetailOverview.fixedCostTitle" component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
-      value: formatADAFull(data?.cost),
+      value: <Box data-testid="delegationDetailOverview.fixedCostValue">{formatADAFull(data?.cost)}</Box>,
       tooltip: ""
     },
     {
-      title: t("margin"),
-      value: formatPercent(data?.margin),
+      title: <Box data-testid="delegationDetailOverview.marginTitle">{t("margin")}</Box>,
+      value: <Box data-testid="delegationDetailOverview.marginValue">{formatPercent(data?.margin)}</Box>,
       tooltip: ""
     },
 
     {
       title: (
-        <Box component="span" display="flex" gap="4px" flexWrap="wrap" justifyContent="center">
+        <Box
+          data-testid="delegationDetailOverview.declaredPledgeTitle"
+          component="span"
+          display="flex"
+          gap="4px"
+          flexWrap="wrap"
+          justifyContent="center"
+        >
           {t("declaredPledge")}{" "}
           <FixedCostBox>
             (<ADAicon />)
@@ -44,7 +51,7 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
         </Box>
       ),
       value: (
-        <Box display={"flex"} alignItems={"center"} gap={1}>
+        <Box data-testid="delegationDetailOverview.declaredPledgeValue" display={"flex"} alignItems={"center"} gap={1}>
           {formatADAFull(data?.pledge)}
           <CustomTooltip
             wOpacity={false}
@@ -69,14 +76,18 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
             }}
             title={
               <Box px={"4px"}>
-                <Box fontSize="12px" color={({ palette }) => palette.secondary.light}>
+                <Box
+                  data-testid="delegationDetailOverview.actualPledgeTitle"
+                  fontSize="12px"
+                  color={({ palette }) => palette.secondary.light}
+                >
                   {t("glossary.actualPledge")}
                 </Box>
                 {data?.totalBalanceOfPoolOwners === null ? (
                   <Box color={({ palette }) => palette.secondary.light}>{t("common.N/A")}</Box>
                 ) : (
                   <Box
-                    data-testid="actual-pledge-value"
+                    data-testid="delegationDetailOverview.actualPledgeValue"
                     fontSize="14px"
                     color={({ palette }) => palette.secondary.light}
                   >
@@ -97,13 +108,15 @@ const DelegationDetailOverview: React.FC<IDelegationDetailOverview> = ({ data, l
       tooltip: ""
     },
     {
-      title: t("epochBlocks"),
-      value: data?.epochBlock || 0,
+      title: <Box data-testid="delegationDetailOverview.epochBlocksTitle">{t("epochBlocks")}</Box>,
+      value: <Box data-testid="delegationDetailOverview.epochBlocksValue">{data?.epochBlock || 0}</Box>,
       tooltip: ""
     },
     {
-      title: t("lifetimeBlocks"),
-      value: numberWithCommas(data?.lifetimeBlock),
+      title: <Box data-testid="delegationDetailOverview.lifetimeBlocksTitle">{t("lifetimeBlocks")}</Box>,
+      value: (
+        <Box data-testid="delegationDetailOverview.lifetimeBlocksValue">{numberWithCommas(data?.lifetimeBlock)}</Box>
+      ),
       tooltip: ""
     }
   ];

@@ -148,11 +148,12 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
 
   return (
     <StyledContainer>
-      <AnalyticsTitle>{t("common.analytics")}</AnalyticsTitle>
+      <AnalyticsTitle data-testid="delegatorChart.analytics">{t("common.analytics")}</AnalyticsTitle>
       <GridWrapper container columns={24} spacing="35px">
         <Grid item xs={24} lg={18}>
           <Box>
             <Box
+              data-testid="delegatorChart.stake"
               component={Button}
               mr={1}
               active={selected === "epochChart" ? 1 : 0}
@@ -160,11 +161,15 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
             >
               {t("stake")}
             </Box>
-            <Button active={selected === "delegatorChart" ? 1 : 0} onClick={() => setSelected("delegatorChart")}>
+            <Button
+              data-testid="delegatorChart.delegator"
+              active={selected === "delegatorChart" ? 1 : 0}
+              onClick={() => setSelected("delegatorChart")}
+            >
               {t("delegator")}
             </Button>
           </Box>
-          <ChartContainer>{renderData()}</ChartContainer>
+          <ChartContainer data-testid="delegatorChart.areaChart">{renderData()}</ChartContainer>
         </Grid>
         <Grid item xs={24} lg={6}>
           <BoxInfo height={"100%"} space={data?.[selected]?.dataByDays?.length ? 36 : 16}>
@@ -172,8 +177,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               <BoxInfoItemRight display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
-                  <Title>{selected === "epochChart" ? t("highestStake") : t("highestNumberOfDelegators")}</Title>
-                  <Value>
+                  <Title data-testid="delegatorChart.highestTitle">
+                    {selected === "epochChart" ? t("highestStake") : t("highestNumberOfDelegators")}
+                  </Title>
+                  <Value data-testid="delegatorChart.highestValue">
                     {loading ? (
                       <SkeletonUI variant="rectangular" />
                     ) : !data?.[selected] ? (
@@ -191,8 +198,10 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
               <BoxInfoItem display={"flex"} alignItems="center" justifyContent={"center"}>
                 <Box>
                   <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
-                  <Title>{selected === "epochChart" ? t("lowestStake") : t("lowestNumberOfDelegators")}</Title>
-                  <Value>
+                  <Title data-testid="delegatorChart.lowestTitle">
+                    {selected === "epochChart" ? t("lowestStake") : t("lowestNumberOfDelegators")}
+                  </Title>
+                  <Value data-testid="delegatorChart.lowestValue">
                     {loading ? (
                       <SkeletonUI variant="rectangular" />
                     ) : !data?.[selected] ? (

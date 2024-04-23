@@ -101,12 +101,18 @@ const Card = ({
       overflow={"hidden"}
     >
       <Header fontWeight="bold">
-        <Box color={(theme) => theme.palette.secondary.main} fontSize={"1rem"} lineHeight="19px" mb="2px">
+        <Box
+          data-testid="transactionMetadata.utxos.input"
+          color={(theme) => theme.palette.secondary.main}
+          fontSize={"1rem"}
+          lineHeight="19px"
+          mb="2px"
+        >
           {type === "down" ? t("glossary.input") : t("glossary.output")}
         </Box>
         <Box color={(theme) => theme.palette.secondary.light} display="flex" justifyContent="space-between">
-          <Box>{t("glossary.address")}</Box>
-          <AmountHeader>{t("glossary.amount")}</AmountHeader>
+          <Box data-testid="transactionMetadata.utxos.address">{t("glossary.address")}</Box>
+          <AmountHeader data-testid="transactionMetadata.utxos.amount">{t("glossary.amount")}</AmountHeader>
         </Box>
       </Header>
       <Box fontSize={14}>
@@ -133,12 +139,17 @@ const Card = ({
                       <Box mr={3} minWidth={200} width={"100%"}>
                         <Box display={"flex"} justifyContent="flex-start" alignItems={"center"}>
                           <Box
+                            data-testid="transactionMetadata.utxos.utxoTitle"
                             color={(theme) => (isFailed ? theme.palette.secondary[600] : theme.palette.secondary.light)}
                             pr={1}
                           >
                             {t("tab.utxo")}:
                           </Box>
-                          <Link to={details.transaction(item.txHash)} style={{ width: "100%" }}>
+                          <Link
+                            data-testid="transactionMetadata.utxos.utxoValue"
+                            to={details.transaction(item.txHash)}
+                            style={{ width: "100%" }}
+                          >
                             <EllipsisContainer
                               isFailed={isFailed}
                               sx={{ transform: "translateY(-3px)" }}
@@ -173,6 +184,7 @@ const Card = ({
                   )}
                   <Box display={"flex"} justifyContent="space-between" alignItems={"center"}>
                     <Box
+                      data-testid="transactionMetadata.utxos.fromTitle"
                       display={"flex"}
                       alignItems="center"
                       justifyContent={"flex-start"}
@@ -189,7 +201,11 @@ const Card = ({
                         flexWrap="nowrap"
                         width={"100%"}
                       >
-                        <Link to={details.address(item.address)} style={{ width: "100%" }}>
+                        <Link
+                          data-testid="transactionMetadata.utxos.fromValue"
+                          to={details.address(item.address)}
+                          style={{ width: "100%" }}
+                        >
                           <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                             <DynamicEllipsisText value={item.address} isCopy isTooltip customTruncateFold={[6, 8]} />
                           </EllipsisContainer>
@@ -214,6 +230,7 @@ const Card = ({
                           flex={1}
                         >
                           <Box
+                            data-testid="transactionMetadata.utxos.stakeAddressTitle"
                             pr={1}
                             color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.light)}
                             sx={{ minWidth: "100px" }}
@@ -221,7 +238,11 @@ const Card = ({
                             {t("common.stakeAddress")}:&nbsp;
                           </Box>
                           <Box style={{ width: "100%" }}>
-                            <Link to={details.stake(item?.stakeAddress)} style={{ width: "100%" }}>
+                            <Link
+                              data-testid="transactionMetadata.utxos.stakeAddressValue"
+                              to={details.stake(item?.stakeAddress)}
+                              style={{ width: "100%" }}
+                            >
                               <EllipsisContainer isFailed={isFailed} hasToken={item?.tokens?.length >= 1}>
                                 <DynamicEllipsisText
                                   value={item.stakeAddress}
@@ -245,8 +266,11 @@ const Card = ({
                     flexWrap="nowrap"
                     width={"auto"}
                   >
-                    <AmountMobile>{t("glossary.amount")}</AmountMobile>
+                    <AmountMobile data-testid="transactionMetadata.utxos.amountTitle">
+                      {t("glossary.amount")}
+                    </AmountMobile>
                     <Box
+                      data-testid="transactionMetadata.utxos.amountValue"
                       component={"span"}
                       whiteSpace="nowrap"
                       color={(theme) =>
@@ -292,6 +316,7 @@ const Card = ({
       </Box>
       <ItemFooter>
         <Box
+          data-testid="transactionMetadata.utxos.totalTitle"
           fontWeight={"bold"}
           color={({ palette }) => (isFailed ? theme.palette.secondary[600] : palette.secondary.main)}
           sx={{ textWrap: "nowrap", marginRight: 1 }}
@@ -300,6 +325,7 @@ const Card = ({
         </Box>
         <div>
           <Box
+            data-testid="transactionMetadata.utxos.amountValue"
             fontWeight={"bold"}
             component="span"
             pr={1}

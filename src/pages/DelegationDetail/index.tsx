@@ -150,7 +150,7 @@ const DelegationDetail: React.FC = () => {
   }[] = [
     {
       icon: StakeKeyHistoryIcon,
-      label: t("epoch"),
+      label: <Box data-testid="delegationDetail.epochTitle">{t("epoch")}</Box>,
       key: "epochs",
       component: (
         <div ref={tableRef}>
@@ -160,7 +160,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: StakingDelegators,
-      label: t("stakingDelegators"),
+      label: <Box data-testid="delegationDetail.stakingTitle">{t("stakingDelegators")}</Box>,
       key: "delegators",
       component: (
         <div ref={tableRef}>
@@ -170,7 +170,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: TimelineIconComponent,
-      label: <Box data-testid="certificatesHistory">{t("certificatesHistory")}</Box>,
+      label: <Box data-testid="delegationDetail.certificatesHistoryTitle">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>
@@ -180,7 +180,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: VotesIcon,
-      label: t("drep.governanceVotes"),
+      label: <Box data-testid="delegationDetail.governanceTitle">{t("drep.governanceVotes")}</Box>,
       key: "governanceVotes",
       component: (
         <div ref={tableRef}>
@@ -259,6 +259,7 @@ const DelegationDetail: React.FC = () => {
             onChange={handleChangeTab(key)}
           >
             <AccordionSummary
+              data-testid={`delegationDetail.${key}`}
               expandIcon={
                 <IoIosArrowDown
                   style={{
@@ -274,7 +275,7 @@ const DelegationDetail: React.FC = () => {
               }}
             >
               <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
-              <TitleTab pl={1} active={+(key === tab)}>
+              <TitleTab data-testid="delegationDetail.tabTitle" pl={1} active={+(key === tab)}>
                 {label}
               </TitleTab>
             </AccordionSummary>

@@ -44,13 +44,13 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   const columns: Column<BlockDetail>[] = [
     {
-      title: t("glossary.block"),
+      title: <div data-testid="epochList.blockTitle">{t("glossary.block")}</div>,
       key: "block",
       minWidth: "100px",
       render: (r) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
         return (
-          <StyledLink to={details.block(r.blockNo || r.hash)}>
+          <StyledLink data-testid="epochList.blockValue" to={details.block(r.blockNo || r.hash)}>
             <CustomTooltip title={tooltip}>
               <span>{blockName}</span>
             </CustomTooltip>
@@ -59,64 +59,70 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       }
     },
     {
-      title: t("glossary.blockID"),
+      title: <div data-testid="epochList.blockIdTitle">{t("glossary.blockID")}</div>,
       key: "blockId",
       minWidth: "150px",
       render: (r) => (
-        <CustomTooltip title={r.hash}>
+        <CustomTooltip data-testid="epochList.blockIdValue" title={r.hash}>
           <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: t("glossary.epoch"),
+      title: <div data-testid="epochList.epochTitle">{t("glossary.epoch")}</div>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="epochList.epochValue" to={details.epoch(r.epochNo)}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <div data-testid="epochList.slotTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
-      minWidth: "50px"
+      minWidth: "50px",
+      render: (r) => <div data-testid="epochList.slotValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <div data-testid="epochList.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r) => <div data-testid="epochList.slotNoValue">{r.slotNo}</div>
     },
     {
-      title: t("createdAt"),
+      title: <div data-testid="epochList.createdAtTitle">{t("createdAt")}</div>,
       key: "time",
       minWidth: "100px",
       render: (r) => (
         <DatetimeTypeTooltip>
-          <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+          <PriceWrapper data-testid="epochList.createdAtValue">{formatDateTimeLocal(r.time)}</PriceWrapper>
         </DatetimeTypeTooltip>
       )
     },
     {
-      title: t("drawer.transactions"),
+      title: <div data-testid="epochList.blkCountTitle">{t("drawer.transactions")}</div>,
       key: "blkCount",
       minWidth: "100px",
-      render: (r) => <BlueText>{r.txCount || 0}</BlueText>
+      render: (r) => <BlueText data-testid="epochList.blkCountTitle">{r.txCount || 0}</BlueText>
     },
     {
-      title: t("common.fees"),
+      title: <div data-testid="epochList.feesTitle">{t("common.fees")}</div>,
       key: "fees",
       render: (r) => (
-        <PriceWrapper>
+        <PriceWrapper data-testid="epochList.feesValue">
           {formatADAFull(r.totalFees)}
           <ADAicon />
         </PriceWrapper>
       )
     },
     {
-      title: t("glossary.output"),
+      title: <div data-testid="epochList.outSumTitle">{t("glossary.output")}</div>,
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
         <StyledOutput>
-          <BlueText>{formatADAFull(r.totalOutput)}</BlueText>
+          <BlueText data-testid="epochList.outSumValue">{formatADAFull(r.totalOutput)}</BlueText>
           <ADAicon />
         </StyledOutput>
       )
@@ -125,13 +131,14 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card title={t("head.page.blocks")} underline>
+      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
         </Actions>
         <Table
+          data-testid="epoch.blockList.table"
           {...fetchData}
           columns={columns}
           total={{ title: t("common.totalBlocks"), count: fetchData.total }}

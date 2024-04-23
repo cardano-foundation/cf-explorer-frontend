@@ -139,6 +139,7 @@ const TabSmartContracts = () => {
       >
         <Box position={"relative"} mb={2} textAlign={"right"}>
           <Box
+            data-testid="nativeScripts.smartContract.filter"
             component={Button}
             variant="text"
             px={2}
@@ -247,7 +248,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
     <FilterContainer padding={2}>
       <Box display={"flex"} flexDirection={"column"}>
         <AccordionContainer expanded={expanded === "version"} onChange={handleChange("version")}>
-          <AccordionSummary>
+          <AccordionSummary data-testid="nativeScripts.smartContract.filter.version">
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <FilterVersionIcon fill={theme.palette.secondary.main} />
@@ -328,7 +329,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             }
           }}
         >
-          <AccordionSummary>
+          <AccordionSummary data-testid="nativeScripts.smartContract.filter.transactionPurpose">
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <CubeIcon width={20} fill={theme.palette.secondary.main} />
@@ -401,7 +402,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
         <Box mt={1}>
           <ApplyFilterButton
-            data-testid="apply-filters"
+            data-testid="nativeScripts.smartContract.filter.applyFilters"
             onClick={handleApplyFilter}
             disabled={!version && filterOption.length === 0}
           >
@@ -409,6 +410,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           </ApplyFilterButton>
         </Box>
         <Box
+          data-testid="nativeScripts.smartContract.filter.reset"
           component={Button}
           width={"100%"}
           textTransform={"capitalize"}

@@ -79,8 +79,8 @@ const DrepsOverview: React.FC = () => {
     <Card
       title={
         <>
-          <Box>{t("head.page.dreps")}</Box>
-          <Box fontSize={14} color={theme.palette.secondary.light} fontWeight={400} mt={1}>
+          <Box data-testid="drep.drepTitle">{t("head.page.dreps")}</Box>
+          <Box data-testid="drep.drepDes" fontSize={14} color={theme.palette.secondary.light} fontWeight={400} mt={1}>
             {t("head.page.dreps.des")}
           </Box>
         </>
@@ -95,11 +95,15 @@ const DrepsOverview: React.FC = () => {
             <Grid item md={6} xs={12} sm={6}>
               <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
-                  <StyledCard.Title>{t("glossary.epoch")}</StyledCard.Title>
-                  <StyledCard.Link to={details.epoch(data?.epochNo)}>
+                  <StyledCard.Title data-testid="drep.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
+                  <StyledCard.Link data-testid="drep.epochValue" to={details.epoch(data?.epochNo)}>
                     {data?.epochNo || t("common.N/A")}
                   </StyledCard.Link>
-                  <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}>
+                  <Box
+                    data-testid="drep.time"
+                    component="span"
+                    sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
+                  >
                     {t("common.endIn")}:{" "}
                     <StyledCard.Comment>
                       {`${days} ${days > 1 ? t("common.days") : t("common.day")} `}
@@ -122,12 +126,13 @@ const DrepsOverview: React.FC = () => {
                 >
                   <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                     <StyledCard.Content>
-                      <StyledCard.Title>{t("glossary.slot")}</StyledCard.Title>
-                      <StyledCard.Value>
+                      <StyledCard.Title data-testid="drep.slotTitle">{t("glossary.slot")}</StyledCard.Title>
+                      <StyledCard.Value data-testid="drep.slotValue">
                         {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
                           ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
                           : MAX_SLOT_EPOCH}
                         <Box
+                          data-testid="drep.totalSlotVale"
                           component="span"
                           sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}
                         >
@@ -137,7 +142,7 @@ const DrepsOverview: React.FC = () => {
                     </StyledCard.Content>
                     <StyledImg src={theme.mode === "light" ? RocketPoolIcon : RocketPoolDarkIcon} alt="Rocket" />
                   </StyledCard.ClickAble>
-                  <Box position={"relative"} top={-60} px={4}>
+                  <Box data-testid="drep.progress" position={"relative"} top={-60} px={4}>
                     <StyledLinearProgress
                       variant="determinate"
                       value={
@@ -159,18 +164,20 @@ const DrepsOverview: React.FC = () => {
                 }}
               >
                 <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
-                  <StyledCard.Title>
+                  <StyledCard.Title data-testid="drep.activeStakeTitle">
                     {t("glossary.activeStake")} (<ADAicon />)
                   </StyledCard.Title>
                   <CustomTooltip title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.N/A")}>
-                    <StyledCard.Value>
+                    <StyledCard.Value data-testid="drep.activeStakeValue">
                       {data?.liveStake ? formatADA(data?.activeStake) : t("common.N/A")}
                     </StyledCard.Value>
                   </CustomTooltip>
                 </StyledCard.Content>
                 <StyledCard.Content style={{}}>
-                  <StyledCard.Title>{t("glossary.delegators")}</StyledCard.Title>
-                  <StyledCard.Value>{numberWithCommas(data?.delegators)}</StyledCard.Value>
+                  <StyledCard.Title data-testid="drep.delegatorsTitle">{t("glossary.delegators")}</StyledCard.Title>
+                  <StyledCard.Value data-testid="drep.delegatorsValue">
+                    {numberWithCommas(data?.delegators)}
+                  </StyledCard.Value>
                 </StyledCard.Content>
                 <Box>
                   <StyledImg src={theme.mode === "light" ? LiveStakeIcon : LiveStakeDarkIcon} alt="Rocket" />
@@ -180,7 +187,7 @@ const DrepsOverview: React.FC = () => {
             <Grid item md={6} xs={12} sm={6}>
               <StyledCard.Container>
                 <StyledCard.Content>
-                  <StyledCard.Title>{t("glossary.totalDreps")}</StyledCard.Title>
+                  <StyledCard.Title data-testid="drep.totalDrepsTitle">{t("glossary.totalDreps")}</StyledCard.Title>
                   <StyledCard.Value>{data?.totalDReps || 0}</StyledCard.Value>
                   <Box
                     sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
@@ -191,16 +198,16 @@ const DrepsOverview: React.FC = () => {
                     gap={1}
                   >
                     <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle>{t("glossary.activeDReps")}</PoolTitle>
-                      <PoolValue>{data?.activeDReps || 0}</PoolValue>
+                      <PoolTitle data-testid="drep.activeDrepsTitle">{t("glossary.activeDReps")}</PoolTitle>
+                      <PoolValue data-testid="drep.activeDrepsValue">{data?.activeDReps || 0}</PoolValue>
                     </Box>
                     <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle>{t("glossary.inactiveDReps")}</PoolTitle>
-                      <PoolValue>{data?.inactiveDReps || 0}</PoolValue>
+                      <PoolTitle data-testid="drep.inactiveDrepsTitle">{t("glossary.inactiveDReps")}</PoolTitle>
+                      <PoolValue data-testid="drep.inactiveDrepsValue">{data?.inactiveDReps || 0}</PoolValue>
                     </Box>
                     <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle>{t("glossary.retiredDReps")}</PoolTitle>
-                      <PoolValue>{data?.retiredDReps || 0}</PoolValue>
+                      <PoolTitle data-testid="drep.retiredDRepsTitle">{t("glossary.retiredDReps")}</PoolTitle>
+                      <PoolValue data-testid="drep.retiredDrepsValue">{data?.retiredDReps || 0}</PoolValue>
                     </Box>
                   </Box>
                 </StyledCard.Content>

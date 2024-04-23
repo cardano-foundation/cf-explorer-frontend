@@ -150,19 +150,24 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={4} sm={6}>
-              <ButtonTitle>{t("common.balance")}</ButtonTitle>
+              <ButtonTitle data-testid="addressAnalytics.balance">{t("common.balance")}</ButtonTitle>
             </Grid>
             <Grid item xs={8} sm={6}>
               <Tabs>
                 {options.map(({ value, label }) => (
-                  <Tab key={value} active={rangeTime === value ? 1 : 0} onClick={() => setRangeTime(value)}>
+                  <Tab
+                    data-testid={`addressAnalytics.${value}`}
+                    key={value}
+                    active={rangeTime === value ? 1 : 0}
+                    onClick={() => setRangeTime(value)}
+                  >
                     {label}
                   </Tab>
                 ))}
               </Tabs>
             </Grid>
           </Grid>
-          <ChartBox highest={highestIndex} lowest={lowestIndex}>
+          <ChartBox data-testid="addressAnalytics.balance" highest={highestIndex} lowest={lowestIndex}>
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
@@ -265,9 +270,11 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                 <Box>
                   <Box minHeight={"90px"}>
                     <CustomIcon height={30} fill={theme.palette.secondary.light} icon={HighestIconComponent} />
-                    <Title>{t("common.highestBalance")}</Title>
+                    <Title data-testid="addressAnalytics.highestBalanceTitle">{t("common.highestBalance")}</Title>
                   </Box>
-                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}</ValueInfo>
+                  <ValueInfo data-testid="addressAnalytics.highestBalanceValue">
+                    {loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(maxBalance)}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItemRight>
             </Box>
@@ -276,9 +283,11 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                 <Box>
                   <Box minHeight={"90px"}>
                     <CustomIcon height={30} fill={theme.palette.secondary.light} icon={LowestIconComponent} />
-                    <Title>{t("common.lowestBalance")}</Title>
+                    <Title data-testid="addressAnalytics.lowestBalanceTitle">{t("common.lowestBalance")}</Title>
                   </Box>
-                  <ValueInfo>{loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}</ValueInfo>
+                  <ValueInfo data-testid="addressAnalytics.lowestBalanceValue">
+                    {loading ? <SkeletonUI variant="rectangular" /> : formatADAFull(minBalance)}
+                  </ValueInfo>
                 </Box>
               </BoxInfoItem>
             </Box>
