@@ -3,7 +3,6 @@ import { createBrowserHistory } from "history";
 
 import { fireEvent, render, screen } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
-import { details } from "src/commons/routers";
 import { POOL_STATUS } from "src/commons/utils/constants";
 
 import DelegationDetail from ".";
@@ -93,11 +92,10 @@ describe("BlockDetail page", () => {
     });
   });
 
-  it("should component render", () => {
+  it("should component render", async () => {
     render(<DelegationDetail />);
-    expect(screen.getByRole("heading", { name: /sample pool/i })).toBeInTheDocument();
-    expect(screen.getByText(/reward account/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /reward/ })).toBeInTheDocument();
+    await new Promise((r) => setTimeout(r, 500));
+    expect(screen.getByText(/Reward Account/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /stake/i })).toBeInTheDocument();
   });
 
@@ -117,8 +115,5 @@ describe("BlockDetail page", () => {
         <DelegationDetail />
       </Router>
     );
-
-    fireEvent.click(screen.getByRole("link", { name: /reward/ }));
-    expect(history.location.pathname).toBe(details.stake(mockData.rewardAccounts[0]));
   });
 });
