@@ -53,29 +53,32 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
   }, [data]);
 
   const itemLeft = [
-    { title: t("drawer.transactions"), value: data?.txCount || 0 },
     {
-      title: t("glossary.adaBalance"),
+      title: <div data-testid="addressDetail.transactionTitle">{t("drawer.transactions")}</div>,
+      value: <div data-testid="addressDetail.transactionValue">{data?.txCount || 0}</div>
+    },
+    {
+      title: <div data-testid="addressDetail.adaBalanceTitle">{t("glossary.adaBalance")}</div>,
       value: (
-        <Box display="flex" alignItems="center">
+        <Box data-testid="addressDetail.adaBalanceValue" display="flex" alignItems="center">
           {formatADAFull(data?.balance)}&nbsp;
           <ADAicon />
         </Box>
       )
     },
     {
-      title: t("glossary.usdValue"),
-      value: <Box>$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
+      title: <div data-testid="addressDetail.usdTitle">{t("glossary.usdValue")}</div>,
+      value: <Box data-testid="addressDetail.usdValue">$ {exchangeADAToUSD(data?.balance || 0, adaRate, true)}</Box>
     },
     {
-      value: <TokenAutocomplete address={data?.address || ""} />
+      value: <TokenAutocomplete data-testid="addressDetail.address" address={data?.address || ""} />
     }
   ];
   const itemRight = [
     {
-      title: t("drawer.totalStake"),
+      title: <div data-testid="addressDetail.totalStakeTitle">{t("drawer.totalStake")}</div>,
       value: (
-        <Box display={"flex"} alignItems={"center"} gap={"5px"}>
+        <Box data-testid="addressDetail.totalStakeValue" display={"flex"} alignItems={"center"} gap={"5px"}>
           {formatADAFull(dataStake?.totalStake)}
           <ADAicon />
           {NETWORK === NETWORKS.sanchonet && (
@@ -89,9 +92,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
       )
     },
     {
-      title: t("glossary.poolName"),
+      title: <div data-testid="addressDetail.poolNameTitle">{t("glossary.poolName")}</div>,
       value: dataStake?.pool?.poolId ? (
         <Link
+          data-testid="addressDetail.poolNameValue"
           to={dataStake?.pool?.poolId ? details.delegation(dataStake.pool.poolId) : "#"}
           style={{ fontFamily: "var(--font-family-text)", color: theme.palette.primary.main }}
         >
@@ -108,10 +112,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
       )
     },
     {
-      title: t("glossary.rewardBalance"),
+      title: <div data-testid="addressDetail.rewardBalanceTitle">{t("glossary.rewardBalance")}</div>,
       value:
         dataStake?.rewardAvailable != null ? (
-          <Box>
+          <Box data-testid="addressDetail.rewardBalanceValue">
             {formatADAFull(dataStake?.rewardAvailable)}&nbsp;
             <ADAicon />
           </Box>
@@ -126,7 +130,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
       <WrapHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft color={theme.palette.secondary.light} fontSize="16px" />
-          <BackText>{t("common.back")}</BackText>
+          <BackText data-testid="addressDetail.back">{t("common.back")}</BackText>
         </BackButton>
         <Box width={"100%"} display={"flex"} flexWrap={"wrap"} alignItems={"center"} justifyContent={"space-between"}>
           <Box
@@ -144,7 +148,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
                   <CustomTooltip title={t("address.title.ADAHanlde")}>
                     <Box display={"inline-block"}>{address.startsWith("$") ? address : `$${address}`} </Box>
                   </CustomTooltip>
-                  <Box display={"inline-block"}>
+                  <Box data-testid="addressDetail.adaHanldeData" display={"inline-block"}>
                     <BookmarkButton keyword={data?.address || ""} type="ADDRESS" />
                   </Box>
                 </Box>
@@ -160,6 +164,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
           </Box>
           {(data?.associatedSmartContract || data?.associatedNativeScript) && (
             <RedirectButton
+              data-testid="addressDetail.view"
               width={isMobile ? "100%" : "auto"}
               component={Button}
               onClick={() =>

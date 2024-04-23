@@ -251,6 +251,7 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary
+            data-testid={`transactionMetadata.${key}`}
             expandIcon={
               <IoIosArrowDown
                 style={{
@@ -267,11 +268,11 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
           >
             {" "}
             <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-            <TitleTab pl={1} active={+(key === tabActive)}>
+            <TitleTab data-testid={`transactionMetadata.${key}Title`} pl={1} active={+(key === tabActive)}>
               {label}
             </TitleTab>
           </AccordionSummary>
-          <AccordionDetails>{children}</AccordionDetails>
+          <AccordionDetails data-testid={`transactionMetadata.${key}Value`}>{children}</AccordionDetails>
         </StyledAccordion>
       ))}
     </Box>

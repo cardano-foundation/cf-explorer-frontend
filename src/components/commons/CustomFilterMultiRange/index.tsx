@@ -178,6 +178,7 @@ const CustomFilterMultiRange: React.FC = () => {
             whiteSpace={"nowrap"}
             fontWeight={"bold"}
             color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+            data-testid="filterRange.filter"
           >
             {t("common.filter")}
           </Box>
@@ -185,17 +186,25 @@ const CustomFilterMultiRange: React.FC = () => {
         {open && (
           <FilterContainer>
             <Box display={"flex"} flexDirection={"column"}>
-              <AccordionContainer expanded={expanded === "action-id"} onChange={handleChange("action-id")}>
+              <AccordionContainer
+                data-testid="filterRange.poolName"
+                expanded={expanded === "poolName"}
+                onChange={handleChange("poolName")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={PoolNameIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="filterRange.poolNameTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.poolName")}
                       </Box>
                     </Box>
                     <Box>
-                      {expanded === "action-id" ? (
+                      {expanded === "poolName" ? (
                         <IoIosArrowUp color={theme.palette.secondary.main} />
                       ) : (
                         <IoIosArrowDown color={theme.palette.secondary.main} />
@@ -205,6 +214,7 @@ const CustomFilterMultiRange: React.FC = () => {
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
+                    data-testid="filterRange.poolNameValue"
                     sx={{
                       width: "100% !important",
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
@@ -216,12 +226,20 @@ const CustomFilterMultiRange: React.FC = () => {
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "poolSize"} onChange={handleChange("poolSize")}>
+              <AccordionContainer
+                data-testid="filterRange.poolSize"
+                expanded={expanded === "poolSize"}
+                onChange={handleChange("poolSize")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={PoolSizesIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="filterRange.poolSizeTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.poolSize")}
                       </Box>
                     </Box>
@@ -239,7 +257,7 @@ const CustomFilterMultiRange: React.FC = () => {
                     <Typography>{formatADA(dataRange?.minPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
-                      data-testid="slider"
+                      data-testid="filterRange.poolSizeValue"
                       getAriaLabel={() => "Minimum distance"}
                       defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
@@ -254,12 +272,16 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "poolPledge"} onChange={handleChange("poolPledge")}>
+              <AccordionContainer
+                data-testid="filterRange.pledge"
+                expanded={expanded === "poolPledge"}
+                onChange={handleChange("poolPledge")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={PoolPledgeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box data-testid="filterRange.pledgeTitle" ml={1} color={({ palette }) => palette.secondary.main}>
                         {t("pool.poolPledge")}
                       </Box>
                     </Box>
@@ -277,7 +299,7 @@ const CustomFilterMultiRange: React.FC = () => {
                     <Typography>{formatADA(dataRange?.minPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
-                      data-testid="slider"
+                      data-testid="filterRange.pledgeValue"
                       getAriaLabel={() => "Minimum distance"}
                       defaultValue={[filterParams.minPledge || 0, initParams.maxPledge || 0]}
                       value={[filterParams.minPledge || 0, filterParams.maxPledge ?? (initParams.maxPledge || 0)]}
@@ -292,12 +314,20 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "poolSaturation"} onChange={handleChange("poolSaturation")}>
+              <AccordionContainer
+                data-testid="filterRange.saturation"
+                expanded={expanded === "poolSaturation"}
+                onChange={handleChange("poolSaturation")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={PoolSaturationIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="filterRange.saturationTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.poolSaturation")}
                       </Box>
                     </Box>
@@ -315,7 +345,7 @@ const CustomFilterMultiRange: React.FC = () => {
                     <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
-                      data-testid="slider"
+                      data-testid="filterRange.saturationValue"
                       getAriaLabel={() => "Minimum distance"}
                       defaultValue={[filterParams.minSaturation || 0, initParams.maxSaturation || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minSaturation", "maxSaturation")}
@@ -333,12 +363,20 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer expanded={expanded === "poolLifetime"} onChange={handleChange("poolLifetime")}>
+              <AccordionContainer
+                data-testid="filterRange.blocksLifeTime"
+                expanded={expanded === "poolLifetime"}
+                onChange={handleChange("poolLifetime")}
+              >
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={PoolBlocksIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                      <Box
+                        data-testid="filterRange.blocksLifeTimeTitle"
+                        ml={1}
+                        color={({ palette }) => palette.secondary.main}
+                      >
                         {t("pool.poolLifetime")}
                       </Box>
                     </Box>
@@ -355,7 +393,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minLifetimeBlock || 0}</Typography>
                     <StyledSlider
-                      data-testid="slider"
+                      data-testid="filterRange.blocksLifeTimeValue"
                       getAriaLabel={() => "Minimum distance"}
                       defaultValue={[filterParams.minBlockLifetime || 0, initParams.maxBlockLifetime || 0]}
                       onChange={(e, newValue) =>
@@ -377,6 +415,7 @@ const CustomFilterMultiRange: React.FC = () => {
               {IS_CONWAY_ERA && (
                 <>
                   <AccordionContainer
+                    data-testid="filterRange.poolParticipation"
                     expanded={expanded === "poolParticipation"}
                     onChange={handleChange("poolParticipation")}
                   >
@@ -384,7 +423,11 @@ const CustomFilterMultiRange: React.FC = () => {
                       <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                         <Box display={"flex"} alignItems={"center"}>
                           <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary[800]} height={18} />
-                          <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                          <Box
+                            data-testid="filterRange.poolParticipationTitle"
+                            ml={1}
+                            color={({ palette }) => palette.secondary.main}
+                          >
                             {t("pool.poolParticipation")}
                           </Box>
                         </Box>
@@ -402,7 +445,7 @@ const CustomFilterMultiRange: React.FC = () => {
                         <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
                         <StyledSlider
                           valueLabelFormat={(value) => formatPercent(value)}
-                          data-testid="slider"
+                          data-testid="filterRange.poolParticipationValue"
                           getAriaLabel={() => "Minimum distance"}
                           defaultValue={[
                             filterParams.minGovParticipationRate || 0,
@@ -425,12 +468,20 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                     </AccordionDetailsFilter>
                   </AccordionContainer>
-                  <AccordionContainer expanded={expanded === "poolVoting"} onChange={handleChange("poolVoting")}>
+                  <AccordionContainer
+                    data-testid="filterRange.poolVoting"
+                    expanded={expanded === "poolVoting"}
+                    onChange={handleChange("poolVoting")}
+                  >
                     <AccordionSummary>
                       <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                         <Box display={"flex"} alignItems={"center"}>
                           <CustomIcon icon={PoolVotingIcon} fill={theme.palette.secondary.light} height={18} />
-                          <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                          <Box
+                            data-testid="filterRange.poolVotingTitle"
+                            ml={1}
+                            color={({ palette }) => palette.secondary.main}
+                          >
                             {t("pool.poolVoting")}
                           </Box>
                         </Box>
@@ -448,7 +499,7 @@ const CustomFilterMultiRange: React.FC = () => {
                         <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
                         <StyledSlider
                           valueLabelFormat={(value) => formatPercent(value)}
-                          data-testid="slider"
+                          data-testid="filterRange.poolVotingValue"
                           getAriaLabel={() => "Minimum distance"}
                           defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
                           onChange={(e, newValue) =>
@@ -473,7 +524,7 @@ const CustomFilterMultiRange: React.FC = () => {
 
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
-                  data-testid="apply-filters"
+                  data-testid="filterRange.applyFilters"
                   onClick={() => {
                     handleFilter();
                   }}
@@ -482,17 +533,22 @@ const CustomFilterMultiRange: React.FC = () => {
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
               </Box>
-              <Box
-                component={Button}
-                width={"100%"}
-                textTransform={"capitalize"}
-                display={"flex"}
-                alignItems={"center"}
-                color={({ palette }) => `${palette.primary.main} !important`}
-                onClick={handleReset}
-              >
-                <Box mr={1}>{t("common.reset")}</Box>
-                <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+              <Box p={theme.spacing(1, 2)} mb={theme.spacing(1)}>
+                <Box
+                  data-testid="filterRange.resetFilters"
+                  component={Button}
+                  width={"100%"}
+                  textTransform={"capitalize"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  color={({ palette }) => `${palette.primary.main} !important`}
+                  onClick={handleReset}
+                >
+                  <Box data-testid="filterRange.resetTitle" mr={1}>
+                    {t("common.reset")}
+                  </Box>
+                  <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
+                </Box>
               </Box>
             </Box>
           </FilterContainer>

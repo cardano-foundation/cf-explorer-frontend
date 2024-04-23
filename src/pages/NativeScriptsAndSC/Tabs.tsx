@@ -77,6 +77,7 @@ const Tabs = () => {
             onChange={handleChangeTab(key)}
           >
             <StyledAccordionSummary
+              data-testid={`nativeScript.${key}`}
               active={+(tabActive === key)}
               expandIcon={
                 <IoIosArrowDown
