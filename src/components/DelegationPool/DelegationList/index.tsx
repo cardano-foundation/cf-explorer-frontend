@@ -14,7 +14,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import CustomFilterMultiRange from "src/components/commons/CustomFilterMultiRange";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
-import { IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { CONWAY_ERE_FEILD, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
@@ -218,7 +218,7 @@ const DelegationLists: React.FC = () => {
         {...fetchData}
         data-testid="delegationList.table"
         columns={columns.filter((col) => {
-          if ((col.key === "governanceParticipationRate" || col.key === "votingPower") && !IS_CONWAY_ERA) {
+          if (CONWAY_ERE_FEILD.includes(col.key) && !FF_GLOBAL_IS_CONWAY_ERA) {
             return false;
           }
           return true;

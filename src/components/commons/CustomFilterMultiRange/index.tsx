@@ -21,7 +21,7 @@ import { API } from "src/commons/utils/api";
 import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
-import { IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
@@ -412,7 +412,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              {IS_CONWAY_ERA && (
+              {FF_GLOBAL_IS_CONWAY_ERA && (
                 <>
                   <AccordionContainer
                     data-testid="filterRange.poolParticipation"

@@ -53,7 +53,7 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
@@ -272,7 +272,7 @@ const DrepDetail = () => {
     }
   ];
 
-  if (!IS_CONWAY_ERA) {
+  if (!FF_GLOBAL_IS_CONWAY_ERA) {
     return <NotFound />;
   }
   if (loading) {

@@ -10,7 +10,7 @@ import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
-import { IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -179,10 +179,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
                     {children
-                      .filter((i) => {
-                        if (i.key === "head.page.drep" && !IS_CONWAY_ERA) return false;
-                        return true;
-                      })
+                      .filter((i) => !(i.key === "head.page.drep" && !FF_GLOBAL_IS_CONWAY_ERA))
                       .map((subItem, subIndex) => {
                         const { href, icon, isSpecialPath, key } = subItem;
                         const title = t(key || "");
