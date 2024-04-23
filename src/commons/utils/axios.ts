@@ -146,6 +146,7 @@ authAxios.interceptors.response.use(
     const originRequest = error.config;
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.ACCESS_TOKEN_EXPIRED ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
       !originRequest._retry &&
       localStorage.getItem("refreshToken")
