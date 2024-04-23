@@ -45,51 +45,66 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   const columns: Column<Registration>[] = [
     {
-      title: t("glossary.txHash"),
+      title: <Box data-testid="registrationPools.transactionHashTitle">{t("glossary.txHash")}</Box>,
       key: "bk.time",
       render: (pool) => {
         return (
           <>
             <CustomTooltip title={pool.txHash}>
-              <StyledLink to={details.transaction(pool.txHash)}>{getShortHash(pool.txHash || "")}</StyledLink>
+              <StyledLink data-testid="registrationPools.transactionHashValue" to={details.transaction(pool.txHash)}>
+                {getShortHash(pool.txHash || "")}
+              </StyledLink>
             </CustomTooltip>
           </>
         );
       }
     },
     {
-      title: t("glossary.createdAt"),
+      title: <Box data-testid="registrationPools.createdAtTitle">{t("glossary.createdAt")}</Box>,
       key: "created_at",
-      render: (pool) => <DatetimeTypeTooltip>{formatDateTimeLocal(pool.txTime || "")}</DatetimeTypeTooltip>
+      render: (pool) => (
+        <DatetimeTypeTooltip data-testid="registrationPools.createdAtValue">
+          {formatDateTimeLocal(pool.txTime || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
-      title: t("glossary.block"),
+      title: <Box data-testid="registrationPools.blockTitle">{t("glossary.block")}</Box>,
       key: "block",
       minWidth: "50px",
-      render: (pool) => <StyledLink to={details.block(pool.block)}>{pool.block}</StyledLink>
+      render: (pool) => (
+        <StyledLink data-testid="registrationPools.blockValue" to={details.block(pool.block)}>
+          {pool.block}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.epoch"),
+      title: <Box data-testid="registrationPools.epochTitle">{t("glossary.epoch")}</Box>,
       key: "epoch",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="registrationPools.epochValue" to={details.epoch(r.epoch)}>
+          {r.epoch}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <Box data-testid="registrationPools.epochSlot">{t("glossary.slot")}</Box>,
       key: "epochSlotNo",
       minWidth: "50px"
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <Box data-testid="registrationPools.absoluteSlotNo">{t("glossary.absoluteSlot")}</Box>,
       key: "slotNo",
       minWidth: "100px"
     },
     {
-      title: t("glossary.pool"),
+      title: <Box data-testid="registrationPools.poolTitle">{t("glossary.pool")}</Box>,
       key: "pool",
       maxWidth: 200,
       render: (pool) => (
         <StyledPoolLink
+          data-testid="registrationPools.poolValue"
           to={{ pathname: details.delegation(pool.poolView), state: { fromPath: history.location.pathname } }}
         >
           <CustomTooltip title={pool.poolName || pool.poolView || ""}>
@@ -104,45 +119,47 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     },
     {
       title: (
-        <Box component="span">
+        <Box data-testid="registrationPools.pledgeTitle" component="span">
           {t("glossary.pledge")} (<ADAicon />)
         </Box>
       ),
       key: poolType === POOL_TYPE.REGISTRATION ? "pledge" : "pu.pledge",
-      render: (pool) => <>{formatADAFull(pool.pledge)}</>,
+      render: (pool) => <Box data-testid="registrationPools.pledgeValue">{formatADAFull(pool.pledge)}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
       title: (
-        <Box component="span" sx={{ textWrap: "nowrap" }}>
+        <Box data-testid="registrationPools.fixedCostTitle" component="span" sx={{ textWrap: "nowrap" }}>
           {t("glossary.fixedCost")} (<ADAicon />)
         </Box>
       ),
       key: poolType === POOL_TYPE.REGISTRATION ? "fixedCost" : "pu.fixedCost",
-      render: (pool) => <>{formatADAFull(pool.cost)}</>,
+      render: (pool) => <Box data-testid="registrationPools.fixedCostValue">{formatADAFull(pool.cost)}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: t("glossary.margin"),
+      title: <Box data-testid="registrationPools.marginTitle">{t("glossary.margin")}</Box>,
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
-      render: (pool) => formatPercent(pool.margin),
+      render: (pool) => <Box data-testid="registrationPools.marginValue">{formatPercent(pool.margin)}</Box>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: t("glossary.stakeAddress"),
+      title: <Box data-testid="registrationPools.stakeAddressTitle">{t("glossary.stakeAddress")}</Box>,
       key: "stakeAddress",
       render: (pool) => (
         <>
           {pool.stakeKey?.slice(0, 2).map((stakeKey) => (
             <StakeKey key={stakeKey}>
               <CustomTooltip title={stakeKey}>
-                <StyledLink to={details.stake(stakeKey)}>{getShortHash(stakeKey)}</StyledLink>
+                <StyledLink data-testid="registrationPools.stakeAddressValue" to={details.stake(stakeKey)}>
+                  {getShortHash(stakeKey)}
+                </StyledLink>
               </CustomTooltip>
             </StakeKey>
           ))}
@@ -164,6 +181,7 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       </Card>
       <Box>
         <Table
+          data-testid="registrationPools.table"
           {...fetchData}
           columns={columns}
           total={{ title: "Total Transactions", count: fetchData.total }}

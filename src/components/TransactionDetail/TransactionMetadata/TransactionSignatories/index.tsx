@@ -20,7 +20,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       minWidth: "10px",
       maxWidth: "20px",
       render: (r) => {
-        return <div>{r.index}</div>;
+        return <div data-testid="transactionMetadata.transactionSignatories.index">{r.index}</div>;
       }
     },
     {
@@ -29,7 +29,7 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
       minWidth: "40px",
       render: (r) => {
         return (
-          <WrapperRowContent>
+          <WrapperRowContent data-testid="transactionMetadata.transactionSignatories.key">
             <WrapperSignerPublicKey>
               {r?.publicKey}{" "}
               {r?.delegateKey ? (
@@ -48,11 +48,17 @@ const TransactionSignatories: React.FC<IProps> = ({ data }) => {
 
   return (
     <Box>
-      <Box color={({ palette }) => palette.secondary.light} textAlign={"left"} mb={1}>
+      <Box
+        data-testid="transactionMetadata.transactionSignatories.des"
+        color={({ palette }) => palette.secondary.light}
+        textAlign={"left"}
+        mb={1}
+      >
         {t("trx.desSignatories")}
       </Box>
       <Wrapper>
         <TableProtocol
+          data-testid="transactionMetadata.transactionSignatories.table"
           height={(data || [])?.length > 5 ? 320 : 0}
           showPagination={false}
           columns={columns}

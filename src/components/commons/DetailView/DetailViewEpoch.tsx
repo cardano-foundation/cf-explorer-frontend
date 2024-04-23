@@ -102,7 +102,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <ViewDetailHeader>
             <ViewAllButton tooltipTitle={t("common.viewDetail")} to={details.epoch(epochNo)} />
             <CustomTooltip title={t("common.close")}>
-              <CloseButton onClick={handleClose}>
+              <CloseButton data-testid="epoch.detailViewEpoch.close" onClick={handleClose}>
                 <CgClose />
               </CloseButton>
             </CustomTooltip>
@@ -183,7 +183,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             <FormNowMessage time={lastUpdated} />
           </TimeDuration>
           <CustomTooltip title={t("common.close")}>
-            <CloseButton onClick={handleClose}>
+            <CloseButton data-testid="epoch.detailViewEpoch.close" onClick={handleClose}>
               <CgClose color={theme.palette.secondary.light} />
             </CloseButton>
           </CustomTooltip>
@@ -192,6 +192,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
           <ViewDetailScroll>
             <HeaderContainer pt={1}>
               <ProgressCircle
+                data-testid="epoch.detailViewEpoch.epochChart"
                 size={150}
                 pathLineCap="butt"
                 pathWidth={4}
@@ -199,8 +200,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 percent={progress}
                 trailOpacity={1}
               >
-                <EpochNumber>{epochNo}</EpochNumber>
-                <EpochText>{t("epoch")}</EpochText>
+                <EpochNumber data-testid="epoch.detailViewEpoch.epochValue">{epochNo}</EpochNumber>
+                <EpochText data-testid="epoch.detailViewEpoch.epochTitle">{t("epoch")}</EpochText>
               </ProgressCircle>
             </HeaderContainer>
             <ListItem>
@@ -210,8 +211,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                   height={30}
                   fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
                 />
-                <ItemName>{t("glossary.blocks")}</ItemName>
-                <ItemValue>
+                <ItemName data-testid="epoch.detailViewEpoch.totalBlocksTitle">{t("glossary.blocks")}</ItemName>
+                <ItemValue data-testid="epoch.detailViewEpoch.totalBlocksValue">
                   {currentEpoch?.no === epochNo ? currentEpoch?.blkCount || data.blkCount : data.blkCount}
                 </ItemValue>
               </Item>
@@ -221,8 +222,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                   height={30}
                   fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
                 />
-                <ItemName>{t("common.slot")}</ItemName>
-                <ItemValue>
+                <ItemName data-testid="epoch.detailViewEpoch.slotTitle">{t("common.slot")}</ItemName>
+                <ItemValue data-testid="epoch.detailViewEpoch.slotValue">
                   {slot}
                   <BlockDefault>/{MAX_SLOT_EPOCH}</BlockDefault>
                 </ItemValue>
@@ -230,32 +231,42 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             </ListItem>
             <Group>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.startTimestamp")}</DetailLabel>
+                <DetailLabel data-testid="epoch.detailViewEpoch.startTimeTitle">
+                  {t("glossary.startTimestamp")}
+                </DetailLabel>
                 <DatetimeTypeTooltip>
-                  <DetailValue>{formatDateTimeLocal(data.startTime || "")}</DetailValue>
+                  <DetailValue data-testid="epoch.detailViewEpoch.startTimeValue">
+                    {formatDateTimeLocal(data.startTime || "")}
+                  </DetailValue>
                 </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.endTimestamp")}</DetailLabel>
+                <DetailLabel data-testid="epoch.detailViewEpoch.endTimeTitle">{t("glossary.endTimestamp")}</DetailLabel>
                 <DatetimeTypeTooltip>
-                  <DetailValue>{formatDateTimeLocal(data.endTime || "")}</DetailValue>
+                  <DetailValue data-testid="epoch.detailViewEpoch.endTimeValue">
+                    {formatDateTimeLocal(data.endTime || "")}
+                  </DetailValue>
                 </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.blocks")}</DetailLabel>
-                <DetailValue>{data.blkCount}</DetailValue>
+                <DetailLabel data-testid="epoch.detailViewEpoch.blocksTitle">{t("glossary.blocks")}</DetailLabel>
+                <DetailValue data-testid="epoch.detailViewEpoch.blocksValue">{data.blkCount}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.uniqueAccounts")}</DetailLabel>
-                <DetailValue>{data.account}</DetailValue>
+                <DetailLabel data-testid="epoch.detailViewEpoch.uniqueAccountsTitle">
+                  {t("glossary.uniqueAccounts")}
+                </DetailLabel>
+                <DetailValue data-testid="epoch.detailViewEpoch.uniqueAccountsValue">{data.account}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("drawer.txCount")}</DetailLabel>
-                <DetailValue>{data.txCount}</DetailValue>
+                <DetailLabel data-testid="epoch.detailViewEpoch.txCountTitle">{t("drawer.txCount")}</DetailLabel>
+                <DetailValue data-testid="epoch.detailViewEpoch.txCountValue">{data.txCount}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.rewardsDistributed")}</DetailLabel>
-                <DetailValue>
+                <DetailLabel data-testid="epoch.detailViewEpoch.rewardsDistributedTitle">
+                  {t("glossary.rewardsDistributed")}
+                </DetailLabel>
+                <DetailValue data-testid="epoch.detailViewEpoch.rewardsDistributedValue">
                   {data?.rewardsDistributed ? (
                     <Box>
                       {formatADAFull(data?.rewardsDistributed)}&nbsp;
@@ -267,15 +278,17 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.totalOutput")}</DetailLabel>
-                <DetailValue>
+                <DetailLabel data-testid="epoch.detailViewEpoch.totalOutputTitle">
+                  {t("glossary.totalOutput")}
+                </DetailLabel>
+                <DetailValue data-testid="epoch.detailViewEpoch.totalOutputValue">
                   {formatADAFull(data.outSum)}
                   <ADAicon />
                 </DetailValue>
               </DetailsInfoItem>
             </Group>
             <Group>
-              <DetailLink to={details.epoch(epochNo)}>
+              <DetailLink data-testid="epoch.detailViewEpoch.blockLink" to={details.epoch(epochNo)}>
                 <DetailLabel style={{ fontSize: 18 }}>
                   <DetailLinkIcon>
                     <BlockIcon />
@@ -291,7 +304,7 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
             </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.epoch(epochNo)} />
+        <ViewMoreButton data-testid="epoch.detailViewEpoch.viewDetail" to={details.epoch(epochNo)} />
       </>
     );
   };

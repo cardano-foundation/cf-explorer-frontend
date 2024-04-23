@@ -73,49 +73,68 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const columns: Column<IStakeKey>[] = [
     {
-      title: t("glossary.txHash"),
+      title: <div data-testid="stake.txHashTitle">{t("glossary.txHash")}</div>,
       key: "txHash",
       minWidth: isMobile ? 245 : 80,
       render: (r) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+          <StyledLink data-testid="stake.txHashValue" to={details.transaction(r.txHash)}>
+            {getShortHash(r.txHash)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: t("glossary.createdAt"),
+      title: <div data-testid="stake.createdAtTitle">{t("glossary.createdAt")}</div>,
       key: "time",
-      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.txTime || "")}</DatetimeTypeTooltip>
+      render: (r) => (
+        <DatetimeTypeTooltip data-testid="stake.createdAtValue">
+          {formatDateTimeLocal(r.txTime || "")}
+        </DatetimeTypeTooltip>
+      )
     },
     {
-      title: t("glossary.block"),
+      title: <div data-testid="stake.blockTitle">{t("glossary.block")}</div>,
       key: "block",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.block(r.block)}>{r.block}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="stake.blockValue" to={details.block(r.block)}>
+          {r.block}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.epoch"),
+      title: <div data-testid="stake.epochTitle">{t("glossary.epoch")}</div>,
       key: "epoch",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epoch)}>{r.epoch}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="stake.epochValue" to={details.epoch(r.epoch)}>
+          {r.epoch}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <div data-testid="stake.epochSlotNoTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
-      minWidth: "50px"
+      minWidth: "50px",
+      render: (r) => <div data-testid="stake.epochSlotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <div data-testid="stake.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r) => <div data-testid="stake.slotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.stakeAddress"),
+      title: <div data-testid="stake.stakeAddressTitle">{t("glossary.stakeAddress")}</div>,
       key: "stakeAddress",
       render: (r) => (
         <>
           <CustomTooltip title={r.stakeKey}>
-            <StyledLink to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}>
+            <StyledLink
+              data-testid="stake.stakeAddressValue"
+              to={{ pathname: details.stake(r.stakeKey), state: { fromPath } }}
+            >
               {getShortHash(r.stakeKey)}
             </StyledLink>
           </CustomTooltip>
@@ -140,6 +159,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
             <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
           <Table
+            data-testid="stake.table"
             {...fetchData}
             columns={columns}
             total={{ title: "Total Token List", count: fetchData.total }}

@@ -42,11 +42,11 @@ const Epoch: React.FC = () => {
 
   const columns: Column<IDataEpoch>[] = [
     {
-      title: <Capitalize>{t("glossary.epoch")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.epochTitle">{t("glossary.epoch")}</Capitalize>,
       key: "epochNumber",
       minWidth: "50px",
       render: (r) => (
-        <EpochNumber>
+        <EpochNumber data-testid="epoch.epochValue">
           <StyledBox>{r.no || 0}</StyledBox>
           <StatusTableRow status={r.status as keyof typeof EPOCH_STATUS}>
             {EPOCH_STATUS_MAPPING[EPOCH_STATUS[r.status]]}
@@ -55,22 +55,22 @@ const Epoch: React.FC = () => {
       )
     },
     {
-      title: <Capitalize>{t("glossary.startTimestamp")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.startTimeTitle">{t("glossary.startTimestamp")}</Capitalize>,
       key: "startTime",
       minWidth: "100px",
       render: (r) => (
         <DatetimeTypeTooltip>
-          <BlueText>{formatDateTimeLocal(r.startTime || "")}</BlueText>
+          <BlueText data-testid="epoch.startTimeValue">{formatDateTimeLocal(r.startTime || "")}</BlueText>
         </DatetimeTypeTooltip>
       )
     },
     {
-      title: <Capitalize>{t("glossary.endTimestamp")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.startTimeTitle">{t("glossary.endTimestamp")}</Capitalize>,
       key: "endTime",
       minWidth: "100px",
       render: (r) => (
         <DatetimeTypeTooltip>
-          <BlueText>
+          <BlueText data-testid="epoch.startTimeValue">
             {formatDateTimeLocal(r.endTime || "")}
             {selected === r.no && <SelectedIcon />}
           </BlueText>
@@ -78,32 +78,32 @@ const Epoch: React.FC = () => {
       )
     },
     {
-      title: <Capitalize>{t("filter.blocks")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.blocksTitle">{t("filter.blocks")}</Capitalize>,
       key: "blkCount",
       minWidth: "100px",
-      render: (r) => <Blocks>{r.blkCount}</Blocks>,
+      render: (r) => <Blocks data-testid="epoch.blocksValue">{r.blkCount}</Blocks>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: <Capitalize>{t("glossary.uniqueAccounts")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.uniqueAccountsTitle">{t("glossary.uniqueAccounts")}</Capitalize>,
       key: "account",
       minWidth: "100px",
-      render: (r) => <Blocks>{r.account}</Blocks>
+      render: (r) => <Blocks data-testid="epoch.uniqueAccountsValue">{r.account}</Blocks>
     },
     {
-      title: <Capitalize>{t("glossary.transactionCount")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.transactionCountTitle">{t("glossary.transactionCount")}</Capitalize>,
       key: "transactionCount",
       minWidth: "100px",
-      render: (r) => <Blocks>{r.txCount}</Blocks>
+      render: (r) => <Blocks data-testid="epoch.uniqueAccountsValue">{r.txCount}</Blocks>
     },
     {
-      title: <Capitalize>{t("glossary.rewardsDistributed")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.rewardsDistributedTitle">{t("glossary.rewardsDistributed")}</Capitalize>,
       key: "rDistributed",
       minWidth: "100px",
       render: (r) => (
-        <>
+        <div data-testid="epoch.rewardsDistributedValue">
           {r.rewardsDistributed ? (
             <Output>
               {formatADAFull(r.rewardsDistributed)}
@@ -112,15 +112,15 @@ const Epoch: React.FC = () => {
           ) : (
             t("common.N/A")
           )}
-        </>
+        </div>
       )
     },
     {
-      title: <Capitalize>{t("glossary.totalOutput")}</Capitalize>,
+      title: <Capitalize data-testid="epoch.totalOutputTitle">{t("glossary.totalOutput")}</Capitalize>,
       key: "outSum",
       minWidth: "100px",
       render: (r) => (
-        <Output>
+        <Output data-testid="epoch.totalOutputValue">
           {formatADAFull(r.outSum)}
           <ADAicon />
         </Output>
@@ -159,10 +159,11 @@ const Epoch: React.FC = () => {
 
   return (
     <StyledContainer>
-      <Card title={t("glossary.epochs")}>
+      <Card data-testid="epoch.epochsTitle" title={t("glossary.epochs")}>
         {latestEpoch && <FirstEpoch data={latestEpoch} onClick={openDetail} />}
         <Table
           {...fetchData}
+          data-testid="epoch.table"
           data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
           columns={columns}
           total={{ title: t("common.totalEpochs"), count: fetchData.total }}

@@ -31,12 +31,12 @@ const DrepsList: React.FC = () => {
 
   const columns: Column<Drep>[] = [
     {
-      title: t("dreps.id"),
+      title: <div data-testid="drepList.drepIdTitle">{t("dreps.id")}</div>,
       key: "id",
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.drepId ? r.drepId : undefined}>
-          <PoolName to={{ pathname: details.drep(r.drepId) }}>
+          <PoolName data-testid="drepList.drepIdValue" to={{ pathname: details.drep(r.drepId) }}>
             <Box component={"span"} textOverflow={"ellipsis"} whiteSpace={"nowrap"} overflow={"hidden"}>
               {`${getShortHash(r.drepId)}`}
             </Box>
@@ -45,12 +45,17 @@ const DrepsList: React.FC = () => {
       )
     },
     {
-      title: <Box component={"span"}>{t("dreps.anchorLink")}</Box>,
+      title: (
+        <Box data-testid="drepList.anchorLinkTitle" component={"span"}>
+          {t("dreps.anchorLink")}
+        </Box>
+      ),
       key: "anchorLink",
       minWidth: "100px",
       render: (r) => (
         <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
           <Box
+            data-testid="drepList.anchorLinkValue"
             component={Button}
             textTransform={"lowercase"}
             fontWeight={400}
@@ -70,12 +75,17 @@ const DrepsList: React.FC = () => {
       )
     },
     {
-      title: <Box component={"span"}>{t("dreps.anchorHash")}</Box>,
+      title: (
+        <Box data-testid="drepList.anchorHashTitle" component={"span"}>
+          {t("dreps.anchorHash")}
+        </Box>
+      ),
       key: "pu.anchorHash",
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.anchorHash ? r.anchorHash : undefined}>
           <Box
+            data-testid="drepList.anchorHashValue"
             component={"span"}
             display={"inline-block"}
             width={"150px"}
@@ -90,23 +100,25 @@ const DrepsList: React.FC = () => {
     },
     {
       title: (
-        <Box component={"span"}>
+        <Box data-testid="drepList.activeStakeTitle" component={"span"}>
           {t("glossary.activeStake")} (<ADAicon />)
         </Box>
       ),
       key: "pu.activeStake",
       minWidth: "120px",
       render: (r) => (
-        <Box component={"span"}>{r.activeVoteStake != null ? formatADAFull(r.activeVoteStake) : t("common.N/A")}</Box>
+        <Box data-testid="drepList.activeStakeValue" component={"span"}>
+          {r.activeVoteStake != null ? formatADAFull(r.activeVoteStake) : t("common.N/A")}
+        </Box>
       )
     },
     {
-      title: t("dreps.votingPower"),
+      title: <div data-testid="drepList.votingPowerTitle">{t("dreps.votingPower")}</div>,
       minWidth: "120px",
       key: "votingPower",
       render: (r) =>
         r.votingPower != null ? (
-          <Box component={"span"} mr={1}>
+          <Box data-testid="drepList.votingPowerValue" component={"span"} mr={1}>
             {formatPercent(r.votingPower / 100) || `0%`}
           </Box>
         ) : (
@@ -114,11 +126,15 @@ const DrepsList: React.FC = () => {
         )
     },
     {
-      title: t("common.status"),
+      title: <div data-testid="drepList.statusTitle">{t("common.status")}</div>,
       key: "status",
       minWidth: "120px",
       render: (r) => (
-        <StakeKeyStatus status={r.status} sx={{ width: 65, display: "inline-block", textAlign: "center" }}>
+        <StakeKeyStatus
+          data-testid="drepList.statusValue"
+          status={r.status}
+          sx={{ width: 65, display: "inline-block", textAlign: "center" }}
+        >
           {r.status === "ACTIVE"
             ? t("status.active")
             : r.status === "INACTIVE"
@@ -128,22 +144,26 @@ const DrepsList: React.FC = () => {
       )
     },
     {
-      title: t("dreps.registrationDate"),
+      title: <div data-testid="drepList.registrationDateTitle">{t("dreps.registrationDate")}</div>,
       minWidth: "100px",
       key: "registrationDate",
       render: (r) => (
         <DatetimeTypeTooltip>
-          <Box component={"span"}>{formatDateTimeLocal(r.createdAt)}</Box>
+          <Box data-testid="drepList.registrationDateValue" component={"span"}>
+            {formatDateTimeLocal(r.createdAt)}
+          </Box>
         </DatetimeTypeTooltip>
       )
     },
     {
-      title: t("dreps.lastUpdated"),
+      title: <div data-testid="drepList.lastUpdatedTitle">{t("dreps.lastUpdated")}</div>,
       key: "lastUpdated",
       minWidth: "120px",
       render: (r) => (
         <DatetimeTypeTooltip>
-          <Box component={"span"}>{formatDateTimeLocal(r.updatedAt)}</Box>
+          <Box data-testid="drepList.lastUpdatedValue" component={"span"}>
+            {formatDateTimeLocal(r.updatedAt)}
+          </Box>
         </DatetimeTypeTooltip>
       )
     }
@@ -152,6 +172,7 @@ const DrepsList: React.FC = () => {
     <>
       <Table
         {...fetchData}
+        data-testid="drepList.table"
         columns={columns}
         total={{ count: fetchData.total, title: "Total", isDataOverSize: fetchData.isDataOverSize }}
         onClickRow={(_, r: Drep) => history.push(details.drep(r.drepId))}

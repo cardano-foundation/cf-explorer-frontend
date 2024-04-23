@@ -144,6 +144,7 @@ interface StakeDelegations {
   stakeKeys: string[];
   time: string;
   txHash: string;
+  slotNo: number;
 }
 
 interface StakeDelegationItem extends Omit<StakeDelegations, "pools"> {
@@ -155,6 +156,7 @@ interface InstantRewards {
   epochNo: number;
   epochSlotNo: number;
   numberOfStakes: number;
+  slotNo: number;
   time: string;
   txHash: string;
   rewards: number;
