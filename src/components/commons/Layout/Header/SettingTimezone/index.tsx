@@ -104,7 +104,9 @@ const TimezoneCard = () => {
 
   useEffect(() => {
     if (selectedTimeZone.toLowerCase() !== "utc" && window.navigator.language !== timezoneSS) {
-      localStorage.setItem("userTimezone", window.navigator.language);
+      if (isLoggedIn) {
+        localStorage.setItem("userTimezone", window.navigator.language);
+      }
       setTimezoneLS(window.navigator.language);
     }
   }, [window.navigator.language]);
@@ -116,9 +118,8 @@ const TimezoneCard = () => {
       .then((res) => res.data)
       .then((data) => {
         if (data) {
-          setSelectedTimeZone(tz);
           localStorage.setItem("userTimezone", tz);
-          window.location.reload();
+          setSelectedTimeZone(tz);
         }
       })
       .finally(() => setLoading(false));

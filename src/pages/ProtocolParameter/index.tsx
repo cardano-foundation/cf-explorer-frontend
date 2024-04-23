@@ -152,6 +152,8 @@ const ProtocolParameter: React.FC = () => {
       render: (r) => {
         const k = r.name;
         const isModalType = k === "genDelegs";
+        const isTimeStamp = k === "timestamp";
+
         return (
           <Box
             component={isModalType ? Button : Box}
@@ -172,7 +174,11 @@ const ProtocolParameter: React.FC = () => {
               textOverflow={"ellipsis"}
               color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
             >
-              {getShortValue(r.value?.toString())}
+              {isTimeStamp ? (
+                <DatetimeTypeTooltip>{formatDateTimeLocal(r.value || "")}</DatetimeTypeTooltip>
+              ) : (
+                getShortValue(r.value?.toString())
+              )}
             </Box>
           </Box>
         );

@@ -10,6 +10,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
@@ -33,7 +34,7 @@ const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddres
       title: t("glossary.createdAt"),
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time || "")
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
     },
     {
       title: t("glossary.block"),

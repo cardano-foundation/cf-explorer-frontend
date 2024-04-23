@@ -60,7 +60,9 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     if (selectedTimeZone.toLowerCase() !== "utc") {
       sessionStorage.setItem("timezone", window.navigator.language);
-      localStorage.setItem("userTimezone", window.navigator.language);
+      if (isLoggedIn) {
+        localStorage.setItem("userTimezone", window.navigator.language);
+      }
     }
   }, [window.navigator.language]);
 
