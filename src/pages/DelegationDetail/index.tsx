@@ -2,7 +2,7 @@ import { Box, Container, useTheme } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import QueryString, { parse, stringify } from "qs";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown } from "react-icons/io";
 import { useSelector } from "react-redux";
@@ -83,10 +83,18 @@ const DelegationDetail: React.FC = () => {
     history.replace({ search: stringify(query) }, state);
   };
 
-  const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolId));
+  const fetchListPools = useFetchList<Delegators>(
+    API.DELEGATION.POOL_LIST,
+    { query: poolId, ...pageInfo },
+    false,
+    tab === "epochs" ? blockKey : undefined
+  );
+  const poolView = useMemo(() => fetchListPools.data[0]?.poolId, [fetchListPools]);
+
+  const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolView || poolId));
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<DelegationOverview>(
-    `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
+    `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolView || poolId}`,
     undefined,
     false,
     blockKey
@@ -94,14 +102,14 @@ const DelegationDetail: React.FC = () => {
 
   const fetchDataEpochs = useFetchList<DelegationEpoch>(
     API.DELEGATION.POOL_DETAIL("epochs"),
-    { poolView: poolId, ...pageInfo },
+    { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "epochs" ? blockKey : undefined
   );
 
   const fetchDataDelegators = useFetchList<StakingDelegators>(
     API.DELEGATION.POOL_DETAIL("delegators"),
-    { poolView: poolId, ...pageInfo },
+    { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "delegators" ? blockKey : undefined
   );
@@ -232,9 +240,9 @@ const DelegationDetail: React.FC = () => {
 
   return (
     <Container>
-      <DelegationDetailInfo data={data} loading={loading} poolId={poolId} lastUpdated={lastUpdated} />
-      <DelegationDetailOverview data={data} loading={loading} />
-      <DelegationDetailChart poolId={poolId} />
+      <DelegationDetailInfo data={data} loading={loading || !poolView} poolId={poolId} lastUpdated={lastUpdated} />
+      <DelegationDetailOverview data={data} loading={loading || !poolView} />
+      <DelegationDetailChart poolId={poolView || poolId} />
       <Box ref={tableRef} mt={"30px"}>
         {tabs.map(({ key, icon: Icon, label, component }, index) => (
           <StyledAccordion
