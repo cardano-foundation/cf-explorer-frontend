@@ -91,7 +91,7 @@ const DrepsOverview: React.FC = () => {
       </TimeDuration>
 
       <Grid container spacing={2}>
-        <Grid item xl={3} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
               <StyledCard.Title data-testid="drep.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
@@ -115,7 +115,7 @@ const DrepsOverview: React.FC = () => {
             <StyledImg src={theme.mode === "light" ? CurentEpochPool : CurentEpochPoolDark} alt="Clock" />
           </StyledCard.ClickAble>
         </Grid>
-        <Grid item xl={3} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <Box height={"100%"}>
             <Box
               bgcolor={(theme) => theme.palette.secondary[0]}
@@ -154,12 +154,10 @@ const DrepsOverview: React.FC = () => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xl={3} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <StyledCard.Container
             sx={{
               justifyContent: "space-between"
-              // [theme.breakpoints.between(1200, 1600)]: { flexWrap: "wrap" },
-              // [theme.breakpoints.down(325)]: { flexWrap: "wrap" }
             }}
           >
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
@@ -183,7 +181,7 @@ const DrepsOverview: React.FC = () => {
             </Box>
           </StyledCard.Container>
         </Grid>
-        <Grid item xl={3} md={6} sm={6} xs={12}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <StyledCard.Container>
             <StyledCard.Content>
               <StyledCard.Title data-testid="drep.totalDrepsTitle">{t("glossary.totalDreps")}</StyledCard.Title>
