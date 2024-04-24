@@ -142,7 +142,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       }
     },
     {
-      title: <Box data-testid="registrationPools.marginTitle">{t("glossary.margin")}</Box>,
+      title: (
+        <Box component={"span"} data-testid="registrationPools.marginTitle">
+          {t("glossary.margin")}
+        </Box>
+      ),
       key: poolType === POOL_TYPE.REGISTRATION ? "margin" : "pu.margin",
       render: (pool) => <Box data-testid="registrationPools.marginValue">{formatPercent(pool.margin)}</Box>,
       sort: ({ columnKey, sortValue }) => {
