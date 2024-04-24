@@ -91,7 +91,7 @@ const CustomFilterMultiRange: React.FC = () => {
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.voteSize || "") || 50,
       sort: (query?.sort || "").toString(),
-      ...(query?.query && { query: query?.query.toString() || "" }),
+      query: "",
       ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.minPoolSize && { minPoolSize: +(query?.minPoolSize || 0) }),
       ...(query?.minPledge && { minPledge: +(query?.minPledge || 0) }),
