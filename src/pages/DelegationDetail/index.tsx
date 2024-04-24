@@ -243,7 +243,6 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailInfo data={data} loading={loading || !poolView} poolId={poolId} lastUpdated={lastUpdated} />
       <DelegationDetailOverview data={data} loading={loading || !poolView} />
       <DelegationDetailChart poolId={poolView || poolId} />
-
       <Box ref={tableRef} mt={"30px"}>
         {tabs.map(({ key, icon: Icon, label, component }, index) => (
           <StyledAccordion
