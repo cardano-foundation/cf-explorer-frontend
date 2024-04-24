@@ -120,6 +120,17 @@ export const SystemLoader = () => {
     const connect = () => {
       if (!WS_URL) return;
       socket.current = new WebSocket(WS_URL);
+      function keepAlive() {
+        const timeout = 20000;
+        if (socket.current?.readyState == socket.current?.OPEN) {
+          socket.current?.send("ping");
+        }
+        setTimeout(keepAlive, timeout);
+      }
+
+      socket.current.onopen = () => {
+        keepAlive();
+      };
 
       socket.current.onmessage = (event) => {
         try {
