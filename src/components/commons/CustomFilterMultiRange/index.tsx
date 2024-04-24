@@ -22,6 +22,7 @@ import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/common
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { AntSwitch } from "src/components/DelegationPool/DelegationList/styles";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
@@ -62,6 +63,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
+  const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
 
@@ -193,6 +195,32 @@ const CustomFilterMultiRange: React.FC = () => {
         </Box>
         {open && (
           <FilterContainer>
+            <AccordionContainer data-testid="filterRange.retiredPools">
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box color={({ palette }) => palette.secondary.main} data-testid="delegationList.retiredPoolsTitle">
+                      {t("glassary.showRetiredPools")}
+                    </Box>
+                  </Box>
+
+                  <AntSwitch
+                    data-testid="poolList.retiredValue"
+                    checked={isShowRetired}
+                    onChange={(e) => {
+                      setIsRetired(e.target.checked);
+                      history.replace({
+                        search: stringify({
+                          ...pageInfo,
+                          page: 0,
+                          retired: e.target.checked
+                        })
+                      });
+                    }}
+                  />
+                </Box>
+              </AccordionSummary>
+            </AccordionContainer>
             <Box display={"flex"} flexDirection={"column"}>
               <AccordionContainer
                 data-testid="filterRange.poolName"

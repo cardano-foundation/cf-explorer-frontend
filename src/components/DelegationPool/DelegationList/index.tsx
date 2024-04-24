@@ -17,7 +17,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { CONWAY_ERE_FEILD, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
-import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
+import { PoolName, TopSearchContainer } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
@@ -25,7 +25,6 @@ const DelegationLists: React.FC = () => {
   const { tickerNameSearch = "" } = history.location.state || {};
   const [search, setSearch] = useState(decodeURIComponent(tickerNameSearch));
   const { pageInfo, setSort } = usePageInfo();
-  const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
 
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
@@ -46,8 +45,8 @@ const DelegationLists: React.FC = () => {
   const fetchData = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
     {
-      isShowRetired: isShowRetired,
-      ...newPageInfo
+      ...newPageInfo,
+      isShowRetired: newPageInfo.retired
     },
     false,
     blockKey
@@ -229,17 +228,6 @@ const DelegationLists: React.FC = () => {
     <>
       <TopSearchContainer sx={{ justifyContent: "end" }}>
         <Box display="flex" gap="10px">
-          <ShowRetiredPools>
-            <Box data-testid="delegationList.retiredPoolsTitle">{t("glassary.showRetiredPools")}</Box>
-            <AntSwitch
-              data-testid="poolList.retiredValue"
-              checked={isShowRetired}
-              onChange={(e) => {
-                setIsRetired(e.target.checked);
-                history.replace({ search: stringify({ ...pageInfo, page: 0, retired: e.target.checked }) });
-              }}
-            />
-          </ShowRetiredPools>
           <CustomFilterMultiRange />
         </Box>
       </TopSearchContainer>
