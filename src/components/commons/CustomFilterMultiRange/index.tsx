@@ -48,6 +48,8 @@ interface PoolResponse {
   maxGovParticipationRate?: number;
 }
 
+const defaultParams = { page: 0, size: 50, sort: "" };
+
 const CustomFilterMultiRange: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -106,7 +108,7 @@ const CustomFilterMultiRange: React.FC = () => {
     setExpanded(false);
     setOpen(false);
     setFilterParams({ ...initParams });
-    history.replace({ search: stringify({ page: 0, size: 50, sort: "" }), state: undefined });
+    history.replace({ search: stringify(defaultParams), state: undefined });
   };
 
   const handleFilter = () => {
@@ -528,7 +530,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   onClick={() => {
                     handleFilter();
                   }}
-                  disabled={!isDisableFilter}
+                  disabled={JSON.stringify(defaultParams) === JSON.stringify(filterParams) && !isDisableFilter}
                 >
                   {t("common.applyFilters")}
                 </ApplyFilterButton>
