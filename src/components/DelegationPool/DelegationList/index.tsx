@@ -134,7 +134,11 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: <div data-testid="poolList.saturationTitle">{t("glossary.saturation")}</div>,
+      title: (
+        <Box component={"span"} data-testid="poolList.saturationTitle">
+          {t("glossary.saturation")}
+        </Box>
+      ),
       minWidth: "120px",
       key: "saturation",
       render: (r) =>
@@ -150,7 +154,11 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: <div data-testid="poolList.blockInEpochTitle">{t("glossary.blocksInEpoch")}</div>,
+      title: (
+        <Box component={"span"} data-testid="poolList.blockInEpochTitle">
+          {t("glossary.blocksInEpoch")}
+        </Box>
+      ),
       key: "epochBlock",
       minWidth: "120px",
       render: (r) => (
@@ -163,7 +171,11 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: <div data-testid="poolList.blockLifetimeTitle">{t("glossary.blocksLifetime")}</div>,
+      title: (
+        <Box component={"span"} data-testid="poolList.blockLifetimeTitle">
+          {t("glossary.blocksLifetime")}
+        </Box>
+      ),
       minWidth: "100px",
       key: "lifetimeBlock",
       render: (r) => (
@@ -176,7 +188,11 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: <div data-testid="poolList.votingPowerTitle">{t("votingPower")}</div>,
+      title: (
+        <Box component={"span"} data-testid="poolList.votingPowerTitle">
+          {t("votingPower")}
+        </Box>
+      ),
       key: "votingPower",
       minWidth: "120px",
       render: (r) =>
@@ -192,7 +208,11 @@ const DelegationLists: React.FC = () => {
       }
     },
     {
-      title: <div data-testid="poolList.participationRateTitle">{t("governanceParticipationRate")}</div>,
+      title: (
+        <Box component={"span"} data-testid="poolList.participationRateTitle">
+          {t("governanceParticipationRate")}
+        </Box>
+      ),
       key: "governanceParticipationRate",
       minWidth: "120px",
       render: (r) => (
