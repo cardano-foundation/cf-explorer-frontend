@@ -50,14 +50,7 @@ export const StyledSlider = styled(Slider)`
   & .MuiSlider-valueLabel,
   .MuiSlider-valueLabelLabe,
   .MuiSlider-valueLabelOpen {
-    transform: translateY(160%) scale(1) !important;
-    background: ${(props) => props.theme.palette.secondary[600]} !important;
-    padding: 6px 8px;
-    font-weight: 400;
-    bottom: 4px;
-    &::before {
-      top: -8px !important;
-    }
+    display: none;
   }
 
   & .MuiSlider-thumb {
