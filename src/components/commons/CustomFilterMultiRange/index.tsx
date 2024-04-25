@@ -177,7 +177,25 @@ const CustomFilterMultiRange: React.FC = () => {
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
           value={minValue || 0}
-          onChange={({ target: { value } }) => setFilterParams({ ...filterParams, [keyOnChangeMin]: +value })}
+          onKeyDown={(event) => {
+            const key = event.key;
+
+            if (
+              !(
+                key === "ArrowLeft" ||
+                key === "ArrowRight" ||
+                key === "Backspace" ||
+                key === "Delete" ||
+                /^\d$/.test(key)
+              )
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onChange={({ target: { value } }) => {
+            const numericValue = value.replace(/[^0-9]/g, "");
+            setFilterParams({ ...filterParams, [keyOnChangeMin]: numericValue });
+          }}
           onKeyPress={handleKeyPress}
         />
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
@@ -188,8 +206,30 @@ const CustomFilterMultiRange: React.FC = () => {
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={maxValue || maxValueDefault}
-          onChange={({ target: { value } }) => setFilterParams({ ...filterParams, [keyOnChangeMax]: value })}
+          value={maxValue}
+          onKeyDown={(event) => {
+            const key = event.key;
+
+            if (
+              !(
+                key === "ArrowLeft" ||
+                key === "ArrowRight" ||
+                key === "Backspace" ||
+                key === "Delete" ||
+                /^\d$/.test(key)
+              )
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onChange={({ target: { value } }) => {
+            const numericValue = value.replace(/[^0-9]/g, "");
+            Number(numericValue) <= maxValueDefault &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMax]: Number(numericValue)
+              });
+          }}
           onKeyPress={handleKeyPress}
         />
       </Box>
@@ -343,7 +383,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                   {groupInputRange(
                     filterParams.minPoolSize || 0,
-                    filterParams.maxPoolSize || 0,
+                    filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0),
                     "minPoolSize",
                     "maxPoolSize",
                     initParams.maxPoolSize
@@ -392,7 +432,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                   {groupInputRange(
                     filterParams.minPledge || 0,
-                    filterParams.maxPledge || 0,
+                    filterParams.maxPledge ?? (initParams.maxPledge || 0),
                     "minPledge",
                     "maxPledge",
                     initParams.maxPledge
@@ -448,7 +488,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                   {groupInputRange(
                     filterParams.minSaturation || 0,
-                    filterParams.maxSaturation || 0,
+                    filterParams.maxSaturation ?? (initParams.maxSaturation || 0),
                     "minSaturation",
                     "maxSaturation",
                     initParams.maxSaturation
@@ -504,7 +544,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                   {groupInputRange(
                     filterParams.minBlockLifetime || 0,
-                    filterParams.maxBlockLifetime || 0,
+                    filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0),
                     "minBlockLifetime",
                     "maxBlockLifetime",
                     initParams.maxBlockLifetime
@@ -567,7 +607,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                       {groupInputRange(
                         filterParams.minGovParticipationRate || 0,
-                        filterParams.maxGovParticipationRate || 0,
+                        filterParams.maxGovParticipationRate ?? (initParams.maxGovParticipationRate || 0),
                         "minGovParticipationRate",
                         "maxGovParticipationRate",
                         initParams.maxGovParticipationRate
@@ -625,7 +665,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                       {groupInputRange(
                         filterParams.minVotingPower || 0,
-                        filterParams.maxVotingPower || 0,
+                        filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
                         "minVotingPower",
                         "maxVotingPower",
                         initParams.maxVotingPower
