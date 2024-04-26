@@ -17,7 +17,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import { CONWAY_ERE_FEILD, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
-import { AntSwitch, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
+import { AntSwitch, DelegationContainer, PoolName, ShowRetiredPools, TopSearchContainer } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
@@ -226,7 +226,7 @@ const DelegationLists: React.FC = () => {
     }
   ];
   return (
-    <>
+    <DelegationContainer>
       <TopSearchContainer sx={{ justifyContent: "end" }}>
         <Box display="flex" gap="10px">
           <ShowRetiredPools>
@@ -263,7 +263,7 @@ const DelegationLists: React.FC = () => {
           }
         }}
       />
-    </>
+    </DelegationContainer>
   );
 };
 
