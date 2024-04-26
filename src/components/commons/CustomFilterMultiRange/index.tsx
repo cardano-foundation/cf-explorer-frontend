@@ -178,15 +178,23 @@ const CustomFilterMultiRange: React.FC = () => {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
+                key === "." ||
                 /^\d$/.test(key)
               )
             ) {
               event.preventDefault();
             }
           }}
+          onBlur={() => {
+            maxValue < minValue &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMin]: maxValue
+              });
+          }}
           onChange={({ target: { value } }) => {
-            const numericValue = value.replace(/[^0-9]/g, "");
-            setFilterParams({ ...filterParams, [keyOnChangeMin]: numericValue });
+            const numericValue = value.replace(/[^0-9.]/g, "");
+            setFilterParams({ ...filterParams, [keyOnChangeMin]: +numericValue });
           }}
           onKeyPress={handleKeyPress}
         />
@@ -208,18 +216,26 @@ const CustomFilterMultiRange: React.FC = () => {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
+                key === "." ||
                 /^\d$/.test(key)
               )
             ) {
               event.preventDefault();
             }
           }}
+          onBlur={() => {
+            maxValue < minValue &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMax]: minValue
+              });
+          }}
           onChange={({ target: { value } }) => {
-            const numericValue = value.replace(/[^0-9]/g, "");
+            const numericValue = value.replace(/[^0-9.]/g, "");
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: Number(numericValue)
+                [keyOnChangeMax]: +numericValue
               });
           }}
           onKeyPress={handleKeyPress}
