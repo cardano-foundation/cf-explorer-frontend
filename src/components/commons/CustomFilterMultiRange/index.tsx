@@ -178,7 +178,10 @@ const CustomFilterMultiRange: React.FC = () => {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
-                key === "." ||
+                ((keyOnChangeMin === "minVotingPower" ||
+                  keyOnChangeMin === "minGovParticipationRate" ||
+                  keyOnChangeMin === "minSaturation") &&
+                  key === ".") ||
                 /^\d$/.test(key)
               )
             ) {
@@ -193,7 +196,8 @@ const CustomFilterMultiRange: React.FC = () => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value.replace(/[^0-9.]/g, "");
+            let numericValue = value.replace(/[^0-9.]/g, "");
+            numericValue = numericValue.replace(/^0+(?!$)/, "");
             setFilterParams({ ...filterParams, [keyOnChangeMin]: numericValue });
           }}
           onKeyPress={handleKeyPress}
@@ -216,7 +220,10 @@ const CustomFilterMultiRange: React.FC = () => {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
-                key === "." ||
+                ((keyOnChangeMin === "minVotingPower" ||
+                  keyOnChangeMin === "minGovParticipationRate" ||
+                  keyOnChangeMin === "minSaturation") &&
+                  key === ".") ||
                 /^\d$/.test(key)
               )
             ) {
@@ -231,7 +238,8 @@ const CustomFilterMultiRange: React.FC = () => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value.replace(/[^0-9.]/g, "");
+            let numericValue = value.replace(/[^0-9.]/g, "");
+            numericValue = numericValue.replace(/^0+(?!$)/, "");
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
