@@ -34,6 +34,8 @@ interface PoolResponse {
   query?: string;
   size?: number;
   sort?: string;
+  isShowRetired?: boolean;
+  retired?: boolean;
   minPoolSize?: number;
   maxPoolSize?: number;
   minPledge?: number;
@@ -64,7 +66,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
-  const [isShowRetired, setIsRetired] = useState(/^true$/i.test(pageInfo.retired));
+  const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
 
@@ -90,11 +92,14 @@ const CustomFilterMultiRange: React.FC = () => {
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
+    setIsRetired(query.retired === "true" ? true : false);
     setFilterParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.voteSize || "") || 50,
       sort: (query?.sort || "").toString(),
       query: "",
+
+      ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.minPoolSize && { minPoolSize: +(query?.minPoolSize || 0) }),
       ...(query?.minPledge && { minPledge: +(query?.minPledge || 0) }),
@@ -122,7 +127,14 @@ const CustomFilterMultiRange: React.FC = () => {
     setOpen(false);
     setFilterParams({ ...filterParams });
     history.replace({
-      search: stringify({ ...filterParams, size: pageInfo.size, sort: pageInfo.sort, page: 1 }),
+      search: stringify({
+        ...filterParams,
+        size: pageInfo.size,
+        sort: pageInfo.sort,
+        page: 1,
+        isShowRetired: isShowRetired,
+        retired: isShowRetired
+      }),
       state: undefined
     });
   };
@@ -335,13 +347,6 @@ const CustomFilterMultiRange: React.FC = () => {
                     checked={isShowRetired}
                     onChange={(e) => {
                       setIsRetired(e.target.checked);
-                      history.replace({
-                        search: stringify({
-                          ...pageInfo,
-                          page: 0,
-                          retired: e.target.checked
-                        })
-                      });
                     }}
                   />
                 </Box>
