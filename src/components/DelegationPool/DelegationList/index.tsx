@@ -39,7 +39,9 @@ const DelegationLists: React.FC = () => {
   }, [tickerNameSearch]);
 
   const newPageInfo = omitBy(
-    pageInfo,
+    {
+      ...pageInfo
+    },
     (value, key) => (isUndefined(value) && !isNumber(pageInfo[key])) || value === ""
   );
 

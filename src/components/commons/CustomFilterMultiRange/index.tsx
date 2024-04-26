@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify, parse } from "qs";
+import BigNumber from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -24,7 +25,7 @@ import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
-import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
+import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
 import CustomIcon from "../CustomIcon";
 
 interface PoolResponse {
@@ -152,6 +153,135 @@ const CustomFilterMultiRange: React.FC = () => {
     [filterParams]
   );
 
+  const groupInputRange = (
+    minValue: number,
+    maxValue: number,
+    keyOnChangeMin: string,
+    keyOnChangeMax: string,
+    maxValueDefault: number
+  ) => {
+    return (
+      <Box display="flex" alignItems="center" gap="30px">
+        <Box
+          component={Input}
+          type="number"
+          data-testid={`filterRange.${keyOnChangeMin}`}
+          sx={{
+            fontSize: "14px",
+            width: "100% !important",
+            color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+          }}
+          value={Number(minValue || 0).toString()}
+          onKeyDown={(event) => {
+            const key = event.key;
+
+            if (
+              !(
+                key === "ArrowLeft" ||
+                key === "ArrowRight" ||
+                key === "Backspace" ||
+                key === "Delete" ||
+                ((keyOnChangeMin === "minVotingPower" ||
+                  keyOnChangeMin === "minGovParticipationRate" ||
+                  keyOnChangeMin === "minSaturation") &&
+                  key === ".") ||
+                /^\d$/.test(key)
+              )
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onBlur={() => {
+            maxValue < minValue &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMin]: maxValue
+              });
+          }}
+          onChange={({ target: { value } }) => {
+            let numericValue = value.replace(/[^0-9.]/g, "");
+            numericValue = numericValue.replace(/^0+(?!$)/, "");
+
+            setFilterParams({
+              ...filterParams,
+              [keyOnChangeMin]:
+                +numericValue > maxValue
+                  ? 0
+                  : ["minGovParticipationRate"].includes(keyOnChangeMin)
+                  ? +numericValue / 100
+                  : ["minPledge"].includes(keyOnChangeMin)
+                  ? +numericValue * 10 ** 6
+                  : ["minSaturation"].includes(keyOnChangeMin)
+                  ? parseFloat(numericValue).toFixed(2)
+                  : numericValue
+            });
+          }}
+          onKeyPress={handleKeyPress}
+        />
+        <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
+        <Box
+          component={Input}
+          type="number"
+          data-testid={`filterRange.${keyOnChangeMax}`}
+          sx={{
+            fontSize: "14px",
+            width: "100% !important",
+            color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+          }}
+          value={Number(maxValue).toString()}
+          onKeyDown={(event) => {
+            const key = event.key;
+
+            if (
+              !(
+                key === "ArrowLeft" ||
+                key === "ArrowRight" ||
+                key === "Backspace" ||
+                key === "Delete" ||
+                ((keyOnChangeMax === "maxVotingPower" ||
+                  keyOnChangeMax === "maxSaturation" ||
+                  keyOnChangeMax === "maxGovParticipationRate") &&
+                  key === ".") ||
+                /^\d$/.test(key)
+              )
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onBlur={() => {
+            maxValue < minValue &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMax]: minValue
+              });
+          }}
+          onChange={({ target: { value } }) => {
+            const numericValue = value
+              .replace(/[^0-9.]/g, "")
+              .replace(/^0+(?!$)/, "")
+              .replace(/^0+(?=\d)/, "");
+
+            Number(numericValue) <= maxValueDefault &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMax]:
+                  +numericValue > maxValueDefault
+                    ? maxValueDefault
+                    : ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                    ? +numericValue / 100
+                    : ["maxPledge"].includes(keyOnChangeMax)
+                    ? +numericValue * 10 ** 6
+                    : ["maxSaturation"].includes(keyOnChangeMax)
+                    ? parseFloat(numericValue).toFixed(2)
+                    : numericValue
+              });
+          }}
+          onKeyPress={handleKeyPress}
+        />
+      </Box>
+    );
+  };
+
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
       <FilterWrapper>
@@ -255,23 +385,29 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                     <Typography>{formatADA(dataRange?.minPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                     <StyledSlider
-                      valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                       data-testid="filterRange.poolSizeValue"
                       getAriaLabel={() => "Minimum distance"}
                       defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
                       onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
                       valueLabelDisplay="auto"
                       value={[filterParams.minPoolSize || 0, filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)]}
-                      disableSwap
                       min={dataRange?.minPoolSize || 0}
+                      disableSwap
                       step={1000000}
                       max={dataRange?.maxPoolSize || 0}
                     />
                     <Typography>{formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                   </Box>
+                  {groupInputRange(
+                    filterParams.minPoolSize || 0,
+                    filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0),
+                    "minPoolSize",
+                    "maxPoolSize",
+                    initParams.maxPoolSize
+                  )}
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer
@@ -297,7 +433,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                     <Typography>{formatADA(dataRange?.minPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
@@ -314,6 +450,23 @@ const CustomFilterMultiRange: React.FC = () => {
                     />
                     <Typography>{formatADA(dataRange?.maxPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                   </Box>
+                  {groupInputRange(
+                    BigNumber(filterParams.minPledge || 0)
+                      .div(10 ** 6)
+                      .toNumber(),
+                    filterParams.maxPledge
+                      ? BigNumber(filterParams.maxPledge)
+                          .div(10 ** 6)
+                          .toNumber()
+                      : BigNumber(initParams.maxPledge || 0)
+                          .div(10 ** 6)
+                          .toNumber(),
+                    "minPledge",
+                    "maxPledge",
+                    BigNumber(initParams.maxPledge || 0)
+                      .div(10 ** 6)
+                      .toNumber()
+                  )}
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer
@@ -343,7 +496,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                     <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
                     <StyledSlider
                       valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
@@ -363,6 +516,13 @@ const CustomFilterMultiRange: React.FC = () => {
 
                     <Typography>{formatPercent((dataRange?.maxSaturation || 0) / 100) || `0%`}</Typography>
                   </Box>
+                  {groupInputRange(
+                    filterParams.minSaturation || 0,
+                    filterParams.maxSaturation ?? (initParams.maxSaturation || 0),
+                    "minSaturation",
+                    "maxSaturation",
+                    initParams.maxSaturation
+                  )}
                 </AccordionDetailsFilter>
               </AccordionContainer>
               <AccordionContainer
@@ -392,7 +552,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                     <Typography>{dataRange?.minLifetimeBlock || 0}</Typography>
                     <StyledSlider
                       data-testid="filterRange.blocksLifeTimeValue"
@@ -412,6 +572,13 @@ const CustomFilterMultiRange: React.FC = () => {
                     />
                     <Typography>{dataRange?.maxLifetimeBlock || 0}</Typography>
                   </Box>
+                  {groupInputRange(
+                    filterParams.minBlockLifetime || 0,
+                    filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0),
+                    "minBlockLifetime",
+                    "maxBlockLifetime",
+                    initParams.maxBlockLifetime
+                  )}
                 </AccordionDetailsFilter>
               </AccordionContainer>
               {FF_GLOBAL_IS_CONWAY_ERA && (
@@ -443,22 +610,19 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                     </AccordionSummary>
                     <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                      <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                         <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
                         <StyledSlider
                           valueLabelFormat={(value) => formatPercent(value)}
                           data-testid="filterRange.poolParticipationValue"
                           getAriaLabel={() => "Minimum distance"}
-                          defaultValue={[
-                            filterParams.minGovParticipationRate || 0,
-                            initParams.maxGovParticipationRate || 0
-                          ]}
+                          defaultValue={[filterParams.minGovParticipationRate || 0, initParams.maxGovParticipationRate]}
                           onChange={(e, newValue) =>
                             handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
                           }
                           value={[
                             filterParams.minGovParticipationRate || 0,
-                            filterParams.maxGovParticipationRate ?? (initParams.maxGovParticipationRate || 0)
+                            filterParams.maxGovParticipationRate ?? initParams.maxGovParticipationRate
                           ]}
                           valueLabelDisplay="auto"
                           disableSwap
@@ -468,6 +632,15 @@ const CustomFilterMultiRange: React.FC = () => {
                         />
                         <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
                       </Box>
+                      {groupInputRange(
+                        +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
+                        filterParams.maxGovParticipationRate !== undefined
+                          ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
+                          : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
+                        "minGovParticipationRate",
+                        "maxGovParticipationRate",
+                        +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", "")
+                      )}
                     </AccordionDetailsFilter>
                   </AccordionContainer>
                   <AccordionContainer
@@ -497,7 +670,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                     </AccordionSummary>
                     <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box display="flex" alignItems="center" mb="30px" sx={{ gap: "14px" }}>
+                      <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                         <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
                         <StyledSlider
                           valueLabelFormat={(value) => formatPercent(value)}
@@ -519,6 +692,13 @@ const CustomFilterMultiRange: React.FC = () => {
                         />
                         <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
                       </Box>
+                      {groupInputRange(
+                        filterParams.minVotingPower || 0,
+                        filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
+                        "minVotingPower",
+                        "maxVotingPower",
+                        initParams.maxVotingPower
+                      )}
                     </AccordionDetailsFilter>
                   </AccordionContainer>
                 </>

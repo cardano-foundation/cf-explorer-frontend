@@ -8,6 +8,8 @@ import {
   AccordionDetails
 } from "@mui/material";
 
+import { StyledInput } from "../CustomFilter/styles";
+
 export const HashName = styled(Typography)(({ theme }) => ({
   paddingBottom: "15px",
   fontSize: "32px",
@@ -50,14 +52,7 @@ export const StyledSlider = styled(Slider)`
   & .MuiSlider-valueLabel,
   .MuiSlider-valueLabelLabe,
   .MuiSlider-valueLabelOpen {
-    transform: translateY(160%) scale(1) !important;
-    background: ${(props) => props.theme.palette.secondary[600]} !important;
-    padding: 6px 8px;
-    font-weight: 400;
-    bottom: 4px;
-    &::before {
-      top: -8px !important;
-    }
+    display: none;
   }
 
   & .MuiSlider-thumb {
@@ -120,5 +115,13 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
     width: "14px",
     height: "16px",
     transform: "rotate(45deg)"
+  }
+}));
+export const Input = styled(StyledInput)(() => ({
+  "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+    display: "none"
+  },
+  "& input[type=number]": {
+    MozAppearance: "textfield"
   }
 }));
