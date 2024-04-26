@@ -23,6 +23,7 @@ import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/common
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { AntSwitch } from "src/components/DelegationPool/DelegationList/styles";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
@@ -33,6 +34,8 @@ interface PoolResponse {
   query?: string;
   size?: number;
   sort?: string;
+  isShowRetired?: boolean;
+  retired?: boolean;
   minPoolSize?: number;
   maxPoolSize?: number;
   minPledge?: number;
@@ -63,6 +66,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
+  const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
   const initParams = {
@@ -86,6 +90,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
+    setIsRetired(query.retired === "true" || false);
     setFilterParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.voteSize || "") || 50,
@@ -117,7 +122,14 @@ const CustomFilterMultiRange: React.FC = () => {
     setOpen(false);
     setFilterParams({ ...filterParams });
     history.replace({
-      search: stringify({ ...filterParams, size: pageInfo.size, sort: pageInfo.sort, page: 1 }),
+      search: stringify({
+        ...filterParams,
+        size: pageInfo.size,
+        sort: pageInfo.sort,
+        page: 1,
+        isShowRetired: isShowRetired,
+        retired: isShowRetired
+      }),
       state: undefined
     });
   };
@@ -317,6 +329,25 @@ const CustomFilterMultiRange: React.FC = () => {
         </Box>
         {open && (
           <FilterContainer>
+            <AccordionContainer data-testid="filterRange.retiredPools">
+              <AccordionSummary>
+                <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                  <Box display={"flex"} alignItems={"center"}>
+                    <Box color={({ palette }) => palette.secondary.main} data-testid="delegationList.retiredPoolsTitle">
+                      {t("glassary.showRetiredPools")}
+                    </Box>
+                  </Box>
+
+                  <AntSwitch
+                    data-testid="poolList.retiredValue"
+                    checked={isShowRetired}
+                    onChange={(e) => {
+                      setIsRetired(e.target.checked);
+                    }}
+                  />
+                </Box>
+              </AccordionSummary>
+            </AccordionContainer>
             <Box display={"flex"} flexDirection={"column"}>
               <AccordionContainer
                 data-testid="filterRange.poolName"
