@@ -206,7 +206,15 @@ const CustomFilterMultiRange: React.FC = () => {
           onChange={({ target: { value } }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
-            setFilterParams({ ...filterParams, [keyOnChangeMin]: numericValue });
+            setFilterParams({
+              ...filterParams,
+              [keyOnChangeMin]:
+                +numericValue > maxValueDefault
+                  ? 0
+                  : ["minGovParticipationRate"].includes(keyOnChangeMin)
+                  ? +numericValue / 100
+                  : numericValue
+            });
           }}
           onKeyPress={handleKeyPress}
         />
@@ -251,7 +259,12 @@ const CustomFilterMultiRange: React.FC = () => {
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: numericValue
+                [keyOnChangeMax]:
+                  +numericValue > maxValueDefault
+                    ? maxValueDefault
+                    : ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                    ? +numericValue / 100
+                    : numericValue
               });
           }}
           onKeyPress={handleKeyPress}
@@ -610,16 +623,13 @@ const CustomFilterMultiRange: React.FC = () => {
                           valueLabelFormat={(value) => formatPercent(value)}
                           data-testid="filterRange.poolParticipationValue"
                           getAriaLabel={() => "Minimum distance"}
-                          defaultValue={[
-                            filterParams.minGovParticipationRate || 0,
-                            initParams.maxGovParticipationRate || 0
-                          ]}
+                          defaultValue={[filterParams.minGovParticipationRate || 0, initParams.maxGovParticipationRate]}
                           onChange={(e, newValue) =>
                             handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
                           }
                           value={[
                             filterParams.minGovParticipationRate || 0,
-                            filterParams.maxGovParticipationRate ?? (initParams.maxGovParticipationRate || 0)
+                            filterParams.maxGovParticipationRate ?? initParams.maxGovParticipationRate
                           ]}
                           valueLabelDisplay="auto"
                           disableSwap
@@ -630,11 +640,12 @@ const CustomFilterMultiRange: React.FC = () => {
                         <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
                       </Box>
                       {groupInputRange(
-                        filterParams.minGovParticipationRate || 0,
-                        filterParams.maxGovParticipationRate ?? (initParams.maxGovParticipationRate || 0),
+                        +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
+                        +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "") ??
+                          +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
                         "minGovParticipationRate",
                         "maxGovParticipationRate",
-                        initParams.maxGovParticipationRate
+                        +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", "")
                       )}
                     </AccordionDetailsFilter>
                   </AccordionContainer>
