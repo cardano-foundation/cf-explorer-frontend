@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify, parse } from "qs";
+import BigNumber from "bignumber.js";
 
 import useFetch from "src/commons/hooks/useFetch";
 import {
@@ -209,10 +210,12 @@ const CustomFilterMultiRange: React.FC = () => {
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
-                +numericValue > maxValueDefault
+                +numericValue > maxValue
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
                   ? +numericValue / 100
+                  : ["minPledge"].includes(keyOnChangeMin)
+                  ? +numericValue * 10 ** 6
                   : numericValue
             });
           }}
@@ -236,9 +239,9 @@ const CustomFilterMultiRange: React.FC = () => {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
-                ((keyOnChangeMin === "minVotingPower" ||
-                  keyOnChangeMin === "minGovParticipationRate" ||
-                  keyOnChangeMin === "minSaturation") &&
+                ((keyOnChangeMax === "maxVotingPower" ||
+                  keyOnChangeMax === "maxSaturation" ||
+                  keyOnChangeMax === "maxGovParticipationRate") &&
                   key === ".") ||
                 /^\d$/.test(key)
               )
@@ -264,6 +267,8 @@ const CustomFilterMultiRange: React.FC = () => {
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
                     ? +numericValue / 100
+                    : ["maxPledge"].includes(keyOnChangeMax)
+                    ? +numericValue * 10 ** 6
                     : numericValue
               });
           }}
@@ -468,11 +473,21 @@ const CustomFilterMultiRange: React.FC = () => {
                     <Typography>{formatADA(dataRange?.maxPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                   </Box>
                   {groupInputRange(
-                    filterParams.minPledge || 0,
-                    filterParams.maxPledge ?? (initParams.maxPledge || 0),
+                    BigNumber(filterParams.minPledge || 0)
+                      .div(10 ** 6)
+                      .toNumber(),
+                    filterParams.maxPledge
+                      ? BigNumber(filterParams.maxPledge)
+                          .div(10 ** 6)
+                          .toNumber()
+                      : BigNumber(initParams.maxPledge || 0)
+                          .div(10 ** 6)
+                          .toNumber(),
                     "minPledge",
                     "maxPledge",
-                    initParams.maxPledge
+                    BigNumber(initParams.maxPledge || 0)
+                      .div(10 ** 6)
+                      .toNumber()
                   )}
                 </AccordionDetailsFilter>
               </AccordionContainer>
@@ -641,8 +656,9 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                       {groupInputRange(
                         +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
-                        +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "") ??
-                          +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
+                        filterParams.maxGovParticipationRate
+                          ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
+                          : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
                         "minGovParticipationRate",
                         "maxGovParticipationRate",
                         +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", "")
