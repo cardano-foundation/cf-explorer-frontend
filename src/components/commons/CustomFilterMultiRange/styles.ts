@@ -78,12 +78,12 @@ export const FilterContainer = styled(Box)(({ theme }) => ({
   zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
-  right: 10,
+  right: 0,
   borderRadius: theme.spacing(1),
   boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
     width: 250,
-    right: -17,
+    right: 0,
     "& p": {
       fontSize: "13px"
     },

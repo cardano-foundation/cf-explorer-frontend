@@ -36,11 +36,14 @@ export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
     z-index: 9;
     position: absolute;
     top: -6px;
-    right: ${({ isMobile }) => (isMobile ? "40%" : "32px")};
+    right: ${({ isMobile }) => (isMobile ? "10%" : "32px")};
     width: 14px;
     height: 16px;
     transform: rotate(45deg);
     box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
+  }
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    right: 152%;
   }
 `;
 
