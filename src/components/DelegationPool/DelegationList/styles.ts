@@ -40,6 +40,11 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   }
 }));
 
+export const DelegationContainer = styled("div")(() => ({
+  "& .table-wrapper tbody": {
+    zIndex: 10
+  }
+}));
 export const StyledInput = styled("input")`
   border: none;
   width: 100%;
