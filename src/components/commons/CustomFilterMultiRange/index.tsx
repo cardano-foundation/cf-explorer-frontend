@@ -200,7 +200,7 @@ const CustomFilterMultiRange: React.FC = () => {
           }}
           onChange={({ target: { value } }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
-            numericValue = numericValue.replace(/^0+(?!$)/, "").replace(/^0+(?=\d)/, "");
+            numericValue = numericValue.replace(/^0+(?!$)/, "");
 
             setFilterParams({
               ...filterParams,
@@ -211,6 +211,8 @@ const CustomFilterMultiRange: React.FC = () => {
                   ? +numericValue / 100
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
+                  : ["minSaturation"].includes(keyOnChangeMin)
+                  ? parseFloat(numericValue).toFixed(2)
                   : numericValue
             });
           }}
@@ -269,6 +271,8 @@ const CustomFilterMultiRange: React.FC = () => {
                     ? +numericValue / 100
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
+                    : ["maxSaturation"].includes(keyOnChangeMax)
+                    ? parseFloat(numericValue).toFixed(2)
                     : numericValue
               });
           }}
