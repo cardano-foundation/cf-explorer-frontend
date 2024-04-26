@@ -25,7 +25,7 @@ import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
-import { AccordionContainer, AccordionDetailsFilter, FilterContainer, StyledSlider } from "./styles";
+import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
 import CustomIcon from "../CustomIcon";
 
 interface PoolResponse {
@@ -162,14 +162,16 @@ const CustomFilterMultiRange: React.FC = () => {
   ) => {
     return (
       <Box display="flex" alignItems="center" gap="30px">
-        <StyledInput
+        <Box
+          component={Input}
+          type="number"
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={minValue || 0}
+          value={Number(minValue || 0).toString()}
           onKeyDown={(event) => {
             const key = event.key;
 
@@ -198,7 +200,8 @@ const CustomFilterMultiRange: React.FC = () => {
           }}
           onChange={({ target: { value } }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
-            numericValue = numericValue.replace(/^0+(?!$)/, "");
+            numericValue = numericValue.replace(/^0+(?!$)/, "").replace(/^0+(?=\d)/, "");
+
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
@@ -214,14 +217,16 @@ const CustomFilterMultiRange: React.FC = () => {
           onKeyPress={handleKeyPress}
         />
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
-        <StyledInput
+        <Box
+          component={Input}
+          type="number"
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={maxValue}
+          value={Number(maxValue).toString()}
           onKeyDown={(event) => {
             const key = event.key;
 
@@ -249,8 +254,11 @@ const CustomFilterMultiRange: React.FC = () => {
               });
           }}
           onChange={({ target: { value } }) => {
-            let numericValue = value.replace(/[^0-9.]/g, "");
-            numericValue = numericValue.replace(/^0+(?!$)/, "");
+            const numericValue = value
+              .replace(/[^0-9.]/g, "")
+              .replace(/^0+(?!$)/, "")
+              .replace(/^0+(?=\d)/, "");
+
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
