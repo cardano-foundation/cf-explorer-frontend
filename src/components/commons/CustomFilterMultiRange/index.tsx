@@ -622,7 +622,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       </Box>
                       {groupInputRange(
                         +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
-                        filterParams.maxGovParticipationRate
+                        filterParams.maxGovParticipationRate !== undefined
                           ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
                           : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
                         "minGovParticipationRate",
