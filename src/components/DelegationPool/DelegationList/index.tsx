@@ -40,10 +40,7 @@ const DelegationLists: React.FC = () => {
 
   const newPageInfo = omitBy(
     {
-      ...pageInfo,
-
-      maxGovParticipationRate: pageInfo["maxGovParticipationRate"] ? +pageInfo["maxGovParticipationRate"] : undefined,
-      minGovParticipationRate: pageInfo["minGovParticipationRate"] ? +pageInfo["minGovParticipationRate"] : undefined
+      ...pageInfo
     },
     (value, key) => (isUndefined(value) && !isNumber(pageInfo[key])) || value === ""
   );
