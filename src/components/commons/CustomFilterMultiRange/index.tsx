@@ -202,7 +202,7 @@ const CustomFilterMultiRange: React.FC = () => {
           }}
           onChange={({ target: { value } }) => {
             const numericValue = value.replace(/[^0-9.]/g, "");
-            setFilterParams({ ...filterParams, [keyOnChangeMin]: +numericValue });
+            setFilterParams({ ...filterParams, [keyOnChangeMin]: numericValue });
           }}
           onKeyPress={handleKeyPress}
         />
@@ -243,7 +243,7 @@ const CustomFilterMultiRange: React.FC = () => {
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: +numericValue
+                [keyOnChangeMax]: numericValue
               });
           }}
           onKeyPress={handleKeyPress}
