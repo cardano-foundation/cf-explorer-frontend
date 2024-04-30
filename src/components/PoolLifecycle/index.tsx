@@ -16,6 +16,8 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { StyledBox } from "src/components/StakekeySummary/styles";
 import { IPoolReportList } from "src/types/report";
 
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
+
 export const EVENTS: { [key in keyof IPoolReportList]?: string } = {
   eventDeregistration: "deregistration",
   eventPoolUpdate: "pool_update",
@@ -79,7 +81,7 @@ const PoolLifecycle: React.FC<IPoolLifecycleProps> = ({ onSort, fetchData, pagin
       title: t("createdAt"),
       key: "id",
       render(data) {
-        return formatDateTimeLocal(data.createdAt);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.createdAt)}</DatetimeTypeTooltip>;
       },
       sort({ sortValue, columnKey }) {
         onSort?.(sortValue ? `${columnKey},${sortValue}` : "");

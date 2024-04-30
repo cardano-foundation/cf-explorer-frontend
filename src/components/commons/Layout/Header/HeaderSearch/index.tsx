@@ -286,9 +286,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       case "token":
         history.push(details.token(encodeURIComponent(data?.token?.fingerprint as string)));
         return;
-      case "pool":
-        history.push(details.delegation(data?.pool?.poolId));
-        return;
       case "tx":
         history.push(details.transaction(data?.tx as string));
         return;
@@ -300,6 +297,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           history.push(details.smartContract(data?.script?.scriptHash as string));
           return;
         }
+      case "pool":
+        history.push(details.delegation(data?.pool?.poolId));
+        return;
       default:
     }
   };
@@ -332,14 +332,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const params = Object.fromEntries(entries);
       const search: { query?: string; search?: string; retired?: boolean } = { ...params };
 
-      if (filter === "tokens") {
-        search.query = query.trim();
-      } else {
-        search.search = query.trim();
-      }
-      const url = `${
-        filter === "tokens" ? API.TOKEN.LIST : API.DELEGATION.POOL_LIST
-      }?page=0&size=${RESULT_SIZE}&${stringify(search)}`;
+      search.query = query.trim();
+
+      const url =
+        filter === "tokens"
+          ? `${API.TOKEN.LIST}?page=0&size=${RESULT_SIZE}&${stringify(search)}`
+          : `${API.DELEGATION.POOL_LIST}?${stringify(search)}`;
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
 
@@ -355,10 +353,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           callback?.();
         } else {
           if (res.data?.totalItems === 1) {
-            history.push(details.delegation((res?.data?.data[0] as DelegationPool)?.poolId));
+            history.push(details.delegation(search.query));
           } else {
-            history.push(routers.DELEGATION_POOLS, {
-              tickerNameSearch: (search.search || "").toLocaleLowerCase()
+            history.push(`${routers.DELEGATION_POOLS}?${stringify(search)}`, {
+              tickerNameSearch: (search.query || "").toLocaleLowerCase()
             });
           }
           callback?.();
@@ -552,6 +550,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
     }
     if (option?.value === "epochs") {
       history.push(details.epoch(search.trim()));
+      handleSetSearchValueDefault();
+      callback?.();
+      return;
+    }
+
+    if (option?.value === "txs") {
+      history.push(details.transaction(search.trim()));
       handleSetSearchValueDefault();
       callback?.();
       return;
@@ -840,7 +845,7 @@ export const OptionsSearch = ({
                     </Box>
                   ),
                   cb: () =>
-                    history.push(routers.DELEGATION_POOLS, {
+                    history.push(`${routers.DELEGATION_POOLS}?page=0&size=50&query=${value}`, {
                       tickerNameSearch: encodeURIComponent((value || "").trim().toLocaleLowerCase())
                     }),
                   formatter: getShortHash

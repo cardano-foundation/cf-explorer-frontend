@@ -36,6 +36,7 @@ import {
   Title,
   WrapButtonSelect
 } from "./styles";
+import SettingTimezone from "./SettingTimezone";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -103,9 +104,14 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 }}
               />
             </WrapButtonSelect>
+            <WrapButtonSelect>
+              <SettingTimezone />
+            </WrapButtonSelect>
+
             <NetworkContainer>
               <SelectNetwork />
             </NetworkContainer>
+
             <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
               <SearchButton onClick={handleOpenSearch} home={+home}>

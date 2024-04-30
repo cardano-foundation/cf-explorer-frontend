@@ -146,6 +146,7 @@ authAxios.interceptors.response.use(
     const originRequest = error.config;
     if (
       (error.response?.data?.errorCode === ACCOUNT_ERROR.INVALID_TOKEN ||
+        error.response?.data?.errorCode === ACCOUNT_ERROR.ACCESS_TOKEN_EXPIRED ||
         error.response?.data?.errorCode === ACCOUNT_ERROR.TOKEN_EXPIRED) &&
       !originRequest._retry &&
       localStorage.getItem("refreshToken")
@@ -157,7 +158,10 @@ authAxios.interceptors.response.use(
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data?.accessToken;
       return authAxios(originRequest);
     }
-    if (error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED) {
+    if (
+      error.response?.data?.errorCode === ACCOUNT_ERROR.REFRESH_TOKEN_EXPIRED ||
+      error.response?.data?.errorCode === ACCOUNT_ERROR.COMMON_ERROR_4
+    ) {
       removeAuthInfo();
       return error;
     }

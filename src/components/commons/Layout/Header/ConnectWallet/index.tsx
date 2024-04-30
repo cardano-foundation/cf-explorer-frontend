@@ -99,6 +99,7 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
         localStorage.setItem("refreshToken", data.refreshToken);
+        localStorage.setItem("userTimezone", data.timezone);
         localStorage.setItem("walletId", data.address);
         localStorage.setItem("email", data.email);
         localStorage.setItem("loginType", "connectWallet");

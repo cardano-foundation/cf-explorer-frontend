@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 import jwtDecode from "jwt-decode";
 import { isNil } from "lodash";
-import moment, { DurationInputArg1, DurationInputArg2 } from "moment";
+import moment, { DurationInputArg1, DurationInputArg2 } from "moment-timezone";
 import { parse } from "qs";
 import { AxisInterval } from "recharts/types/util/types";
 import { createDecipheriv, pbkdf2Sync } from "crypto";
@@ -68,7 +68,8 @@ export const numberWithCommas = (value?: number | string, decimal = 6) => {
 export const formatADA = (
   value?: string | number,
   abbreviations: string[] = LARGE_NUMBER_ABBREVIATIONS,
-  numOfUnits = 6
+  numOfUnits = 6,
+  decimalDigits = 6
 ): string => {
   if (!value) return `0${abbreviations[0]}`;
   const realAda = new BigNumber(value).div(10 ** 6);
@@ -86,7 +87,7 @@ export const formatADA = (
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
-  return numberWithCommas(realAda.toString(), 6);
+  return numberWithCommas(realAda.toString(), decimalDigits);
 };
 
 export const formatADAFull = (value?: string | number, limit = 6): string => {
@@ -162,6 +163,7 @@ export const removeAuthInfo = () => {
   localStorage.removeItem("walletId");
   localStorage.removeItem("email");
   localStorage.removeItem("loginType");
+  localStorage.removeItem("userTimezone");
   localStorage.removeItem("persist:user");
   localStorage.setItem("cf-wallet-connected", "false");
   localStorage.removeItem("cf-last-connected-wallet");
@@ -183,6 +185,7 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
     localStorage.setItem("refreshToken", data.refreshToken);
     localStorage.setItem("walletId", data.address);
     localStorage.setItem("email", data.email);
+    localStorage.setItem("userTimezone", data.timezone);
     localStorage.setItem("login-type", "normal");
 
     const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
@@ -193,15 +196,117 @@ export const handleSignIn = async (username: string, password: string, cbSuccess
   }
 };
 
-export const formatDateTime = (date: string) => {
-  return moment(date).format("MM/DD/YYYY HH:mm:ss");
-};
 export const formatDateTimeLocal = (date: string) => {
-  return moment(moment(`${date} GMT+0000`).local(true)).format("MM/DD/YYYY HH:mm:ss");
+  if (!date) return "";
+  if (!sessionStorage.getItem("timezone")) {
+    return moment(moment.utc(`${date}`)).toISOString();
+  }
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    hour: "2-digit",
+    minute: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    second: "2-digit",
+    hourCycle: "h23",
+    timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
+  });
+
+  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
 };
 
-export const formatDate = (date: string) => {
-  return moment(date).format("DD/MM/YYYY");
+export const formatDateLocal = (date: string) => {
+  if (!date) return "";
+
+  const timeZone = sessionStorage.getItem("timezone") ? sessionStorage.getItem("timezone")?.replace(/"/g, "") : "UTC";
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hourCycle: "h23",
+    timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
+  });
+
+  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
+};
+
+export const formatTypeDate = () => {
+  if (!sessionStorage.getItem("timezone")) {
+    return moment(moment("2023/08/03 21:44:51+0000").utc())
+      .toISOString()
+      .replace("2023", "YYYY")
+      .replace("08", "MM")
+      .replace("03", "DD")
+      .replace("21", "HH")
+      .replace("44", "mm")
+      .replace("51", "ss");
+  }
+
+  const zoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const zoneNameShort = moment.tz(zoneName).format("z");
+  const timezone = moment.tz(zoneName).format("Z");
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+  const timeZoneText =
+    timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
+  return `Date format ${dateFormat
+    .format(moment("2023/08/03") as never as Date)
+    .replace("2023", "YYYY")
+    .replace("08", "MM")
+    .replace("03", "DD")} ${timeZoneText}`;
+};
+
+export const formatTypeDateTime = () => {
+  if (!sessionStorage.getItem("timezone")) {
+    return moment(moment("2023/08/03 21:44:51+0000").utc())
+      .toISOString()
+      .replace("2023", "yyyy")
+      .replace("08", "MM")
+      .replace("03", "dd")
+      .replace("21", "HH")
+      .replace("44", "mm")
+      .replace("51", "ss");
+  }
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
+
+  const dateFormat = new Intl.DateTimeFormat(timeZone == "UTC" ? "en-US" : timeZone, {
+    hour: "2-digit",
+    minute: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    second: "2-digit",
+    hourCycle: "h23",
+    timeZone: "UTC"
+  });
+
+  return `${dateFormat
+    .format(moment("2023/08/03 09:44:51+0000").utc() as never as Date)
+    .replace("2023", "yyyy")
+    .replace("08", "MM")
+    .replace("03", "dd")}`
+    .replace("09", "HH")
+    .replace("44", "mm")
+    .replace("51", "ss");
 };
 
 export const getEpochSlotNo = (data: IDataEpoch) => {

@@ -65,7 +65,7 @@ const SummaryItems = ({
         <GridItem>
           <Icon src={theme.isDark ? SummaryWalletDark : WalletRoundedIcon} alt="wallet icon" />
           <Box ref={iconRef} display={"flex"} flexDirection={"column"} justifyContent={"center"} width={"100%"}>
-            <TitleText>{t("common.wallet")}</TitleText>
+            <TitleText data-testid="transactionMetadata.summary.walletTitle">{t("common.wallet")}</TitleText>
             <Box ref={walletAddressRef} display={"flex"} justifyContent="flex-start" alignItems={"center"}>
               <Box
                 display={"flex"}
@@ -79,6 +79,7 @@ const SummaryItems = ({
                   style={{ width: "100%" }}
                 >
                   <Box
+                    data-testid="transactionMetadata.summary.walletValue"
                     color={(theme) => theme.palette.primary.main}
                     fontWeight="bold"
                     fontFamily={"var(--font-family-text)"}
@@ -129,6 +130,7 @@ const SummaryItems = ({
           />
           <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
             <TitleText
+              data-testid="transactionMetadata.summary.adaTitle"
               style={
                 item.value === 0
                   ? {
@@ -147,7 +149,7 @@ const SummaryItems = ({
                 height: item.value ? `${height}px` : "0px"
               }}
             >
-              <ValueText>
+              <ValueText data-testid="transactionMetadata.summary.adaValue">
                 {item.value
                   ? type === "down"
                     ? `${formatADAFull(item.value).replace("-", "")}`
@@ -193,6 +195,7 @@ const SummaryItems = ({
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText
+                data-testid="transactionMetadata.summary.tokensSentTitle"
                 style={
                   tokensSent.length === 0
                     ? {
@@ -211,7 +214,7 @@ const SummaryItems = ({
                   height: tokensSent.length > 0 ? `${height}px` : "0px"
                 }}
               >
-                <ValueText alignSelf={"flex-start"}>
+                <ValueText data-testid="transactionMetadata.summary.tokensSentValue" alignSelf={"flex-start"}>
                   {tokensSent.length === 0
                     ? ""
                     : tokensSent.length === 1
@@ -292,6 +295,7 @@ const SummaryItems = ({
             />
             <Box display={"flex"} flexDirection={"column"} justifyContent={"center"}>
               <TitleText
+                data-testid="transactionMetadata.summary.tokensReceivedTitle"
                 style={
                   tokensReceived.length === 0
                     ? {
@@ -310,7 +314,7 @@ const SummaryItems = ({
                   height: tokensReceived.length > 0 ? `${height}px` : "0px"
                 }}
               >
-                <ValueText alignSelf={"flex-start"}>
+                <ValueText data-testid="transactionMetadata.summary.tokensReceivedValue" alignSelf={"flex-start"}>
                   {tokensReceived.length === 0
                     ? ""
                     : tokensReceived.length === 1

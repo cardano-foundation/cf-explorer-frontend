@@ -36,11 +36,15 @@ export const API = {
     POOL_DETAIL: (poolId: string) => `gov-actions/${poolId}/voting-procedure-detail`
   },
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
+  POOL_RANGE_VALUES: "pools/range-values-for-filter",
   DREP_CERTIFICATES_HISTORY: "dreps/:drepId/certificates-history",
   DREP_OVERVIEW: "dreps/:drepId/drep-details",
   DREP_OVERVIEW_CHART: "dreps/:drepId/vote-procedure-chart",
   DREP_DELEGATOR: "dreps/:drepId/get-delegation",
-
+  DREPS_LIST: {
+    DREPS_LIST: "dreps/filter",
+    DREPS_OVERVIEW: "dreps/overview"
+  },
   TOKEN: {
     LIST: "tokens",
     TOKEN_TRX: "tokens/:tokenId/txs",
@@ -154,5 +158,6 @@ export const API = {
 export const USER_API = {
   ACTIVITY_LOG: "user/activities-log",
   INFO: "user/info",
+  SET_TIMEZONE: "user/set-timezone",
   BOOKMARK: "bookmark/find-all-key"
 };

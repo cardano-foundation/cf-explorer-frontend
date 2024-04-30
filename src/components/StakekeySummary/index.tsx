@@ -1,5 +1,4 @@
 import { useState } from "react";
-import moment from "moment";
 import { useHistory } from "react-router-dom";
 import { Box, CircularProgress, IconButton, styled, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -9,13 +8,14 @@ import { API } from "src/commons/utils/api";
 import { defaultAxiosDownload } from "src/commons/utils/axios";
 import { details } from "src/commons/routers";
 import { DownloadGreenIcon } from "src/commons/resources";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateLocal, formatDateTimeLocal } from "src/commons/utils/helper";
 import { IReportStaking, IStakeKeySummary } from "src/types/report";
 
 import Table, { Column } from "../commons/Table";
 import CustomIcon from "../commons/CustomIcon";
 import CustomTooltip from "../commons/CustomTooltip";
 import { StyledBox } from "./styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 export const EVENTS: { [key in keyof IReportStaking]?: string } = {
   eventDelegation: "Delegation",
@@ -84,7 +84,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
         onSort?.(sortValue ? `${columnKey},${sortValue}` : "");
       },
       render(data) {
-        return formatDateTimeLocal(data.createdAt);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.createdAt)}</DatetimeTypeTooltip>;
       }
     },
     {
@@ -103,7 +103,7 @@ const StakekeySummary: React.FC<IStakekeySummaryProps> = ({ fetchData, onSort, p
       key: "date",
       title: t("common.dateRange"),
       render(data) {
-        return `${moment(data.fromDate).format("MM/DD/yyyy")} - ${moment(data.toDate).format("MM/DD/yyyy")}`;
+        return `${formatDateLocal(data.fromDate)} - ${formatDateLocal(data.toDate)}`;
       }
     },
     {

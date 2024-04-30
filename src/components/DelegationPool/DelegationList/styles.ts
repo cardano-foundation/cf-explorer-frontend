@@ -40,6 +40,11 @@ export const SearchContainer = styled("div")(({ theme }) => ({
   }
 }));
 
+export const DelegationContainer = styled("div")(() => ({
+  "& .table-wrapper tbody": {
+    zIndex: 10
+  }
+}));
 export const StyledInput = styled("input")`
   border: none;
   width: 100%;
@@ -70,11 +75,6 @@ export const TopSearchContainer = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
 `;
 
 export const ShowRetiredPools = styled(Box)`
@@ -85,6 +85,7 @@ export const ShowRetiredPools = styled(Box)`
   color: ${({ theme }) => theme.palette.secondary.light};
   gap: 12px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 10px;
     width: 100%;
     justify-content: flex-end;
   }

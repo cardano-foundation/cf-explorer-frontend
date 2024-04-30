@@ -12,6 +12,7 @@ import { Label, StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface TransactionListFullProps {
   underline?: boolean;
@@ -57,7 +58,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       title: t("createdAt"),
       key: "createdat",
       minWidth: 120,
-      render: (r) => <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
+      render: (r) => (
+        <DatetimeTypeTooltip>
+          <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       title: t("glossary.address"),

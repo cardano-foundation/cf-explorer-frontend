@@ -22,6 +22,7 @@ import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/comm
 import { Img, StyledLink } from "./styles";
 import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
 import { Capitalize } from "../commons/CustomText/styles";
+import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 
 interface AddressTransactionListProps {
   underline?: boolean;
@@ -62,7 +63,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: <Capitalize>{t("glossary.txhash")}</Capitalize>,
+      title: <Capitalize data-testid="addressTransactionList.trxhashTitle">{t("glossary.txhash")}</Capitalize>,
       key: "trxhash",
       minWidth: isMobile ? 190 : 120,
 
@@ -94,57 +95,75 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
               </Box>
             )}
             <CustomTooltip title={transaction.hash}>
-              <StyledLink to={details.transaction(transaction.hash)}>{getShortHash(transaction.hash)}</StyledLink>
+              <StyledLink data-testid="addressTransactionList.trxhashValue" to={details.transaction(transaction.hash)}>
+                {getShortHash(transaction.hash)}
+              </StyledLink>
             </CustomTooltip>
           </Box>
         );
       }
     },
     {
-      title: t("createdAt"),
+      title: <div data-testid="addressTransactionList.createdAtTitle">{t("createdAt")}</div>,
       key: "created_at",
       minWidth: 120,
       render: (transaction) => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatDateTimeLocal(transaction.time || "")}</Box>
+          <DatetimeTypeTooltip>
+            <Box data-testid="addressTransactionList.createdAtValue" mr={1}>
+              {formatDateTimeLocal(transaction.time || "")}
+            </Box>
+          </DatetimeTypeTooltip>
         </Box>
       )
     },
     {
-      title: t("glossary.block"),
+      title: <div data-testid="addressTransactionList.blockTitle">{t("glossary.block")}</div>,
       key: "block",
       minWidth: 50,
-      render: (transaction) => <StyledLink to={details.block(transaction.blockNo)}>{transaction.blockNo}</StyledLink>
+      render: (transaction) => (
+        <StyledLink data-testid="addressTransactionList.blockValue" to={details.block(transaction.blockNo)}>
+          {transaction.blockNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.epoch"),
+      title: <div data-testid="addressTransactionList.epochNoTitle">{t("glossary.epoch")}</div>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="addressTransactionList.epochNoValue" to={details.epoch(r.epochNo)}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <div data-testid="addressTransactionList.epochSlotNoTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
-      minWidth: "50px"
+      minWidth: "50px",
+      render: (r) => <div data-testid="addressTransactionList.epochSlotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <div data-testid="addressTransactionList.slotTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slot",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r) => <div data-testid="addressTransactionList.slotValue">{r.slot}</div>
     },
     {
-      title: t("common.fees"),
+      title: <div data-testid="addressTransactionList.feeTitle">{t("common.fees")}</div>,
       key: "fee",
       minWidth: 120,
       render: (transaction) => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(transaction.fee)}</Box>
+          <Box data-testid="addressTransactionList.feeValue" mr={1}>
+            {formatADAFull(transaction.fee)}
+          </Box>
           <ADAicon />
         </Box>
       )
     },
     {
-      title: t("glossary.adaAmount"),
+      title: <div data-testid="addressTransactionList.adaAmountTitle">{t("glossary.adaAmount")}</div>,
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -152,6 +171,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
         return (
           <Box display="inline-flex" alignItems="center">
             <Box
+              data-testid="addressTransactionList.adaAmountValue"
               mr={1}
               color={
                 isUp
@@ -170,7 +190,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       }
     },
     {
-      title: t("glossary.Token"),
+      title: <div data-testid="addressTransactionList.totalOutputTitle">{t("glossary.Token")}</div>,
       minWidth: 120,
       key: "totalOutput",
       render: (transaction) => {
@@ -184,7 +204,13 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
           }));
         }
         return (
-          <Box display={"flex"} alignItems={"center"} maxWidth={{ xs: "240px", md: "250px" }} flexWrap="wrap">
+          <Box
+            data-testid="addressTransactionList.totalOutputValue"
+            display={"flex"}
+            alignItems={"center"}
+            maxWidth={{ xs: "240px", md: "250px" }}
+            flexWrap="wrap"
+          >
             {transaction.tokens && transaction.tokens.length === 1 && <TokenLink isSuccess={true} token={tokens[0]} />}
             {transaction.tokens && transaction.tokens.length > 1 && (
               <DropdownTokens tokens={tokens} type={type} hideInputLabel isSuccess={true} />
@@ -199,6 +225,7 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     <Card title={<TextCardHighlight>{t("tab.transactions")}</TextCardHighlight>} underline={underline}>
       <Table
         {...fetchData}
+        data-testid="addressTransactionList.table"
         columns={columns}
         total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{

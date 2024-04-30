@@ -53,10 +53,12 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { useScreen } from "src/commons/hooks/useScreen";
-import { VOTE_TYPE } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
+import NotFound from "../NotFound";
 
 const voteOption = [
   { title: "Action Type", value: "Default" },
@@ -136,7 +138,11 @@ const DrepDetail = () => {
           {t("createdAt")}
         </TitleCard>
       ),
-      value: <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
+      value: (
+        <DatetimeTypeTooltip>
+          <ValueCard>{formatDateTimeLocal(data?.createdAt || "")}</ValueCard>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: ActiveVoteIcon,
@@ -265,6 +271,10 @@ const DrepDetail = () => {
       )
     }
   ];
+
+  if (!FF_GLOBAL_IS_CONWAY_ERA) {
+    return <NotFound />;
+  }
   if (loading) {
     return (
       <StyledContainer>

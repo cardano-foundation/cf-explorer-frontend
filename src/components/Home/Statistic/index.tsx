@@ -38,6 +38,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
 import useFetchIntervalFromCoinGecko from "src/commons/hooks/useFetchIntervalFromCoinGecko";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   AdaPrice,
@@ -266,9 +267,11 @@ const HomeStatistic = () => {
                   <Box color={({ palette }) => palette.secondary.light}>
                     {t("glossary.uniqueAccounts")}: {numberWithCommas(currentEpoch?.account)}
                   </Box>
-                  <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
-                    {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
-                  </Box>
+                  <DatetimeTypeTooltip>
+                    <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
+                      {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
+                    </Box>
+                  </DatetimeTypeTooltip>
                 </Box>
               </VerticalContent>
             </Item>

@@ -25,6 +25,7 @@ import DropdownDetail from "src/components/commons/DropdownDetail";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   BackButton,
@@ -75,7 +76,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <HeaderDetailContainer>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft color={theme.palette.secondary.light} />
-          <BackText>{t("common.back")}</BackText>
+          <BackText data-testid="poolDetail.back">{t("common.back")}</BackText>
         </BackButton>
         <HeaderContainer>
           <HeaderTitle>
@@ -118,7 +119,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
   return (
     <HeaderDetailContainer>
-      <BackButton onClick={history.goBack}>
+      <BackButton data-testid="poolDetail.back" onClick={history.goBack}>
         <HiArrowLongLeft color={theme.palette.secondary.light} />
         <BackText>{t("common.back")}</BackText>
       </BackButton>
@@ -160,8 +161,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </HeaderContainer>
       {width < 600 && <HeaderBookmark justifyStyle={"flex-end"} />}
       <PoolId>
-        <PoolIdLabel>{t("common.poolId")}: </PoolIdLabel>
-        <Link to={details.delegation(data?.poolView)}>
+        <PoolIdLabel data-testid="poolDetail.poolIdTitle">{t("common.poolId")}: </PoolIdLabel>
+        <Link data-testid="poolDetail.poolIdValue" to={details.delegation(data?.poolView)}>
           <PoolIdValue>
             <TruncateSubTitleContainer>
               <DynamicEllipsisText value={data?.poolView || ""} isCopy isTooltip />
@@ -171,8 +172,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       </PoolId>
       {data?.hashView && (
         <PoolId>
-          <PoolIdLabel>{t("common.poolhash")}: </PoolIdLabel>
-          <Link to={details.delegation(data?.hashView)}>
+          <PoolIdLabel data-testid="poolDetail.poolHashTitle">{t("common.poolhash")}: </PoolIdLabel>
+          <Link data-testid="poolDetail.poolHashValue" to={details.delegation(data?.hashView)}>
             <PoolIdValue>
               <TruncateSubTitleContainer>
                 <DynamicEllipsisText value={data?.hashView || ""} isCopy isTooltip />
@@ -183,16 +184,21 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       )}
       {data?.homepage && (
         <PoolId>
-          <PoolIdLabel>{t("common.poolHomepage")}: </PoolIdLabel>
-          <PoolHomepage href={data?.homepage} target="_blank" rel="noreferrer">
+          <PoolIdLabel data-testid="poolDetail.poolHomepageTitle">{t("common.poolHomepage")}: </PoolIdLabel>
+          <PoolHomepage
+            data-testid="poolDetail.poolHomepageValue"
+            href={data?.homepage}
+            target="_blank"
+            rel="noreferrer"
+          >
             {data?.homepage}
           </PoolHomepage>
         </PoolId>
       )}
       {data?.description && (
         <PoolDescriptionWrapper>
-          <PoolIdLabel>{t("common.poolDescription")}: </PoolIdLabel>
-          <PoolDescription>{data?.description}</PoolDescription>
+          <PoolIdLabel data-testid="poolDetail.poolDescriptionTitle">{t("common.poolDescription")}: </PoolIdLabel>
+          <PoolDescription data-testid="poolDetail.poolDescriptionValue">{data?.description}</PoolDescription>
         </PoolDescriptionWrapper>
       )}
       <TimeDuration>
@@ -203,22 +209,26 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3} top={1}>
             <CustomIcon fill={theme.palette.secondary.main} icon={TickerIconComponent} height={22} />
             <InfoTitle>
-              <StyledTitle>{t("common.ticker")}</StyledTitle>
+              <StyledTitle data-testid="poolDetail.tickerTitle">{t("common.ticker")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.tickerName || ""}</InfoValue>
+            <InfoValue data-testid="poolDetail.tickerValue">{data?.tickerName || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3} top={1}>
             <CustomIcon fill={theme.palette.secondary.main} height={22} icon={CalendarIconComponent} />
             <InfoTitle>
-              <StyledTitle>{t("createdAt")}</StyledTitle>
+              <StyledTitle data-testid="poolDetail.createdAtTitle">{t("createdAt")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.createDate && formatDateTimeLocal(data.createDate || "")}</InfoValue>
+            <DatetimeTypeTooltip>
+              <InfoValue data-testid="poolDetail.createdAtValue">
+                {data?.createDate && formatDateTimeLocal(data.createDate || "")}
+              </InfoValue>
+            </DatetimeTypeTooltip>
           </Item>
           <Item item xs={6} md={3} top={1} sx={{ position: "relative" }}>
             <CustomIcon fill={theme.palette.secondary.main} height={22} icon={RewardIconComponent} />
             <InfoTitle>
-              <StyledTitle>{t("rewardAccount")}</StyledTitle>
-              <InfoValue mt={"4px"}>
+              <StyledTitle data-testid="poolDetail.rewardAccountTitle">{t("rewardAccount")}</StyledTitle>
+              <InfoValue data-testid="poolDetail.rewardAccountValue" mt={"4px"}>
                 {data?.rewardAccounts ? (
                   <>
                     <Box
@@ -236,6 +246,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </InfoValue>
               {data?.rewardAccounts && data.rewardAccounts.length > 1 && (
                 <ButtonViewAll
+                  data-testid="poolDetail.viewAllRewardAccount"
                   sx={{ color: (theme) => theme.palette.common.black }}
                   onClick={() => {
                     setOpenReward(!isOpenReward);
@@ -249,6 +260,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenReward && (
               <DropdownDetail
+                data-testid="poolDetail.rewardAccountList"
                 title={t("glossary.rewardAccountList")}
                 value={data?.rewardAccounts || []}
                 close={() => setOpenReward(false)}
@@ -259,8 +271,8 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <CustomIcon fill={theme.palette.secondary.main} height={22} icon={UserIconComponent} />
             <InfoTitle>
               <Box width={"100%"}>
-                <StyledTitle>{t("ownerAccount")}</StyledTitle>{" "}
-                <InfoValue mt={"4px"}>
+                <StyledTitle data-testid="poolDetail.ownerAccountTitle">{t("ownerAccount")}</StyledTitle>{" "}
+                <InfoValue data-testid="poolDetail.ownerAccountValue" mt={"4px"}>
                   {data?.ownerAccounts ? (
                     <Box
                       component={Link}
@@ -277,6 +289,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               </Box>
               {data?.ownerAccounts && data.ownerAccounts.length > 1 && (
                 <ButtonViewAll
+                  data-testid="poolDetail.viewAllOwnerAccount"
                   sx={{
                     color: (theme) => theme.palette.secondary[0],
                     background: (theme) => theme.palette.primary.main,
@@ -294,6 +307,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
 
             {isOpenOwner && (
               <DropdownDetail
+                data-testid="poolDetail.ownerAddressList"
                 title={t("glossary.ownerAddressList")}
                 value={data?.ownerAccounts || []}
                 close={() => setOpenOwner(false)}
@@ -309,9 +323,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               style={{ marginTop: "5px" }}
             />
             <InfoTitle>
-              <StyledTitle>{t("glossary.poolSize")}</StyledTitle>
+              <StyledTitle data-testid="poolDetail.poolSizeTitle">{t("glossary.poolSize")}</StyledTitle>
             </InfoTitle>
-            <InfoValue sx={{ wordBreak: "break-word" }}>
+            <InfoValue data-testid="poolDetail.poolSizeValue" sx={{ wordBreak: "break-word" }}>
               <FlexGap10>
                 {data?.poolSize != null ? formatADAFull(data?.poolSize) : t("common.N/A")}
                 {data?.poolSize != null ? (
@@ -325,9 +339,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.main} height={24} icon={HighestIconComponent} />
             <InfoTitle>
-              <StyledTitle>{t("stakeLimit")}</StyledTitle>
+              <StyledTitle data-testid="poolDetail.stakeLimitTitle">{t("stakeLimit")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>
+            <InfoValue data-testid="poolDetail.stakeLimitValue">
               {data?.stakeLimit != null ? (
                 <FlexGap10>
                   {formatADAFull(data?.stakeLimit)}
@@ -343,9 +357,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
           <Item item xs={6} md={3}>
             <CustomIcon fill={theme.palette.secondary.main} height={22} icon={DelegatorIconComponent} />
             <InfoTitle>
-              <StyledTitle>{t("delegators")}</StyledTitle>
+              <StyledTitle data-testid="poolDetail.delegatorsTitle">{t("delegators")}</StyledTitle>
             </InfoTitle>
-            <InfoValue>{data?.delegators || ""}</InfoValue>
+            <InfoValue data-testid="poolDetail.delegatorsValue">{data?.delegators || ""}</InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>
@@ -363,6 +377,7 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                 gap={"4px"}
               >
                 <Box
+                  data-testid="poolDetail.saturationTitle"
                   component={"span"}
                   color={({ palette }) => palette.secondary.light}
                   style={{ fontSize: "14px", fontWeight: "400" }}
@@ -370,7 +385,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
                   {t("saturation")}
                 </Box>
                 {data?.saturation != null ? (
-                  <Box fontSize={16}>{formatPercent(data?.saturation ? data?.saturation / 100 : 0)}</Box>
+                  <Box data-testid="poolDetail.saturationValue" fontSize={16}>
+                    {formatPercent(data?.saturation ? data?.saturation / 100 : 0)}
+                  </Box>
                 ) : (
                   <FlexGap10> {t("common.N/A")}</FlexGap10>
                 )}

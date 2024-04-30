@@ -21,6 +21,7 @@ import RegistrationCertificateModal from "src/components/StakingLifeCycle/SPOLif
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { ReportGeneratedPoolDetailContext } from "..";
 
@@ -51,7 +52,7 @@ const PoolRegistrationTab = () => {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return formatDateTimeLocal(data.time);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.time)}</DatetimeTypeTooltip>;
       }
     },
     {

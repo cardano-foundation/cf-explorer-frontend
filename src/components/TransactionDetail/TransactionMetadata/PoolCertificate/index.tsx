@@ -34,14 +34,21 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
         ?.map((item, index) => {
           return (
             <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
-              <CardHeader>{t("title.poolDeregistrations")}</CardHeader>
+              <CardHeader data-testid="transactionMetadata.poolCertificate.poolDeregistrations">
+                {t("title.poolDeregistrations")}
+              </CardHeader>
               <WrapRightSide py={2}>
                 <Grid item xs={12} md={6}>
                   <Box display="flex" flexDirection="column" gap="15px">
                     <Box display="flex" alignItems="center">
-                      <TextLabel>{t("common.poolID")}: </TextLabel>
+                      <TextLabel data-testid="transactionMetadata.poolCertificate.poolIdTitle">
+                        {t("common.poolID")}:{" "}
+                      </TextLabel>
                       <TextValue>
-                        <Link to={details.delegation(item.poolId || "")}>
+                        <Link
+                          data-testid="transactionMetadata.poolCertificate.poolIdValue"
+                          to={details.delegation(item.poolId || "")}
+                        >
                           <EllipsisContainer>
                             <DynamicEllipsisText value={item.poolId} isTooltip isCopy customTruncateFold={[8, 8]} />
                           </EllipsisContainer>
@@ -49,9 +56,16 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                       </TextValue>
                     </Box>
                     <Box display="flex" alignItems="center">
-                      <TextLabel>{t("glossary.epoch")}: </TextLabel>
+                      <TextLabel data-testid="transactionMetadata.poolCertificate.epochTitle">
+                        {t("glossary.epoch")}:{" "}
+                      </TextLabel>
                       <TextValue>
-                        <Link to={details.epoch(item.epoch)}>{item.epoch}</Link>
+                        <Link
+                          data-testid="transactionMetadata.poolCertificate.epochValue"
+                          to={details.epoch(item.epoch)}
+                        >
+                          {item.epoch}
+                        </Link>
                       </TextValue>
                     </Box>
                   </Box>

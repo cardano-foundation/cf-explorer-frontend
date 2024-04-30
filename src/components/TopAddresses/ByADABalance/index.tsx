@@ -32,33 +32,35 @@ const TopAddressesByADABalance = () => {
 
   const columns: Column<Address>[] = [
     {
-      title: t("glossary.address"),
+      title: <div data-testid="topAddresses.byADABalance.addressTitle">{t("glossary.address")}</div>,
       key: "address",
       minWidth: 170,
       maxWidth: "35vw",
       render: (r) => (
-        <StyledLink to={details.address(r.address)}>
+        <StyledLink data-testid="topAddresses.byADABalance.addressValue" to={details.address(r.address)}>
           <DynamicEllipsisText value={r.address} isTooltip />
         </StyledLink>
       )
     },
     {
-      title: t("common.balance"),
+      title: <div data-testid="topAddresses.byADABalance.balanceTitle">{t("common.balance")}</div>,
       key: "balance",
       minWidth: 60,
       render: (r) => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.balance)}</Box>
+          <Box data-testid="topAddresses.byADABalance.balanceValue" mr={1}>
+            {formatADAFull(r.balance)}
+          </Box>
           <ADAicon />
         </Box>
       )
     },
     {
-      title: t("glossary.transactionCount"),
+      title: <div data-testid="topAddresses.byADABalance.transactionCountTitle">{t("glossary.transactionCount")}</div>,
       minWidth: 120,
       key: "transaction_count",
       render: (r) => (
-        <Box display="flex" alignItems="center">
+        <Box data-testid="topAddresses.byADABalance.transactionCountValue" display="flex" alignItems="center">
           {numberWithCommas(r.txCount) || 0}
         </Box>
       )
@@ -101,6 +103,7 @@ const TopAddressesByADABalance = () => {
         </PageSize>
       </Actions>
       <Table
+        data-testid="topAddresses.byADABalance.transactionCountTitle"
         data={data}
         error={error}
         loading={loading}

@@ -10,6 +10,7 @@ import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
+import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -177,51 +178,53 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
               {children?.length ? (
                 <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
                   <SubMenu disablePadding>
-                    {children.map((subItem, subIndex) => {
-                      const { href, icon, isSpecialPath, key } = subItem;
-                      const title = t(key || "");
-                      return href ? (
-                        <ListItem
-                          data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                          key={subIndex}
-                          button
-                          {...(isExternalLink(href)
-                            ? { component: "a", href, target: "_blank" }
-                            : { component: Link, to: href })}
-                          selected={isActiveMenu(href, isSpecialPath)}
-                          sx={(theme) => ({
-                            ...itemStyle(theme, sidebar),
-                            ...(isActiveMenu(href, isSpecialPath)
-                              ? {
-                                  backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
-                                  color: (theme) => `${theme.palette.secondary.main} !important`
-                                }
-                              : { color: (theme) => theme.palette.secondary.light }),
-                            paddingLeft: "70px",
-                            [theme.breakpoints.down("md")]: {
-                              paddingLeft: "60px"
-                            },
-                            ":hover": isActiveMenu(href, isSpecialPath)
-                              ? {
-                                  color: `#fff !important`
-                                }
-                              : {
-                                  backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
-                                }
-                          })}
-                        >
-                          {icon ? (
-                            <MenuIcon
-                              src={icon}
-                              alt={title}
-                              iconOnly={+!sidebar}
-                              active={+isActiveMenu(href, isSpecialPath)}
-                            />
-                          ) : null}
-                          <SubMenuText primary={title} open={+sidebar} active={+isActiveMenu(href, isSpecialPath)} />
-                        </ListItem>
-                      ) : null;
-                    })}
+                    {children
+                      .filter((i) => !(i.key === "head.page.drep" && !FF_GLOBAL_IS_CONWAY_ERA))
+                      .map((subItem, subIndex) => {
+                        const { href, icon, isSpecialPath, key } = subItem;
+                        const title = t(key || "");
+                        return href ? (
+                          <ListItem
+                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                            key={subIndex}
+                            button
+                            {...(isExternalLink(href)
+                              ? { component: "a", href, target: "_blank" }
+                              : { component: Link, to: href })}
+                            selected={isActiveMenu(href, isSpecialPath)}
+                            sx={(theme) => ({
+                              ...itemStyle(theme, sidebar),
+                              ...(isActiveMenu(href, isSpecialPath)
+                                ? {
+                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
+                                    color: (theme) => `${theme.palette.secondary.main} !important`
+                                  }
+                                : { color: (theme) => theme.palette.secondary.light }),
+                              paddingLeft: "70px",
+                              [theme.breakpoints.down("md")]: {
+                                paddingLeft: "60px"
+                              },
+                              ":hover": isActiveMenu(href, isSpecialPath)
+                                ? {
+                                    color: `#fff !important`
+                                  }
+                                : {
+                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
+                                  }
+                            })}
+                          >
+                            {icon ? (
+                              <MenuIcon
+                                src={icon}
+                                alt={title}
+                                iconOnly={+!sidebar}
+                                active={+isActiveMenu(href, isSpecialPath)}
+                              />
+                            ) : null}
+                            <SubMenuText primary={title} open={+sidebar} active={+isActiveMenu(href, isSpecialPath)} />
+                          </ListItem>
+                        ) : null;
+                      })}
                   </SubMenu>
                 </Collapse>
               ) : null}

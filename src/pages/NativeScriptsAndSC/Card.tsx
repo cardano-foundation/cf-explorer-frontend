@@ -47,14 +47,20 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.nativeScriptDetail(data.scriptHash)}>
         <Row>
-          <Title>{t("common.scriptHash")}: </Title>
-          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
+          <Title data-testid="nativeScripts.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
+          <Box
+            data-testid="nativeScripts.card.scriptHashValue"
+            width={"calc(100% - 100px)"}
+            color={`${theme.palette.primary.main} !important`}
+          >
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
         <Row>
-          <Title width={"100%"}>{t("nativeScript.policy")}: </Title>
-          <Value>
+          <Title data-testid="nativeScripts.card.policyTitle" width={"100%"}>
+            {t("nativeScript.policy")}:{" "}
+          </Title>
+          <Value data-testid="nativeScripts.card.policyValue">
             <Box mt={1} display={"flex"} flexWrap={"wrap"}>
               <TimeLockChip isOpen={data.isOpen} />
               <MultiSigChip isMultiSig={data.isMultiSig} />
@@ -62,13 +68,13 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           </Value>
         </Row>
         <Row>
-          <Title>{t("nativeScript.assetHolders")}: </Title>
-          <Value>{data.numberOfAssetHolders || 0}</Value>
+          <Title data-testid="nativeScripts.card.assetHoldersTitle">{t("nativeScript.assetHolders")}: </Title>
+          <Value data-testid="nativeScripts.card.assetHoldersValue">{data.numberOfAssetHolders || 0}</Value>
         </Row>
 
         <Row>
-          <Title>{t("nativeScript.tokens")}: </Title>
-          <Value>{data.numberOfTokens || 0}</Value>
+          <Title data-testid="nativeScripts.card.tokensTitle">{t("nativeScript.tokens")}: </Title>
+          <Value data-testid="nativeScripts.card.tokensValue">{data.numberOfTokens || 0}</Value>
         </Row>
         <Row>
           {data.tokens &&
@@ -129,6 +135,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
               fontSize={14}
               to={details.nativeScriptDetail(data.scriptHash, "token")}
               color={`${theme.palette.primary.main} !important`}
+              data-testid="nativeScripts.card.more"
             >
               {t("glossary.more")}
             </Box>
@@ -164,14 +171,18 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.smartContract(data.scriptHash)}>
         <Row>
-          <Title>{t("common.scriptHash")}: </Title>
-          <Box width={"calc(100% - 100px)"} color={`${theme.palette.primary.main} !important`}>
+          <Title data-testid="nativeScripts.smartContract.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
+          <Box
+            data-testid="nativeScripts.smartContract.card.scriptHashValue"
+            width={"calc(100% - 100px)"}
+            color={`${theme.palette.primary.main} !important`}
+          >
             <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
           </Box>
         </Row>
         <Row>
-          <Title>{t("Version")}: </Title>
-          <Value>
+          <Title data-testid="nativeScripts.smartContract.card.versionTitle">{t("Version")}: </Title>
+          <Value data-testid="nativeScripts.smartContract.card.versionValue">
             {data.scriptVersion ? version[data.scriptVersion] : ""}
             <Box
               component={Button}
@@ -192,16 +203,21 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
           </Value>
         </Row>
         <Row>
-          <Title>{t("smartContract.totalTrx")}: </Title>
-          <Value>{data.txCount || 0}</Value>
+          <Title data-testid="nativeScripts.smartContract.card.totalTrxTitle">{t("smartContract.totalTrx")}: </Title>
+          <Value data-testid="nativeScripts.smartContract.card.totalTrxValue">{data.txCount || 0}</Value>
         </Row>
         <Row>
-          <Title>{t("smartContract.trxPurpose")}: </Title>
+          <Title data-testid="nativeScripts.smartContract.card.purposeTitle">{t("smartContract.trxPurpose")}: </Title>
           {data.txPurposes && data.txPurposes.length > 0
             ? data.txPurposes.map((item, index) => {
                 return (
                   <Chip key={index}>
-                    <Box display={"flex"} alignItems={"center"} height={"100%"}>
+                    <Box
+                      data-testid="nativeScripts.smartContract.card.purposeValue"
+                      display={"flex"}
+                      alignItems={"center"}
+                      height={"100%"}
+                    >
                       {item}
                     </Box>
                   </Chip>

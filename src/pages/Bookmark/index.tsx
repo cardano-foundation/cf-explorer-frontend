@@ -1,6 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Dialog, DialogActions, DialogContentText, IconButton, useTheme } from "@mui/material";
-import moment from "moment";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory } from "react-router-dom";
@@ -13,11 +12,12 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import useToast from "src/commons/hooks/useToast";
 import { details, routers } from "src/commons/routers";
 import { NETWORK, NETWORK_TYPES } from "src/commons/utils/constants";
-import { formatBlockHashById, getShortHash } from "src/commons/utils/helper";
+import { formatBlockHashById, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import { deleteBookmark } from "src/commons/utils/userRequest";
 import { ButtonClose } from "src/components/ScriptModal/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { Column } from "src/types/table";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { CancelButton, DeleteButton, StyledTable, TitleTab, WrapTab } from "./Styles";
 
@@ -218,7 +218,7 @@ const Bookmark = () => {
       key: "Added On",
       minWidth: 120,
       render: (data) => {
-        return moment(data.createdDate).local().format("MM/DD/YYYY HH:mm:ss");
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.createdDate || "")}</DatetimeTypeTooltip>;
       }
     },
     {

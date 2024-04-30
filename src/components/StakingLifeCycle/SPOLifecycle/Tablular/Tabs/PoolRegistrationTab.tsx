@@ -17,6 +17,7 @@ import { AdaValue } from "src/components/commons/ADAValue";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomIcon from "src/components/commons/CustomIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { RegistrationCertificateModal } from "../../Registration/RegistrationCertificateModal";
 
@@ -49,7 +50,7 @@ const PoolRegistrationTab = () => {
         sortValue ? setSort(`bk.${columnKey},${sortValue}`) : setSort("");
       },
       render(data) {
-        return formatDateTimeLocal(data.time);
+        return <DatetimeTypeTooltip>{formatDateTimeLocal(data.time)}</DatetimeTypeTooltip>;
       }
     },
     {

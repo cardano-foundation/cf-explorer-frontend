@@ -7,11 +7,12 @@ import useFetch from "src/commons/hooks/useFetch";
 import { CalenderPaleIcon, SliderRight } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { CARDANO_NEWS_URL } from "src/commons/utils/constants";
-import { formatDateTime, getHostname } from "src/commons/utils/helper";
+import { formatDateTimeLocal, getHostname } from "src/commons/utils/helper";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import ViewAllButtonExternal from "src/components/commons/ViewAllButtonExternal";
 import breakpoints from "src/themes/breakpoints";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
   Author,
@@ -132,7 +133,7 @@ const LatestStories = () => {
                   <FooterCard>
                     <Time>
                       <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      {formatDateTime(date)}
+                      <DatetimeTypeTooltip>{formatDateTimeLocal(date)}</DatetimeTypeTooltip>
                     </Time>
                   </FooterCard>
                 </Detail>

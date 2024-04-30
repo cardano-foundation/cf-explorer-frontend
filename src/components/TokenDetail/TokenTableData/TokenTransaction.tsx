@@ -14,6 +14,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText, TimeDuration } from "./styles";
 
@@ -46,7 +47,9 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
             <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
           </CustomTooltip>
           <br />
-          <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+          <DatetimeTypeTooltip>
+            <SmallText>{formatDateTimeLocal(r.time || "")}</SmallText>
+          </DatetimeTypeTooltip>
         </>
       )
     },

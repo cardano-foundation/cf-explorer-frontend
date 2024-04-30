@@ -12,6 +12,7 @@ import { getPoolEventType } from "src/components/PoolLifecycle";
 import { getEventType } from "src/components/StakekeySummary";
 import CustomModal from "src/components/commons/CustomModal";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { formatTypeDate, formatTypeDateTime } from "src/commons/utils/helper";
 
 import { ReportType } from "./FilledInfoModal";
 import {
@@ -36,6 +37,11 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
   const theme = useTheme();
   const history = useHistory();
   const { isMobile } = useScreen();
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
   const handleGenerateReport = async () => {
     setLoading(true);
     try {
@@ -54,12 +60,18 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           isPoolSize: params?.poolSize === "YES",
           isFeesPaid: params?.feesPaid === "YES",
           event: params?.eventsKey,
-          epochRanges: params?.epochRange
+          epochRanges: params?.epochRange,
+          timePattern: formatTypeDateTime(),
+          zoneOffset: timeZone == "UTC" ? 0 : moment().utcOffset(),
+          dateFormat: formatTypeDate()
         };
         response = await generateStakePoolReport(paramsStakeKeyReport);
       } else {
         const events = params?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
+          timePattern: formatTypeDateTime(),
+          dateFormat: formatTypeDate(),
+          zoneOffset: timeZone == "UTC" ? 0 : moment().utcOffset(),
           stakeKey: params?.address,
           reportName: params?.reportName || defaultReportName,
           fromDate: moment(start).format("yyyy/MM/DD hh:mm:ss"),

@@ -15,6 +15,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 import FormNowMessage from "src/components/commons/FormNowMessage";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Actions, StyledContainer, StyledLink, TimeDuration } from "./styles";
 
@@ -34,53 +35,73 @@ const InstantReards = () => {
 
   const columns: Column<InstantRewards>[] = [
     {
-      title: t("glossary.txHash"),
+      title: <div data-testid="instaneousRewards.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: 120,
       key: "txHash",
       render: (r) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+          <StyledLink data-testid="instaneousRewards.txHashValue" to={details.transaction(r.txHash)}>
+            {getShortHash(r.txHash)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: t("glossary.createdAt"),
+      title: <div data-testid="instaneousRewards.createdAtTitle">{t("glossary.createdAt")}</div>,
       key: "createdat",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time)
+      render: (r) => (
+        <DatetimeTypeTooltip data-testid="instaneousRewards.createdAtValue">
+          {formatDateTimeLocal(r.time)}
+        </DatetimeTypeTooltip>
+      )
     },
     {
-      title: t("glossary.block"),
+      title: <div data-testid="instaneousRewards.blockNoTitle">{t("glossary.block")}</div>,
       key: "blockNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="instaneousRewards.blockNoValue" to={details.block(r.blockNo)}>
+          {r.blockNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.epoch"),
+      title: <div data-testid="instaneousRewards.epochNoTitle">{t("glossary.epoch")}</div>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r) => (
+        <StyledLink data-testid="instaneousRewards.epochNoValue" to={details.epoch(r.epochNo)}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <div data-testid="instaneousRewards.epochSlotNoTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
-      minWidth: "50px"
+      minWidth: "50px",
+      render: (r) => <div data-testid="instaneousRewards.epochSlotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: <div data-testid="instaneousRewards.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r) => <div data-testid="instaneousRewards.slotNoValue">{r.slotNo}</div>
     },
     {
-      title: t("glossary.stakeAddress"),
+      title: <div data-testid="instaneousRewards.numberOfStakesTitle">{t("glossary.stakeAddress")}</div>,
       key: "numberOfStakes",
-      render: (r) => <Box component={"span"}>{r.numberOfStakes}</Box>
+      render: (r) => (
+        <Box data-testid="instaneousRewards.numberOfStakesValue" component={"span"}>
+          {r.numberOfStakes}
+        </Box>
+      )
     },
     {
-      title: t("glosary.rewardsPaid"),
+      title: <div data-testid="instaneousRewards.rewardTitle">{t("glosary.rewardsPaid")}</div>,
       key: "reward",
       render: (r) => (
-        <Box component={"span"}>
+        <Box data-testid="instaneousRewards.rewardValue" component={"span"}>
           {formatADAFull(r.rewards)} <ADAicon />
         </Box>
       )
@@ -96,6 +117,7 @@ const InstantReards = () => {
           </TimeDuration>
         </Actions>
         <Table
+          data-testid="instaneousRewards.table"
           {...fetchData}
           columns={columns}
           total={{ title: "Total Contracts", count: fetchData.total }}

@@ -19,6 +19,7 @@ import { WrapFilterDescription } from "src/components/StakingLifeCycle/Delegator
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from "../styles";
 
@@ -47,7 +48,7 @@ const WithdrawalHistoryTab = () => {
       title: t("createdAt"),
       key: "time",
       minWidth: "120px",
-      render: (r) => formatDateTimeLocal(r.time),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.time)}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

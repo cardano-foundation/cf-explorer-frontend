@@ -2,7 +2,7 @@ import { Box, Container, useTheme } from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import QueryString, { parse, stringify } from "qs";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown } from "react-icons/io";
 import { useSelector } from "react-redux";
@@ -13,7 +13,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { StakeKeyHistoryIcon, StakingDelegators, TimelineIconComponent, VotesIcon } from "src/commons/resources";
 import { routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { VOTE_TYPE, POOL_STATUS, STATUS_VOTE } from "src/commons/utils/constants";
+import { VOTE_TYPE, POOL_STATUS, STATUS_VOTE, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { getPageInfo } from "src/commons/utils/helper";
 import DelegationDetailChart from "src/components/DelegationDetail/DelegationDetailChart";
 import DelegationDetailInfo from "src/components/DelegationDetail/DelegationDetailInfo";
@@ -83,10 +83,18 @@ const DelegationDetail: React.FC = () => {
     history.replace({ search: stringify(query) }, state);
   };
 
-  const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolId));
+  const fetchListPools = useFetchList<Delegators>(
+    API.DELEGATION.POOL_LIST,
+    { query: poolId, ...pageInfo },
+    false,
+    tab === "epochs" ? blockKey : undefined
+  );
+  const poolView = useMemo(() => fetchListPools.data[0]?.poolId, [fetchListPools]);
+
+  const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolView || poolId));
 
   const { data, loading, initialized, error, lastUpdated } = useFetch<DelegationOverview>(
-    `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolId}`,
+    `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolView || poolId}`,
     undefined,
     false,
     blockKey
@@ -94,14 +102,14 @@ const DelegationDetail: React.FC = () => {
 
   const fetchDataEpochs = useFetchList<DelegationEpoch>(
     API.DELEGATION.POOL_DETAIL("epochs"),
-    { poolView: poolId, ...pageInfo },
+    { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "epochs" ? blockKey : undefined
   );
 
   const fetchDataDelegators = useFetchList<StakingDelegators>(
     API.DELEGATION.POOL_DETAIL("delegators"),
-    { poolView: poolId, ...pageInfo },
+    { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "delegators" ? blockKey : undefined
   );
@@ -142,7 +150,7 @@ const DelegationDetail: React.FC = () => {
   }[] = [
     {
       icon: StakeKeyHistoryIcon,
-      label: t("epoch"),
+      label: <Box data-testid="delegationDetail.epochTitle">{t("epoch")}</Box>,
       key: "epochs",
       component: (
         <div ref={tableRef}>
@@ -152,7 +160,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: StakingDelegators,
-      label: t("stakingDelegators"),
+      label: <Box data-testid="delegationDetail.stakingTitle">{t("stakingDelegators")}</Box>,
       key: "delegators",
       component: (
         <div ref={tableRef}>
@@ -162,7 +170,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: TimelineIconComponent,
-      label: <Box data-testid="certificatesHistory">{t("certificatesHistory")}</Box>,
+      label: <Box data-testid="delegationDetail.certificatesHistoryTitle">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
       component: (
         <div ref={tableRef}>
@@ -172,7 +180,7 @@ const DelegationDetail: React.FC = () => {
     },
     {
       icon: VotesIcon,
-      label: t("drep.governanceVotes"),
+      label: <Box data-testid="delegationDetail.governanceTitle">{t("drep.governanceVotes")}</Box>,
       key: "governanceVotes",
       component: (
         <div ref={tableRef}>
@@ -180,7 +188,7 @@ const DelegationDetail: React.FC = () => {
         </div>
       )
     }
-  ];
+  ].filter((tab) => !(tab.key === "governanceVotes" && !FF_GLOBAL_IS_CONWAY_ERA));
 
   const indexExpand = tabs.findIndex((item) => item.key === tab);
   const needBorderRadius = (currentKey: string) => {
@@ -232,9 +240,9 @@ const DelegationDetail: React.FC = () => {
 
   return (
     <Container>
-      <DelegationDetailInfo data={data} loading={loading} poolId={poolId} lastUpdated={lastUpdated} />
-      <DelegationDetailOverview data={data} loading={loading} />
-      <DelegationDetailChart poolId={poolId} />
+      <DelegationDetailInfo data={data} loading={loading || !poolView} poolId={poolId} lastUpdated={lastUpdated} />
+      <DelegationDetailOverview data={data} loading={loading || !poolView} />
+      <DelegationDetailChart poolId={poolView || poolId} />
       <Box ref={tableRef} mt={"30px"}>
         {tabs.map(({ key, icon: Icon, label, component }, index) => (
           <StyledAccordion
@@ -245,6 +253,7 @@ const DelegationDetail: React.FC = () => {
             onChange={handleChangeTab(key)}
           >
             <AccordionSummary
+              data-testid={`delegationDetail.${key}`}
               expandIcon={
                 <IoIosArrowDown
                   style={{
@@ -260,7 +269,7 @@ const DelegationDetail: React.FC = () => {
               }}
             >
               <Icon fill={key === tab ? theme.palette.primary.main : theme.palette.secondary.light} />
-              <TitleTab pl={1} active={+(key === tab)}>
+              <TitleTab data-testid="delegationDetail.tabTitle" pl={1} active={+(key === tab)}>
                 {label}
               </TitleTab>
             </AccordionSummary>
