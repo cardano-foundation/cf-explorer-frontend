@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
+import { Box, Button, ClickAwayListener, Typography, useTheme, AccordionSummary } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
@@ -67,6 +67,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
+
   const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
@@ -393,37 +394,63 @@ const CustomFilterMultiRange: React.FC = () => {
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.poolSize"
-                expanded={expanded === "poolSize"}
-                onChange={handleChange("poolSize")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolSizesIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box
-                        data-testid="filterRange.poolSizeTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolSize")}
+              <Box component={dataRange?.maxPoolSize === null ? CustomTooltip : Box} title={t("common.noDataAvaiable")}>
+                <AccordionContainer
+                  data-testid="filterRange.poolSize"
+                  expanded={expanded === "poolSize"}
+                  onChange={handleChange("poolSize")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxPoolSize === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolSizesIcon}
+                          fill={
+                            dataRange?.maxPoolSize === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.light
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.poolSizeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxPoolSize === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolSize")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolSize" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxPoolSize === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxPoolSize === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "poolSize" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box
-                    component={dataRange?.maxPoolSize === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
-                  >
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
                     <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                       <Typography>
                         {formatADA(dataRange?.minPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
@@ -456,36 +483,64 @@ const CustomFilterMultiRange: React.FC = () => {
                       initParams.maxPoolSize,
                       dataRange?.maxPoolSize === null
                     )}
-                  </Box>
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.pledge"
-                expanded={expanded === "poolPledge"}
-                onChange={handleChange("poolPledge")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolPledgeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box data-testid="filterRange.pledgeTitle" ml={1} color={({ palette }) => palette.secondary.main}>
-                        {t("pool.poolPledge")}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box component={dataRange?.maxPledge === null ? CustomTooltip : Box} title={t("common.noDataAvaiable")}>
+                <AccordionContainer
+                  data-testid="filterRange.pledge"
+                  expanded={expanded === "poolPledge"}
+                  onChange={handleChange("poolPledge")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxPledge === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolPledgeIcon}
+                          fill={
+                            dataRange?.maxPledge === null ? theme.palette.secondary[600] : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.pledgeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxPledge === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolPledge")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolPledge" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxPledge === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxPledge === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "poolPledge" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box
-                    component={dataRange?.maxPledge === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
-                  >
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
                     <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                       <Typography>{formatADA(dataRange?.minPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
                       <StyledSlider
@@ -522,40 +577,69 @@ const CustomFilterMultiRange: React.FC = () => {
                         .toNumber(),
                       dataRange?.maxPledge === null
                     )}
-                  </Box>
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.saturation"
-                expanded={expanded === "poolSaturation"}
-                onChange={handleChange("poolSaturation")}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box
+                component={dataRange?.maxSaturation === null ? CustomTooltip : Box}
+                title={t("common.noDataAvaiable")}
               >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolSaturationIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box
-                        data-testid="filterRange.saturationTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolSaturation")}
+                <AccordionContainer
+                  data-testid="filterRange.saturation"
+                  expanded={expanded === "poolSaturation"}
+                  onChange={handleChange("poolSaturation")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxSaturation === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolSaturationIcon}
+                          fill={
+                            dataRange?.maxSaturation === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.saturationTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxSaturation === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolSaturation")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolSaturation" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxSaturation === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxSaturation === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "poolSaturation" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box
-                    component={dataRange?.maxSaturation === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
-                  >
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
                     <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                       <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
                       <StyledSlider
@@ -587,40 +671,69 @@ const CustomFilterMultiRange: React.FC = () => {
                       initParams.maxSaturation,
                       dataRange?.maxSaturation === null
                     )}
-                  </Box>
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.blocksLifeTime"
-                expanded={expanded === "poolLifetime"}
-                onChange={handleChange("poolLifetime")}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box
+                component={dataRange?.maxLifetimeBlock === null ? CustomTooltip : Box}
+                title={t("common.noDataAvaiable")}
               >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolBlocksIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box
-                        data-testid="filterRange.blocksLifeTimeTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolLifetime")}
+                <AccordionContainer
+                  data-testid="filterRange.blocksLifeTime"
+                  expanded={expanded === "poolLifetime"}
+                  onChange={handleChange("poolLifetime")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxLifetimeBlock === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolBlocksIcon}
+                          fill={
+                            dataRange?.maxLifetimeBlock === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.blocksLifeTimeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxLifetimeBlock === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolLifetime")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolLifetime" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxLifetimeBlock === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxLifetimeBlock === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "poolLifetime" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box
-                    component={dataRange?.maxLifetimeBlock === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
-                  >
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
                     <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                       <Typography>{dataRange?.minLifetimeBlock || 0}</Typography>
                       <StyledSlider
@@ -650,42 +763,73 @@ const CustomFilterMultiRange: React.FC = () => {
                       initParams.maxBlockLifetime,
                       dataRange?.maxLifetimeBlock === null
                     )}
-                  </Box>
-                </AccordionDetailsFilter>
-              </AccordionContainer>
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
               {FF_GLOBAL_IS_CONWAY_ERA && (
                 <>
-                  <AccordionContainer
-                    data-testid="filterRange.poolParticipation"
-                    expanded={expanded === "poolParticipation"}
-                    onChange={handleChange("poolParticipation")}
+                  <Box
+                    component={dataRange?.maxGovParticipationRate === null ? CustomTooltip : Box}
+                    title={t("common.noDataAvaiable")}
                   >
-                    <AccordionSummary>
-                      <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                        <Box display={"flex"} alignItems={"center"}>
-                          <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary[800]} height={18} />
-                          <Box
-                            data-testid="filterRange.poolParticipationTitle"
-                            ml={1}
-                            color={({ palette }) => palette.secondary.main}
-                          >
-                            {t("pool.poolParticipation")}
+                    <AccordionContainer
+                      data-testid="filterRange.poolParticipation"
+                      expanded={expanded === "poolParticipation"}
+                      onChange={handleChange("poolParticipation")}
+                    >
+                      <AccordionSummary
+                        disabled={dataRange?.maxGovParticipationRate === null}
+                        sx={{
+                          "&.Mui-disabled": {
+                            opacity: 0.9
+                          }
+                        }}
+                      >
+                        <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                          <Box display={"flex"} alignItems={"center"}>
+                            <CustomIcon
+                              icon={PoolParticipationIcon}
+                              fill={
+                                dataRange?.maxGovParticipationRate === null
+                                  ? theme.palette.secondary[600]
+                                  : theme.palette.secondary[800]
+                              }
+                              height={18}
+                            />
+                            <Box
+                              data-testid="filterRange.poolParticipationTitle"
+                              ml={1}
+                              color={({ palette }) =>
+                                dataRange?.maxGovParticipationRate === null
+                                  ? palette.secondary[600]
+                                  : palette.secondary.main
+                              }
+                            >
+                              {t("pool.poolParticipation")}
+                            </Box>
+                          </Box>
+                          <Box>
+                            {expanded === "poolParticipation" ? (
+                              <IoIosArrowUp
+                                color={
+                                  dataRange?.maxGovParticipationRate === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            ) : (
+                              <IoIosArrowDown
+                                color={
+                                  dataRange?.maxGovParticipationRate === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            )}
                           </Box>
                         </Box>
-                        <Box>
-                          {expanded === "poolParticipation" ? (
-                            <IoIosArrowUp color={theme.palette.secondary.main} />
-                          ) : (
-                            <IoIosArrowDown color={theme.palette.secondary.main} />
-                          )}
-                        </Box>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box
-                        component={dataRange?.maxGovParticipationRate === null ? CustomTooltip : Box}
-                        title={t("common.noDataAvaiable")}
-                      >
+                      </AccordionSummary>
+                      <AccordionDetailsFilter sx={{ background: "unset" }}>
                         <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                           <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
                           <StyledSlider
@@ -722,40 +866,70 @@ const CustomFilterMultiRange: React.FC = () => {
                           +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
                           dataRange?.maxGovParticipationRate === null
                         )}
-                      </Box>
-                    </AccordionDetailsFilter>
-                  </AccordionContainer>
-                  <AccordionContainer
-                    data-testid="filterRange.poolVoting"
-                    expanded={expanded === "poolVoting"}
-                    onChange={handleChange("poolVoting")}
+                      </AccordionDetailsFilter>
+                    </AccordionContainer>
+                  </Box>
+
+                  <Box
+                    component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
+                    title={t("common.noDataAvaiable")}
                   >
-                    <AccordionSummary>
-                      <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                        <Box display={"flex"} alignItems={"center"}>
-                          <CustomIcon icon={PoolVotingIcon} fill={theme.palette.secondary.light} height={18} />
-                          <Box
-                            data-testid="filterRange.poolVotingTitle"
-                            ml={1}
-                            color={({ palette }) => palette.secondary.main}
-                          >
-                            {t("pool.poolVoting")}
+                    <AccordionContainer
+                      data-testid="filterRange.poolVoting"
+                      expanded={expanded === "poolVoting"}
+                      onChange={handleChange("poolVoting")}
+                    >
+                      <AccordionSummary
+                        disabled={dataRange?.maxVotingPower === null}
+                        sx={{
+                          "&.Mui-disabled": {
+                            opacity: 0.9
+                          }
+                        }}
+                      >
+                        <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                          <Box display={"flex"} alignItems={"center"}>
+                            <CustomIcon
+                              icon={PoolVotingIcon}
+                              fill={
+                                dataRange?.maxVotingPower === null
+                                  ? theme.palette.secondary[600]
+                                  : theme.palette.secondary.light
+                              }
+                              height={18}
+                            />
+                            <Box
+                              data-testid="filterRange.poolVotingTitle"
+                              ml={1}
+                              color={({ palette }) =>
+                                dataRange?.maxVotingPower === null ? palette.secondary[600] : palette.secondary.main
+                              }
+                            >
+                              {t("pool.poolVoting")}
+                            </Box>
+                          </Box>
+                          <Box>
+                            {expanded === "poolVoting" ? (
+                              <IoIosArrowUp
+                                color={
+                                  dataRange?.maxVotingPower === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            ) : (
+                              <IoIosArrowDown
+                                color={
+                                  dataRange?.maxVotingPower === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            )}
                           </Box>
                         </Box>
-                        <Box>
-                          {expanded === "poolVoting" ? (
-                            <IoIosArrowUp color={theme.palette.secondary.main} />
-                          ) : (
-                            <IoIosArrowDown color={theme.palette.secondary.main} />
-                          )}
-                        </Box>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box
-                        component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
-                        title={t("common.noDataAvaiable")}
-                      >
+                      </AccordionSummary>
+                      <AccordionDetailsFilter sx={{ background: "unset" }}>
                         <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
                           <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
                           <StyledSlider
@@ -787,9 +961,9 @@ const CustomFilterMultiRange: React.FC = () => {
                           initParams.maxVotingPower,
                           dataRange?.maxVotingPower === null
                         )}
-                      </Box>
-                    </AccordionDetailsFilter>
-                  </AccordionContainer>
+                      </AccordionDetailsFilter>
+                    </AccordionContainer>
+                  </Box>
                 </>
               )}
 
