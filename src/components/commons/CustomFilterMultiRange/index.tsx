@@ -402,7 +402,22 @@ const CustomFilterMultiRange: React.FC = () => {
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <Box component={dataRange?.maxPoolSize === null ? CustomTooltip : Box} title={t("common.noDataAvaiable")}>
+              <Box
+                component={dataRange?.maxPoolSize === null ? CustomTooltip : Box}
+                title={dataRange?.maxPoolSize === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
                 <AccordionContainer
                   data-testid="filterRange.poolSize"
                   expanded={expanded === "poolSize"}
@@ -494,7 +509,22 @@ const CustomFilterMultiRange: React.FC = () => {
                   </AccordionDetailsFilter>
                 </AccordionContainer>
               </Box>
-              <Box component={dataRange?.maxPledge === null ? CustomTooltip : Box} title={t("common.noDataAvaiable")}>
+              <Box
+                component={dataRange?.maxPledge === null ? CustomTooltip : Box}
+                title={dataRange?.maxPledge === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
                 <AccordionContainer
                   data-testid="filterRange.pledge"
                   expanded={expanded === "poolPledge"}
@@ -590,7 +620,19 @@ const CustomFilterMultiRange: React.FC = () => {
               </Box>
               <Box
                 component={dataRange?.maxSaturation === null ? CustomTooltip : Box}
-                title={t("common.noDataAvaiable")}
+                title={dataRange?.maxSaturation === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
               >
                 <AccordionContainer
                   data-testid="filterRange.saturation"
@@ -684,7 +726,19 @@ const CustomFilterMultiRange: React.FC = () => {
               </Box>
               <Box
                 component={dataRange?.maxLifetimeBlock === null ? CustomTooltip : Box}
-                title={t("common.noDataAvaiable")}
+                title={dataRange?.maxLifetimeBlock === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
               >
                 <AccordionContainer
                   data-testid="filterRange.blocksLifeTime"
@@ -778,7 +832,19 @@ const CustomFilterMultiRange: React.FC = () => {
                 <>
                   <Box
                     component={dataRange?.maxGovParticipationRate === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
+                    title={dataRange?.maxGovParticipationRate === null ? t("common.noDataAvaiable") : undefined}
+                    slotProps={{
+                      popper: {
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -18]
+                            }
+                          }
+                        ]
+                      }
+                    }}
                   >
                     <AccordionContainer
                       data-testid="filterRange.poolParticipation"
@@ -880,7 +946,19 @@ const CustomFilterMultiRange: React.FC = () => {
 
                   <Box
                     component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
-                    title={t("common.noDataAvaiable")}
+                    title={dataRange?.maxVotingPower === null ? t("common.noDataAvaiable") : undefined}
+                    slotProps={{
+                      popper: {
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -18]
+                            }
+                          }
+                        ]
+                      }
+                    }}
                   >
                     <AccordionContainer
                       data-testid="filterRange.poolVoting"
