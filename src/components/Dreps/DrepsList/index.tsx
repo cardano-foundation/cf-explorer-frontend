@@ -55,6 +55,7 @@ const DrepsList: React.FC = () => {
           toDate: pageInfo?.toDate
             ? moment
                 .utc(pageInfo?.toDate)
+                .endOf("D")
                 .subtract(timeZone == "UTC" ? 0 : moment().utcOffset(), "minutes")
                 .format(DATETIME_PARTTEN)
             : ""
