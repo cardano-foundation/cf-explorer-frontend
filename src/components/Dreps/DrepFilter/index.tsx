@@ -53,7 +53,7 @@ interface PoolResponse {
 
 const defaultParams = { page: 0, size: 50, sort: "" };
 
-const DrepFilter: React.FC = () => {
+const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
@@ -65,8 +65,8 @@ const DrepFilter: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
-  const fetchDataRange = useFetch<PoolResponse>(API.DREP_RANGE_VALUES);
-  const dataRange = fetchDataRange.data;
+  const { data: dataRange, loading: loadingRange } = useFetch<PoolResponse>(API.DREP_RANGE_VALUES);
+
   const initParams = {
     page: 0,
     size: 50,
@@ -301,6 +301,7 @@ const DrepFilter: React.FC = () => {
       <FilterWrapper>
         <Box
           component={Button}
+          disabled={loadingRange || loading}
           variant="text"
           px={2}
           textTransform={"capitalize"}
@@ -655,6 +656,17 @@ const DrepFilter: React.FC = () => {
                       value={filterParams.drepStatus}
                       onChange={({ target: { value } }) => setFilterParams({ ...filterParams, drepStatus: value })}
                     >
+                      <FormControlLabel
+                        value={"" || undefined}
+                        control={
+                          <Radio
+                            sx={{
+                              color: theme.palette.secondary.light
+                            }}
+                          />
+                        }
+                        label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
+                      />
                       <FormControlLabel
                         value="ACTIVE"
                         control={
