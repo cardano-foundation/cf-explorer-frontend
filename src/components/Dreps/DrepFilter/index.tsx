@@ -13,7 +13,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
-import { pickBy } from "lodash";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { isEmpty, pickBy } from "lodash";
 import { stringify, parse } from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
@@ -94,6 +95,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
       sort: (query?.sort || "").toString(),
       drepIdOrHash: "",
       anchorText: "",
+      drepStatus: "",
       ...(query?.drepStatus && { drepStatus: query?.drepStatus ? `${query?.drepStatus}` : "" }),
       ...(query?.maxActiveVoteStake && { maxActiveVoteStake: +(query?.maxActiveVoteStake || 0) }),
       ...(query?.minActiveVoteStake && { minActiveVoteStake: +(query?.minActiveVoteStake || 0) }),
@@ -653,11 +655,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                     <RadioGroup
                       aria-labelledby="demo-controlled-radio-buttons-group"
                       name="controlled-radio-buttons-group"
-                      value={filterParams.drepStatus}
+                      value={filterParams.drepStatus || ""}
                       onChange={({ target: { value } }) => setFilterParams({ ...filterParams, drepStatus: value })}
                     >
                       <FormControlLabel
-                        value={"" || undefined}
+                        value={""}
                         control={
                           <Radio
                             sx={{
@@ -706,15 +708,20 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               </AccordionContainer>
               <AccordionContainer data-testid="filterRange.saturation">
                 <AccordionSummary onClick={() => setShowDaterange(true)}>
-                  <Box display={"flex"} alignItems={"center"}>
-                    <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={20} />
-                    <Box
-                      data-testid="filterRange.drep.statusTitle"
-                      ml={"4px"}
-                      color={({ palette }) => palette.secondary.main}
-                    >
-                      {t("drep.filter.registrationDate")}
-                    </Box>
+                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={20} />
+                      <Box
+                        data-testid="filterRange.drep.statusTitle"
+                        ml={"4px"}
+                        color={({ palette }) => palette.secondary.main}
+                      >
+                        {t("drep.filter.registrationDate")}
+                      </Box>
+                    </Box>{" "}
+                    {!isEmpty(pickBy(dateRange, (value) => value !== "" && value !== undefined)) && (
+                      <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
+                    )}
                   </Box>
                 </AccordionSummary>
               </AccordionContainer>
