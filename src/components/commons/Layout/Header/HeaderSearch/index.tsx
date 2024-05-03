@@ -102,7 +102,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
   const [ADAHandleOption, setADAHanldeOption] = useState<
     { stakeAddress: string; paymentAddress: string } | undefined
   >();
-
   const [loading, setLoading] = useState<boolean>(false);
   const [totalResult, setTotalResult] = useState<number>(0);
 
@@ -197,22 +196,23 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setLoading(true);
       const res = await defaultAxios.get(API.SEARCH_ALL(query?.trim()));
       const adaHanlde = await adaHandleSearch(search?.trim());
-
+      const filteredData = Object.fromEntries(
+        Object.entries(res?.data).filter(([, value]) => value !== null && value !== false)
+      );
       setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-
       if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "" && isEmpty(adaHanlde)) {
         throw new Error();
       }
-
       if (adaHanlde && adaHanlde !== null) {
         if (
           adaHanlde &&
           (!keyDetail || keyDetail === "address") &&
           res.data &&
           !res.data.validPoolName &&
-          !res.data.validTokenName
+          !res.data.validTokenName &&
+          !(Object.keys(filteredData).length > 0)
         ) {
           handleSetSearchValueDefault();
           setLoading(false);
