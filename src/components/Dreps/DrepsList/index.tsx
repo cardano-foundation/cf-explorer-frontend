@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { stringify } from "qs";
+import { pickBy } from "lodash";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -17,17 +18,26 @@ import ADAicon from "src/components/commons/ADAIcon";
 import { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { PoolName } from "./styles";
+import { PoolName, TopSearchContainer } from "./styles";
+import DrepFilter from "../DrepFilter";
 
 const DrepsList: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { pageInfo } = usePageInfo();
+  const { pageInfo, setSort } = usePageInfo();
   const [metadataUrl, setMetadataUrl] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
+  const handleBlankSort = () => {
+    history.replace({ search: stringify({ ...pageInfo, page: 1, sort: undefined }) });
+  };
 
-  const fetchData = useFetchList<Drep>(API.DREPS_LIST.DREPS_LIST, { ...pageInfo }, false, blockKey);
+  const fetchData = useFetchList<Drep>(
+    API.DREPS_LIST.DREPS_LIST,
+    { ...pickBy(pageInfo, (value) => value !== "" && value !== undefined) },
+    false,
+    blockKey
+  );
 
   const columns: Column<Drep>[] = [
     {
@@ -104,16 +114,23 @@ const DrepsList: React.FC = () => {
           {t("glossary.activeStake")} (<ADAicon />)
         </Box>
       ),
-      key: "pu.activeStake",
+      key: "activeVoteStake",
       minWidth: "120px",
       render: (r) => (
         <Box data-testid="drepList.activeStakeValue" component={"span"}>
           {r.activeVoteStake != null ? formatADAFull(r.activeVoteStake) : t("common.N/A")}
         </Box>
-      )
+      ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
     },
     {
-      title: <div data-testid="drepList.votingPowerTitle">{t("dreps.votingPower")}</div>,
+      title: (
+        <Box data-testid="drepList.votingPowerTitle" component={"span"}>
+          {t("dreps.votingPower")}
+        </Box>
+      ),
       minWidth: "120px",
       key: "votingPower",
       render: (r) =>
@@ -123,7 +140,10 @@ const DrepsList: React.FC = () => {
           </Box>
         ) : (
           t("common.N/A")
-        )
+        ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
     },
     {
       title: <div data-testid="drepList.statusTitle">{t("common.status")}</div>,
@@ -144,20 +164,31 @@ const DrepsList: React.FC = () => {
       )
     },
     {
-      title: <div data-testid="drepList.registrationDateTitle">{t("dreps.registrationDate")}</div>,
+      title: (
+        <Box data-testid="drepList.registrationDateTitle" component={"span"}>
+          {t("dreps.registrationDate")}
+        </Box>
+      ),
       minWidth: "100px",
-      key: "registrationDate",
+      key: "createdAt",
       render: (r) => (
         <DatetimeTypeTooltip>
           <Box data-testid="drepList.registrationDateValue" component={"span"}>
             {formatDateTimeLocal(r.createdAt)}
           </Box>
         </DatetimeTypeTooltip>
-      )
+      ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
     },
     {
-      title: <div data-testid="drepList.lastUpdatedTitle">{t("dreps.lastUpdated")}</div>,
-      key: "lastUpdated",
+      title: (
+        <Box data-testid="drepList.lastUpdatedTitle" component={"span"}>
+          {t("dreps.lastUpdated")}
+        </Box>
+      ),
+      key: "updatedAt",
       minWidth: "120px",
       render: (r) => (
         <DatetimeTypeTooltip>
@@ -165,11 +196,19 @@ const DrepsList: React.FC = () => {
             {formatDateTimeLocal(r.updatedAt)}
           </Box>
         </DatetimeTypeTooltip>
-      )
+      ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
     }
   ];
   return (
     <>
+      <TopSearchContainer sx={{ justifyContent: "end" }}>
+        <Box display="flex" gap="10px">
+          <DrepFilter />
+        </Box>
+      </TopSearchContainer>
       <Table
         {...fetchData}
         data-testid="drepList.table"

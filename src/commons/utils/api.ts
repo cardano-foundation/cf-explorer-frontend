@@ -37,6 +37,7 @@ export const API = {
   },
   POOL_CERTIFICATES_HISTORY: "pools/certificates-history",
   POOL_RANGE_VALUES: "pools/range-values-for-filter",
+  DREP_RANGE_VALUES: "dreps/range-values-for-filter",
   DREP_CERTIFICATES_HISTORY: "dreps/:drepId/certificates-history",
   DREP_OVERVIEW: "dreps/:drepId/drep-details",
   DREP_OVERVIEW_CHART: "dreps/:drepId/vote-procedure-chart",
