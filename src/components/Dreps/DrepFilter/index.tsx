@@ -727,7 +727,12 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               </AccordionContainer>
 
               <DateRangeModal
-                onClose={() => setShowDaterange(false)}
+                onClose={() => {
+                  setShowDaterange(false);
+                }}
+                onClearValue={() => {
+                  setDateRange({});
+                }}
                 open={showDaterange}
                 value={dateRange}
                 onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
