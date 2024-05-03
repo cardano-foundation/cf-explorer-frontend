@@ -240,7 +240,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           return;
         }
 
-        if (!res?.data?.validPoolName && res?.data?.validTokenName) {
+        if (!res?.data?.validPoolName && res?.data?.validTokenName && !(Object.keys(filteredData).length > 0)) {
           history.push(
             `${routers.TOKEN_LIST}?tokenName=${encodeURIComponent((search || "").trim().toLocaleLowerCase())}`
           );
