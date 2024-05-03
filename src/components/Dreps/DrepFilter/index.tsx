@@ -31,10 +31,12 @@ import { API } from "src/commons/utils/api";
 import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 
+import CustomIcon from "../../commons/CustomIcon";
 import { ApplyFilterButton, StyledInput } from "../../commons/CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
-import CustomIcon from "../../commons/CustomIcon";
 
 interface PoolResponse {
   page?: number;
@@ -77,7 +79,13 @@ const DrepFilter: React.FC = () => {
     minVotingPower: +(dataRange?.minVotingPower || 0),
     maxVotingPower: +(dataRange?.maxVotingPower || 0)
   };
+
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
+  const [showDaterange, setShowDaterange] = useState<boolean>(false);
+  const [dateRange, setDateRange] = useState<{
+    fromDate?: string;
+    toDate?: string;
+  }>({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
 
   useEffect(() => {
     setFilterParams({
@@ -92,11 +100,13 @@ const DrepFilter: React.FC = () => {
       ...(query?.minVotingPower && { minVotingPower: +(query?.minVotingPower || 0) }),
       ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) })
     });
+    setDateRange({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
   }, [JSON.stringify(query)]);
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
     setFilterParams({ ...initParams });
+    setDateRange({});
     history.replace({
       search: stringify(
         pickBy(
@@ -124,7 +134,9 @@ const DrepFilter: React.FC = () => {
             ...filterParams,
             size: pageInfo.size,
             sort: pageInfo.sort,
-            page: 1
+            page: 1,
+            fromDate: dateRange.fromDate,
+            toDate: dateRange.toDate
           },
           (value) => value !== "" && value !== undefined
         )
@@ -396,125 +408,219 @@ const DrepFilter: React.FC = () => {
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.activeStake"
-                expanded={expanded === "activeStake"}
-                onChange={handleChange("activeStake")}
+              <Box
+                component={dataRange?.maxActiveVoteStake === null ? CustomTooltip : Box}
+                title={dataRange?.maxActiveVoteStake === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
               >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={ActiveStakeDrepIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box
-                        data-testid="filterRange.activeStakeTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("drep.filter.activeStake")}
+                <AccordionContainer
+                  data-testid="filterRange.activeStake"
+                  expanded={expanded === "activeStake"}
+                  onChange={handleChange("activeStake")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxActiveVoteStake === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={ActiveStakeDrepIcon}
+                          fill={
+                            dataRange?.maxActiveVoteStake === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary[800]
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.activeStakeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxActiveVoteStake === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("drep.filter.activeStake")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "activeStake" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxActiveVoteStake === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxActiveVoteStake === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "activeStake" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>
+                        {formatADA(dataRange?.minActiveVoteStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
+                      <StyledSlider
+                        data-testid="filterRange.activeStakeValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams?.minActiveVoteStake || 0, initParams.maxActiveVoteStake || 0]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minActiveVoteStake", ".maxActiveVoteStake")
+                        }
+                        valueLabelDisplay="auto"
+                        value={[
+                          filterParams?.minActiveVoteStake || 0,
+                          filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0)
+                        ]}
+                        min={dataRange?.minActiveVoteStake || 0}
+                        disableSwap
+                        step={1000000}
+                        max={dataRange?.maxActiveVoteStake || 0}
+                      />
+                      <Typography>
+                        {formatADA(dataRange?.maxActiveVoteStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
                     </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>
-                      {formatADA(dataRange?.minActiveVoteStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
-                    </Typography>
-                    <StyledSlider
-                      data-testid="filterRange.activeStakeValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams?.minActiveVoteStake || 0, initParams.maxActiveVoteStake || 0]}
-                      onChange={(e, newValue) =>
-                        handleChangeValueRange(e, newValue, "minActiveVoteStake", ".maxActiveVoteStake")
+                    {groupInputRange(
+                      filterParams?.minActiveVoteStake || 0,
+                      filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0),
+                      "minActiveVoteStake",
+                      ".maxActiveVoteStake",
+                      initParams.maxActiveVoteStake
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+
+              <Box
+                component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
+                title={dataRange?.maxVotingPower === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
                       }
-                      valueLabelDisplay="auto"
-                      value={[
-                        filterParams?.minActiveVoteStake || 0,
-                        filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0)
-                      ]}
-                      min={dataRange?.minActiveVoteStake || 0}
-                      disableSwap
-                      step={1000000}
-                      max={dataRange?.maxActiveVoteStake || 0}
-                    />
-                    <Typography>
-                      {formatADA(dataRange?.maxActiveVoteStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
-                    </Typography>
-                  </Box>
-                  {groupInputRange(
-                    filterParams?.minActiveVoteStake || 0,
-                    filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0),
-                    "minActiveVoteStake",
-                    ".maxActiveVoteStake",
-                    initParams.maxActiveVoteStake
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.poolVoting"
-                expanded={expanded === "poolVoting"}
-                onChange={handleChange("poolVoting")}
+                    ]
+                  }
+                }}
               >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolVotingIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box
-                        data-testid="filterRange.poolVotingTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolVoting")}
+                <AccordionContainer
+                  data-testid="filterRange.poolVoting"
+                  expanded={expanded === "poolVoting"}
+                  onChange={handleChange("poolVoting")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxVotingPower === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolVotingIcon}
+                          fill={
+                            dataRange?.maxVotingPower === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary[800]
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.poolVotingTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxActiveVoteStake === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolVoting")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolVoting" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxActiveVoteStake === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxActiveVoteStake === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
                       </Box>
                     </Box>
-                    <Box>
-                      {expanded === "poolVoting" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
+                      <StyledSlider
+                        valueLabelFormat={(value) => formatPercent(value)}
+                        data-testid="filterRange.poolVotingValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
+                        }
+                        value={[
+                          filterParams.minVotingPower || 0,
+                          filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0)
+                        ]}
+                        valueLabelDisplay="auto"
+                        disableSwap
+                        min={dataRange?.minVotingPower || 0}
+                        step={0.0001}
+                        max={dataRange?.maxVotingPower || 0}
+                      />
+                      <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
                     </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
-                    <StyledSlider
-                      valueLabelFormat={(value) => formatPercent(value)}
-                      data-testid="filterRange.poolVotingValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
-                      onChange={(e, newValue) =>
-                        handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
-                      }
-                      value={[
-                        filterParams.minVotingPower || 0,
-                        filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0)
-                      ]}
-                      valueLabelDisplay="auto"
-                      disableSwap
-                      min={dataRange?.minVotingPower || 0}
-                      step={0.0001}
-                      max={dataRange?.maxVotingPower || 0}
-                    />
-                    <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
-                  </Box>
-                  {groupInputRange(
-                    filterParams.minVotingPower || 0,
-                    filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
-                    "minVotingPower",
-                    "maxVotingPower",
-                    initParams.maxVotingPower
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
+                    {groupInputRange(
+                      filterParams.minVotingPower || 0,
+                      filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
+                      "minVotingPower",
+                      "maxVotingPower",
+                      initParams.maxVotingPower
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+
               <AccordionContainer
                 data-testid="filterRange.drep.status"
                 expanded={expanded === "status"}
@@ -587,7 +693,7 @@ const DrepFilter: React.FC = () => {
                 </Box>
               </AccordionContainer>
               <AccordionContainer data-testid="filterRange.saturation">
-                <AccordionSummary>
+                <AccordionSummary onClick={() => setShowDaterange(true)}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={20} />
                     <Box
@@ -601,6 +707,12 @@ const DrepFilter: React.FC = () => {
                 </AccordionSummary>
               </AccordionContainer>
 
+              <DateRangeModal
+                onClose={() => setShowDaterange(false)}
+                open={showDaterange}
+                value={dateRange}
+                onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+              />
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
                   data-testid="filterRange.applyFilters"

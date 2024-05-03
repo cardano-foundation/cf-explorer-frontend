@@ -1,10 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { stringify } from "qs";
 import { pickBy } from "lodash";
+import moment from "moment";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -17,6 +18,7 @@ import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
 import ADAicon from "src/components/commons/ADAIcon";
 import { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
 
 import { PoolName, TopSearchContainer } from "./styles";
 import DrepFilter from "../DrepFilter";
@@ -24,6 +26,7 @@ import DrepFilter from "../DrepFilter";
 const DrepsList: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const theme = useTheme();
   const { pageInfo, setSort } = usePageInfo();
   const [metadataUrl, setMetadataUrl] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
@@ -31,10 +34,34 @@ const DrepsList: React.FC = () => {
   const handleBlankSort = () => {
     history.replace({ search: stringify({ ...pageInfo, page: 1, sort: undefined }) });
   };
+  const timeZone = localStorage.getItem("userTimezone")
+    ? `${localStorage.getItem("userTimezone")}` === "utc"
+      ? "UTC"
+      : localStorage.getItem("userTimezone") || "UTC"
+    : sessionStorage.getItem("timezone")?.replace(/"/g, "") || "UTC";
 
   const fetchData = useFetchList<Drep>(
     API.DREPS_LIST.DREPS_LIST,
-    { ...pickBy(pageInfo, (value) => value !== "" && value !== undefined) },
+    {
+      ...pickBy(
+        {
+          ...pageInfo,
+          fromDate: pageInfo?.fromDate
+            ? moment
+                .utc(pageInfo?.fromDate)
+                .subtract(timeZone == "UTC" ? 0 : moment().utcOffset(), "minutes")
+                .format(DATETIME_PARTTEN)
+            : "",
+          toDate: pageInfo?.toDate
+            ? moment
+                .utc(pageInfo?.toDate)
+                .subtract(timeZone == "UTC" ? 0 : moment().utcOffset(), "minutes")
+                .format(DATETIME_PARTTEN)
+            : ""
+        },
+        (value) => value !== "" && value !== undefined
+      )
+    },
     false,
     blockKey
   );
@@ -204,7 +231,14 @@ const DrepsList: React.FC = () => {
   ];
   return (
     <>
-      <TopSearchContainer sx={{ justifyContent: "end" }}>
+      <TopSearchContainer
+        sx={{
+          justifyContent: "end",
+          [theme.breakpoints.down("sm")]: {
+            alignItems: "flex-end"
+          }
+        }}
+      >
         <Box display="flex" gap="10px">
           <DrepFilter />
         </Box>

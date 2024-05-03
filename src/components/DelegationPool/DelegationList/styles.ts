@@ -45,6 +45,7 @@ export const DelegationContainer = styled("div")(() => ({
     zIndex: 10
   }
 }));
+
 export const StyledInput = styled("input")`
   border: none;
   width: 100%;
