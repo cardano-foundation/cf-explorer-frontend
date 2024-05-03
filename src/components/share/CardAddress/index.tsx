@@ -25,8 +25,9 @@ export interface DetailCardProps {
   type: "left" | "right";
   loading: boolean;
   addressDestination?: string;
+  error?: string | null;
 }
-const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination }) => {
+const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, loading, addressDestination, error }) => {
   if (loading) {
     return (
       <CardItemStyled padding={0}>
@@ -49,7 +50,13 @@ const CardAddress: React.FC<DetailCardProps> = ({ title, address, item, type, lo
         {type === "left" ? (
           <TokenAddress>{address}</TokenAddress>
         ) : (
-          <AddressLink to={addressDestination || details.address(address)}>{address}</AddressLink>
+          <Box
+            component={error !== null ? TokenAddress : AddressLink}
+            to={addressDestination || details.address(address)}
+            color={({ palette }) => (error !== null ? `${palette.secondary[600]} !important` : "inherit")}
+          >
+            {address}
+          </Box>
         )}
         <CopyButton text={address} />
       </AddressGroup>
