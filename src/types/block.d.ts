@@ -9,6 +9,7 @@ interface Block {
   totalFees: number;
   totalOutput: number;
   txCount: number;
+  maxEpochSlot: number;
 }
 
 type BlockDetail = Block & {
