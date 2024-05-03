@@ -241,7 +241,7 @@ const DrepsList: React.FC = () => {
         }}
       >
         <Box display="flex" gap="10px">
-          <DrepFilter />
+          <DrepFilter loading={fetchData.loading} />
         </Box>
       </TopSearchContainer>
       <Table
