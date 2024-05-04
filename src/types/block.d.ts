@@ -10,6 +10,9 @@ interface Block {
   totalOutput: number;
   txCount: number;
   maxEpochSlot: number;
+  poolName: string;
+  poolTicker: string;
+  poolView: string;
 }
 
 type BlockDetail = Block & {
