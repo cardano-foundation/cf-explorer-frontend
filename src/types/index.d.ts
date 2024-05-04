@@ -10,6 +10,7 @@ type FilterParams =
   | "delegations/pool-detail-header"
   | "lifecycle"
   | "policies"
+  | "dreps"
   | "delegations/pool-list?search="
   | "ADAHanlde";
 interface SearchParams {

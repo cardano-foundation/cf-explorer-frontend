@@ -15,7 +15,7 @@ import { HeaderSearchIconComponent } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import defaultAxios from "src/commons/utils/axios";
-import { API_ADA_HANDLE_API } from "src/commons/utils/constants";
+import { API_ADA_HANDLE_API, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { getShortHash } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 
@@ -52,7 +52,8 @@ const URL_FETCH_DETAIL = {
   txs: (trx: string) => `${API.TRANSACTION.DETAIL}/${trx}`,
   addresses: (address: string) => `${API.ADDRESS.DETAIL}/${address}`,
   stake: (stake: string) => `${API.STAKE.DETAIL}/${stake}`,
-  policies: (policy: string) => `${API.SCRIPTS_SEARCH}/${policy}`
+  policies: (policy: string) => `${API.SCRIPTS_SEARCH}/${policy}`,
+  dreps: (dreps: string) => `${API.DREP_OVERVIEW.replace(":drepId", dreps)}`
 };
 
 interface Props extends RouteComponentProps {
@@ -65,6 +66,7 @@ interface IResponseSearchAll {
   epoch?: number;
   block?: string;
   tx?: string;
+  drep?: string;
   token?: {
     name: string;
     fingerprint: string;
@@ -173,6 +175,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       label: t("filter.scriptHash"),
       paths: [routers.SMART_CONTRACT, routers.NATIVE_SCRIPT_DETAIL, routers.NATIVE_SCRIPTS_AND_SC],
       detail: details.policyDetail
+    },
+    {
+      value: "dreps",
+      label: t("filter.dreps"),
+      paths: [routers.DREPS, routers.DREP_DETAILS],
+      detail: details.drep
     }
   ];
 
@@ -202,7 +210,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       setADAHanldeOption(isEmpty(adaHanlde) ? undefined : adaHanlde);
       setDataSearchAll(res?.data);
       const keyDetail = getKeyIfOnlyOneNonNullResult(res?.data);
-      if (!res?.data?.validPoolName && !res?.data?.validTokenName && keyDetail === "" && isEmpty(adaHanlde)) {
+      if (
+        !res?.data?.validPoolName &&
+        !res?.data?.validTokenName &&
+        keyDetail === "" &&
+        !(Object.keys(filteredData).length > 0) &&
+        isEmpty(adaHanlde)
+      ) {
         throw new Error();
       }
       if (adaHanlde && adaHanlde !== null) {
@@ -261,7 +275,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
 
       setShowOption(true);
       setLoading(false);
-    } catch {
+    } catch (error) {
       showResultNotFound();
       setLoading(false);
     }
@@ -288,6 +302,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         return;
       case "tx":
         history.push(details.transaction(data?.tx as string));
+        return;
+      case "drep":
+        history.push(details.drep(data?.drep as string));
         return;
       case "script":
         if (data?.script?.nativeScript) {
@@ -335,8 +352,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       search.query = query.trim();
       const url =
         filter === "tokens"
-          ? `${API.TOKEN.LIST}?page=0&size=${RESULT_SIZE}&${stringify(search)}`
-          : `${API.DELEGATION.POOL_LIST}?${stringify(search)}`;
+          ? `${API.TOKEN.LIST}?page=0&size=${RESULT_SIZE}&${stringify({ query: query })}`
+          : `${API.DELEGATION.POOL_LIST}?${stringify({ query: query })}&page=0&size=${RESULT_SIZE}`;
+
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
 
@@ -352,9 +370,9 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           callback?.();
         } else {
           if (res.data?.totalItems === 1) {
-            history.push(details.delegation(search.query));
+            history.push(details.delegation(res.data.data[0].poolId || ""));
           } else {
-            history.push(`${routers.DELEGATION_POOLS}?${stringify(search)}`, {
+            history.push(`${routers.DELEGATION_POOLS}?${stringify({ page: 1, size: 50, query: query })}`, {
               tickerNameSearch: (search.query || "").toLocaleLowerCase()
             });
           }
@@ -365,7 +383,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         setShowOption(true);
       }
       setLoading(false);
-    } catch {
+    } catch (error) {
       showResultNotFound();
       setLoading(false);
     }
@@ -559,6 +577,12 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       callback?.();
       return;
     }
+    if (option?.value === "dreps") {
+      history.push(details.drep(search.trim()));
+      handleSetSearchValueDefault();
+      callback?.();
+      return;
+    }
 
     if (search) {
       const params = { search, filter: filterParams || (filter !== "all" ? filter : undefined) };
@@ -620,11 +644,18 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           }
         }}
       >
-        {options.map(({ value, label }) => (
-          <SelectOption data-testid="filter-options" key={value} value={value} home={home ? 1 : 0}>
-            {label}
-          </SelectOption>
-        ))}
+        {options
+          .filter((i) => {
+            if (!FF_GLOBAL_IS_CONWAY_ERA) {
+              return i.value !== "dreps";
+            }
+            return i;
+          })
+          .map(({ value, label }) => (
+            <SelectOption data-testid="filter-options" key={value} value={value} home={home ? 1 : 0}>
+              {label}
+            </SelectOption>
+          ))}
       </StyledSelect>
       <StyledInput
         data-testid="search-bar"
