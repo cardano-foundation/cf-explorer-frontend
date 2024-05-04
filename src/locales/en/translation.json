@@ -805,7 +805,6 @@
   "common.hexFormat": "Hex Format",
   "common.sent": "Sent",
   "common.received": "Received",
-  "desc.transactionUTXO": "Includes transactions in which the UTXO containing the tokens is used resulting in token movement, while the tokens are unspent and returned to the address",
   "explain.minFeeA": "Additional transaction fee per byte of data (in lovelace).",
   "explain.minFeeB": "Base transaction fee (in lovelace).",
   "explain.maxBlockSize": "Maximum size of a block body. Limits blockchain storage size",
