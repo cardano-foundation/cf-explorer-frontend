@@ -63,14 +63,14 @@ const StepReviewModal: React.FC<IPropsModal> = ({ open, handleCloseModal, params
           epochRanges: params?.epochRange,
           timePattern: formatTypeDateTime(),
           zoneOffset: timeZone == "UTC" ? 0 : moment().utcOffset(),
-          dateFormat: formatTypeDate()
+          dateFormat: formatTypeDate().replace("Date format ", "")
         };
         response = await generateStakePoolReport(paramsStakeKeyReport);
       } else {
         const events = params?.eventsKey?.map((event: string) => ({ type: event }));
         const paramsStakeKeyReport = {
           timePattern: formatTypeDateTime(),
-          dateFormat: formatTypeDate(),
+          dateFormat: formatTypeDate().replace("Date format ", ""),
           zoneOffset: timeZone == "UTC" ? 0 : moment().utcOffset(),
           stakeKey: params?.address,
           reportName: params?.reportName || defaultReportName,
