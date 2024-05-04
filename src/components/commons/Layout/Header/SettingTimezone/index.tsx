@@ -120,6 +120,7 @@ const TimezoneCard = () => {
         if (data) {
           localStorage.setItem("userTimezone", tz);
           setSelectedTimeZone(tz);
+          window.location.reload();
         }
       })
       .finally(() => setLoading(false));
