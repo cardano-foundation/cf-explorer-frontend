@@ -127,7 +127,7 @@ const error = {
 };
 const errorDarkmode = {
   100: "#C20024",
-  700: "#C20024",
+  700: "#FFA3B4",
   800: "#FFEBEE",
   contrastText: COMMON.white,
 
