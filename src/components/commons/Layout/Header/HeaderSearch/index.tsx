@@ -264,7 +264,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
         }
 
         if (res?.data?.validPoolName && !res?.data?.validTokenName) {
-          history.push(routers.DELEGATION_POOLS, {
+          history.push(`${routers.DELEGATION_POOLS}?${stringify({ page: 1, size: 50, query: query })}`, {
             tickerNameSearch: encodeURIComponent((search || "").trim().toLocaleLowerCase())
           });
           setShowOption(false);
