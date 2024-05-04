@@ -6,6 +6,7 @@
   "filter.blocks": "Blocks",
   "filter.transactions": "Transactions",
   "filter.tokens": "Tokens",
+  "filter.dreps": "Dreps",
   "filter.address": "Addresses",
   "filter.pools": "Pools",
   "filter.ADAHanlde": "ADA Handle",
