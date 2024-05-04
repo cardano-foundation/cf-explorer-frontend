@@ -140,14 +140,14 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
               }}
             />
           )}
-          <CustomTooltip title={data?.poolName || poolId}>
+          <CustomTooltip title={data?.poolName || data?.poolView || poolId}>
             <HeaderTitle>
               {data?.poolName ? (
                 data?.poolName
               ) : (
                 <TruncateSubTitleContainer>
                   <DynamicEllipsisText
-                    value={data?.poolName || data?.poolName || poolId}
+                    value={data?.poolName || data?.poolView || poolId}
                     sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 50px)" }}
                     postfix={5}
                     isNoLimitPixel={true}
