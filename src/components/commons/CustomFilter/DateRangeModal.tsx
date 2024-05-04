@@ -9,7 +9,7 @@ import CustomDatePicker, { IDateRange } from "../CustomDatePicker";
 
 export const DATETIME_PARTTEN = `YYYY/MM/DD HH:mm:ss`;
 
-const toLocalTime = (date?: string): Date | null => (date ? moment.utc(date, DATETIME_PARTTEN).local().toDate() : null);
+const toLocalTime = (date?: string): Date | null => (date ? moment(date, DATETIME_PARTTEN).local().toDate() : null);
 
 const toTimeFormat = (date: Date | null): string | undefined =>
   date ? moment(date).format(DATETIME_PARTTEN) : undefined;

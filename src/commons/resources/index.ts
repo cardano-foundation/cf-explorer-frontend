@@ -240,6 +240,9 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import DrepIdIcon from "./icons/DrepId.svg?react";
+import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -304,6 +307,8 @@ export {
   UserIcon,
   DropIcon,
   DelegatorIcon,
+  DrepIdIcon,
+  ActiveStakeDrepIcon,
   LightningIcon,
   LinkOff,
   SignOut,

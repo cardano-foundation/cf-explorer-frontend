@@ -126,7 +126,7 @@ export const footerMenus: Menu[] = [
     icon: BrowseIcon,
     children: [
       { href: "https://cardanofoundation.org/en/about-us/", title: "Cardano Foundation", key: "site.CF" },
-      { href: "https://docs.cardano.org/en/latest/", title: "Cardano Docs", key: "site.cardanoDocs" },
+      { href: "https://docs.cardano.org/", title: "Cardano Docs", key: "site.cardanoDocs" },
       { href: "https://education.cardanofoundation.org/", title: "Cardano Academy", key: "site.cardanoAcademy" },
       { href: "https://developers.cardano.org/", title: "Developer Portal", key: "site.developerPortal" },
       { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
