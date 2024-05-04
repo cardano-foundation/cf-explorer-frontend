@@ -16,7 +16,7 @@ import ADAicon from "src/components/commons/ADAIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText, TimeDuration } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 interface ITokenTransaction {
   tokenId: string;
@@ -145,7 +145,6 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
 
   return (
     <Box>
-      <DescriptionText>{t("desc.transactionUTXO")}</DescriptionText>
       <TimeDuration>
         <FormNowMessage time={fetchData.lastUpdated} />
       </TimeDuration>
