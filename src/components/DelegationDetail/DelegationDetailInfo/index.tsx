@@ -104,13 +104,13 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
       <Box display="flex" alignItems="center" justifyContent={justifyStyle} flex="1">
         <Box display="flex" alignItems="center" width={"100%"}>
           <Box marginLeft={isPoolName ? 0 : 3}>
-            <BookmarkButton keyword={poolId} type="POOL" />
+            <BookmarkButton keyword={data?.poolView || poolId} type="POOL" />
           </Box>
           <Box marginLeft={width < 400 ? 0 : 1}>
             <HeaderStatus status={data?.poolStatus}>{data?.poolStatus}</HeaderStatus>
           </Box>
           <Box marginLeft={"auto"}>
-            <ToStakeLifCycleButton address={poolId} from={"poolDetail"} />
+            <ToStakeLifCycleButton address={data?.poolView || poolId} from={"poolDetail"} />
           </Box>
         </Box>
       </Box>
