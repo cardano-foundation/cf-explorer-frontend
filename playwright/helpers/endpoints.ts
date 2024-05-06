@@ -23,6 +23,17 @@ export class BlockFrost {
       return `${BlockFrost.BASE_MAIN_NET_URL}/epochs/latest`;
     }
   };
+  static GetEpochById = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/epochs`;
+    }
+  };
+
+  static GetBlockByNumber = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/blocks`;
+    }
+  };
 }
 
 export class Koios {

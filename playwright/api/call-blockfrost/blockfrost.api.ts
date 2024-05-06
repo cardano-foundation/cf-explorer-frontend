@@ -36,8 +36,40 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getEpochById = async (epochId: number) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.GetEpochById.Base + `/${epochId}`,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getBlockByNumber = async (blockNumber: number) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.GetBlockByNumber.Base + `/${blockNumber}`,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
   return {
     getLastEpochData,
-    getLatestBlockData
+    getLatestBlockData,
+    getEpochById,
+    getBlockByNumber
   };
 }
