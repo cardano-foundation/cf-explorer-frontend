@@ -206,13 +206,6 @@ const GovernanceVotesDetail: React.FC<{
     })}`
   );
 
-  const { data: dataChart } = useFetch<GovernanceVoteChart>(
-    `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
-      txHash: voteId,
-      index: index || 0
-    })}`
-  );
-
   const [tab, setTab] = useState<string>("pool");
   const handleTabChange = (newTab: string) => {
     setTab(newTab);
@@ -308,7 +301,7 @@ const GovernanceVotesDetail: React.FC<{
         </Box>
       </Box>
       {tab === "pool" && <OverviewVote data={data} />}
-      {tab === "overall" && <OverallVote data={data} dataChart={dataChart} />}
+      {tab === "overall" && <OverallVote data={data} voteId={voteId} index={index} />}
     </Box>
   );
 };

@@ -1,6 +1,18 @@
 import { useMemo, useState } from "react";
-import { Box, Button, Chip, TooltipProps, Typography, useTheme, Tooltip, tooltipClasses, styled } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  TooltipProps,
+  Typography,
+  useTheme,
+  Tooltip,
+  tooltipClasses,
+  styled,
+  Skeleton
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { stringify } from "qs";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -17,7 +29,10 @@ import {
   VotesYesIcon,
   VotingPowerIcon
 } from "src/commons/resources";
-import { formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { formatADA, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 
 import {
   DataContainer,
@@ -32,17 +47,31 @@ import CustomTooltip from "../commons/CustomTooltip";
 import CopyButton from "../commons/CopyButton";
 import { GovernanceStatus, actionTypeListDrep } from "../commons/CardGovernanceVotes";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
+import CustomModal from "../commons/CustomModal";
+import { CIPPropertyTable } from "../CIPComplianceModal/styles";
+import { Column } from "../commons/Table";
 
 import { ActionMetadataModal, ActionMetadataModalConfirm, GovernanceVoteDetail, VoteHistoryModal } from ".";
 
-const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; dataChart: GovernanceVoteChart | null }> = ({
+type VoteType = "SPOs" | "DReps" | "CC";
+
+const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string; index?: number }> = ({
   data,
-  dataChart
+  voteId,
+  index
 }) => {
-  const [selectVote, setSelectVote] = useState<string>("");
+  const [selectVote, setSelectVote] = useState<VoteType>("SPOs");
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
+
+  const { data: dataChart, loading: loadingChart } = useFetch<GovernanceVoteChart>(
+    `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
+      txHash: voteId,
+      index: index || 0,
+      voterType: voterType[selectVote]
+    })}`
+  );
 
   const theme = useTheme();
   const { t } = useTranslation();
@@ -52,12 +81,33 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; dataChart: Gove
   const filterDataChart = (selectVote: string) => {
     switch (selectVote) {
       case "SPOs":
-        return dataChart?.votingChartsList.filter((i) => i.voterType === "STAKING_POOL_KEY_HASH")[0];
-      case "DReps":
-        return dataChart?.votingChartsList.filter((i) => i.voterType === "DREP_KEY_HASH")[0];
-      case "CC":
-        return dataChart?.votingChartsList.filter((i) => i.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH")[0];
+        return {
+          voterType: "STAKING_POOL_KEY_HASH",
+          numberOfYesVote: dataChart?.totalYesVoteStake,
+          numberOfNoVotes: dataChart?.totalNoVoteStake,
+          numberOfAbstainVotes: dataChart?.abstainVoteStake,
+          totalVote: dataChart?.activeVoteStake,
+          threshold: dataChart?.threshold
+        };
 
+      case "DReps":
+        return {
+          voterType: "DREP_KEY_HASH",
+          numberOfYesVote: dataChart?.totalYesVoteStake,
+          numberOfNoVotes: dataChart?.totalNoVoteStake,
+          numberOfAbstainVotes: dataChart?.abstainVoteStake,
+          totalVote: dataChart?.activeVoteStake,
+          threshold: dataChart?.threshold
+        };
+      case "CC":
+        return {
+          voterType: "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH",
+          numberOfYesVote: dataChart?.yesCcMembers,
+          numberOfNoVotes: dataChart?.noCcMembers,
+          numberOfAbstainVotes: dataChart?.abstainCcMembers,
+          totalVote: dataChart?.ccMembers,
+          threshold: dataChart?.threshold
+        };
       default:
         return dataChart;
     }
@@ -181,7 +231,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; dataChart: Gove
               <InfoTitle paddingBottom="3px">
                 <StyledTitle data-testid="governance.actionMetadataTitle">{t("pool.actionMetadata")}</StyledTitle>
               </InfoTitle>
-              <InfoValue>
+              <InfoValue sx={{ pr: "20px  !important", [theme.breakpoints.down("sm")]: { pr: "0  !important" } }}>
                 <Button
                   data-testid="governance.actionMetadataDetail"
                   onClick={() => {
@@ -253,6 +303,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; dataChart: Gove
                 [theme.breakpoints.down("xl")]: {
                   px: "0 !important",
                   pt: "20px !important",
+                  pb: "0px !important",
                   borderTop: `1px solid ${
                     theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
                   }  !important`,
@@ -279,47 +330,54 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; dataChart: Gove
                 <StyledTitle data-testid="governance.votesTitle">{t("pool.votes")}</StyledTitle>
 
                 <Box display="flex" gap="8px" flexWrap="inherit">
-                  {(selectVote ? listVotes.slice(0, 1) : listVotes).map((i) => (
+                  {listVotes.map((i) => (
                     <Chip
                       key={i}
                       sx={{
                         fontWeight: 500,
                         fontSize: "12px",
-                        background: selectVote
-                          ? theme.palette.primary[200]
-                          : theme.isDark
-                          ? theme.palette.primary[500]
-                          : theme.palette.primary[100],
-                        border: `1px solid ${selectVote ? theme.palette.primary.main : theme.palette.secondary[600]}`,
-                        color: selectVote
-                          ? theme.palette.secondary.main
-                          : theme.isDark
-                          ? theme.palette.secondary.main
-                          : theme.palette.secondary[600],
+                        background:
+                          selectVote === i
+                            ? theme.palette.primary[200]
+                            : theme.isDark
+                            ? theme.palette.primary[500]
+                            : theme.palette.primary[100],
+                        border: `1px solid ${
+                          selectVote === i ? theme.palette.primary.main : theme.palette.secondary[600]
+                        }`,
+                        color:
+                          selectVote === i
+                            ? theme.palette.secondary.main
+                            : theme.isDark
+                            ? theme.palette.secondary.main
+                            : theme.palette.secondary[600],
                         "&:hover": {
                           background: theme.palette.primary[200]
                         }
                       }}
-                      label={selectVote || i}
-                      onClick={() => setSelectVote(selectVote ? "" : i)}
+                      label={i}
+                      onClick={() => setSelectVote(i as VoteType)}
                     />
                   ))}
-                  {selectVote && (
-                    <Chip
-                      sx={{
-                        background: theme.isDark ? theme.palette.primary[500] : theme.palette.primary[100],
-                        border: `1px solid ${theme.palette.secondary[600]}`,
-                        color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary[600]
-                      }}
-                      onClick={() => setSelectVote("")}
-                      label="x"
-                    />
-                  )}
                 </Box>
               </InfoTitle>
               <InfoValue data-testid="governance.votesValue" width={"100%"}>
                 <Box pr="5px">
-                  <VoteRate data={filterDataChart(selectVote)} />
+                  {loadingChart ? (
+                    <Box
+                      component={Skeleton}
+                      variant="rectangular"
+                      sx={{
+                        height: 150,
+                        [theme.breakpoints.down("sm")]: {
+                          height: 300
+                        }
+                      }}
+                      borderRadius={2}
+                    />
+                  ) : (
+                    <VoteRate data={filterDataChart(selectVote) as VotingChart} selectedVote={selectVote} />
+                  )}
                 </Box>
               </InfoValue>
             </Item>
@@ -419,12 +477,14 @@ const VoteBar = ({
   percentage,
   color,
   icon,
-  label
+  label,
+  value
 }: {
   percentage: string | number;
   color: string;
   icon: JSX.Element;
   label: string;
+  value?: number | string | null;
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -443,7 +503,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {t("common.N/A")} ({percentage})
+              {value ? value : t("common.N/A")} ({percentage})
             </Typography>
           </Box>
         }
@@ -470,9 +530,10 @@ const VoteBar = ({
   );
 };
 
-const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null }) => {
+const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVote: string }) => {
   const { t } = useTranslation();
   const theme = useTheme();
+  const [openModal, setOpenModal] = useState(false);
 
   const totalVote = useMemo(() => {
     if (data) {
@@ -482,34 +543,184 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
   }, [JSON.stringify(data)]);
 
   return (
-    <Box display="flex" alignItems="end" justifyContent="space-between" flexWrap={"wrap"} width="100%" minHeight={150}>
-      <VoteBar
-        percentage={totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / totalVote) : 0}
-        color={theme.palette.success[700]}
-        icon={<VotesYesIcon />}
-        label={t("common.yes")}
-      />
-      <VoteBar
-        percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
-        color={theme.palette.warning[700]}
-        icon={<VotesAbstainIcon />}
-        label={t("common.abstain")}
-      />
-      <VoteBar
-        percentage={
-          totalVote > 0
-            ? formatPercent(
-                (100 -
-                  (+formatPercent((data?.numberOfYesVote || 0) / totalVote).split("%")[0] +
-                    +formatPercent((data?.numberOfAbstainVotes || 0) / totalVote).split("%")[0])) /
-                  100
-              )
-            : 0
+    <Box
+      display="flex"
+      alignItems="end"
+      justifyContent="space-between"
+      flexWrap={"wrap"}
+      width="100%"
+      minHeight={150}
+      sx={{
+        [theme.breakpoints.down("sm")]: {
+          flexDirection: "column",
+          alignItems: "start",
+          mt: 2
         }
-        color={theme.palette.error[700]}
-        icon={<VotesNoIcon />}
-        label={t("common.no")}
-      />
+      }}
+    >
+      <Box flex={3} color={theme.palette.secondary.light} fontSize={14}>
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Box>
+            {selectedVote == "CC" ? " CC Members: " : "Active Voting Stake: "}
+            <Box display={"inline"} fontWeight={"light"}>
+              {data?.totalVote !== null
+                ? `${selectedVote == "CC" ? data?.totalVote : formatADA(data?.totalVote)} ${
+                    selectedVote == "CC" ? "" : "ADA"
+                  }`
+                : t("common.N/A")}
+            </Box>
+          </Box>
+          <BlackWarningIcon />
+        </Box>
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Box py={2}>
+            Threshold:{" "}
+            <Box display={"inline"} fontWeight={"light"}>
+              {data?.totalVote !== null && data?.threshold !== null
+                ? `${
+                    selectedVote == "CC"
+                      ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
+                      : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                  } ${selectedVote == "CC" ? "" : "ADA"}`
+                : t("common.N/A")}{" "}
+              ({formatPercent(data?.threshold)})
+            </Box>
+          </Box>{" "}
+          <BlackWarningIcon />
+        </Box>
+        <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Box>
+            Remaining:{" "}
+            <Box display={"inline"} fontWeight={"light"}>
+              {data?.totalVote !== null
+                ? `${
+                    selectedVote == "CC"
+                      ? (data?.totalVote || 0) - totalVote
+                      : formatADA((data?.totalVote || 0) - totalVote)
+                  } ${selectedVote == "CC" ? "" : "ADA"}`
+                : t("common.N/A")}
+            </Box>
+          </Box>{" "}
+          <BlackWarningIcon />
+        </Box>
+        <Box pt={2}>
+          <Box display={"inline"} sx={{ cursor: "pointer" }} onClick={() => setOpenModal(true)}>
+            <ChipContainer maxWidth="170px" Icon={VotesAbstainIcon} variant="warning" message={t("drep.abstainInfo")} />
+          </Box>
+        </Box>
+      </Box>
+      <Box flex={1} width={"100%"}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexWrap={"wrap"}
+          width="100%"
+          minHeight={150}
+          alignItems={"end"}
+          gap={4}
+        >
+          <VoteBar
+            percentage={
+              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote) : 0
+            }
+            color={theme.palette.success[700]}
+            icon={<VotesYesIcon />}
+            label={t("common.yes")}
+            value={data?.numberOfYesVote}
+          />
+          <VoteBar
+            percentage={
+              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote) : 0
+            }
+            color={theme.palette.error[700]}
+            icon={<VotesNoIcon />}
+            label={t("common.no")}
+            value={data?.numberOfNoVotes}
+          />
+        </Box>
+      </Box>
+      <AbstainInfo open={openModal} data={data} onClose={() => setOpenModal(false)} />
     </Box>
+  );
+};
+
+const voterType = {
+  SPOs: "STAKING_POOL_KEY_HASH",
+  DReps: "DREP_KEY_HASH",
+  CC: "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+};
+
+export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: VotingChart | null }> = ({
+  onClose,
+  open,
+  data
+}) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+
+  const dataTable =
+    data?.totalVote !== null
+      ? [
+          {
+            current: data?.totalVote,
+            starting: (data?.totalVote || 0) + (data?.numberOfAbstainVotes || 0),
+            abstained: data?.numberOfAbstainVotes
+          }
+        ]
+      : null;
+
+  const columns: Column<{ current: number; starting: number; abstained: number }>[] = [
+    {
+      title:
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+          ? t("drep.abstainCCTotal")
+          : t("drep.abstainActiveVoteStake"),
+      key: "expectedFormat",
+      minWidth: 130,
+      render: (r) => (data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.starting : formatADA(r.starting))
+    },
+    {
+      title: t("drep.abstainAmount"),
+      key: "expectedFormat",
+      minWidth: 130,
+      render: (r) =>
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.abstained : formatADA(r.abstained)
+    },
+    {
+      title:
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+          ? t("drep.abstainCCCurent")
+          : t("drep.abstainCurrentVoteStake"),
+      key: "expectedFormat",
+      minWidth: 130,
+      render: (r) => (data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : formatADA(r.current))
+    }
+  ];
+  return (
+    <CustomModal
+      open={open}
+      onClose={() => onClose?.()}
+      title={t("drep.abstainInfoTitle")}
+      width={650}
+      sx={{ maxHeight: "70vh" }}
+    >
+      <Box display="block" pb="15px">
+        <Typography data-testid="governance.metadataModal.anchor" color={theme.palette.secondary.main}>
+          {data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+            ? t("drep.abstainInfoDescriptionCC")
+            : data?.voterType === "STAKING_POOL_KEY_HASH"
+            ? t("drep.abstainInfoDescriptionSPOs")
+            : t("drep.abstainInfoDescriptionDrep")}
+        </Typography>
+        <CIPPropertyTable
+          isModal
+          height="auto"
+          isFullTableHeight={true}
+          data={dataTable}
+          columns={columns}
+          showPagination={false}
+        />
+      </Box>
+    </CustomModal>
   );
 };

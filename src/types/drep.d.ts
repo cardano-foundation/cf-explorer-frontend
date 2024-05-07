@@ -65,12 +65,18 @@ interface DelegationGovernanceVotesProps {
 }
 
 interface GovernanceVoteChart {
-  txHash: string | null;
+  abstainCcMembers: number | null;
+  abstainVoteStake: number | null;
+  activeVoteStake: number | null;
+  ccMembers: number | null;
   index: number | null;
-  numberOfYesVote: number;
-  numberOfNoVotes: number;
-  numberOfAbstainVotes: number;
-  votingChartsList: VotingChart[];
+  noCcMembers: number | null;
+  threshold: number | null;
+  totalNoVoteStake: number | null;
+  totalYesVoteStake: number | null;
+  txHash: string;
+  voterType: number | null;
+  yesCcMembers: number | null;
 }
 
 interface VotingChart {
@@ -78,4 +84,6 @@ interface VotingChart {
   numberOfYesVote: number;
   numberOfNoVotes: number;
   numberOfAbstainVotes: number;
+  totalVote: number;
+  threshold: number;
 }
