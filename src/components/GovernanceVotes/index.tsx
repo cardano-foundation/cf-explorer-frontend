@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
@@ -20,15 +21,15 @@ import {
   TableRow,
   Typography,
   useTheme,
-  ClickAwayListener,
-  Link
+  ClickAwayListener
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -48,7 +49,6 @@ import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -63,10 +63,10 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
@@ -664,6 +664,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
@@ -949,7 +950,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
-                    ata-testid="governance.filter.currentStatusValue"
+                    data-testid="governance.filter.currentStatusValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1079,7 +1080,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
-                  onClose={() => setOpenDateRange(false)}
+                  onClose={() => {
+                    setOpenDateRange(false);
+                  }}
                   onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>
