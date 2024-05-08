@@ -205,12 +205,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               width={"100%"}
             >
               <Box display="flex" justifyContent="space-between" pr="5px">
-                <CustomIcon
-                  fill={theme.palette.secondary.light}
-                  icon={CurrentStatusIcon}
-                  height={28}
-                  marginTop="15px"
-                />
+                <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle>
@@ -294,7 +289,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               item
               xs={6}
               md={6}
-              pb={"38px !important"}
+              pb={"45px !important"}
               pl={"25px !important"}
               top={1}
               sx={{
@@ -315,17 +310,22 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
               }  !important`}
             >
-              <Box display="flex" justifyContent="space-between" pr="5px">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                pr="5px"
+                sx={{ [theme.breakpoints.down("md")]: { pt: "20px" } }}
+              >
                 <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle
-                paddingTop="2px"
                 paddingBottom="3px"
                 paddingRight="5px"
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center !important"
+                mt="7px !important"
               >
                 <StyledTitle data-testid="governance.votesTitle">{t("pool.votes")}</StyledTitle>
 
@@ -371,7 +371,8 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                         height: 150,
                         [theme.breakpoints.down("sm")]: {
                           height: 300
-                        }
+                        },
+                        bgcolor: theme.isDark ? theme.palette.secondary[600] : ""
                       }}
                       borderRadius={2}
                     />
@@ -423,12 +424,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 }}
               >
                 <Box display="flex" justifyContent="space-between" pr="5px">
-                  <CustomIcon
-                    fill={theme.palette.secondary.light}
-                    height={27}
-                    icon={VotingPowerIcon}
-                    style={{ marginTop: "5px" }}
-                  />
+                  <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} />
                   <BlackWarningIcon />
                 </Box>
                 <InfoTitle paddingBottom="3px">
@@ -492,7 +488,7 @@ const VoteBar = ({
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography data-testid="governance.voteBar.percent" fontSize="10px" fontWeight={400}>
-        {!percentage ? "0%" : percentage}
+        {!value ? "0" : value}
       </Typography>
       <LightTooltip
         title={
@@ -704,7 +700,7 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       width={650}
       sx={{ maxHeight: "70vh" }}
     >
-      <Box display="block" pb="15px">
+      <Box display="block">
         <Typography data-testid="governance.metadataModal.anchor" color={theme.palette.secondary.main}>
           {data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
             ? t("drep.abstainInfoDescriptionCC")
