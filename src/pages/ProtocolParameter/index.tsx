@@ -809,7 +809,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.daterange")}
                 </Box>
               </Box>
-              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
+              {Boolean(dateRange.fromDate) && Boolean(dateRange.toDate) && (
+                <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
+              )}
             </Box>
           </ButtonFilter>
 
@@ -921,6 +923,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           open={showDaterange}
           value={dateRange}
           onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+          onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
         />
       </FilterContainer>
     </ClickAwayListener>
