@@ -923,6 +923,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           open={showDaterange}
           value={dateRange}
           onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+          onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
         />
       </FilterContainer>
     </ClickAwayListener>

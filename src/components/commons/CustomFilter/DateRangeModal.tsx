@@ -45,7 +45,6 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({ onClose, onDateRangeCha
     onClose?.();
     if (dateRange[0] === null || dateRange[1] === null) {
       onClearValue && onClearValue({ fromDate: "", toDate: "" });
-      onDateRangeChange({ fromDate: "", toDate: "" });
     }
   };
 
