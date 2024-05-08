@@ -732,7 +732,7 @@ const VoteRate = ({ data }: { data?: GovernanceVoteChart | VotingChart | null })
               )
             : 0
         }
-        color={theme.palette.error[700]}
+        color={theme.isDark ? theme.palette.error[100] : theme.palette.error[700]}
         icon={<VotesNoIcon />}
         label={t("common.no")}
       />
