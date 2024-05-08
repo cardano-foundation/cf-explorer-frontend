@@ -474,16 +474,17 @@ const VoteBar = ({
   color,
   icon,
   label,
-  value
+  value,
+  tooltipTitle
 }: {
   percentage: string | number;
   color: string;
   icon: JSX.Element;
   label: string;
   value?: number | string | null;
+  tooltipTitle: React.ReactNode;
 }) => {
   const theme = useTheme();
-  const { t } = useTranslation();
   const { isGalaxyFoldSmall } = useScreen();
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -499,7 +500,7 @@ const VoteBar = ({
               fontWeight={600}
               color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
             >
-              {value ? value : t("common.N/A")} ({percentage})
+              {tooltipTitle}
             </Typography>
           </Box>
         }
@@ -557,7 +558,8 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
       <Box flex={3} color={theme.palette.secondary.light} fontSize={14}>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Box>
-            {selectedVote == "CC" ? " CC Members: " : "Active Voting Stake: "}
+            {selectedVote == "CC" ? t("drep.ccMembers") : t("drep.activeVoteStake")}
+            {": "}
             <Box display={"inline"} fontWeight={"light"}>
               {data?.totalVote !== null
                 ? `${selectedVote == "CC" ? data?.totalVote : formatADA(data?.totalVote)} ${
@@ -566,11 +568,14 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 : t("common.N/A")}
             </Box>
           </Box>
-          <BlackWarningIcon />
+          <CustomTooltip title={t("drep.activeVoteStakeTooltip")}>
+            <BlackWarningIcon />
+          </CustomTooltip>
         </Box>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Box py={2}>
-            Threshold:{" "}
+            {t("drep.threshold")}
+            {": "}
             <Box display={"inline"} fontWeight={"light"}>
               {data?.totalVote !== null && data?.threshold !== null
                 ? `${
@@ -582,11 +587,14 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               ({formatPercent(data?.threshold)})
             </Box>
           </Box>{" "}
-          <BlackWarningIcon />
+          <CustomTooltip title={t("drep.thresholdTooltip")}>
+            <BlackWarningIcon />
+          </CustomTooltip>
         </Box>
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Box>
-            Remaining:{" "}
+            {t("drep.remaining")}
+            {": "}
             <Box display={"inline"} fontWeight={"light"}>
               {data?.totalVote !== null
                 ? `${
@@ -597,7 +605,9 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 : t("common.N/A")}
             </Box>
           </Box>{" "}
-          <BlackWarningIcon />
+          <CustomTooltip title={t("drep.remainingTooltip")}>
+            <BlackWarningIcon />
+          </CustomTooltip>
         </Box>
         <Box pt={2}>
           <Box display={"inline"} sx={{ cursor: "pointer" }} onClick={() => setOpenModal(true)}>
@@ -623,6 +633,34 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
             icon={<VotesYesIcon />}
             label={t("common.yes")}
             value={data?.numberOfYesVote}
+            tooltipTitle={
+              <Box textAlign={"left"} pl={"4px"}>
+                <Box>
+                  Current:{" "}
+                  {data?.numberOfYesVote !== null
+                    ? `${selectedVote == "CC" ? data?.numberOfYesVote : formatADA(data?.numberOfYesVote)} ${
+                        selectedVote == "CC" ? "" : "ADA"
+                      }`
+                    : t("common.N/A")}{" "}
+                  (
+                  {data?.totalVote && data?.totalVote > 0
+                    ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote)
+                    : "0%"}
+                  )
+                </Box>
+                <Box>
+                  Threshold:{" "}
+                  {data?.totalVote !== null && data?.threshold !== null
+                    ? `${
+                        selectedVote == "CC"
+                          ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
+                          : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                      } ${selectedVote == "CC" ? "" : "ADA"}`
+                    : t("common.N/A")}{" "}
+                  ({formatPercent(data?.threshold)})
+                </Box>
+              </Box>
+            }
           />
           <VoteBar
             percentage={
@@ -632,6 +670,21 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
             icon={<VotesNoIcon />}
             label={t("common.no")}
             value={data?.numberOfNoVotes}
+            tooltipTitle={
+              <Box textAlign={"left"} pl={"4px"}>
+                Current:{" "}
+                {data?.numberOfNoVotes !== null
+                  ? `${selectedVote == "CC" ? data?.numberOfNoVotes : formatADA(data?.numberOfNoVotes)} ${
+                      selectedVote == "CC" ? "" : "ADA"
+                    }`
+                  : t("common.N/A")}{" "}
+                (
+                {data?.totalVote && data?.totalVote > 0
+                  ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote)
+                  : "0%"}
+                )
+              </Box>
+            }
           />
         </Box>
       </Box>
