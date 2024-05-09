@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -60,17 +60,26 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
   voteId,
   index
 }) => {
-  const [selectVote, setSelectVote] = useState<VoteType>("SPOs");
+  const [selectVote, setSelectVote] = useState<VoteType | "">("");
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
 
+  useEffect(() => {
+    if (data?.allowedVoteBySPO) {
+      setSelectVote("SPOs");
+    } else {
+      setSelectVote("DReps");
+    }
+  }, [data?.allowedVoteBySPO]);
   const { data: dataChart, loading: loadingChart } = useFetch<GovernanceVoteChart>(
-    `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
-      txHash: voteId,
-      index: index || 0,
-      voterType: voterType[selectVote]
-    })}`
+    selectVote
+      ? `${API.POOL_CERTIFICATE.POOL_CHART}?${stringify({
+          txHash: voteId,
+          index: index || 0,
+          voterType: voterType[selectVote as VoteType]
+        })}`
+      : ""
   );
 
   const theme = useTheme();
@@ -116,6 +125,12 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
   if (!data) {
     return <></>;
   }
+
+  const disableButtonSelect = (key: string) => {
+    if (key === "SPOs" && !data.allowedVoteBySPO) return true;
+    if (key === "CC" && !data.allowedVoteByCC) return true;
+    return false;
+  };
 
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
@@ -346,33 +361,46 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
 
                 <Box display="flex" gap="8px" flexWrap="inherit">
                   {listVotes.map((i) => (
-                    <Chip
+                    <CustomTooltip
                       key={i}
-                      sx={{
-                        fontWeight: 500,
-                        fontSize: "12px",
-                        background:
-                          selectVote === i
-                            ? theme.palette.primary[200]
-                            : theme.isDark
-                            ? theme.palette.primary[500]
-                            : theme.palette.primary[100],
-                        border: `1px solid ${
-                          selectVote === i ? theme.palette.primary.main : theme.palette.secondary[600]
-                        }`,
-                        color:
-                          selectVote === i
-                            ? theme.palette.secondary.main
-                            : theme.isDark
-                            ? theme.palette.secondary.main
-                            : theme.palette.secondary[600],
-                        "&:hover": {
-                          background: theme.palette.primary[200]
-                        }
-                      }}
-                      label={i}
-                      onClick={() => setSelectVote(i as VoteType)}
-                    />
+                      title={
+                        disableButtonSelect(i)
+                          ? i === "SPOs"
+                            ? t("drep.SPODisable")
+                            : t("drep.CCÏDisable")
+                          : undefined
+                      }
+                    >
+                      <Box display={"inline-block"}>
+                        <Chip
+                          disabled={disableButtonSelect(i)}
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "12px",
+                            background:
+                              selectVote === i
+                                ? theme.palette.primary[200]
+                                : theme.isDark
+                                ? theme.palette.primary[500]
+                                : theme.palette.primary[100],
+                            border: `1px solid ${
+                              selectVote === i ? theme.palette.primary.main : theme.palette.secondary[600]
+                            }`,
+                            color:
+                              selectVote === i
+                                ? theme.palette.secondary.main
+                                : theme.isDark
+                                ? theme.palette.secondary.main
+                                : theme.palette.secondary[600],
+                            "&:hover": {
+                              background: theme.palette.primary[200]
+                            }
+                          }}
+                          label={i}
+                          onClick={() => setSelectVote(i as VoteType)}
+                        />
+                      </Box>
+                    </CustomTooltip>
                   ))}
                 </Box>
               </InfoTitle>
@@ -596,7 +624,21 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               </Box>
             </CustomTooltip>
           </Box>
-          <CustomTooltip title={t("drep.activeVoteStakeTooltip")}>
+          <CustomTooltip
+            slotProps={{
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -4]
+                    }
+                  }
+                ]
+              }
+            }}
+            title={t("drep.activeVoteStakeTooltip")}
+          >
             <BlackWarningIcon />
           </CustomTooltip>
         </Box>
@@ -625,7 +667,21 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               </Box>
             </CustomTooltip>
           </Box>{" "}
-          <CustomTooltip title={t("drep.thresholdTooltip")}>
+          <CustomTooltip
+            slotProps={{
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -4]
+                    }
+                  }
+                ]
+              }
+            }}
+            title={t("drep.thresholdTooltip")}
+          >
             <BlackWarningIcon />
           </CustomTooltip>
         </Box>
@@ -653,7 +709,21 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               </Box>
             </CustomTooltip>
           </Box>{" "}
-          <CustomTooltip title={t("drep.remainingTooltip")}>
+          <CustomTooltip
+            slotProps={{
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -4]
+                    }
+                  }
+                ]
+              }
+            }}
+            title={t("drep.remainingTooltip")}
+          >
             <BlackWarningIcon />
           </CustomTooltip>
         </Box>

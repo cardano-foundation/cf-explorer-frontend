@@ -342,6 +342,8 @@ export interface GovernanceVoteDetail {
   votingPower: number | null;
   submissionDate: string;
   poolName: string | null;
+  allowedVoteByCC: boolean;
+  allowedVoteBySPO: boolean;
   expiryDate: string;
   historyVotes: {
     no: number | null;
