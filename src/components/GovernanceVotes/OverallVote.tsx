@@ -686,7 +686,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 <Box>
                   Current:{" "}
                   {data?.numberOfYesVote !== null
-                    ? `${selectedVote == "CC" ? data?.numberOfYesVote : formatADA(data?.numberOfYesVote)} ${
+                    ? `${selectedVote == "CC" ? data?.numberOfYesVote : formatADAFull(data?.numberOfYesVote)} ${
                         selectedVote == "CC" ? "" : "ADA"
                       }`
                     : t("common.N/A")}{" "}
@@ -702,7 +702,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                     ? `${
                         selectedVote == "CC"
                           ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                          : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                          : formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
                       } ${selectedVote == "CC" ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
                   ({formatPercent(data?.threshold)})
@@ -722,7 +722,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               <Box textAlign={"left"} pl={"4px"}>
                 Current:{" "}
                 {data?.numberOfNoVotes !== null
-                  ? `${selectedVote == "CC" ? data?.numberOfNoVotes : formatADA(data?.numberOfNoVotes)} ${
+                  ? `${selectedVote == "CC" ? data?.numberOfNoVotes : formatADAFull(data?.numberOfNoVotes)} ${
                       selectedVote == "CC" ? "" : "ADA"
                     }`
                   : t("common.N/A")}{" "}
