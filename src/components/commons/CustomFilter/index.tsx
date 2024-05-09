@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
-import { pick } from "lodash";
+import { omit, pick } from "lodash";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -223,7 +223,7 @@ const CustomFilter: React.FC<Props> = (props) => {
                     toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                   });
                 }}
-                onClearValue={() => setParams({ ...params, fromDate: "", toDate: "" })}
+                onClearValue={() => setParams(omit(params, ["fromDate", "toDate"]))}
                 onClose={() => setOpenDateRange(false)}
               />
             </AdditionContainer>
