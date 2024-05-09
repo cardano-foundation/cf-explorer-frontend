@@ -223,6 +223,7 @@ const CustomFilter: React.FC<Props> = (props) => {
                     toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                   });
                 }}
+                onClearValue={() => setParams({ ...params, fromDate: "", toDate: "" })}
                 onClose={() => setOpenDateRange(false)}
               />
             </AdditionContainer>
