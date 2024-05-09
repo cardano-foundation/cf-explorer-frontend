@@ -29,7 +29,7 @@ import {
   VotesYesIcon,
   VotingPowerIcon
 } from "src/commons/resources";
-import { formatADA, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -578,13 +578,23 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           <Box>
             {selectedVote == "CC" ? t("drep.ccMembers") : t("drep.activeVoteStake")}
             {": "}
-            <Box display={"inline"} fontWeight={"light"}>
-              {data?.totalVote !== null
-                ? `${selectedVote == "CC" ? data?.totalVote || 0 : formatADA(data?.totalVote || 0)} ${
-                    selectedVote == "CC" ? "" : "ADA"
-                  }`
-                : t("common.N/A")}
-            </Box>
+            <CustomTooltip
+              title={
+                data?.totalVote !== null
+                  ? selectedVote == "CC"
+                    ? data?.totalVote || 0
+                    : formatADAFull(data?.totalVote || 0)
+                  : t("common.N/A")
+              }
+            >
+              <Box display={"inline"} fontWeight={"light"}>
+                {data?.totalVote !== null
+                  ? `${selectedVote == "CC" ? data?.totalVote || 0 : formatADA(data?.totalVote || 0)} ${
+                      selectedVote == "CC" ? "" : "ADA"
+                    }`
+                  : t("common.N/A")}
+              </Box>
+            </CustomTooltip>
           </Box>
           <CustomTooltip title={t("drep.activeVoteStakeTooltip")}>
             <BlackWarningIcon />
@@ -594,16 +604,26 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           <Box py={2}>
             {t("drep.threshold")}
             {": "}
-            <Box display={"inline"} fontWeight={"light"}>
-              {data?.totalVote !== null && data?.threshold !== null
-                ? `${
-                    selectedVote == "CC"
-                      ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                      : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
-                  } ${selectedVote == "CC" ? "" : "ADA"}`
-                : t("common.N/A")}{" "}
-              ({formatPercent(data?.threshold)})
-            </Box>
+            <CustomTooltip
+              title={
+                data?.totalVote !== null && data?.threshold !== null
+                  ? selectedVote == "CC"
+                    ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
+                    : formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                  : t("common.N/A")
+              }
+            >
+              <Box display={"inline"} fontWeight={"light"}>
+                {data?.totalVote !== null && data?.threshold !== null
+                  ? `${
+                      selectedVote == "CC"
+                        ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
+                        : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
+                  : t("common.N/A")}{" "}
+                ({formatPercent(data?.threshold)})
+              </Box>
+            </CustomTooltip>
           </Box>{" "}
           <CustomTooltip title={t("drep.thresholdTooltip")}>
             <BlackWarningIcon />
@@ -613,15 +633,25 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           <Box>
             {t("drep.remaining")}
             {": "}
-            <Box display={"inline"} fontWeight={"light"}>
-              {data?.totalVote !== null
-                ? `${
-                    selectedVote == "CC"
-                      ? (data?.totalVote || 0) - totalVote
-                      : formatADA((data?.totalVote || 0) - totalVote)
-                  } ${selectedVote == "CC" ? "" : "ADA"}`
-                : t("common.N/A")}
-            </Box>
+            <CustomTooltip
+              title={
+                data?.totalVote !== null
+                  ? selectedVote == "CC"
+                    ? (data?.totalVote || 0) - totalVote
+                    : formatADAFull((data?.totalVote || 0) - totalVote)
+                  : t("common.N/A")
+              }
+            >
+              <Box display={"inline"} fontWeight={"light"}>
+                {data?.totalVote !== null
+                  ? `${
+                      selectedVote == "CC"
+                        ? (data?.totalVote || 0) - totalVote
+                        : formatADA((data?.totalVote || 0) - totalVote)
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
+                  : t("common.N/A")}
+              </Box>
+            </CustomTooltip>
           </Box>{" "}
           <CustomTooltip title={t("drep.remainingTooltip")}>
             <BlackWarningIcon />
@@ -650,7 +680,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
             color={theme.palette.success[700]}
             icon={<VotesYesIcon />}
             label={t("common.yes")}
-            value={data?.numberOfYesVote}
+            value={selectedVote == "CC" ? data?.numberOfYesVote : formatADA(data?.numberOfYesVote)}
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 <Box>
@@ -687,7 +717,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
             color={theme.palette.error[700]}
             icon={<VotesNoIcon />}
             label={t("common.no")}
-            value={data?.numberOfNoVotes}
+            value={selectedVote == "CC" ? data?.numberOfNoVotes : formatADA(data?.numberOfNoVotes)}
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 Current:{" "}
@@ -729,9 +759,9 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
     data?.totalVote !== null
       ? [
           {
-            current: data?.totalVote,
+            current: data?.totalVote || 0,
             starting: (data?.totalVote || 0) + (data?.numberOfAbstainVotes || 0),
-            abstained: data?.numberOfAbstainVotes
+            abstained: data?.numberOfAbstainVotes || 0
           }
         ]
       : null;
@@ -744,14 +774,15 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
           : t("drep.abstainActiveVoteStake"),
       key: "expectedFormat",
       minWidth: 130,
-      render: (r) => (data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.starting : formatADA(r.starting))
+      render: (r) =>
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.starting : `${formatADAFull(r.starting)} ADA`
     },
     {
       title: t("drep.abstainAmount"),
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.abstained : formatADA(r.abstained)
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.abstained : `${formatADAFull(r.abstained)} ADA`
     },
     {
       title:
@@ -760,7 +791,8 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
           : t("drep.abstainCurrentVoteStake"),
       key: "expectedFormat",
       minWidth: 130,
-      render: (r) => (data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : formatADA(r.current))
+      render: (r) =>
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : `${formatADAFull(r.current)} ADA`
     }
   ];
   return (
