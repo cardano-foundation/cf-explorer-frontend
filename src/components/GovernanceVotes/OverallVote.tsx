@@ -199,13 +199,18 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               md={6}
               top={1}
               borderLeft={"none !important"}
-              pt={"20px  !important"}
+              pt={"10px  !important"}
               px={"0px  !important"}
               sx={{ position: "relative", pr: "5px !important" }}
               width={"100%"}
             >
               <Box display="flex" justifyContent="space-between" pr="5px">
-                <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} />
+                <CustomIcon
+                  fill={theme.palette.secondary.light}
+                  icon={CurrentStatusIcon}
+                  height={28}
+                  marginTop="10px"
+                />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle>
@@ -218,9 +223,9 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoTitle>
             </Item>
-            <Item item xs={6} md={6} top={1} pr={"5px !important"} pt={"20px  !important"}>
+            <Item item xs={6} md={6} top={1} pr={"5px !important"} pt={"10px  !important"}>
               <Box display="flex" justifyContent="space-between" pr="5px">
-                <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
+                <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} marginTop="10px" />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle paddingBottom="3px">
@@ -249,9 +254,14 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               </InfoValue>
             </Item>
 
-            <Item item xs={6} md={6} pr={"5px !important"} py={"20px !important"}>
+            <Item item xs={6} md={6} pr={"5px !important"} pt={"10px !important"} pb={"20px !important"}>
               <Box display="flex" justifyContent="space-between" pr="5px">
-                <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+                <CustomIcon
+                  fill={theme.palette.secondary.light}
+                  height={27}
+                  icon={SubmissionDateIcon}
+                  marginTop="10px"
+                />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle paddingBottom="3px">
@@ -261,9 +271,14 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 <DatetimeTypeTooltip>{formatDateTimeLocal(data?.submissionDate || "")}</DatetimeTypeTooltip>
               </InfoValue>
             </Item>
-            <Item item xs={6} md={6} pr={"5px !important"}>
+            <Item item xs={6} md={6} pr={"5px !important"} pt={"10px !important"} pb={"20px !important"}>
               <Box display="flex" justifyContent="space-between" pr="5px">
-                <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
+                <CustomIcon
+                  fill={theme.palette.secondary.light}
+                  height={27}
+                  icon={SubmissionDateIcon}
+                  marginTop="10px"
+                />
                 <BlackWarningIcon />
               </Box>
               <InfoTitle paddingBottom="3px">
@@ -387,7 +402,8 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               xs={6}
               md={6}
               pr={"5px !important"}
-              py={"20px !important"}
+              pt={"10px !important"}
+              pb={"20px !important"}
               sx={{
                 [theme.breakpoints.down("xl")]: {
                   p: "0px !important",
@@ -408,14 +424,16 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               <Box
                 sx={{
                   [theme.breakpoints.down("xl")]: {
-                    py: "20px",
-                    width: "50.1%",
+                    pt: "10px",
+                    pb: "20px",
+                    width: "50%",
                     borderRight: `1px solid ${
                       theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
                     }  !important`
                   },
                   [theme.breakpoints.down("md")]: {
-                    py: "20px",
+                    pt: "10px",
+                    pb: "20px",
                     width: "50.1%",
                     borderRight: `1px solid ${
                       theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
@@ -424,7 +442,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 }}
               >
                 <Box display="flex" justifyContent="space-between" pr="5px">
-                  <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} />
+                  <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} mt={"10px"} />
                   <BlackWarningIcon />
                 </Box>
                 <InfoTitle paddingBottom="3px">
@@ -562,7 +580,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
             {": "}
             <Box display={"inline"} fontWeight={"light"}>
               {data?.totalVote !== null
-                ? `${selectedVote == "CC" ? data?.totalVote : formatADA(data?.totalVote)} ${
+                ? `${selectedVote == "CC" ? data?.totalVote || 0 : formatADA(data?.totalVote || 0)} ${
                     selectedVote == "CC" ? "" : "ADA"
                   }`
                 : t("common.N/A")}
@@ -762,6 +780,7 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
             : t("drep.abstainInfoDescriptionDrep")}
         </Typography>
         <CIPPropertyTable
+          sx={{ mb: `0px !important` }}
           isModal
           height="auto"
           isFullTableHeight={true}
