@@ -583,7 +583,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? data?.totalVote || 0
-                    : formatADAFull(data?.totalVote || 0)
+                    : `${formatADAFull(data?.totalVote || 0)} ADA`
                   : t("common.N/A")
               }
             >
@@ -609,7 +609,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null && data?.threshold !== null
                   ? selectedVote == "CC"
                     ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                    : formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                    : `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
                   : t("common.N/A")
               }
             >
@@ -638,7 +638,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? (data?.totalVote || 0) - totalVote
-                    : formatADAFull((data?.totalVote || 0) - totalVote)
+                    : `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
                   : t("common.N/A")
               }
             >
