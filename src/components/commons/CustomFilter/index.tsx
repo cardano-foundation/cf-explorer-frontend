@@ -233,7 +233,6 @@ const CustomFilter: React.FC<Props> = (props) => {
                 onClick={() => {
                   if (onSubmit) {
                     onSubmit?.({ ...params, search: search });
-                    history.replace({ search: stringify({ page, size, sort: params?.sort }) });
                     setOpenSearch(false);
                     setOpen(false);
                   }
