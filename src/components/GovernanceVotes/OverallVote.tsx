@@ -841,7 +841,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                           : t("common.N/A")
                       } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
-                  ({formatPercent(data?.threshold)})
+                  ({data?.threshold ? formatPercent(data?.threshold) : t("common.N/A")})
                 </Box>
               </Box>
             }
