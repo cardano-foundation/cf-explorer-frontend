@@ -695,7 +695,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                         : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
                         ? formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
                         : t("common.N/A")
-                    } ${selectedVote == "CC" ? "" : "ADA"}`
+                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                   : t("common.N/A")}{" "}
                 ({data?.threshold ? formatPercent(data?.threshold) : t("common.N/A")})
               </Box>
