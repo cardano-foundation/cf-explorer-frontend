@@ -141,10 +141,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           {data?.poolName ? (
             data.poolName
           ) : (
-            <DynamicEllipsisText
-              value={data?.poolView ? data.poolView : data?.description || ""}
-              isTooltip={!!data?.poolView}
-            />
+            <DynamicEllipsisText value={data?.poolView ? data.poolView : data?.description || ""} isTooltip />
           )}{" "}
           {data?.poolTicker && `- ${data.poolTicker}`}
         </Box>
