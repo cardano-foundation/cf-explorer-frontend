@@ -370,7 +370,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                     >
                       <Box display={"inline-block"}>
                         <Chip
-                          disabled={disableButtonSelect(i)}
+                          disabled={disableButtonSelect(i) || loadingChart}
                           sx={{
                             fontWeight: 500,
                             fontSize: "12px",
@@ -795,12 +795,22 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
         >
           <VoteBar
             percentage={
-              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote) : 0
+              data?.totalVote && data?.totalVote > 0
+                ? FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                  ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote)
+                  : 0
+                : 0
             }
             color={theme.palette.success[700]}
             icon={<VotesYesIcon />}
             label={t("common.yes")}
-            value={selectedVote == "CC" ? data?.numberOfYesVote : formatADA(data?.numberOfYesVote)}
+            value={
+              selectedVote == "CC"
+                ? data?.numberOfYesVote
+                : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                ? formatADA(data?.numberOfYesVote)
+                : t("common.N/A")
+            }
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 <Box>
@@ -838,12 +848,22 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           />
           <VoteBar
             percentage={
-              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote) : 0
+              data?.totalVote && data?.totalVote > 0
+                ? FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                  ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote)
+                  : 0
+                : 0
             }
             color={theme.palette.error[700]}
             icon={<VotesNoIcon />}
             label={t("common.no")}
-            value={selectedVote == "CC" ? data?.numberOfNoVotes : formatADA(data?.numberOfNoVotes)}
+            value={
+              selectedVote == "CC"
+                ? data?.numberOfNoVotes
+                : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                ? formatADA(data?.numberOfNoVotes)
+                : t("common.N/A")
+            }
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 Current:{" "}
