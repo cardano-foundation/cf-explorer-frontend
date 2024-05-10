@@ -131,7 +131,6 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
     if (key === "CC" && !data.allowedVoteByCC) return true;
     return false;
   };
-
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
       <Box
@@ -317,14 +316,15 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
           >
             <Item
               item
+              flex={2}
               xs={6}
               md={6}
-              pb={"45px !important"}
               pl={"25px !important"}
               top={1}
               sx={{
                 position: "relative",
                 pr: "5px !important",
+                pb: `${window.innerWidth / window.innerHeight > 1.9 ? "45px" : "43.5px"} !important`,
                 [theme.breakpoints.down("xl")]: {
                   px: "0 !important",
                   pt: "20px !important",
@@ -423,6 +423,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
             </Item>
             <Item
               item
+              flex={1}
               xs={6}
               md={6}
               pr={"5px !important"}
@@ -573,7 +574,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
   const { t } = useTranslation();
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
-
+  const { isTablet, isGalaxyFoldSmall } = useScreen();
   const totalVote = useMemo(() => {
     if (data) {
       return (data?.numberOfAbstainVotes || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfYesVote || 0);
@@ -602,20 +603,35 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           <Box>
             {selectedVote == "CC" ? t("drep.ccMembers") : t("drep.activeVoteStake")}
             {": "}
+            {isGalaxyFoldSmall ? <br /> : <></>}
             <CustomTooltip
               title={
                 data?.totalVote !== null
                   ? selectedVote == "CC"
-                    ? data?.totalVote || 0
-                    : `${formatADAFull(data?.totalVote || 0)} ADA`
+                    ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
+                    : `${formatADAFull((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)} ADA`
                   : t("common.N/A")
               }
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, isTablet ? -15 : -5]
+                      }
+                    }
+                  ]
+                }
+              }}
             >
               <Box display={"inline"} fontWeight={"light"}>
                 {data?.totalVote !== null
-                  ? `${selectedVote == "CC" ? data?.totalVote || 0 : formatADA(data?.totalVote || 0)} ${
-                      selectedVote == "CC" ? "" : "ADA"
-                    }`
+                  ? `${
+                      selectedVote == "CC"
+                        ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
+                        : formatADA((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
                   : t("common.N/A")}
               </Box>
             </CustomTooltip>
@@ -627,7 +643,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   {
                     name: "offset",
                     options: {
-                      offset: [0, -4]
+                      offset: [0, isTablet ? -15 : -5]
                     }
                   }
                 ]
@@ -642,6 +658,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           <Box py={2}>
             {t("drep.threshold")}
             {": "}
+            {isGalaxyFoldSmall ? <br /> : <></>}
             <CustomTooltip
               title={
                 data?.totalVote !== null && data?.threshold !== null
@@ -650,6 +667,18 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                     : `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
                   : t("common.N/A")
               }
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, isTablet ? -15 : -5]
+                      }
+                    }
+                  ]
+                }
+              }}
             >
               <Box display={"inline"} fontWeight={"light"}>
                 {data?.totalVote !== null && data?.threshold !== null
@@ -670,7 +699,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   {
                     name: "offset",
                     options: {
-                      offset: [0, -4]
+                      offset: [0, isTablet ? -15 : -5]
                     }
                   }
                 ]
@@ -684,7 +713,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
         <Box display={"flex"} alignItems={"center"} gap={1}>
           <Box>
             {t("drep.remaining")}
-            {": "}
+            {": "} {isGalaxyFoldSmall ? <br /> : <></>}
             <CustomTooltip
               title={
                 data?.totalVote !== null
@@ -693,6 +722,18 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                     : `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
                   : t("common.N/A")
               }
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, isTablet ? -15 : -5]
+                      }
+                    }
+                  ]
+                }
+              }}
             >
               <Box display={"inline"} fontWeight={"light"}>
                 {data?.totalVote !== null
@@ -712,7 +753,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   {
                     name: "offset",
                     options: {
-                      offset: [0, -4]
+                      offset: [0, isTablet ? -15 : -5]
                     }
                   }
                 ]
@@ -825,8 +866,8 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
     data?.totalVote !== null
       ? [
           {
-            current: data?.totalVote || 0,
-            starting: (data?.totalVote || 0) + (data?.numberOfAbstainVotes || 0),
+            current: (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0),
+            starting: data?.totalVote || 0,
             abstained: data?.numberOfAbstainVotes || 0
           }
         ]
