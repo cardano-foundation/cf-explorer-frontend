@@ -33,6 +33,7 @@ import { formatADA, formatADAFull, formatDateTimeLocal, formatPercent, getShortH
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
+import { FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE } from "src/commons/utils/constants";
 
 import {
   DataContainer,
@@ -609,7 +610,9 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
-                    : `${formatADAFull((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)} ADA`
+                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                    ? `${formatADAFull((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)} ADA`
+                    : t("common.N/A")
                   : t("common.N/A")
               }
               slotProps={{
@@ -630,8 +633,10 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
-                        : formatADA((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)
-                    } ${selectedVote == "CC" ? "" : "ADA"}`
+                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                        ? formatADA((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)
+                        : t("common.N/A")
+                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                   : t("common.N/A")}
               </Box>
             </CustomTooltip>
@@ -664,7 +669,9 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null && data?.threshold !== null
                   ? selectedVote == "CC"
                     ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                    : `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
+                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                    ? `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
+                    : t("common.N/A")
                   : t("common.N/A")
               }
               slotProps={{
@@ -685,10 +692,12 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                        : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                        ? formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                        : t("common.N/A")
                     } ${selectedVote == "CC" ? "" : "ADA"}`
                   : t("common.N/A")}{" "}
-                ({formatPercent(data?.threshold)})
+                ({data?.threshold ? formatPercent(data?.threshold) : t("common.N/A")})
               </Box>
             </CustomTooltip>
           </Box>{" "}
@@ -719,7 +728,9 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? (data?.totalVote || 0) - totalVote
-                    : `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
+                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                    ? `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
+                    : t("common.N/A")
                   : t("common.N/A")
               }
               slotProps={{
@@ -740,8 +751,10 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? (data?.totalVote || 0) - totalVote
-                        : formatADA((data?.totalVote || 0) - totalVote)
-                    } ${selectedVote == "CC" ? "" : "ADA"}`
+                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                        ? formatADA((data?.totalVote || 0) - totalVote)
+                        : t("common.N/A")
+                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                   : t("common.N/A")}
               </Box>
             </CustomTooltip>
@@ -866,8 +879,10 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
     data?.totalVote !== null
       ? [
           {
-            current: (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0),
-            starting: data?.totalVote || 0,
+            current: FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+              ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)
+              : t("common.N/A"),
+            starting: FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? data?.totalVote || 0 : t("common.N/A"),
             abstained: data?.numberOfAbstainVotes || 0
           }
         ]
@@ -882,7 +897,9 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.starting : `${formatADAFull(r.starting)} ADA`
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+          ? r.starting
+          : `${formatADAFull(r.starting)} ${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""}`
     },
     {
       title: t("drep.abstainAmount"),
@@ -899,7 +916,9 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : `${formatADAFull(r.current)} ADA`
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+          ? r.current
+          : `${formatADAFull(r.current)} ${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""}`
     }
   ];
   return (
