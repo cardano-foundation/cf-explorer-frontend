@@ -492,17 +492,17 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                         getAriaLabel={() => "Minimum distance"}
                         defaultValue={[filterParams?.minActiveVoteStake || 0, initParams.maxActiveVoteStake || 0]}
                         onChange={(e, newValue) =>
-                          handleChangeValueRange(e, newValue, "minActiveVoteStake", ".maxActiveVoteStake")
+                          handleChangeValueRange(e, newValue, "minActiveVoteStake", "maxActiveVoteStake")
                         }
                         valueLabelDisplay="auto"
                         value={[
                           filterParams?.minActiveVoteStake || 0,
                           filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0)
                         ]}
-                        min={dataRange?.minActiveVoteStake || 0}
+                        min={dataRange?.minActiveVoteStake ? dataRange?.minActiveVoteStake / 10 ** 6 : 0}
                         disableSwap
-                        step={1000000}
-                        max={dataRange?.maxActiveVoteStake || 0}
+                        step={1000}
+                        max={dataRange?.maxActiveVoteStake ? dataRange?.maxActiveVoteStake / 10 ** 6 : 0}
                       />
                       <Typography>
                         {formatADA(dataRange?.maxActiveVoteStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
@@ -510,7 +510,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                     </Box>
                     {groupInputRange(
                       filterParams?.minActiveVoteStake || 0,
-                      filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake || 0),
+                      filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake / 10 ** 6 || 0),
                       "minActiveVoteStake",
                       ".maxActiveVoteStake",
                       initParams.maxActiveVoteStake

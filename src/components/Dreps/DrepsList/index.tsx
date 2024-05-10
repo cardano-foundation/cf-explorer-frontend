@@ -58,7 +58,11 @@ const DrepsList: React.FC = () => {
                 .endOf("D")
                 .subtract(timeZone == "UTC" ? 0 : moment().utcOffset(), "minutes")
                 .format(DATETIME_PARTTEN)
-            : ""
+            : "",
+          activeStakeTo: pageInfo?.maxActiveVoteStake ? +pageInfo.maxActiveVoteStake * 10 ** 6 : "",
+          activeStakeFrom: pageInfo?.minActiveVoteStake ? +pageInfo?.minActiveVoteStake * 10 ** 6 : "",
+          votingPowerTo: pageInfo?.maxVotingPower ? +pageInfo.maxVotingPower * 10 ** 6 : "",
+          votingPowerFrom: pageInfo?.minVotingPower ? +pageInfo?.minVotingPower * 10 ** 6 : ""
         },
         (value) => value !== "" && value !== undefined
       )
