@@ -307,7 +307,8 @@ export const ChipContainer: React.FC<{
   titleTooltip?: string;
   variant?: "success" | "warning" | "info" | "error" | "gray";
   messageColor?: string;
-}> = ({ Icon, message, variant, titleTooltip, messageColor }) => {
+  maxWidth?: string;
+}> = ({ Icon, message, variant, titleTooltip, messageColor, maxWidth }) => {
   const theme = useTheme();
 
   const color = (variant?: "success" | "warning" | "info" | "error" | "gray") => {
@@ -349,6 +350,7 @@ export const ChipContainer: React.FC<{
     <CustomTooltip title={titleTooltip || ""}>
       <Chip
         pl={`${Icon ? "4px" : 1} !important`}
+        maxWidth={maxWidth ? `${maxWidth} !important` : "unset"}
         mb={1}
         bgcolor={`${backgroundColor(variant)} !important`}
         borderColor={`${color(variant)} !important`}

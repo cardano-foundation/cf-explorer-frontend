@@ -447,7 +447,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                           fill={
                             dataRange?.maxActiveVoteStake === null
                               ? theme.palette.secondary[600]
-                              : theme.palette.secondary[800]
+                              : theme.palette.secondary.light
                           }
                           height={18}
                         />
@@ -563,7 +563,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                           data-testid="filterRange.poolVotingTitle"
                           ml={1}
                           color={({ palette }) =>
-                            dataRange?.maxActiveVoteStake === null ? palette.secondary[600] : palette.secondary.main
+                            dataRange?.maxVotingPower === null ? palette.secondary[600] : palette.secondary.main
                           }
                         >
                           {t("pool.poolVoting")}
