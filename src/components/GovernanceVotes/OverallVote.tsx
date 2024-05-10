@@ -909,10 +909,8 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
     data?.totalVote !== null
       ? [
           {
-            current: FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-              ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)
-              : t("common.N/A"),
-            starting: FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? data?.totalVote || 0 : t("common.N/A"),
+            current: (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0),
+            starting: data?.totalVote || 0,
             abstained: data?.numberOfAbstainVotes || 0
           }
         ]
