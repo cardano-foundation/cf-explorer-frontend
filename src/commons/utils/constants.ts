@@ -138,7 +138,7 @@ export const FF_GLOBAL_IS_CONWAY_ERA =
   (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA || get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA")) === "true";
 export const FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE =
   (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ||
-    get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE")) !== "true";
+    get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE")) === "true";
 export const CONWAY_ERE_FEILD = ["governanceParticipationRate", "votingPower"];
 
 export enum ACCOUNT_ERROR {
