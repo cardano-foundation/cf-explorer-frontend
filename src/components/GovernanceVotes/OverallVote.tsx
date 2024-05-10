@@ -806,14 +806,18 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 <Box>
                   Current:{" "}
                   {data?.numberOfYesVote !== null
-                    ? `${selectedVote == "CC" ? data?.numberOfYesVote : formatADAFull(data?.numberOfYesVote)} ${
-                        selectedVote == "CC" ? "" : "ADA"
-                      }`
+                    ? `${
+                        selectedVote == "CC"
+                          ? data?.numberOfYesVote
+                          : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                          ? formatADAFull(data?.numberOfYesVote)
+                          : t("common.N/A")
+                      } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
                   (
-                  {data?.totalVote && data?.totalVote > 0
+                  {data?.totalVote && data?.totalVote > 0 && FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
                     ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote)
-                    : "0%"}
+                    : t("common.N/A")}
                   )
                 </Box>
                 <Box>
@@ -822,8 +826,10 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                     ? `${
                         selectedVote == "CC"
                           ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                          : formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
-                      } ${selectedVote == "CC" ? "" : "ADA"}`
+                          : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                          ? formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                          : t("common.N/A")
+                      } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
                   ({formatPercent(data?.threshold)})
                 </Box>
@@ -842,14 +848,18 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
               <Box textAlign={"left"} pl={"4px"}>
                 Current:{" "}
                 {data?.numberOfNoVotes !== null
-                  ? `${selectedVote == "CC" ? data?.numberOfNoVotes : formatADAFull(data?.numberOfNoVotes)} ${
-                      selectedVote == "CC" ? "" : "ADA"
-                    }`
+                  ? `${
+                      selectedVote == "CC"
+                        ? data?.numberOfNoVotes
+                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                        ? formatADAFull(data?.numberOfNoVotes)
+                        : t("common.N/A")
+                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                   : t("common.N/A")}{" "}
                 (
-                {data?.totalVote && data?.totalVote > 0
+                {data?.totalVote && data?.totalVote > 0 && FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
                   ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote)
-                  : "0%"}
+                  : t("common.N/A")}
                 )
               </Box>
             }
