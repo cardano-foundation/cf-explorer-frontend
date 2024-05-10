@@ -909,7 +909,9 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       render: (r) =>
         data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
           ? r.starting
-          : `${formatADAFull(r.starting)} ${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""}`
+          : `${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? formatADAFull(r.starting) : t("common.N/A")} ${
+              FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""
+            }`
     },
     {
       title: t("drep.abstainAmount"),
@@ -928,7 +930,9 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       render: (r) =>
         data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
           ? r.current
-          : `${formatADAFull(r.current)} ${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""}`
+          : `${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? formatADAFull(r.current) : t("common.N/A")} ${
+              FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""
+            }`
     }
   ];
   return (
