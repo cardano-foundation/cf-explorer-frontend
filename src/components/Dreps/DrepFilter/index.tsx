@@ -512,7 +512,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                       filterParams?.minActiveVoteStake || 0,
                       filterParams.maxActiveVoteStake ?? (initParams.maxActiveVoteStake / 10 ** 6 || 0),
                       "minActiveVoteStake",
-                      ".maxActiveVoteStake",
+                      "maxActiveVoteStake",
                       initParams.maxActiveVoteStake
                     )}
                   </AccordionDetailsFilter>
