@@ -13,6 +13,7 @@ interface Block {
   poolName: string;
   poolTicker: string;
   poolView: string;
+  description: string;
 }
 
 type BlockDetail = Block & {
