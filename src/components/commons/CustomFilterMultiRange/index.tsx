@@ -277,7 +277,13 @@ const CustomFilterMultiRange: React.FC = () => {
             maxValue < minValue &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: minValue
+                [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                  ? +minValue / 100
+                  : ["maxPledge"].includes(keyOnChangeMax)
+                  ? +minValue * 10 ** 6
+                  : ["maxSaturation"].includes(keyOnChangeMax)
+                  ? parseFloat(`${minValue}`).toFixed(2)
+                  : minValue
               });
           }}
           onChange={({ target: { value } }) => {
@@ -601,7 +607,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       BigNumber(filterParams.minPledge || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      filterParams.maxPledge
+                      filterParams.maxPledge !== undefined && !isNaN(filterParams.maxPledge)
                         ? BigNumber(filterParams.maxPledge)
                             .div(10 ** 6)
                             .toNumber()
