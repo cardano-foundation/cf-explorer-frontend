@@ -414,14 +414,13 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       }),
     [currentPath]
   );
-
   useEffect(() => {
     const filter: FilterParams = options.find((item) => checkIncludesPath(item.paths))?.value || "all";
     if ("/" + currentPath !== routers.SEARCH) setValues({ ...intitalValue, filter });
     setError("");
     setShowErrorMobile?.(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues, history.location.pathname]);
+  }, [currentPath, checkIncludesPath, setError, setShowErrorMobile, setValues, history.location]);
 
   const handleSearch = async (e?: FormEvent, filterParams?: FilterParams) => {
     e?.preventDefault();
