@@ -528,7 +528,7 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
               )
             : 0
         }
-        color={theme.palette.error[700]}
+        color={theme.isDark ? theme.palette.error[100] : theme.palette.error[700]}
         numberVote={data?.numberOfNoVotes || 0}
         icon={<VotesNoIcon />}
         label={t("common.no")}

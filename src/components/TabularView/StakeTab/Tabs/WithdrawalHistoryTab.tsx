@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { omit } from "lodash";
@@ -14,7 +14,7 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
-import CustomFilter from "src/components/commons/CustomFilter";
+import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter";
 import { WrapFilterDescription } from "src/components/StakingLifeCycle/DelegatorLifecycle/Withdraw/RecentWithdraws/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
@@ -27,10 +27,13 @@ const WithdrawalHistoryTab = () => {
   const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
   const { stakeId } = useParams<{ stakeId: string }>();
+  const [params, setParams] = useState<FilterParams>({});
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
   const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
-    ...pageInfo
+    ...pageInfo,
+    ...params,
+    txHash: params.search
   });
 
   const columns: Column<WithdrawItem>[] = [
@@ -97,6 +100,9 @@ const WithdrawalHistoryTab = () => {
             sortKey="id"
             filterValue={omit(pageInfo, ["page", "size"])}
             onSubmit={(params) => {
+              if (params) {
+                setParams(params);
+              }
               const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
               history.replace({ search: stringify({ page: 1, ...newParams }) });
             }}
