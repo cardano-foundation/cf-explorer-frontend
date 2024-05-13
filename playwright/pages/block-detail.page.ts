@@ -5,12 +5,13 @@ import { BlockInformationDto } from "../api/dtos/blockInformation.dto";
 
 export function blockDetailPage(page: Page) {
   const blockId = page.getByTestId("ellipsis-text");
-  const blockCreateAt = page.locator('//div[div[div[text()="Created At"]]]/following-sibling::div');
-  const blockTransactionsCount = page.locator('//div[div[div[text()="Transactions"]]]/following-sibling::div');
+  const blockCreateAt = page.getByTestId("detailHeader.value").nth(0);
+  const blockTransactionsCount = page.getByTestId("detailHeader.value").nth(2);
   const epochNumber = page.locator('div[data-test-id="CircularProgressbarWithChildren__children"] > a');
-  const blockSlotData = page.locator('//div[div[div[text()="Slot - Absolute Slot"]]]/following-sibling::div');
-  const blockNumber = page.locator('//div[div[div[text()="Block"]]]/following-sibling::div');
-  const blockTotalOutput = page.locator('//div[div[div[text()="Total output in ADA"]]]/following-sibling::div');
+  const blockSlotData = page.getByTestId("detailHeader.value").nth(6);
+  const blockNumber = page.getByTestId("detailHeader.value").nth(5);
+  const blockTotalOutput = page.getByTestId("detailHeader.value").nth(4);
+
   const assertBlockDataIsDisplayed = async (lastBlockDataApi: Promise<BlockInformationDto>) => {
     await expect(blockId, "The block id is not the expected for the current block details").toHaveText(
       (
