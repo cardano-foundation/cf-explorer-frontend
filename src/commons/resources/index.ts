@@ -196,6 +196,7 @@ import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import KingIcon from "./icons/king-icon.svg?react";
+import BlockProducerIcon from "./icons/block-producer.svg?react";
 import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
@@ -378,6 +379,7 @@ export {
   PolygonDarkRedIcon,
   CubeIconComponent,
   KingIcon,
+  BlockProducerIcon,
   TooltipIcon,
   SlotIcon,
   TimeIconComponent,
