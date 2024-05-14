@@ -135,7 +135,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: (
         <Box
           component={data?.poolView ? Link : Box}
-          color={({ palette }) => `${data?.poolView ? palette.primary.main : palette.text}!important`}
+          color={({ palette }) => `${data?.poolView ? palette.primary.main : palette.secondary.main}!important`}
           to={details.delegation(data?.poolView)}
         >
           {data?.poolName ? (
