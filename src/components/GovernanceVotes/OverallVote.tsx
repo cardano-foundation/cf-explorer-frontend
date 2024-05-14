@@ -670,7 +670,9 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? selectedVote == "CC"
                     ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
                     : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                    ? `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
+                    ? `${formatADAFull(
+                        Math.ceil(((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0))
+                      )} ADA`
                     : t("common.N/A")
                   : t("common.N/A")
               }
@@ -693,7 +695,11 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                       selectedVote == "CC"
                         ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
                         : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                        ? formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                        ? formatADA(
+                            Math.ceil(
+                              ((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0)
+                            )
+                          )
                         : t("common.N/A")
                     } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                   : t("common.N/A")}{" "}
