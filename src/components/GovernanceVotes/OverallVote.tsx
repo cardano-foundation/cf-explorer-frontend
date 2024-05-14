@@ -843,7 +843,11 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                         selectedVote == "CC"
                           ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
                           : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                          ? formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                          ? formatADAFull(
+                              Math.ceil(
+                                ((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0)
+                              )
+                            )
                           : t("common.N/A")
                       } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
