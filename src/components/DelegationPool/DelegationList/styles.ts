@@ -42,7 +42,7 @@ export const SearchContainer = styled("div")(({ theme }) => ({
 
 export const DelegationContainer = styled("div")(() => ({
   "& .table-wrapper tbody": {
-    zIndex: 10
+    zIndex: 1
   }
 }));
 
