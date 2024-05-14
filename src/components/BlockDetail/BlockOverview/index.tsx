@@ -135,13 +135,13 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: (
         <Box
           component={data?.poolView ? Link : Box}
-          color={({ palette }) => `${palette.primary.main}!important`}
+          color={({ palette }) => `${data?.poolView ? palette.primary.main : palette.secondary.main}!important`}
           to={details.delegation(data?.poolView)}
         >
           {data?.poolName ? (
             data.poolName
           ) : (
-            <DynamicEllipsisText value={data?.poolView || ""} isTooltip={!!data?.poolView} />
+            <DynamicEllipsisText value={data?.poolView ? data.poolView : data?.description || ""} isTooltip />
           )}{" "}
           {data?.poolTicker && `- ${data.poolTicker}`}
         </Box>
