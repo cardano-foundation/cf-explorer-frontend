@@ -11,7 +11,7 @@ import {
   OutputIcon,
   CubeIconComponent,
   SlotIcon,
-  KingIcon,
+  BlockProducerIcon,
   TooltipIcon
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
@@ -119,7 +119,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       value: `${data?.epochSlotNo || ""} - ${data?.slotNo || ""}`
     },
     {
-      icon: KingIcon,
+      icon: BlockProducerIcon,
       title: (
         <Box display={"flex"} alignItems={"center"}>
           <Box display={"flex"} alignItems="center">
