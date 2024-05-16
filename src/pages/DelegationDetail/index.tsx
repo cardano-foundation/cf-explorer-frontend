@@ -85,7 +85,7 @@ const DelegationDetail: React.FC = () => {
 
   const fetchListPools = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { query: poolId, ...pageInfo },
+    { query: poolId },
     false,
     tab === "epochs" ? blockKey : undefined
   );
@@ -101,21 +101,21 @@ const DelegationDetail: React.FC = () => {
   );
 
   const fetchDataEpochs = useFetchList<DelegationEpoch>(
-    API.DELEGATION.POOL_DETAIL("epochs"),
+    tab === "epochs" ? API.DELEGATION.POOL_DETAIL("epochs") : "",
     { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "epochs" ? blockKey : undefined
   );
 
   const fetchDataDelegators = useFetchList<StakingDelegators>(
-    API.DELEGATION.POOL_DETAIL("delegators"),
+    tab === "delegators" ? API.DELEGATION.POOL_DETAIL("delegators") : "",
     { poolView: poolView || poolId, ...pageInfo },
     false,
     tab === "delegators" ? blockKey : undefined
   );
 
   const fetchDataCertificatesHistory = useFetchList<CertificateHistory>(
-    `${API.POOL_CERTIFICATES_HISTORY}/${poolId}`,
+    tab === "certificatesHistory" ? `${API.POOL_CERTIFICATES_HISTORY}/${poolId}` : "",
     { ...pageInfo },
     false,
     tab === "certificatesHistory" ? blockKey : undefined
