@@ -365,7 +365,11 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                     <CustomTooltip
                       key={i}
                       title={
-                        disableButtonSelect(i) ? (i === "SPOs" ? t("drep.SPODisable") : t("drep.CCDisable")) : undefined
+                        disableButtonSelect(i) ? (
+                          <Box maxWidth={"min(340px,80vw) !important"}>
+                            {disableButtonSelect(i) ? (i === "SPOs" ? t("drep.SPODisable") : t("drep.CCDisable")) : ""}
+                          </Box>
+                        ) : undefined
                       }
                     >
                       <Box display={"inline-block"}>
