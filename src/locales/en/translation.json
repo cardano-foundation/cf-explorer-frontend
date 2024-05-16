@@ -1109,7 +1109,7 @@
   "drep.threshold": "Threshold",
   "drep.remaining": "Remaining",
   "drep.SPODisable": "SPOs cannot cast votes for this governance action",
-  "drep.CCDisable": "CC cannot cast votes for this governance action",
+  "drep.CCDisable": "Constitutional committee is not eligible to vote on this governance action",
   "drep.activeVoteStakeTooltip": "The active voting stake is the amount of participating stake involved in this governance action.",
   "drep.thresholdTooltip": "The threshold is the amount of ADA from yes votes required for this governance action to be ratified.",
   "drep.remainingTooltip": "The remaining ADA shows the amount of ADA from participants still left to be voted.",
