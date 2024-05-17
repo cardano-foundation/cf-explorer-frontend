@@ -1,4 +1,5 @@
 interface IStakeKey {
+  txKey?: string;
   txId: number;
   txHash: string;
   txTime: string;
