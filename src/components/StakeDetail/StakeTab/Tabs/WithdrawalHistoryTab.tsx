@@ -14,7 +14,10 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
-const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
+const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string; tabActive: TabStakeDetail }> = ({
+  stakeAddress,
+  tabActive
+}) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -72,8 +75,8 @@ const WithdrawalHistoryTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddres
     }
   ];
   const fetchData = useFetchList<WithdrawalHistory>(
-    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/withdrawal-history` : "",
-    pageInfo
+    stakeAddress && tabActive === "withdrawal" ? `${API.STAKE.DETAIL}/${stakeAddress}/withdrawal-history` : "",
+    { ...pageInfo, tabActive }
   );
 
   return (

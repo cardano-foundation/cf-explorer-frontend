@@ -28,19 +28,22 @@ const DelegationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const detailData = useContext(DelegatorDetailContext);
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
 
   const [selected, setSelected] = useState<string>("");
   const [params, setParams] = useState<FilterParams>({});
 
-  const fetchData = useFetchList<DelegationItem>(stakeId ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    txHash: params.search
-  });
-
+  const fetchData = useFetchList<DelegationItem>(
+    stakeId && tab === "delegation" ? API.STAKE_LIFECYCLE.DELEGATION(stakeId) : "",
+    {
+      ...pageInfo,
+      ...params,
+      tab,
+      txHash: params.search
+    }
+  );
   const columns: Column<DelegationItem>[] = [
     {
       title: t("glossary.txHash"),
