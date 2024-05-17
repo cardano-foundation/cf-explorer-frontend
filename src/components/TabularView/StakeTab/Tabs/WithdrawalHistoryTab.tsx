@@ -26,15 +26,19 @@ import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from
 const WithdrawalHistoryTab = () => {
   const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const [params, setParams] = useState<FilterParams>({});
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
-  const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    txHash: params.search
-  });
+  const fetchData = useFetchList<WithdrawalHistoryItem>(
+    stakeId && tab === "withdrawal-history" ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "",
+    {
+      ...pageInfo,
+      ...params,
+      tab,
+      txHash: params.search
+    }
+  );
 
   const columns: Column<WithdrawItem>[] = [
     {

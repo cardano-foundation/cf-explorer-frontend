@@ -16,11 +16,12 @@ import Table, { Column } from "../../commons/Table";
 import { PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
 interface ITokenMinting {
+  tabActive: string;
   tokenId: string;
   metadata?: ITokenMetadata;
 }
 
-const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
+const TokenMinting: React.FC<ITokenMinting> = ({ tabActive, tokenId, metadata }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -28,8 +29,8 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tokenId, metadata }) => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<ITokenTopHolderTable>(
-    `${API.TOKEN.LIST}/${tokenId}/mints`,
-    { ...pageInfo, tokenId },
+    tabActive === "tokenMint" ? `${API.TOKEN.LIST}/${tokenId}/mints` : "",
+    { ...pageInfo, tokenId, tabActive },
     false,
     blockKey
   );

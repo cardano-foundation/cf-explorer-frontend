@@ -15,13 +15,14 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { PriceValue, SmallText, StyledLink, TimeDuration } from "./styles";
 
 interface ITokenTopHolder {
+  tabActive: string;
   tokenId: string;
   totalSupply?: number;
   decimal?: number;
   setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decimal, setCurrentHolder }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSupply, decimal, setCurrentHolder }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -29,8 +30,8 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<ITokenTopHolderTable>(
-    `${API.TOKEN.LIST}/${tokenId}/top_holders`,
-    { ...pageInfo, tokenId },
+    tabActive === "topHolders" ? `${API.TOKEN.LIST}/${tokenId}/top_holders` : "",
+    { ...pageInfo, tokenId, tabActive },
     false,
     blockKey
   );
