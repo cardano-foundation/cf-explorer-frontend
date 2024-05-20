@@ -3,10 +3,11 @@ import { styled, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { APP_VERSION } from "src/commons/utils/constants";
+import { APP_VERSION, BUG_BOUNTY_URL } from "src/commons/utils/constants";
 import { routers } from "src/commons/routers";
 
 import FooterMenu from "../Sidebar/FooterMenu";
+import CustomTooltip from "../../CustomTooltip";
 
 const StyledFooter = styled("footer")`
   margin-top: 10px;
@@ -81,6 +82,10 @@ const DotDivide = styled(Box)(({ theme }) => ({
   }
 }));
 
+const StyledLinkExternal = styled("a")`
+  color: ${(props) => `${props.theme.palette.primary.main} !important`};
+`;
+
 const LinkTo = styled(Link)`
   color: ${(props) => `${props.theme.palette.primary.main} !important`};
 `;
@@ -101,6 +106,13 @@ const Footer: React.FC = () => {
           <LinkTo to={routers.FAQ} rel="noopener noreferrer">
             {t("common.faqs")}
           </LinkTo>
+          <DotDivide />
+          <CustomTooltip title="Report security issues here">
+            <StyledLinkExternal href={BUG_BOUNTY_URL} target="_blank" rel="noopener noreferrer">
+              {t("common.bugBounty")}
+            </StyledLinkExternal>
+          </CustomTooltip>
+
           <DotDivide />
           <LinkTo to={routers.TERMS_OF_SERVICE} rel="noopener noreferrer">
             {t("common.termsOfService")}
