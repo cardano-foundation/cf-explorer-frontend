@@ -7,6 +7,7 @@ import { APP_VERSION } from "src/commons/utils/constants";
 import { routers } from "src/commons/routers";
 
 import FooterMenu from "../Sidebar/FooterMenu";
+import CustomTooltip from "../../CustomTooltip";
 
 const StyledFooter = styled("footer")`
   margin-top: 10px;
@@ -81,6 +82,10 @@ const DotDivide = styled(Box)(({ theme }) => ({
   }
 }));
 
+const StyledLinkExternal = styled(Box)(({ theme }) => ({
+  color: theme.palette.primary.main
+}));
+
 const LinkTo = styled(Link)`
   color: ${(props) => `${props.theme.palette.primary.main} !important`};
 `;
@@ -101,6 +106,13 @@ const Footer: React.FC = () => {
           <LinkTo to={routers.FAQ} rel="noopener noreferrer">
             {t("common.faqs")}
           </LinkTo>
+          <DotDivide />
+          <CustomTooltip title="Report security issues here">
+            <a href="https://immunefi.com/bug-bounty/cardanofoundation/" target="_blank" rel="noopener noreferrer">
+              <StyledLinkExternal>{t("common.bugBounty")}</StyledLinkExternal>
+            </a>
+          </CustomTooltip>
+
           <DotDivide />
           <LinkTo to={routers.TERMS_OF_SERVICE} rel="noopener noreferrer">
             {t("common.termsOfService")}
