@@ -34,7 +34,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { status, txHash, type, vote, votingPower, index, isRepeatVote } = data;
+  const { status, txHash, type, vote, votingPower, isRepeatVote, indexType } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -45,7 +45,7 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
           <Box maxWidth="400px" flex={1}>
             <Tooltip title={txHash} placement="top" arrow>
               <TitleCard data-testid="governance.card.title">
-                {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
+                {actionTypeListDrep.find((action) => action.value === type)?.text} #{indexType}
               </TitleCard>
             </Tooltip>
           </Box>
