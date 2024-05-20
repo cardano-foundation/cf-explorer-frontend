@@ -331,6 +331,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               md={6}
               height={height}
               pl={"25px !important"}
+              //Todo: <tung.nguyen6> in sprint 9
               top={location.pathname.split("/").includes("pool") ? 2 : 1}
               sx={{
                 position: "relative",
