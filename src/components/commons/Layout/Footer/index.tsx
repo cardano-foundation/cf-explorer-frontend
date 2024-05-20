@@ -3,7 +3,7 @@ import { styled, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { APP_VERSION } from "src/commons/utils/constants";
+import { APP_VERSION, BUG_BOUNTY_URL } from "src/commons/utils/constants";
 import { routers } from "src/commons/routers";
 
 import FooterMenu from "../Sidebar/FooterMenu";
@@ -82,9 +82,9 @@ const DotDivide = styled(Box)(({ theme }) => ({
   }
 }));
 
-const StyledLinkExternal = styled(Box)(({ theme }) => ({
-  color: theme.palette.primary.main
-}));
+const StyledLinkExternal = styled("a")`
+  color: ${(props) => `${props.theme.palette.primary.main} !important`};
+`;
 
 const LinkTo = styled(Link)`
   color: ${(props) => `${props.theme.palette.primary.main} !important`};
@@ -108,9 +108,9 @@ const Footer: React.FC = () => {
           </LinkTo>
           <DotDivide />
           <CustomTooltip title="Report security issues here">
-            <a href="https://immunefi.com/bug-bounty/cardanofoundation/" target="_blank" rel="noopener noreferrer">
-              <StyledLinkExternal>{t("common.bugBounty")}</StyledLinkExternal>
-            </a>
+            <StyledLinkExternal href={BUG_BOUNTY_URL} target="_blank" rel="noopener noreferrer">
+              {t("common.bugBounty")}
+            </StyledLinkExternal>
           </CustomTooltip>
 
           <DotDivide />
