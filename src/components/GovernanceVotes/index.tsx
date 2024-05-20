@@ -256,7 +256,7 @@ const GovernanceVotesDetail: React.FC<{
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
             <HashName data-testid="governance.hashName">
-              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
             </HashName>
           </Box>
           <Box textAlign="center">
@@ -314,6 +314,7 @@ export interface VoteHistoryProps {
 
 export interface GovernanceVote {
   index: number;
+  indexType: number;
   status: string;
   txHash: string;
   type: string;
@@ -325,6 +326,7 @@ export interface GovernanceVote {
 export interface GovernanceVoteDetail {
   txHash: string;
   index: number;
+  indexType: number;
   govActionType: string;
   anchorHash: string;
   anchorUrl: string;
