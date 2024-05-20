@@ -24,15 +24,19 @@ import { StyledLink, TableSubTitle } from "../styles";
 const StakeRegistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const history = useHistory();
 
   const { pageInfo, setSort } = usePageInfo();
 
   const [openModal, setOpenModal] = useState(false);
-  const fetchData = useFetchList<RegistrationItem>(stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "", {
-    ...pageInfo
-  });
+  const fetchData = useFetchList<RegistrationItem>(
+    stakeId && tab === "registration" ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
+    {
+      ...pageInfo,
+      tab
+    }
+  );
 
   const columns: Column<RegistrationItem>[] = [
     {

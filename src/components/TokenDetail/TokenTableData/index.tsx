@@ -32,7 +32,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   metadataCIP60
 }) => {
   const { t } = useTranslation();
-  const { tokenId } = useParams<{ tokenId: string }>();
+  const { tokenId, tabActive } = useParams<{ tokenId: string; tabActive: string }>();
   const history = useHistory();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const theme = useTheme();
@@ -40,7 +40,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     {
       key: "transactions",
       label: t("glossary.transactions"),
-      children: <TokenTransaction tokenId={tokenId} />,
+      children: <TokenTransaction tabActive={tabActive} tokenId={tokenId} />,
       icon: TransactionIcon
     },
     {
@@ -48,6 +48,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
       label: t("glossary.topHolders"),
       children: (
         <TokenTopHolder
+          tabActive={tabActive}
           tokenId={tokenId}
           totalSupply={totalSupply}
           decimal={metadata?.decimals}
@@ -59,7 +60,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     {
       key: "tokenMint",
       label: t("tab.minting"),
-      children: <TokenMinting tokenId={tokenId} metadata={metadata} />,
+      children: <TokenMinting tabActive={tabActive} tokenId={tokenId} metadata={metadata} />,
       icon: UnionTokenIcon
     },
     {

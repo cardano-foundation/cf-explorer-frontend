@@ -19,9 +19,10 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
-const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> = ({
+const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean; tabActive: TabStakeDetail }> = ({
   isMobile = false,
-  stakeAddress
+  stakeAddress,
+  tabActive
 }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
@@ -30,8 +31,8 @@ const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> =
   const theme = useTheme();
 
   const fetchData = useFetchList<StakeHistory>(
-    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/stake-history` : "",
-    pageInfo
+    stakeAddress && tabActive === "stake-key" ? `${API.STAKE.DETAIL}/${stakeAddress}/stake-history` : "",
+    { ...pageInfo, tabActive }
   );
 
   const columns: Column<StakeHistory>[] = [
