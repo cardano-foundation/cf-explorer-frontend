@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
+import { useLocation } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -65,7 +66,10 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
   const [openActionMetadataModal, setOpenActionMetadataModal] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
-
+  const [height, setHeight] = useState<number>(0);
+  const ref1 = useRef<HTMLInputElement>(null);
+  const ref2 = useRef<HTMLInputElement>(null);
+  const location = useLocation();
   useEffect(() => {
     if (data?.allowedVoteBySPO) {
       setSelectVote("SPOs");
@@ -82,6 +86,11 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
         })}`
       : ""
   );
+
+  useEffect(() => {
+    const sumHeightElement = (ref1.current?.offsetHeight ?? 0) + (ref2.current?.offsetHeight ?? 0);
+    setHeight(sumHeightElement);
+  });
 
   const theme = useTheme();
   const { t } = useTranslation();
@@ -144,7 +153,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
       >
         <Box flex="1">
           <StyledGrid container>
-            <Item item xs={6} md={6} top={1} pr={"5px !important"}>
+            <Item item ref={ref1} xs={6} md={6} top={1} pr={"5px !important"}>
               <Box display="flex" justifyContent="space-between" pr={"5px"}>
                 <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
                 <BlackWarningIcon />
@@ -209,6 +218,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
             </Item>
 
             <Item
+              ref={ref2}
               item
               xs={6}
               md={6}
@@ -317,15 +327,16 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
           >
             <Item
               item
-              flex={2}
               xs={6}
               md={6}
+              height={height}
               pl={"25px !important"}
-              top={1}
+              //Todo: <tung.nguyen6> in sprint 9
+              top={location.pathname.split("/").includes("pool") ? 2 : 1}
               sx={{
                 position: "relative",
                 pr: "5px !important",
-                pb: `${window.innerWidth / window.innerHeight > 1.9 ? "45px" : "43.5px"} !important`,
+                pb: "43.5px",
                 [theme.breakpoints.down("xl")]: {
                   px: "0 !important",
                   pt: "20px !important",
