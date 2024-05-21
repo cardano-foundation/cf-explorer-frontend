@@ -336,7 +336,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               sx={{
                 position: "relative",
                 pr: "5px !important",
-                pb: "43.5px",
+                pb: `${window.innerWidth / window.innerHeight > 1.9 ? "45px" : "43.5px"} !important`,
                 [theme.breakpoints.down("xl")]: {
                   px: "0 !important",
                   pt: "20px !important",
