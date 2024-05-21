@@ -107,7 +107,10 @@ const Footer: React.FC = () => {
             {t("common.faqs")}
           </LinkTo>
           <DotDivide />
-          <CustomTooltip title="Report security issues here">
+          <CustomTooltip
+            componentsProps={{ transition: { style: { marginBottom: "10px" } } }}
+            title="Report security issues here"
+          >
             <StyledLinkExternal href={BUG_BOUNTY_URL} target="_blank" rel="noopener noreferrer">
               {t("common.bugBounty")}
             </StyledLinkExternal>
