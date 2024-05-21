@@ -16,6 +16,7 @@ interface IDataEpoch {
   maxSlot: number;
   rewardsDistributed: number;
   account: number;
+  syncingProgress: number;
 }
 
 interface IEpoch {
@@ -38,6 +39,7 @@ interface EpochCurrentType {
   endTime: string;
   startTime: string;
   circulatingSupply: number;
+  syncingProgress: number;
   blkCount: number;
 }
 
