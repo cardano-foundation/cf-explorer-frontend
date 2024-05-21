@@ -81,7 +81,8 @@ export const SystemLoader = () => {
         startTime,
         endTime,
         circulatingSupply,
-        blkCount
+        blkCount,
+        syncingProgress
       } = currentEpoch;
       const TIME_OUT_CRAWLER_STOP = 100;
       const interval = setInterval(() => {
@@ -96,7 +97,8 @@ export const SystemLoader = () => {
           startTime,
           endTime,
           circulatingSupply,
-          blkCount
+          blkCount,
+          syncingProgress
         });
       }, 1000);
       return () => clearInterval(interval);
