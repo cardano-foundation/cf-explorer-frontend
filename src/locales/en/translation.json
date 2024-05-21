@@ -63,6 +63,7 @@
   "common.termsOfService": "Terms Of Service",
   "common.privacyPolicy": "Privacy Policy",
   "common.noDataAvaiable": "No data available",
+  "common.tooltipBugBounty": "Report security issues here",
   "network.mainnet": "Mainnet",
   "network.preprod": "Preprod",
   "network.preview": "Preview",
