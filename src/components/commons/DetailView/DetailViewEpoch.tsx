@@ -1,5 +1,4 @@
 import { Box, useTheme } from "@mui/material";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronRight } from "react-icons/bi";
@@ -167,14 +166,9 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       );
     }
 
-    const slot =
-      data.no === currentEpoch?.no
-        ? moment(formatDateTimeLocal(data.endTime)).diff(moment()) >= 0
-          ? currentEpoch.slot
-          : data.maxSlot || MAX_SLOT_EPOCH
-        : data.maxSlot || MAX_SLOT_EPOCH;
+    const slot = data.no === currentEpoch?.no ? currentEpoch.slot : data.maxSlot || MAX_SLOT_EPOCH;
 
-    const progress = +Math.min((slot / data.maxSlot) * 100, 100).toFixed(0);
+    const progress = data.no === currentEpoch?.no ? (currentEpoch?.syncingProgress || 0) * 100 : 100;
     return (
       <>
         <ViewDetailHeader>
