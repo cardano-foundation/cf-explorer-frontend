@@ -136,6 +136,9 @@ export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(wi
 export const API_GECKO = process.env.REACT_APP_API_URL_COIN_GECKO || get(window, "env.REACT_APP_API_URL_COIN_GECKO");
 export const FF_GLOBAL_IS_CONWAY_ERA =
   (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA || get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA")) === "true";
+export const FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE =
+  (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ||
+    get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE")) === "true";
 export const CONWAY_ERE_FEILD = ["governanceParticipationRate", "votingPower"];
 
 export enum ACCOUNT_ERROR {

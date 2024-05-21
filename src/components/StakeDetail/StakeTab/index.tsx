@@ -40,31 +40,31 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
       icon: DelegationHistoryIcon,
       label: t("tab.DelegationHistory"),
       key: "delegation",
-      component: <DelegationHistoryTab stakeAddress={stakeAddress} isMobile={isMobile} />
+      component: <DelegationHistoryTab tabActive={tabActive || ""} stakeAddress={stakeAddress} isMobile={isMobile} />
     },
     {
       icon: StakeKeyHistoryIcon,
       label: t("tab.stakeAddressHistory"),
       key: "stake-key",
-      component: <StakeHistoryTab stakeAddress={stakeAddress} isMobile={isMobile} />
+      component: <StakeHistoryTab tabActive={tabActive || ""} stakeAddress={stakeAddress} isMobile={isMobile} />
     },
     {
       icon: WithdrawalHistoryIcon,
       label: t("tab.withdrawalHistory"),
       key: "withdrawal",
-      component: <WithdrawalHistoryTab stakeAddress={stakeAddress} />
+      component: <WithdrawalHistoryTab tabActive={tabActive || ""} stakeAddress={stakeAddress} />
     },
     {
       icon: InstantaneousHistoryIcon,
       label: t("tab.instantaneousRewards"),
       key: "instantaneous",
-      component: <InstantaneousTab stakeAddress={stakeAddress} />
+      component: <InstantaneousTab tabActive={tabActive || ""} stakeAddress={stakeAddress} />
     },
     {
       icon: TransactionIcon,
       label: t("tab.transactions"),
       key: "transactions",
-      component: <TransactionTab stakeAddress={stakeAddress} />
+      component: <TransactionTab tabActive={tabActive || ""} stakeAddress={stakeAddress} />
     }
   ];
 

@@ -200,8 +200,8 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
-                  {data?.epochNo}
-                  <BlockDefault>/{data?.epochSlotNo}</BlockDefault>
+                  {data?.epochSlotNo}
+                  <BlockDefault>/{data?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
                 </ItemValue>
               </Item>
             </ListItem>

@@ -60,12 +60,6 @@ const DelegationLists: React.FC = () => {
     history.replace({ search: stringify({ ...pageInfo, page: 1, sort: undefined }) });
   };
 
-  useEffect(() => {
-    if (fetchData.initialized) {
-      history.replace({ search: stringify({ ...pageInfo }), state: undefined });
-    }
-  }, [fetchData.initialized, history]);
-
   const columns: Column<Delegators>[] = [
     {
       title: <div data-testid="poolList.poolNameTitle">{t("glossary.pool")}</div>,

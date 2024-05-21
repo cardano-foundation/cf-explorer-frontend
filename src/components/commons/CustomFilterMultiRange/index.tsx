@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AccordionSummary, Box, Button, ClickAwayListener, Typography, useTheme } from "@mui/material";
+import { Box, Button, ClickAwayListener, Typography, useTheme, AccordionSummary } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
@@ -28,6 +28,7 @@ import { AntSwitch } from "src/components/DelegationPool/DelegationList/styles";
 import { ApplyFilterButton, StyledInput } from "../CustomFilter/styles";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
 import CustomIcon from "../CustomIcon";
+import CustomTooltip from "../CustomTooltip";
 
 interface PoolResponse {
   page?: number;
@@ -66,6 +67,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
+
   const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
@@ -170,12 +172,14 @@ const CustomFilterMultiRange: React.FC = () => {
     maxValue: number,
     keyOnChangeMin: string,
     keyOnChangeMax: string,
-    maxValueDefault: number
+    maxValueDefault: number,
+    disabled = false
   ) => {
     return (
       <Box display="flex" alignItems="center" gap="30px">
         <Box
           component={Input}
+          disabled={disabled}
           type="number"
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
@@ -234,6 +238,7 @@ const CustomFilterMultiRange: React.FC = () => {
         <Box
           component={Input}
           type="number"
+          disabled={disabled}
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
             fontSize: "14px",
@@ -264,7 +269,13 @@ const CustomFilterMultiRange: React.FC = () => {
             maxValue < minValue &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: minValue
+                [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                  ? +minValue / 100
+                  : ["maxPledge"].includes(keyOnChangeMax)
+                  ? +minValue * 10 ** 6
+                  : ["maxSaturation"].includes(keyOnChangeMax)
+                  ? parseFloat(`${minValue}`).toFixed(2)
+                  : minValue
               });
           }}
           onChange={({ target: { value } }) => {
@@ -389,349 +400,654 @@ const CustomFilterMultiRange: React.FC = () => {
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.poolSize"
-                expanded={expanded === "poolSize"}
-                onChange={handleChange("poolSize")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolSizesIcon} fill={theme.palette.secondary.light} height={18} />
-                      <Box
-                        data-testid="filterRange.poolSizeTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolSize")}
-                      </Box>
-                    </Box>
-                    <Box>
-                      {expanded === "poolSize" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>{formatADA(dataRange?.minPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
-                    <StyledSlider
-                      data-testid="filterRange.poolSizeValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
-                      onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
-                      valueLabelDisplay="auto"
-                      value={[filterParams.minPoolSize || 0, filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)]}
-                      min={dataRange?.minPoolSize || 0}
-                      disableSwap
-                      step={1000000}
-                      max={dataRange?.maxPoolSize || 0}
-                    />
-                    <Typography>{formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
-                  </Box>
-                  {groupInputRange(
-                    filterParams.minPoolSize || 0,
-                    filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0),
-                    "minPoolSize",
-                    "maxPoolSize",
-                    initParams.maxPoolSize
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.pledge"
-                expanded={expanded === "poolPledge"}
-                onChange={handleChange("poolPledge")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolPledgeIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box data-testid="filterRange.pledgeTitle" ml={1} color={({ palette }) => palette.secondary.main}>
-                        {t("pool.poolPledge")}
-                      </Box>
-                    </Box>
-                    <Box>
-                      {expanded === "poolPledge" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>{formatADA(dataRange?.minPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
-                    <StyledSlider
-                      valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
-                      data-testid="filterRange.pledgeValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams.minPledge || 0, initParams.maxPledge || 0]}
-                      value={[filterParams.minPledge || 0, filterParams.maxPledge ?? (initParams.maxPledge || 0)]}
-                      onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPledge", "maxPledge")}
-                      valueLabelDisplay="auto"
-                      disableSwap
-                      step={1000000}
-                      min={dataRange?.minPledge || 0}
-                      max={dataRange?.maxPledge || 0}
-                    />
-                    <Typography>{formatADA(dataRange?.maxPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
-                  </Box>
-                  {groupInputRange(
-                    BigNumber(filterParams.minPledge || 0)
-                      .div(10 ** 6)
-                      .toNumber(),
-                    filterParams.maxPledge
-                      ? BigNumber(filterParams.maxPledge)
-                          .div(10 ** 6)
-                          .toNumber()
-                      : BigNumber(initParams.maxPledge || 0)
-                          .div(10 ** 6)
-                          .toNumber(),
-                    "minPledge",
-                    "maxPledge",
-                    BigNumber(initParams.maxPledge || 0)
-                      .div(10 ** 6)
-                      .toNumber()
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.saturation"
-                expanded={expanded === "poolSaturation"}
-                onChange={handleChange("poolSaturation")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolSaturationIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box
-                        data-testid="filterRange.saturationTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolSaturation")}
-                      </Box>
-                    </Box>
-                    <Box>
-                      {expanded === "poolSaturation" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
-                    <StyledSlider
-                      valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
-                      data-testid="filterRange.saturationValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams.minSaturation || 0, initParams.maxSaturation || 0]}
-                      onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minSaturation", "maxSaturation")}
-                      valueLabelDisplay="auto"
-                      value={[
-                        filterParams.minSaturation || 0,
-                        filterParams.maxSaturation ?? (initParams.maxSaturation || 0)
-                      ]}
-                      disableSwap
-                      min={dataRange?.minSaturation || 0}
-                      max={dataRange?.maxSaturation || 0}
-                    />
-
-                    <Typography>{formatPercent((dataRange?.maxSaturation || 0) / 100) || `0%`}</Typography>
-                  </Box>
-                  {groupInputRange(
-                    filterParams.minSaturation || 0,
-                    filterParams.maxSaturation ?? (initParams.maxSaturation || 0),
-                    "minSaturation",
-                    "maxSaturation",
-                    initParams.maxSaturation
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
-              <AccordionContainer
-                data-testid="filterRange.blocksLifeTime"
-                expanded={expanded === "poolLifetime"}
-                onChange={handleChange("poolLifetime")}
-              >
-                <AccordionSummary>
-                  <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={PoolBlocksIcon} fill={theme.palette.secondary.main} height={18} />
-                      <Box
-                        data-testid="filterRange.blocksLifeTimeTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("pool.poolLifetime")}
-                      </Box>
-                    </Box>
-                    <Box>
-                      {expanded === "poolLifetime" ? (
-                        <IoIosArrowUp color={theme.palette.secondary.main} />
-                      ) : (
-                        <IoIosArrowDown color={theme.palette.secondary.main} />
-                      )}
-                    </Box>
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetailsFilter sx={{ background: "unset" }}>
-                  <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                    <Typography>{dataRange?.minLifetimeBlock || 0}</Typography>
-                    <StyledSlider
-                      data-testid="filterRange.blocksLifeTimeValue"
-                      getAriaLabel={() => "Minimum distance"}
-                      defaultValue={[filterParams.minBlockLifetime || 0, initParams.maxBlockLifetime || 0]}
-                      onChange={(e, newValue) =>
-                        handleChangeValueRange(e, newValue, "minBlockLifetime", "maxBlockLifetime")
+              <Box
+                component={dataRange?.maxPoolSize === null ? CustomTooltip : Box}
+                title={dataRange?.maxPoolSize === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
                       }
-                      valueLabelDisplay="auto"
-                      value={[
-                        filterParams.minBlockLifetime || 0,
-                        filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0)
-                      ]}
-                      disableSwap
-                      min={dataRange?.minLifetimeBlock || 0}
-                      max={dataRange?.maxLifetimeBlock || 0}
-                    />
-                    <Typography>{dataRange?.maxLifetimeBlock || 0}</Typography>
-                  </Box>
-                  {groupInputRange(
-                    filterParams.minBlockLifetime || 0,
-                    filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0),
-                    "minBlockLifetime",
-                    "maxBlockLifetime",
-                    initParams.maxBlockLifetime
-                  )}
-                </AccordionDetailsFilter>
-              </AccordionContainer>
+                    ]
+                  }
+                }}
+              >
+                <AccordionContainer
+                  data-testid="filterRange.poolSize"
+                  expanded={expanded === "poolSize"}
+                  onChange={handleChange("poolSize")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxPoolSize === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolSizesIcon}
+                          fill={
+                            dataRange?.maxPoolSize === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.light
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.poolSizeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxPoolSize === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolSize")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolSize" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxPoolSize === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxPoolSize === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>
+                        {formatADA(dataRange?.minPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
+                      <StyledSlider
+                        data-testid="filterRange.poolSizeValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minPoolSize || 0, initParams.maxPoolSize || 0]}
+                        onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPoolSize", "maxPoolSize")}
+                        valueLabelDisplay="auto"
+                        value={[
+                          filterParams.minPoolSize || 0,
+                          filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)
+                        ]}
+                        min={dataRange?.minPoolSize || 0}
+                        disableSwap
+                        step={1000000}
+                        disabled={dataRange?.maxPoolSize === null}
+                        max={dataRange?.maxPoolSize || 0}
+                      />
+                      <Typography>
+                        {formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
+                    </Box>
+                    {groupInputRange(
+                      filterParams.minPoolSize || 0,
+                      filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0),
+                      "minPoolSize",
+                      "maxPoolSize",
+                      initParams.maxPoolSize,
+                      dataRange?.maxPoolSize === null
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box
+                component={dataRange?.maxPledge === null ? CustomTooltip : Box}
+                title={dataRange?.maxPledge === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
+                <AccordionContainer
+                  data-testid="filterRange.pledge"
+                  expanded={expanded === "poolPledge"}
+                  onChange={handleChange("poolPledge")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxPledge === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolPledgeIcon}
+                          fill={
+                            dataRange?.maxPledge === null ? theme.palette.secondary[600] : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.pledgeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxPledge === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolPledge")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolPledge" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxPledge === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxPledge === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>{formatADA(dataRange?.minPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
+                      <StyledSlider
+                        valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
+                        data-testid="filterRange.pledgeValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minPledge || 0, initParams.maxPledge || 0]}
+                        value={[filterParams.minPledge || 0, filterParams.maxPledge ?? (initParams.maxPledge || 0)]}
+                        onChange={(e, newValue) => handleChangeValueRange(e, newValue, "minPledge", "maxPledge")}
+                        valueLabelDisplay="auto"
+                        disableSwap
+                        step={1000000}
+                        min={dataRange?.minPledge || 0}
+                        max={dataRange?.maxPledge || 0}
+                        disabled={dataRange?.maxPledge === null}
+                      />
+                      <Typography>{formatADA(dataRange?.maxPledge, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}</Typography>
+                    </Box>
+                    {groupInputRange(
+                      BigNumber(filterParams.minPledge || 0)
+                        .div(10 ** 6)
+                        .toNumber(),
+                      filterParams.maxPledge !== undefined && !isNaN(filterParams.maxPledge)
+                        ? BigNumber(filterParams.maxPledge)
+                            .div(10 ** 6)
+                            .toNumber()
+                        : BigNumber(initParams.maxPledge || 0)
+                            .div(10 ** 6)
+                            .toNumber(),
+                      "minPledge",
+                      "maxPledge",
+                      BigNumber(initParams.maxPledge || 0)
+                        .div(10 ** 6)
+                        .toNumber(),
+                      dataRange?.maxPledge === null
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box
+                component={dataRange?.maxSaturation === null ? CustomTooltip : Box}
+                title={dataRange?.maxSaturation === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
+                <AccordionContainer
+                  data-testid="filterRange.saturation"
+                  expanded={expanded === "poolSaturation"}
+                  onChange={handleChange("poolSaturation")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxSaturation === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolSaturationIcon}
+                          fill={
+                            dataRange?.maxSaturation === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.saturationTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxSaturation === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolSaturation")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolSaturation" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxSaturation === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxSaturation === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>{formatPercent((dataRange?.minSaturation || 0) / 100) || `0%`}</Typography>
+                      <StyledSlider
+                        valueLabelFormat={(value) => formatPercent(value / 100) || `0%`}
+                        data-testid="filterRange.saturationValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minSaturation || 0, initParams.maxSaturation || 0]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minSaturation", "maxSaturation")
+                        }
+                        valueLabelDisplay="auto"
+                        value={[
+                          filterParams.minSaturation || 0,
+                          filterParams.maxSaturation ?? (initParams.maxSaturation || 0)
+                        ]}
+                        disableSwap
+                        min={dataRange?.minSaturation || 0}
+                        max={dataRange?.maxSaturation || 0}
+                        disabled={dataRange?.maxSaturation === null}
+                      />
+
+                      <Typography>{formatPercent((dataRange?.maxSaturation || 0) / 100) || `0%`}</Typography>
+                    </Box>
+                    {groupInputRange(
+                      filterParams.minSaturation || 0,
+                      filterParams.maxSaturation ?? (initParams.maxSaturation || 0),
+                      "minSaturation",
+                      "maxSaturation",
+                      initParams.maxSaturation,
+                      dataRange?.maxSaturation === null
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
+              <Box
+                component={dataRange?.maxLifetimeBlock === null ? CustomTooltip : Box}
+                title={dataRange?.maxLifetimeBlock === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
+                <AccordionContainer
+                  data-testid="filterRange.blocksLifeTime"
+                  expanded={expanded === "poolLifetime"}
+                  onChange={handleChange("poolLifetime")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxLifetimeBlock === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolBlocksIcon}
+                          fill={
+                            dataRange?.maxLifetimeBlock === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary.main
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.blocksLifeTimeTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxLifetimeBlock === null ? palette.secondary[600] : palette.secondary.main
+                          }
+                        >
+                          {t("pool.poolLifetime")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "poolLifetime" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxLifetimeBlock === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxLifetimeBlock === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>{dataRange?.minLifetimeBlock || 0}</Typography>
+                      <StyledSlider
+                        data-testid="filterRange.blocksLifeTimeValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minBlockLifetime || 0, initParams.maxBlockLifetime || 0]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minBlockLifetime", "maxBlockLifetime")
+                        }
+                        valueLabelDisplay="auto"
+                        value={[
+                          filterParams.minBlockLifetime || 0,
+                          filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0)
+                        ]}
+                        disableSwap
+                        min={dataRange?.minLifetimeBlock || 0}
+                        max={dataRange?.maxLifetimeBlock || 0}
+                        disabled={dataRange?.maxLifetimeBlock === null}
+                      />
+                      <Typography>{dataRange?.maxLifetimeBlock || 0}</Typography>
+                    </Box>
+                    {groupInputRange(
+                      filterParams.minBlockLifetime || 0,
+                      filterParams.maxBlockLifetime ?? (initParams.maxBlockLifetime || 0),
+                      "minBlockLifetime",
+                      "maxBlockLifetime",
+                      initParams.maxBlockLifetime,
+                      dataRange?.maxLifetimeBlock === null
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
               {FF_GLOBAL_IS_CONWAY_ERA && (
                 <>
-                  <AccordionContainer
-                    data-testid="filterRange.poolParticipation"
-                    expanded={expanded === "poolParticipation"}
-                    onChange={handleChange("poolParticipation")}
+                  <Box
+                    component={dataRange?.maxGovParticipationRate === null ? CustomTooltip : Box}
+                    title={dataRange?.maxGovParticipationRate === null ? t("common.noDataAvaiable") : undefined}
+                    slotProps={{
+                      popper: {
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -18]
+                            }
+                          }
+                        ]
+                      }
+                    }}
                   >
-                    <AccordionSummary>
-                      <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                        <Box display={"flex"} alignItems={"center"}>
-                          <CustomIcon icon={PoolParticipationIcon} fill={theme.palette.secondary[800]} height={18} />
-                          <Box
-                            data-testid="filterRange.poolParticipationTitle"
-                            ml={1}
-                            color={({ palette }) => palette.secondary.main}
-                          >
-                            {t("pool.poolParticipation")}
+                    <AccordionContainer
+                      data-testid="filterRange.poolParticipation"
+                      expanded={expanded === "poolParticipation"}
+                      onChange={handleChange("poolParticipation")}
+                    >
+                      <AccordionSummary
+                        disabled={dataRange?.maxGovParticipationRate === null}
+                        sx={{
+                          "&.Mui-disabled": {
+                            opacity: 0.9
+                          }
+                        }}
+                      >
+                        <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                          <Box display={"flex"} alignItems={"center"}>
+                            <CustomIcon
+                              icon={PoolParticipationIcon}
+                              fill={
+                                dataRange?.maxGovParticipationRate === null
+                                  ? theme.palette.secondary[600]
+                                  : theme.palette.secondary[800]
+                              }
+                              height={18}
+                            />
+                            <Box
+                              data-testid="filterRange.poolParticipationTitle"
+                              ml={1}
+                              color={({ palette }) =>
+                                dataRange?.maxGovParticipationRate === null
+                                  ? palette.secondary[600]
+                                  : palette.secondary.main
+                              }
+                            >
+                              {t("pool.poolParticipation")}
+                            </Box>
+                          </Box>
+                          <Box>
+                            {expanded === "poolParticipation" ? (
+                              <IoIosArrowUp
+                                color={
+                                  dataRange?.maxGovParticipationRate === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            ) : (
+                              <IoIosArrowDown
+                                color={
+                                  dataRange?.maxGovParticipationRate === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            )}
                           </Box>
                         </Box>
-                        <Box>
-                          {expanded === "poolParticipation" ? (
-                            <IoIosArrowUp color={theme.palette.secondary.main} />
-                          ) : (
-                            <IoIosArrowDown color={theme.palette.secondary.main} />
-                          )}
+                      </AccordionSummary>
+                      <AccordionDetailsFilter sx={{ background: "unset" }}>
+                        <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                          <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
+                          <StyledSlider
+                            valueLabelFormat={(value) => formatPercent(value)}
+                            data-testid="filterRange.poolParticipationValue"
+                            getAriaLabel={() => "Minimum distance"}
+                            defaultValue={[
+                              filterParams.minGovParticipationRate || 0,
+                              initParams.maxGovParticipationRate
+                            ]}
+                            onChange={(e, newValue) =>
+                              handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
+                            }
+                            value={[
+                              filterParams.minGovParticipationRate || 0,
+                              filterParams.maxGovParticipationRate ?? initParams.maxGovParticipationRate
+                            ]}
+                            valueLabelDisplay="auto"
+                            disableSwap
+                            step={0.000001}
+                            min={dataRange?.minGovParticipationRate || 0}
+                            max={dataRange?.maxGovParticipationRate || 0}
+                            disabled={dataRange?.maxGovParticipationRate === null}
+                          />
+                          <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
                         </Box>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                        <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
-                        <StyledSlider
-                          valueLabelFormat={(value) => formatPercent(value)}
-                          data-testid="filterRange.poolParticipationValue"
-                          getAriaLabel={() => "Minimum distance"}
-                          defaultValue={[filterParams.minGovParticipationRate || 0, initParams.maxGovParticipationRate]}
-                          onChange={(e, newValue) =>
-                            handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
+                        {groupInputRange(
+                          +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
+                          filterParams.maxGovParticipationRate !== undefined
+                            ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
+                            : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
+                          "minGovParticipationRate",
+                          "maxGovParticipationRate",
+                          +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
+                          dataRange?.maxGovParticipationRate === null
+                        )}
+                      </AccordionDetailsFilter>
+                    </AccordionContainer>
+                  </Box>
+
+                  <Box
+                    component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
+                    title={dataRange?.maxVotingPower === null ? t("common.noDataAvaiable") : undefined}
+                    slotProps={{
+                      popper: {
+                        modifiers: [
+                          {
+                            name: "offset",
+                            options: {
+                              offset: [0, -18]
+                            }
                           }
-                          value={[
-                            filterParams.minGovParticipationRate || 0,
-                            filterParams.maxGovParticipationRate ?? initParams.maxGovParticipationRate
-                          ]}
-                          valueLabelDisplay="auto"
-                          disableSwap
-                          step={0.000001}
-                          min={dataRange?.minGovParticipationRate || 0}
-                          max={dataRange?.maxGovParticipationRate || 0}
-                        />
-                        <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
-                      </Box>
-                      {groupInputRange(
-                        +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
-                        filterParams.maxGovParticipationRate !== undefined
-                          ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
-                          : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
-                        "minGovParticipationRate",
-                        "maxGovParticipationRate",
-                        +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", "")
-                      )}
-                    </AccordionDetailsFilter>
-                  </AccordionContainer>
-                  <AccordionContainer
-                    data-testid="filterRange.poolVoting"
-                    expanded={expanded === "poolVoting"}
-                    onChange={handleChange("poolVoting")}
+                        ]
+                      }
+                    }}
                   >
-                    <AccordionSummary>
-                      <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                        <Box display={"flex"} alignItems={"center"}>
-                          <CustomIcon icon={PoolVotingIcon} fill={theme.palette.secondary.light} height={18} />
-                          <Box
-                            data-testid="filterRange.poolVotingTitle"
-                            ml={1}
-                            color={({ palette }) => palette.secondary.main}
-                          >
-                            {t("pool.poolVoting")}
+                    <AccordionContainer
+                      data-testid="filterRange.poolVoting"
+                      expanded={expanded === "poolVoting"}
+                      onChange={handleChange("poolVoting")}
+                    >
+                      <AccordionSummary
+                        disabled={dataRange?.maxVotingPower === null}
+                        sx={{
+                          "&.Mui-disabled": {
+                            opacity: 0.9
+                          }
+                        }}
+                      >
+                        <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                          <Box display={"flex"} alignItems={"center"}>
+                            <CustomIcon
+                              icon={PoolVotingIcon}
+                              fill={
+                                dataRange?.maxVotingPower === null
+                                  ? theme.palette.secondary[600]
+                                  : theme.palette.secondary.light
+                              }
+                              height={18}
+                            />
+                            <Box
+                              data-testid="filterRange.poolVotingTitle"
+                              ml={1}
+                              color={({ palette }) =>
+                                dataRange?.maxVotingPower === null ? palette.secondary[600] : palette.secondary.main
+                              }
+                            >
+                              {t("pool.poolVoting")}
+                            </Box>
+                          </Box>
+                          <Box>
+                            {expanded === "poolVoting" ? (
+                              <IoIosArrowUp
+                                color={
+                                  dataRange?.maxVotingPower === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            ) : (
+                              <IoIosArrowDown
+                                color={
+                                  dataRange?.maxVotingPower === null
+                                    ? theme.palette.secondary[600]
+                                    : theme.palette.secondary.main
+                                }
+                              />
+                            )}
                           </Box>
                         </Box>
-                        <Box>
-                          {expanded === "poolVoting" ? (
-                            <IoIosArrowUp color={theme.palette.secondary.main} />
-                          ) : (
-                            <IoIosArrowDown color={theme.palette.secondary.main} />
-                          )}
+                      </AccordionSummary>
+                      <AccordionDetailsFilter sx={{ background: "unset" }}>
+                        <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                          <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
+                          <StyledSlider
+                            valueLabelFormat={(value) => formatPercent(value)}
+                            data-testid="filterRange.poolVotingValue"
+                            getAriaLabel={() => "Minimum distance"}
+                            defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
+                            onChange={(e, newValue) =>
+                              handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
+                            }
+                            value={[
+                              filterParams.minVotingPower || 0,
+                              filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0)
+                            ]}
+                            valueLabelDisplay="auto"
+                            disableSwap
+                            min={dataRange?.minVotingPower || 0}
+                            step={0.0001}
+                            max={dataRange?.maxVotingPower || 0}
+                            disabled={dataRange?.maxVotingPower === null}
+                          />
+                          <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
                         </Box>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetailsFilter sx={{ background: "unset" }}>
-                      <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                        <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
-                        <StyledSlider
-                          valueLabelFormat={(value) => formatPercent(value)}
-                          data-testid="filterRange.poolVotingValue"
-                          getAriaLabel={() => "Minimum distance"}
-                          defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
-                          onChange={(e, newValue) =>
-                            handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
-                          }
-                          value={[
-                            filterParams.minVotingPower || 0,
-                            filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0)
-                          ]}
-                          valueLabelDisplay="auto"
-                          disableSwap
-                          min={dataRange?.minVotingPower || 0}
-                          step={0.0001}
-                          max={dataRange?.maxVotingPower || 0}
-                        />
-                        <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
-                      </Box>
-                      {groupInputRange(
-                        filterParams.minVotingPower || 0,
-                        filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
-                        "minVotingPower",
-                        "maxVotingPower",
-                        initParams.maxVotingPower
-                      )}
-                    </AccordionDetailsFilter>
-                  </AccordionContainer>
+                        {groupInputRange(
+                          filterParams.minVotingPower || 0,
+                          filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
+                          "minVotingPower",
+                          "maxVotingPower",
+                          initParams.maxVotingPower,
+                          dataRange?.maxVotingPower === null
+                        )}
+                      </AccordionDetailsFilter>
+                    </AccordionContainer>
+                  </Box>
                 </>
               )}
 
