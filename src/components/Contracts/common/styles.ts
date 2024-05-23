@@ -6,6 +6,11 @@ export const UnderlineText = styled(Typography)`
   font-weight: 500;
   cursor: pointer;
 `;
+export const LinkToText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-weight: 500;
+  cursor: pointer;
+`;
 
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;

@@ -337,3 +337,77 @@ export const OutputsUTXOLink = styled(Typography)`
   color: ${({ theme }) => theme.palette.primary.main} !important;
   cursor: pointer;
 `;
+
+export const VotingContainer = styled(MintContainer)<{ isMobile?: number }>`
+  width: 100%;
+  max-width: 920px;
+  justify-content: space-between;
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-wrap: nowrap;
+  }
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    flex-direction: column !important;
+  }
+  flex-direction: ${({ isMobile }) => (isMobile ? "column" : "row")};
+  gap: ${({ isMobile }) => (isMobile ? "60px" : "unset")};
+  padding: 0px;
+`;
+
+export const VotingRounded = styled(Rrounded)`
+  flex-direction: column;
+  background-color: transparent;
+  padding: 12px;
+`;
+
+export const VotingBlueBox = styled(BlueBox)`
+  border: 2px dashed ${({ theme }) => (theme.isDark ? theme.palette.secondary[600] : theme.palette.secondary.light)};
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 298px;
+  border-radius: 20px;
+  ${({ theme }) => theme.breakpoints.down(420)} {
+    flex-direction: column;
+  }
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200])};
+`;
+
+export const ProposingContainer = styled(VotingContainer)<{ isMobile?: number }>``;
+export const ProposingBlueBox = styled(VotingBlueBox)``;
+
+export const WhiteSpace = styled(BlueBox)`
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 1px 2px 4px 0px rgba(67, 70, 86, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
+  gap: 5px;
+  width: 100%;
+`;
+
+export const ViewGovernanceProposingButton = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: ${(props) => props.theme.palette.primary.main};
+  padding: 16px 20px;
+  color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 500;
+  width: 100%;
+  max-width: 570px;
+  white-space: nowrap;
+  transition: 0.3s ease-out;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.primary.dark};
+  }
+`;
+
+export const ViewGovernanceButton = styled(ViewGovernanceProposingButton)`
+  min-height: 83px;
+`;
