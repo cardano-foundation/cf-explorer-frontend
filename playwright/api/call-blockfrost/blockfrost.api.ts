@@ -24,7 +24,22 @@ export function blockfrostApi(request: APIRequestContext) {
   const getLastEpochData = async () => {
     return BaseApi.getData(
       request,
-      Endpoint.BlockFrost.LastEpochData.Base,
+      Endpoint.BlockFrost.Epochs.Latest,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getEpochById = async (epochId: number) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Epochs.Base + `/${epochId}`,
       {},
       {
         Accept: "*/*",
@@ -38,6 +53,7 @@ export function blockfrostApi(request: APIRequestContext) {
 
   return {
     getLastEpochData,
-    getLatestBlockData
+    getLatestBlockData,
+    getEpochById
   };
 }

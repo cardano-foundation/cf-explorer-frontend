@@ -197,7 +197,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </BackButton>
           )}
           <HeaderContainer>
-            <HeaderTitle>{title}</HeaderTitle>
+            <HeaderTitle data-testId="detail-header-title">{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
             {epoch?.status && (
@@ -236,7 +236,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </TimeDuration>
         </Box>
         {epoch ? (
-          <EpochDetail class-name="123">
+          <EpochDetail>
             <ProgressCircle
               size={100}
               pathWidth={8}
@@ -363,7 +363,6 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 )}
               </Box>
               <Box
-                data-testid="detailHeader.title"
                 sx={{
                   my: 1,
                   [theme.breakpoints.down("md")]: {
@@ -373,7 +372,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               >
                 {item.title}
               </Box>
-              <ValueCard data-testid="detailHeader.value">{item.value}</ValueCard>
+              <ValueCard>{item.value}</ValueCard>
             </CardItem>
           );
         })}

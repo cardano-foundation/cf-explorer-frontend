@@ -41,7 +41,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       title: (
         <EpochNumber>
           {currentEpochData?.status !== EPOCH_STATUS.SYNCING.toUpperCase() && (
-            <Box component={"span"}>{currentEpochData?.no}</Box>
+            <Box component={"span"} data-testid="epoch-no-current-header">
+              {currentEpochData?.no}
+            </Box>
           )}
         </EpochNumber>
       ),
@@ -92,14 +94,14 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard data-testid="epoch.firstEpoch.startTimeTitle" mr={1}>
+          <TitleCard data-testid="epoch.firstEpoch.endTimeTitle" mr={1}>
             {t("glossary.endTimestamp")}
           </TitleCard>
         </Box>
       ),
       value: (
         <DatetimeTypeTooltip>
-          <Content data-testid="epoch.firstEpoch.startTimeValue">
+          <Content data-testid="epoch.firstEpoch.endTimeValue">
             {formatDateTimeLocal(currentEpochData?.endTime || "")}
           </Content>
         </DatetimeTypeTooltip>
@@ -140,7 +142,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     }
   ];
   return (
-    <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)}>
+    <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)} data-testid="epoch.firstEpoch.container">
       <DetailHeader
         data-testid="epoch.firstEpoch.detailHeader"
         isClickAble={true}

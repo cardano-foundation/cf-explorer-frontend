@@ -18,9 +18,12 @@ export class BlockFrost {
       return `${BlockFrost.BASE_MAIN_NET_URL}/blocks/latest`;
     }
   };
-  static LastEpochData = class {
+  static Epochs = class {
     public static get Base() {
-      return `${BlockFrost.BASE_MAIN_NET_URL}/epochs/latest`;
+      return `${BlockFrost.BASE_MAIN_NET_URL}/epochs`;
+    }
+    public static get Latest() {
+      return `${BlockFrost.Epochs.Base}/latest`;
     }
   };
 }
