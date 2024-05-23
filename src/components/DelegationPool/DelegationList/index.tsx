@@ -48,7 +48,9 @@ const DelegationLists: React.FC = () => {
     API.DELEGATION.POOL_LIST,
     {
       ...newPageInfo,
-      isShowRetired: newPageInfo.retired
+      isShowRetired: newPageInfo.retired,
+      maxPoolSize: newPageInfo?.maxPoolSize ? +newPageInfo.maxPoolSize * 10 ** 6 : "",
+      minPoolSize: newPageInfo?.minPoolSize ? +newPageInfo.minPoolSize * 10 ** 6 : ""
     },
     false,
     blockKey
