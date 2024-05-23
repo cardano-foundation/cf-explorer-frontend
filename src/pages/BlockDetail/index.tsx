@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Box, CircularProgress } from "@mui/material";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -26,10 +27,16 @@ const BlockDetail = () => {
     document.title = `Block ${blockId} | Cardano Blockchain Explorer`;
   }, [blockId]);
 
+  if (loading) {
+    return (
+      <Box>
+        <CircularProgress />
+      </Box>
+    );
+  }
   if (!initialized) {
     return null;
   }
-
   if ((initialized && !data) || error) return <NoRecord />;
 
   return (

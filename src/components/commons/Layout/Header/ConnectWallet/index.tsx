@@ -84,13 +84,14 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stakeAddress]);
 
-  const handleSignIn = async (signature: string, nonce: NonceObject | null) => {
+  const handleSignIn = async (signature: string, nonce: NonceObject | null, key?: string) => {
     try {
       setSignature(signature);
       if (nonce?.nonce) {
         const payload = {
           address: stakeAddress || "",
           signature,
+          key,
           type: 1
         };
         const response = await signIn(payload);
@@ -128,8 +129,8 @@ const ConnectWallet: React.FC<Props> = ({ customButton, onSuccess }) => {
         !isSignP2P && setDisableSignButton(true);
         await signMessage(
           nonceValue.nonce,
-          (signature: string) => {
-            handleSignIn(signature, nonceValue);
+          (signature: string, key?: string) => {
+            handleSignIn(signature, nonceValue, key);
           },
           () => {
             toast.error(t("message.user.rejected"));

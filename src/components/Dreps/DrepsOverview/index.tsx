@@ -89,141 +89,131 @@ const DrepsOverview: React.FC = () => {
       <TimeDuration>
         <FormNowMessage time={lastUpdated} />
       </TimeDuration>
+
       <Grid container spacing={2}>
-        <Grid item lg={6} md={12} xs={12}>
-          <Grid container spacing={2}>
-            <Grid item md={6} xs={12} sm={6}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
+          <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
+            <StyledCard.Content>
+              <StyledCard.Title data-testid="drep.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
+              <StyledCard.Link data-testid="drep.epochValue" to={details.epoch(data?.epochNo)}>
+                {data?.epochNo || t("common.N/A")}
+              </StyledCard.Link>
+              <Box
+                data-testid="drep.time"
+                component="span"
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
+              >
+                {t("common.endIn")}:{" "}
+                <StyledCard.Comment>
+                  {`${days} ${days > 1 ? t("common.days") : t("common.day")} `}
+                  {`${hours} ${hours > 1 ? t("common.hours") : t("common.hour")} `}
+                  {`${minutes} ${minutes > 1 ? t("common.minutes") : t("common.minute")} `}
+                  {`${seconds} ${seconds > 1 ? t("common.seconds") : t("common.second")}`}
+                </StyledCard.Comment>
+              </Box>
+            </StyledCard.Content>
+            <StyledImg src={theme.mode === "light" ? CurentEpochPool : CurentEpochPoolDark} alt="Clock" />
+          </StyledCard.ClickAble>
+        </Grid>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
+          <Box height={"100%"}>
+            <Box
+              bgcolor={(theme) => theme.palette.secondary[0]}
+              boxShadow={(theme) => theme.shadow.card}
+              borderRadius="12px"
+              height={"100%"}
+            >
               <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
                 <StyledCard.Content>
-                  <StyledCard.Title data-testid="drep.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
-                  <StyledCard.Link data-testid="drep.epochValue" to={details.epoch(data?.epochNo)}>
-                    {data?.epochNo || t("common.N/A")}
-                  </StyledCard.Link>
-                  <Box
-                    data-testid="drep.time"
-                    component="span"
-                    sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
-                  >
-                    {t("common.endIn")}:{" "}
-                    <StyledCard.Comment>
-                      {`${days} ${days > 1 ? t("common.days") : t("common.day")} `}
-                      {`${hours} ${hours > 1 ? t("common.hours") : t("common.hour")} `}
-                      {`${minutes} ${minutes > 1 ? t("common.minutes") : t("common.minute")} `}
-                      {`${seconds} ${seconds > 1 ? t("common.seconds") : t("common.second")}`}
-                    </StyledCard.Comment>
-                  </Box>
-                </StyledCard.Content>
-                <StyledImg src={theme.mode === "light" ? CurentEpochPool : CurentEpochPoolDark} alt="Clock" />
-              </StyledCard.ClickAble>
-            </Grid>
-            <Grid item md={6} xs={12} sm={6}>
-              <Box height={"100%"}>
-                <Box
-                  bgcolor={(theme) => theme.palette.secondary[0]}
-                  boxShadow={(theme) => theme.shadow.card}
-                  borderRadius="12px"
-                  height={"100%"}
-                >
-                  <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
-                    <StyledCard.Content>
-                      <StyledCard.Title data-testid="drep.slotTitle">{t("glossary.slot")}</StyledCard.Title>
-                      <StyledCard.Value data-testid="drep.slotValue">
-                        {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
-                          ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
-                          : MAX_SLOT_EPOCH}
-                        <Box
-                          data-testid="drep.totalSlotVale"
-                          component="span"
-                          sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}
-                        >
-                          / {MAX_SLOT_EPOCH}
-                        </Box>
-                      </StyledCard.Value>
-                    </StyledCard.Content>
-                    <StyledImg src={theme.mode === "light" ? RocketPoolIcon : RocketPoolDarkIcon} alt="Rocket" />
-                  </StyledCard.ClickAble>
-                  <Box data-testid="drep.progress" position={"relative"} top={-60} px={4}>
-                    <StyledLinearProgress
-                      variant="determinate"
-                      value={
-                        moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
-                          ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
-                          : 100
-                      }
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item md={6} xs={12} sm={6}>
-              <StyledCard.Container
-                sx={{
-                  justifyContent: "space-between",
-                  [theme.breakpoints.between(1200, 1600)]: { flexWrap: "wrap" },
-                  [theme.breakpoints.down(325)]: { flexWrap: "wrap" }
-                }}
-              >
-                <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
-                  <StyledCard.Title data-testid="drep.activeStakeTitle">
-                    {t("glossary.activeStake")} (<ADAicon />)
-                  </StyledCard.Title>
-                  <CustomTooltip title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.N/A")}>
-                    <StyledCard.Value data-testid="drep.activeStakeValue">
-                      {data?.liveStake ? formatADA(data?.activeStake) : t("common.N/A")}
-                    </StyledCard.Value>
-                  </CustomTooltip>
-                </StyledCard.Content>
-                <StyledCard.Content style={{}}>
-                  <StyledCard.Title data-testid="drep.delegatorsTitle">{t("glossary.delegators")}</StyledCard.Title>
-                  <StyledCard.Value data-testid="drep.delegatorsValue">
-                    {numberWithCommas(data?.delegators)}
+                  <StyledCard.Title data-testid="drep.slotTitle">{t("glossary.slot")}</StyledCard.Title>
+                  <StyledCard.Value data-testid="drep.slotValue">
+                    {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
+                      : MAX_SLOT_EPOCH}
+                    <Box
+                      data-testid="drep.totalSlotVale"
+                      component="span"
+                      sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}
+                    >
+                      / {MAX_SLOT_EPOCH}
+                    </Box>
                   </StyledCard.Value>
                 </StyledCard.Content>
-                <Box>
-                  <StyledImg src={theme.mode === "light" ? LiveStakeIcon : LiveStakeDarkIcon} alt="Rocket" />
-                </Box>
-              </StyledCard.Container>
-            </Grid>
-            <Grid item md={6} xs={12} sm={6}>
-              <StyledCard.Container>
-                <StyledCard.Content>
-                  <StyledCard.Title data-testid="drep.totalDrepsTitle">{t("glossary.totalDreps")}</StyledCard.Title>
-                  <StyledCard.Value>{data?.totalDReps || 0}</StyledCard.Value>
-                  <Box
-                    sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
-                    display={"flex"}
-                    alignItems={"center"}
-                    width={"100%"}
-                    flexWrap={"wrap"}
-                    gap={1}
-                  >
-                    <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle data-testid="drep.activeDrepsTitle">{t("glossary.activeDReps")}</PoolTitle>
-                      <PoolValue data-testid="drep.activeDrepsValue">{data?.activeDReps || 0}</PoolValue>
-                    </Box>
-                    <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle data-testid="drep.inactiveDrepsTitle">{t("glossary.inactiveDReps")}</PoolTitle>
-                      <PoolValue data-testid="drep.inactiveDrepsValue">{data?.inactiveDReps || 0}</PoolValue>
-                    </Box>
-                    <Box flex={1} minWidth={"max-content"}>
-                      <PoolTitle data-testid="drep.retiredDRepsTitle">{t("glossary.retiredDReps")}</PoolTitle>
-                      <PoolValue data-testid="drep.retiredDrepsValue">{data?.retiredDReps || 0}</PoolValue>
-                    </Box>
-                  </Box>
-                </StyledCard.Content>
-                <StyledCustomIcon
-                  icon={theme.mode === "light" ? TotalPoolIcon : TotalPoolDarkIcon}
-                  originWidth={35}
-                  originHeight={35}
-                  width={35}
+                <StyledImg src={theme.mode === "light" ? RocketPoolIcon : RocketPoolDarkIcon} alt="Rocket" />
+              </StyledCard.ClickAble>
+              <Box data-testid="drep.progress" position={"relative"} top={-60} px={4}>
+                <StyledLinearProgress
+                  variant="determinate"
+                  value={
+                    moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
+                      : 100
+                  }
                 />
-              </StyledCard.Container>
-            </Grid>
-          </Grid>
+              </Box>
+            </Box>
+          </Box>
         </Grid>
-        <Grid item lg={6} md={12} xs={12}>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
+          <StyledCard.Container
+            sx={{
+              justifyContent: "space-between"
+            }}
+          >
+            <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
+              <StyledCard.Title data-testid="drep.activeStakeTitle">
+                {t("glossary.activeStake")} (<ADAicon />)
+              </StyledCard.Title>
+              <CustomTooltip title={data?.liveStake ? formatADAFull(data?.liveStake) : t("common.N/A")}>
+                <StyledCard.Value data-testid="drep.activeStakeValue">
+                  {data?.liveStake ? formatADA(data?.activeStake) : t("common.N/A")}
+                </StyledCard.Value>
+              </CustomTooltip>
+            </StyledCard.Content>
+            <StyledCard.Content style={{}}>
+              <StyledCard.Title data-testid="drep.delegatorsTitle">{t("glossary.delegators")}</StyledCard.Title>
+              <StyledCard.Value data-testid="drep.delegatorsValue">
+                {numberWithCommas(data?.delegators)}
+              </StyledCard.Value>
+            </StyledCard.Content>
+            <Box>
+              <StyledImg src={theme.mode === "light" ? LiveStakeIcon : LiveStakeDarkIcon} alt="Rocket" />
+            </Box>
+          </StyledCard.Container>
+        </Grid>
+        <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <StyledCard.Container>
-            <StyledCard.Content sx={{ minHeight: 100 }}></StyledCard.Content>
+            <StyledCard.Content>
+              <StyledCard.Title data-testid="drep.totalDrepsTitle">{t("glossary.totalDreps")}</StyledCard.Title>
+              <StyledCard.Value>{data?.totalDReps || 0}</StyledCard.Value>
+              <Box
+                sx={{ color: (theme) => theme.palette.secondary.light, textAlign: "left" }}
+                display={"flex"}
+                alignItems={"center"}
+                width={"100%"}
+                flexWrap={"wrap"}
+                gap={1}
+              >
+                <Box flex={1} minWidth={"max-content"}>
+                  <PoolTitle data-testid="drep.activeDrepsTitle">{t("glossary.activeDReps")}</PoolTitle>
+                  <PoolValue data-testid="drep.activeDrepsValue">{data?.activeDReps || 0}</PoolValue>
+                </Box>
+                <Box flex={1} minWidth={"max-content"}>
+                  <PoolTitle data-testid="drep.inactiveDrepsTitle">{t("glossary.inactiveDReps")}</PoolTitle>
+                  <PoolValue data-testid="drep.inactiveDrepsValue">{data?.inactiveDReps || 0}</PoolValue>
+                </Box>
+                <Box flex={1} minWidth={"max-content"}>
+                  <PoolTitle data-testid="drep.retiredDRepsTitle">{t("glossary.retiredDReps")}</PoolTitle>
+                  <PoolValue data-testid="drep.retiredDrepsValue">{data?.retiredDReps || 0}</PoolValue>
+                </Box>
+              </Box>
+            </StyledCard.Content>
+            <StyledCustomIcon
+              icon={theme.mode === "light" ? TotalPoolIcon : TotalPoolDarkIcon}
+              originWidth={35}
+              originHeight={35}
+              width={35}
+            />
           </StyledCard.Container>
         </Grid>
       </Grid>

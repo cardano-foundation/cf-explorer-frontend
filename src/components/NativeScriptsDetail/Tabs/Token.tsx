@@ -32,7 +32,9 @@ const Token = () => {
       title: t("common.tokenName"),
       key: "tokenname",
       minWidth: "50px",
-      render: (r) => <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name}</LinkComponent>
+      render: (r) => (
+        <LinkComponent to={details.token(r.fingerprint)}>{r.displayName || r.name || r.fingerprint}</LinkComponent>
+      )
     },
     {
       title: t("common.tokenID"),
@@ -66,6 +68,7 @@ const Token = () => {
       render: (r) => <>{formatAmount(r?.txCount || "")}</>
     }
   ];
+
   return (
     <>
       <Table

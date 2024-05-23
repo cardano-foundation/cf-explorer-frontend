@@ -21,7 +21,10 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_BOLNISI_NAME_API": JSON.stringify(env.REACT_APP_BOLNISI_NAME_API),
       "process.env.REACT_APP_ADA_HANDLE_API": JSON.stringify(env.REACT_APP_ADA_HANDLE_API),
       "process.env.REACT_APP_API_URL_COIN_GECKO": JSON.stringify(env.REACT_APP_API_URL_COIN_GECKO),
-      "process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA": JSON.stringify(env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA)
+      "process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA": JSON.stringify(env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA),
+      "process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE": JSON.stringify(
+        env.REACT_APP_FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+      )
     },
     optimizeDeps: {
       esbuildOptions: {

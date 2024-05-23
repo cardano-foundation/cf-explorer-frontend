@@ -16,13 +16,14 @@ import ADAicon from "src/components/commons/ADAIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue, DescriptionText, TimeDuration } from "./styles";
+import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 interface ITokenTransaction {
+  tabActive: string;
   tokenId: string;
 }
 
-const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
+const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -30,8 +31,8 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<Transactions>(
-    API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId),
-    { ...pageInfo },
+    tabActive === "transactions" ? API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId) : "",
+    { ...pageInfo, tabActive },
     false,
     blockKey
   );
@@ -145,7 +146,6 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
 
   return (
     <Box>
-      <DescriptionText>{t("desc.transactionUTXO")}</DescriptionText>
       <TimeDuration>
         <FormNowMessage time={fetchData.lastUpdated} />
       </TimeDuration>

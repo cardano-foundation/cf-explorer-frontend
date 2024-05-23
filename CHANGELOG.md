@@ -1,5 +1,84 @@
 # Changelog
 
+## [1.3.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.2.0...v1.3.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* add comment ([8174b5d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8174b5d9a84be77f765ebdbbf758a23da7173149))
+* call multi api when click tab in pool detail page ([a139e5e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a139e5e218830babb7118379bb3d94d4651d3ba7))
+* change of block producer icon ([019c104](https://github.com/cardano-foundation/cf-explorer-frontend/commit/019c10416876e3bcd8429d639deb762bfb0691c6))
+* common call multi api when click only tab ([4b74cb4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4b74cb46b0b6ffc0526a3c9aecafeb8f3aa69582))
+* Display-missing-data-in-metadata-tab ([29b624e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/29b624e7382b50b12555155cdf0815349829f1cd))
+* MET-2055 not straight line ([f644493](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f64449387940fd5e6ed24b4bf0fd9ab84355c426))
+* MET-2055 update tooltip ([f927b27](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f927b27929a74f4b0d8d1043554794538810af74))
+* MET-2055 update tooltip CC disable ([83b492f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/83b492ff0332c10ae78a3de1031c1727eaf62767))
+* MET-2063 fix token name not display ([cb68f5a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cb68f5a7605e3edf53e0740391992a4f3946b3cc))
+* MET-2195 update show epoch progress ([776d984](https://github.com/cardano-foundation/cf-explorer-frontend/commit/776d984f674fe0357c482c0c2d8769bc048473fd))
+* revert code ([d438e7b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d438e7b9e7d016eb894ab133cc2266a32c0aa9e0))
+* show threshold in tooltip ([607e6ad](https://github.com/cardano-foundation/cf-explorer-frontend/commit/607e6ad268969c2597ef348f40f04de9614b68d4))
+* Stake Address Deregistration ([660044e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/660044e1a0e29d68e6a9b291f1c736754773230b))
+* update signin payload ([7c21f6d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7c21f6de483644f3346af36768637833fb71d912))
+
+## [1.2.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.1.0...v1.2.0) (2024-05-07)
+
+
+### Features
+
+* MET -1958 pool overview search bar ([c8b05af](https://github.com/cardano-foundation/cf-explorer-frontend/commit/c8b05af604b8e06ef1faaf1e19fb929ede9dda81))
+* MET 2024 Add data-testid to Explorer web elements ([17c6b9b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/17c6b9b908f3d67a44b6aef5c9c2ffc121760e86))
+* MET-1958 add value range ([6266397](https://github.com/cardano-foundation/cf-explorer-frontend/commit/62663976e737b13a84d0a914d069a4e26ba64a2b))
+* MET-1965 add modal confirm anchor link ([870b74c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/870b74cc2e7caaec7d1d4123b86cd534707720d6))
+* MET-1965 update status ([ffda717](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ffda717ced31c8ae0d1f7a05e9f5ffa7718dab31))
+* MET-1989 add hour cycle in format date ([40e3a40](https://github.com/cardano-foundation/cf-explorer-frontend/commit/40e3a40161c4ef33d702e8f57655598fafd14464))
+* MET-1989 add reponsive ([4c7b245](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4c7b245589004c04d05b5fcd10186323a364e2e8))
+* MET-1989 add tz report ([9fbf2e8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9fbf2e831dcb4c56480c052f314085f5f1574987))
+* MET-1989 fix jest test ([989489e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/989489e93a612f55e1d1045cc734b6c1878547de))
+* MET-1989 save user tz ([d12c296](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d12c2961eb17a458a6017e11f053f7b2726ac5eb))
+* MET-1989 setting date time ([8d2767c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8d2767c500a94fb9cc5a548ab7974e28dcac90d3))
+* MET-1989 setting timezone ([0eeab3a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0eeab3a265d34b2d27acd4d5fa2a8b98731cd03e))
+* MET-1989 setting tomezone ([da3f88e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/da3f88e1f96ca9e90d5de264099a142d1b3089b7))
+* MET-1989 update datetime ([6ca54d8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/6ca54d8caf71407e9f424c9ecef863d7854ffa61))
+* MET-1989 update format time ([ac79b8b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ac79b8b4b8d32a57544906772f78297a0c844ecd))
+* MET-1989 update format tz ([ab81643](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ab816430b81cf006b55243fce51088898542455c))
+* MET-1989 update height sidebar ([bb4d9fa](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bb4d9fa9f45b3b4d77ba38ae5245acc400f64a33))
+* MET-1989 update listen timezone and language change ([4aeed7f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4aeed7f854970f4aef030e28cf8001e032d9b78a))
+* MET-1989 update refesh token expried ([f1736d8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f1736d8c783ed2932e903ae0ea7c323291b4e7aa))
+* MET-1989 update storage ([ef8b6e7](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ef8b6e7ad2a56336961281e9a529d85511d98ba8))
+* MET-1989 update timezone ([85e307a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/85e307a75d60857c9d349b0b6a377a2d951856c5))
+* MET-1989 update token expried ([14e46da](https://github.com/cardano-foundation/cf-explorer-frontend/commit/14e46da335385f4d93b7a880c86ebc02cacd22cd))
+* MET-1989 update tooltip ([e5245a9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e5245a9ed7deb5cc6f282dd621268009c329b28c))
+* MET-1989 update tooltip ([429a7fe](https://github.com/cardano-foundation/cf-explorer-frontend/commit/429a7fe6a4cc49128e124a9da2508f1dc06b8ea2))
+* MET-2061 add flag conway era ([d12f77f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d12f77f644927b1fe840355df6127b57044ea564))
+* MET-2061 add flag conway era ([f019f8f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f019f8f0c18f4310c49e17539374f6b6eee584a5))
+* resolve conflict ([3484e5b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/3484e5bbea494ade9b2bc9bf5c0b2205f5b87c20))
+
+
+### Bug Fixes
+
+* add tz param report ([1227e00](https://github.com/cardano-foundation/cf-explorer-frontend/commit/1227e00ec0bc62cccabd062eaa441c003d33bb7a))
+* add validate input ([602fa9f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/602fa9ff938c26a41dbaec7e67c0f56bbf3cc211))
+* change logic value percent input ([fad7638](https://github.com/cardano-foundation/cf-explorer-frontend/commit/fad76380be1e6efb7c5412b2e4c6781c2d20f7ca))
+* clear params filter pools ([d959dac](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d959dac326e9d81fb3c3b67a1708cfc2ea40da51))
+* fix playwright e2e workflow file type error ([516b136](https://github.com/cardano-foundation/cf-explorer-frontend/commit/516b13614fbaa35a12e09fb089215b2b0bbc09ac))
+* keep-alive-websocket ([5d3a755](https://github.com/cardano-foundation/cf-explorer-frontend/commit/5d3a75588bbac449aeb20af8c836c6bd3ef1ff39))
+* MET 2017 Pools filter options text field not being reset after search results ([e1bdcc9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e1bdcc9d1ec677f2d8757cf588ca7c3645ee556e))
+* MET 2018 Pools filter options where there is a bar there should be text input ([9f58f99](https://github.com/cardano-foundation/cf-explorer-frontend/commit/9f58f99b5b9690cb1834937dc23ba60dd8d53cb6))
+* MET 2110 Pools Overview Pools table show Retired pools should move to filter ([e89c49b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e89c49bd33deb4172a94497c6a47461ad3300cbe))
+* MET-1965 update test ([b69ddbd](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b69ddbdf2bb0e965812746119aeb0906e27b9e27))
+* MET-1989 change local storage to session storage ([ad37176](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ad3717623ebe986ff751167578c59578aedbd0aa))
+* MET-1989 update tooltip ([cafc8e9](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cafc8e9e097d01c4527dc5a6b8a03ea8345ba11a))
+* MET-2108 update fixed number ([d0faad5](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d0faad53e58791135c9693df343d2a185494a2ac))
+* MET-2108 update format percent filter ([bcdf2e3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/bcdf2e3202f211f6f8803d51396565c61f91cf84))
+* MET-2108 update format value ([7c37cb3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7c37cb3c029420694d651fdf8ed79f49b3afbc64))
+* MET-2108 update input ([545c226](https://github.com/cardano-foundation/cf-explorer-frontend/commit/545c22628ec748a7f64c5f4bbc326f85726acdf9))
+* MET-2108 update logic filter ([070eeb8](https://github.com/cardano-foundation/cf-explorer-frontend/commit/070eeb8baf3b5ba492d80b0ac04c068b662c5d38))
+* MET-2109 sort icon break line in table ([e8704b3](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e8704b3aadbdbb4723ff8774c32f05c2ea799118))
+* refator code ([34e2958](https://github.com/cardano-foundation/cf-explorer-frontend/commit/34e2958afa3bbb32eae417335447237bcf6d4371))
+* remove convert number ([540a298](https://github.com/cardano-foundation/cf-explorer-frontend/commit/540a298807230f1cf835f69bc33fde19242452e8))
+* set default when max value &lt; min  value ([f9c91ab](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f9c91ab36bd7c2cd458c7535a5e4a4e5c7425af1))
+* test fail ([420d14a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/420d14af818527af80ac22a4773461776e9d9ec6))
+
 ## [1.1.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.0.0...v1.1.0) (2024-04-10)
 
 
