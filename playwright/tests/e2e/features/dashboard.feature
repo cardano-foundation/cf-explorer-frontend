@@ -2,7 +2,7 @@ Feature: Check explorer dashboard shows a general and updated data of the cardan
 
   Scenario: Check Explorer dashboard have all the elements with a general resume about explorer content
     Given User goes to explorer portal
-    Then the user should see tha general dashboard page with all the resume information
+    Then the user should see the general dashboard page with all the resume information
 
   Scenario: Search for epoch by epoch number using epochs filter
     Given User goes to explorer portal

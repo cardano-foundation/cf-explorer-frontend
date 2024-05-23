@@ -12,7 +12,7 @@ const { Given, When, Then } = createBdd();
 let epochData: Promise<BlockfrostEpochInformationDto>;
 let blockData: Promise<BlockInformationDto>;
 
-Then(/^the user should see tha general dashboard page with all the resume information$/, async ({ page }) => {
+Then(/^the user should see the general dashboard page with all the resume information$/, async ({ page }) => {
   // await dashboard(page).assertDashboardInfoCards();
   await dashboard(page).assertTransactionsInfoSections();
   await dashboard(page).assertPoolsInfoSection();
