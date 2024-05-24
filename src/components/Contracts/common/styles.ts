@@ -6,6 +6,11 @@ export const UnderlineText = styled(Typography)`
   font-weight: 500;
   cursor: pointer;
 `;
+export const LinkToText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-weight: 500;
+  cursor: pointer;
+`;
 
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;
@@ -105,6 +110,12 @@ export const CLButton = styled("button")`
   &:hover {
     background-color: ${({ theme }) => theme.palette.primary.dark};
   }
+`;
+
+export const ContractAddressLabel = styled(Typography)`
+  font-weight: 600;
+  text-align: left;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const WrapLabel = styled(Typography)(({ theme }) => ({
