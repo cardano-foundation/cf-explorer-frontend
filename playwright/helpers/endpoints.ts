@@ -13,14 +13,20 @@ export class CardanoFoundation {
 export class BlockFrost {
   static readonly BASE_MAIN_NET_URL = process.env.BLOCKFROST_API_URL;
 
-  static LastBlockData = class {
+  static Blocks = class {
     public static get Base() {
-      return `${BlockFrost.BASE_MAIN_NET_URL}/blocks/latest`;
+      return `${BlockFrost.BASE_MAIN_NET_URL}/blocks`;
+    }
+    public static get Latest() {
+      return `${BlockFrost.Blocks.Base}/latest`;
     }
   };
-  static LastEpochData = class {
+  static Epochs = class {
     public static get Base() {
-      return `${BlockFrost.BASE_MAIN_NET_URL}/epochs/latest`;
+      return `${BlockFrost.BASE_MAIN_NET_URL}/epochs`;
+    }
+    public static get Latest() {
+      return `${BlockFrost.Epochs.Base}/latest`;
     }
   };
 }

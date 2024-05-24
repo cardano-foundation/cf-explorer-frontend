@@ -49,7 +49,7 @@ When(/^the last active epoch information has been requested through api service$
   lastActiveEpochData = (await blockfrostService(request)).getLastEpochData();
 });
 Then(/^the user should see the same information for the epoch that the api returns$/, async ({ page }) => {
-  await epochDetailPage(page).assertLastActiveEpochDataIsDisplayed(lastActiveEpochData);
+  await epochDetailPage(page).assertEpochDataIsDisplayed(lastActiveEpochData);
 });
 When(/^the user selects the last finished epoch$/, async ({ page }) => {
   await epochsDashboardPage(page).openLastFinishedEpochDetails();
