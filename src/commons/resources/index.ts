@@ -48,6 +48,8 @@ import EmptyIcon from "./icons/noData.svg";
 import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
+import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -411,6 +413,8 @@ export {
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
+  FetchDataErrLight,
+  FetchDataErrDark,
   WhiteSearchIcon,
   WhiteSearchIconComponent,
   WalletRoundedIcon,

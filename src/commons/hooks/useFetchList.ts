@@ -15,6 +15,7 @@ export interface FetchReturnType<T> {
   data: T[];
   loading: boolean;
   error: string | null;
+  statusError: number | undefined;
   initialized: boolean;
   total: number;
   totalPage: number;
@@ -41,6 +42,7 @@ const useFetchList = <T>(
   const [isDataOverSize, setIsDataOverSize] = useState<boolean | null>(null);
   const [total, setTotal] = useState(0);
   const [refreshLoading, setRefreshLoading] = useState(false);
+  const [statusError, setStatusError] = useState<number | undefined>(undefined);
   const [query, setQuery] = useState<Params>(cleanObject(params));
   const lastFetch = useRef<number>();
   const lastKey = useRef<number | string | undefined>(key);
@@ -85,8 +87,10 @@ const useFetchList = <T>(
         setData([]);
         setTotal(0);
         setInitialized(true);
-        if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
-        else if (typeof error === "string") setError(error);
+        if (error instanceof AxiosError) {
+          setError(error?.response?.data?.message || error?.message);
+          setStatusError(error.response?.status);
+        } else if (typeof error === "string") setError(error);
       }
       lastFetch.current = Date.now();
       if (needLoading) setLoading(false);
@@ -126,6 +130,7 @@ const useFetchList = <T>(
     data,
     loading,
     error,
+    statusError,
     initialized,
     total,
     totalPage,
