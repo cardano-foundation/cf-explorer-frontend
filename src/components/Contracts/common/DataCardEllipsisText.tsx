@@ -29,7 +29,7 @@ const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value, purpose }
   }, [purpose]);
   return (
     <DataCardBox style={{ maxHeight: "80px" }}>
-      <DataTitle>{title}</DataTitle>
+      <DataTitle>{title}:</DataTitle>
       <StyledLink
         style={{
           fontWeight: "500",
@@ -45,7 +45,7 @@ const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value, purpose }
           isTooltip
           isCopy
           postfix={isMobile ? 6 : 8}
-          sx={{ width: "105%", maxWidth: "240px" }}
+          sx={{ width: "240px" }}
         />
       </StyledLink>
     </DataCardBox>

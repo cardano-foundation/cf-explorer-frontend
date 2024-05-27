@@ -409,5 +409,5 @@ export const ViewGovernanceProposingButton = styled(Box)`
 `;
 
 export const ViewGovernanceButton = styled(ViewGovernanceProposingButton)`
-  min-height: 83px;
+  min-height: 81px;
 `;
