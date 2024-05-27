@@ -94,7 +94,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
-  const { data, total, lastUpdated, loading, initialized } = useFetchList<GovernanceVote>(
+  const { data, total, lastUpdated, loading, initialized, error } = useFetchList<GovernanceVote>(
     `${API.POOL_CERTIFICATE.POOL}/${hash}`,
     omitBy(params, isUndefined),
     false
@@ -159,12 +159,14 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
 
   return (
     <>
-      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
-      </Box>
+      {!error && (
+        <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{

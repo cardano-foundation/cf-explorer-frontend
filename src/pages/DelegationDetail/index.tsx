@@ -146,12 +146,14 @@ const DelegationDetail: React.FC = () => {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     label: React.ReactNode;
     key: TabPoolDetail;
+    errorFetchDataTab: boolean;
     component: React.ReactNode;
   }[] = [
     {
       icon: StakeKeyHistoryIcon,
       label: <Box data-testid="delegationDetail.epochTitle">{t("epoch")}</Box>,
       key: "epochs",
+      errorFetchDataTab: fetchDataEpochs.error,
       component: (
         <div ref={tableRef}>
           <DelegationEpochList {...fetchDataEpochs} scrollEffect={scrollEffect} />
@@ -162,6 +164,7 @@ const DelegationDetail: React.FC = () => {
       icon: StakingDelegators,
       label: <Box data-testid="delegationDetail.stakingTitle">{t("stakingDelegators")}</Box>,
       key: "delegators",
+      errorFetchDataTab: fetchDataDelegators.error,
       component: (
         <div ref={tableRef}>
           <DelegationStakingDelegatorsList {...fetchDataDelegators} scrollEffect={scrollEffect} />
@@ -172,6 +175,7 @@ const DelegationDetail: React.FC = () => {
       icon: TimelineIconComponent,
       label: <Box data-testid="delegationDetail.certificatesHistoryTitle">{t("certificatesHistory")}</Box>,
       key: "certificatesHistory",
+      errorFetchDataTab: fetchDataCertificatesHistory.error,
       component: (
         <div ref={tableRef}>
           <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
@@ -244,7 +248,7 @@ const DelegationDetail: React.FC = () => {
       <DelegationDetailOverview data={data} loading={loading || !poolView} />
       <DelegationDetailChart poolId={poolView || poolId} />
       <Box ref={tableRef} mt={"30px"}>
-        {tabs.map(({ key, icon: Icon, label, component }, index) => (
+        {tabs.map(({ key, icon: Icon, label, errorFetchDataTab, component }, index) => (
           <StyledAccordion
             key={key}
             expanded={tab === key}
@@ -274,7 +278,7 @@ const DelegationDetail: React.FC = () => {
               </TitleTab>
             </AccordionSummary>
             <AccordionDetails>
-              {tab != "governanceVotes" && (
+              {tab != "governanceVotes" && !errorFetchDataTab && (
                 <TimeDuration>
                   <FormNowMessage time={getLastUpdatedTime()} />
                 </TimeDuration>

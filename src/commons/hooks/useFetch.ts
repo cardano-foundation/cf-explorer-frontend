@@ -10,6 +10,7 @@ interface FetchReturnType<T> {
   initialized: boolean;
   refresh: () => void;
   lastUpdated?: number;
+  statusError?: number | undefined;
 }
 
 const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | string): FetchReturnType<T> => {
@@ -17,6 +18,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | 
   const [initialized, setInitialized] = useState<boolean>(!!initial || false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [statusError, setStatusError] = useState<number | undefined>(undefined);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const lastFetch = useRef<number>();
   const lastKey = useRef<number | string | undefined>(key);
@@ -38,8 +40,10 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | 
       } catch (error) {
         setInitialized(true);
         setData(null);
-        if (error instanceof AxiosError) setError(error?.response?.data?.message || error?.message);
-        else if (typeof error === "string") setError(error);
+        if (error instanceof AxiosError) {
+          setError(error?.response?.data?.message || error?.message);
+          setStatusError(error.response?.status);
+        } else if (typeof error === "string") setError(error);
       }
       lastFetch.current = Date.now();
       if (needLoading) setLoading(false);
@@ -74,7 +78,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | 
     fetch(true);
   }, [fetch]);
 
-  return { data, loading, error, initialized, refresh: fetch, lastUpdated: lastFetch.current };
+  return { data, loading, error, initialized, refresh: fetch, lastUpdated: lastFetch.current, statusError };
 };
 
 export default useFetch;
