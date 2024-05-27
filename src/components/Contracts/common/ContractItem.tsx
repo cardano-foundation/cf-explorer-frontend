@@ -58,9 +58,17 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
           detail: details.smartContract
         };
       case "VOTING":
-        return;
+        return {
+          value: data.scriptHash,
+          explain: t("explain.voting.desc"),
+          detail: details.smartContract
+        };
       case "PROPOSING":
-        return;
+        return {
+          value: data.scriptHash,
+          explain: t("explain.proposing.desc"),
+          detail: details.smartContract
+        };
     }
   }, [data]);
 

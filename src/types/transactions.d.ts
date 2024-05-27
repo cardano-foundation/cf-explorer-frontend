@@ -125,6 +125,14 @@ interface IContractItemTx {
   redeemerBytes: string;
   redeemerMem: number;
   redeemerSteps: number;
+  governanceAction?: string;
+  governanceActionMetadata?: string;
+  voterType?: string;
+  vote?: string;
+  dRepId?: string;
+  submissionDate?: string;
+  expireDate?: string;
+  proposalPolicy?: string;
   scriptBytes: string;
   scriptHash: string;
   stakeAddress?: string;
@@ -170,6 +178,7 @@ type TTCIPProperties = {
   valid: boolean;
   valueFormat?: string;
   checkNotRequired?: boolean;
+  valueFormat?: string;
 };
 
 interface Transaction {
