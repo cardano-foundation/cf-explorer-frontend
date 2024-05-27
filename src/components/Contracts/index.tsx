@@ -24,7 +24,8 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
     governanceActionMetadata: "1111111111111111111111111111111111",
     voterType: "DRep",
     vote: "YES",
-    dRepId: "12345678901234567890123456789012345678912551324456932154"
+    dRepId: "12345678901234567890123456789012345678912551324456932154",
+    proposalLink: "https://hornan7.github.io/proposal.txt"
   }));
   const _dataVoting = data?.map((item) => ({
     ...item,

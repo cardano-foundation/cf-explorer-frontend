@@ -1,11 +1,16 @@
 import React from "react";
 import { Box } from "@mui/material";
 
+import { getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { useScreen } from "src/commons/hooks/useScreen";
+
 import { DataCardBox, DataTitle, DataValue, LinkToText } from "./styles";
 
 export interface Data {
   title: string;
   value: string | number;
+  proposalLink: string;
 }
 export interface DataCardProps {
   data: Data;
@@ -14,6 +19,7 @@ export interface DataCardProps {
 }
 
 const GovernanceActionCard: React.FC<DataCardProps> = ({ data, setOpenModal, onClose }) => {
+  const { isGalaxyFoldSmall } = useScreen();
   const handleClick = () => {
     onClose?.();
     setOpenModal?.();
@@ -23,7 +29,11 @@ const GovernanceActionCard: React.FC<DataCardProps> = ({ data, setOpenModal, onC
       <DataCardBox>
         <DataTitle>{data.title}</DataTitle>
         <DataValue>{data.value}</DataValue>
-        <LinkToText onClick={handleClick}>{"https://hornan7.github.io/proposal.txt"}</LinkToText>
+        <CustomTooltip title={data?.proposalLink}>
+          <LinkToText onClick={handleClick}>
+            {isGalaxyFoldSmall ? getShortHash(data?.proposalLink) : data?.proposalLink}
+          </LinkToText>
+        </CustomTooltip>
       </DataCardBox>
     </Box>
   );

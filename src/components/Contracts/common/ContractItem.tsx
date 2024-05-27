@@ -77,7 +77,6 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
       setOpen(false);
     }
   };
-
   return (
     <CLCardContaienr data-testid="contract-card-item">
       <Box>

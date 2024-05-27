@@ -104,6 +104,7 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
         proposalPolicy={data?.proposalPolicy}
         purpose={data?.purpose}
         governanceActionMetadata={data?.governanceActionMetadata}
+        proposalLink={data?.proposalLink}
         open={openProposingOutput}
         onClose={() => setOpenProposingOutput(false)}
         setOpenModal={() => setOpenModal(true)}
@@ -129,7 +130,7 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
       <ProposingBlueBox ref={leftBoxRef}>
         <WhiteSpace>
           <DataTitle> {`${t("contract.governance")}:`}</DataTitle>
-          <DataValue>{t("contract.treasury")}</DataValue>
+          <DataValue style={{ whiteSpace: "nowrap" }}>{t("contract.treasury")}</DataValue>
         </WhiteSpace>
         <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
           {t("contract.redeemer")}

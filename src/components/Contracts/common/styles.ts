@@ -10,6 +10,7 @@ export const LinkToText = styled(Typography)`
   color: ${({ theme }) => theme.palette.primary.main};
   font-weight: 500;
   cursor: pointer;
+  width: fit-content;
 `;
 
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
