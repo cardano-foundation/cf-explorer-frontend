@@ -1,14 +1,15 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
 import CustomModal from "src/components/commons/CustomModal";
 
-import { ModalContent, SlotContainer } from "./styles";
+import { ModalContent, SlotContainer, TitleModal } from "./styles";
 import DataCard from "../common/DataCard";
 import GovernanceActionCard from "../common/GovernanceActionCard";
 import ViewGovenanceProposing from "../common/ViewGovenanceProposing";
 import DataCardEllipsisText from "../common/DataCardEllipsisText";
+import ExplainationDropdown from "../common/ExplainationDropdown";
 
 type Data = { title: string; value?: string | number };
 
@@ -19,6 +20,7 @@ export interface ProposingOutputModalProps {
   data?: Data[];
   proposalPolicy?: string;
   governanceActionMetadata?: string;
+  purpose?: string;
 }
 
 const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
@@ -27,7 +29,8 @@ const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
   data,
   setOpenModal,
   proposalPolicy,
-  governanceActionMetadata
+  governanceActionMetadata,
+  purpose
 }) => {
   const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
@@ -36,12 +39,17 @@ const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
       modalProps={{ style: { zIndex: 1302 } }}
       open={open}
       onClose={handleCloseModal}
-      title={t("outputs.label")}
+      title={t("output.label")}
       width={550}
       modalContainerProps={{ px: "20px" }}
     >
       <ModalContent>
-        {t("explain.output")}
+        <ExplainationDropdown title={t("explain.output")}>
+          <TitleModal component="p" mb={2}>
+            {t("explain.datum.desc")}
+          </TitleModal>
+          <Typography>{t("explain.datum.desc2")}</Typography>
+        </ExplainationDropdown>
         <SlotContainer>
           <Grid container spacing={2}>
             {data &&
@@ -52,7 +60,11 @@ const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
                 </Grid>
               ))}
             <Grid item xs={12} md={6}>
-              <DataCardEllipsisText title={t("contract.proposalPolicy")} value={proposalPolicy} />
+              <DataCardEllipsisText
+                title={t("contract.proposalPolicy")}
+                value={proposalPolicy as string}
+                purpose={purpose as string}
+              />
             </Grid>
             <Grid item xs={12} md={12}>
               <GovernanceActionCard
