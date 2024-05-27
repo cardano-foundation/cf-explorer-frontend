@@ -126,6 +126,7 @@ interface IContractItemTx {
   redeemerMem: number;
   redeemerSteps: number;
   governanceAction?: string;
+  proposalLink?: string;
   governanceActionMetadata?: string;
   voterType?: string;
   vote?: string;

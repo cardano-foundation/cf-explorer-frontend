@@ -21,6 +21,7 @@ export interface ProposingOutputModalProps {
   proposalPolicy?: string;
   governanceActionMetadata?: string;
   purpose?: string;
+  proposalLink?: string;
 }
 
 const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
@@ -30,7 +31,8 @@ const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
   setOpenModal,
   proposalPolicy,
   governanceActionMetadata,
-  purpose
+  purpose,
+  proposalLink
 }) => {
   const { t } = useTranslation();
   const handleCloseModal = () => onClose?.();
@@ -68,7 +70,11 @@ const ProposingOutputModal: React.FC<ProposingOutputModalProps> = ({
             </Grid>
             <Grid item xs={12} md={12}>
               <GovernanceActionCard
-                data={{ title: t("contract.governanceActionMetadata"), value: governanceActionMetadata as string }}
+                data={{
+                  title: t("contract.governanceActionMetadata"),
+                  value: governanceActionMetadata as string,
+                  proposalLink: proposalLink as string
+                }}
                 setOpenModal={setOpenModal}
                 onClose={handleCloseModal}
               />

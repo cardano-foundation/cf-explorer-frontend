@@ -10,6 +10,7 @@ import { DataCardBox, DataTitle, DataValue, LinkToText } from "./styles";
 export interface Data {
   title: string;
   value: string | number;
+  proposalLink: string;
 }
 export interface DataCardProps {
   data: Data;
@@ -28,11 +29,9 @@ const GovernanceActionCard: React.FC<DataCardProps> = ({ data, setOpenModal, onC
       <DataCardBox>
         <DataTitle>{data.title}</DataTitle>
         <DataValue>{data.value}</DataValue>
-        <CustomTooltip title={"https://hornan7.github.io/proposal.txt"}>
+        <CustomTooltip title={data?.proposalLink}>
           <LinkToText onClick={handleClick}>
-            {isGalaxyFoldSmall
-              ? getShortHash("https://hornan7.github.io/proposal.txt")
-              : "https://hornan7.github.io/proposal.txt"}
+            {isGalaxyFoldSmall ? getShortHash(data?.proposalLink) : data?.proposalLink}
           </LinkToText>
         </CustomTooltip>
       </DataCardBox>

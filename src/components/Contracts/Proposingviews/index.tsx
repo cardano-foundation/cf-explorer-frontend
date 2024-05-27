@@ -104,6 +104,7 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
         proposalPolicy={data?.proposalPolicy}
         purpose={data?.purpose}
         governanceActionMetadata={data?.governanceActionMetadata}
+        proposalLink={data?.proposalLink}
         open={openProposingOutput}
         onClose={() => setOpenProposingOutput(false)}
         setOpenModal={() => setOpenModal(true)}
