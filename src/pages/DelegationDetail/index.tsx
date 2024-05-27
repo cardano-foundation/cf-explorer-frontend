@@ -85,7 +85,7 @@ const DelegationDetail: React.FC = () => {
 
   const fetchListPools = useFetchList<Delegators>(
     API.DELEGATION.POOL_LIST,
-    { query: poolId },
+    { query: poolId, isShowRetired: true },
     false,
     tab === "epochs" ? blockKey : undefined
   );
