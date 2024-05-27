@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledLink } from "src/components/share/styled";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { Uppercase } from "src/components/commons/CustomText/styles";
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 
@@ -79,7 +81,18 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
     <CLCardContaienr data-testid="contract-card-item">
       <Box>
         <WrapLabel>{t("glossary.contract")}:</WrapLabel>
-        {/*  */}
+        <StyledLink
+          style={{
+            fontWeight: "500",
+            textDecoration: "underline",
+            maxWidth: "100%",
+            display: "contents",
+            flexGrow: 1
+          }}
+          to={contractAddress?.detail(contractAddress.value) || "/"}
+        >
+          <DynamicEllipsisText value={contractAddress?.value || ""} isTooltip />
+        </StyledLink>
       </Box>
       <Box>
         <WrapLabel>{t("contract.purpose")}:</WrapLabel>
