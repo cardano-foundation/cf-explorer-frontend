@@ -28,13 +28,14 @@ import {
 
 export interface TransactionChartIF {
   date: string;
-  simpleTransactions: number;
-  smartContract: number;
-  metadata: number;
+  simpleTransactions: number | null;
+  smartContract: number | null;
+  metadata: number | null;
 }
 
 type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
 export type TypeChart = "trx" | "simple" | "complex";
+type Key = "simpleTransactions" | "smartContract" | "metadata";
 
 const TransactionChart: React.FC = () => {
   const { t } = useTranslation();
@@ -67,9 +68,18 @@ const TransactionChart: React.FC = () => {
     blockKey
   );
 
-  const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
-  const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);
-  const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
+  const getDisplayedValue = (list: Omit<TransactionChartIF, "date">[], key: Key) => {
+    let sum = 0;
+    if (list === null || list.length === 0) return "N/A";
+    for (let i = 0; i < list.length; i++) {
+      const val = list[i][key];
+      if (val === null) {
+        return "N/A";
+      }
+      sum += val;
+    }
+    return sum;
+  };
 
   const dataOverview = [
     {
@@ -79,14 +89,14 @@ const TransactionChart: React.FC = () => {
           {t("glossary.metadata")} <Box fontSize={"0.6875rem"}>({t("glossary.withoutSC")})</Box>
         </Box>
       ),
-      value: sumMetadata || 0
+      value: getDisplayedValue(data || [], "metadata")
     },
     {
       key: "simple",
       title: <Box textAlign={"left"}>{t("glossary.smartContracts")}</Box>,
-      value: sumSmartContract || 0
+      value: getDisplayedValue(data || [], "smartContract")
     },
-    { key: "complex", title: t("glossary.simpleTxs"), value: sumSimple || 0 }
+    { key: "complex", title: t("glossary.simpleTxs"), value: getDisplayedValue(data || [], "simpleTransactions") }
   ];
 
   const renderLoading = () => {
@@ -143,7 +153,9 @@ const TransactionChart: React.FC = () => {
                     <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
                   </Box>
 
-                  <ValueChart data-testid={item.key}>{numberWithCommas(item.value)}</ValueChart>
+                  <ValueChart data-testid={item.key}>
+                    {typeof item.value === "number" ? numberWithCommas(item.value) : item.value}
+                  </ValueChart>
                 </InfoItem>
               ))}
             </BoxInfo>
