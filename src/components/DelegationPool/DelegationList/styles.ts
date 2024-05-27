@@ -39,7 +39,6 @@ export const SearchContainer = styled("div")(({ theme }) => ({
     maxWidth: "unset"
   }
 }));
-
 export const DelegationContainer = styled("div")(() => ({
   "& .table-wrapper tbody": {
     zIndex: 10
