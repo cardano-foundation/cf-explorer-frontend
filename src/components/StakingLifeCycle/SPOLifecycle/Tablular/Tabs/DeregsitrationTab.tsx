@@ -22,7 +22,7 @@ import { DeregistrationCertificateModal } from "../../Deregistration";
 const DeregsitrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", tab } = useParams<{ poolId: string; tab: string }>();
   const history = useHistory();
 
   const { pageInfo, setSort } = usePageInfo();
@@ -70,9 +70,10 @@ const DeregsitrationTab = () => {
   ];
 
   const fetchData = useFetchList<SPODeregistrationTabpular>(
-    poolId ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
+    poolId && tab === "deregistration" ? API.SPO_LIFECYCLE.SPO_DEREGISTRATION(poolId) : "",
     {
-      ...pageInfo
+      ...pageInfo,
+      tab
     }
   );
 
