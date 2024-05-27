@@ -23,8 +23,8 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
     proposalPolicy: "1234567443445141436541256435236342",
     governanceActionMetadata: "1111111111111111111111111111111111",
     voterType: "DRep",
-    vote: "Yes",
-    dRepId: "3124132452133332143543535345"
+    vote: "YES",
+    dRepId: "12345678901234567890123456789012345678912551324456932154"
   }));
   const _dataVoting = data?.map((item) => ({
     ...item,
@@ -35,8 +35,8 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
     proposalPolicy: "1234567443445141436541256435236342",
     governanceActionMetadata: "1111111111111111111111111111111111",
     voterType: "DRep",
-    vote: "Yes",
-    dRepId: "3124132452133332143543535345"
+    vote: "YES",
+    dRepId: "312413245213123456789012345678901234567890123456789125513244569321543332143543535345"
   }));
   const _data = _dataProposing?.concat(_dataVoting);
 

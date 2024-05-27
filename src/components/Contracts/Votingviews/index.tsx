@@ -93,7 +93,12 @@ const Votingviews: React.FC<VotingViewProps> = ({ data, isMobile }) => {
         onClose={() => setOpenRedeemer(false)}
       />
       <VotingOutputModal
-        data={{ dRepId: data?.dRepId, voterType: data?.voterType as string, vote: data?.vote }}
+        data={{
+          dRepId: data?.dRepId,
+          voterType: data?.voterType as string,
+          vote: data?.vote,
+          purpose: data?.purpose as string
+        }}
         open={openVotingOutput}
         onClose={() => setOpenVotingOutput(false)}
       />

@@ -73,6 +73,7 @@ import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
 import OverallVote from "./OverallVote";
 import { ViewGovernanceProposingButton } from "../commons/ViewBlocks/styles";
+import { DataCardBox } from "../Contracts/common/styles";
 
 const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ hash, type }) => {
   const { search } = useLocation();
@@ -564,19 +565,25 @@ export const ActionMetadataModalConfirm: React.FC<{
 
   return (
     <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
-      <Box display="block">
-        <Box data-testid="governance.actionMetadataModal.disclaimer" fontSize={16} color={theme.palette.secondary.main}>
-          {t("drep.disclaimer.des1")}
+      <DataCardBox style={{ marginBottom: "20px" }}>
+        <Box display="block">
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimer"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+          >
+            {t("drep.disclaimer.des1")}
+          </Box>
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimerDes"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+            my={2}
+          >
+            {t("drep.disclaimer.des2")}
+          </Box>
         </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.disclaimerDes"
-          fontSize={16}
-          color={theme.palette.secondary.main}
-          my={2}
-        >
-          {t("drep.disclaimer.des2")}
-        </Box>
-      </Box>
+      </DataCardBox>
       <Box
         data-testid="governance.actionMetadataModal.externalLink"
         component={Link}

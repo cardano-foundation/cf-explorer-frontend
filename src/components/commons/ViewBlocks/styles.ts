@@ -369,7 +369,7 @@ export const VotingBlueBox = styled(BlueBox)`
   ${({ theme }) => theme.breakpoints.down(420)} {
     flex-direction: column;
   }
-  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[200])};
+  background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[0] : theme.palette.primary[200])};
 `;
 
 export const ProposingContainer = styled(VotingContainer)<{ isMobile?: number }>``;

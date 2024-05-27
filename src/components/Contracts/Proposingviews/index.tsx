@@ -99,9 +99,10 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
         data={[
           { title: t("contract.governance"), value: data?.governanceAction },
           { title: t("pool.submission"), value: data?.submissionDate },
-          { title: t("contract.expireDate"), value: data?.expireDate }
+          { title: t("contract.expiryDate"), value: data?.expireDate }
         ]}
         proposalPolicy={data?.proposalPolicy}
+        purpose={data?.purpose}
         governanceActionMetadata={data?.governanceActionMetadata}
         open={openProposingOutput}
         onClose={() => setOpenProposingOutput(false)}

@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { StyledLink } from "src/components/share/styled";
+import { details } from "src/commons/routers";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { DataCardBox, DataTitle } from "./styles";
 
 export interface DataCardProps {
-  value?: string | number;
+  value: string;
   title: string;
+  purpose: string;
 }
 
-const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value }) => {
+const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value, purpose }) => {
+  const { isMobile } = useScreen();
+  const address = useMemo(() => {
+    switch (purpose) {
+      case "VOTING":
+        return {
+          detail: details.drep
+        };
+      case "PROPOSING":
+        return {
+          detail: details.smartContract
+        };
+    }
+  }, [purpose]);
   return (
     <DataCardBox style={{ maxHeight: "80px" }}>
       <DataTitle>{title}</DataTitle>
@@ -22,9 +38,15 @@ const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value }) => {
           display: "contents",
           flexGrow: 1
         }}
-        to={"/"}
+        to={address?.detail(value as string) || "/"}
       >
-        <DynamicEllipsisText value={value as string} isTooltip isCopy />
+        <DynamicEllipsisText
+          value={value as string}
+          isTooltip
+          isCopy
+          postfix={isMobile ? 6 : 8}
+          sx={{ width: "105%", maxWidth: "240px" }}
+        />
       </StyledLink>
     </DataCardBox>
   );
