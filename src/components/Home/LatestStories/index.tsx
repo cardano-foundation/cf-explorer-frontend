@@ -124,16 +124,18 @@ const LatestStories = () => {
                 <Detail>
                   <WrapHeader>
                     <CustomTooltip title={authorName}>
-                      <Author>{authorName}</Author>
+                      <Author data-testid="authorNameStories.value">{authorName}</Author>
                     </CustomTooltip>
-                    <ResourceHref>{getHostname(resource_href)}</ResourceHref>
+                    <ResourceHref data-testid="resourceHref.value">{getHostname(resource_href)}</ResourceHref>
                   </WrapHeader>
-                  <ItemTitle>{title} </ItemTitle>
-                  <Description>{default_content}</Description>
+                  <ItemTitle data-testid="titleStories.value">{title} </ItemTitle>
+                  <Description data-testid="contentStories.value">{default_content}</Description>
                   <FooterCard>
                     <Time>
                       <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      <DatetimeTypeTooltip>{formatDateTimeLocal(date)}</DatetimeTypeTooltip>
+                      <DatetimeTypeTooltip data-testid="dateStories.value">
+                        {formatDateTimeLocal(date)}
+                      </DatetimeTypeTooltip>
                     </Time>
                   </FooterCard>
                 </Detail>
