@@ -84,7 +84,7 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
   };
   return (
     <ProposingContainer isMobile={+!!isMobile}>
-      <ActionMetadataModalConfirm open={openModal} onClose={() => setOpenModal(false)} />
+      <ActionMetadataModalConfirm anchorUrl={data?.proposalLink} open={openModal} onClose={() => setOpenModal(false)} />
       <RedeemerModal
         data={[
           { title: t("contract.purpose"), value: data?.purpose },
