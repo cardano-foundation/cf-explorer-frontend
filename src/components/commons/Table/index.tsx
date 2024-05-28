@@ -575,13 +575,15 @@ const Table: React.FC<TableProps> = ({
         {!loading && initialized && data?.length === 0 && !error && (
           <EmptyRecord isModal={isModal} className={emptyClassName} />
         )}
-        {!loading && initialized && data?.length === 0 && error && (statusError ?? 0 < 500) && (
+        {!loading && initialized && error && statusError !== 500 && (
           <EmptyRecord isModal={isModal} className={emptyClassName} />
         )}
-        {!loading && initialized && data?.length === 0 && error && statusError === 500 && (
+        {!loading && initialized && error && statusError === 500 && (
           <FetchDataErrIcon isModal={isModal} className={emptyClassName} />
         )}
-        {!loading && initialized && data === null && <NotAvailableIcon isModal={isModal} className={emptyClassName} />}
+        {!loading && initialized && data === null && !error && (
+          <NotAvailableIcon isModal={isModal} className={emptyClassName} />
+        )}
       </Wrapper>
       {showPagination && (
         <FooterTable total={total} clearSelection={clearSelection} pagination={pagination} loading={!!loading} />
