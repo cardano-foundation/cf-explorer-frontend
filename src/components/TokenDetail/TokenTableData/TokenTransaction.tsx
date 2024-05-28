@@ -36,7 +36,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
@@ -146,9 +146,11 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
 
   return (
     <Box>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}

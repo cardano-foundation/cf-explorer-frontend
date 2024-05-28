@@ -34,7 +34,7 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tabActive, tokenId, metadata })
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<ITokenMintingTable>[] = [
     {
       title: t("glossary.txhash"),
@@ -70,9 +70,11 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tabActive, tokenId, metadata })
 
   return (
     <>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}

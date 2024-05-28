@@ -41,6 +41,7 @@ import { Lowercase } from "../CustomText/styles";
 import Filter from "../Filter";
 import NoRecord from "../NoRecord";
 import NotAvailable from "../NotAvailable";
+import FetchDataErr from "../FetchDataErr";
 import {
   Empty,
   InputNumber,
@@ -83,6 +84,11 @@ export const NotAvailableIcon: React.FC<TEmptyRecord> = ({ className, isModal })
   </Empty>
 );
 
+export const FetchDataErrIcon: React.FC<TEmptyRecord> = ({ className, isModal }) => (
+  <Empty className={className} ismodal={+(isModal || 0)}>
+    <FetchDataErr p={`${0} !important`} />
+  </Empty>
+);
 const TableHeader = <T extends ColumnType>({
   columns,
   loading,
@@ -354,7 +360,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">
-        {pagination?.total ? (
+        {pagination?.total && pagination.total > optionList[0] ? (
           <Box display="flex" alignItems="center">
             <SelectMui
               open={open}
@@ -410,7 +416,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.total > pagination.size ? (
+      {pagination?.total && pagination.total > (pagination?.size || 10) ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
@@ -440,6 +446,7 @@ const Table: React.FC<TableProps> = ({
   loading,
   initialized = true,
   error,
+  statusError,
   onClickRow,
   showTabView,
   rowKey,
@@ -565,8 +572,14 @@ const Table: React.FC<TableProps> = ({
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
-        {!loading && ((initialized && data?.length === 0) || error) && (
+        {!loading && initialized && data?.length === 0 && !error && (
           <EmptyRecord isModal={isModal} className={emptyClassName} />
+        )}
+        {!loading && initialized && data?.length === 0 && error && (statusError ?? 0 < 500) && (
+          <EmptyRecord isModal={isModal} className={emptyClassName} />
+        )}
+        {!loading && initialized && data?.length === 0 && error && statusError === 500 && (
+          <FetchDataErrIcon isModal={isModal} className={emptyClassName} />
         )}
         {!loading && initialized && data === null && <NotAvailableIcon isModal={isModal} className={emptyClassName} />}
       </Wrapper>
