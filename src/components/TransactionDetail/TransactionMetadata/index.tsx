@@ -92,7 +92,6 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     }
     return result;
   }, [data?.protocols, data?.previousProtocols]);
-
   const _dataProposing = data?.contracts?.map((item) => ({
     ...item,
     purpose: "PROPOSING",
