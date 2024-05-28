@@ -14,7 +14,7 @@ export interface DataCardProps {
 }
 
 const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value, purpose }) => {
-  const { isMobile } = useScreen();
+  const { isMobile, isTablet } = useScreen();
   const address = useMemo(() => {
     switch (purpose) {
       case "VOTING":
@@ -45,7 +45,7 @@ const DataCardEllipsisText: React.FC<DataCardProps> = ({ title, value, purpose }
           isTooltip
           isCopy
           postfix={isMobile ? 6 : 8}
-          sx={{ width: "240px" }}
+          sx={{ width: isTablet ? "auto" : "240px" }}
         />
       </StyledLink>
     </DataCardBox>
