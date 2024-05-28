@@ -14,33 +14,6 @@ export interface ContractsListProps {
 }
 
 const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
-  const _dataProposing = data?.map((item) => ({
-    ...item,
-    purpose: "PROPOSING",
-    governanceAction: "Treasury Withdrawal",
-    submissionDate: "03/19/2024 15:40:11",
-    expireDate: "04/19/2024 15:40:11",
-    proposalPolicy: "1234567443445141436541256435236342",
-    governanceActionMetadata: "1111111111111111111111111111111111",
-    voterType: "DRep",
-    vote: "YES",
-    dRepId: "12345678901234567890123456789012345678912551324456932154",
-    proposalLink: "https://hornan7.github.io/proposal.txt"
-  }));
-  const _dataVoting = data?.map((item) => ({
-    ...item,
-    purpose: "VOTING",
-    governanceAction: "Treasury Withdrawal",
-    submissionDate: "03/19/2024 15:40:11",
-    expireDate: "04/19/2024 15:40:11",
-    proposalPolicy: "1234567443445141436541256435236342",
-    governanceActionMetadata: "1111111111111111111111111111111111",
-    voterType: "DRep",
-    vote: "YES",
-    dRepId: "312413245213123456789012345678901234567890123456789125513244569321543332143543535345"
-  }));
-  const _data = _dataProposing?.concat(_dataVoting);
-
   const { t } = useTranslation();
   const { trxHash } = useParams<{ trxHash: string }>();
   const [openContractInfo, setOpenContactInfo] = useState(false);
@@ -69,8 +42,8 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
               <InfoSolidIcon onClick={() => setOpenContactInfo(!openContractInfo)} />
             </Box>
           </Grid>
-          {_data &&
-            _data.map((item, index) => (
+          {data &&
+            data.map((item, index) => (
               <Grid key={index} item xs={12} sm={6} md={6} lg={4} xl={3}>
                 <ContractItem onClick={goToDetail} data={item} />
               </Grid>

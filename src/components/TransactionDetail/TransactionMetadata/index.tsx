@@ -93,6 +93,34 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
     return result;
   }, [data?.protocols, data?.previousProtocols]);
 
+  const _dataProposing = data?.contracts?.map((item) => ({
+    ...item,
+    purpose: "PROPOSING",
+    governanceAction: "Treasury Withdrawal",
+    submissionDate: "03/19/2024 15:40:11",
+    expireDate: "04/19/2024 15:40:11",
+    proposalPolicy: "1234567443445141436541256435236342",
+    governanceActionMetadata: "1111111111111111111111111111111111",
+    voterType: "DRep",
+    vote: "YES",
+    dRepId: "12345678901234567890123456789012345678912551324456932154",
+    proposalLink: "https://hornan7.github.io/proposal.txt"
+  }));
+  const _dataVoting = data?.contracts?.map((item) => ({
+    ...item,
+    purpose: "VOTING",
+    governanceAction: "Treasury Withdrawal",
+    submissionDate: "03/19/2024 15:40:11",
+    expireDate: "04/19/2024 15:40:11",
+    proposalPolicy: "1234567443445141436541256435236342",
+    governanceActionMetadata: "1111111111111111111111111111111111",
+    voterType: "DRep",
+    vote: "YES",
+    dRepId: "312413245213123456789012345678901234567890123456789125513244569321543332143543535345"
+  }));
+  const _data = _dataProposing?.concat(_dataVoting);
+  const dataContract = _data?.concat(data?.contracts);
+
   const tabs: TTab[] = [
     {
       key: "summary",
@@ -114,10 +142,10 @@ const TransactionMetadata: React.FC<TransactionMetadataProps> = ({ data }) => {
       label: (
         <Box display={"flex"} alignItems={"center"} data-testid="contract-tab">
           {t("glossary.contracts")}
-          <CustomNumberBadge value={data?.contracts?.length} />
+          <CustomNumberBadge value={dataContract?.length} />
         </Box>
       ),
-      children: <ContractsList data={data?.contracts} />
+      children: <ContractsList data={dataContract} />
     },
     {
       key: "collaterals",
