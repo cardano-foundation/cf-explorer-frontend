@@ -24,14 +24,18 @@ import { StyledLink, TableSubTitle } from "../styles";
 const DeregistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
   const [openModal, setOpenModal] = useState(false);
 
-  const fetchData = useFetchList<DeregistrationItem>(stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "", {
-    ...pageInfo
-  });
+  const fetchData = useFetchList<DeregistrationItem>(
+    stakeId && tab === "deregistration" ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
+    {
+      ...pageInfo,
+      tab
+    }
+  );
 
   const columns: Column<DeregistrationItem>[] = [
     {
