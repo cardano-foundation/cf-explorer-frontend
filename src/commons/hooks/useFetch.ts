@@ -36,6 +36,7 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | 
         const res = await service.get(url);
         setData(res?.data as T);
         setError(null);
+        setStatusError(undefined);
         setInitialized(true);
       } catch (error) {
         setInitialized(true);

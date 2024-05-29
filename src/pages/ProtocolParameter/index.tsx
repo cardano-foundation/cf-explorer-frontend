@@ -718,8 +718,6 @@ export const ProtocolParameterHistory = () => {
         )}
         {columnsTable?.length > 1 && initialized && (
           <TableStyled
-            minHeight={"unset"}
-            maxHeight={"unset"}
             columns={columnsTable}
             data={dataTable}
             error={errorHistory}

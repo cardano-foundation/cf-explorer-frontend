@@ -377,12 +377,14 @@ const DrepAccordion = () => {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     label: React.ReactNode;
     key: TabDrepDetail;
+    errorFetchData: boolean;
     component: React.ReactNode;
   }[] = [
     {
       icon: governanceVotesIcon,
       label: t("drep.governanceVotes"),
       key: "governanceVotes",
+      errorFetchData: Boolean(null),
       component: (
         <div ref={tableRef}>
           <DelegationGovernanceVotes hash={drepId} type={VOTE_TYPE.DREP_KEY_HASH} />
@@ -393,6 +395,7 @@ const DrepAccordion = () => {
       icon: StakingDelegators,
       label: t("stakingDelegators"),
       key: "delegators",
+      errorFetchData: Boolean(fetchDataDelegator.error),
       component: (
         <div ref={tableRef}>
           <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
@@ -403,6 +406,7 @@ const DrepAccordion = () => {
       icon: TimelineIconComponent,
       label: <Box data-testid="certificatesHistory">{t("drep.certificatesHistory")}</Box>,
       key: "certificatesHistory",
+      errorFetchData: Boolean(fetchDataCertificatesHistory.error),
       component: (
         <div ref={tableRef}>
           <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
@@ -443,7 +447,7 @@ const DrepAccordion = () => {
 
   return (
     <Box ref={tableRef} mt={"30px"}>
-      {tabs.map(({ key, icon: Icon, label, component }, index) => (
+      {tabs.map(({ key, icon: Icon, label, component, errorFetchData }, index) => (
         <StyledAccordion
           key={key}
           expanded={tab === key}
@@ -472,7 +476,7 @@ const DrepAccordion = () => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>
-            {tab != "governanceVotes" && (
+            {tab != "governanceVotes" && !errorFetchData && (
               <TimeDuration>
                 <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
               </TimeDuration>
