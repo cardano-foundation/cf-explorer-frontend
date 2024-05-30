@@ -479,7 +479,13 @@ const DrepAccordion = () => {
           <AccordionDetails>
             {tab != "governanceVotes" && !errorFetchData && (
               <TimeDuration>
-                <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
+                <FormNowMessage
+                  time={
+                    tab === "certificatesHistory"
+                      ? fetchDataCertificatesHistory.lastUpdated
+                      : fetchDataDelegator.lastUpdated
+                  }
+                />
               </TimeDuration>
             )}
             {component}
