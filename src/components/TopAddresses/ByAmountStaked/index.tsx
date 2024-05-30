@@ -77,11 +77,7 @@ const TopAddressesByAmountStaked = () => {
   return (
     <Box mt={"18px"}>
       <Actions>
-        {!error && (
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        )}
+        <TimeDuration>{!error && <FormNowMessage time={lastUpdated} />}</TimeDuration>
         <PageSize>
           <SelectMui
             value={pageSize}

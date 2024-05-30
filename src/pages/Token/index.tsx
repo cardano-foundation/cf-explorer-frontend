@@ -166,6 +166,7 @@ const Tokens = () => {
         <Table
           {...fetchData}
           statusError={statusError}
+          error={error}
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total, isDataOverSize: fetchData.isDataOverSize }}

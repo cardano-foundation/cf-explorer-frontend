@@ -54,6 +54,7 @@ const useFetchList = <T>(
         setInitialized(false);
         setLoading(false);
         setError(null);
+        setStatusError(undefined);
         setCurrentPage(0);
         setTotalPage(0);
         setTotal(0);
@@ -78,6 +79,7 @@ const useFetchList = <T>(
         setQuery(cleanObject(params));
         setData(res?.data?.data as T[]);
         setError(null);
+        setStatusError(undefined);
         setIsDataOverSize(res?.data?.isDataOverSize ?? null);
         setCurrentPage(res.data.currentPage);
         setTotalPage(res.data.totalPages);

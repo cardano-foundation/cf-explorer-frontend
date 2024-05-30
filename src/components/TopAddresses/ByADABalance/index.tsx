@@ -23,7 +23,7 @@ const TopAddressesByADABalance = () => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
-  const { error, statusError, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
+  const { data, error, statusError, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.ADDRESS.TOP_ADDRESS,
     { page: 0, size: +pageSize },
     false,
@@ -66,15 +66,10 @@ const TopAddressesByADABalance = () => {
       )
     }
   ];
-
   return (
     <Box mt={"18px"}>
       <Actions>
-        {!error && (
-          <TimeDuration>
-            <FormNowMessage time={lastUpdated} />
-          </TimeDuration>
-        )}
+        <TimeDuration>{!error && <FormNowMessage time={lastUpdated} />}</TimeDuration>
         <PageSize>
           <SelectMui
             value={pageSize}
