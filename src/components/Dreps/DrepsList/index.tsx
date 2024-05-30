@@ -70,7 +70,7 @@ const DrepsList: React.FC = () => {
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<Drep>[] = [
     {
       title: <div data-testid="drepList.drepIdTitle">{t("dreps.id")}</div>,
@@ -236,18 +236,20 @@ const DrepsList: React.FC = () => {
   ];
   return (
     <>
-      <TopSearchContainer
-        sx={{
-          justifyContent: "end",
-          [theme.breakpoints.down("sm")]: {
-            alignItems: "flex-end"
-          }
-        }}
-      >
-        <Box display="flex" gap="10px">
-          <DrepFilter loading={fetchData.loading} />
-        </Box>
-      </TopSearchContainer>
+      {!error && (
+        <TopSearchContainer
+          sx={{
+            justifyContent: "end",
+            [theme.breakpoints.down("sm")]: {
+              alignItems: "flex-end"
+            }
+          }}
+        >
+          <Box display="flex" gap="10px">
+            <DrepFilter loading={fetchData.loading} />
+          </Box>
+        </TopSearchContainer>
+      )}
       <Table
         {...fetchData}
         data-testid="drepList.table"

@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
@@ -20,15 +21,15 @@ import {
   TableRow,
   Typography,
   useTheme,
-  ClickAwayListener,
-  Link
+  ClickAwayListener
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -37,18 +38,18 @@ import {
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
+  LinkIcon,
   RepeatVotesIcon,
   ResetIcon,
   VoteIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
 import CardGovernanceVotes, { VoteStatus, actionTypeListDrep } from "src/components/commons/CardGovernanceVotes";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -63,14 +64,17 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
 import OverallVote from "./OverallVote";
+import FetchDataErr from "../commons/FetchDataErr";
+import { ViewGovernanceProposingButton } from "../commons/ViewBlocks/styles";
+import { DataCardBox } from "../Contracts/common/styles";
 
 const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ hash, type }) => {
   const { search } = useLocation();
@@ -94,7 +98,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
-  const { data, total, lastUpdated, loading, initialized } = useFetchList<GovernanceVote>(
+  const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
     `${API.POOL_CERTIFICATE.POOL}/${hash}`,
     omitBy(params, isUndefined),
     false
@@ -127,7 +131,10 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && initialized && <NoRecord m="170px 0px" padding={`0 !important`} />}
+        {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+          <NoRecord m="170px 0px" padding={`0 !important`} />
+        )}
+        {error && statusError === 500 && <FetchDataErr m="170px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -159,12 +166,14 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
 
   return (
     <>
-      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
-      </Box>
+      {!error && (
+        <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{
@@ -255,7 +264,7 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
-            <HashName data-testid="governance.hashName">
+            <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
               {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
             </HashName>
           </Box>
@@ -564,31 +573,45 @@ export const ActionMetadataModalConfirm: React.FC<{
 
   return (
     <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
-      <Box display="block" pb="15px">
-        <Box data-testid="governance.actionMetadataModal.disclaimer" fontSize={16} color={theme.palette.secondary.main}>
-          {t("drep.disclaimer.des1")}
+      <DataCardBox style={{ marginBottom: "20px" }}>
+        <Box display="block">
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimer"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+          >
+            {t("drep.disclaimer.des1")}
+          </Box>
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimerDes"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+            my={2}
+          >
+            {t("drep.disclaimer.des2")}
+          </Box>
         </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.disclaimerDes"
-          fontSize={16}
-          color={theme.palette.secondary.main}
-          my={2}
-        >
-          {t("drep.disclaimer.des2")}
-        </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.externalLink"
-          component={Link}
-          sx={{ textDecoration: "underline !important" }}
-          fontSize="16px"
-          color={`${theme.palette.primary.main} !important`}
-          fontWeight="700"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={anchorUrl || "/"}
-        >
-          Proceed to External Link
-        </Box>
+      </DataCardBox>
+      <Box
+        data-testid="governance.actionMetadataModal.externalLink"
+        component={Link}
+        sx={{ textDecoration: "underline !important" }}
+        fontSize="16px"
+        color={`${theme.palette.primary.main} !important`}
+        fontWeight="700"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={anchorUrl || "/"}
+      >
+        <ViewGovernanceProposingButton>
+          {t("common.proceedToExternalLink")}
+          <CustomIcon
+            style={{ cursor: "pointer", marginLeft: "5px" }}
+            icon={LinkIcon}
+            width={22}
+            fill={theme.palette.secondary[100]}
+          />
+        </ViewGovernanceProposingButton>
       </Box>
     </CustomModal>
   );
@@ -668,6 +691,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
@@ -953,7 +977,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
-                    ata-testid="governance.filter.currentStatusValue"
+                    data-testid="governance.filter.currentStatusValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1083,7 +1107,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
-                  onClose={() => setOpenDateRange(false)}
+                  onClose={() => {
+                    setOpenDateRange(false);
+                  }}
                   onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>

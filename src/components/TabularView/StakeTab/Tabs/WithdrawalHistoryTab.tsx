@@ -26,15 +26,19 @@ import { StyledLink, TableSubTitle, WrapWalletLabel, WrapperDelegationTab } from
 const WithdrawalHistoryTab = () => {
   const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const [params, setParams] = useState<FilterParams>({});
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
-  const fetchData = useFetchList<WithdrawalHistoryItem>(stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "", {
-    ...pageInfo,
-    ...params,
-    txHash: params.search
-  });
+  const fetchData = useFetchList<WithdrawalHistoryItem>(
+    stakeId && tab === "withdrawal-history" ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "",
+    {
+      ...pageInfo,
+      ...params,
+      tab,
+      txHash: params.search
+    }
+  );
 
   const columns: Column<WithdrawItem>[] = [
     {
@@ -80,7 +84,7 @@ const WithdrawalHistoryTab = () => {
     }
   ];
 
-  const { total } = fetchData;
+  const { total, error } = fetchData;
 
   return (
     <>
@@ -90,25 +94,27 @@ const WithdrawalHistoryTab = () => {
           <Box mr={1}>Rewards withdrawn:</Box>
           <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.rewardWithdrawn ?? 0} />
         </WrapWalletLabel>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
-          </WrapFilterDescription>
+        {!error && (
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+              {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
+            </WrapFilterDescription>
 
-          <CustomFilter
-            sortKey="id"
-            filterValue={omit(pageInfo, ["page", "size"])}
-            onSubmit={(params) => {
-              if (params) {
-                setParams(params);
-              }
-              const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
-              history.replace({ search: stringify({ page: 1, ...newParams }) });
-            }}
-            searchLabel={t("common.searchTx")}
-          />
-        </Box>
+            <CustomFilter
+              sortKey="id"
+              filterValue={omit(pageInfo, ["page", "size"])}
+              onSubmit={(params) => {
+                if (params) {
+                  setParams(params);
+                }
+                const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
+                history.replace({ search: stringify({ page: 1, ...newParams }) });
+              }}
+              searchLabel={t("common.searchTx")}
+            />
+          </Box>
+        )}
       </WrapperDelegationTab>
       <Table
         {...fetchData}

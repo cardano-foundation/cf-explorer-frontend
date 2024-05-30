@@ -18,7 +18,7 @@ import { AmountADARow } from "./styles";
 
 const OperatorRewardTab = () => {
   const { t } = useTranslation();
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", tab } = useParams<{ poolId: string; tab: string }>();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
 
@@ -64,9 +64,13 @@ const OperatorRewardTab = () => {
     }
   ];
 
-  const fetchData = useFetchList<SPO_REWARD>(poolId ? API.SPO_LIFECYCLE.REWARD(poolId) : "", {
-    ...pageInfo
-  });
+  const fetchData = useFetchList<SPO_REWARD>(
+    poolId && tab === "operator-rewards" ? API.SPO_LIFECYCLE.REWARD(poolId) : "",
+    {
+      ...pageInfo,
+      tab
+    }
+  );
 
   return (
     <Box>

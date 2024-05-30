@@ -56,12 +56,14 @@ export interface TableProps<T extends ColumnType = any> {
   columns: Column<T>[];
   data?: T[] | null;
   screen?: string;
+  screen?: string;
   className?: string;
   emptyClassName?: string;
   style?: React.CSSProperties;
   loading?: boolean;
   initialized?: boolean;
   error?: React.ReactNode;
+  statusError?: number | undefined;
   total?: {
     count: number;
     title: string;

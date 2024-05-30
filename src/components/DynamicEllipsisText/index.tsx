@@ -10,7 +10,6 @@ import CustomTooltip from "../commons/CustomTooltip";
 const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   display: inline-block;
   white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
-  overflow: hidden;
   width: 100%;
   text-align: left;
   transform: translateY(2px);
@@ -72,6 +71,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  isSeparateCopyIcon?: boolean;
   whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);

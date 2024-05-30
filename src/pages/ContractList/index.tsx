@@ -29,6 +29,8 @@ const Transactions: React.FC = () => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const fetchData = useFetchList<Contracts>(API.CONTRACT, { ...pageInfo, sort }, false, blockKey);
 
+  const { error } = fetchData;
+
   useEffect(() => {
     document.title = `Contracts List | Cardano Blockchain Explorer`;
   }, []);
@@ -88,9 +90,11 @@ const Transactions: React.FC = () => {
   return (
     <StyledContainer>
       <Card title={t("head.page.smartContracts")} underline={false}>
-        <TimeDuration>
-          <FormNowMessage time={fetchData.lastUpdated} />
-        </TimeDuration>
+        {!error && (
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        )}
         <Table
           {...fetchData}
           columns={columns}

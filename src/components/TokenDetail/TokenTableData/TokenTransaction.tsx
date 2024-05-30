@@ -19,10 +19,11 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 interface ITokenTransaction {
+  tabActive: string;
   tokenId: string;
 }
 
-const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
+const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -30,12 +31,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
   const fetchData = useFetchList<Transactions>(
-    API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId),
-    { ...pageInfo },
+    tabActive === "transactions" ? API.TOKEN.TOKEN_TRX.replace(":tokenId", tokenId) : "",
+    { ...pageInfo, tabActive },
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
@@ -145,9 +146,11 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tokenId }) => {
 
   return (
     <Box>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}
