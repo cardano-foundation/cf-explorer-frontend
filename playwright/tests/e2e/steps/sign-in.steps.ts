@@ -19,7 +19,7 @@ When(/^the user enter his credentials for sign in$/, async ({ page }) => {
 });
 Then(/^the user should see the explorer dashboard page with his user account info$/, async ({ page }) => {
   await dashboard(page).assertUserLoggedIn(username);
-  await dashboard(page).assertItLoads();
+  await dashboard(page).assertDashboardInfoCards();
 });
 
 When(/^the user enter and invalid email$/, async ({ page }) => {

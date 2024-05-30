@@ -9,7 +9,7 @@ export function blockfrostApi(request: APIRequestContext) {
   const getLatestBlockData = async () => {
     return BaseApi.getData(
       request,
-      Endpoint.BlockFrost.LastBlockData.Base,
+      Endpoint.BlockFrost.Blocks.Latest,
       {},
       {
         Accept: "*/*",
@@ -51,9 +51,25 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getBlockByNumber = async (blockNumber: number) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Blocks.Base + `/${blockNumber}`,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
   return {
     getLastEpochData,
     getLatestBlockData,
-    getEpochById
+    getEpochById,
+    getBlockByNumber
   };
 }

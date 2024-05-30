@@ -23,7 +23,7 @@ import { ClickAbleLink } from "./styles";
 const PoolUpdateTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", tab } = useParams<{ poolId: string; tab: string }>();
   const history = useHistory();
 
   const [selectedValue, setSelectedValue] = useState<PoolUpdateDetail | null>(null);
@@ -72,9 +72,13 @@ const PoolUpdateTab = () => {
     }
   ];
 
-  const fetchData = useFetchList<PoolUpdateDetail>(poolId ? API.SPO_LIFECYCLE.POOL_UPDATE_LIST(poolId) : "", {
-    ...pageInfo
-  });
+  const fetchData = useFetchList<PoolUpdateDetail>(
+    poolId && tab === "pool-updates" ? API.SPO_LIFECYCLE.POOL_UPDATE_LIST(poolId) : "",
+    {
+      ...pageInfo,
+      tab
+    }
+  );
 
   return (
     <Box>

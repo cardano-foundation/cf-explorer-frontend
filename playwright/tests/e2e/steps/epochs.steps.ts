@@ -1,15 +1,15 @@
 import { createBdd } from "playwright-bdd";
 
 import { blockfrostApi } from "playwright/api/call-blockfrost/blockfrost.api";
-import { Epochs } from "playwright/pages/epochs.page";
+import { epochsDashboardPage } from "playwright/pages/epochs-dashboard.page";
 
 const { Given, When, Then } = createBdd();
 
 Given(/^the user is in the general dashboard page in explorer portal$/, async ({ page }) => {
-  await Epochs(page).goToDashboard();
+  await epochsDashboardPage(page).goToDashboard();
 });
 When(/^the user selects the Epochs option inside the Blockchain drop down menu$/, async ({ page }) => {
-  await Epochs(page).goToEpochsFromSidebar();
+  await epochsDashboardPage(page).goToEpochsFromSidebar();
 });
 Then(
   /^the user should see the epochs info containing the Search bar, Current epoch resume info and the Finished epochs table$/,
@@ -20,34 +20,34 @@ Then(
       lastEpoch = data;
     });
 
-    await Epochs(page).searchBarOnEpochs();
-    await Epochs(page).checkCurrentEpoch({ lastEpoch });
-    await Epochs(page).checkTableFinishedEpochTable();
+    await epochsDashboardPage(page).searchBarOnEpochs();
+    await epochsDashboardPage(page).checkCurrentEpoch({ lastEpoch });
+    await epochsDashboardPage(page).checkTableFinishedEpochTable();
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 When(/^the user selects the current epoch number$/, async ({ page }) => {
-  await Epochs(page).openWidgetCurrentEpoch();
+  await epochsDashboardPage(page).openWidgetCurrentEpoch();
 });
 Then(
   /^the user should see a widget containing the Info widget data with the same epoch number, start time, end time, blocks number and slot number of the selected current active epoch$/,
   async ({ page, request }) => {
     (await blockfrostApi(request).getLastEpochData()).json().then(async (data) => {
-      await Epochs(page).checkCurrentEpochWidget({ currentEpoch: data });
+      await epochsDashboardPage(page).checkCurrentEpochWidget({ currentEpoch: data });
     });
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page with finished epoch$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 When(
   /^the user selects one of the finished epochs record or the eye symbol at the end of the row$/,
   async ({ page }) => {
-    await Epochs(page).openWidgetFinishedEpoch();
+    await epochsDashboardPage(page).openWidgetFinishedEpoch();
   }
 );
 Then(
@@ -57,19 +57,19 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await Epochs(page).checkFinishedEpochWidget({ currentEpoch: data });
+        await epochsDashboardPage(page).checkFinishedEpochWidget({ currentEpoch: data });
       });
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page to current epoch detail$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 Given(/^the user open the info widget of the current active epoch$/, async ({ page }) => {
-  await Epochs(page).openWidgetCurrentEpoch();
+  await epochsDashboardPage(page).openWidgetCurrentEpoch();
 });
 When(/^the user selects the view details button in the info widget$/, async ({ page }) => {
-  await Epochs(page).goToEpochsDetailFromWidget();
+  await epochsDashboardPage(page).goToEpochsDetailFromWidget();
 });
 Then(
   /^the user should see the epoch detail view info page containing the Search bar, Epoch details and the Blocks table with the data of active epoch$/,
@@ -78,19 +78,19 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await Epochs(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page to finished epoch detail$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 Given(/^the user open the info widget of one finished epoch$/, async ({ page }) => {
-  await Epochs(page).openWidgetFinishedEpoch();
+  await epochsDashboardPage(page).openWidgetFinishedEpoch();
 });
 When(/^the user selects the view details button in the info finished epoch widget$/, async ({ page }) => {
-  await Epochs(page).goToEpochsDetailFromWidget();
+  await epochsDashboardPage(page).goToEpochsDetailFromWidget();
 });
 Then(
   /^the user should see the epoch detail view info page containing the Search bar, Epoch details and the Blocks table with the data of the select finished epoch$/,
@@ -99,59 +99,59 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await Epochs(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page to block detail$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 Given(/^the user go to the detail view page of one epoch$/, async ({ page }) => {
-  await Epochs(page).openWidgetFinishedEpoch();
-  await Epochs(page).goToEpochsDetailFromWidget();
+  await epochsDashboardPage(page).openWidgetFinishedEpoch();
+  await epochsDashboardPage(page).goToEpochsDetailFromWidget();
 });
 When(
   /^the user selects the block number of one record of the blocks table in the epoch detail view page$/,
   async ({ page }) => {
-    await Epochs(page).goToBlockDetailFromEpoch();
+    await epochsDashboardPage(page).goToBlockDetailFromEpoch();
   }
 );
 Then(
   /^the user should be redirected to the block details page of the select block in the epoch detail view page$/,
   async ({ page }) => {
-    await Epochs(page).checkBlockDetailPage();
+    await epochsDashboardPage(page).checkBlockDetailPage();
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page to block detail by block id$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 Given(/^the user go to the detail view page of one finished epoch$/, async ({ page }) => {
-  await Epochs(page).openWidgetFinishedEpoch();
-  await Epochs(page).goToEpochsDetailFromWidget();
+  await epochsDashboardPage(page).openWidgetFinishedEpoch();
+  await epochsDashboardPage(page).goToEpochsDetailFromWidget();
 });
 When(
   /^the user selects the block id of one record of the blocks table in the epoch detail view page$/,
   async ({ page }) => {
-    await Epochs(page).goToBlockDetailFromEpochByBlockId();
+    await epochsDashboardPage(page).goToBlockDetailFromEpochByBlockId();
   }
 );
 Then(
   /^the user should be redirected to the block details page of the select block in the epoch detail view page by blockid$/,
   async ({ page }) => {
-    await Epochs(page).checkBlockDetailPage();
+    await epochsDashboardPage(page).checkBlockDetailPage();
   }
 );
 
 Given(/^the user is in the Epochs section in the explorer page to block list by block tab$/, async ({ page }) => {
-  await Epochs(page).goToEpochs();
+  await epochsDashboardPage(page).goToEpochs();
 });
 Given(/^the user selects one of the epochs open widget Epoch$/, async ({ page }) => {
-  await Epochs(page).openWidgetFinishedEpoch();
+  await epochsDashboardPage(page).openWidgetFinishedEpoch();
 });
 When(/^user selects the blocks section into the info widget of the selected epoch$/, async ({ page }) => {
-  await Epochs(page).goToEpochsDetailFromWidgetByBlockTab();
+  await epochsDashboardPage(page).goToEpochsDetailFromWidgetByBlockTab();
 });
 Then(
   /^the user should see the selected epoch detail view page in the blocks table section$/,
@@ -160,7 +160,7 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await Epochs(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );

@@ -29,10 +29,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
   };
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   if (!currentEpochData) return null;
-  const progress =
-    moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
-      ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
-      : 100;
+  const progress = currentEpochData.syncingProgress * 100;
 
   const listOverview = [
     {
@@ -61,7 +58,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
               <EpochProgress
                 data-testid="epoch.firstEpoch.progress"
                 status={currentEpochData?.status as keyof typeof EPOCH_STATUS}
-              >{`${progress}%`}</EpochProgress>
+              >{`${Math.round(progress)}%`}</EpochProgress>
             ) : (
               currentEpochData?.no
             )}

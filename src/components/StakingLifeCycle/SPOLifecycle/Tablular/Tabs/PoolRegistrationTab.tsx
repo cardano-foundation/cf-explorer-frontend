@@ -24,7 +24,7 @@ import { RegistrationCertificateModal } from "../../Registration/RegistrationCer
 const PoolRegistrationTab = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { poolId = "" } = useParams<{ poolId: string }>();
+  const { poolId = "", tab } = useParams<{ poolId: string; tab: string }>();
 
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
@@ -90,9 +90,10 @@ const PoolRegistrationTab = () => {
   ];
 
   const fetchData = useFetchList<SPORegistrationTabpular>(
-    poolId ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : "",
+    poolId && tab === "registration" ? API.SPO_LIFECYCLE.SPO_REGISTRATION_LIST(poolId) : "",
     {
-      ...pageInfo
+      ...pageInfo,
+      tab
     }
   );
 

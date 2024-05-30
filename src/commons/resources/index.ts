@@ -195,6 +195,9 @@ import OutputIcon from "./icons/outputIcon.svg?react";
 import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
+import KingIcon from "./icons/king-icon.svg?react";
+import BlockProducerIcon from "./icons/block-producer.svg?react";
+import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
@@ -238,6 +241,9 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import DrepIdIcon from "./icons/DrepId.svg?react";
+import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -302,6 +308,8 @@ export {
   UserIcon,
   DropIcon,
   DelegatorIcon,
+  DrepIdIcon,
+  ActiveStakeDrepIcon,
   LightningIcon,
   LinkOff,
   SignOut,
@@ -370,6 +378,9 @@ export {
   PolygonDarkIcon,
   PolygonDarkRedIcon,
   CubeIconComponent,
+  KingIcon,
+  BlockProducerIcon,
+  TooltipIcon,
   SlotIcon,
   TimeIconComponent,
   TimelineIconComponent,

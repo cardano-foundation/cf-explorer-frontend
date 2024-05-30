@@ -27,9 +27,25 @@ export async function blockfrostService(request: APIRequestContext) {
     return finishedEpochId - 1;
   };
 
+  const getEpochById = async (epochId: number) => {
+    const epochResponse = await blockfrostApi(request).getEpochById(epochId);
+    expect(epochResponse.status()).toEqual(HttpStatusCode.Ok);
+    const epochData: BlockfrostEpochInformationDto = await epochResponse.json();
+    return epochData;
+  };
+
+  const getBlockByNumber = async (blockNumber: number) => {
+    const blockResponse = await blockfrostApi(request).getBlockByNumber(blockNumber);
+    expect(blockResponse.status()).toEqual(HttpStatusCode.Ok);
+    const blockData: BlockInformationDto = await blockResponse.json();
+    return blockData;
+  };
+
   return {
     getLastBlockData,
     getLastEpochData,
-    getLastFinishedEpochId
+    getLastFinishedEpochId,
+    getEpochById,
+    getBlockByNumber
   };
 }

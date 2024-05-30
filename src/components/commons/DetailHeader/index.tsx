@@ -1,7 +1,6 @@
 import React, { memo, useState } from "react";
 import { Backdrop, Box, useTheme } from "@mui/material";
 import { HiArrowLongLeft } from "react-icons/hi2";
-import moment from "moment";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
@@ -11,7 +10,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { SearchIcon } from "src/commons/resources";
-import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
+import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -243,12 +242,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
               percent={
                 type === "EPOCH"
                   ? currentEpoch && (epoch?.no || 0) === currentEpoch?.no
-                    ? ((moment(formatDateTimeLocal(epoch?.endTime || "")).diff(moment()) > 0 &&
-                      epoch?.slot < MAX_SLOT_EPOCH
-                        ? epoch?.slot
-                        : MAX_SLOT_EPOCH) /
-                        MAX_SLOT_EPOCH) *
-                      100
+                    ? (currentEpoch?.syncingProgress || 0) * 100
                     : 100
                   : (epoch?.slot / MAX_SLOT_EPOCH) * 100
               }

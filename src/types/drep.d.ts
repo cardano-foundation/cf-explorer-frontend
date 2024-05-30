@@ -58,3 +58,32 @@ interface Drep {
   updatedAt: string;
   votingPower: number;
 }
+
+interface DelegationGovernanceVotesProps {
+  hash: string;
+  type: VOTE_TYPE.DREP_KEY_HASH | VOTE_TYPE.STAKING_POOL_KEY_HASH;
+}
+
+interface GovernanceVoteChart {
+  abstainCcMembers: number | null;
+  abstainVoteStake: number | null;
+  activeVoteStake: number | null;
+  ccMembers: number | null;
+  index: number | null;
+  noCcMembers: number | null;
+  threshold: number | null;
+  totalNoVoteStake: number | null;
+  totalYesVoteStake: number | null;
+  txHash: string;
+  voterType: number | null;
+  yesCcMembers: number | null;
+}
+
+interface VotingChart {
+  voterType: string;
+  numberOfYesVote: number;
+  numberOfNoVotes: number;
+  numberOfAbstainVotes: number;
+  totalVote: number;
+  threshold: number;
+}

@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.3.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.2.0...v1.3.0) (2024-05-21)
+
+
+### Bug Fixes
+
+* add comment ([8174b5d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/8174b5d9a84be77f765ebdbbf758a23da7173149))
+* call multi api when click tab in pool detail page ([a139e5e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a139e5e218830babb7118379bb3d94d4651d3ba7))
+* change of block producer icon ([019c104](https://github.com/cardano-foundation/cf-explorer-frontend/commit/019c10416876e3bcd8429d639deb762bfb0691c6))
+* common call multi api when click only tab ([4b74cb4](https://github.com/cardano-foundation/cf-explorer-frontend/commit/4b74cb46b0b6ffc0526a3c9aecafeb8f3aa69582))
+* Display-missing-data-in-metadata-tab ([29b624e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/29b624e7382b50b12555155cdf0815349829f1cd))
+* MET-2055 not straight line ([f644493](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f64449387940fd5e6ed24b4bf0fd9ab84355c426))
+* MET-2055 update tooltip ([f927b27](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f927b27929a74f4b0d8d1043554794538810af74))
+* MET-2055 update tooltip CC disable ([83b492f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/83b492ff0332c10ae78a3de1031c1727eaf62767))
+* MET-2063 fix token name not display ([cb68f5a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/cb68f5a7605e3edf53e0740391992a4f3946b3cc))
+* MET-2195 update show epoch progress ([776d984](https://github.com/cardano-foundation/cf-explorer-frontend/commit/776d984f674fe0357c482c0c2d8769bc048473fd))
+* revert code ([d438e7b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/d438e7b9e7d016eb894ab133cc2266a32c0aa9e0))
+* show threshold in tooltip ([607e6ad](https://github.com/cardano-foundation/cf-explorer-frontend/commit/607e6ad268969c2597ef348f40f04de9614b68d4))
+* Stake Address Deregistration ([660044e](https://github.com/cardano-foundation/cf-explorer-frontend/commit/660044e1a0e29d68e6a9b291f1c736754773230b))
+* update signin payload ([7c21f6d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7c21f6de483644f3346af36768637833fb71d912))
+
 ## [1.2.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.1.0...v1.2.0) (2024-05-07)
 
 

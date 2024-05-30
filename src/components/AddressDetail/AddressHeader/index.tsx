@@ -43,8 +43,10 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
   const {
     data: dataStake,
     loading: loadingStake,
-    lastUpdated
+    lastUpdated,
+    error
   } = useFetch<WalletStake>(stakeKey ? `${API.STAKE.DETAIL}/${stakeKey}` : "", undefined, false, blockKey);
+
   const theme = useTheme();
   const { isMobile } = useScreen();
   const history = useHistory();
@@ -202,6 +204,7 @@ const AddressHeader: React.FC<Props> = ({ data, loading, adaHanldeData }) => {
               type="right"
               address={data?.stakeAddress || ""}
               item={itemRight}
+              error={error}
               loading={loading || loadingStake}
               addressDestination={details.stake(data?.stakeAddress)}
             />
