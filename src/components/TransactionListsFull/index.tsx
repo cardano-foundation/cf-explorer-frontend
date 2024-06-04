@@ -42,20 +42,22 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   const columns: Column<Transactions>[] = [
     {
-      title: t("glossary.txhash"),
+      title: <Box data-testid="block.detail.trxTable.txhash">{t("glossary.txhash")}</Box>,
       key: "hash",
       minWidth: 120,
 
-      render: (r) => (
+      render: (r, index) => (
         <div>
           <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+            <StyledLink data-testid={`block.detail.trxTable.value.txhash#${index}`} to={details.transaction(r.hash)}>
+              {getShortHash(r.hash)}
+            </StyledLink>
           </CustomTooltip>
         </div>
       )
     },
     {
-      title: t("createdAt"),
+      title: <Box data-testid="block.detail.trxTable.createdAt">{t("createdAt")}</Box>,
       key: "createdat",
       minWidth: 120,
       render: (r) => (
@@ -65,10 +67,10 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: t("glossary.address"),
+      title: <Box data-testid="block.detail.trxTable.address">{t("glossary.address")}</Box>,
       key: "address",
       minWidth: 120,
-      render(r) {
+      render(r, index) {
         return (
           <div>
             <Box display={"flex"}>
@@ -77,7 +79,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
                 {r.addressesInput.slice(0, 1).map((tx, key) => {
                   return (
                     <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)} key={key}>
+                      <StyledLink
+                        to={details.address(tx)}
+                        key={key}
+                        data-testid={`block.detail.trxTable.value.inputAddress#${index}`}
+                      >
                         <Box ml={1}>{getShortHash(tx)}</Box>
                       </StyledLink>
                     </CustomTooltip>
@@ -114,7 +120,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       }
     },
     {
-      title: t("common.fees"),
+      title: <Box data-testid="block.detail.trxTable.fees">{t("common.fees")}</Box>,
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -125,7 +131,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: t("glossary.outputInAda"),
+      title: <Box data-testid="block.detail.trxTable.output">{t("glossary.outputInAda")}</Box>,
       minWidth: 120,
       key: "ouput",
       render: (r) => (

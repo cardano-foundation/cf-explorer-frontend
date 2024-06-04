@@ -176,7 +176,9 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 percent={data?.epochNo === epochNo ? ((data?.epochSlotNo || 0) / MAX_SLOT_EPOCH) * 100 : 100}
                 trailOpacity={1}
               >
-                <EpochNumber>{data?.epochNo !== null ? data?.epochNo : "_"}</EpochNumber>
+                <EpochNumber data-testId="block.widget.epochNo">
+                  {data?.epochNo !== null ? data?.epochNo : "_"}
+                </EpochNumber>
                 <EpochText>{t("glossary.epoch")}</EpochText>
               </ProgressCircle>
             </HeaderContainer>
@@ -189,7 +191,9 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 />
                 <ItemName>{t("glossary.block")}</ItemName>
                 <CustomTooltip title={tooltip}>
-                  <ItemValue sx={{ textTransform: "none" }}>{blockName}</ItemValue>
+                  <ItemValue sx={{ textTransform: "none" }} data-testid="block.widget.blockno">
+                    {blockName}
+                  </ItemValue>
                 </CustomTooltip>
               </Item>
               <Item>
@@ -199,7 +203,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                   fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
                 />
                 <ItemName>{t("common.slot")}</ItemName>
-                <ItemValue>
+                <ItemValue data-testid="block.widget.slotNo">
                   {data?.epochSlotNo}
                   <BlockDefault>/{data?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
                 </ItemValue>
@@ -210,42 +214,44 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
                 <DetailLabel>{t("glossary.blockId")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={data?.hash}>
-                    <StyledLink to={details.block(blockNo)}>{getShortHash(data?.hash)}</StyledLink>
+                    <StyledLink to={details.block(blockNo)} data-testid="block.widget.blockHash">
+                      {getShortHash(data?.hash)}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={data?.hash} />
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.absoluteSlot")}</DetailLabel>
-                <DetailValue>{data.slotNo}</DetailValue>
+                <DetailValue data-testid="block.widget.absSlotNo">{data.slotNo}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DatetimeTypeTooltip>
-                  <DetailValue>{formatDateTimeLocal(data.time || "")}</DetailValue>
+                  <DetailValue data-testid="block.widget.createdAt">{formatDateTimeLocal(data.time || "")}</DetailValue>
                 </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</DetailLabel>
-                <DetailValue>{confirmation}</DetailValue>
+                <DetailValue data-testid="block.widget.confirmation">{confirmation}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.transactionfees")}</DetailLabel>
-                <DetailValue>
+                <DetailValue data-testid="block.widget.fees">
                   {formatADAFull(data?.totalFees)}
                   <ADAicon />
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.totalOutputInAda")}</DetailLabel>
-                <DetailValue>
+                <DetailValue data-testid="block.widget.output">
                   {formatADAFull(data?.totalOutput)}
                   <ADAicon />
                 </DetailValue>
               </DetailsInfoItem>
             </Group>
             <Group>
-              <DetailLink to={details.block(blockNo)}>
+              <DetailLink to={details.block(blockNo)} data-testid="block.widget.trxTab">
                 <DetailLabel>
                   <DetailLinkIcon>
                     <CgArrowsExchange />
@@ -261,7 +267,7 @@ const DetailViewBlock: React.FC<DetailViewBlockProps> = (props) => {
             </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.block(blockNo)} />
+        <ViewMoreButton data-testid="block.detailViewEpoch.viewDetail" to={details.block(blockNo)} />
       </>
     );
   };

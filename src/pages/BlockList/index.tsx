@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef, MouseEvent } from "react";
+import { Box } from "@mui/material";
 import { stringify } from "qs";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -41,53 +42,63 @@ const BlockList = () => {
 
   const columns: Column<Block>[] = [
     {
-      title: <Capitalize>{t("glossary.block")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.block">{t("glossary.block")}</Capitalize>,
       key: "blockNo",
       minWidth: "50px",
-      render: (r) => {
+      render: (r, index) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
         return (
           <Link to={details.block(r.blockNo || r.hash)}>
             <CustomTooltip title={tooltip}>
-              <span>{blockName}</span>
+              <span data-testid={`blocks.table.value.block#${index}`}>{blockName}</span>
             </CustomTooltip>
           </Link>
         );
       }
     },
     {
-      title: <Capitalize>{t("glossary.blockID")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.blockId">{t("glossary.blockID")}</Capitalize>,
       key: "blockId",
       minWidth: "50px",
-      render: (r) => (
+      render: (r, index) => (
         <CustomTooltip title={r.hash}>
-          <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
+          <StyledLink to={details.block(r.blockNo || r.hash)} data-testid={`blocks.table.value.blockId#${index}`}>
+            {getShortHash(`${r.hash}`)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
     {
-      title: <Capitalize>{t("glossary.epoch")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.epoch"> {t("glossary.epoch")}</Capitalize>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r, index) => (
+        <StyledLink to={details.epoch(r.epochNo)} data-testid={`blocks.table.value.epoch#${index}`}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
-      title: <Capitalize>{t("glossary.slot")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>,
       key: "epochSlotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r, index) => <Box data-testid={`blocks.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
-      title: <Capitalize>{t("glossary.absoluteSlot")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>,
       key: "slotNo",
-      minWidth: "100px"
+      minWidth: "100px",
+      render: (r, index) => <Box data-testid={`blocks.table.value.absSlot#${index}`}>{r.slotNo}</Box>
     },
     {
-      title: <Capitalize>{t("createdAt")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.createAt">{t("createdAt")}</Capitalize>,
       key: "time",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, index) => (
         <DatetimeTypeTooltip>
-          <PriceWrapper>{formatDateTimeLocal(r.time)}</PriceWrapper>
+          <PriceWrapper data-testid={`blocks.table.value.createAt#${index}`}>
+            {formatDateTimeLocal(r.time)}
+          </PriceWrapper>
         </DatetimeTypeTooltip>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -95,30 +106,30 @@ const BlockList = () => {
       }
     },
     {
-      title: <Capitalize>{t("glossary.transactions")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.transactions">{t("glossary.transactions")}</Capitalize>,
       key: "txCount",
       minWidth: "50px",
-      render: (r) => <BlueText>{r.txCount}</BlueText>,
+      render: (r, index) => <BlueText data-testid={`blocks.table.value.txCount#${index}`}>{r.txCount}</BlueText>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     },
     {
-      title: <Capitalize>{t("common.fees")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.fee">{t("common.fees")}</Capitalize>,
       key: "fees",
-      render: (r) => (
-        <PriceWrapper>
+      render: (r, index) => (
+        <PriceWrapper data-testid={`blocks.table.value.fee#${index}`}>
           {formatADAFull(r.totalFees)}
           <ADAicon />
         </PriceWrapper>
       )
     },
     {
-      title: <Capitalize>{t("glossary.output")}</Capitalize>,
+      title: <Capitalize data-testid="blocks.table.title.output">{t("glossary.output")}</Capitalize>,
       key: "output",
       minWidth: "100px",
-      render: (r) => (
-        <PriceWrapper>
+      render: (r, index) => (
+        <PriceWrapper data-testid={`blocks.table.value.output#${index}`}>
           {formatADAFull(r.totalOutput)}
           <ADAicon />
           {selected === (r.blockNo || r.hash) && <SelectedIcon />}
