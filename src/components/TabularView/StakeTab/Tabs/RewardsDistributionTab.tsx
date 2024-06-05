@@ -24,7 +24,7 @@ import { AmountADARow, StyledLink, WrapWalletLabel, WrapperDelegationTab } from 
 const RewardsDistributionTab = () => {
   const { t } = useTranslation();
   const detailData = useContext(DelegatorDetailContext);
-  const { stakeId } = useParams<{ stakeId: string }>();
+  const { stakeId, tab } = useParams<{ stakeId: string; tab: string }>();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
 
@@ -55,9 +55,13 @@ const RewardsDistributionTab = () => {
     }
   ];
 
-  const fetchData = useFetchList<RewardDistributionItem>(stakeId ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "", {
-    ...pageInfo
-  });
+  const fetchData = useFetchList<RewardDistributionItem>(
+    stakeId && tab === "rewards" ? API.STAKE_LIFECYCLE.RECEIVED_REWARD(stakeId) : "",
+    {
+      ...pageInfo,
+      tab
+    }
+  );
   const { total, error } = fetchData;
   return (
     <>

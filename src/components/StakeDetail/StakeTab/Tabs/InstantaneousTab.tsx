@@ -14,7 +14,10 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
-const InstantaneousTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
+const InstantaneousTab: React.FC<{ stakeAddress?: string; tabActive: TabStakeDetail }> = ({
+  stakeAddress,
+  tabActive
+}) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -72,8 +75,8 @@ const InstantaneousTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress })
     }
   ];
   const fetchData = useFetchList<Instantaneous>(
-    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/instantaneous-rewards` : "",
-    pageInfo
+    stakeAddress && tabActive === "instantaneous" ? `${API.STAKE.DETAIL}/${stakeAddress}/instantaneous-rewards` : "",
+    { ...pageInfo, tabActive }
   );
 
   return (

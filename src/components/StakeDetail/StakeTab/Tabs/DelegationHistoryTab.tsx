@@ -12,17 +12,18 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { StyledLink } from "../styles";
 
-const DelegationHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean }> = ({
+const DelegationHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean; tabActive: TabStakeDetail }> = ({
   isMobile = false,
-  stakeAddress
+  stakeAddress,
+  tabActive
 }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<DelegationHistory>(
-    stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}/delegation-history` : "",
-    pageInfo
+    stakeAddress && tabActive === "delegation" ? `${API.STAKE.DETAIL}/${stakeAddress}/delegation-history` : "",
+    { ...pageInfo, tabActive }
   );
 
   const columns: Column<DelegationHistory>[] = [
