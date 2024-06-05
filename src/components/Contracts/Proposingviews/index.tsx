@@ -130,7 +130,7 @@ const Proposingviews: React.FC<ProposingViewProps> = ({ data, isMobile }) => {
       <ProposingBlueBox ref={leftBoxRef}>
         <WhiteSpace>
           <DataTitle> {`${t("contract.governance")}:`}</DataTitle>
-          <DataValue style={{ whiteSpace: "nowrap" }}>{t("contract.treasury")}</DataValue>
+          <DataValue>{t("contract.treasury")}</DataValue>
         </WhiteSpace>
         <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
           {t("contract.redeemer")}
