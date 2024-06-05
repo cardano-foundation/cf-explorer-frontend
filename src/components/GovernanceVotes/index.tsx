@@ -37,6 +37,7 @@ import {
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
+  LinkIcon,
   RepeatVotesIcon,
   ResetIcon,
   VoteIcon
@@ -72,6 +73,8 @@ import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
 import OverallVote from "./OverallVote";
 import FetchDataErr from "../commons/FetchDataErr";
+import { ViewGovernanceProposingButton } from "../commons/ViewBlocks/styles";
+import { DataCardBox } from "../Contracts/common/styles";
 
 const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ hash, type }) => {
   const { search } = useLocation();
@@ -262,7 +265,7 @@ const GovernanceVotesDetail: React.FC<{
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
             <HashName data-testid="governance.hashName">
-              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
             </HashName>
           </Box>
           <Box textAlign="center">
@@ -320,6 +323,7 @@ export interface VoteHistoryProps {
 
 export interface GovernanceVote {
   index: number;
+  indexType: number;
   status: string;
   txHash: string;
   type: string;
@@ -331,6 +335,7 @@ export interface GovernanceVote {
 export interface GovernanceVoteDetail {
   txHash: string;
   index: number;
+  indexType: number;
   govActionType: string;
   anchorHash: string;
   anchorUrl: string;
@@ -568,31 +573,45 @@ export const ActionMetadataModalConfirm: React.FC<{
 
   return (
     <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
-      <Box display="block" pb="15px">
-        <Box data-testid="governance.actionMetadataModal.disclaimer" fontSize={16} color={theme.palette.secondary.main}>
-          {t("drep.disclaimer.des1")}
+      <DataCardBox style={{ marginBottom: "20px" }}>
+        <Box display="block">
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimer"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+          >
+            {t("drep.disclaimer.des1")}
+          </Box>
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimerDes"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+            my={2}
+          >
+            {t("drep.disclaimer.des2")}
+          </Box>
         </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.disclaimerDes"
-          fontSize={16}
-          color={theme.palette.secondary.main}
-          my={2}
-        >
-          {t("drep.disclaimer.des2")}
-        </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.externalLink"
-          component={Link}
-          sx={{ textDecoration: "underline !important" }}
-          fontSize="16px"
-          color={`${theme.palette.primary.main} !important`}
-          fontWeight="700"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={anchorUrl || "/"}
-        >
-          Proceed to External Link
-        </Box>
+      </DataCardBox>
+      <Box
+        data-testid="governance.actionMetadataModal.externalLink"
+        component={Link}
+        sx={{ textDecoration: "underline !important" }}
+        fontSize="16px"
+        color={`${theme.palette.primary.main} !important`}
+        fontWeight="700"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={anchorUrl || "/"}
+      >
+        <ViewGovernanceProposingButton>
+          {t("common.proceedToExternalLink")}
+          <CustomIcon
+            style={{ cursor: "pointer", marginLeft: "5px" }}
+            icon={LinkIcon}
+            width={22}
+            fill={theme.palette.secondary[100]}
+          />
+        </ViewGovernanceProposingButton>
       </Box>
     </CustomModal>
   );

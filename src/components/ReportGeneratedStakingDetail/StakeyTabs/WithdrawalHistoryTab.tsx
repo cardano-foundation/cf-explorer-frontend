@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
+import BigNumber from "bignumber.js";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -61,7 +62,7 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue value={r.value + r.fee} />
+          <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               {formatADAFull(r.value)}&nbsp;

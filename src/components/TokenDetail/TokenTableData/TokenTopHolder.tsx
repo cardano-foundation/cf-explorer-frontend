@@ -90,7 +90,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
-        onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
+        onClickRow={(_, r: ITokenTopHolderTable) =>
+          history.push(r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address))
+        }
       />
     </>
   );
