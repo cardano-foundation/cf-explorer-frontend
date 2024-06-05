@@ -11,10 +11,13 @@ const FetchDataErrContainer = styled(Box)`
   padding: 120px 0px;
 `;
 
-const Image = styled("img")`
-  width: auto;
-  height: 214px;
-`;
+const Image = styled("img")(({ theme }) => ({
+  width: "auto",
+  height: "214px",
+  [theme.breakpoints.down("sm")]: {
+    width: "260px"
+  }
+}));
 
 const FetchDataErr: React.FC<BoxProps> = React.forwardRef((props, ref) => {
   const theme = useTheme();
