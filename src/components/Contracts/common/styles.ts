@@ -27,6 +27,7 @@ export const DataCardBox = styled(Box)`
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   gap: 5px;
   min-height: 80px;
+  height: 100%;
 `;
 
 export const DataTitle = styled(Typography)`
