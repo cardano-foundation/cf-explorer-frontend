@@ -587,7 +587,6 @@ export const ActionMetadataModalConfirm: React.FC<{
       <Box
         data-testid="governance.actionMetadataModal.externalLink"
         component={Link}
-        sx={{ textDecoration: "underline !important" }}
         fontSize="16px"
         color={`${theme.palette.primary.main} !important`}
         fontWeight="700"
