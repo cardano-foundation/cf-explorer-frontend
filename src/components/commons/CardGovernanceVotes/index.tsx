@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
@@ -34,7 +34,7 @@ export const actionTypeListDrep = [
 ];
 
 const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
-  const { status, txHash, type, vote, votingPower, index, isRepeatVote } = data;
+  const { status, type, vote, votingPower, index, isRepeatVote } = data;
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -43,11 +43,9 @@ const CardGovernanceVotes: React.FC<ICardGovernanceVotes> = ({ data }) => {
       <Box p={2}>
         <Box display="flex" justifyContent="space-between" width="100%">
           <Box maxWidth="400px" flex={1}>
-            <Tooltip title={txHash} placement="top" arrow>
-              <TitleCard data-testid="governance.card.title">
-                {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
-              </TitleCard>
-            </Tooltip>
+            <TitleCard data-testid="governance.card.title">
+              {actionTypeListDrep.find((action) => action.value === type)?.text} #{index}
+            </TitleCard>
           </Box>
           <>
             <VoteStatus status={vote} isRepeatVote={isRepeatVote} />
