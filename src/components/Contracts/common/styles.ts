@@ -45,7 +45,7 @@ export const DataValue = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
   font-feature-settings: "clig" off, "liga" off;
   line-height: normal;
-  line-break: anywhere;
+  line-break: auto;
   max-height: 40vh;
   overflow: auto;
   padding-right: 10px;
