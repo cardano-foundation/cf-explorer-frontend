@@ -21,8 +21,17 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { Img, StyledContainer, StyledLink } from "./styles";
 
-const TransactionTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
-  return <TransactionListFull url={`${API.STAKE.DETAIL}/${stakeAddress}/txs`} showTitle={false} />;
+const TransactionTab: React.FC<{ stakeAddress?: string; tabActive: TabStakeDetail }> = ({
+  stakeAddress,
+  tabActive
+}) => {
+  return (
+    <TransactionListFull
+      tabActive={tabActive}
+      url={tabActive === "transactions" ? `${API.STAKE.DETAIL}/${stakeAddress}/txs` : ""}
+      showTitle={false}
+    />
+  );
 };
 
 interface TransactionListFullProps {
@@ -31,6 +40,7 @@ interface TransactionListFullProps {
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTitle?: boolean;
+  tabActive: TabStakeDetail;
 }
 
 const TransactionListFull: React.FC<TransactionListFullProps> = ({
@@ -38,13 +48,14 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   url,
   openDetail,
   selected,
-  showTitle = true
+  showTitle = true,
+  tabActive
 }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(url, pageInfo);
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo, tabActive });
   const theme = useTheme();
   const { isMobile } = useScreen();
 

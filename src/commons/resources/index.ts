@@ -48,6 +48,8 @@ import EmptyIcon from "./icons/noData.svg";
 import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
+import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -184,6 +186,7 @@ import DropIconComponent from "./icons/drop.svg?react";
 import DelegatorIconComponent from "./icons/delegator.svg?react";
 import LightningIconComponent from "./icons/lightning.svg?react";
 import LinkOffComponent from "./icons/link-off.svg?react";
+import LinkIcon from "./icons/LinkIcon.svg?react";
 import User2Component from "./icons/user2.svg?react";
 import WhiteSearchIconComponent from "./icons/white-search-icon.svg?react";
 import CopyOutlineIconComponent from "./icons/copy-outline.svg?react";
@@ -195,6 +198,9 @@ import OutputIcon from "./icons/outputIcon.svg?react";
 import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
+import KingIcon from "./icons/king-icon.svg?react";
+import BlockProducerIcon from "./icons/block-producer.svg?react";
+import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
@@ -214,6 +220,7 @@ import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
 import VotesNoneIcon from "./icons/voteNone.svg?react";
 import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
 import GovernanceIdIcon from "./icons/governanceId.svg?react";
+import GovernanceIcon from "./icons/governance.svg?react";
 import ActionTypeIcon from "./icons/action-type.svg?react";
 import VoteIcon from "./icons/vote.svg?react";
 import CurrentStatusIcon from "./icons/current-status.svg?react";
@@ -238,6 +245,9 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import DrepIdIcon from "./icons/DrepId.svg?react";
+import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
 export {
@@ -302,6 +312,8 @@ export {
   UserIcon,
   DropIcon,
   DelegatorIcon,
+  DrepIdIcon,
+  ActiveStakeDrepIcon,
   LightningIcon,
   LinkOff,
   SignOut,
@@ -371,6 +383,9 @@ export {
   PolygonDarkIcon,
   PolygonDarkRedIcon,
   CubeIconComponent,
+  KingIcon,
+  BlockProducerIcon,
+  TooltipIcon,
   SlotIcon,
   TimeIconComponent,
   TimelineIconComponent,
@@ -393,10 +408,13 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  LinkIcon,
   SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
+  FetchDataErrLight,
+  FetchDataErrDark,
   WhiteSearchIcon,
   WhiteSearchIconComponent,
   WalletRoundedIcon,
@@ -478,6 +496,7 @@ export {
   PoolSaturationIcon,
   PoolParticipationIcon,
   PoolBlocksIcon,
+  GovernanceIcon,
   PoolVotingIcon
 };
 

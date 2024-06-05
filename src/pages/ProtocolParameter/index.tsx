@@ -80,10 +80,18 @@ const ProtocolParameter: React.FC = () => {
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataFixed, initialized: initialFixed } = useFetch<ProtocolFixed>(PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, initialized: initialLastest } = useFetch<Partial<TProtocolParam>>(
-    PROTOCOL_PARAMETER.LASTEST
-  );
+  const {
+    data: dataFixed,
+    initialized: initialFixed,
+    error: errorFixed,
+    statusError: statusErrFixed
+  } = useFetch<ProtocolFixed>(PROTOCOL_PARAMETER.FIXED);
+  const {
+    data: dataLastest,
+    initialized: initialLastest,
+    error: errorLastest,
+    statusError: statusErrLastest
+  } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
 
   const dataFixedVertical =
     isObject(dataFixed) &&
@@ -291,7 +299,14 @@ const ProtocolParameter: React.FC = () => {
                     height={280}
                   />
                 )}
-                {initialLastest && <Table columns={columnsVerticalLatestTable} data={dataLatestVertical || []} />}
+                {initialLastest && (
+                  <Table
+                    columns={columnsVerticalLatestTable}
+                    error={errorLastest}
+                    statusError={statusErrLastest}
+                    data={dataLatestVertical || []}
+                  />
+                )}
               </Box>
               <Box pt={"30px"}>
                 <Box>
@@ -312,7 +327,14 @@ const ProtocolParameter: React.FC = () => {
                       height={280}
                     />
                   )}
-                  {initialFixed && <Table columns={columnsVerticalFixedTable} data={dataFixedVertical || []} />}
+                  {initialFixed && (
+                    <Table
+                      columns={columnsVerticalFixedTable}
+                      error={errorFixed}
+                      statusError={statusErrFixed}
+                      data={dataFixedVertical || []}
+                    />
+                  )}
                 </Box>
               </Box>
             </>
@@ -366,7 +388,13 @@ export const ProtocolParameterHistory = () => {
   }
 
   const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
-  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
+  const {
+    data: dataHistory,
+    loading,
+    initialized,
+    error: errorHistory,
+    statusError: statusErrHistory
+  } = useFetch<ProtocolHistory>(url);
   const [isShowUpcomingEpoch, setIsShowUpcomingEpoch] = useState<boolean>(false);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
@@ -618,31 +646,33 @@ export const ProtocolParameterHistory = () => {
                     : t("glossary.showingNumberEpoch", { total: totalEpoch })}
                 </TextDescription>
               )}
-              <Box
-                component={Button}
-                variant="text"
-                textTransform={"capitalize"}
-                bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
-                border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
-                px={2}
-                onClick={() => setShowFiter(!showFilter)}
-              >
-                <CustomIcon
-                  icon={FilterIcon}
-                  fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
-                  height={18}
-                />
+              {!errorHistory && (
                 <Box
-                  ml={1}
-                  whiteSpace={"nowrap"}
-                  fontWeight={"bold"}
-                  color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                  component={Button}
+                  variant="text"
+                  textTransform={"capitalize"}
+                  bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
+                  border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+                  px={2}
+                  onClick={() => setShowFiter(!showFilter)}
                 >
-                  {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                  <CustomIcon
+                    icon={FilterIcon}
+                    fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+                    height={18}
+                  />
+                  <Box
+                    ml={1}
+                    whiteSpace={"nowrap"}
+                    fontWeight={"bold"}
+                    color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                  >
+                    {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                  </Box>
                 </Box>
-              </Box>
+              )}
             </Box>
-            {showFilter && (
+            {showFilter && !errorHistory && (
               <FilterComponent
                 setFilterParams={setFilterParams}
                 setResetFilter={setResetFilter}
@@ -688,10 +718,10 @@ export const ProtocolParameterHistory = () => {
         )}
         {columnsTable?.length > 1 && initialized && (
           <TableStyled
-            minHeight={"unset"}
-            maxHeight={"unset"}
             columns={columnsTable}
             data={dataTable}
+            error={errorHistory}
+            statusError={statusErrHistory}
             loading={loading}
           />
         )}
@@ -809,7 +839,9 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
                   {t("filter.daterange")}
                 </Box>
               </Box>
-              {!isEmpty(dateRange) && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
+              {Boolean(dateRange.fromDate) && Boolean(dateRange.toDate) && (
+                <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
+              )}
             </Box>
           </ButtonFilter>
 
@@ -921,6 +953,7 @@ export const FilterComponent: React.FC<FilterComponentProps> = ({
           open={showDaterange}
           value={dateRange}
           onDateRangeChange={({ fromDate, toDate }) => setDateRange({ fromDate, toDate })}
+          onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
         />
       </FilterContainer>
     </ClickAwayListener>

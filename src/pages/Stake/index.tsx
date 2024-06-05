@@ -46,6 +46,15 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockKey);
 
+  const { error } = fetchData;
+
+  const stakeDataWithKey = fetchData.data.map((item, id) => {
+    return { ...item, txKey: `key${id}` };
+  });
+  const _fetchData = {
+    ...fetchData,
+    data: [...stakeDataWithKey]
+  };
   useEffect(() => {
     handleClose();
   }, [history.location.pathname]);
@@ -57,7 +66,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IStakeKey) => {
     setOnDetailView(true);
-    setSelected(r.stakeKey);
+    r.txKey && setSelected(r.txKey);
     setStakeKey(r.stakeKey);
   };
 
@@ -155,17 +164,19 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               : t("head.page.stakeAddressDeregistration")
           }
         >
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
+          {!error && (
+            <TimeDuration>
+              <FormNowMessage time={_fetchData.lastUpdated} />
+            </TimeDuration>
+          )}
           <Table
             data-testid="stake.table"
-            {...fetchData}
+            {..._fetchData}
             columns={columns}
-            total={{ title: "Total Token List", count: fetchData.total }}
+            total={{ title: "Total Token List", count: _fetchData.total }}
             pagination={{
               ...pageInfo,
-              total: fetchData.total,
+              total: _fetchData.total,
               onChange: (page, size) => {
                 mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 history.push({ search: stringify({ page, size, stakeAddressType }) });
@@ -173,7 +184,7 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               handleCloseDetailView: handleClose
             }}
             onClickRow={openDetail}
-            rowKey="stakeKey"
+            rowKey="txKey"
             selected={selected}
             showTabView
             tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}

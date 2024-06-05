@@ -85,7 +85,7 @@ const LatestStories = () => {
   };
 
   return (
-    <LatestStoriesContainer data-testid="home-latest-stories">
+    <LatestStoriesContainer data-testid="latestStories.home-latest-stories">
       <Header>
         <Title>{t("common.latestStories")}</Title>
         <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
@@ -106,7 +106,7 @@ const LatestStories = () => {
           { breakpoint: breakpoints.values.sm, settings: { slidesToShow: 1.5, slidesToScroll: 1 } }
         ]}
       >
-        {data.map(({ meta_image, banner_image, title, news_item_content, resource_href }) => {
+        {data.map(({ meta_image, banner_image, title, news_item_content, resource_href, index }) => {
           const { date, default_content, author } = news_item_content;
 
           const authorName = getAuthorName(author);
@@ -124,16 +124,22 @@ const LatestStories = () => {
                 <Detail>
                   <WrapHeader>
                     <CustomTooltip title={authorName}>
-                      <Author>{authorName}</Author>
+                      <Author data-testid={`latestStories.authorNameStories.value#${index}`}>{authorName}</Author>
                     </CustomTooltip>
-                    <ResourceHref>{getHostname(resource_href)}</ResourceHref>
+                    <ResourceHref data-testid={`latestStories.resourceHref.value#${index}`}>
+                      {getHostname(resource_href)}
+                    </ResourceHref>
                   </WrapHeader>
-                  <ItemTitle>{title} </ItemTitle>
-                  <Description>{default_content}</Description>
+                  <ItemTitle data-testid={`latestStories.titleStories.value#${index}`}>{title} </ItemTitle>
+                  <Description data-testid={`latestStories.contentStories.value#${index}`}>
+                    {default_content}
+                  </Description>
                   <FooterCard>
                     <Time>
                       <TimeIcon src={CalenderPaleIcon} alt="calender pale" />
-                      <DatetimeTypeTooltip>{formatDateTimeLocal(date)}</DatetimeTypeTooltip>
+                      <DatetimeTypeTooltip data-testid={`latestStories.dateStories.value#${index}`}>
+                        {formatDateTimeLocal(date)}
+                      </DatetimeTypeTooltip>
                     </Time>
                   </FooterCard>
                 </Detail>

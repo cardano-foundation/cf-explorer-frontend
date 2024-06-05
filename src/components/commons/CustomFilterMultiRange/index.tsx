@@ -277,7 +277,13 @@ const CustomFilterMultiRange: React.FC = () => {
             maxValue < minValue &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: minValue
+                [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                  ? +minValue / 100
+                  : ["maxPledge"].includes(keyOnChangeMax)
+                  ? +minValue * 10 ** 6
+                  : ["maxSaturation"].includes(keyOnChangeMax)
+                  ? parseFloat(`${minValue}`).toFixed(2)
+                  : minValue
               });
           }}
           onChange={({ target: { value } }) => {
@@ -488,11 +494,11 @@ const CustomFilterMultiRange: React.FC = () => {
                           filterParams.minPoolSize || 0,
                           filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)
                         ]}
-                        min={dataRange?.minPoolSize || 0}
+                        min={dataRange?.minPoolSize ? dataRange.minPoolSize / 10 ** 6 : 0}
                         disableSwap
-                        step={1000000}
+                        step={100}
                         disabled={dataRange?.maxPoolSize === null}
-                        max={dataRange?.maxPoolSize || 0}
+                        max={dataRange?.maxPoolSize ? dataRange.maxPoolSize / 10 ** 6 : 0}
                       />
                       <Typography>
                         {formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
@@ -601,7 +607,7 @@ const CustomFilterMultiRange: React.FC = () => {
                       BigNumber(filterParams.minPledge || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      filterParams.maxPledge
+                      filterParams.maxPledge !== undefined && !isNaN(filterParams.maxPledge)
                         ? BigNumber(filterParams.maxPledge)
                             .div(10 ** 6)
                             .toNumber()

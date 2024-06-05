@@ -6,6 +6,12 @@ export const UnderlineText = styled(Typography)`
   font-weight: 500;
   cursor: pointer;
 `;
+export const LinkToText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+`;
 
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;
@@ -20,6 +26,8 @@ export const DataCardBox = styled(Box)`
   padding: 16px 20px;
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   gap: 5px;
+  min-height: 80px;
+  height: 100%;
 `;
 
 export const DataTitle = styled(Typography)`
