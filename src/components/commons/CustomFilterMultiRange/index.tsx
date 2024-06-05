@@ -488,11 +488,11 @@ const CustomFilterMultiRange: React.FC = () => {
                           filterParams.minPoolSize || 0,
                           filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)
                         ]}
-                        min={dataRange?.minPoolSize || 0}
+                        min={dataRange?.minPoolSize ? dataRange.minPoolSize / 10 ** 6 : 0}
                         disableSwap
-                        step={1000000}
+                        step={100}
                         disabled={dataRange?.maxPoolSize === null}
-                        max={dataRange?.maxPoolSize || 0}
+                        max={dataRange?.maxPoolSize ? dataRange.maxPoolSize / 10 ** 6 : 0}
                       />
                       <Typography>
                         {formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
