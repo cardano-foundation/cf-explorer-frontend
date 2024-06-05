@@ -62,6 +62,7 @@ export interface TableProps<T extends ColumnType = any> {
   loading?: boolean;
   initialized?: boolean;
   error?: React.ReactNode;
+  statusError?: number | undefined;
   total?: {
     count: number;
     title: string;

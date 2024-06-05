@@ -72,6 +72,7 @@ import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
 import OverallVote from "./OverallVote";
+import FetchDataErr from "../commons/FetchDataErr";
 import { ViewGovernanceProposingButton } from "../commons/ViewBlocks/styles";
 import { DataCardBox } from "../Contracts/common/styles";
 
@@ -97,7 +98,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
-  const { data, total, lastUpdated, loading, initialized } = useFetchList<GovernanceVote>(
+  const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
     `${API.POOL_CERTIFICATE.POOL}/${hash}`,
     omitBy(params, isUndefined),
     false
@@ -130,7 +131,10 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && initialized && <NoRecord m="170px 0px" padding={`0 !important`} />}
+        {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+          <NoRecord m="170px 0px" padding={`0 !important`} />
+        )}
+        {error && statusError === 500 && <FetchDataErr m="170px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -162,12 +166,14 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
 
   return (
     <>
-      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
-      </Box>
+      {!error && (
+        <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{

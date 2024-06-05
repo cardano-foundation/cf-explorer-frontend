@@ -46,6 +46,8 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockKey);
 
+  const { error } = fetchData;
+
   useEffect(() => {
     handleClose();
   }, [history.location.pathname]);
@@ -155,9 +157,11 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               : t("head.page.stakeAddressDeregistration")
           }
         >
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
+          {!error && (
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          )}
           <Table
             data-testid="stake.table"
             {...fetchData}

@@ -190,7 +190,7 @@ const PolicyTable = () => {
         </Box>
         {tabs.map(({ key, columns }) => (
           <TabPanel style={{ padding: 0 }} key={key} value={key}>
-            {key === TABS.HOLDERS ? (
+            {key === TABS.HOLDERS && !holderFetchData.error ? (
               <TimeDuration>
                 <FormNowMessage time={holderFetchData.lastUpdated} />
               </TimeDuration>

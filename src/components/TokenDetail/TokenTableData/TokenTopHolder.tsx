@@ -34,7 +34,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   useEffect(() => {
     if (fetchData.total && setCurrentHolder) {
       setCurrentHolder(fetchData.total || 0);
@@ -76,9 +76,11 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tokenId, totalSupply, decim
 
   return (
     <>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}

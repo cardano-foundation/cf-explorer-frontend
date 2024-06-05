@@ -80,7 +80,7 @@ const WithdrawalHistoryTab = () => {
     }
   ];
 
-  const { total } = fetchData;
+  const { total, error } = fetchData;
 
   return (
     <>
@@ -90,25 +90,27 @@ const WithdrawalHistoryTab = () => {
           <Box mr={1}>Rewards withdrawn:</Box>
           <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.rewardWithdrawn ?? 0} />
         </WrapWalletLabel>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
-          </WrapFilterDescription>
+        {!error && (
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+              {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
+            </WrapFilterDescription>
 
-          <CustomFilter
-            sortKey="id"
-            filterValue={omit(pageInfo, ["page", "size"])}
-            onSubmit={(params) => {
-              if (params) {
-                setParams(params);
-              }
-              const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
-              history.replace({ search: stringify({ page: 1, ...newParams }) });
-            }}
-            searchLabel={t("common.searchTx")}
-          />
-        </Box>
+            <CustomFilter
+              sortKey="id"
+              filterValue={omit(pageInfo, ["page", "size"])}
+              onSubmit={(params) => {
+                if (params) {
+                  setParams(params);
+                }
+                const newParams = omit({ ...params, txHash: params?.search }, ["search"]);
+                history.replace({ search: stringify({ page: 1, ...newParams }) });
+              }}
+              searchLabel={t("common.searchTx")}
+            />
+          </Box>
+        )}
       </WrapperDelegationTab>
       <Table
         {...fetchData}
