@@ -120,6 +120,7 @@ const DrepDetail = () => {
                 sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
                 isNoLimitPixel={true}
                 isTooltip
+                whiteSpace="normal"
               />
             </Box>
           )}
