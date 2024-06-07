@@ -286,6 +286,7 @@ export const CIP20_DOCS_URL = "https://cips.cardano.org/cip/CIP-0020";
 export const CIP25_DOCS_URL = "https://cips.cardano.org/cip/CIP-0025";
 export const CIP60_DOCS_URL = "https://cips.cardano.org/cip/CIP-0060";
 export const CIP83_DOCS_URL = "https://cips.cardano.org/cip/CIP-0083";
+export const BUG_BOUNTY_URL = "https://immunefi.com/bug-bounty/cardanofoundation/";
 export enum STATUS_VOTE {
   YES = "YES",
   NO = "NO",
