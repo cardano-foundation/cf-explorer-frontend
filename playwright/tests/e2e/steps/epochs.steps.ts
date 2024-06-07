@@ -2,8 +2,11 @@ import { createBdd } from "playwright-bdd";
 
 import { blockfrostApi } from "playwright/api/call-blockfrost/blockfrost.api";
 import { epochsDashboardPage } from "playwright/pages/epochs-dashboard.page";
+import { epochDetailPage } from "playwright/pages/epoch-detail.page";
 
 const { Given, When, Then } = createBdd();
+
+let blockId: string | null;
 
 Given(/^the user is in the general dashboard page in explorer portal$/, async ({ page }) => {
   await epochsDashboardPage(page).goToDashboard();
@@ -78,7 +81,7 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochDetailPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );
@@ -99,7 +102,7 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochDetailPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );
@@ -114,13 +117,15 @@ Given(/^the user go to the detail view page of one epoch$/, async ({ page }) => 
 When(
   /^the user selects the block number of one record of the blocks table in the epoch detail view page$/,
   async ({ page }) => {
-    await epochsDashboardPage(page).goToBlockDetailFromEpoch();
+    const firstBlockInEpochDetail = page.getByTestId("epochList.blockValue#0");
+    blockId = await firstBlockInEpochDetail.textContent();
+    await firstBlockInEpochDetail.click();
   }
 );
 Then(
   /^the user should be redirected to the block details page of the select block in the epoch detail view page$/,
   async ({ page }) => {
-    await epochsDashboardPage(page).checkBlockDetailPage();
+    await epochDetailPage(page).checkBlockDetailPage({ blockId });
   }
 );
 
@@ -134,13 +139,15 @@ Given(/^the user go to the detail view page of one finished epoch$/, async ({ pa
 When(
   /^the user selects the block id of one record of the blocks table in the epoch detail view page$/,
   async ({ page }) => {
-    await epochsDashboardPage(page).goToBlockDetailFromEpochByBlockId();
+    const firstBlockInEpochDetail = page.getByTestId("epochList.blockValue#0");
+    blockId = await firstBlockInEpochDetail.textContent();
+    await firstBlockInEpochDetail.click();
   }
 );
 Then(
   /^the user should be redirected to the block details page of the select block in the epoch detail view page by blockid$/,
   async ({ page }) => {
-    await epochsDashboardPage(page).checkBlockDetailPage();
+    await epochDetailPage(page).checkBlockDetailPage({ blockId });
   }
 );
 
@@ -160,7 +167,7 @@ Then(
     (await blockfrostApi(request).getEpochById(parseInt(<string>await epochNo.textContent())))
       .json()
       .then(async (data) => {
-        await epochsDashboardPage(page).checkEpochDetailPage({ currentEpoch: data });
+        await epochDetailPage(page).checkEpochDetailPage({ currentEpoch: data });
       });
   }
 );
