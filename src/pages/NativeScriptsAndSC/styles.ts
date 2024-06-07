@@ -59,7 +59,7 @@ export const ButtonViewModal = styled(Box)`
 export const StyledContainer = styled(Container)(({ theme }) => ({
   padding: "30px 16px 0px",
   [theme.breakpoints.down("md")]: {
-    paddingTop: 0
+    padding: "0px 25px"
   }
 }));
 
