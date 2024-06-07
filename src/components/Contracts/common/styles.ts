@@ -6,6 +6,12 @@ export const UnderlineText = styled(Typography)`
   font-weight: 500;
   cursor: pointer;
 `;
+export const LinkToText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.primary.main};
+  font-weight: 500;
+  cursor: pointer;
+  width: fit-content;
+`;
 
 export const ArrowIconContainer = styled(Box)<{ open?: number }>`
   rotate: ${({ open }) => (open ? 0 : 180)}deg;
@@ -20,6 +26,8 @@ export const DataCardBox = styled(Box)`
   padding: 16px 20px;
   background-color: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.common.white)};
   gap: 5px;
+  min-height: 80px;
+  height: 100%;
 `;
 
 export const DataTitle = styled(Typography)`
@@ -37,18 +45,19 @@ export const DataValue = styled(Typography)`
   color: ${({ theme }) => (theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light)};
   font-feature-settings: "clig" off, "liga" off;
   line-height: normal;
-  line-break: anywhere;
+  line-break: auto;
   max-height: 40vh;
   overflow: auto;
   padding-right: 10px;
   &::-webkit-scrollbar {
-    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
     background: transparent;
+    width: 70%;
   }
   &:hover {
     border-radius: 8px 0px 0px 8px;
@@ -105,6 +114,12 @@ export const CLButton = styled("button")`
   &:hover {
     background-color: ${({ theme }) => theme.palette.primary.dark};
   }
+`;
+
+export const ContractAddressLabel = styled(Typography)`
+  font-weight: 600;
+  text-align: left;
+  color: ${({ theme }) => theme.palette.secondary.light};
 `;
 
 export const WrapLabel = styled(Typography)(({ theme }) => ({

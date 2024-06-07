@@ -38,6 +38,8 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
 
   const fetchData = useFetchList<Registration>(`${API.POOL}/${poolType}`, { ...pageInfo }, false, blockKey);
 
+  const { error } = fetchData;
+
   useEffect(() => {
     const title = poolType === POOL_TYPE.REGISTRATION ? "Registration" : "Deregistration";
     document.title = `${title} Pools | Cardano Blockchain Explorer`;
@@ -179,9 +181,11 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
       <Card
         title={poolType === POOL_TYPE.REGISTRATION ? t("glossary.poolCertificate") : t("glossary.poolDeregistration")}
       >
-        <TimeDuration>
-          <FormNowMessage time={fetchData.lastUpdated} />
-        </TimeDuration>
+        {!error && (
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        )}
       </Card>
       <Box>
         <Table

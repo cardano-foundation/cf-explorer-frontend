@@ -94,7 +94,6 @@ const HomeStatistic = () => {
   const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
   const [btcDataLocal, setBtcDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("btcData", null);
   const [usdDataLocal, setUsdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
-
   const {
     data: btcData,
     lastUpdated: lastUpdatedBtcData,
@@ -302,23 +301,28 @@ const HomeStatistic = () => {
                   <CustomTooltip title={liveStake ? formatADAFull(liveStake) : t("common.N/A")}>
                     <Title data-testid="live-stake-value">{liveStake ? formatADA(liveStake) : t("common.N/A")}</Title>
                   </CustomTooltip>
-                  <Progress>
-                    <CustomTooltip title={"Total staked to Circulating supply ratio"}>
-                      <ProcessActive data-testid="live-stake-progress-active" rate={liveRate.toNumber()}>
-                        {isShowLiveStakePercentText && `${liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%`}
-                      </ProcessActive>
-                    </CustomTooltip>
-                    <ProgressPending
-                      data-testid="live-stake-progress-pending"
-                      rate={liveRate.div(-1).plus(100).toNumber()}
-                    >
-                      {isShowOtherStakePercentText && (
-                        <Box color={({ palette }) => palette.secondary.main}>
-                          {liveStake ? liveRate.div(-1).plus(100).toFixed(0) : 0}%
-                        </Box>
-                      )}
-                    </ProgressPending>
-                  </Progress>
+                  {currentEpoch?.circulatingSupply !== null && (
+                    <Progress>
+                      <CustomTooltip title={"Total staked to Circulating supply ratio"}>
+                        <ProcessActive
+                          data-testid="live-stake-progress-active"
+                          rate={currentEpoch?.circulatingSupply ? liveRate.toNumber() : 0}
+                        >
+                          {isShowLiveStakePercentText && `${liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%`}
+                        </ProcessActive>
+                      </CustomTooltip>
+                      <ProgressPending
+                        data-testid="live-stake-progress-pending"
+                        rate={currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100}
+                      >
+                        {isShowOtherStakePercentText && (
+                          <Box color={({ palette }) => palette.secondary.main}>
+                            {liveStake ? 100 - +liveRate.toFixed(0, BigNumber.ROUND_DOWN) : 0}%
+                          </Box>
+                        )}
+                      </ProgressPending>
+                    </Progress>
+                  )}
                 </Box>
                 <Box>
                   <Box color={({ palette }) => palette.secondary.light}>
@@ -335,14 +339,26 @@ const HomeStatistic = () => {
                         {t("glossary.circulatingSupply")} (<ADAicon width={8} />){": "}
                       </span>
                     </CustomTooltip>
-                    <CustomTooltip title={formatADAFull(currentEpoch?.circulatingSupply || 0)}>
-                      <span data-testid="circulating-supply-value">{formatADA(circulatingSupply.toString())} </span>
-                    </CustomTooltip>
-                    <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                      <span data-testid="circulating-supply-percentage">
-                        ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
+                    <CustomTooltip
+                      title={
+                        currentEpoch?.circulatingSupply === null
+                          ? t("common.N/A")
+                          : formatADAFull(currentEpoch?.circulatingSupply || 0)
+                      }
+                    >
+                      <span data-testid="circulating-supply-value">
+                        {currentEpoch?.circulatingSupply === null
+                          ? t("common.N/A")
+                          : formatADA(circulatingSupply.toString())}{" "}
                       </span>
                     </CustomTooltip>
+                    {currentEpoch?.circulatingSupply !== null && (
+                      <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
+                        <span data-testid="circulating-supply-percentage">
+                          ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
+                        </span>
+                      </CustomTooltip>
+                    )}
                   </Box>
                 </Box>
               </VerticalContent>

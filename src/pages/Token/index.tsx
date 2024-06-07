@@ -39,7 +39,7 @@ const Tokens = () => {
   const queries = new URLSearchParams(search);
 
   const mainRef = useRef(document.querySelector("#main"));
-  const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
+  const { data, lastUpdated, error, statusError, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
     { ...pageInfo, query: queries.get("tokenName") || "" },
     false,
@@ -158,11 +158,15 @@ const Tokens = () => {
   return (
     <StyledContainer>
       <Card title={t("glossary.nativeTokens")}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
+        {!error && (
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+        )}
         <Table
           {...fetchData}
+          statusError={statusError}
+          error={error}
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total, isDataOverSize: fetchData.isDataOverSize }}

@@ -45,12 +45,16 @@ const DelegationEpochList = ({
   data,
   loading,
   total,
-  initialized
+  initialized,
+  error,
+  statusError
 }: {
   data: DelegationEpoch[] | null;
   loading: boolean;
   initialized: boolean;
   total: number;
+  error: string | null;
+  statusError: number | undefined;
   scrollEffect: () => void;
 }) => {
   const { t } = useTranslation();
@@ -126,6 +130,8 @@ const DelegationEpochList = ({
     <Table
       data-testid="delegationEpochList.table"
       columns={columns}
+      error={error}
+      statusError={statusError}
       data={data}
       total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
@@ -145,12 +151,16 @@ const DelegationStakingDelegatorsList = ({
   data,
   initialized,
   loading,
-  total
+  total,
+  error,
+  statusError
 }: {
   data: StakingDelegators[] | null;
   loading: boolean;
   initialized: boolean;
   total: number;
+  error: string | null;
+  statusError: number | undefined;
   scrollEffect: () => void;
 }) => {
   const { t } = useTranslation();
@@ -227,6 +237,8 @@ const DelegationStakingDelegatorsList = ({
       data-testid="stakingDelegators.table"
       columns={columns}
       data={data ? data : []}
+      error={error}
+      statusError={statusError}
       total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
       initialized={initialized}
@@ -248,12 +260,16 @@ const DelegationCertificatesHistory = ({
   data,
   initialized,
   loading,
-  total
+  total,
+  error,
+  statusError
 }: {
   data: CertificateHistory[] | null;
   loading: boolean;
   initialized: boolean;
   total: number;
+  error: string | null;
+  statusError: number | undefined;
   scrollEffect: () => void;
 }) => {
   const { t } = useTranslation();
@@ -369,6 +385,8 @@ const DelegationCertificatesHistory = ({
     <Table
       data-testid="poolHistory.table"
       columns={columns}
+      error={error}
+      statusError={statusError}
       data={data ? data : []}
       total={{ count: total, title: t("glossary.totalTokenList") }}
       loading={loading}
