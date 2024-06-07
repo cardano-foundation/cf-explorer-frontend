@@ -12,6 +12,11 @@ import { poolDetailPage } from "../../../pages/pool-detail.page";
 
 const { Given, When, Then } = createBdd();
 
+let epochNo: string | null;
+let transactionHash: string | null;
+let address: string | null;
+let poolId: string | null;
+
 Given(/^the user is in the general dashboard page in explorer portal$/, async ({ page }) => {
   await blocksDashboard(page).goToDashboard();
 });
@@ -89,10 +94,12 @@ Given(/^the user is in the blocks page in explorer portal web$/, async ({ page }
   await blocksDashboard(page).goToBlocks();
 });
 When(/^the user selects the epoch number of one of the blocks record in the table$/, async ({ page }) => {
-  await blocksDashboard(page).goToEpochDetailFromEpochNo();
+  const blocksTableValueEpoch = page.getByTestId("blocks.table.value.epoch#2");
+  epochNo = await blocksTableValueEpoch.textContent();
+  await blocksTableValueEpoch.click();
 });
 Then(/^the user should see the epoch detail page of the selected epoch number in the table$/, async ({ page }) => {
-  await epochDetailPage(page).checkEpochDetailPage();
+  await epochDetailPage(page).checkEpochDetailPage({ epochNo });
 });
 
 Given(/^the user is in the blocks page in explorer portal for go to detail widget$/, async ({ page }) => {
@@ -152,13 +159,15 @@ Given(/^the user go to the detail view page of one block for go to trx detail fr
 When(
   /^the user selects the transaction hash of one record of the transactions table in the block detail view page$/,
   async ({ page }) => {
-    await blockDetailPage(page).goToTrxDetailFromTrxTable();
+    const blocksDetailTrxTableValueTrx = page.getByTestId("block.detail.trxTable.value.txhash#0");
+    transactionHash = await blocksDetailTrxTableValueTrx.getAttribute("aria-label");
+    await blocksDetailTrxTableValueTrx.click();
   }
 );
 Then(
   /^the user should be redirected to the transaction details page of the select transaction in the block detail view page$/,
   async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail();
+    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash });
   }
 );
 
@@ -175,13 +184,15 @@ Given(/^the user go to the detail view page of one block for go to address detai
 When(
   /^the user selects one of the input - output addresses of one record of the transactions table in the block detail view page$/,
   async ({ page }) => {
-    await blockDetailPage(page).goToAddressDetailFromTrxTable();
+    const blocksDetailTrxTableValueInputAddress = page.getByTestId("block.detail.trxTable.value.inputAddress#0");
+    address = await blocksDetailTrxTableValueInputAddress.getAttribute("aria-label");
+    await blocksDetailTrxTableValueInputAddress.click();
   }
 );
 Then(
   /^the user should be redirected to the address details page of the select address in the block detail view page$/,
   async ({ page }) => {
-    await addressDetailPage(page).checkAddressDetail();
+    await addressDetailPage(page).checkAddressDetail({ address });
   }
 );
 
@@ -218,8 +229,10 @@ Given(/^the user go to the detail view page of one block for go to pool detail f
   await blocksDashboard(page).goToBlockDetailFromWidgetByBlockHash();
 });
 When(/^the user selects the pool link in the block producer$/, async ({ page }) => {
-  await blockDetailPage(page).goToPoolDetailByBlockProducer();
+  const blocksDetailProducer = page.getByTestId("block.detail.overview.value.producer");
+  poolId = await blocksDetailProducer.getAttribute("href");
+  await blocksDetailProducer.click();
 });
 Then(/^the user should be redirected to the pool details page that produce the given block$/, async ({ page }) => {
-  await poolDetailPage(page).checkPoolDetail();
+  await poolDetailPage(page).checkPoolDetail({ poolId: (poolId || "")?.split("/")[3] });
 });

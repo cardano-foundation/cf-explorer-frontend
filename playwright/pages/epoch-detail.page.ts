@@ -16,7 +16,9 @@ export function epochDetailPage(page: Page) {
   const blocksCount = page.locator('//div[div[div[text()="Blocks"]]]/following-sibling::div');
   const transactionCount = page.locator('//div[div[div[text()="Transaction Count"]]]/following-sibling::div');
 
-  const checkEpochDetailPage = async () => {
+  const checkEpochDetailPage = async ({ epochNo }: { epochNo: string | null }) => {
+    const url = await page.url();
+    expect(url, "Check url pool detail").toContain(`/epoch/${epochNo}`);
     expect(deatailPageTitle, "Epoch detail title").toHaveText("Epoch Details");
   };
 
