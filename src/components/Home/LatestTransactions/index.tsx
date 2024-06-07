@@ -85,7 +85,8 @@ const LatestTransactions: React.FC = () => {
                 );
               })
             : data?.map((item) => {
-                const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo } = item;
+                const { hash, fromAddress, toAddress, blockNo, amount, status, time, epochNo, epochSlotNo, index } =
+                  item;
                 return (
                   // isTable show 2 item per row else show 1 item per row grid
                   <Grid item xl={3} lg={3} xs={12} sm={6} key={hash}>
@@ -110,7 +111,10 @@ const LatestTransactions: React.FC = () => {
                             <CustomTooltip title={hash}>
                               <Link to={details.transaction(hash)}>
                                 <Hash>
-                                  <DynamicEllipsisText value={hash} />
+                                  <DynamicEllipsisText
+                                    data-testid={`trxLastest.transactionHash.value#${index}`}
+                                    value={hash}
+                                  />
                                 </Hash>
                               </Link>
                             </CustomTooltip>
@@ -119,13 +123,13 @@ const LatestTransactions: React.FC = () => {
                         <RowItem>
                           <small>{t("glossary.block")}: </small>
                           <Link to={details.block(blockNo)}>
-                            <BlockNo>{blockNo}</BlockNo>
+                            <BlockNo data-testid={`trxLastest.block.value#${index}`}>{blockNo}</BlockNo>
                           </Link>
                         </RowItem>
                         <RowItem>
                           <small>{t("glossary.epoch")}: </small>
                           <Link to={details.epoch(epochNo)}>
-                            <BlockNo>{epochNo}</BlockNo>
+                            <BlockNo data-testid={`trxLastest.epochNo.value#${index}`}>{epochNo}</BlockNo>
                           </Link>
                         </RowItem>
                         <RowItem>
@@ -135,7 +139,7 @@ const LatestTransactions: React.FC = () => {
                         {fromAddress?.slice(0, 1).map((add) => {
                           return (
                             // from
-                            <RowItemFromTo key={add}>
+                            <RowItemFromTo key={add} data-testid={`trxLastest.fromAddress.value#${index}`}>
                               <small>{t("common.from")}: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
@@ -160,7 +164,7 @@ const LatestTransactions: React.FC = () => {
                         {/* to */}
                         {toAddress?.slice(0, 1).map((add) => {
                           return (
-                            <RowItemFromTo key={add}>
+                            <RowItemFromTo key={add} data-testid={`trxLastest.toAddress.value#${index}`}>
                               <small>{t("common.to")}: </small>
                               <CustomTooltip title={add}>
                                 <Link to={details.address(add)}>
@@ -184,7 +188,7 @@ const LatestTransactions: React.FC = () => {
                         })}
                         <RowItem>
                           <small>{t("common.createdAt")}: </small>
-                          <DatetimeTypeTooltip>
+                          <DatetimeTypeTooltip data-testid={`trxLastest.createdAt.value#${index}`}>
                             <small>{formatDateTimeLocal(time)}</small>
                           </DatetimeTypeTooltip>
                         </RowItem>

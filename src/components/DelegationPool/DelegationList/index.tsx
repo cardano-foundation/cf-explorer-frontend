@@ -48,12 +48,14 @@ const DelegationLists: React.FC = () => {
     API.DELEGATION.POOL_LIST,
     {
       ...newPageInfo,
-      isShowRetired: newPageInfo.retired
+      isShowRetired: newPageInfo.retired,
+      maxPoolSize: newPageInfo?.maxPoolSize ? +newPageInfo.maxPoolSize * 10 ** 6 : "",
+      minPoolSize: newPageInfo?.minPoolSize ? +newPageInfo.minPoolSize * 10 ** 6 : ""
     },
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const fromPath = history.location.pathname as SpecialPath;
 
   const handleBlankSort = () => {
@@ -222,11 +224,13 @@ const DelegationLists: React.FC = () => {
   ];
   return (
     <DelegationContainer>
-      <TopSearchContainer sx={{ justifyContent: "end" }}>
-        <Box display="flex" gap="10px">
-          <CustomFilterMultiRange />
-        </Box>
-      </TopSearchContainer>
+      {!error && (
+        <TopSearchContainer sx={{ justifyContent: "end" }}>
+          <Box display="flex" gap="10px">
+            <CustomFilterMultiRange />
+          </Box>
+        </TopSearchContainer>
+      )}
       <Table
         {...fetchData}
         data-testid="delegationList.table"

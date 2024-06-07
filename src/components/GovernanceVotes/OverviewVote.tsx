@@ -42,7 +42,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
   const theme = useTheme();
   const { t } = useTranslation();
   const { isGalaxyFoldSmall, isMobile } = useScreen();
-
   if (!data) {
     return <></>;
   }

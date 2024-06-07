@@ -13,5 +13,6 @@ const InfoSolidIcon: React.FC<{
 
 const Image = styled("img")`
   cursor: pointer;
+  padding-bottom: 6px;
 `;
 export default InfoSolidIcon;

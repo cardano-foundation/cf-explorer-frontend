@@ -232,7 +232,11 @@ export const WithdrawnDraw = ({ selected, showBackButton }: Props) => {
         </AccountContainer>
         <AmountGroup>
           <BoxGroup>
-            <NetAmountBox ref={netAmountRef} value={amount && fee ? amount - fee : 0} txHash={txHash || ""} />
+            <NetAmountBox
+              ref={netAmountRef}
+              value={amount !== undefined && fee !== undefined ? (amount || 0) - (fee || 0) : 0}
+              txHash={txHash || ""}
+            />
             <WithdrawnBox ref={withDrawnRef} value={amount || 0} txHash={txHash || ""} />
           </BoxGroup>
           <BoxGroup>

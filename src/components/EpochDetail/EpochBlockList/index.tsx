@@ -42,6 +42,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
     epochNo?.toString() === epochId && pageInfo.page === 0 ? blockNo : 0
   );
 
+  const { error } = fetchData;
+
   const columns: Column<BlockDetail>[] = [
     {
       title: <div data-testid="epochList.blockTitle">{t("glossary.block")}</div>,
@@ -132,14 +134,17 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
   return (
     <StyledContainer>
       <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           data-testid="epoch.blockList.table"
           {...fetchData}
+          error={error}
           columns={columns}
           total={{ title: t("common.totalBlocks"), count: fetchData.total }}
           pagination={{

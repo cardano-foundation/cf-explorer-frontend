@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { stringify } from "qs";
+import BigNumber from "bignumber.js";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { details } from "src/commons/routers";
@@ -29,7 +30,7 @@ const WithdrawalHistoryTab = () => {
       ...pageInfo
     }
   );
-  const { total } = fetchData;
+  const { total, error } = fetchData;
   const columns: Column<WithdrawItem>[] = [
     {
       title: t("glossary.txHash"),
@@ -61,7 +62,7 @@ const WithdrawalHistoryTab = () => {
       minWidth: "120px",
       render: (r) => (
         <Box>
-          <AdaValue value={r.value + r.fee} />
+          <AdaValue value={new BigNumber(r.value).minus(new BigNumber(r.fee)).toString()} />
           <TableSubTitle>
             <Box display="flex" mt={1} alignItems="center" lineHeight="1">
               {formatADAFull(r.value)}&nbsp;
@@ -76,14 +77,16 @@ const WithdrawalHistoryTab = () => {
 
   return (
     <>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
-        <Box />
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
-          </WrapFilterDescription>
+      {!error && (
+        <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
+          <Box />
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
+            </WrapFilterDescription>
+          </Box>
         </Box>
-      </Box>
+      )}
       <Table
         {...fetchData}
         columns={columns}
