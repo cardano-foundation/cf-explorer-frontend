@@ -7,6 +7,7 @@ import { log } from "../utils/logger";
 
 export function epochDetailPage(page: Page) {
   const epochId = page.locator('div[data-test-id="CircularProgressbarWithChildren__children"] > a');
+  const deatailPageTitle = page.getByTestId("detail.page.title");
   const epochStartTime = page.locator(
     "//div[div[div[@data-testid='epoch.overview.startTimeTitle']]]/following-sibling::div"
   );
@@ -14,6 +15,10 @@ export function epochDetailPage(page: Page) {
   const totalOutput = page.locator('//div[div[div[text()="Total output"]]]/following-sibling::div');
   const blocksCount = page.locator('//div[div[div[text()="Blocks"]]]/following-sibling::div');
   const transactionCount = page.locator('//div[div[div[text()="Transaction Count"]]]/following-sibling::div');
+
+  const checkEpochDetailPage = async () => {
+    expect(deatailPageTitle, "Epoch detail title").toHaveText("Epoch Details");
+  };
 
   const assertEpochDataIsDisplayed = async (lastEpochData: Promise<BlockfrostEpochInformationDto>) => {
     await expect(epochId, "The epoch id is not the expected for the current epoch details").toHaveText(
@@ -89,6 +94,7 @@ export function epochDetailPage(page: Page) {
 
   return {
     assertEpochDataIsDisplayed,
-    assertLastFinishedEpochDataIsDisplayed
+    assertLastFinishedEpochDataIsDisplayed,
+    checkEpochDetailPage
   };
 }

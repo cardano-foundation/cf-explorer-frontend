@@ -4,6 +4,11 @@ import { blockfrostApi } from "playwright/api/call-blockfrost/blockfrost.api";
 import { BlockInformationDto } from "playwright/api/dtos/blockInformation.dto";
 
 import { blocksDashboard } from "../../../pages/blocks-dashboard.page";
+import { blockDetailPage } from "../../../pages/block-detail.page";
+import { epochDetailPage } from "../../../pages/epoch-detail.page";
+import { transactionDetailPage } from "../../../pages/transaction-detail.page";
+import { addressDetailPage } from "../../../pages/address-detail.page";
+import { poolDetailPage } from "../../../pages/pool-detail.page";
 
 const { Given, When, Then } = createBdd();
 
@@ -35,11 +40,11 @@ Then(
       (await blockfrostApi(request).getBlockByNumber(parseInt(<string>await blockNo.textContent())))
         .json()
         .then(async (data) => {
-          await blocksDashboard(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
+          await blockDetailPage(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
         });
     }
     await blocksDashboard(page).searchBarOnBlocks();
-    await blocksDashboard(page).checkTransactionsTable();
+    await blockDetailPage(page).checkTransactionsTable();
   }
 );
 
@@ -57,7 +62,7 @@ Then(
       (await blockfrostApi(request).getBlockByNumber(parseInt(<string>await blockNo.textContent())))
         .json()
         .then(async (data) => {
-          await blocksDashboard(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
+          await blockDetailPage(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
         });
     }
   }
@@ -75,7 +80,7 @@ Then(/^the user should see the block detail page of the selected block id in the
     (await blockfrostApi(request).getBlockByNumber(parseInt(<string>await blockNo.textContent())))
       .json()
       .then(async (data) => {
-        await blocksDashboard(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
+        await blockDetailPage(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
       });
   }
 });
@@ -87,7 +92,7 @@ When(/^the user selects the epoch number of one of the blocks record in the tabl
   await blocksDashboard(page).goToEpochDetailFromEpochNo();
 });
 Then(/^the user should see the epoch detail page of the selected epoch number in the table$/, async ({ page }) => {
-  await blocksDashboard(page).checkEpochDetailPage();
+  await epochDetailPage(page).checkEpochDetailPage();
 });
 
 Given(/^the user is in the blocks page in explorer portal for go to detail widget$/, async ({ page }) => {
@@ -131,7 +136,7 @@ Then(
     if (ariaLabelValue) {
       await blocksDashboard(page).goToBlockDetailFromWidgetByBlockHash();
       (await blockfrostApi(request).getBlockByHash(ariaLabelValue)).json().then(async (data) => {
-        await blocksDashboard(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
+        await blockDetailPage(page).checkBlockOverviewDetailPage({ blockFrostBlock: data as BlockInformationDto });
       });
     }
   }
@@ -147,13 +152,13 @@ Given(/^the user go to the detail view page of one block for go to trx detail fr
 When(
   /^the user selects the transaction hash of one record of the transactions table in the block detail view page$/,
   async ({ page }) => {
-    await blocksDashboard(page).goToTrxDetailFromTrxTable();
+    await blockDetailPage(page).goToTrxDetailFromTrxTable();
   }
 );
 Then(
   /^the user should be redirected to the transaction details page of the select transaction in the block detail view page$/,
   async ({ page }) => {
-    await blocksDashboard(page).checkTransactionsDetail();
+    await transactionDetailPage(page).checkTransactionsDetail();
   }
 );
 
@@ -170,13 +175,13 @@ Given(/^the user go to the detail view page of one block for go to address detai
 When(
   /^the user selects one of the input - output addresses of one record of the transactions table in the block detail view page$/,
   async ({ page }) => {
-    await blocksDashboard(page).goToAddressDetailFromTrxTable();
+    await blockDetailPage(page).goToAddressDetailFromTrxTable();
   }
 );
 Then(
   /^the user should be redirected to the address details page of the select address in the block detail view page$/,
   async ({ page }) => {
-    await blocksDashboard(page).checkAddressDetail();
+    await addressDetailPage(page).checkAddressDetail();
   }
 );
 
@@ -198,7 +203,7 @@ When(/^the user selects the transactions section into the info widget of the sel
 Then(
   /^the user should see the selected block detail view page in the transactions table section$/,
   async ({ page }) => {
-    await blocksDashboard(page).checkTransactionsTable();
+    await blockDetailPage(page).checkTransactionsTable();
   }
 );
 
@@ -213,8 +218,8 @@ Given(/^the user go to the detail view page of one block for go to pool detail f
   await blocksDashboard(page).goToBlockDetailFromWidgetByBlockHash();
 });
 When(/^the user selects the pool link in the block producer$/, async ({ page }) => {
-  await blocksDashboard(page).goToPoolDetailByBlockProducer();
+  await blockDetailPage(page).goToPoolDetailByBlockProducer();
 });
 Then(/^the user should be redirected to the pool details page that produce the given block$/, async ({ page }) => {
-  await blocksDashboard(page).checkPoolDetail();
+  await poolDetailPage(page).checkPoolDetail();
 });

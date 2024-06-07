@@ -6,12 +6,9 @@ import { BlockInformationDto } from "playwright/api/dtos/blockInformation.dto";
 export function blocksDashboard(page: Page) {
   const blocksTable = page.getByTestId("blocks-card");
   const firstBlocksID = page.locator("td > [aria-label]").first();
-
   const sidebarBlockchainButton = page.getByTestId("menu-button-blockchain");
   const epochsTab = page.getByTestId("submenu-button-blocks");
   const searchBarEpoch = page.getByTestId("all-filters-dropdown");
-  const deatailPageTitle = page.getByTestId("detail.page.title");
-  const addressDetailTitle = page.getByTestId("address-detail-title");
 
   //Blocks Table
   const blocksTableTitleBlock = page.getByTestId("blocks.table.title.block");
@@ -27,24 +24,6 @@ export function blocksDashboard(page: Page) {
   const blocksTableTitleFee = page.getByTestId("blocks.table.title.fee");
   const blocksTableTitleOutput = page.getByTestId("blocks.table.title.output");
   const blocksTableValueSlot = page.getByTestId("blocks.table.value.slot#2");
-
-  //Block detail
-  const blocksDetailHeader = page.getByTestId("block.detail.header");
-  const blocksDetailProducer = page.getByTestId("block.detail.overview.value.producer");
-  const blocksDetailCreateTime = page.getByTestId("block.detail.overview.value.createAt");
-  const blocksDetailConfirmation = page.getByTestId("block.detail.overview.value.confirmation");
-  const blocksDetailTotalTrx = page.getByTestId("block.detail.overview.value.transactions");
-  const blocksDetailTrxFee = page.getByTestId("block.detail.overview.value.transactionFee");
-  const blocksDetailOutput = page.getByTestId("block.detail.overview.value.output");
-
-  //Block detail - Transactions Table
-  const blocksDetailTrxTableTxhash = page.getByTestId("block.detail.trxTable.txhash");
-  const blocksDetailTrxTableCreatedAt = page.getByTestId("block.detail.trxTable.createdAt");
-  const blocksDetailTrxTableAddress = page.getByTestId("block.detail.trxTable.address");
-  const blocksDetailTrxTableFees = page.getByTestId("block.detail.trxTable.fees");
-  const blocksDetailTrxTableoutput = page.getByTestId("block.detail.trxTable.output");
-  const blocksDetailTrxTableValueTrx = page.getByTestId("block.detail.trxTable.value.txhash#0");
-  const blocksDetailTrxTableValueInputAddress = page.getByTestId("block.detail.trxTable.value.inputAddress#0");
 
   //Block widget
   const blocksWidgetViewDetailButton = page.getByTestId("block.detailViewEpoch.viewDetail");
@@ -86,14 +65,6 @@ export function blocksDashboard(page: Page) {
     await blocksTableValueBlock.click();
   };
 
-  const goToTrxDetailFromTrxTable = async () => {
-    await blocksDetailTrxTableValueTrx.click();
-  };
-
-  const goToAddressDetailFromTrxTable = async () => {
-    await blocksDetailTrxTableValueInputAddress.click();
-  };
-
   const goToBlockDetailFromBlockId = async () => {
     await blocksTableValueBlockId.click();
   };
@@ -106,10 +77,6 @@ export function blocksDashboard(page: Page) {
     await blocksWidgetTrxTab.click();
   };
 
-  const goToPoolDetailByBlockProducer = async () => {
-    await blocksDetailProducer.click();
-  };
-
   const openLastBlockDetails = async () => {
     await expect(blocksTable).toBeVisible();
     await firstBlocksID.click();
@@ -117,10 +84,6 @@ export function blocksDashboard(page: Page) {
 
   const searchBarOnBlocks = async () => {
     await expect(searchBarEpoch).toHaveText("Blocks");
-  };
-
-  const checkEpochDetailPage = async () => {
-    expect(deatailPageTitle, "Epoch detail title").toHaveText("Epoch Details");
   };
 
   const checkBlocksTable = async () => {
@@ -133,43 +96,6 @@ export function blocksDashboard(page: Page) {
     await expect(blocksTableTitleTransactionsCount, "Check title on blocks table").toHaveText("Transactions");
     await expect(blocksTableTitleFee, "Check title on blocks table").toHaveText("Fees");
     await expect(blocksTableTitleOutput, "Check title on finished epoch table").toHaveText("Output");
-  };
-
-  const checkBlockOverviewDetailPage = async ({ blockFrostBlock }: { blockFrostBlock: BlockInformationDto }) => {
-    await expect(blocksDetailHeader, "Block detail title").toHaveText("Block Details");
-
-    expect(
-      moment((await blocksDetailCreateTime.textContent())?.replace(",", "")).unix(),
-      "Block create time to equal create time epoch Blockfrost"
-    ).toEqual(blockFrostBlock?.time);
-
-    expect(
-      +((await blocksDetailConfirmation.textContent()) || 0),
-      "Confirmation in block  to greate or equal confirmation in Blockfrost"
-    ).toBeGreaterThanOrEqual(blockFrostBlock?.confirmations);
-
-    expect(
-      +((await blocksDetailTotalTrx.textContent()) || 0),
-      "Total transaction in block to greate or equal total transaction in Blockfrost"
-    ).toBeGreaterThanOrEqual(blockFrostBlock?.confirmations);
-
-    expect(
-      +((await blocksDetailTrxFee.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total fees in block detail to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.fees || 0));
-
-    expect(
-      +((await blocksDetailOutput.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total output in block detail to equal total output in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.output || 0));
-  };
-
-  const checkTransactionsTable = async () => {
-    await expect(blocksDetailTrxTableTxhash, "Check title on transaction table").toHaveText("Tx hash");
-    await expect(blocksDetailTrxTableCreatedAt, "Check title on transaction table").toHaveText("Created At");
-    await expect(blocksDetailTrxTableAddress, "Check title on transaction table").toHaveText("Addresses");
-    await expect(blocksDetailTrxTableFees, "Check title on transaction table").toHaveText("Fees");
-    await expect(blocksDetailTrxTableoutput, "Check title on transaction table").toHaveText("Output in ADA");
   };
 
   const checkBlockWidget = async ({ blockFrostBlock }: { blockFrostBlock: BlockInformationDto }) => {
@@ -207,23 +133,6 @@ export function blocksDashboard(page: Page) {
     ).toEqual(+(blockFrostBlock?.output || 0));
   };
 
-  const checkTransactionsDetail = async () => {
-    const url = await page.url();
-    await expect(deatailPageTitle, "Check title on transaction detail").toHaveText("Transaction Details");
-    expect(url, "Check url transaction detail").toContain("/transaction/");
-  };
-
-  const checkAddressDetail = async () => {
-    const url = await page.url();
-    await expect(addressDetailTitle, "Check title on address detail").toHaveText("Address Details");
-    expect(url, "Check url address detail").toContain("/address/");
-  };
-
-  const checkPoolDetail = async () => {
-    const url = await page.url();
-    expect(url, "Check url pool detail").toContain("/pool/");
-  };
-
   return {
     openLastBlockDetails,
     goToDashboard,
@@ -233,20 +142,12 @@ export function blocksDashboard(page: Page) {
     checkBlocksTable,
     openLastestBlockWidget,
     goToBlockDetailFromWidget,
-    checkBlockOverviewDetailPage,
-    checkTransactionsTable,
     goToBlockDetailFromBlockNo,
     goToEpochDetailFromEpochNo,
     goToBlockDetailFromBlockId,
-    checkEpochDetailPage,
     checkBlockWidget,
     goToBlockDetailFromWidgetByBlockHash,
-    goToTrxDetailFromTrxTable,
-    checkTransactionsDetail,
-    goToAddressDetailFromTrxTable,
-    checkAddressDetail,
-    goToBlockDetailFromWidgetByTrxTab,
-    checkPoolDetail,
-    goToPoolDetailByBlockProducer
+
+    goToBlockDetailFromWidgetByTrxTab
   };
 }
