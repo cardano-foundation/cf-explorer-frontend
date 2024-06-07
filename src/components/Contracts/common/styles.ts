@@ -50,13 +50,14 @@ export const DataValue = styled(Typography)`
   overflow: auto;
   padding-right: 10px;
   &::-webkit-scrollbar {
-    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
     background: transparent;
+    width: 70%;
   }
   &:hover {
     border-radius: 8px 0px 0px 8px;
