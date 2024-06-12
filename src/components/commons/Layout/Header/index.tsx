@@ -37,6 +37,7 @@ import {
   WrapButtonSelect
 } from "./styles";
 import SettingTimezone from "./SettingTimezone";
+// import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -107,6 +108,10 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             <WrapButtonSelect>
               <SettingTimezone />
             </WrapButtonSelect>
+
+            {/* <WrapButtonSelect>
+              <SelectLanguage />
+            </WrapButtonSelect> */}
 
             <NetworkContainer>
               <SelectNetwork />
