@@ -200,7 +200,13 @@ const DrepDetail = () => {
       icon: LifetimeVoteDrepIcon,
       sizeIcon: 26,
       title: (
-        <Box display={"flex"} alignItems={"center"} gap={2} justifyContent={"space-between"} flexWrap={"wrap"}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={2}
+          justifyContent={"space-between"}
+          sx={{ [theme.breakpoints.down("lg")]: { flexWrap: "wrap" } }}
+        >
           <TitleCard display={"flex"} alignItems="center">
             {t("drep.lifetimeVotes")}
           </TitleCard>
@@ -213,8 +219,8 @@ const DrepDetail = () => {
             IconComponent={DropdownIcon}
             sx={{
               bgcolor: theme.palette.primary[100],
-              maxWidth: "200px",
-              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
+              width: "200px",
+              [theme.breakpoints.down("sm")]: { width: "100%" }
             }}
             MenuProps={{
               style: { zIndex: 1303 },
@@ -575,7 +581,7 @@ const VoteBar = ({
           </Typography>
         </Box>
       }
-      placement="right"
+      placement="top"
     >
       <Box
         sx={{ background: color, borderRadius: "4px" }}
@@ -595,8 +601,9 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.primary[200],
+    backgroundColor: theme.palette.primary[100],
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: 11
+    fontSize: 11,
+    border: `1px solid ${theme.palette.primary[200]}`
   }
 }));
