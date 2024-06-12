@@ -684,6 +684,16 @@ import NativeType from "./icons/NativeType.svg?react";
 import NativeOneMint from "./icons/NativeOneMint.svg?react";
 import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
 import DrawerClose from "./icons/drawerClose.svg?react";
+import CCCurentState from "./icons/CCCurentState.svg?react";
+import CCProposalPolicy from "./icons/CCProposalPolicy.svg?react";
+import CCActiveMembers from "./icons/CCActiveMembers.svg?react";
+import CCThreshold from "./icons/CCThreshold.svg?react";
+import CCGovernanceVotes from "./icons/CCGovernanceVotes.svg?react";
+import CCUpcomingChange from "./icons/CCUpcomingChange.svg?react";
+import CCLastChange from "./icons/CCLastChange.svg?react";
+import CClistMembers from "./icons/CClistMembers.svg?react";
+import CCGorvernanceVote from "./icons/CCGorvernanceVote.svg?react";
+import CCHistoryStatus from "./icons/CCHistoryStatus.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -871,5 +881,15 @@ export {
   NativeType,
   NativeOneMint,
   BolsiniAddress,
-  DrawerClose
+  DrawerClose,
+  CCCurentState,
+  CCProposalPolicy,
+  CCActiveMembers,
+  CCThreshold,
+  CCGovernanceVotes,
+  CCUpcomingChange,
+  CCLastChange,
+  CClistMembers,
+  CCGorvernanceVote,
+  CCHistoryStatus
 };

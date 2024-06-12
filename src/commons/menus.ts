@@ -108,6 +108,18 @@ export const menus: Menu[] = [
     icon: ProtocolIcon,
     href: lists.protocolParameters(),
     children: []
+  },
+  {
+    title: "Governance",
+    key: "glossary.governance",
+    icon: OperationalIcon,
+    children: [
+      {
+        title: "Constitutional Committee",
+        key: "glossary.constitutionalCommittee",
+        href: details.CONSTITUIONAL_COMMITTEES("listMembers")
+      }
+    ]
   }
 ];
 
