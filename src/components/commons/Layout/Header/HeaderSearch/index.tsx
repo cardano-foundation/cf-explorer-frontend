@@ -350,11 +350,10 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       const search: { query?: string; search?: string; retired?: boolean } = { ...params };
 
       search.query = query.trim();
-
       const url =
         filter === "tokens"
           ? `${API.TOKEN.LIST}?page=0&size=${RESULT_SIZE}&${stringify({ query: query })}`
-          : `${API.DELEGATION.POOL_LIST}?${stringify({ query: query })}&page=0&size=${RESULT_SIZE}`;
+          : `${API.DELEGATION.POOL_LIST}?${stringify({ query: query })}&page=0&size=${RESULT_SIZE}&isShowRetired=true`;
 
       const res = await defaultAxios.get(url);
       setTotalResult(res?.data && res.data?.totalItems ? res.data?.totalItems : 0);
@@ -571,7 +570,6 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
       callback?.();
       return;
     }
-
     if (option?.value === "txs") {
       history.push(details.transaction(search.trim()));
       handleSetSearchValueDefault();
