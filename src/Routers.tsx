@@ -53,6 +53,7 @@ import VerifyEmail from "./pages/VerifyEmail";
 import NativeScriptsDetailPage from "./pages/NativeScriptDetail";
 import DrepDetail from "./pages/DrepDetail";
 import Dreps from "./pages/Dreps";
+import ConstitutionalCommittees from "./pages/ConstitutionalCommittees";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -106,6 +107,7 @@ const Routes: React.FC = () => {
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
       <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
+      <Route path={routers.CONSTITUIONAL_COMMITTEES} exact component={ConstitutionalCommittees} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StakingLifecycle} />
       <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
       <PrivateRoute path={routers.REPORT_GENERATED_POOL_DETAIL} exact component={ReportGeneratedPoolDetail} />
