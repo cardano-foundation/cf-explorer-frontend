@@ -97,140 +97,148 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <SidebarMenuContainer>
       <Menu>
-        {menus.map((item, index) => {
-          const { href, key, children, icon, tooltip } = item;
-          const title = t(key || "");
-          const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
-          return (
-            <React.Fragment key={index}>
-              {href ? (
-                <ListItem
-                  button
-                  onClick={() => setActive(null)}
-                  data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                  {...(isExternalLink(href)
-                    ? { component: "a", href, target: "_blank" }
-                    : { component: Link, to: href })}
-                  selected={isActiveMenu(href)}
-                  sx={(theme) => ({
-                    ...itemStyle(theme, sidebar),
-                    ...(isActiveMenu(href)
-                      ? {
-                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                          color: (theme) => theme.palette.secondary[0]
-                        }
-                      : { color: (theme) => theme.palette.secondary.light }),
-                    fontWeight: "bold !important",
-                    ":hover": isActiveMenu(href)
-                      ? {
-                          backgroundColor: `${theme.palette.primary.dark}  !important`
-                        }
-                      : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                  })}
-                >
-                  {icon ? <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} /> : null}
-                  <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
-                </ListItem>
-              ) : (
-                <ListItem
-                  button
-                  data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                  onClick={() => children?.length && handleOpen(`menu-${index}`)}
-                  sx={(theme) => ({
-                    ...itemStyle(theme, sidebar),
-                    ...(`menu-${index}` === currentActive
-                      ? {
-                          backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
-                          color: (theme) => theme.palette.secondary[0]
-                        }
-                      : { color: (theme) => theme.palette.secondary.light }),
-                    fontWeight: "bold !important",
-                    ":hover":
-                      `menu-${index}` === currentActive
+        {menus
+          .filter((i) => !(i.key === "glossary.governance" && !FF_GLOBAL_IS_CONWAY_ERA))
+          .map((item, index) => {
+            const { href, key, children, icon, tooltip } = item;
+            const title = t(key || "");
+            const tooltipTitle = `${!sidebar ? `${title}${title && tooltip ? `: ` : ``}` : ``}${tooltip || ``}`;
+            return (
+              <React.Fragment key={index}>
+                {href ? (
+                  <ListItem
+                    button
+                    onClick={() => setActive(null)}
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                    {...(isExternalLink(href)
+                      ? { component: "a", href, target: "_blank" }
+                      : { component: Link, to: href })}
+                    selected={isActiveMenu(href)}
+                    sx={(theme) => ({
+                      ...itemStyle(theme, sidebar),
+                      ...(isActiveMenu(href)
                         ? {
-                            backgroundColor: `${theme.palette.primary.dark} !important`
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
+                          }
+                        : { color: (theme) => theme.palette.secondary.light }),
+                      fontWeight: "bold !important",
+                      ":hover": isActiveMenu(href)
+                        ? {
+                            backgroundColor: `${theme.palette.primary.dark}  !important`
                           }
                         : { backgroundColor: `${theme.palette.primary[200]} !important` }
-                  })}
-                >
-                  {icon ? (
-                    <MenuIcon
-                      src={icon}
-                      alt={title}
-                      iconOnly={+!sidebar}
+                    })}
+                  >
+                    {icon ? (
+                      <MenuIcon src={icon} alt={title} iconOnly={+!sidebar} active={+isActiveMenu(href)} />
+                    ) : null}
+                    <MenuText primary={title} open={+sidebar} active={+isActiveMenu(href)} />
+                  </ListItem>
+                ) : (
+                  <ListItem
+                    button
+                    data-testid={`menu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                    onClick={() => children?.length && handleOpen(`menu-${index}`)}
+                    sx={(theme) => ({
+                      ...itemStyle(theme, sidebar),
+                      ...(`menu-${index}` === currentActive
+                        ? {
+                            backgroundColor: (theme) => `${theme.palette.primary.main} !important`,
+                            color: (theme) => theme.palette.secondary[0]
+                          }
+                        : { color: (theme) => theme.palette.secondary.light }),
+                      fontWeight: "bold !important",
+                      ":hover":
+                        `menu-${index}` === currentActive
+                          ? {
+                              backgroundColor: `${theme.palette.primary.dark} !important`
+                            }
+                          : { backgroundColor: `${theme.palette.primary[200]} !important` }
+                    })}
+                  >
+                    {icon ? (
+                      <MenuIcon
+                        src={icon}
+                        alt={title}
+                        iconOnly={+!sidebar}
+                        active={+(`menu-${index}` === currentActive)}
+                      />
+                    ) : null}
+                    <MenuText
+                      primary={title}
+                      open={+sidebar}
                       active={+(`menu-${index}` === currentActive)}
+                      disable={+!!tooltipTitle}
                     />
-                  ) : null}
-                  <MenuText
-                    primary={title}
-                    open={+sidebar}
-                    active={+(`menu-${index}` === currentActive)}
-                    disable={+!!tooltipTitle}
-                  />
 
-                  {sidebar && children?.length ? (
-                    <IconMenu component={"span"}>
-                      {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
-                    </IconMenu>
-                  ) : null}
-                </ListItem>
-              )}
-              {children?.length ? (
-                <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
-                  <SubMenu disablePadding>
-                    {children
-                      .filter((i) => !(i.key === "head.page.drep" && !FF_GLOBAL_IS_CONWAY_ERA))
-                      .map((subItem, subIndex) => {
-                        const { href, icon, isSpecialPath, key } = subItem;
-                        const title = t(key || "");
-                        return href ? (
-                          <ListItem
-                            data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
-                            key={subIndex}
-                            button
-                            {...(isExternalLink(href)
-                              ? { component: "a", href, target: "_blank" }
-                              : { component: Link, to: href })}
-                            selected={isActiveMenu(href, isSpecialPath)}
-                            sx={(theme) => ({
-                              ...itemStyle(theme, sidebar),
-                              ...(isActiveMenu(href, isSpecialPath)
-                                ? {
-                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
-                                    color: (theme) => `${theme.palette.secondary.main} !important`
-                                  }
-                                : { color: (theme) => theme.palette.secondary.light }),
-                              paddingLeft: "70px",
-                              [theme.breakpoints.down("md")]: {
-                                paddingLeft: "60px"
-                              },
-                              ":hover": isActiveMenu(href, isSpecialPath)
-                                ? {
-                                    color: `#fff !important`
-                                  }
-                                : {
-                                    backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
-                                  }
-                            })}
-                          >
-                            {icon ? (
-                              <MenuIcon
-                                src={icon}
-                                alt={title}
-                                iconOnly={+!sidebar}
+                    {sidebar && children?.length ? (
+                      <IconMenu component={"span"}>
+                        {`menu-${index}` === active ? <BiChevronUp size={18} /> : <BiChevronDown size={18} />}
+                      </IconMenu>
+                    ) : null}
+                  </ListItem>
+                )}
+                {children?.length ? (
+                  <Collapse in={`menu-${index}` === active} timeout="auto" unmountOnExit>
+                    <SubMenu disablePadding>
+                      {children
+                        .filter((i) => !(i.key === "head.page.drep" && !FF_GLOBAL_IS_CONWAY_ERA))
+                        .map((subItem, subIndex) => {
+                          const { href, icon, isSpecialPath, key } = subItem;
+                          const title = t(key || "");
+                          return href ? (
+                            <ListItem
+                              data-testid={`submenu-button-${title.toLowerCase().replaceAll(" ", "_")}`}
+                              key={subIndex}
+                              button
+                              {...(isExternalLink(href)
+                                ? { component: "a", href, target: "_blank" }
+                                : { component: Link, to: href })}
+                              selected={isActiveMenu(href, isSpecialPath)}
+                              sx={(theme) => ({
+                                ...itemStyle(theme, sidebar),
+                                ...(isActiveMenu(href, isSpecialPath)
+                                  ? {
+                                      backgroundColor: (theme) => `${theme.palette.primary[200]} !important`,
+                                      color: (theme) => `${theme.palette.secondary.main} !important`
+                                    }
+                                  : { color: (theme) => theme.palette.secondary.light }),
+                                paddingLeft: "70px",
+                                [theme.breakpoints.down("md")]: {
+                                  paddingLeft: "60px"
+                                },
+                                ":hover": isActiveMenu(href, isSpecialPath)
+                                  ? {
+                                      color: `#fff !important`
+                                    }
+                                  : {
+                                      backgroundColor: (theme) => `${theme.palette.primary[200]} !important`
+                                    }
+                              })}
+                            >
+                              {icon ? (
+                                <MenuIcon
+                                  src={icon}
+                                  alt={title}
+                                  iconOnly={+!sidebar}
+                                  active={+isActiveMenu(href, isSpecialPath)}
+                                />
+                              ) : null}
+                              <SubMenuText
+                                primary={title}
+                                open={+sidebar}
                                 active={+isActiveMenu(href, isSpecialPath)}
                               />
-                            ) : null}
-                            <SubMenuText primary={title} open={+sidebar} active={+isActiveMenu(href, isSpecialPath)} />
-                          </ListItem>
-                        ) : null;
-                      })}
-                  </SubMenu>
-                </Collapse>
-              ) : null}
-            </React.Fragment>
-          );
-        })}
+                            </ListItem>
+                          ) : null;
+                        })}
+                    </SubMenu>
+                  </Collapse>
+                ) : null}
+              </React.Fragment>
+            );
+          })}
         <StyledDivider sidebar={+sidebar} />
         {footerMenus.map((item, index) => {
           const { href, key, children, icon } = item;
