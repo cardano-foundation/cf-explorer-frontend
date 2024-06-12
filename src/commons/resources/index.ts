@@ -148,6 +148,7 @@ import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
+import GovernanceHome from "./icons/governanceHome.svg";
 //only component
 
 import SignOutComponent from "./icons/sign-out.svg?react";
@@ -462,6 +463,7 @@ export {
   CreateDrepIcon,
   ActiveVoteIcon,
   LiveStakeDrepIcon,
+  GovernanceHome,
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
   governanceVotesIcon,

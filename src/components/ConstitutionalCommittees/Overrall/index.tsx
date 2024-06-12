@@ -156,7 +156,7 @@ const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
                     fill={!item.strokeColor ? theme.palette.secondary.main : ""}
                     stroke={item.strokeColor ? theme.palette.secondary.main : ""}
                     icon={item.icon}
-                    height={item?.sizeIcon || 22}
+                    height={item?.sizeIcon || 24}
                   />
                 )
               ) : null}

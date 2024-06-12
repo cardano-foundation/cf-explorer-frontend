@@ -5,6 +5,7 @@ import {
   BlockChainMenuIcon,
   BrowseIcon,
   DashboardIcon,
+  GovernanceHome,
   OperationalIcon,
   ProtocolIcon,
   StakingLifecycleIcon,
@@ -112,7 +113,7 @@ export const menus: Menu[] = [
   {
     title: "Governance",
     key: "glossary.governance",
-    icon: OperationalIcon,
+    icon: GovernanceHome,
     children: [
       {
         title: "Constitutional Committee",
