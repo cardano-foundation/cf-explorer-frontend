@@ -8,6 +8,7 @@ import { log } from "../utils/logger";
 
 export function epochDetailPage(page: Page) {
   const epochId = page.locator('div[data-test-id="CircularProgressbarWithChildren__children"] > a');
+  const deatailPageTitle = page.getByTestId("detail.page.title");
   const epochStartTime = page.locator(
     "//div[div[div[@data-testid='epoch.overview.startTimeTitle']]]/following-sibling::div"
   );
@@ -41,6 +42,13 @@ export function epochDetailPage(page: Page) {
   const goToBlockDetailFromEpochByBlockId = async () => {
     await firstBlockIdInEpochDetail.click();
   };
+
+  const checkEpochDetail = async ({ epochNo }: { epochNo: string | null }) => {
+    const url = await page.url();
+    expect(url, "Check url pool detail").toContain(`/epoch/${epochNo}`);
+    expect(deatailPageTitle, "Epoch detail title").toHaveText("Epoch Details");
+  };
+
   const assertEpochDataIsDisplayed = async (lastEpochData: Promise<BlockfrostEpochInformationDto>) => {
     await expect(epochId, "The epoch id is not the expected for the current epoch details").toHaveText(
       (await lastEpochData).epoch.toString()
@@ -153,9 +161,10 @@ export function epochDetailPage(page: Page) {
   return {
     assertEpochDataIsDisplayed,
     assertLastFinishedEpochDataIsDisplayed,
-    goToBlockDetailFromEpoch,
     checkEpochDetailPage,
+    goToBlockDetailFromEpoch,
     checkBlockDetailPage,
-    goToBlockDetailFromEpochByBlockId
+    goToBlockDetailFromEpochByBlockId,
+    checkEpochDetail
   };
 }

@@ -196,7 +196,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </BackButton>
           )}
           <HeaderContainer>
-            <HeaderTitle data-testId="detail-header-title">{title}</HeaderTitle>
+            <HeaderTitle data-testid="detail.page.title">{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
             {epoch?.status && (
