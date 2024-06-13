@@ -2,6 +2,7 @@ import { Box, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
 
+import { details } from "src/commons/routers";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 
@@ -30,7 +31,7 @@ const Members = () => {
         <Box
           data-testid={`cc.member.publicKey.value#${idx}`}
           component={Link}
-          to={"#"}
+          to={details.constitutionalCommitteeDetail(r.publicKey, "governanceVotes")}
           color={`${theme.palette.primary.main} !important`}
         >
           {r.publicKey}
