@@ -139,7 +139,18 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
   return (
     <StyledContainer>
-      <Card title={showTitle ? t("head.page.transactions") : ""} underline={underline}>
+      <Card
+        title={
+          showTitle ? (
+            <Box display={"inline"} data-testid="header.table.transactions">
+              {t("head.page.transactions")}
+            </Box>
+          ) : (
+            ""
+          )
+        }
+        underline={underline}
+      >
         <Table
           {...fetchData}
           columns={columns}
