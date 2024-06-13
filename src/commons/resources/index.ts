@@ -248,6 +248,11 @@ import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
 import DrepIdIcon from "./icons/DrepId.svg?react";
 import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+import CCDetailRegistrared from "./icons/ccDetailRegistrared.svg?react";
+import CCDetailVotingParticipation from "./icons/CCVotingParticipation.svg?react";
+import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
+import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
+import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -401,6 +406,11 @@ export {
   TotalOutput,
   FileGuard,
   HighestIconComponent,
+  CCDetailRegistrared,
+  CCDetailVotingParticipation,
+  CCDetailLifetimeVotes,
+  CCStatusHistory,
+  CCDetailRegistrationInformation,
   LowestIconComponent,
   UserIconComponent,
   DropIconComponent,

@@ -118,7 +118,7 @@ export const menus: Menu[] = [
       {
         title: "Constitutional Committee",
         key: "glossary.constitutionalCommittee",
-        href: details.CONSTITUIONAL_COMMITTEES("listMembers")
+        href: details.constitutionalCommittees("listMembers")
       }
     ]
   }

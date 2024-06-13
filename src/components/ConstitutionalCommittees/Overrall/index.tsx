@@ -19,6 +19,7 @@ import { CardItem } from "./styles";
 
 const ConstitutionalCommitteeOVerrall = () => {
   const theme = useTheme();
+
   const listOverview = [
     {
       icon: CCCurentState,
@@ -85,6 +86,7 @@ const ConstitutionalCommitteeOVerrall = () => {
     },
     {}
   ];
+
   return (
     <Box mb={2}>
       <Card data-testid="committee-header" title={t("glossary.constitutionalCommittee")}>
@@ -128,7 +130,7 @@ interface OverralCardIF {
   }[];
 }
 
-const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
+export const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
   const theme = useTheme();
 
   return (
