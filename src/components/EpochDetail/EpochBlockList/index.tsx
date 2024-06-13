@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
+import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -47,10 +48,10 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: <div data-testid="epochList.blockTitle">{t("glossary.block")}</div>,
       key: "block",
       minWidth: "100px",
-      render: (r) => {
+      render: (r, index) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
         return (
-          <StyledLink data-testid="epochList.blockValue" to={details.block(r.blockNo || r.hash)}>
+          <StyledLink data-testid={`epochList.blockValue#${index}`} to={details.block(r.blockNo || r.hash)}>
             <CustomTooltip title={tooltip}>
               <span>{blockName}</span>
             </CustomTooltip>
@@ -62,8 +63,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: <div data-testid="epochList.blockIdTitle">{t("glossary.blockID")}</div>,
       key: "blockId",
       minWidth: "150px",
-      render: (r) => (
-        <CustomTooltip data-testid="epochList.blockIdValue" title={r.hash}>
+      render: (r, index) => (
+        <CustomTooltip data-testid={`epochList.blockIdValue#${index}`} title={r.hash}>
           <StyledLink to={details.block(r.blockNo || r.hash)}>{getShortHash(`${r.hash}`)}</StyledLink>
         </CustomTooltip>
       )
@@ -72,8 +73,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: <div data-testid="epochList.epochTitle">{t("glossary.epoch")}</div>,
       key: "epochNo",
       minWidth: "50px",
-      render: (r) => (
-        <StyledLink data-testid="epochList.epochValue" to={details.epoch(r.epochNo)}>
+      render: (r, index) => (
+        <StyledLink data-testid={`epochList.epochValue#${index}`} to={details.epoch(r.epochNo)}>
           {r.epochNo}
         </StyledLink>
       )
@@ -82,35 +83,35 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: <div data-testid="epochList.slotTitle">{t("glossary.slot")}</div>,
       key: "epochSlotNo",
       minWidth: "50px",
-      render: (r) => <div data-testid="epochList.slotValue">{r.epochSlotNo}</div>
+      render: (r, index) => <div data-testid={`epochList.slotValue#${index}`}>{r.epochSlotNo}</div>
     },
     {
       title: <div data-testid="epochList.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
       key: "slotNo",
       minWidth: "100px",
-      render: (r) => <div data-testid="epochList.slotNoValue">{r.slotNo}</div>
+      render: (r, index) => <div data-testid={`epochList.slotNoValue#${index}`}>{r.slotNo}</div>
     },
     {
       title: <div data-testid="epochList.createdAtTitle">{t("createdAt")}</div>,
       key: "time",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, index) => (
         <DatetimeTypeTooltip>
-          <PriceWrapper data-testid="epochList.createdAtValue">{formatDateTimeLocal(r.time)}</PriceWrapper>
+          <PriceWrapper data-testid={`epochList.createdAtValue#${index}`}>{formatDateTimeLocal(r.time)}</PriceWrapper>
         </DatetimeTypeTooltip>
       )
     },
     {
-      title: <div data-testid="epochList.blkCountTitle">{t("drawer.transactions")}</div>,
+      title: <div data-testid="epochList.txCountTitle">{t("drawer.transactions")}</div>,
       key: "blkCount",
       minWidth: "100px",
-      render: (r) => <BlueText data-testid="epochList.blkCountTitle">{r.txCount || 0}</BlueText>
+      render: (r, index) => <BlueText data-testid={`epochList.txCountValue#${index}`}>{r.txCount || 0}</BlueText>
     },
     {
       title: <div data-testid="epochList.feesTitle">{t("common.fees")}</div>,
       key: "fees",
-      render: (r) => (
-        <PriceWrapper data-testid="epochList.feesValue">
+      render: (r, index) => (
+        <PriceWrapper data-testid={`epochList.feesValue#${index}`}>
           {formatADAFull(r.totalFees)}
           <ADAicon />
         </PriceWrapper>
@@ -120,9 +121,9 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       title: <div data-testid="epochList.outSumTitle">{t("glossary.output")}</div>,
       key: "outSum",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, index) => (
         <StyledOutput>
-          <BlueText data-testid="epochList.outSumValue">{formatADAFull(r.totalOutput)}</BlueText>
+          <BlueText data-testid={`epochList.outSumValue#${index}`}>{formatADAFull(r.totalOutput)}</BlueText>
           <ADAicon />
         </StyledOutput>
       )
@@ -131,7 +132,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
+      <Card title={<Box data-testid="epoch.blockList.blocksTitle">{t("head.page.blocks")}</Box>} underline>
         <Actions>
           <TimeDuration>
             <FormNowMessage time={fetchData.lastUpdated} />

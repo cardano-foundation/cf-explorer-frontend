@@ -17,7 +17,7 @@ let transactionHash: string | null;
 let address: string | null;
 let poolId: string | null;
 
-Given(/^the user is in the general dashboard page in explorer portal$/, async ({ page }) => {
+Given(/^the user is in the general dashboard page in explorer portal block test$/, async ({ page }) => {
   await blocksDashboard(page).goToDashboard();
 });
 When(/^the user selects the Blocks option inside the Blockchain drop down menu$/, async ({ page }) => {
@@ -99,7 +99,7 @@ When(/^the user selects the epoch number of one of the blocks record in the tabl
   await blocksTableValueEpoch.click();
 });
 Then(/^the user should see the epoch detail page of the selected epoch number in the table$/, async ({ page }) => {
-  await epochDetailPage(page).checkEpochDetailPage({ epochNo });
+  await epochDetailPage(page).checkEpochDetail({ epochNo });
 });
 
 Given(/^the user is in the blocks page in explorer portal for go to detail widget$/, async ({ page }) => {

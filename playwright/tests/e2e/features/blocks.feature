@@ -1,7 +1,7 @@
 Feature: Check Block List Cardano Explorer
 
   Scenario: Blocks section content
-    Given the user is in the general dashboard page in explorer portal
+    Given the user is in the general dashboard page in explorer portal block test
     When the user selects the Blocks option inside the Blockchain drop down menu
     Then the user should see the blocks info containing the Search bar and Blocks table
 
