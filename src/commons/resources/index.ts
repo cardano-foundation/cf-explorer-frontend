@@ -246,6 +246,7 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import ParticipationIcon from "./icons/participation-rate.svg?react";
 import DrepIdIcon from "./icons/DrepId.svg?react";
 import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
 import CCDetailRegistrared from "./icons/ccDetailRegistrared.svg?react";
@@ -509,7 +510,8 @@ export {
   PoolParticipationIcon,
   PoolBlocksIcon,
   GovernanceIcon,
-  PoolVotingIcon
+  PoolVotingIcon,
+  ParticipationIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

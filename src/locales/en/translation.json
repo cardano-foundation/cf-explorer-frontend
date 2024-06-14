@@ -309,6 +309,7 @@
   "dreps.anchorLink": "Anchor Link",
   "dreps.anchorHash": "Anchor Hash",
   "dreps.votingPower": "Voting Power",
+  "dreps.participationRate": "Participation Rate",
   "dreps.registrationDate": "Registration Date",
   "dreps.lastUpdated": "Last Updated Date",
   "common.searchPools": "Search Pools",
