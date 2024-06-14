@@ -118,8 +118,7 @@ export const CIPPropertyTable = styled(Table)(({ theme }) => ({
   "& .table-wrapper": {
     padding: 0,
     border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
-    borderBottom: "0px",
-    boxShadow: theme.shadow.card
+    boxShadow: "0px 2px 2px 0px rgba(67, 70, 86, 0.20)"
   },
   "& td, th": {
     borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,

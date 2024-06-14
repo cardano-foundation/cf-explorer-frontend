@@ -200,13 +200,7 @@ const DrepDetail = () => {
       icon: LifetimeVoteDrepIcon,
       sizeIcon: 26,
       title: (
-        <Box
-          display={"flex"}
-          alignItems={"center"}
-          gap={2}
-          justifyContent={"space-between"}
-          sx={{ [theme.breakpoints.down("lg")]: { flexWrap: "wrap" } }}
-        >
+        <Box display={"flex"} alignItems={"center"} gap={2} justifyContent={"space-between"} flexWrap={"wrap"}>
           <TitleCard display={"flex"} alignItems="center">
             {t("drep.lifetimeVotes")}
           </TitleCard>

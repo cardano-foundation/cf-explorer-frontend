@@ -329,7 +329,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               item
               xs={6}
               md={6}
-              height={height}
+              height={isGalaxyFoldSmall ? 440 : isMobile ? 400 : height}
               pl={"25px !important"}
               //Todo: <tung.nguyen6> in sprint 9
               top={location.pathname.split("/").includes("pool") ? 2 : 1}
@@ -417,7 +417,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoTitle>
               <InfoValue data-testid="governance.votesValue" width={"100%"}>
-                <Box pr="5px">
+                <Box pr="5px" sx={{ height: "900px" }}>
                   {loadingChart ? (
                     <Box
                       component={Skeleton}
@@ -544,7 +544,7 @@ const VoteBar = ({
   tooltipTitle: React.ReactNode;
 }) => {
   const theme = useTheme();
-  const { isGalaxyFoldSmall } = useScreen();
+  const { isGalaxyFoldSmall, isMobile } = useScreen();
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography data-testid="governance.voteBar.percent" fontSize="10px" fontWeight={400}>
@@ -570,7 +570,7 @@ const VoteBar = ({
           height={`${
             +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
           }px`}
-          width={isGalaxyFoldSmall ? "24px" : "36px"}
+          width={isMobile ? "60px" : "36px"}
         />
       </LightTooltip>
       <Typography
