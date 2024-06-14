@@ -435,7 +435,7 @@ const HeaderSearch: React.FC<Props> = ({ home, callback, setShowErrorMobile, his
           .then((data: { nativeScript: boolean; scriptHash: string; smartContract: boolean }) => {
             callback?.();
             if (data.nativeScript) {
-              history.push(details.nativeScriptDetail(data.scriptHash || "", "script"));
+              history.push(details.nativeScriptDetail(data.scriptHash || ""));
               handleSetSearchValueDefault();
             }
             if (data.smartContract) {
