@@ -23,6 +23,8 @@ export const routers = {
   TOKEN_LIST: "/tokens",
   TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
   STAKE_ADDRESS_REGISTRATION: "/stake-address-registrations",
+  CONSTITUIONAL_COMMITTEES: "/constitutional-committees/:tabActive?",
+  CONSTITUIONAL_COMMITTEE_DETAIL: "/constitutional-committee/:CCid/:tabActive?",
   STAKE_ADDRESS_DEREGISTRATION: "/stake-address-de-registrations",
   STAKE_ADDRESS_DELEGATIONS: "/stake-address-delegations",
   INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
@@ -99,7 +101,10 @@ export const details = {
   smartcontractDetail: (id: string) => routers.SMARTCONTRACT_DETAIL.replace(":id", id),
   nativeScript: (address?: string, tab = "transaction") =>
     routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab),
-  drep: (drepId: string) => routers.DREP_DETAILS.replace(":drepId", drepId ?? "")
+  drep: (drepId: string) => routers.DREP_DETAILS.replace(":drepId", drepId ?? ""),
+  constitutionalCommittees: (tab: string) => routers.CONSTITUIONAL_COMMITTEES.replace(":tabActive", tab ?? ""),
+  constitutionalCommitteeDetail: (id: string, tab?: string) =>
+    routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? "")
 };
 
 export const listRouters = [

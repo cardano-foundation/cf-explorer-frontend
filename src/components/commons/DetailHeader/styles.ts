@@ -170,6 +170,7 @@ export const SlotLeaderTitle = styled("small")`
   color: ${({ theme }) => theme.palette.secondary.light};
   align-self: center;
   margin-right: 8px;
+  padding-top: 7px;
   white-space: nowrap;
 `;
 

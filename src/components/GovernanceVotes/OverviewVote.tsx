@@ -49,7 +49,7 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
   return (
     <DataContainer sx={{ boxShadow: "unset" }}>
       <StyledGrid container>
-        <Item item xs={6} md={3} top={1} pr={"5px !important"}>
+        <Item item xs={6} md={6} lg={3} top={1} pr={"5px !important"}>
           <Box display="flex" justifyContent="space-between" pr={"5px"}>
             <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
             <BlackWarningIcon />
@@ -95,7 +95,7 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             </Box>
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} top={1} pr={"5px !important"}>
+        <Item item xs={6} md={6} lg={3} top={1} pr={"5px !important"}>
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
             <BlackWarningIcon />
@@ -107,7 +107,18 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text}
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} top={1} sx={{ position: "relative", pr: "5px !important" }}>
+        <Item
+          item
+          xs={6}
+          md={6}
+          lg={3}
+          top={1}
+          sx={{
+            position: "relative",
+            pr: "5px !important",
+            [theme.breakpoints.down("lg")]: { borderLeft: "none  !important", pl: "0px ", pt: "20px" }
+          }}
+        >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
             <BlackWarningIcon />
@@ -150,7 +161,19 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             }
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} top={1} sx={{ position: "relative", pr: "5px !important" }} width={"100%"}>
+        <Item
+          item
+          xs={6}
+          md={6}
+          lg={3}
+          top={1}
+          sx={{
+            position: "relative",
+            pr: "5px !important",
+            [theme.breakpoints.down("lg")]: { pt: "20px" }
+          }}
+          width={"100%"}
+        >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
             <BlackWarningIcon />
@@ -165,7 +188,19 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             </Box>
           </InfoTitle>
         </Item>
-        <Item item xs={6} md={3} pr={"5px !important"}>
+        <Item
+          item
+          xs={6}
+          md={6}
+          lg={3}
+          pr={"5px !important"}
+          sx={{
+            [theme.breakpoints.down("lg")]: {
+              borderBottom: `1px solid ${theme.palette.primary[200]}  !important`,
+              paddingBottom: "25px"
+            }
+          }}
+        >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon
               fill={theme.palette.secondary.light}
@@ -183,7 +218,19 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} pr={"5px !important"}>
+        <Item
+          item
+          xs={6}
+          md={6}
+          lg={3}
+          pr={"5px !important"}
+          sx={{
+            [theme.breakpoints.down("lg")]: {
+              borderBottom: `1px solid ${theme.palette.primary[200]}  !important`,
+              paddingBottom: "25px"
+            }
+          }}
+        >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
             <BlackWarningIcon />
@@ -195,7 +242,14 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             <DatetimeTypeTooltip>{formatDateTimeLocal(data?.submissionDate || "")}</DatetimeTypeTooltip>
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} pr={"5px !important"}>
+        <Item
+          item
+          xs={6}
+          md={6}
+          lg={3}
+          pr={"5px !important"}
+          sx={{ [theme.breakpoints.down("lg")]: { borderLeft: "none  !important", pl: "0px" } }}
+        >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
             <BlackWarningIcon />
@@ -207,7 +261,7 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
             <DatetimeTypeTooltip>{formatDateTimeLocal(data?.expiryDate || "")}</DatetimeTypeTooltip>
           </InfoValue>
         </Item>
-        <Item item xs={6} md={3} pr={"5px !important"}>
+        <Item item xs={6} md={6} lg={3} pr={"5px !important"} sx={{ [theme.breakpoints.down("lg")]: { pl: "25px" } }}>
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
             <BlackWarningIcon />

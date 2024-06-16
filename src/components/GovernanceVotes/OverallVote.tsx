@@ -34,7 +34,6 @@ import { formatADA, formatADAFull, formatDateTimeLocal, formatPercent, getShortH
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE } from "src/commons/utils/constants";
 
 import {
   DataContainer,
@@ -329,7 +328,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
               item
               xs={6}
               md={6}
-              height={height}
+              height={isGalaxyFoldSmall ? 440 : isMobile ? 400 : height}
               pl={"25px !important"}
               //Todo: <tung.nguyen6> in sprint 9
               top={location.pathname.split("/").includes("pool") ? 2 : 1}
@@ -417,7 +416,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoTitle>
               <InfoValue data-testid="governance.votesValue" width={"100%"}>
-                <Box pr="5px">
+                <Box pr="5px" sx={{ height: "900px" }}>
                   {loadingChart ? (
                     <Box
                       component={Skeleton}
@@ -544,7 +543,7 @@ const VoteBar = ({
   tooltipTitle: React.ReactNode;
 }) => {
   const theme = useTheme();
-  const { isGalaxyFoldSmall } = useScreen();
+  const { isGalaxyFoldSmall, isMobile } = useScreen();
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
       <Typography data-testid="governance.voteBar.percent" fontSize="10px" fontWeight={400}>
@@ -570,7 +569,7 @@ const VoteBar = ({
           height={`${
             +(percentage.toString()?.split("%")[0] || 0) === 0 ? 0.5 : +percentage.toString().split("%")[0] + 1
           }px`}
-          width={isGalaxyFoldSmall ? "24px" : "36px"}
+          width={isMobile ? "60px" : "36px"}
         />
       </LightTooltip>
       <Typography
@@ -625,9 +624,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
-                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                    ? `${formatADAFull((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)} ADA`
-                    : t("common.N/A")
+                    : `${formatADAFull((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)} ADA`
                   : t("common.N/A")
               }
               slotProps={{
@@ -648,10 +645,8 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? (data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0
-                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                        ? formatADA((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)
-                        : t("common.N/A")
-                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                        : formatADA((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0) || 0)
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
                   : t("common.N/A")}
               </Box>
             </CustomTooltip>
@@ -684,11 +679,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null && data?.threshold !== null
                   ? selectedVote == "CC"
                     ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                    ? `${formatADAFull(
-                        Math.ceil(((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0))
-                      )} ADA`
-                    : t("common.N/A")
+                    : `${formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))} ADA`
                   : t("common.N/A")
               }
               slotProps={{
@@ -709,14 +700,8 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                        ? formatADA(
-                            Math.ceil(
-                              ((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0)
-                            )
-                          )
-                        : t("common.N/A")
-                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                        : formatADA(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
                   : t("common.N/A")}{" "}
                 ({data?.threshold ? formatPercent(data?.threshold) : t("common.N/A")})
               </Box>
@@ -749,9 +734,7 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                 data?.totalVote !== null
                   ? selectedVote == "CC"
                     ? (data?.totalVote || 0) - totalVote
-                    : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                    ? `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
-                    : t("common.N/A")
+                    : `${formatADAFull((data?.totalVote || 0) - totalVote)} ADA`
                   : t("common.N/A")
               }
               slotProps={{
@@ -772,10 +755,8 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                   ? `${
                       selectedVote == "CC"
                         ? (data?.totalVote || 0) - totalVote
-                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                        ? formatADA((data?.totalVote || 0) - totalVote)
-                        : t("common.N/A")
-                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                        : formatADA((data?.totalVote || 0) - totalVote)
+                    } ${selectedVote == "CC" ? "" : "ADA"}`
                   : t("common.N/A")}
               </Box>
             </CustomTooltip>
@@ -816,37 +797,23 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
         >
           <VoteBar
             percentage={
-              data?.totalVote && data?.totalVote > 0
-                ? FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                  ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote)
-                  : 0
-                : 0
+              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote) : 0
             }
             color={theme.palette.success[700]}
             icon={<VotesYesIcon />}
             label={t("common.yes")}
-            value={
-              selectedVote == "CC"
-                ? data?.numberOfYesVote
-                : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                ? formatADA(data?.numberOfYesVote)
-                : t("common.N/A")
-            }
+            value={selectedVote == "CC" ? data?.numberOfYesVote : formatADA(data?.numberOfYesVote)}
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 <Box>
                   Current:{" "}
                   {data?.numberOfYesVote !== null
-                    ? `${
-                        selectedVote == "CC"
-                          ? data?.numberOfYesVote
-                          : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                          ? formatADAFull(data?.numberOfYesVote)
-                          : t("common.N/A")
-                      } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                    ? `${selectedVote == "CC" ? data?.numberOfYesVote : formatADAFull(data?.numberOfYesVote)} ${
+                        selectedVote == "CC" ? "" : "ADA"
+                      }`
                     : t("common.N/A")}{" "}
                   (
-                  {data?.totalVote && data?.totalVote > 0 && FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                  {data?.totalVote && data?.totalVote > 0
                     ? formatPercent((data?.numberOfYesVote || 0) / data?.totalVote)
                     : t("common.N/A")}
                   )
@@ -857,14 +824,8 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
                     ? `${
                         selectedVote == "CC"
                           ? Math.ceil((data?.totalVote || 0) * (data?.threshold || 0))
-                          : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                          ? formatADAFull(
-                              Math.ceil(
-                                ((data?.totalVote || 0) - (data?.numberOfAbstainVotes || 0)) * (data?.threshold || 0)
-                              )
-                            )
-                          : t("common.N/A")
-                      } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                          : formatADAFull(Math.ceil((data?.totalVote || 0) * (data?.threshold || 0)))
+                      } ${selectedVote == "CC" ? "" : "ADA"}`
                     : t("common.N/A")}{" "}
                   ({data?.threshold ? formatPercent(data?.threshold) : t("common.N/A")})
                 </Box>
@@ -873,36 +834,22 @@ const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVo
           />
           <VoteBar
             percentage={
-              data?.totalVote && data?.totalVote > 0
-                ? FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                  ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote)
-                  : 0
-                : 0
+              data?.totalVote && data?.totalVote > 0 ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote) : 0
             }
             color={theme.palette.error[700]}
             icon={<VotesNoIcon />}
             label={t("common.no")}
-            value={
-              selectedVote == "CC"
-                ? data?.numberOfNoVotes
-                : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                ? formatADA(data?.numberOfNoVotes)
-                : t("common.N/A")
-            }
+            value={selectedVote == "CC" ? data?.numberOfNoVotes : formatADA(data?.numberOfNoVotes)}
             tooltipTitle={
               <Box textAlign={"left"} pl={"4px"}>
                 Current:{" "}
                 {data?.numberOfNoVotes !== null
-                  ? `${
-                      selectedVote == "CC"
-                        ? data?.numberOfNoVotes
-                        : FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
-                        ? formatADAFull(data?.numberOfNoVotes)
-                        : t("common.N/A")
-                    } ${selectedVote == "CC" || !FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "" : "ADA"}`
+                  ? `${selectedVote == "CC" ? data?.numberOfNoVotes : formatADAFull(data?.numberOfNoVotes)} ${
+                      selectedVote == "CC" ? "" : "ADA"
+                    }`
                   : t("common.N/A")}{" "}
                 (
-                {data?.totalVote && data?.totalVote > 0 && FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE
+                {data?.totalVote && data?.totalVote > 0
                   ? formatPercent((data?.numberOfNoVotes || 0) / data?.totalVote)
                   : t("common.N/A")}
                 )
@@ -950,11 +897,7 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
-          ? r.starting
-          : `${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? formatADAFull(r.starting) : t("common.N/A")} ${
-              FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""
-            }`
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.starting : `${formatADAFull(r.starting)} ADA`
     },
     {
       title: t("drep.abstainAmount"),
@@ -971,11 +914,7 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
-          ? r.current
-          : `${FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? formatADAFull(r.current) : t("common.N/A")} ${
-              FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE ? "ADA" : ""
-            }`
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : `${formatADAFull(r.current)} ADA}`
     }
   ];
   return (
