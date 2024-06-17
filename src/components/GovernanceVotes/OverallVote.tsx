@@ -474,7 +474,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                   [theme.breakpoints.down("md")]: {
                     pt: "10px",
                     pb: "20px",
-                    width: "50.1%",
+                    width: "50%",
                     borderRight: `1px solid ${
                       theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
                     }  !important`
