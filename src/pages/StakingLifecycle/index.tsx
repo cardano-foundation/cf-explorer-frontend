@@ -103,6 +103,7 @@ const StakingLifecycle: React.FC = () => {
   );
 
   const totalResult = validTab === "pool-reports" ? fetchDataPool.total : fetchDataStake.total;
+  const errorFetchData = fetchDataPool.error || fetchDataStake.error;
 
   if (!validTabs.includes(validTab)) return <NoRecord />;
 
@@ -118,19 +119,21 @@ const StakingLifecycle: React.FC = () => {
       <StakingLifeCycleSearch />
       <TitleHead>
         <TextHeadline>{t("common.yourSavedReports")}</TextHeadline>
-        <FilterHead>
-          <WrapFilterDescription>
-            {t("common.showing")} {totalResult} {totalResult <= 1 ? t("common.result") : t("common.results")}
-          </WrapFilterDescription>
-          <CustomFilter
-            sortKey="id"
-            filterValue={params}
-            onSubmit={setParams}
-            searchLabel={t("report.searchLabel")}
-            page={page}
-            size={size}
-          />
-        </FilterHead>
+        {!errorFetchData && (
+          <FilterHead>
+            <WrapFilterDescription>
+              {t("common.showing")} {totalResult} {totalResult <= 1 ? t("common.result") : t("common.results")}
+            </WrapFilterDescription>
+            <CustomFilter
+              sortKey="id"
+              filterValue={params}
+              onSubmit={setParams}
+              searchLabel={t("report.searchLabel")}
+              page={page}
+              size={size}
+            />
+          </FilterHead>
+        )}
       </TitleHead>
       <TabContext value={validTab}>
         <TabHeader>

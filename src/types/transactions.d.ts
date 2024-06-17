@@ -125,6 +125,15 @@ interface IContractItemTx {
   redeemerBytes: string;
   redeemerMem: number;
   redeemerSteps: number;
+  governanceAction?: string;
+  proposalLink?: string;
+  governanceActionMetadata?: string;
+  voterType?: string;
+  vote?: string;
+  dRepId?: string;
+  submissionDate?: string;
+  expireDate?: string;
+  proposalPolicy?: string;
   scriptBytes: string;
   scriptHash: string;
   stakeAddress?: string;

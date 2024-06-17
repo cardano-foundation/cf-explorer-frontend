@@ -56,6 +56,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
@@ -80,7 +81,7 @@ const DrepDetail = () => {
 
   const [typeVote, setTypeVote] = useState("Default");
   const [openModal, setOpenModal] = useState(false);
-  const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+  const { data, loading, error } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
@@ -119,6 +120,7 @@ const DrepDetail = () => {
                 sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
                 isNoLimitPixel={true}
                 isTooltip
+                whiteSpace="normal"
               />
             </Box>
           )}
@@ -154,7 +156,7 @@ const DrepDetail = () => {
       ),
       value: (
         <ValueCard>
-          {data?.liveStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
+          {data?.activeVoteStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
         </ValueCard>
       )
     },
@@ -271,7 +273,7 @@ const DrepDetail = () => {
       )
     }
   ];
-
+  if (error) return <NoRecord />;
   if (!FF_GLOBAL_IS_CONWAY_ERA) {
     return <NotFound />;
   }
@@ -376,12 +378,14 @@ const DrepAccordion = () => {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     label: React.ReactNode;
     key: TabDrepDetail;
+    errorFetchData: boolean;
     component: React.ReactNode;
   }[] = [
     {
       icon: governanceVotesIcon,
       label: t("drep.governanceVotes"),
       key: "governanceVotes",
+      errorFetchData: Boolean(null),
       component: (
         <div ref={tableRef}>
           <DelegationGovernanceVotes hash={drepId} type={VOTE_TYPE.DREP_KEY_HASH} />
@@ -392,6 +396,7 @@ const DrepAccordion = () => {
       icon: StakingDelegators,
       label: t("stakingDelegators"),
       key: "delegators",
+      errorFetchData: Boolean(fetchDataDelegator.error),
       component: (
         <div ref={tableRef}>
           <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
@@ -402,6 +407,7 @@ const DrepAccordion = () => {
       icon: TimelineIconComponent,
       label: <Box data-testid="certificatesHistory">{t("drep.certificatesHistory")}</Box>,
       key: "certificatesHistory",
+      errorFetchData: Boolean(fetchDataCertificatesHistory.error),
       component: (
         <div ref={tableRef}>
           <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
@@ -442,7 +448,7 @@ const DrepAccordion = () => {
 
   return (
     <Box ref={tableRef} mt={"30px"}>
-      {tabs.map(({ key, icon: Icon, label, component }, index) => (
+      {tabs.map(({ key, icon: Icon, label, component, errorFetchData }, index) => (
         <StyledAccordion
           key={key}
           expanded={tab === key}
@@ -471,9 +477,15 @@ const DrepAccordion = () => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>
-            {tab != "governanceVotes" && (
+            {tab != "governanceVotes" && !errorFetchData && (
               <TimeDuration>
-                <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
+                <FormNowMessage
+                  time={
+                    tab === "certificatesHistory"
+                      ? fetchDataCertificatesHistory.lastUpdated
+                      : fetchDataDelegator.lastUpdated
+                  }
+                />
               </TimeDuration>
             )}
             {component}

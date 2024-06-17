@@ -27,6 +27,7 @@ const TokenTransaction: React.FC = () => {
   const pageInfo = getPageInfo(search);
   const fetchData = useFetchList<Transactions>(`${API.ADDRESS.DETAIL}/${params.address}/txs`, pageInfo);
   const [txHashSelected, setTxHashSelected] = useState<string>("");
+  const { error } = fetchData;
 
   const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: Transactions) => {
     setTxHashSelected(r.hash);
@@ -149,9 +150,11 @@ const TokenTransaction: React.FC = () => {
   ];
   return (
     <>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}

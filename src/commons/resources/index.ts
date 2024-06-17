@@ -49,6 +49,8 @@ import EmptyIcon from "./icons/noData.svg";
 import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
+import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -184,6 +186,7 @@ import DropIconComponent from "./icons/drop.svg?react";
 import DelegatorIconComponent from "./icons/delegator.svg?react";
 import LightningIconComponent from "./icons/lightning.svg?react";
 import LinkOffComponent from "./icons/link-off.svg?react";
+import LinkIcon from "./icons/LinkIcon.svg?react";
 import User2Component from "./icons/user2.svg?react";
 import WhiteSearchIconComponent from "./icons/white-search-icon.svg?react";
 import CopyOutlineIconComponent from "./icons/copy-outline.svg?react";
@@ -219,6 +222,7 @@ import VotesIcon from "./icons/votes.svg?react";
 import VotesNoneIcon from "./icons/voteNone.svg?react";
 import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
 import GovernanceIdIcon from "./icons/governanceId.svg?react";
+import GovernanceIcon from "./icons/governance.svg?react";
 import ActionTypeIcon from "./icons/action-type.svg?react";
 import VoteIcon from "./icons/vote.svg?react";
 import CurrentStatusIcon from "./icons/current-status.svg?react";
@@ -403,10 +407,13 @@ export {
   sunIcon,
   moonIcon,
   LinkOffComponent,
+  LinkIcon,
   SignOutComponent,
   LightningIconComponent,
   MenuIconComponent,
   EmptyDarkIcon,
+  FetchDataErrLight,
+  FetchDataErrDark,
   WhiteSearchIcon,
   WhiteSearchIconComponent,
   WalletRoundedIcon,
@@ -488,6 +495,7 @@ export {
   PoolSaturationIcon,
   PoolParticipationIcon,
   PoolBlocksIcon,
+  GovernanceIcon,
   PoolVotingIcon
 };
 

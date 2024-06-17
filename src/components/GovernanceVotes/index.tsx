@@ -37,6 +37,7 @@ import {
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
+  LinkIcon,
   RepeatVotesIcon,
   ResetIcon,
   VoteIcon
@@ -71,6 +72,9 @@ import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
 import OverallVote from "./OverallVote";
+import FetchDataErr from "../commons/FetchDataErr";
+import { ViewGovernanceProposingButton } from "../commons/ViewBlocks/styles";
+import { DataCardBox } from "../Contracts/common/styles";
 
 const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ hash, type }) => {
   const { search } = useLocation();
@@ -94,7 +98,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
-  const { data, total, lastUpdated, loading, initialized } = useFetchList<GovernanceVote>(
+  const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
     `${API.POOL_CERTIFICATE.POOL}/${hash}`,
     omitBy(params, isUndefined),
     false
@@ -127,7 +131,10 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && initialized && <NoRecord m="170px 0px" padding={`0 !important`} />}
+        {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+          <NoRecord m="170px 0px" padding={`0 !important`} />
+        )}
+        {error && statusError === 500 && <FetchDataErr m="170px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -159,12 +166,14 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
 
   return (
     <>
-      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
-      </Box>
+      {!error && (
+        <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterGovernanceVotes setQuery={setQuery} query={query} voterType={type} />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{
@@ -256,7 +265,7 @@ const GovernanceVotesDetail: React.FC<{
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
             <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
-              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.index}
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
             </HashName>
           </Box>
           <Box textAlign="center">
@@ -314,6 +323,7 @@ export interface VoteHistoryProps {
 
 export interface GovernanceVote {
   index: number;
+  indexType: number;
   status: string;
   txHash: string;
   type: string;
@@ -325,6 +335,7 @@ export interface GovernanceVote {
 export interface GovernanceVoteDetail {
   txHash: string;
   index: number;
+  indexType: number;
   govActionType: string;
   anchorHash: string;
   anchorUrl: string;
@@ -562,31 +573,44 @@ export const ActionMetadataModalConfirm: React.FC<{
 
   return (
     <CustomModal onClose={onClose} open={open} title={t("Disclaimer")} width={500} sx={{ maxHeight: "70vh" }}>
-      <Box display="block" pb="15px">
-        <Box data-testid="governance.actionMetadataModal.disclaimer" fontSize={16} color={theme.palette.secondary.main}>
-          {t("drep.disclaimer.des1")}
+      <DataCardBox style={{ marginBottom: "20px" }}>
+        <Box display="block">
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimer"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+          >
+            {t("drep.disclaimer.des1")}
+          </Box>
+          <Box
+            data-testid="governance.actionMetadataModal.disclaimerDes"
+            fontSize={16}
+            color={theme.palette.secondary.main}
+            my={2}
+          >
+            {t("drep.disclaimer.des2")}
+          </Box>
         </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.disclaimerDes"
-          fontSize={16}
-          color={theme.palette.secondary.main}
-          my={2}
-        >
-          {t("drep.disclaimer.des2")}
-        </Box>
-        <Box
-          data-testid="governance.actionMetadataModal.externalLink"
-          component={Link}
-          sx={{ textDecoration: "underline !important" }}
-          fontSize="16px"
-          color={`${theme.palette.primary.main} !important`}
-          fontWeight="700"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={anchorUrl || "/"}
-        >
-          Proceed to External Link
-        </Box>
+      </DataCardBox>
+      <Box
+        data-testid="governance.actionMetadataModal.externalLink"
+        component={Link}
+        fontSize="16px"
+        color={`${theme.palette.primary.main} !important`}
+        fontWeight="700"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={anchorUrl || "/"}
+      >
+        <ViewGovernanceProposingButton>
+          {t("common.proceedToExternalLink")}
+          <CustomIcon
+            style={{ cursor: "pointer", marginLeft: "5px" }}
+            icon={LinkIcon}
+            width={22}
+            fill={theme.palette.secondary[100]}
+          />
+        </ViewGovernanceProposingButton>
       </Box>
     </CustomModal>
   );
