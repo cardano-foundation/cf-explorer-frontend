@@ -914,7 +914,7 @@ export const AbstainInfo: React.FC<{ onClose?: () => void; open: boolean; data: 
       key: "expectedFormat",
       minWidth: 130,
       render: (r) =>
-        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : `${formatADAFull(r.current)} ADA}`
+        data?.voterType === "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH" ? r.current : `${formatADAFull(r.current)} ADA`
     }
   ];
   return (
