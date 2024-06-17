@@ -1,11 +1,12 @@
 import { Box, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { ProtectIcon, ProtectIconDark } from "src/commons/resources";
 import Card from "src/components/commons/Card";
+import { formatDateLocal } from "src/commons/utils/helper";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { HereButton, StyledCard, StyledImg } from "./styles";
 import DetailViewGroupProtocol from "../DetailViewGroupProtocol/DetailViewGroupProtocol";
@@ -95,7 +96,9 @@ function GroupProtocoParameters(props: GroupType) {
 
                   <StyledCard.ContainerValue>
                     <StyledCard.Value>{t("common.timestamp")}</StyledCard.Value>
-                    <StyledCard.Value>{el.time ? moment(el.time).format("DD/MM/YYYY") : t("N/A")}</StyledCard.Value>
+                    <StyledCard.Value>
+                      {el.time ? <DatetimeTypeTooltip>{formatDateLocal(el.time)}</DatetimeTypeTooltip> : t("N/A")}
+                    </StyledCard.Value>
                   </StyledCard.ContainerValue>
                 </StyledCard.Content>
               </StyledCard.Container>
