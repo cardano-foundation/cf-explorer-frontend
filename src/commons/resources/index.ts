@@ -49,6 +49,8 @@ import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import ProtectIcon from "./icons/protect-icon.svg";
+import ProtectIconDark from "./icons/protect-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -491,6 +493,8 @@ export {
   ActionTypeIcon,
   VoteIcon,
   historyIcon,
+  ProtectIcon,
+  ProtectIconDark,
   CurrentStatusIcon,
   VotingPowerIcon,
   SubmissionDateIcon,
