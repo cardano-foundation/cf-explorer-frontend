@@ -77,7 +77,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     history.replace(details.token(tokenId, tab));
   };
   return (
-    <Box mt={3}>
+    <Box mt={3} mb={2}>
       <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
     </Box>
   );
