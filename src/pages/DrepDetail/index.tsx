@@ -447,7 +447,7 @@ const DrepAccordion = () => {
   };
 
   return (
-    <Box ref={tableRef} mt={"30px"}>
+    <Box ref={tableRef} mt={"30px"} mb={"10px"}>
       {tabs.map(({ key, icon: Icon, label, component, errorFetchData }, index) => (
         <StyledAccordion
           key={key}
