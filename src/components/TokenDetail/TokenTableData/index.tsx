@@ -78,7 +78,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   };
 
   return (
-    <Box mt={3} mb={"10px"}>
+    <Box mt={3} mb={2}>
       <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
     </Box>
   );
