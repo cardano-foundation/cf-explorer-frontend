@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { ProtectIcon, ProtectIconDark } from "src/commons/resources";
 import Card from "src/components/commons/Card";
 import { formatDateLocal } from "src/commons/utils/helper";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import ParseScriptModal from "src/components/ParseScriptModal";
 
 import { HereButton, StyledCard, StyledImg } from "./styles";
 import DetailViewGroupProtocol from "../DetailViewGroupProtocol/DetailViewGroupProtocol";
@@ -21,6 +22,8 @@ function GroupProtocoParameters(props: GroupType) {
   const { group, type } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [costModelScript, setCostModelScript] = useState("");
+  const [titleModal, setTitleModal] = useState("");
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -90,7 +93,20 @@ function GroupProtocoParameters(props: GroupType) {
                   <StyledCard.ContainerValue>
                     <StyledCard.Value>{t("glossary.value")}</StyledCard.Value>
                     <StyledCard.Value>
-                      {el?.value && typeof el.value === "number" ? el.value : t("N/A")}
+                      <Box
+                        maxWidth={"200px "}
+                        component={el?.name === "costModels" && typeof el.value === "string" ? Button : Box}
+                        onClick={() => {
+                          if (el?.name === "costModels") {
+                            setCostModelScript(el.value ? `${el.value}` : "");
+                            setTitleModal("costModels");
+                          }
+                        }}
+                      >
+                        <Box maxWidth={170} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
+                          {el.value ? el.value : t("N/A")}
+                        </Box>
+                      </Box>
                     </StyledCard.Value>
                   </StyledCard.ContainerValue>
 
@@ -107,6 +123,12 @@ function GroupProtocoParameters(props: GroupType) {
         })}
       </Grid>
       <DetailViewGroupProtocol groupType={type} open={open} onClose={toggleDrawer(false)} />
+      <ParseScriptModal
+        open={!!costModelScript}
+        onClose={() => setCostModelScript("")}
+        script={costModelScript}
+        title={titleModal || "CostModel"}
+      />
     </Card>
   );
 }

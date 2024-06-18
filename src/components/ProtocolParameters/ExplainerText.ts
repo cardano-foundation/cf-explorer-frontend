@@ -83,35 +83,35 @@ export const GovernanceParameters = [
 ];
 
 export const ExplanationDetailNetwork = [
-  { label: "maximum block body size", explanation: "maxBBSize", description: "The maximum size of a block, in Bytes" },
+  { label: "Maximum block body size", explanation: "maxBBSize", description: "The maximum size of a block, in Bytes" },
   {
-    label: "maximum transaction size",
+    label: "Maximum transaction size",
     explanation: "maxTxSize",
     description: "The maximum size of a transaction, in Bytes"
   },
   {
-    label: "maximum block header size",
+    label: "Maximum block header size",
     explanation: "maxBHSize",
     description:
       "The size of the block header. Note that increasing the block header size may affect the overall block size (maxBlockBodySize)"
   },
   {
-    label: "maximum size of a serialized asset value",
+    label: "Maximum size of a serialized asset value",
     explanation: "maxValSize",
     description: "The limit on the serialized size of the Value in each output in Bytes"
   },
   {
-    label: "maximum script execution units in a single transaction",
+    label: "Maximum script execution units in a single transaction",
     explanation: "maxTxExUnits",
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
   },
   {
-    label: "maximum script execution units in a single block",
+    label: "Maximum script execution units in a single block",
     explanation: "maxBlockExUnits",
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
   },
   {
-    label: "maximum number of collateral inputs",
+    label: "Maximum number of collateral inputs",
     explanation: "axCollateralInputs",
     description: "Defines the maximum number of inputs that can be used for collateral when executing a Plutus script"
   }
