@@ -27,7 +27,7 @@ import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import { PROTOCOL_TYPE, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { getShortValue } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
@@ -183,7 +183,6 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     }
   ];
-
   return (
     <Container>
       {histories && (
@@ -201,7 +200,7 @@ const ProtocolParameter: React.FC = () => {
           <GroupProtocoParameters group={Network} type="network" />
           <GroupProtocoParameters group={Economic} type="economic" />
           <GroupProtocoParameters group={Technical} type="technical" />
-          <GroupProtocoParameters group={Governance} type="governance" />
+          {FF_GLOBAL_IS_CONWAY_ERA && <GroupProtocoParameters group={Governance} type="governance" />}
         </Box>
       )}
     </Container>

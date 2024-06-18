@@ -19,7 +19,7 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
     }
   },
   "& .MuiModal-backdrop": {
-    background: "#24262E33"
+    background: theme.palette.background
   }
 }));
 
@@ -87,7 +87,7 @@ export const CloseButton = styled(IconButton)`
 `;
 
 export const ContainerContent = styled(Box)`
-  margin-top: 90px;
+  margin-top: 65px;
 `;
 
 export const ContainerTitle = styled(Box)`

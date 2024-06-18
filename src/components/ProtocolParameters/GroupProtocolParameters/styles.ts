@@ -2,7 +2,7 @@ import { styled, Box } from "@mui/material";
 
 export const Header = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.secondary.main,
+  color: theme.palette.primary.main,
   fontSize: "1.125rem",
   textAlign: "left"
 }));
@@ -60,6 +60,7 @@ export const StyledCard = {
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-text-small);
     color: ${(props) => props.theme.palette.secondary.light};
+    display: block;
   `,
 
   Comment: styled("span")`
