@@ -88,10 +88,6 @@ const StatusHistory = () => {
     );
   }
 
-  if ((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) {
-    return <NoRecord m="80px 0px" padding={`0 !important`} />;
-  }
-
   return (
     <Box>
       <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
@@ -104,7 +100,9 @@ const StatusHistory = () => {
           voterType={VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH}
         />
       </Box>
-
+      {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+        <NoRecord m="80px 0px" padding={`0 !important`} />
+      )}
       <Box component={Grid} container spacing={2} mt={1}>
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
