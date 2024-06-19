@@ -153,7 +153,13 @@ export const API = {
     ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
     SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
   },
-  ADAHandle: (name: string) => `/addresses/by-ada-handle/${name}`
+  ADAHandle: (name: string) => `/addresses/by-ada-handle/${name}`,
+  COMMITTEE: {
+    OVERVIEW: "committee/overview",
+    MEMBERS: "committee/members",
+    HISTORY: "gov-actions/committee-history",
+    CC_DETAIL: () => `gov-actions/voting-procedure-detail`
+  }
 };
 
 export const USER_API = {

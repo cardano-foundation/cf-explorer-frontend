@@ -99,7 +99,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   }, [JSON.stringify(query)]);
 
   const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
-    `${API.POOL_CERTIFICATE.POOL}/${hash}`,
+    hash ? `${API.POOL_CERTIFICATE.POOL}/${hash}` : API.POOL_CERTIFICATE.POOL,
     omitBy(params, isUndefined),
     false
   );
@@ -112,7 +112,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   if (query.voteId) {
     return (
       <>
-        <GovernanceVotesDetail hash={hash} voteId={(query?.voteId as string) || ""} index={index} type={type} />
+        <GovernanceVotesDetail hash={hash || ""} voteId={(query?.voteId as string) || ""} index={index} type={type} />
       </>
     );
   }
@@ -132,9 +132,9 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     return (
       <Box component={Grid} container spacing={2}>
         {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
-          <NoRecord m="170px 0px" padding={`0 !important`} />
+          <NoRecord m="80px 0px" padding={`0 !important`} />
         )}
-        {error && statusError === 500 && <FetchDataErr m="170px 0px" padding={`0 !important`} />}
+        {error && statusError === 500 && <FetchDataErr m="80px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -208,14 +208,21 @@ const GovernanceVotesDetail: React.FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
+    // hash
+    //   ?
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
       txHash: voteId,
       index: index || 0,
       voterType: type
     })}`
+    // : `${API.COMMITTEE.CC_DETAIL()}?${stringify({
+    //     txHash: "c7daa6efaa072d57ab88c66924158d5959b3ef17777b2e2b37bc61af47eb0245",
+    //     index: index || 0,
+    //     voterType: "DREP_KEY_HASH"
+    //   })}`
   );
 
-  const [tab, setTab] = useState<string>("pool");
+  const [tab, setTab] = useState<string>(type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? "pool" : "overall");
   const handleTabChange = (newTab: string) => {
     setTab(newTab);
   };
@@ -264,53 +271,62 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
-            <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
-              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
-            </HashName>
+            {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+              <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
+                {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
+              </HashName>
+            )}
+            {type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+              <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
+                {t("cc.vote.title")}
+              </HashName>
+            )}
           </Box>
-          <Box textAlign="center">
-            <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <TabButton data-testid="governance.poolTab" tabName="pool">
-                <Box width={85}>
-                  {data?.poolName && data.poolName.length < 10 ? (
-                    data.poolName
-                  ) : (
-                    <DynamicEllipsisText
-                      sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
-                      postfix={3}
-                      sxLastPart={{ textTransform: "none", direction: "ltr" }}
-                      sxFirstPart={{ textTransform: "none" }}
-                      isNoLimitPixel={true}
-                      isTooltip
-                      value={data?.poolName || poolId || drepId || ""}
-                    />
-                  )}
-                </Box>
-              </TabButton>
-              <TabButton data-testid="governance.overallTab" tabName="overall" title={t("common.overall")} />
-            </ButtonGroup>
-            <Box display="flex" justifyContent="center">
-              <Typography
-                data-testid="governance.descriptionTab"
-                fontSize="14px"
-                fontWeight={400}
-                lineHeight="16.41px"
-                pt="16px"
-                width="400px"
-                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-              >
-                {tab === "pool"
-                  ? type === VOTE_TYPE.DREP_KEY_HASH
-                    ? t("pool.tabPoolDrep")
-                    : t("pool.tabPool")
-                  : t("pool.overall")}
-              </Typography>
+          {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+            <Box textAlign="center">
+              <ButtonGroup variant="outlined" aria-label="Basic button group">
+                <TabButton data-testid="governance.poolTab" tabName="pool">
+                  <Box width={85}>
+                    {data?.poolName && data.poolName.length < 10 ? (
+                      data.poolName
+                    ) : (
+                      <DynamicEllipsisText
+                        sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
+                        postfix={3}
+                        sxLastPart={{ textTransform: "none", direction: "ltr" }}
+                        sxFirstPart={{ textTransform: "none" }}
+                        isNoLimitPixel={true}
+                        isTooltip
+                        value={data?.poolName || poolId || drepId || ""}
+                      />
+                    )}
+                  </Box>
+                </TabButton>
+                <TabButton data-testid="governance.overallTab" tabName="overall" title={t("common.overall")} />
+              </ButtonGroup>
+              <Box display="flex" justifyContent="center">
+                <Typography
+                  data-testid="governance.descriptionTab"
+                  fontSize="14px"
+                  fontWeight={400}
+                  lineHeight="16.41px"
+                  pt="16px"
+                  width="400px"
+                  color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+                >
+                  {tab === "pool"
+                    ? type === VOTE_TYPE.DREP_KEY_HASH
+                      ? t("pool.tabPoolDrep")
+                      : t("pool.tabPool")
+                    : t("pool.overall")}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
       {tab === "pool" && <OverviewVote data={data} />}
-      {tab === "overall" && <OverallVote data={data} voteId={voteId} index={index} />}
+      {tab === "overall" && <OverallVote data={data} voteId={voteId} index={index} type={type} />}
     </Box>
   );
 };

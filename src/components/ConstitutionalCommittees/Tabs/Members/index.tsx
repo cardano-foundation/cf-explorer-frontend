@@ -1,29 +1,28 @@
 import { Box, useTheme } from "@mui/material";
 import { t } from "i18next";
-import { Link } from "react-router-dom";
+import { stringify } from "qs";
+import { Link, useHistory, useParams } from "react-router-dom";
 
+import useFetchList from "src/commons/hooks/useFetchList";
+import usePageInfo from "src/commons/hooks/usePageInfo";
+import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 
-interface MembersIF {
-  publicKey: string;
-  status: string;
-  term: string;
-}
-
-const mockData = [
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" },
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" },
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" },
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" },
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" },
-  { publicKey: "addr1vxs5sejcrqzt3elnkedv452hr7e5v8sqydmurj3cnrre27cg00ahv", status: "Active", term: "483-824" }
-];
-
 const Members = () => {
+  const { pageInfo } = usePageInfo();
+  const { tabActive } = useParams<{ tabActive?: string }>();
+  const history = useHistory();
+
+  const { data, loading, error, total, initialized, statusError } = useFetchList<CCMember>(
+    tabActive === "listMembers" ? API.COMMITTEE.MEMBERS : "",
+    {
+      ...pageInfo
+    }
+  );
   const theme = useTheme();
-  const columns: Column<MembersIF>[] = [
+  const columns: Column<CCMember>[] = [
     {
       title: <Box data-testid="cc.member.publicKey.title">{t("cc.member.publicKey")}</Box>,
       key: "no",
@@ -63,7 +62,8 @@ const Members = () => {
       minWidth: "120px",
       render: (data, idx) => (
         <Box data-testid={`cc.member.term.title#${idx}`} component={"span"}>
-          {data.term}
+          {data.activeEpoch || 0}
+          {data.expiredEpoch && "-"} {data.expiredEpoch ? data.expiredEpoch : ""}
         </Box>
       )
     }
@@ -73,23 +73,20 @@ const Members = () => {
     <Table
       data-testid="stakingDelegators.table"
       columns={columns}
-      data={mockData}
-      // error={error}
-      // statusError={statusError}
-      total={{ count: mockData.length, title: t("glossary.totalTokenList") }}
-      // loading={loading}
-      // initialized={initialized}
+      data={data}
+      error={error}
+      statusError={statusError}
+      total={{ count: total, title: t("glossary.totalTokenList") }}
+      loading={loading}
+      initialized={initialized}
       pagination={{
-        // onChange: (page, size) => {
-        //   setQuery({ tab: query.tab, page, size });
-        // },
+        onChange: (page, size) => {
+          history.replace({ search: stringify({ ...pageInfo, page, size }) });
+        },
         page: 1,
-        total: mockData.length,
+        total: total,
         size: 10
       }}
-      // onClickRow={(e, r) => {
-      //   history.push(details.stake(r.view || r.stakeAddress));
-      // }}
     />
   );
 };
