@@ -49,7 +49,7 @@ const useFetchList = <T>(
 
   const getList = useCallback(
     async (needLoading?: boolean) => {
-      if (!url) {
+      if (!url || url === "") {
         setData([]);
         setInitialized(false);
         setLoading(false);
