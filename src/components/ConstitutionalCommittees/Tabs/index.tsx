@@ -14,7 +14,7 @@ import StatusHistory from "./StatusHistory";
 const Tabs = () => {
   const history = useHistory();
   const onTabChange = (tab: string) => {
-    history.replace(details.CONSTITUIONAL_COMMITTEES(tab));
+    history.replace(details.constitutionalCommittees(tab));
   };
   const constitutionalCommitteeTabs: TTab[] = [
     {

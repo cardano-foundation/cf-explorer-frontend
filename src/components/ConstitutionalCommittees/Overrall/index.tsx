@@ -122,7 +122,7 @@ interface OverralCardIF {
   }[];
 }
 
-const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
+export const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
   const theme = useTheme();
 
   return (

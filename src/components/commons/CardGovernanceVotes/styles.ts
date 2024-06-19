@@ -27,10 +27,8 @@ export const TitleCard = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   lineHeight: "28px",
   color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light,
-  [theme.breakpoints.down("lg")]: {
-    fontSize: "24px"
-  },
+  fontSize: "24px",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "16px"
+    fontSize: "20px"
   }
 }));

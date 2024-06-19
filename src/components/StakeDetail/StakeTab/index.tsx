@@ -92,7 +92,7 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
   };
 
   return (
-    <Box ref={tabRef} mt={"30px"}>
+    <Box ref={tabRef} mt={"30px"} mb={2}>
       {tabs.map(({ key, icon: Icon, label, component }, index) => (
         <StyledAccordion
           key={key}

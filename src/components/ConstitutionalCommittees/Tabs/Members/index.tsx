@@ -6,6 +6,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
 import Table from "src/components/commons/Table";
 import { Column } from "src/types/table";
 
@@ -29,7 +30,7 @@ const Members = () => {
         <Box
           data-testid={`cc.member.publicKey.value#${idx}`}
           component={Link}
-          to={"#"}
+          to={details.constitutionalCommitteeDetail(r.publicKey, "governanceVotes")}
           color={`${theme.palette.primary.main} !important`}
         >
           {r.publicKey}
