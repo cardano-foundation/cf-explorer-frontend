@@ -1,4 +1,4 @@
-import { Box, useTheme, styled } from "@mui/material";
+import { Box, useTheme, Skeleton } from "@mui/material";
 import { t } from "i18next";
 
 import {
@@ -10,15 +10,19 @@ import {
   CCUpcomingChange,
   CCLastChange
 } from "src/commons/resources";
-import Card from "src/components/commons/Card";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { DetailsInfo, ValueCard } from "src/components/commons/DetailHeader/styles";
 import { TitleCard } from "src/pages/DrepDetail/styles";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { CardItem } from "./styles";
 
 const ConstitutionalCommitteeOVerrall = () => {
-  const theme = useTheme();
+  const { data, loading } = useFetch<CCOVerview>(API.COMMITTEE.OVERVIEW);
+
   const listOverview = [
     {
       icon: CCCurentState,
@@ -27,7 +31,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.currentState")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{data?.currentState || ""}</Box>
     },
     {
       icon: CCProposalPolicy,
@@ -36,7 +40,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.proposalPolicy")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{data?.proposalPolicy || ""}</Box>
     },
     {
       icon: CCActiveMembers,
@@ -45,7 +49,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.activeMembers")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{data?.activeMembers || ""}</Box>
     },
     {
       icon: CCThreshold,
@@ -54,7 +58,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.threshold")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{data?.threshold || ""}</Box>
     },
     {
       icon: CCGovernanceVotes,
@@ -63,7 +67,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.governanceVotes")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{data?.governanceVotes || ""}</Box>
     },
     {
       icon: CCUpcomingChange,
@@ -72,7 +76,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.upcomingChange")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: <Box>{t("common.N/A")}</Box>
     },
     {
       icon: CCLastChange,
@@ -81,41 +85,31 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.lastChangeTimestamp")} </TitleCard>
         </Box>
       ),
-      value: <Box>-</Box>
+      value: (
+        <Box>
+          <DatetimeTypeTooltip>{formatDateTimeLocal(data?.lastUpdate || "")}</DatetimeTypeTooltip>{" "}
+        </Box>
+      )
     },
     {}
   ];
+
+  if (loading) {
+    return (
+      <Box mb={2}>
+        <Skeleton variant="rectangular" height={"307px"} style={{ borderRadius: 10, marginTop: 8 }} />
+      </Box>
+    );
+  }
+
   return (
     <Box mb={2}>
-      <Card data-testid="committee-header" title={t("glossary.constitutionalCommittee")}>
-        <Description data-testid="constitutionalCommittee.drepDes">
-          {t("constitutionalCommittee.page.description")}
-        </Description>
-        <Description data-testid="constitutionalCommittee.drepDes">
-          To learn more about the different parameters, click{" "}
-          <Box component={"a"} href="#" color={`${theme.palette.primary.main} !important`}>
-            here
-          </Box>
-        </Description>
-      </Card>
       <OverralCard listItem={listOverview} />
     </Box>
   );
 };
 
 export default ConstitutionalCommitteeOVerrall;
-
-const Description = styled(Box)(({ theme }) => ({
-  fontSize: 14,
-  color: theme.palette.secondary.light,
-  fontWeight: 400,
-  marginTop: theme.spacing(1),
-  textAlign: "left",
-  width: "80vw",
-  [theme.breakpoints.down("md")]: {
-    width: "100%"
-  }
-}));
 
 interface OverralCardIF {
   listItem: {

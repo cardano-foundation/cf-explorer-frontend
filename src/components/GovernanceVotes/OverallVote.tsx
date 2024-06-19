@@ -34,7 +34,7 @@ import { formatADA, formatADAFull, formatDateTimeLocal, formatPercent, getShortH
 import { ChipContainer } from "src/pages/NativeScriptsAndSC/Card";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_BOOTSTRAP_DATA_AVAILABLE, VOTE_TYPE } from "src/commons/utils/constants";
 
 import {
   DataContainer,
@@ -57,10 +57,11 @@ import { ActionMetadataModal, ActionMetadataModalConfirm, GovernanceVoteDetail, 
 
 type VoteType = "SPOs" | "DReps" | "CC";
 
-const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string; index?: number }> = ({
+const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string; index?: number; type: string }> = ({
   data,
   voteId,
-  index
+  index,
+  type
 }) => {
   const [selectVote, setSelectVote] = useState<VoteType | "">("");
   const [openHistoryVoteModal, setOpenHistoryVoteModal] = useState<boolean>(false);
@@ -437,64 +438,66 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoValue>
             </Item>
-            <Item
-              item
-              flex={1}
-              xs={6}
-              md={6}
-              pr={"5px !important"}
-              pt={"10px !important"}
-              pb={"20px !important"}
-              sx={{
-                [theme.breakpoints.down("xl")]: {
-                  p: "0px !important",
-                  borderTop: `1px solid ${
-                    theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
-                  }  !important`,
-
-                  borderLeft: "none  !important"
-                },
-                [theme.breakpoints.down("md")]: {
-                  p: "0px !important",
-                  borderTop: "none  !important",
-                  borderBottom: "none  !important",
-                  borderLeft: "none  !important"
-                }
-              }}
-            >
-              <Box
+            {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+              <Item
+                item
+                flex={1}
+                xs={6}
+                md={6}
+                pr={"5px !important"}
+                pt={"10px !important"}
+                pb={"20px !important"}
                 sx={{
                   [theme.breakpoints.down("xl")]: {
-                    pt: "10px",
-                    pb: "20px",
-                    width: "50%",
-                    borderRight: `1px solid ${
+                    p: "0px !important",
+                    borderTop: `1px solid ${
                       theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
-                    }  !important`
+                    }  !important`,
+
+                    borderLeft: "none  !important"
                   },
                   [theme.breakpoints.down("md")]: {
-                    pt: "10px",
-                    pb: "20px",
-                    width: "50.1%",
-                    borderRight: `1px solid ${
-                      theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
-                    }  !important`
+                    p: "0px !important",
+                    borderTop: "none  !important",
+                    borderBottom: "none  !important",
+                    borderLeft: "none  !important"
                   }
                 }}
               >
-                <Box display="flex" justifyContent="space-between" pr="5px">
-                  <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} mt={"10px"} />
-                  <BlackWarningIcon />
-                </Box>
-                <InfoTitle paddingBottom="3px">
-                  <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
-                </InfoTitle>
+                <Box
+                  sx={{
+                    [theme.breakpoints.down("xl")]: {
+                      pt: "10px",
+                      pb: "20px",
+                      width: "50%",
+                      borderRight: `1px solid ${
+                        theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
+                      }  !important`
+                    },
+                    [theme.breakpoints.down("md")]: {
+                      pt: "10px",
+                      pb: "20px",
+                      width: "50.1%",
+                      borderRight: `1px solid ${
+                        theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
+                      }  !important`
+                    }
+                  }}
+                >
+                  <Box display="flex" justifyContent="space-between" pr="5px">
+                    <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} mt={"10px"} />
+                    <BlackWarningIcon />
+                  </Box>
+                  <InfoTitle paddingBottom="3px">
+                    <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
+                  </InfoTitle>
 
-                <InfoValue data-testid="governance.votingPowerValue" sx={{ wordBreak: "break-word" }}>
-                  {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
-                </InfoValue>
-              </Box>
-            </Item>
+                  <InfoValue data-testid="governance.votingPowerValue" sx={{ wordBreak: "break-word" }}>
+                    {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
+                  </InfoValue>
+                </Box>
+              </Item>
+            )}
           </Box>
         </Box>
       </Box>
