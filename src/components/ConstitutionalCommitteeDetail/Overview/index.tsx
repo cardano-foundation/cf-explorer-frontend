@@ -80,7 +80,7 @@ const Overview = ({ data, loading }: { data: CCDetailOVerview | null; loading: b
       icon: CCDetailRegistrationInformation,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("cc.detail.registrationInformation")} </TitleCard>
+          <TitleCard mr={1}>{t("cc.detail.resignationInformation")} </TitleCard>
         </Box>
       ),
       value: <Box>{data?.resignedAt !== null ? data?.resignedAt : t("common.na")}</Box>
