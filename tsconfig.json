@@ -23,6 +23,6 @@
   "paths": {
     "src/*": ["./*"]
   },
-  "include": ["src/**/*", "public/**/*", "**/*.ts"],
+  "include": ["src/**/*", "public/**/*", "**/*.ts", "playwright/tests/e2e/features/transactions-overview.feature"],
   "exclude": ["node_modules"]
 }
