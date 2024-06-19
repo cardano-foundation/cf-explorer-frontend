@@ -95,7 +95,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
 
   const theme = useTheme();
   const { t } = useTranslation();
-  const { isGalaxyFoldSmall, isMobile } = useScreen();
+  const { isGalaxyFoldSmall, isMobile, isLanrgeScreen } = useScreen();
   const listVotes = ["SPOs", "DReps", "CC"];
 
   const filterDataChart = (selectVote: string) => {
@@ -438,7 +438,9 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoValue>
             </Item>
-            {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+            {isLanrgeScreen && type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? (
+              <></>
+            ) : (
               <Item
                 item
                 flex={1}
@@ -484,17 +486,28 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                     }
                   }}
                 >
-                  <Box display="flex" justifyContent="space-between" pr="5px">
-                    <CustomIcon fill={theme.palette.secondary.light} height={27} icon={VotingPowerIcon} mt={"10px"} />
-                    <BlackWarningIcon />
-                  </Box>
-                  <InfoTitle paddingBottom="3px">
-                    <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
-                  </InfoTitle>
+                  {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? (
+                    <>
+                      <Box display="flex" justifyContent="space-between" pr="5px">
+                        <CustomIcon
+                          fill={theme.palette.secondary.light}
+                          height={27}
+                          icon={VotingPowerIcon}
+                          mt={"10px"}
+                        />
+                        <BlackWarningIcon />
+                      </Box>
+                      <InfoTitle paddingBottom="3px">
+                        <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
+                      </InfoTitle>
 
-                  <InfoValue data-testid="governance.votingPowerValue" sx={{ wordBreak: "break-word" }}>
-                    {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
-                  </InfoValue>
+                      <InfoValue data-testid="governance.votingPowerValue" sx={{ wordBreak: "break-word" }}>
+                        {data?.votingPower ? `${data?.votingPower} ADA` : "N/A"}{" "}
+                      </InfoValue>
+                    </>
+                  ) : (
+                    <Box height={"95px"}></Box>
+                  )}
                 </Box>
               </Item>
             )}

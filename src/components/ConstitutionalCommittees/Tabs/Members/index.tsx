@@ -29,11 +29,11 @@ const Members = () => {
       render: (r, idx) => (
         <Box
           data-testid={`cc.member.publicKey.value#${idx}`}
-          component={Link}
+          component={r.publicKey !== null ? Link : Box}
           to={details.constitutionalCommitteeDetail(r.publicKey, "governanceVotes")}
-          color={`${theme.palette.primary.main} !important`}
+          color={`${r.publicKey !== null ? theme.palette.primary.main : theme.palette.secondary.light} !important`}
         >
-          {r.publicKey}
+          {r.publicKey !== null ? r.publicKey : t("common.na")}
         </Box>
       )
     },

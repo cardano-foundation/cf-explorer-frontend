@@ -210,6 +210,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? t("status.inActive")
                   : stakeKeyStatus === "DEACTIVATED"
                   ? t("status.deActivated")
+                  : stakeKeyStatus === "EXPIRED"
+                  ? t("common.EXPIRED")
                   : t("status.retired")}
               </StakeKeyStatus>
             )}

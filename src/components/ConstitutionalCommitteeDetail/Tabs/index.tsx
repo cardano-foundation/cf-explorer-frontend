@@ -18,7 +18,7 @@ const Tabs = () => {
     {
       key: "governanceVotes",
       icon: CCGorvernanceVote,
-      children: <DelegationGovernanceVotes hash={"drepId"} type={VOTE_TYPE.DREP_KEY_HASH} />,
+      children: <DelegationGovernanceVotes hash={CCid} type={VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH} />,
       label: <Box data-testid="ns.script">{t("cc.governanceVotes")}</Box>
     }
   ];
