@@ -40,7 +40,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.proposalPolicy")} </TitleCard>
         </Box>
       ),
-      value: <Box>{data?.proposalPolicy || ""}</Box>
+      value: <Box>{data?.proposalPolicy === null ? t("common.N/A") : data?.proposalPolicy || ""}</Box>
     },
     {
       icon: CCActiveMembers,
