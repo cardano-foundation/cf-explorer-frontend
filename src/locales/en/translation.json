@@ -50,7 +50,7 @@
   "time.3m": "3m",
   "time.1y": "1y",
   "time.3y": "3y",
-  "time.all_time": "Max",
+  "time.all_time": "MAX",
   "glossary.transactionHash": "Transaction hash",
   "glossary.block": "Block",
   "common.slot": "Slot",
