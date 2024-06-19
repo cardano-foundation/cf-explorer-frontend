@@ -63,6 +63,7 @@
   "cc.detail.lifetimeVotes": "Lifetime Votes",
   "cc.detail.statusHistory": "Status History",
   "cc.detail.registrationInformation": "Registration Information",
+  "cc.vote.title": "Governance Action Voting Name",
   "constitutionalCommittee.page.description": "Explore the role, composition, and current status of the Constitutional Committee responsible for Cardano's governance. Review member details, governance actions, and the proposal policy to understand the decision-making processes that shape the network.",
   "time.24h": "24h",
   "time.1d": "1d",
