@@ -15,7 +15,7 @@ import { DetailsInfo, ValueCard } from "src/components/commons/DetailHeader/styl
 import { TitleCard } from "src/pages/DrepDetail/styles";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatPercent } from "src/commons/utils/helper";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import { CardItem } from "./styles";
@@ -58,7 +58,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.threshold")} </TitleCard>
         </Box>
       ),
-      value: <Box>{data?.threshold || ""}</Box>
+      value: <Box>{formatPercent(data?.threshold || 0)}</Box>
     },
     {
       icon: CCGovernanceVotes,
