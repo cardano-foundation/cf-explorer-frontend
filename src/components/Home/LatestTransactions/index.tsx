@@ -51,7 +51,7 @@ const LatestTransactions: React.FC = () => {
 
   const history = useHistory();
   return (
-    <TransactionContainer data-testid="home-latest-transactions">
+    <TransactionContainer data-testid="trxLastest.home-latest-transactions">
       <Header>
         <Title>{t("common.latestTxs")}</Title>
         <Actions>
@@ -132,7 +132,7 @@ const LatestTransactions: React.FC = () => {
                             <BlockNo data-testid={`trxLastest.epochNo.value#${index}`}>{epochNo}</BlockNo>
                           </Link>
                         </RowItem>
-                        <RowItem>
+                        <RowItem data-testid={`trxLastest.slotNo.value#${index}`}>
                           <small>{t("glossary.slot")}: </small>
                           <small>{epochSlotNo}</small>
                         </RowItem>

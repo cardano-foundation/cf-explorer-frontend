@@ -17,6 +17,7 @@ interface TProtocolParam {
   minFeeB: TProtocolItem;
   maxBlockSize: TProtocolItem;
   maxTxSize: TProtocolItem;
+  maxBHSize: TProtocolItem;
   maxBhSize: TProtocolItem;
   keyDeposit: TProtocolItem;
   poolDeposit: TProtocolItem;
@@ -43,6 +44,23 @@ interface TProtocolParam {
   maxCollateralInputs: TProtocolItem;
   coinsPerUTxOByte: TProtocolItem;
   timestamp: string;
+  maxTxExUnits: TProtocolItem;
+  maxBBSize: TProtocolItem;
+  maxBlockExUnits: TProtocolItem;
+  rho: TProtocolItem;
+  tau: TProtocolItem;
+  prices: TProtocolItem;
+  a0: TProtocolItem;
+  eMax: TProtocolItem;
+  nOpt: TProtocolItem;
+  costModels: TProtocolItem;
+  collateralPercentage: TProtocolItem;
+  govActionLifetime: TProtocolItem;
+  govActionDeposit: TProtocolItem;
+  drepDeposit: TProtocolItem;
+  drepActivity: TProtocolItem;
+  ccMinSize: TProtocolItem;
+  ccMaxTermLength: TProtocolItem;
 }
 
 interface ProtocolHistory {
