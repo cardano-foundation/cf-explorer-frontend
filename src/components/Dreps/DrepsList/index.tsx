@@ -178,6 +178,26 @@ const DrepsList: React.FC = () => {
       }
     },
     {
+      title: (
+        <Box data-testid="drepList.participationRate" component={"span"}>
+          {t("governanceParticipationRate")}
+        </Box>
+      ),
+      minWidth: "120px",
+      key: "participationRate",
+      render: (r) =>
+        r.participationRate != null ? (
+          <Box data-testid="drepList.ParticipationValue" component={"span"} mr={1}>
+            {formatPercent(r.participationRate / 100) || `0%`}
+          </Box>
+        ) : (
+          t("common.N/A")
+        ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
+    },
+    {
       title: <div data-testid="drepList.statusTitle">{t("common.status")}</div>,
       key: "status",
       minWidth: "120px",
