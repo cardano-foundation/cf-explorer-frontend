@@ -12,7 +12,7 @@ import FetchDataErr from "../commons/FetchDataErr";
 const ConstitutionalCommitteeDetail = () => {
   const { CCid } = useParams<{ CCid?: string }>();
   const { data, loading, error, statusError } = useFetch<CCDetailOVerview>(API.COMMITTEE.DETAIL_OVERVIEW(CCid || ""));
-  // eslint-disable-next-line no-constant-condition
+
   if (error && statusError !== 500) {
     return <NoRecord m="170px 0px" padding={`0 !important`} />;
   }

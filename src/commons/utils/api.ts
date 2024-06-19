@@ -159,7 +159,8 @@ export const API = {
     DETAIL_OVERVIEW: (hash: string) => `committee/${hash}`,
     MEMBERS: "committee/members",
     HISTORY: "gov-actions/committee-history",
-    CC_DETAIL: () => `gov-actions/voting-procedure-detail`
+    CC_DETAIL: () => `gov-actions/voting-procedure-detail`,
+    CC_DETAIL_CHART: (hash: string) => `committee/${hash}/vote-procedure-chart`
   }
 };
 

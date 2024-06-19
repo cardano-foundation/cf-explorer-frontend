@@ -61,7 +61,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
 
-const voteOption = [
+export const voteOption = [
   { title: "Action Type", value: "Default" },
   { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
@@ -496,7 +496,7 @@ const DrepAccordion = () => {
   );
 };
 
-const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
+export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
   const theme = useTheme();
   const totalVote = useMemo(() => {
     if (data) {
