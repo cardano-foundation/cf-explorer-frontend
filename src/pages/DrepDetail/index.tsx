@@ -65,7 +65,7 @@ export const voteOption = [
   { title: "Action Type", value: "Default" },
   { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
-  { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
+  { title: "Constitutional Committee Updates", value: "UPDATE_COMMITTEE" },
   { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
   { title: "Hard-Fork Initiation", value: "HARD_FORK_INITIATION_ACTION" },
   { title: "Protocol Parameter Changes", value: "PARAMETER_CHANGE_ACTION" },
