@@ -294,6 +294,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
             dataKey="date"
             tickFormatter={(date: string) => formatX(date, range)}
+            minTickGap={20}
           />
           <YAxis
             tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
