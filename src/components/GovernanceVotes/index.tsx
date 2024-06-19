@@ -205,21 +205,13 @@ const GovernanceVotesDetail: React.FC<{
   const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
 
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
-    // hash
-    //   ?
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
       txHash: voteId,
       index: index || 0,
       voterType: type
     })}`
-    // : `${API.COMMITTEE.CC_DETAIL()}?${stringify({
-    //     txHash: "c7daa6efaa072d57ab88c66924158d5959b3ef17777b2e2b37bc61af47eb0245",
-    //     index: index || 0,
-    //     voterType: "DREP_KEY_HASH"
-    //   })}`
   );
 
   const [tab, setTab] = useState<string>(type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? "pool" : "overall");
