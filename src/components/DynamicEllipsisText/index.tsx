@@ -28,7 +28,7 @@ const FirstPart = styled(SubPart)`
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
-  direction: rtl;
+  direction: ltl;
 `;
 
 const ContainerShortHand = styled(Box)`
