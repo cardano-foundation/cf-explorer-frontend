@@ -105,20 +105,11 @@ export const TitleDetail = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main
 }));
 
-export const SubTitleDetail = styled(Box)(({ theme }) => ({
-  textAlign: "left",
-  marginTop: "16px",
-  fontSize: "var(--font-size-text-small)",
-  color: theme.palette.secondary.light,
-  whiteSpace: "pre-wrap"
-}));
-
 export const SubTitleDetailChildren = styled("li")`
   font-size: var(--font-size-text-small);
   color: ${(props) => props.theme.palette.secondary.light};
-  list-style: inside;
   text-align: left;
-  margin-top: 8px;
+  white-space: "pre-wrap";
 `;
 export const Header = styled(Box)(({ theme }) => ({ textAlign: "left", color: theme.palette.secondary.main }));
 

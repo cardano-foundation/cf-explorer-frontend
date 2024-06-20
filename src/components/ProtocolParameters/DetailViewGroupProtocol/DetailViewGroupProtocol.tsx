@@ -10,7 +10,6 @@ import {
   Description,
   Header,
   Line,
-  SubTitleDetail,
   SubTitleDetailChildren,
   TitleDetail,
   ViewDetailContainer,
@@ -46,23 +45,17 @@ type Data = {
 
 type PropsExpainer = {
   items:
-    | (
-        | {
-            label: string;
-            explanation: string;
-            description: string;
-            children?: undefined;
-          }
-        | {
-            label: string;
-            explanation: string;
-            description: string;
-            children?: {
+    | {
+        label?: string;
+        explanation?: string;
+        description?: string;
+        children?:
+          | {
               description: string;
             }[];
-          }
-      )[]
+      }[]
     | null;
+  level?: number;
 };
 
 function DetailViewGroupProtocol({ open, onClose, groupType }: Props) {
@@ -175,24 +168,47 @@ const HeaderLevelExplainer = ({ data }: Data) => {
     </Box>
   );
 };
+const getStylesText = (level: number) => {
+  let style = {};
+  switch (level) {
+    case 0:
+      style = {
+        listStyle: "none",
+        marginTop: "32px"
+      };
+      break;
+    case 1:
+      style = {
+        listStyle: "disc",
+        marginTop: "8px"
+      };
+      break;
+    case 2:
+      style = {
+        listStyle: "circle",
+        marginTop: "8px"
+      };
+      break;
+  }
+  return style;
+};
+const Member = ({ name, level }: { name: string; level: number }) => (
+  <SubTitleDetailChildren style={getStylesText(level)}>{name}</SubTitleDetailChildren>
+);
 
-const ExplainerProtocol = ({ items }: PropsExpainer) => {
+const ExplainerProtocol = ({ items, level = 0 }: PropsExpainer) => {
   if (items === null) return;
   return (
     <Box>
       {items.map((parentItem, i) => (
         <Box key={i}>
-          <TitleDetail>{parentItem.label}</TitleDetail>
-          <TitleDetail>{`(${parentItem.explanation})`}</TitleDetail>
-          <SubTitleDetail>{parentItem.description}</SubTitleDetail>
-          {isArray(parentItem.children) && (
-            <Box component="ul">
-              {parentItem.children.map((childItem, i) => (
-                <SubTitleDetailChildren key={i}>{childItem.description}</SubTitleDetailChildren>
-              ))}
-            </Box>
-          )}
-          <Line />
+          {parentItem.label && <TitleDetail>{parentItem.label}</TitleDetail>}
+          {parentItem.explanation && <TitleDetail>{`(${parentItem.explanation})`}</TitleDetail>}
+          <Member name={parentItem.description ?? ""} level={level} />
+          <Box marginLeft={"16px"}>
+            {isArray(parentItem.children) && <ExplainerProtocol items={parentItem.children} level={level + 1} />}
+          </Box>
+          {level === 0 && <Line />}
         </Box>
       ))}
     </Box>
