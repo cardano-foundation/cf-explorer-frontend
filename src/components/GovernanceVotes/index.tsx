@@ -82,6 +82,8 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   const query = parse(search.split("?")[1]);
   const [params, setParams] = useState({});
   const [index, setIndex] = useState<number | undefined>();
+  const [voterHash, setVoterHash] = useState<string>();
+
   useEffect(() => {
     setParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
@@ -98,6 +100,9 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
+  // for governance haven't voted yet
+  const backupHashCC = "618000087d7b2085be40ddfa77e2a96b2d2facebc773e5c1b59af7bd";
+
   const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
     hash ? `${API.POOL_CERTIFICATE.POOL}/${hash}` : API.POOL_CERTIFICATE.POOL,
     omitBy(params, isUndefined),
@@ -112,7 +117,12 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   if (query.voteId) {
     return (
       <>
-        <GovernanceVotesDetail hash={hash || ""} voteId={(query?.voteId as string) || ""} index={index} type={type} />
+        <GovernanceVotesDetail
+          hash={type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? voterHash || backupHashCC : hash || ""}
+          voteId={(query?.voteId as string) || ""}
+          index={index}
+          type={type}
+        />
       </>
     );
   }
@@ -144,6 +154,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             key={index}
             onClick={() => {
               setIndex(value.index);
+              setVoterHash(value.voterHash);
               history.push(
                 {
                   search: stringify({
@@ -338,6 +349,7 @@ export interface GovernanceVote {
   vote: string;
   votingPower: string;
   isRepeatVote: boolean;
+  voterHash: string;
 }
 
 export interface GovernanceVoteDetail {
