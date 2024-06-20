@@ -1,5 +1,11 @@
 import { styled, Box } from "@mui/material";
 
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+
+export const StyledSkeleton = styled(CommonSkeleton)`
+  border-radius: var(--border-radius);
+  min-height: 130px;
+`;
 export const Header = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   color: theme.palette.primary.main,
@@ -55,6 +61,7 @@ export const StyledCard = {
     font-weight: var(--font-weight-bold);
     white-space: nowrap;
     display: block;
+    cursor: default;
   `,
   Value: styled("span")`
     font-weight: var(--font-weight-normal);
