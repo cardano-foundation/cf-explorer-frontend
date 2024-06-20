@@ -116,7 +116,7 @@ const ReportGeneratedStakingDetailTabs = () => {
   };
 
   return (
-    <Box>
+    <Box mb={2}>
       <TopHeader>
         <BackButton onClick={history.goBack}>
           <HiArrowLongLeft color={theme.palette.secondary.light} />
