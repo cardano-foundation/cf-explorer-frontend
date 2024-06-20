@@ -156,9 +156,11 @@ export const API = {
   ADAHandle: (name: string) => `/addresses/by-ada-handle/${name}`,
   COMMITTEE: {
     OVERVIEW: "committee/overview",
+    DETAIL_OVERVIEW: (hash: string) => `committee/${hash}`,
     MEMBERS: "committee/members",
     HISTORY: "gov-actions/committee-history",
-    CC_DETAIL: () => `gov-actions/voting-procedure-detail`
+    CC_DETAIL: () => `gov-actions/voting-procedure-detail`,
+    CC_DETAIL_CHART: (hash: string) => `committee/${hash}/vote-procedure-chart`
   }
 };
 

@@ -3,6 +3,7 @@ import { t } from "i18next";
 import { stringify } from "qs";
 import { Link, useHistory, useParams } from "react-router-dom";
 
+import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { API } from "src/commons/utils/api";
@@ -28,11 +29,11 @@ const Members = () => {
       render: (r, idx) => (
         <Box
           data-testid={`cc.member.publicKey.value#${idx}`}
-          component={Link}
-          to={"#"}
-          color={`${theme.palette.primary.main} !important`}
+          component={r.publicKey !== null ? Link : Box}
+          to={details.constitutionalCommitteeDetail(r.publicKey, "governanceVotes")}
+          color={`${r.publicKey !== null ? theme.palette.primary.main : theme.palette.secondary.light} !important`}
         >
-          {r.publicKey}
+          {r.publicKey !== null ? r.publicKey : t("common.na")}
         </Box>
       )
     },

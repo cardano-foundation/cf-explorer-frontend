@@ -82,6 +82,8 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   const query = parse(search.split("?")[1]);
   const [params, setParams] = useState({});
   const [index, setIndex] = useState<number | undefined>();
+  const [voterHash, setVoterHash] = useState<string>();
+
   useEffect(() => {
     setParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
@@ -98,6 +100,9 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
+  // for governance haven't voted yet
+  const backupHashCC = "618000087d7b2085be40ddfa77e2a96b2d2facebc773e5c1b59af7bd";
+
   const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
     hash ? `${API.POOL_CERTIFICATE.POOL}/${hash}` : API.POOL_CERTIFICATE.POOL,
     omitBy(params, isUndefined),
@@ -112,7 +117,12 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   if (query.voteId) {
     return (
       <>
-        <GovernanceVotesDetail hash={hash || ""} voteId={(query?.voteId as string) || ""} index={index} type={type} />
+        <GovernanceVotesDetail
+          hash={type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? voterHash || backupHashCC : hash || ""}
+          voteId={(query?.voteId as string) || ""}
+          index={index}
+          type={type}
+        />
       </>
     );
   }
@@ -144,6 +154,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             key={index}
             onClick={() => {
               setIndex(value.index);
+              setVoterHash(value.voterHash);
               history.push(
                 {
                   search: stringify({
@@ -205,21 +216,13 @@ const GovernanceVotesDetail: React.FC<{
   const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
 
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
-    // hash
-    //   ?
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
       txHash: voteId,
       index: index || 0,
       voterType: type
     })}`
-    // : `${API.COMMITTEE.CC_DETAIL()}?${stringify({
-    //     txHash: "c7daa6efaa072d57ab88c66924158d5959b3ef17777b2e2b37bc61af47eb0245",
-    //     index: index || 0,
-    //     voterType: "DREP_KEY_HASH"
-    //   })}`
   );
 
   const [tab, setTab] = useState<string>(type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? "pool" : "overall");
@@ -346,6 +349,7 @@ export interface GovernanceVote {
   vote: string;
   votingPower: string;
   isRepeatVote: boolean;
+  voterHash: string;
 }
 
 export interface GovernanceVoteDetail {
@@ -721,6 +725,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       ...(dateRange?.fromDate && { fromDate: dateRange.fromDate || "" }),
       ...(dateRange?.toDate && { toDate: dateRange.toDate || "" })
     });
+    setParams({ ...params, governanceActionTxHash: "", anchorText: "" });
   };
 
   const currentStatusList = [
@@ -853,7 +858,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={"Search ID"}
-                    value={params?.governanceActionTxHash}
                     onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                     onKeyPress={handleKeyPress}
                   />
@@ -893,7 +897,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       placeholder={t("pool.searchMetadata")}
-                      value={params?.anchorText}
                       onChange={({ target: { value } }) => setParams({ ...params, anchorText: value })}
                       onKeyPress={handleKeyPress}
                     />

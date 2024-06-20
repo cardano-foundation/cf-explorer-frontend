@@ -7,6 +7,18 @@ interface CCOVerview {
   lastUpdate: string;
 }
 
+interface CCDetailOVerview {
+  publicKey: string;
+  scriptHash: string;
+  status: "ACTIVE" | "EXPIRED";
+  expiredEpoch: number;
+  activeEpoch: number;
+  registeredAt: string;
+  termDuration: number;
+  votingParticipation: number;
+  resignedAt: string;
+}
+
 interface CCMember {
   publicKey: string;
   scriptHash: string;
