@@ -858,7 +858,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={"Search ID"}
-                    value={params?.governanceActionTxHash}
                     onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                     onKeyPress={handleKeyPress}
                   />
@@ -898,7 +897,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       placeholder={t("pool.searchMetadata")}
-                      value={params?.anchorText}
                       onChange={({ target: { value } }) => setParams({ ...params, anchorText: value })}
                       onKeyPress={handleKeyPress}
                     />
