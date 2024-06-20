@@ -410,6 +410,7 @@
   "drawer.InstaneousRewards": "Instantaneous Rewards",
   "drawer.transactions": "Transactions",
   "drawer.viewDetails": "View Details",
+  "drawer.transactionsHistory": "Transaction history",
   "head.page.stakeAddressDeregistration": "Stake Address Deregistration",
   "common.lastUpdatedSecondsAgo": "Last updated {{sec}} seconds ago",
   "drawer.rewardWithdrawn": "Reward withdrawn",
