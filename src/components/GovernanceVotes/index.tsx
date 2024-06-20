@@ -726,6 +726,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       ...(dateRange?.fromDate && { fromDate: dateRange.fromDate || "" }),
       ...(dateRange?.toDate && { toDate: dateRange.toDate || "" })
     });
+    setParams({ ...params, governanceActionTxHash: "", anchorText: "" });
   };
 
   const currentStatusList = [

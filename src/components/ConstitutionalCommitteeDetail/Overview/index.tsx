@@ -95,6 +95,13 @@ const Overview = ({ data, loading }: { data: CCDetailOVerview | null; loading: b
           justifyContent={"space-between"}
           flexWrap={"wrap"}
           width={"100%"}
+          sx={{
+            flexDirection: "row",
+            [theme.breakpoints.down("sm")]: {
+              flexDirection: "column",
+              alignItems: "flex-start"
+            }
+          }}
         >
           <TitleCard display={"flex"} alignItems="center">
             {t("drep.lifetimeVotes")}
@@ -109,8 +116,7 @@ const Overview = ({ data, loading }: { data: CCDetailOVerview | null; loading: b
             sx={{
               bgcolor: theme.palette.primary[100],
               width: "100%",
-              maxWidth: "200px",
-              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
+              maxWidth: "200px"
             }}
             MenuProps={{
               style: { zIndex: 1303 },
