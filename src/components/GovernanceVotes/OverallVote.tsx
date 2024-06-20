@@ -544,9 +544,10 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.primary[200],
-    color: "rgba(0, 0, 0, 0.87)",
-    fontSize: 11
+    backgroundColor: theme.palette.primary[100],
+    color: theme.palette.secondary.light,
+    fontSize: 11,
+    border: `1px solid ${theme.palette.primary[200]}`
   }
 }));
 
