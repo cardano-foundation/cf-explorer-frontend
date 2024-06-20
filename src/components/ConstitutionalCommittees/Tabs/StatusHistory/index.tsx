@@ -361,7 +361,6 @@ export const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, 
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={"Search ID"}
-                    value={params?.governanceActionTxHash}
                     onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                     onKeyPress={handleKeyPress}
                   />
