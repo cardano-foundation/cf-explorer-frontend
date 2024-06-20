@@ -347,6 +347,12 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                   }  !important`,
                   borderLeft: "none  !important",
                   borderBottom: "none  !important"
+                },
+                [theme.breakpoints.down("md")]: {
+                  p: "0px !important",
+                  borderTop: "none  !important",
+                  borderBottom: "none  !important",
+                  borderLeft: "none  !important"
                 }
               }}
               borderLeft={`1px solid ${

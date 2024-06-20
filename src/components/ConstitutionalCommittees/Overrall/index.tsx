@@ -31,7 +31,7 @@ const ConstitutionalCommitteeOVerrall = () => {
           <TitleCard mr={1}>{t("cc.currentState")} </TitleCard>
         </Box>
       ),
-      value: <Box>{data?.currentState || ""}</Box>
+      value: <Box textTransform={"capitalize"}>{(data?.currentState || "").toLocaleLowerCase()}</Box>
     },
     {
       icon: CCProposalPolicy,
