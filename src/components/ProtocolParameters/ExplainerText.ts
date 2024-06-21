@@ -41,8 +41,8 @@ export const NetworkParameters = [
           { title: "b. Minters of Fungible/Non-Fungible Tokens" },
           { title: "c. Plutus scripts" },
           { title: "d. DeFi developers" },
-          { title: "c. Stake Pool Operators" },
-          { title: "d. Voting transactions" }
+          { title: "e. Stake Pool Operators" },
+          { title: "f. Voting transactions" }
         ]
       }
     ]

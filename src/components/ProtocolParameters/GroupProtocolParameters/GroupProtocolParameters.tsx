@@ -135,9 +135,7 @@ function GroupProtocoParameters(props: GroupType) {
                             }
                           }}
                         >
-                          <Box maxWidth={170} overflow={"hidden"} whiteSpace={"nowrap"} textOverflow={"ellipsis"}>
-                            {el.value ? el.value : t("N/A")}
-                          </Box>
+                          <Box>{truncateText(el.value ? `${el.value}` : t("N/A"), 20)}</Box>
                         </Box>
                       </StyledCard.Value>
                     </StyledCard.ContainerValue>
@@ -164,6 +162,10 @@ function GroupProtocoParameters(props: GroupType) {
       />
     </Card>
   );
+}
+
+function truncateText(text: string, maxLength: number): string {
+  return text.length > maxLength ? `${text.slice(0, maxLength - 3)}...` : text;
 }
 
 const getStylesText = (level: number) => {
