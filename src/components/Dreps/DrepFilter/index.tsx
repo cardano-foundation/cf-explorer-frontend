@@ -27,7 +27,7 @@ import {
   GovernanceIdIcon,
   PoolVotingIcon,
   ResetIcon,
-  ParticipationIcon
+  PoolParticipationIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
@@ -769,7 +769,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                     <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                       <Box display={"flex"} alignItems={"center"}>
                         <CustomIcon
-                          icon={ParticipationIcon}
+                          icon={PoolParticipationIcon}
                           fill={
                             dataRange?.maxGovParticipationRate === null
                               ? theme.palette.secondary[600]
