@@ -184,11 +184,11 @@ const DrepsList: React.FC = () => {
         </Box>
       ),
       minWidth: "120px",
-      key: "participationRate",
+      key: "govParticipationRate",
       render: (r) =>
-        r.participationRate != null ? (
+        r.govParticipationRate != null ? (
           <Box data-testid="drepList.ParticipationValue" component={"span"} mr={1}>
-            {formatPercent(r.participationRate / 100) || `0%`}
+            {formatPercent(r.govParticipationRate) || `0%`}
           </Box>
         ) : (
           t("common.N/A")
