@@ -78,7 +78,7 @@ const Tabular = ({ tabsRenderConfig }: ITabularProps) => {
   };
 
   return (
-    <Box mt={5}>
+    <Box mt={5} mb={2}>
       <TabularOverview />
       <StakeTab
         tabsRenderConfig={tabsRenderConfig}

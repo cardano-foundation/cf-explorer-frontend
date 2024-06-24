@@ -117,16 +117,16 @@ export const CIPPropertyTable = styled(Table)(({ theme }) => ({
   marginBottom: "30px",
   "& .table-wrapper": {
     padding: 0,
-    border: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
-    borderBottom: "0px",
-    boxShadow: theme.shadow.card
+    boxShadow: "1px 2px 5px 0px rgba(67, 70, 86, 0.20)",
+    margin: "0px 3px 15px 3px"
   },
   "& td, th": {
-    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`,
     paddingTop: "18px",
     paddingBottom: "18px"
   },
-
+  "& th": {
+    borderBottom: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
+  },
   "& tr th:nth-child(4), & tr td:nth-child(4)": {
     borderLeft: `1px solid ${theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]}`
   },
