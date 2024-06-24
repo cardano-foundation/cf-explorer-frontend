@@ -274,16 +274,10 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
-            {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
-              <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
-                {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
-              </HashName>
-            )}
-            {type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
-              <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
-                {t("cc.vote.title")}
-              </HashName>
-            )}
+
+            <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
+              {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
+            </HashName>
           </Box>
           {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
             <Box textAlign="center">
