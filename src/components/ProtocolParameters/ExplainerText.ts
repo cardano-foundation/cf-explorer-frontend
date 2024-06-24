@@ -14,7 +14,14 @@ export const EconomicParameters = [
       },
       {
         title: "4. Balance economic incentives for different Cardano stakeholders, including but not limited to:",
-        children: [{ title: "a. Stake pool operators" }, { title: "b. Ada holders" }]
+        children: [
+          { title: "a. Stake pool operators" },
+          { title: "b. Ada holders" },
+          { title: "c. DeFi users" },
+          { title: "d. Infrastructure users" },
+          { title: "e. Developers (e.g. DApps)" },
+          { title: "f. Financial intermediaries (e.g. Exchanges)" }
+        ]
       }
     ]
   }
@@ -41,8 +48,8 @@ export const NetworkParameters = [
           { title: "b. Minters of Fungible/Non-Fungible Tokens" },
           { title: "c. Plutus scripts" },
           { title: "d. DeFi developers" },
-          { title: "c. Stake Pool Operators" },
-          { title: "d. Voting transactions" }
+          { title: "e. Stake Pool Operators" },
+          { title: "f. Voting transactions" }
         ]
       }
     ]
