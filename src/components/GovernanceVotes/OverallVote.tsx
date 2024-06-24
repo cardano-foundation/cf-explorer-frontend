@@ -424,7 +424,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 </Box>
               </InfoTitle>
               <InfoValue data-testid="governance.votesValue" width={"100%"}>
-                <Box pr="5px" sx={{ height: "900px" }}>
+                <Box pr="5px">
                   {loadingChart ? (
                     <Box
                       component={Skeleton}
