@@ -33,7 +33,8 @@ import {
   VotesYesIcon,
   VotesAbstainIcon,
   VotesNoIcon,
-  DropdownIcon
+  DropdownIcon,
+  CCDetailVotingParticipation
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -184,7 +185,7 @@ const DrepDetail = () => {
       value: <ValueCard>{data?.delegators} </ValueCard>
     },
     {
-      icon: CreateDrepIcon,
+      icon: CCDetailVotingParticipation,
       sizeIcon: 26,
       title: (
         <TitleCard display={"flex"} alignItems="center">
