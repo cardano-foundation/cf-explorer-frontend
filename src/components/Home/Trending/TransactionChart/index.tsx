@@ -23,7 +23,8 @@ import {
   Tabs,
   Title,
   TransactionContainer,
-  ValueChart
+  ValueChart,
+  XAxisChart
 } from "./styles";
 
 export interface TransactionChartIF {
@@ -262,7 +263,8 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
 
   if (!data) return <></>;
   return (
-    <Box width={"100%"} minHeight={"250px"} height={250}>
+    <Box width={"100%"} minHeight={"250px"} height={250} sx={{ position: "relative" }}>
+      <XAxisChart></XAxisChart>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           height={500}

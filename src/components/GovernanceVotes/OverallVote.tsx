@@ -465,12 +465,10 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                     borderLeft: "none  !important"
                   },
                   [theme.breakpoints.down("md")]: {
-                    pt: "10px",
-                    pb: "20px",
-                    width: "50%",
-                    borderRight: `1px solid ${
-                      theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
-                    }  !important`
+                    p: "0px !important",
+                    borderTop: "none  !important",
+                    borderBottom: "none  !important",
+                    borderLeft: "none  !important"
                   }
                 }}
               >
