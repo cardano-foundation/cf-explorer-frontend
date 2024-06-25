@@ -1,8 +1,14 @@
 import { styled, Box } from "@mui/material";
 
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+
+export const StyledSkeleton = styled(CommonSkeleton)`
+  border-radius: var(--border-radius);
+  min-height: 130px;
+`;
 export const Header = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
-  color: theme.palette.secondary.main,
+  color: theme.palette.primary.main,
   fontSize: "1.125rem",
   textAlign: "left"
 }));
@@ -55,11 +61,13 @@ export const StyledCard = {
     font-weight: var(--font-weight-bold);
     white-space: nowrap;
     display: block;
+    cursor: default;
   `,
   Value: styled("span")`
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-text-small);
     color: ${(props) => props.theme.palette.secondary.light};
+    display: block;
   `,
 
   Comment: styled("span")`

@@ -27,7 +27,7 @@ import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { PROTOCOL_TYPE } from "src/commons/utils/constants";
+import { PROTOCOL_TYPE, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { getShortValue } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
@@ -40,6 +40,12 @@ import { ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from 
 import { Column } from "src/types/table";
 import GroupProtocoParameters from "src/components/ProtocolParameters/GroupProtocolParameters/GroupProtocolParameters";
 import ProtocolHeader from "src/components/ProtocolParameters/ProtocolHeader";
+import {
+  displayTooltipEconomic,
+  displayTooltipGovernance,
+  displayTooltipNetwork,
+  displayTooltipTechnical
+} from "src/components/ProtocolParameters/ExplainerText";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextProtocolHistory } from "./explainerText";
@@ -63,7 +69,7 @@ const ProtocolParameter: React.FC = () => {
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataLastest } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
+  const { data: dataLastest, loading, error } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -87,10 +93,34 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     },
     {
+      name: "maxTxExMem",
+      value: dataLastest?.maxTxExMem?.value,
+      time: dataLastest?.maxTxExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxTxExSteps",
+      value: dataLastest?.maxTxExSteps?.value,
+      time: dataLastest?.maxTxExSteps?.time,
+      icon: false
+    },
+    {
       name: "maxBlockExUnits",
       value: dataLastest?.maxBlockExUnits?.value,
       time: dataLastest?.maxBlockExUnits?.time,
       icon: true
+    },
+    {
+      name: "maxBlockExMem",
+      value: dataLastest?.maxBlockExMem?.value,
+      time: dataLastest?.maxBlockExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxBlockExSteps",
+      value: dataLastest?.maxBlockExSteps?.value,
+      time: dataLastest?.maxBlockExSteps?.time,
+      icon: false
     },
     {
       name: "maxCollateralInputs",
@@ -130,9 +160,15 @@ const ProtocolParameter: React.FC = () => {
       icon: true
     },
     {
-      name: "prices",
-      value: dataLastest?.prices?.value,
-      time: dataLastest?.prices?.time,
+      name: "priceStep",
+      value: dataLastest?.priceStep?.value,
+      time: dataLastest?.priceStep?.time,
+      icon: false
+    },
+    {
+      name: "priceMem",
+      value: dataLastest?.priceMem?.value,
+      time: dataLastest?.priceMem?.time,
       icon: false
     }
   ];
@@ -171,9 +207,9 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     },
     {
-      name: "collateralPercentage",
-      value: dataLastest?.collateralPercentage?.value,
-      time: dataLastest?.collateralPercentage?.time,
+      name: "ccMinSize",
+      value: dataLastest?.ccMinSize?.value,
+      time: dataLastest?.ccMinSize?.time,
       icon: false
     },
     {
@@ -183,7 +219,7 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     }
   ];
-
+  if (error) return <NoRecord />;
   return (
     <Container>
       {histories && (
@@ -198,10 +234,17 @@ const ProtocolParameter: React.FC = () => {
       {!histories && (
         <Box marginBottom={"109px"} marginTop={"64px"}>
           <ProtocolHeader />
-          <GroupProtocoParameters group={Network} type="network" />
-          <GroupProtocoParameters group={Economic} type="economic" />
-          <GroupProtocoParameters group={Technical} type="technical" />
-          <GroupProtocoParameters group={Governance} type="governance" />
+          <GroupProtocoParameters loading={loading} data={displayTooltipNetwork} group={Network} type="network" />
+          <GroupProtocoParameters loading={loading} group={Economic} data={displayTooltipEconomic} type="economic" />
+          <GroupProtocoParameters loading={loading} group={Technical} data={displayTooltipTechnical} type="technical" />
+          {FF_GLOBAL_IS_CONWAY_ERA && (
+            <GroupProtocoParameters
+              loading={loading}
+              data={displayTooltipGovernance}
+              group={Governance}
+              type="governance"
+            />
+          )}
         </Box>
       )}
     </Container>
@@ -318,7 +361,7 @@ export const ProtocolParameterHistory = () => {
             {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
             !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
-                <Box>
+                <Box component={"div"} style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                   {r[t as ProtocolTypeKey]
                     ? r[t as ProtocolTypeKey]?.value
                       ? r[t as ProtocolTypeKey]?.value
