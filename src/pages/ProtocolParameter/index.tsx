@@ -87,12 +87,6 @@ const ProtocolParameter: React.FC = () => {
     { name: "maxBHSize", value: dataLastest?.maxBHSize?.value, time: dataLastest?.maxBHSize?.time, icon: true },
     { name: "maxValSize", value: dataLastest?.maxValSize?.value, time: dataLastest?.maxValSize?.time, icon: true },
     {
-      name: "maxTxExUnits",
-      value: dataLastest?.maxTxExUnits?.value,
-      time: dataLastest?.maxTxExUnits?.time,
-      icon: false
-    },
-    {
       name: "maxTxExMem",
       value: dataLastest?.maxTxExMem?.value,
       time: dataLastest?.maxTxExMem?.time,
@@ -103,12 +97,6 @@ const ProtocolParameter: React.FC = () => {
       value: dataLastest?.maxTxExSteps?.value,
       time: dataLastest?.maxTxExSteps?.time,
       icon: false
-    },
-    {
-      name: "maxBlockExUnits",
-      value: dataLastest?.maxBlockExUnits?.value,
-      time: dataLastest?.maxBlockExUnits?.time,
-      icon: true
     },
     {
       name: "maxBlockExMem",
