@@ -113,9 +113,29 @@ export const ExplanationDetailNetwork = [
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
   },
   {
+    label: "Maximum number of memory units in a single transaction",
+    explanation: "maxTxExMem",
+    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
+  },
+  {
+    label: "Maximum number of steps in a single transaction",
+    explanation: "maxTxExSteps",
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per transaction"
+  },
+  {
     label: "Maximum script execution units in a single block",
     explanation: "maxBlockExUnits",
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+  },
+  {
+    label: "Maximum number of memory units in a single transaction",
+    explanation: "maxBlockExMem",
+    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+  },
+  {
+    label: "Maximum number of steps in a single block",
+    explanation: "maxBlockExSteps",
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block"
   },
   {
     label: "Maximum number of collateral inputs",
@@ -179,8 +199,14 @@ export const ExplanationDetailEconomic = [
     description: "Defines the cost for using Plutus reference scripts in Lovelace"
   },
   {
+    label: "Fee per Plutus execution step",
+    explanation: "priceStep",
+    description:
+      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
+  },
+  {
     label: "Prices of Plutus execution units",
-    explanation: "prices",
+    explanation: "priceMem",
     description:
       "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
   }
@@ -323,8 +349,20 @@ export const displayTooltipNetwork = {
   maxTxExUnits: {
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
   },
+  maxTxExMem: {
+    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
+  },
+  maxTxExSteps: {
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per transaction"
+  },
   maxBlockExUnits: {
+    description: "Maximum number of steps in a single block."
+  },
+  maxBlockExMem: {
     description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+  },
+  maxBlockExSteps: {
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block"
   },
   maxCollateralInputs: {
     description: "Defines the maximum number of inputs that can be used for collateral when executing a Plutus script"
@@ -367,7 +405,11 @@ export const displayTooltipEconomic = {
       "Part of the rewards mechanism. The minimum pool cost is transferred to the pool rewards address before any delegator rewards are paid"
   },
   coinsPerUTxOByte: { description: "Defines the cost for using Plutus reference scripts in Lovelace" },
-  prices: {
+  priceStep: {
+    description:
+      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
+  },
+  priceMem: {
     description:
       "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks."
   }

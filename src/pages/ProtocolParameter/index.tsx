@@ -69,7 +69,7 @@ const ProtocolParameter: React.FC = () => {
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataLastest, loading } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
+  const { data: dataLastest, loading, error } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -93,10 +93,34 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     },
     {
+      name: "maxTxExMem",
+      value: dataLastest?.maxTxExMem?.value,
+      time: dataLastest?.maxTxExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxTxExSteps",
+      value: dataLastest?.maxTxExSteps?.value,
+      time: dataLastest?.maxTxExSteps?.time,
+      icon: false
+    },
+    {
       name: "maxBlockExUnits",
       value: dataLastest?.maxBlockExUnits?.value,
       time: dataLastest?.maxBlockExUnits?.time,
       icon: true
+    },
+    {
+      name: "maxBlockExMem",
+      value: dataLastest?.maxBlockExMem?.value,
+      time: dataLastest?.maxBlockExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxBlockExSteps",
+      value: dataLastest?.maxBlockExSteps?.value,
+      time: dataLastest?.maxBlockExSteps?.time,
+      icon: false
     },
     {
       name: "maxCollateralInputs",
@@ -136,9 +160,15 @@ const ProtocolParameter: React.FC = () => {
       icon: true
     },
     {
-      name: "prices",
-      value: dataLastest?.prices?.value,
-      time: dataLastest?.prices?.time,
+      name: "priceStep",
+      value: dataLastest?.priceStep?.value,
+      time: dataLastest?.priceStep?.time,
+      icon: false
+    },
+    {
+      name: "priceMem",
+      value: dataLastest?.priceMem?.value,
+      time: dataLastest?.priceMem?.time,
       icon: false
     }
   ];
@@ -189,7 +219,7 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     }
   ];
-
+  if (error) return <NoRecord />;
   return (
     <Container>
       {histories && (
