@@ -57,6 +57,7 @@ interface Drep {
   status: "ACTIVE" | "INACTIVE" | "RETIRED";
   updatedAt: string;
   votingPower: number;
+  govParticipationRate?: number;
 }
 
 interface DelegationGovernanceVotesProps {

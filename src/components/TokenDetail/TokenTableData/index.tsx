@@ -5,8 +5,8 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { details } from "src/commons/routers";
 import CustomAccordion, { TTab } from "src/components/commons/CustomAccordion";
+import { UnionTokenIcon, PeopleIcon, TransactionIcon, MetadataIcon } from "src/commons/resources";
 
-import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "../../../commons/resources";
 import TokenMetaData from "./TokenMetadata";
 import TokenMinting from "./TokenMinting";
 import TokenTopHolder from "./TokenTopHolder";
@@ -76,9 +76,8 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   const handleTabChange = (tab: string) => {
     history.replace(details.token(tokenId, tab));
   };
-
   return (
-    <Box mt={3}>
+    <Box mt={3} mb={2}>
       <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
     </Box>
   );
