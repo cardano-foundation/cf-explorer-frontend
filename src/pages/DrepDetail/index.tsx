@@ -317,7 +317,6 @@ const DrepDetail = () => {
         }
         loading={false}
         listItem={listOverview}
-        bookmarkData={"1"}
         subTitle={`Type: ${data?.type || ""}`}
         stakeKeyStatus={data?.status}
       />
