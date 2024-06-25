@@ -6,12 +6,12 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
-  CCDetailLifetimeVotes,
   CCDetailRegistrared,
   CCDetailRegistrationInformation,
   CCDetailVotingParticipation,
   CCStatusHistory,
   DropdownIcon,
+  LifetimeVoteDrepIcon,
   TimeIconComponent
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
@@ -86,7 +86,7 @@ const Overview = ({ data, loading }: { data: CCDetailOVerview | null; loading: b
       value: <Box>{data?.resignedAt !== null ? data?.resignedAt : t("common.na")}</Box>
     },
     {
-      icon: CCDetailLifetimeVotes,
+      icon: LifetimeVoteDrepIcon,
       title: (
         <Box
           display={"flex"}
