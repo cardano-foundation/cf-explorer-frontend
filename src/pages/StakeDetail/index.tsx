@@ -65,7 +65,7 @@ const StakeDetail: React.FC = () => {
     if (status.data?.hasRegistration) return setSpecialPath(routers.STAKE_ADDRESS_REGISTRATION);
   }, [state, status, data?.status]);
 
-  if (adaHandleLoading) {
+  if (adaHandleLoading || loading || status.loading || !initialized) {
     return (
       <Box>
         <CircularProgress />

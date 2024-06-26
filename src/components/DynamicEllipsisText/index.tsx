@@ -28,7 +28,7 @@ const FirstPart = styled(SubPart)`
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
-  direction: rtl;
+  direction: ltl;
 `;
 
 const ContainerShortHand = styled(Box)`
@@ -71,6 +71,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  isSeparateCopyIcon?: boolean;
   whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);

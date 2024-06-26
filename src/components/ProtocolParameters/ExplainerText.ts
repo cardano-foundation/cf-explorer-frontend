@@ -244,6 +244,11 @@ export const ExplanationDetailGovernance = [
     description: "The deposit that is charged when registering a DRep. Helps to limit the number of active DReps."
   },
   {
+    label: "DRep deposit amount",
+    explanation: "drepDeposit",
+    description: "The deposit that is charged when registering a DRep. Helps to limit the number of active DReps."
+  },
+  {
     label: "DRep activity period in epochs",
     explanation: "drepActivity",
     description: "The deposit that is charged when registering a DRep. Helps to limit the number of active DReps."

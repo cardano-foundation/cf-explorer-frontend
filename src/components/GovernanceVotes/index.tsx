@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   FormControlLabel,
   Grid,
+  Link,
   Radio,
   RadioGroup,
   Skeleton,
@@ -20,15 +21,15 @@ import {
   TableRow,
   Typography,
   useTheme,
-  ClickAwayListener,
-  Link
+  ClickAwayListener
 } from "@mui/material";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import moment from "moment";
-import { isEmpty, isUndefined, omitBy } from "lodash";
 import { JsonViewer } from "@textea/json-viewer";
+import { isEmpty, isUndefined, omitBy } from "lodash";
+import moment from "moment";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
+import useFetchList from "src/commons/hooks/useFetchList";
 import {
   ActionTypeIcon,
   AnchorTextIcon,
@@ -43,13 +44,12 @@ import {
   VoteIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { POOLS_ACTION_TYPE, VOTE_TYPE, STATUS_VOTE } from "src/commons/utils/constants";
+import { POOLS_ACTION_TYPE, STATUS_VOTE, VOTE_TYPE } from "src/commons/utils/constants";
 import CardGovernanceVotes, { VoteStatus, actionTypeListDrep } from "src/components/commons/CardGovernanceVotes";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import CustomIcon from "src/components/commons/CustomIcon";
 import CustomModal from "src/components/commons/CustomModal";
 import { FooterTable } from "src/components/commons/Table";
-import useFetchList from "src/commons/hooks/useFetchList";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -64,10 +64,10 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { TimeDuration } from "../TransactionLists/styles";
-import NoRecord from "../commons/NoRecord";
 import DynamicEllipsisText from "../DynamicEllipsisText";
 import { ViewJson } from "../ScriptModal/styles";
+import { TimeDuration } from "../TransactionLists/styles";
+import NoRecord from "../commons/NoRecord";
 import { AntSwitch, HashName, StyledArea } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import OverviewVote from "./OverviewVote";
@@ -82,6 +82,8 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   const query = parse(search.split("?")[1]);
   const [params, setParams] = useState({});
   const [index, setIndex] = useState<number | undefined>();
+  const [voterHash, setVoterHash] = useState<string>();
+
   useEffect(() => {
     setParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
@@ -98,8 +100,11 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     });
   }, [JSON.stringify(query)]);
 
+  // for governance haven't voted yet
+  const backupHashCC = "618000087d7b2085be40ddfa77e2a96b2d2facebc773e5c1b59af7bd";
+
   const { data, total, lastUpdated, loading, initialized, error, statusError } = useFetchList<GovernanceVote>(
-    `${API.POOL_CERTIFICATE.POOL}/${hash}`,
+    hash ? `${API.POOL_CERTIFICATE.POOL}/${hash}` : API.POOL_CERTIFICATE.POOL,
     omitBy(params, isUndefined),
     false
   );
@@ -112,7 +117,12 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
   if (query.voteId) {
     return (
       <>
-        <GovernanceVotesDetail hash={hash} voteId={(query?.voteId as string) || ""} index={index} type={type} />
+        <GovernanceVotesDetail
+          hash={type === VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? voterHash || backupHashCC : hash || ""}
+          voteId={(query?.voteId as string) || ""}
+          index={index}
+          type={type}
+        />
       </>
     );
   }
@@ -132,9 +142,9 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     return (
       <Box component={Grid} container spacing={2}>
         {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
-          <NoRecord m="170px 0px" padding={`0 !important`} />
+          <NoRecord m="80px 0px" padding={`0 !important`} />
         )}
-        {error && statusError === 500 && <FetchDataErr m="170px 0px" padding={`0 !important`} />}
+        {error && statusError === 500 && <FetchDataErr m="80px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item
@@ -144,6 +154,7 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
             key={index}
             onClick={() => {
               setIndex(value.index);
+              setVoterHash(value.voterHash);
               history.push(
                 {
                   search: stringify({
@@ -205,7 +216,6 @@ const GovernanceVotesDetail: React.FC<{
   const { drepId, poolId } = useParams<{ drepId: string; poolId: string }>();
 
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   const { data, loading, initialized } = useFetch<GovernanceVoteDetail>(
     `${API.POOL_CERTIFICATE.POOL_DETAIL(hash || "")}?${stringify({
@@ -215,7 +225,7 @@ const GovernanceVotesDetail: React.FC<{
     })}`
   );
 
-  const [tab, setTab] = useState<string>("pool");
+  const [tab, setTab] = useState<string>(type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH ? "pool" : "overall");
   const handleTabChange = (newTab: string) => {
     setTab(newTab);
   };
@@ -264,53 +274,56 @@ const GovernanceVotesDetail: React.FC<{
             >
               <ArrowLeftWhiteIcon width={isGalaxyFoldSmall ? 30 : 44} height={isGalaxyFoldSmall ? 30 : 44} />
             </Box>
+
             <HashName data-testid="governance.hashName" sx={{ marginLeft: isGalaxyFoldSmall ? "8px" : "0px" }}>
               {actionTypeListDrep.find((action) => action.value === data?.govActionType)?.text} #{data?.indexType}
             </HashName>
           </Box>
-          <Box textAlign="center">
-            <ButtonGroup variant="outlined" aria-label="Basic button group">
-              <TabButton data-testid="governance.poolTab" tabName="pool">
-                <Box width={85}>
-                  {data?.poolName && data.poolName.length < 10 ? (
-                    data.poolName
-                  ) : (
-                    <DynamicEllipsisText
-                      sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
-                      postfix={3}
-                      sxLastPart={{ textTransform: "none", direction: "ltr" }}
-                      sxFirstPart={{ textTransform: "none" }}
-                      isNoLimitPixel={true}
-                      isTooltip
-                      value={data?.poolName || poolId || drepId || ""}
-                    />
-                  )}
-                </Box>
-              </TabButton>
-              <TabButton data-testid="governance.overallTab" tabName="overall" title={t("common.overall")} />
-            </ButtonGroup>
-            <Box display="flex" justifyContent="center">
-              <Typography
-                data-testid="governance.descriptionTab"
-                fontSize="14px"
-                fontWeight={400}
-                lineHeight="16.41px"
-                pt="16px"
-                width="400px"
-                color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
-              >
-                {tab === "pool"
-                  ? type === VOTE_TYPE.DREP_KEY_HASH
-                    ? t("pool.tabPoolDrep")
-                    : t("pool.tabPool")
-                  : t("pool.overall")}
-              </Typography>
+          {type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH && (
+            <Box textAlign="center">
+              <ButtonGroup variant="outlined" aria-label="Basic button group">
+                <TabButton data-testid="governance.poolTab" tabName="pool">
+                  <Box width={85}>
+                    {data?.poolName && data.poolName.length < 10 ? (
+                      data.poolName
+                    ) : (
+                      <DynamicEllipsisText
+                        sx={{ textTransform: data?.poolName ? "unset" : "lowercase" }}
+                        postfix={3}
+                        sxLastPart={{ textTransform: "none", direction: "ltr" }}
+                        sxFirstPart={{ textTransform: "none" }}
+                        isNoLimitPixel={true}
+                        isTooltip
+                        value={data?.poolName || poolId || drepId || ""}
+                      />
+                    )}
+                  </Box>
+                </TabButton>
+                <TabButton data-testid="governance.overallTab" tabName="overall" title={t("common.overall")} />
+              </ButtonGroup>
+              <Box display="flex" justifyContent="center">
+                <Typography
+                  data-testid="governance.descriptionTab"
+                  fontSize="14px"
+                  fontWeight={400}
+                  lineHeight="16.41px"
+                  pt="16px"
+                  width="400px"
+                  color={theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light}
+                >
+                  {tab === "pool"
+                    ? type === VOTE_TYPE.DREP_KEY_HASH
+                      ? t("pool.tabPoolDrep")
+                      : t("pool.tabPool")
+                    : t("pool.overall")}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
       {tab === "pool" && <OverviewVote data={data} />}
-      {tab === "overall" && <OverallVote data={data} voteId={voteId} index={index} />}
+      {tab === "overall" && <OverallVote data={data} voteId={voteId} index={index} type={type} />}
     </Box>
   );
 };
@@ -330,6 +343,7 @@ export interface GovernanceVote {
   vote: string;
   votingPower: string;
   isRepeatVote: boolean;
+  voterHash: string;
 }
 
 export interface GovernanceVoteDetail {
@@ -690,6 +704,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const handleFilter = () => {
     setExpanded(false);
     setOpen(false);
+    setParams(params);
     setParamsFilter(params);
     setQuery({
       tab: query.tab,
@@ -705,6 +720,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       ...(dateRange?.fromDate && { fromDate: dateRange.fromDate || "" }),
       ...(dateRange?.toDate && { toDate: dateRange.toDate || "" })
     });
+    setParams({ ...params, governanceActionTxHash: "", anchorText: "" });
   };
 
   const currentStatusList = [
@@ -837,7 +853,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={"Search ID"}
-                    value={params?.governanceActionTxHash}
                     onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
                     onKeyPress={handleKeyPress}
                   />
@@ -877,7 +892,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                         color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                       }}
                       placeholder={t("pool.searchMetadata")}
-                      value={params?.anchorText}
                       onChange={({ target: { value } }) => setParams({ ...params, anchorText: value })}
                       onKeyPress={handleKeyPress}
                     />
@@ -975,7 +989,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                   sx={{ maxHeight: "170px", display: "block", overflowX: "hidden", overflowY: "auto" }}
                 >
                   <RadioGroup
-                    ata-testid="governance.filter.currentStatusValue"
+                    data-testid="governance.filter.currentStatusValue"
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     sx={{ p: "0px 16px" }}
@@ -1105,7 +1119,9 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                       toDate: moment(toDate, DATETIME_PARTTEN).endOf("d").utc().format(DATETIME_PARTTEN)
                     });
                   }}
-                  onClose={() => setOpenDateRange(false)}
+                  onClose={() => {
+                    setOpenDateRange(false);
+                  }}
                   onClearValue={() => setDateRange({ fromDate: "", toDate: "" })}
                 />
               </AccordionSummary>
