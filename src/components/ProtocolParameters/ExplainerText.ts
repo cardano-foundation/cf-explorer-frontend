@@ -99,7 +99,7 @@ export const ExplanationDetailNetwork = [
     label: "Maximum transaction size",
     explanation: "maxTxSize",
     description:
-      "	Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
+      "Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
   },
   {
     label: "Maximum block header size",
@@ -109,7 +109,7 @@ export const ExplanationDetailNetwork = [
   {
     label: "Maximum size of a serialized asset value",
     explanation: "maxValSize",
-    description: "The limit on the serialized size of the Value in each output in Bytes"
+    description: "The limit on the serialized size of the Value in each output in Bytes."
   },
   {
     label: "Maximum number of memory units in a single transaction",
@@ -129,7 +129,7 @@ export const ExplanationDetailNetwork = [
   {
     label: "Maximum number of steps in a single block",
     explanation: "maxBlockExSteps",
-    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block"
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block."
   },
   {
     label: "Maximum number of collateral inputs",
@@ -180,19 +180,19 @@ export const ExplanationDetailEconomic = [
   {
     label: "Minimum Lovelace deposit per byte of serialized UTxO",
     explanation: "coinsPerUTxOByte",
-    description: "Defines the cost for using Plutus reference scripts in Lovelace"
+    description: "Defines the cost for using Plutus reference scripts in Lovelace."
   },
   {
     label: "Fee per Plutus execution step",
     explanation: "priceStep",
     description:
-      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
+      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks."
   },
   {
     label: "Prices of Plutus execution units",
     explanation: "priceMem",
     description:
-      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
+      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks."
   }
 ];
 
@@ -230,7 +230,7 @@ export const ExplanationDetailGovernance = [
     label: "Governance action maximum lifetime in epochs",
     explanation: "govActionLifetime",
     description:
-      "The period after which a governance action will expire if it is not enacted (as a whole number of epochs)"
+      "The period after which a governance action will expire if it is not enacted (as a whole number of epochs)."
   },
   {
     label: "Governance action deposit",
@@ -265,12 +265,12 @@ export const displayTooltipNetwork = {
   maxBBSize: { description: "Maximum size of a block body. Limits blockchain storage size and communication costs." },
   maxTxSize: {
     description:
-      "	Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
+      "Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
   },
   maxBHSize: {
     description: "Maximum size of the block header, which should be significantly less than the maximum block size."
   },
-  maxValSize: { description: "The limit on the serialized size of the Value in each output in Bytes" },
+  maxValSize: { description: "The limit on the serialized size of the Value in each output in Bytes." },
   maxTxExMem: {
     description: "Maximum number of Plutus memory units that can be used in a single transaction."
   },
@@ -281,7 +281,7 @@ export const displayTooltipNetwork = {
     description: "Maximum number of Plutus execution steps that can be used in a single block."
   },
   maxBlockExSteps: {
-    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block"
+    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block."
   },
   maxCollateralInputs: {
     description: "Maximum number of collateral inputs in a transaction."
@@ -313,10 +313,10 @@ export const displayTooltipEconomic = {
   minPoolCost: {
     description: "Minimum pool cost per epoch (in lovelace), which enables the pledge effect."
   },
-  coinsPerUTxOByte: { description: "Defines the cost for using Plutus reference scripts in Lovelace" },
+  coinsPerUTxOByte: { description: "Defines the cost for using Plutus reference scripts in Lovelace." },
   priceStep: {
     description:
-      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks. "
+      "Defines the fees for executing Plutus scripts. Gives an economic return for Plutus script execution. Provides security against low-cost DoS attacks."
   },
   priceMem: {
     description:
@@ -339,14 +339,14 @@ export const displayTooltipTechnical = {
     description: "Plutus cost models."
   },
   collateralPercentage: {
-    description: "	Percentage of fee that is used as collateral for a failed transaction."
+    description: "Percentage of fee that is used as collateral for a failed transaction."
   }
 };
 
 export const displayTooltipGovernance = {
   govActionLifetime: {
     description:
-      "The period after which a governance action will expire if it is not enacted (as a whole number of epochs)"
+      "The period after which a governance action will expire if it is not enacted (as a whole number of epochs)."
   },
   govActionDeposit: {
     description:
