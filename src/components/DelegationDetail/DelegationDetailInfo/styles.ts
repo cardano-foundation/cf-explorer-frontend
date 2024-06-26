@@ -85,6 +85,7 @@ export const PoolIdValue = styled("small")`
   word-break: break-word;
   line-height: 1.5;
   margin-right: 5px;
+  cursor: default;
 `;
 export const PoolHomepage = styled("a")`
   font-family: var(--font-family-text);
