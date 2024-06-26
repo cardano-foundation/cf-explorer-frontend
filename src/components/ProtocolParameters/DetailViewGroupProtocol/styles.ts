@@ -3,6 +3,7 @@ import { styled, Box, IconButton, Drawer, Divider } from "@mui/material";
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
   zIndex: 1302,
   "& .MuiDrawer-paper": {
+    width: "fit-content",
     background: `${theme.palette.secondary[0]}`,
     border: "none",
     height: "100%",
@@ -25,11 +26,11 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
 
 export const ViewDetailContainer = styled(Box)(({ theme }) => ({
   position: "relative",
-  width: "430px",
+  width: "510px",
   height: "100%",
   overflowX: "hidden",
   overflowY: "auto",
-  marginLeft: "30px",
+  marginLeft: "25px",
   textAlign: "center",
   [theme.breakpoints.down("sm")]: {
     display: "flex",
@@ -57,8 +58,7 @@ export const ViewDetailContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const ViewDetailScroll = styled(Box)(({ theme }) => ({
-  width: "400px",
-  maxWidth: "400px",
+  width: "100%",
   marginRight: "16px",
   overflowX: "hidden",
   overflow: "hidden",
@@ -88,6 +88,7 @@ export const CloseButton = styled(IconButton)`
 
 export const ContainerContent = styled(Box)`
   margin-top: 65px;
+  margin-right: 25px;
 `;
 
 export const ContainerTitle = styled(Box)`
