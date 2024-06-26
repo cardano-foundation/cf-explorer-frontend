@@ -30,7 +30,7 @@ import {
   PoolParticipationIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -235,7 +235,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                 +numericValue > maxValue
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
-                  ? +numericValue / 100
+                  ? truncateToTwoDecimals(+numericValue) / 100
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
@@ -295,7 +295,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? +numericValue / 100
+                    ? truncateToTwoDecimals(+numericValue) / 100
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
