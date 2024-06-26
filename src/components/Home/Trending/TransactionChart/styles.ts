@@ -152,3 +152,11 @@ export const ValueChart = styled(Box)(({ theme }) => ({
   fontWeight: "bold",
   fontSize: "20px"
 }));
+export const XAxisChart = styled(Box)(() => ({
+  position: "absolute",
+  borderBottom: "2px solid #a0a2aa",
+  width: "calc(100% - 73px)",
+  bottom: "29px",
+  zIndex: 1,
+  left: "55px"
+}));
