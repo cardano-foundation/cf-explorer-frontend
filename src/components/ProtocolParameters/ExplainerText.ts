@@ -257,29 +257,12 @@ export const ExplanationDetailGovernance = [
     label: "Minimal constitutional committee size",
     explanation: "ccMinSize",
     description:
-      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee.",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee."
   },
   {
     label: "Maximum term length (in epochs) for the constitutional committee members",
     explanation: "ccMaxTermLength",
-    description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+    description: "The limit on the maximum term that a committee member may serve (as a whole number of epochs)."
   }
 ];
 
@@ -383,26 +366,9 @@ export const displayTooltipGovernance = {
   },
   ccMinSize: {
     description:
-      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee.",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee."
   },
   ccMaxTermLength: {
-    description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+    description: "The limit on the maximum term that a committee member may serve (as a whole number of epochs)."
   }
 };
