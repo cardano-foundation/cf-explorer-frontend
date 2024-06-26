@@ -90,17 +90,21 @@ export const GovernanceParameters = [
 ];
 
 export const ExplanationDetailNetwork = [
-  { label: "Maximum block body size", explanation: "maxBBSize", description: "The maximum size of a block, in Bytes" },
+  {
+    label: "Maximum block body size",
+    explanation: "maxBBSize",
+    description: "Maximum size of a block body. Limits blockchain storage size and communication costs."
+  },
   {
     label: "Maximum transaction size",
     explanation: "maxTxSize",
-    description: "The maximum size of a transaction, in Bytes"
+    description:
+      "	Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
   },
   {
     label: "Maximum block header size",
     explanation: "maxBHSize",
-    description:
-      "The size of the block header. Note that increasing the block header size may affect the overall block size (maxBlockBodySize)"
+    description: "Maximum size of the block header, which should be significantly less than the maximum block size."
   },
   {
     label: "Maximum size of a serialized asset value",
@@ -108,29 +112,19 @@ export const ExplanationDetailNetwork = [
     description: "The limit on the serialized size of the Value in each output in Bytes"
   },
   {
-    label: "Maximum script execution units in a single transaction",
-    explanation: "maxTxExUnits",
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
-  },
-  {
     label: "Maximum number of memory units in a single transaction",
     explanation: "maxTxExMem",
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
+    description: "Maximum number of Plutus memory units that can be used in a single transaction."
   },
   {
     label: "Maximum number of steps in a single transaction",
     explanation: "maxTxExSteps",
-    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per transaction"
-  },
-  {
-    label: "Maximum script execution units in a single block",
-    explanation: "maxBlockExUnits",
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+    description: "Maximum number of Plutus execution steps that can be used in a single transaction."
   },
   {
     label: "Maximum number of memory units in a single transaction",
     explanation: "maxBlockExMem",
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+    description: "Maximum number of Plutus execution steps that can be used in a single block."
   },
   {
     label: "Maximum number of steps in a single block",
@@ -140,7 +134,7 @@ export const ExplanationDetailNetwork = [
   {
     label: "Maximum number of collateral inputs",
     explanation: "maxCollateralInputs",
-    description: "Defines the maximum number of inputs that can be used for collateral when executing a Plutus script"
+    description: "Maximum number of collateral inputs in a transaction."
   }
 ];
 
@@ -148,50 +142,40 @@ export const ExplanationDetailEconomic = [
   {
     label: "Minimum fee coefficient",
     explanation: "minFeeA",
-    description:
-      "Defines the cost for basic transactions in Lovelace\nfee(tx)  =  txFeeFixed + txFeePerByte x nBytes(tx)"
+    description: "Additional transaction fee per byte of data (in lovelace)."
   },
   {
     label: "Minimum fee constant",
     explanation: "minFeeB",
-    description:
-      "Defines the cost for basic transactions in Lovelace\nfee(tx)  =  txFeeFixed + txFeePerByte x nBytes(tx)"
+    description: "Base transaction fee (in lovelace)."
   },
   {
     label: "Delegation key Lovelace deposit",
     explanation: "keyDeposit",
-    description: "Ensures that stake addresses are retired when no longer needed",
-    children: [
-      { description: "Helps reduce long term storage costs" },
-      { description: "Helps limit CPU and memory costs in the ledger" }
-    ]
+    description:
+      "Deposit charged for stake keys (in Lovelace), which ensures that unused keys are returned thus freeing resources."
   },
   {
     label: "Pool registration Lovelace deposit",
     explanation: "poolDeposit",
-    description:
-      "Ensures that stake pools are retired by the stake pool operator when the stake pool is no longer needed by them. Helps reduce long term storage costs"
+    description: "Pool deposit (in lovelace)."
   },
   {
     label: "Monetary expansion",
     explanation: "rho",
-    description: "Part of the rewards mechanism.",
-    children: [
-      { description: "The monetary expansion controls the amount of reserves that is used for rewards each epoch" },
-      { description: "Governs the long-term sustainability of Cardano" }
-    ]
+    description:
+      "Monetary expansion rate per epoch, which governs the rewards that are returned from reserves to the ecosystem (treasury, stake pools, and delegators)."
   },
   {
     label: "Treasury expansion",
     explanation: "tau",
     description:
-      "Part of the rewards mechanism. The treasury cut portion of the monetary expansion is transferred to the treasury before any pool rewards are paid. Can be set in the range 0.0-1.0 (0%-100%)"
+      "Treasury rate (0.2 = 20%). The proportion of total rewards allocated to treasury each epoch before the remaining rewards are distributed to pools."
   },
   {
     label: "Minimum fixed rewards cut for pools",
     explanation: "minPoolCost",
-    description:
-      "Part of the rewards mechanism. The minimum pool cost is transferred to the pool rewards address before any delegator rewards are paid"
+    description: "Minimum pool cost per epoch (in lovelace), which enables the pledge effect."
   },
   {
     label: "Minimum Lovelace deposit per byte of serialized UTxO",
@@ -216,64 +200,28 @@ export const ExplanationDetailTechnical = [
   {
     label: "Pool pledge influence",
     explanation: "a0",
-    children: [
-      { description: "Enables the pledge protection mechanism" },
-      {
-        description: "Provides protection against Sybil attack",
-        children: [
-          { description: "Higher values reward pools that have more pledge and penalize pools that have less pledge" }
-        ]
-      },
-      {
-        description: "Has an economic effect as well as technical effect - economic advice is also required",
-        children: [{ description: "Can be set in the range 0.0-infinity" }]
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description: "The ‘influence factor’ that governs how much impact the pledge has on rewards."
   },
   {
     label: "PoolRetireMaxEpoch",
     explanation: "eMax",
-    description: "Defines the maximum number of epochs notice that a pool can give when planning to retire"
+    description: "Maximum number of epochs within which a pool can be announced to retire starting from the next epoch."
   },
   {
     label: "Desired number of pools",
     explanation: "nOpt",
-    description: "Sets the target number of stake pools",
-    children: [
-      { description: "The expected number of pools when the network is in the equilibrium state" },
-      {
-        description: "Primarily a security parameter, ensuring decentralization by pool division/replication",
-        children: [
-          { description: "Higher values reward pools that have more pledge and penalize pools that have less pledge" }
-        ]
-      },
-      {
-        description:
-          "Has an economic effect as well as a security affect  - economic advice is also required when changing this parameter"
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description:
+      "The target number of stake pools, also known as k, impacts the saturation threshold and encourages the growth of stake pools."
   },
   {
     label: "Plutus execution cost models",
     explanation: "costModels",
-    description:
-      "Define the base costs for each Plutus primitive in terms of CPU and memory unit. There are about 150 distinct micro-parameters in total.\nCost models are defined for each Plutus language version. A new language version may introduce additional micro-parameters or remove existing micro-parameters"
+    description: "Plutus cost models."
   },
   {
     label: "Proportion of collateral needed for scripts",
     explanation: "collateralPercentage",
-    description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+    description: "Percentage of fee that is used as collateral for a failed transaction."
   }
 ];
 
@@ -287,16 +235,8 @@ export const ExplanationDetailGovernance = [
   {
     label: "Governance action deposit",
     explanation: "govActionDeposit",
-    description: "Sets the target number of stake pools",
-    children: [
-      { description: "The expected number of pools when the network is in the equilibrium state" },
-      { description: "Primarily a security parameter, ensuring decentralization by pool division/replication" },
-      {
-        description:
-          "Has an economic effect as well as a security affect  - economic advice is also required when changing this parameter"
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description:
+      "The deposit that is charged when submitting a governance action. Helps to limit the number of actions that are submitted."
   },
   {
     label: "DRep deposit amount",
@@ -312,7 +252,7 @@ export const ExplanationDetailGovernance = [
     label: "Minimal constitutional committee size",
     explanation: "ccMinSize",
     description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
+      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee.",
     children: [
       {
         description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
@@ -339,70 +279,56 @@ export const ExplanationDetailGovernance = [
 ];
 
 export const displayTooltipNetwork = {
-  maxBBSize: { description: "The maximum size of a block, in Bytes" },
-  maxTxSize: { description: "The maximum size of a transaction, in Bytes" },
-  maxBHSize: {
+  maxBBSize: { description: "Maximum size of a block body. Limits blockchain storage size and communication costs." },
+  maxTxSize: {
     description:
-      "The size of the block header. Note that increasing the block header size may affect the overall block size (maxBlockBodySize)"
+      "	Maximum size of a transaction. While several transactions may be included in a block, the maximum transaction size must be strictly less than the maximum block size."
+  },
+  maxBHSize: {
+    description: "Maximum size of the block header, which should be significantly less than the maximum block size."
   },
   maxValSize: { description: "The limit on the serialized size of the Value in each output in Bytes" },
-  maxTxExUnits: {
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
-  },
   maxTxExMem: {
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per transaction"
+    description: "Maximum number of Plutus memory units that can be used in a single transaction."
   },
   maxTxExSteps: {
-    description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per transaction"
-  },
-  maxBlockExUnits: {
-    description: "Maximum number of steps in a single block."
+    description: "Maximum number of Plutus execution steps that can be used in a single transaction."
   },
   maxBlockExMem: {
-    description: "The limit on the maximum number of memory units that can be used by Plutus scripts per block"
+    description: "Maximum number of Plutus execution steps that can be used in a single block."
   },
   maxBlockExSteps: {
     description: "The limit on the maximum number of CPU steps that can be used by Plutus scripts per block"
   },
   maxCollateralInputs: {
-    description: "Defines the maximum number of inputs that can be used for collateral when executing a Plutus script"
+    description: "Maximum number of collateral inputs in a transaction."
   }
 };
 
 export const displayTooltipEconomic = {
   minFeeA: {
-    description:
-      "Defines the cost for basic transactions in Lovelace\nfee(tx)  =  txFeeFixed + txFeePerByte x nBytes(tx)"
+    description: "Additional transaction fee per byte of data (in lovelace)."
   },
   minFeeB: {
-    description:
-      "Defines the cost for basic transactions in Lovelace\nfee(tx)  =  txFeeFixed + txFeePerByte x nBytes(tx)"
+    description: "Base transaction fee (in lovelace)."
   },
   keyDeposit: {
-    description: "Ensures that stake addresses are retired when no longer needed",
-    children: [
-      { description: "Helps reduce long term storage costs" },
-      { description: "Helps limit CPU and memory costs in the ledger" }
-    ]
+    description:
+      "Deposit charged for stake keys (in Lovelace), which ensures that unused keys are returned thus freeing resources."
   },
   poolDeposit: {
-    description:
-      "Ensures that stake pools are retired by the stake pool operator when the stake pool is no longer needed by them. Helps reduce long term storage costs"
+    description: "Pool deposit (in lovelace)."
   },
   rho: {
-    description: "Part of the rewards mechanism.",
-    children: [
-      { description: "The monetary expansion controls the amount of reserves that is used for rewards each epoch" },
-      { description: "Governs the long-term sustainability of Cardano" }
-    ]
+    description:
+      "Monetary expansion rate per epoch, which governs the rewards that are returned from reserves to the ecosystem (treasury, stake pools, and delegators)."
   },
   tau: {
     description:
-      "Part of the rewards mechanism. The treasury cut portion of the monetary expansion is transferred to the treasury before any pool rewards are paid. Can be set in the range 0.0-1.0 (0%-100%)"
+      "Treasury rate (0.2 = 20%). The proportion of total rewards allocated to treasury each epoch before the remaining rewards are distributed to pools."
   },
   minPoolCost: {
-    description:
-      "Part of the rewards mechanism. The minimum pool cost is transferred to the pool rewards address before any delegator rewards are paid"
+    description: "Minimum pool cost per epoch (in lovelace), which enables the pledge effect."
   },
   coinsPerUTxOByte: { description: "Defines the cost for using Plutus reference scripts in Lovelace" },
   priceStep: {
@@ -417,56 +343,20 @@ export const displayTooltipEconomic = {
 
 export const displayTooltipTechnical = {
   a0: {
-    children: [
-      { description: "Enables the pledge protection mechanism" },
-      {
-        description: "Provides protection against Sybil attack",
-        children: [
-          { description: "Higher values reward pools that have more pledge and penalize pools that have less pledge" }
-        ]
-      },
-      {
-        description: "Has an economic effect as well as technical effect - economic advice is also required",
-        children: [{ description: "Can be set in the range 0.0-infinity" }]
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description: "The ‘influence factor’ that governs how much impact the pledge has on rewards."
   },
   eMax: {
-    description: "Defines the maximum number of epochs notice that a pool can give when planning to retire"
+    description: "Maximum number of epochs within which a pool can be announced to retire starting from the next epoch."
   },
   nOpt: {
-    description: "Sets the target number of stake pools",
-    children: [
-      { description: "The expected number of pools when the network is in the equilibrium state" },
-      {
-        description: "Primarily a security parameter, ensuring decentralization by pool division/replication",
-        children: [
-          { description: "Higher values reward pools that have more pledge and penalize pools that have less pledge" }
-        ]
-      },
-      {
-        description:
-          "Has an economic effect as well as a security affect  - economic advice is also required when changing this parameter"
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description:
+      "The target number of stake pools, also known as k, impacts the saturation threshold and encourages the growth of stake pools."
   },
   costModels: {
-    description:
-      "Define the base costs for each Plutus primitive in terms of CPU and memory unit. There are about 150 distinct micro-parameters in total.\nCost models are defined for each Plutus language version. A new language version may introduce additional micro-parameters or remove existing micro-parameters"
+    description: "Plutus cost models."
   },
   collateralPercentage: {
-    description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
-    children: [
-      {
-        description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"
-      },
-      { description: "If a script fails to execute, then the collateral is lost" },
-      { description: "The collateral is never lost if a script executes successfully" },
-      { description: "By making it more expensive rather than less expensive to execute failed scripts" }
-    ]
+    description: "	Percentage of fee that is used as collateral for a failed transaction."
   }
 };
 
@@ -476,16 +366,8 @@ export const displayTooltipGovernance = {
       "The period after which a governance action will expire if it is not enacted (as a whole number of epochs)"
   },
   govActionDeposit: {
-    description: "Sets the target number of stake pools",
-    children: [
-      { description: "The expected number of pools when the network is in the equilibrium state" },
-      { description: "Primarily a security parameter, ensuring decentralization by pool division/replication" },
-      {
-        description:
-          "Has an economic effect as well as a security affect  - economic advice is also required when changing this parameter"
-      },
-      { description: "Large changes in this parameter will trigger mass redelegation events" }
-    ]
+    description:
+      "The deposit that is charged when submitting a governance action. Helps to limit the number of actions that are submitted."
   },
   drepDeposit: {
     description: "The deposit that is charged when registering a DRep. Helps to limit the number of active DReps."
@@ -496,7 +378,7 @@ export const displayTooltipGovernance = {
   },
   ccMinSize: {
     description:
-      "Defines how much collateral must be provided when executing a Plutus script as a percentage of the normal execution cost",
+      "The least number of members that can be included in a constitutional committee following a governance action to change the Constitutional Committee.",
     children: [
       {
         description: "Collateral is used to pay for failed script execution instead of the usual script execution fees"

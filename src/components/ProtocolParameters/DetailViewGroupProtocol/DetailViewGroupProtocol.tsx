@@ -120,10 +120,10 @@ function DetailViewGroupProtocol({ open, onClose, groupType }: Props) {
     return (
       <>
         <ViewDetailContainer>
+          <CloseButton onClick={onClose}>
+            <CgClose />
+          </CloseButton>
           <ViewDetailScroll>
-            <CloseButton onClick={onClose}>
-              <CgClose />
-            </CloseButton>
             <ContainerContent>
               <ContainerTitle>
                 <Header component="h2">{getTitleGroupProtocol(groupType)}</Header>
