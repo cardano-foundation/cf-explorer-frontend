@@ -5,6 +5,7 @@ import { koiosApi } from "playwright/api/call-koios/koios.api";
 
 import { transactionOverviewPage } from "../../../pages/transaction-overview.page";
 import { transactionDetailPage } from "../../../pages/transaction-detail.page";
+import { addressDetailPage } from "../../../pages/address-detail.page";
 
 const { Given, When, Then } = createBdd();
 
@@ -15,7 +16,7 @@ Given(/^the user is in the general dashboard page in explorer portal test$/, asy
   await transactionOverviewPage(page).goToDashboard();
 });
 When(/^the user selects the Transactions option inside the Blockchain drop down menu$/, async ({ page }) => {
-  await transactionOverviewPage(page).goToEpochsFromSidebar();
+  await transactionOverviewPage(page).goToTransactionFromSidebar();
 });
 Then(
   /^the user should see the transactions page containing the Search bar and Transactions table$/,
@@ -59,7 +60,7 @@ When(
   }
 );
 Then(/^the transaction details page of the select transaction should be opened$/, async ({ page }) => {
-  await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+  await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
 });
 
 Given(/^the user is in the Transactions page portal$/, async ({ page }) => {
@@ -130,7 +131,7 @@ When(/^the user selects the view details button in the transcation info widget$/
   await transactionDetailFromWidgetDetailViewBtn.click();
 });
 Then(/^the transaction details page of the selected transaction should be opened$/, async ({ page }) => {
-  await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+  await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
 });
 
 Given(/^the user is in the Transactions page to address detail from detail button in widget$/, async ({ page }) => {
@@ -171,7 +172,7 @@ When(/^the user selects the summary section in the info widget$/, async ({ page 
 Then(
   /^the transaction detail page of the selected transaction should be opened with the summary section displayed$/,
   async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );
 
@@ -189,7 +190,7 @@ When(/^the user selects the UTXOs section in the info widget of the selected tra
 Then(
   /^the transaction detail page of the selected transaction should be opened with the UTXOs section displayed$/,
   async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );
 
@@ -216,6 +217,6 @@ When(
 Then(
   /^the transaction detail page of the selected transaction should be opened with the transaction signatories section displayed$/,
   async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );

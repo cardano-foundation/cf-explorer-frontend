@@ -7,7 +7,7 @@ export function transactionOverviewPage(page: Page) {
   const firstTransactionInTable = page.getByTestId("transaction.table.value.txhash#0");
   const searchBarEpoch = page.getByTestId("all-filters-dropdown");
   const sidebarBlockchainButton = page.getByTestId("menu-button-blockchain");
-  const epochsTab = page.getByTestId("submenu-button-transactions");
+  const transactionTab = page.getByTestId("submenu-button-transactions");
   const transactionTableTitleTxhash = page.getByTestId("transactions.table.title.txhash");
   const transactionTableTitleBlock = page.getByTestId("transactions.table.title.block");
   const transactionTableTitleEpoch = page.getByTestId("transactions.table.title.epoch");
@@ -37,9 +37,9 @@ export function transactionOverviewPage(page: Page) {
     await expect(searchBarEpoch).toHaveText("Transactions");
   };
 
-  const goToEpochsFromSidebar = async () => {
+  const goToTransactionFromSidebar = async () => {
     await sidebarBlockchainButton.click();
-    await epochsTab.click();
+    await transactionTab.click();
   };
 
   const goToDashboard = async () => {
@@ -116,7 +116,7 @@ export function transactionOverviewPage(page: Page) {
     checkCurrenTransactionWidget,
     openWidget,
     searchBarOnTransaction,
-    goToEpochsFromSidebar,
+    goToTransactionFromSidebar,
     goToDashboard,
     checkTransactionsTable,
     goToTransactions,
