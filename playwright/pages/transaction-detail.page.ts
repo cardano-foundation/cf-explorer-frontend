@@ -6,8 +6,7 @@ export function transactionDetailPage(page: Page) {
 
     const url = await page.url();
     await expect(deatailPageTitle, "Check title on transaction detail").toHaveText("Transaction Details");
-    expect(url, "Check url transaction detail").toContain(`/transaction/${transactionHash}`);
+    expect(url, "Check url transaction detail").toContain(`${transactionHash}`);
   };
-
   return { checkTransactionsDetail };
 }

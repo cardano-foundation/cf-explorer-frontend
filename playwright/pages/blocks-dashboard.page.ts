@@ -147,7 +147,6 @@ export function blocksDashboard(page: Page) {
     goToBlockDetailFromBlockId,
     checkBlockWidget,
     goToBlockDetailFromWidgetByBlockHash,
-
     goToBlockDetailFromWidgetByTrxTab
   };
 }

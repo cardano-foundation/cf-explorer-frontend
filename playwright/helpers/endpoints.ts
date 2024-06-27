@@ -39,4 +39,9 @@ export class Koios {
       return `${Koios.BASE_MAIN_NET_URL}/epoch_info`;
     }
   };
+  static Transactions = class {
+    public static get Base() {
+      return `${Koios.BASE_MAIN_NET_URL}/tx_info`;
+    }
+  };
 }

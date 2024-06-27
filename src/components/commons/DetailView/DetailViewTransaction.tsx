@@ -238,7 +238,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                 }
                 trailOpacity={1}
               >
-                <EpochNumber>{data?.tx?.epochNo}</EpochNumber>
+                <EpochNumber data-testid="transaction.widget.epoch">{data?.tx?.epochNo}</EpochNumber>
                 <EpochText>Epoch</EpochText>
               </ProgressCircle>
             </HeaderContainer>
@@ -250,7 +250,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                   fill={theme.isDark ? theme.palette.secondary[0] : theme.palette.common.white}
                 />
                 <ItemName>{t("glossary.block")}</ItemName>
-                <ItemValue>{data?.tx?.blockNo}</ItemValue>
+                <ItemValue data-testid="transaction.widget.block">{data?.tx?.blockNo}</ItemValue>
               </Item>
               <Item>
                 <CustomIcon
@@ -260,7 +260,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                 />
                 <ItemName>{t("common.slot")}</ItemName>
                 <ItemValue>
-                  {data?.tx?.epochSlot}
+                  <span data-testid="transaction.widget.epochSlot">{data?.tx?.epochSlot}</span>
                   <BlockDefault>/{data?.tx?.maxEpochSlot || MAX_SLOT_EPOCH}</BlockDefault>
                 </ItemValue>
               </Item>
@@ -270,21 +270,25 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
                 <DetailLabel>{t("glossary.transactionHash")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={hash} placement="top-start">
-                    <StyledLink to={details.transaction(hash)}>{getShortHash(hash)}</StyledLink>
+                    <StyledLink to={details.transaction(hash)} data-testid="transaction.widget.trxHash">
+                      {getShortHash(hash)}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={hash} />
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("glossary.absoluteSlot")}</DetailLabel>
-                <DetailValue>{data?.tx?.slotNo}</DetailValue>
+                <DetailValue data-testid="transaction.widget.slot">{data?.tx?.slotNo}</DetailValue>
               </DetailsInfoItem>
               {input && (
                 <DetailsInfoItem>
                   <DetailLabel>{t("glossary.input")}</DetailLabel>
                   <DetailValue>
                     <CustomTooltip title={input} placement="top-start">
-                      <StyledLink to={details.address(input)}>{getShortHash(input)}</StyledLink>
+                      <StyledLink to={details.address(input)} data-testid="transaction.widget.inputAddress">
+                        {getShortHash(input)}
+                      </StyledLink>
                     </CustomTooltip>
                     <CopyButton text={input} />
                   </DetailValue>
@@ -304,7 +308,9 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DatetimeTypeTooltip>
-                  <DetailValue>{formatDateTimeLocal(data?.tx?.time || "")}</DetailValue>
+                  <DetailValue data-testid="transaction.widget.createdAt">
+                    {formatDateTimeLocal(data?.tx?.time || "")}
+                  </DetailValue>
                 </DatetimeTypeTooltip>
               </DetailsInfoItem>
               <DetailsInfoItem>
@@ -337,7 +343,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
               if (!value) return null;
               return (
                 <Group key={key}>
-                  <DetailLink to={details.transaction(hash, key)}>
+                  <DetailLink to={details.transaction(hash, key)} data-testid={`transaction.widget.${key}`}>
                     <DetailLabel>
                       <DetailLinkIcon>{icon}</DetailLinkIcon>
                       <DetailLinkName>
@@ -356,7 +362,7 @@ const DetailViewTransaction: React.FC<DetailViewTransactionProps> = (props) => {
             })}
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.transaction(hash)} />
+        <ViewMoreButton to={details.transaction(hash)} data-testid="transaction.detailViewEpoch.viewDetail" />
       </>
     );
   };
