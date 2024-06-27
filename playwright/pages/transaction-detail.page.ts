@@ -1,9 +1,12 @@
 import { expect, Page } from "@playwright/test";
 
 export function transactionDetailPage(page: Page) {
-  const checkAddressDetail = async ({ addressId }: { addressId: string | null }) => {
+  const checkTransactionsDetail = async ({ transactionHash }: { transactionHash: string | null }) => {
+    const deatailPageTitle = page.getByTestId("detail.page.title");
+
     const url = await page.url();
-    expect(url, "Check url address detail").toContain(`${addressId}`);
+    await expect(deatailPageTitle, "Check title on transaction detail").toHaveText("Transaction Details");
+    expect(url, "Check url transaction detail").toContain(`${transactionHash}`);
   };
-  return { checkAddressDetail };
+  return { checkTransactionsDetail };
 }

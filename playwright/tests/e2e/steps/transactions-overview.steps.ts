@@ -60,7 +60,7 @@ When(
   }
 );
 Then(/^the transaction details page of the select transaction should be opened$/, async ({ page }) => {
-  await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+  await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
 });
 
 Given(/^the user is in the Transactions page portal$/, async ({ page }) => {
@@ -105,7 +105,7 @@ When(
   }
 );
 Then(/^the user should be redirected to the address details page of the selected address hash$/, async ({ page }) => {
-  await transactionDetailPage(page).checkAddressDetail({ addressId: addressId || "" });
+  await addressDetailPage(page).checkAddressDetail({ address: addressId || "" });
 });
 
 Then(/^the user should be redirected to the address detail page of the selected address hash$/, async ({ page }) => {
@@ -131,7 +131,7 @@ When(/^the user selects the view details button in the transcation info widget$/
   await transactionDetailFromWidgetDetailViewBtn.click();
 });
 Then(/^the transaction details page of the selected transaction should be opened$/, async ({ page }) => {
-  await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+  await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
 });
 
 Given(/^the user is in the Transactions page to address detail from detail button in widget$/, async ({ page }) => {
@@ -148,7 +148,7 @@ When(/^the user selects the Input or Output address hash in the transcation info
 Then(
   /^the user should be redirected to the address detail page of the selected input address hash$/,
   async ({ page }) => {
-    await transactionDetailPage(page).checkAddressDetail({ addressId: addressId || "" });
+    await addressDetailPage(page).checkAddressDetail({ address: addressId || "" });
   }
 );
 
@@ -172,7 +172,7 @@ When(/^the user selects the summary section in the info widget$/, async ({ page 
 Then(
   /^the transaction detail page of the selected transaction should be opened with the summary section displayed$/,
   async ({ page }) => {
-    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );
 
@@ -190,7 +190,7 @@ When(/^the user selects the UTXOs section in the info widget of the selected tra
 Then(
   /^the transaction detail page of the selected transaction should be opened with the UTXOs section displayed$/,
   async ({ page }) => {
-    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );
 
@@ -217,6 +217,6 @@ When(
 Then(
   /^the transaction detail page of the selected transaction should be opened with the transaction signatories section displayed$/,
   async ({ page }) => {
-    await addressDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
+    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
   }
 );
