@@ -14,7 +14,7 @@ import StatusHistory from "./StatusHistory";
 const Tabs = () => {
   const history = useHistory();
   const onTabChange = (tab: string) => {
-    history.replace(details.CONSTITUIONAL_COMMITTEES(tab));
+    history.replace(details.constitutionalCommittees(tab));
   };
   const constitutionalCommitteeTabs: TTab[] = [
     {
@@ -26,7 +26,11 @@ const Tabs = () => {
     {
       key: "governanceVotes",
       icon: CCGorvernanceVote,
-      children: <DelegationGovernanceVotes hash={"drepId"} type={VOTE_TYPE.DREP_KEY_HASH} />,
+      children: (
+        <Box px={1}>
+          <DelegationGovernanceVotes type={VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH} />
+        </Box>
+      ),
       label: <Box data-testid="ns.script">{t("cc.governanceVotes")}</Box>
     },
     {

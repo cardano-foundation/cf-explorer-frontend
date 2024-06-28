@@ -210,6 +210,8 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                   ? t("status.inActive")
                   : stakeKeyStatus === "DEACTIVATED"
                   ? t("status.deActivated")
+                  : stakeKeyStatus === "EXPIRED"
+                  ? t("common.EXPIRED")
                   : t("status.retired")}
               </StakeKeyStatus>
             )}
@@ -257,122 +259,124 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           ""
         )}
       </WrapHeader>
-      <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
-        {(listItem || [])?.map((item, index) => {
-          const keyItem = item.key || "";
-          return (
-            <CardItem
-              item
-              xs={isDetailToken && index === 0 ? 12 : 6}
-              sm={isDetailToken && index === 0 ? 12 : 6}
-              md={numberOfItems === 4 ? 3 : 4}
-              lg={numberOfItems > 6 ? 12 / itemOnRow : true}
-              length={numberOfItems}
-              key={index}
-              wide={+isDetailToken}
-              itemOnRow={itemOnRow}
-            >
-              <Box position="relative" display={item.hideHeader ? "none" : ""}>
-                {item.icon ? (
-                  typeof item.icon === "string" ? (
-                    <img src={item.icon} alt="" height={20} />
-                  ) : (
-                    <CustomIcon
-                      fill={!item.strokeColor ? theme.palette.secondary.main : ""}
-                      stroke={item.strokeColor ? theme.palette.secondary.main : ""}
-                      icon={item.icon}
-                      height={item?.sizeIcon || 22}
-                    />
-                  )
-                ) : null}
-                {item.allowSearch && keyItem && (
-                  <AllowSearchButton
-                    onClick={() => {
-                      setOpenBackdrop((prev) => ({ ...prev, [keyItem]: true }));
-                    }}
-                  >
-                    <SearchIcon stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
-                  </AllowSearchButton>
-                )}
-                {item.allowSearch && keyItem && openBackdrop[keyItem] && (
-                  <StyledSelect
-                    renderValue={() => "Token"}
-                    displayEmpty
-                    value={""}
-                    IconComponent={BiChevronDown}
-                    MenuProps={{
-                      MenuListProps: {
-                        sx: {
-                          bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
-                        }
-                      },
-                      PaperProps: {
-                        sx: {
-                          borderRadius: 2,
-                          bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
-                          marginTop: 0.5,
-                          "&::-webkit-scrollbar": {
-                            width: "5px"
-                          },
-                          "&::-webkit-scrollbar-track": {
-                            background: "transparent"
-                          },
-                          "&::-webkit-scrollbar-thumb": {
-                            background: "transparent"
-                          },
-                          "&:hover": {
+      {listItem && (
+        <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
+          {(listItem || [])?.map((item, index) => {
+            const keyItem = item.key || "";
+            return (
+              <CardItem
+                item
+                xs={isDetailToken && index === 0 ? 12 : 6}
+                sm={isDetailToken && index === 0 ? 12 : 6}
+                md={numberOfItems === 4 ? 3 : 4}
+                lg={numberOfItems > 6 ? 12 / itemOnRow : true}
+                length={numberOfItems}
+                key={index}
+                wide={+isDetailToken}
+                itemOnRow={itemOnRow}
+              >
+                <Box position="relative" display={item.hideHeader ? "none" : ""}>
+                  {item.icon ? (
+                    typeof item.icon === "string" ? (
+                      <img src={item.icon} alt="" height={20} />
+                    ) : (
+                      <CustomIcon
+                        fill={!item.strokeColor ? theme.palette.secondary.main : ""}
+                        stroke={item.strokeColor ? theme.palette.secondary.main : ""}
+                        icon={item.icon}
+                        height={item?.sizeIcon || 22}
+                      />
+                    )
+                  ) : null}
+                  {item.allowSearch && keyItem && (
+                    <AllowSearchButton
+                      onClick={() => {
+                        setOpenBackdrop((prev) => ({ ...prev, [keyItem]: true }));
+                      }}
+                    >
+                      <SearchIcon stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />
+                    </AllowSearchButton>
+                  )}
+                  {item.allowSearch && keyItem && openBackdrop[keyItem] && (
+                    <StyledSelect
+                      renderValue={() => "Token"}
+                      displayEmpty
+                      value={""}
+                      IconComponent={BiChevronDown}
+                      MenuProps={{
+                        MenuListProps: {
+                          sx: {
+                            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`
+                          }
+                        },
+                        PaperProps: {
+                          sx: {
+                            borderRadius: 2,
+                            bgcolor: ({ palette }) => `${palette.secondary[0]} !important`,
+                            marginTop: 0.5,
+                            "&::-webkit-scrollbar": {
+                              width: "5px"
+                            },
+                            "&::-webkit-scrollbar-track": {
+                              background: "transparent"
+                            },
                             "&::-webkit-scrollbar-thumb": {
-                              background: theme.palette.secondary.light
+                              background: "transparent"
+                            },
+                            "&:hover": {
+                              "&::-webkit-scrollbar-thumb": {
+                                background: theme.palette.secondary.light
+                              }
                             }
                           }
                         }
-                      }
-                    }}
-                  >
-                    {!item?.dataSearch || (item?.dataSearch?.length === 0 && <NoRecord />)}
-                    {item?.dataSearch &&
-                      item?.dataSearch?.length > 0 &&
-                      item?.dataSearch?.map((item, index) => (
-                        <StyledMenuItem
-                          onClick={() => {
-                            handleClickItem(details.token(item?.assetId));
-                          }}
-                          key={index}
-                        >
-                          <CustomTooltip title={item.assetName || item.assetId}>
-                            <Box
-                              color={({ palette }) => palette.secondary.main}
-                              mr={2}
-                              sx={{ maxWidth: "220px", textOverflow: "ellipsis", overflow: "hidden" }}
-                            >
-                              {item.assetName || getShortHash(item.assetId)}
+                      }}
+                    >
+                      {!item?.dataSearch || (item?.dataSearch?.length === 0 && <NoRecord />)}
+                      {item?.dataSearch &&
+                        item?.dataSearch?.length > 0 &&
+                        item?.dataSearch?.map((item, index) => (
+                          <StyledMenuItem
+                            onClick={() => {
+                              handleClickItem(details.token(item?.assetId));
+                            }}
+                            key={index}
+                          >
+                            <CustomTooltip title={item.assetName || item.assetId}>
+                              <Box
+                                color={({ palette }) => palette.secondary.main}
+                                mr={2}
+                                sx={{ maxWidth: "220px", textOverflow: "ellipsis", overflow: "hidden" }}
+                              >
+                                {item.assetName || getShortHash(item.assetId)}
+                              </Box>
+                            </CustomTooltip>
+                            <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>
+                              {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
                             </Box>
-                          </CustomTooltip>
-                          <Box color={({ palette }) => palette.secondary.main} fontWeight={500}>
-                            {formatNumberDivByDecimals(item?.assetQuantity || 0, item?.metadata?.decimals || 0)}
-                          </Box>
-                        </StyledMenuItem>
-                      ))}
-                  </StyledSelect>
-                )}
-              </Box>
-              <Box
-                data-testid="detailHeader.title"
-                sx={{
-                  my: 1,
-                  [theme.breakpoints.down("md")]: {
-                    mb: 0
-                  }
-                }}
-              >
-                {item.title}
-              </Box>
-              <ValueCard data-testid="detailHeader.value">{item.value}</ValueCard>
-            </CardItem>
-          );
-        })}
-        <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} itemOnRow={itemOnRow} />
-      </DetailsInfo>
+                          </StyledMenuItem>
+                        ))}
+                    </StyledSelect>
+                  )}
+                </Box>
+                <Box
+                  data-testid="detailHeader.title"
+                  sx={{
+                    my: 1,
+                    [theme.breakpoints.down("md")]: {
+                      mb: 0
+                    }
+                  }}
+                >
+                  {item.title}
+                </Box>
+                <ValueCard data-testid="detailHeader.value">{item.value}</ValueCard>
+              </CardItem>
+            );
+          })}
+          <BufferList numberOfItems={numberOfItems} wide={+isDetailToken} itemOnRow={itemOnRow} />
+        </DetailsInfo>
+      )}
       <Backdrop
         sx={{ zIndex: 100, touchAction: "none" }}
         onClick={() => setOpenBackdrop({ input: false, output: false })}

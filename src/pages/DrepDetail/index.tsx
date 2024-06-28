@@ -32,7 +32,8 @@ import {
   VotesYesIcon,
   VotesAbstainIcon,
   VotesNoIcon,
-  DropdownIcon
+  DropdownIcon,
+  CCDetailVotingParticipation
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -61,11 +62,11 @@ import NoRecord from "src/components/commons/NoRecord";
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
 
-const voteOption = [
+export const voteOption = [
   { title: "Action Type", value: "Default" },
   { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
-  { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
+  { title: "Constitutional Committee Updates", value: "UPDATE_COMMITTEE" },
   { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
   { title: "Hard-Fork Initiation", value: "HARD_FORK_INITIATION_ACTION" },
   { title: "Protocol Parameter Changes", value: "PARAMETER_CHANGE_ACTION" },
@@ -183,7 +184,7 @@ const DrepDetail = () => {
       value: <ValueCard>{data?.delegators} </ValueCard>
     },
     {
-      icon: CreateDrepIcon,
+      icon: CCDetailVotingParticipation,
       sizeIcon: 26,
       title: (
         <TitleCard display={"flex"} alignItems="center">
@@ -213,8 +214,8 @@ const DrepDetail = () => {
             IconComponent={DropdownIcon}
             sx={{
               bgcolor: theme.palette.primary[100],
-              maxWidth: "200px",
-              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
+              width: "200px",
+              [theme.breakpoints.down("sm")]: { width: "100%" }
             }}
             MenuProps={{
               style: { zIndex: 1303 },
@@ -315,7 +316,6 @@ const DrepDetail = () => {
         }
         loading={false}
         listItem={listOverview}
-        bookmarkData={"1"}
         subTitle={`Type: ${data?.type || ""}`}
         stakeKeyStatus={data?.status}
       />
@@ -496,7 +496,7 @@ const DrepAccordion = () => {
   );
 };
 
-const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
+export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
   const theme = useTheme();
   const totalVote = useMemo(() => {
     if (data) {
@@ -575,7 +575,7 @@ const VoteBar = ({
           </Typography>
         </Box>
       }
-      placement="right"
+      placement="top"
     >
       <Box
         sx={{ background: color, borderRadius: "4px" }}
@@ -595,8 +595,9 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.primary[200],
+    backgroundColor: theme.palette.primary[100],
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: 11
+    fontSize: 11,
+    border: `1px solid ${theme.palette.primary[200]}`
   }
 }));

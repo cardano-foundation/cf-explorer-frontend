@@ -50,6 +50,8 @@ import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import ProtectIcon from "./icons/protect-icon.svg";
+import ProtectIconDark from "./icons/protect-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -246,8 +248,14 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import ParticipationIcon from "./icons/participation-rate.svg?react";
 import DrepIdIcon from "./icons/DrepId.svg?react";
 import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+import CCDetailRegistrared from "./icons/ccDetailRegistrared.svg?react";
+import CCDetailVotingParticipation from "./icons/CCVotingParticipation.svg?react";
+import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
+import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
+import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -400,6 +408,11 @@ export {
   TotalOutput,
   FileGuard,
   HighestIconComponent,
+  CCDetailRegistrared,
+  CCDetailVotingParticipation,
+  CCDetailLifetimeVotes,
+  CCStatusHistory,
+  CCDetailRegistrationInformation,
   LowestIconComponent,
   UserIconComponent,
   DropIconComponent,
@@ -479,6 +492,8 @@ export {
   ActionTypeIcon,
   VoteIcon,
   historyIcon,
+  ProtectIcon,
+  ProtectIconDark,
   CurrentStatusIcon,
   VotingPowerIcon,
   SubmissionDateIcon,
@@ -498,7 +513,8 @@ export {
   PoolParticipationIcon,
   PoolBlocksIcon,
   GovernanceIcon,
-  PoolVotingIcon
+  PoolVotingIcon,
+  ParticipationIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
