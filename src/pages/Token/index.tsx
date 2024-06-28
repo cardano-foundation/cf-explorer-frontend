@@ -109,12 +109,6 @@ const Tokens = () => {
       render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
     },
     {
-      title: t("glossary.volume24h"),
-      key: "volumeIn24h",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
-    },
-    {
       title: t("common.totalSupply"),
       key: "supply",
       minWidth: "150px",
