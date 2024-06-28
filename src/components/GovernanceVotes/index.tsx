@@ -660,6 +660,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const [expanded, setExpanded] = useState<string | false>("");
   const [openDateRange, setOpenDateRange] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const { isMobile } = useScreen();
 
   const filterValue = {
     sort: "ASC",
@@ -952,7 +953,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                             noWrap
                             overflow="hidden"
                             textOverflow="ellipsis"
-                            maxWidth="15rem"
+                            maxWidth={isMobile ? "12rem" : "15rem"}
                           >
                             {i.text}
                           </Typography>
