@@ -40,42 +40,58 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: TimeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("createdAt")} </TitleCard>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.createAt">
+            {t("createdAt")}{" "}
+          </TitleCard>
         </Box>
       ),
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.time || "")}</DatetimeTypeTooltip>
+      value: (
+        <DatetimeTypeTooltip>
+          <Box data-testid="block.detail.overview.value.createAt">{formatDateTimeLocal(data?.time || "")}</Box>
+        </DatetimeTypeTooltip>
+      )
     },
     {
       icon: TxConfirm,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.confirmation">
             {data?.confirmation && data?.confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}
           </TitleCard>
         </Box>
       ),
-      value: <WrapConfirmation>{data?.confirmation || 0}</WrapConfirmation>
+      value: (
+        <WrapConfirmation data-testid="block.detail.overview.value.confirmation">
+          {data?.confirmation || 0}
+        </WrapConfirmation>
+      )
     },
     {
       icon: ExchageIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.transactions">
             {data?.txCount && data?.txCount > 1 ? t("glossary.transactions") : t("glossary.transaction")}
           </TitleCard>
         </Box>
       ),
-      value: data?.txCount || 0
+      value: (
+        <Box display={"inline"} data-testid="block.detail.overview.value.transactions">
+          {data?.txCount || 0}
+        </Box>
+      )
     },
     {
       icon: ExchageAltIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{t("glossary.transactionfees")} </TitleCard>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.transactionFee">
+            {t("glossary.transactionfees")}{" "}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <Box component={"span"}>
+        <Box component={"span"} data-testid="block.detail.overview.value.transactionFee">
           {formatADAFull(data?.totalFees)} <ADAicon />
         </Box>
       )
@@ -84,11 +100,14 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: OutputIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.totalOutputInAda")}</TitleCard>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.output">
+            {" "}
+            {t("glossary.totalOutputInAda")}
+          </TitleCard>
         </Box>
       ),
       value: (
-        <Box data-testid="block-details-total-output-in-ada" component={"span"}>
+        <Box component={"span"} data-testid="block.detail.overview.value.output">
           {formatADAFull(data?.totalOutput)} <ADAicon />
         </Box>
       )
@@ -97,14 +116,17 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: CubeIconComponent,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}> {t("glossary.block")}</TitleCard>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.block">
+            {" "}
+            {t("glossary.block")}
+          </TitleCard>
         </Box>
       ),
       value: (() => {
         const { blockName, tooltip } = formatNameBlockNo(data?.blockNo, data?.epochNo);
         return (
           <CustomTooltip title={tooltip}>
-            <span>{blockName}</span>
+            <span data-testid="block.detail.overview.value.block">{blockName}</span>
           </CustomTooltip>
         );
       })()
@@ -113,17 +135,23 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       icon: SlotIcon,
       title: (
         <Box display={"flex"} alignItems="center">
-          <TitleCard mr={1}>{`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}</TitleCard>
+          <TitleCard mr={1} data-testid="block.detail.overview.title.slot">{`${t("common.slot")} - ${t(
+            "glossary.absoluteSlot"
+          )}`}</TitleCard>
         </Box>
       ),
-      value: `${data?.epochSlotNo || ""} - ${data?.slotNo || ""}`
+      value: (
+        <Box data-testid="block.detail.overview.value.slot">{`${data?.epochSlotNo || ""} - ${data?.slotNo || ""}`}</Box>
+      )
     },
     {
       icon: BlockProducerIcon,
       title: (
         <Box display={"flex"} alignItems={"center"}>
           <Box display={"flex"} alignItems="center">
-            <TitleCard mr={1}>{t("glossary.blockproducer")} </TitleCard>
+            <TitleCard mr={1} data-testid="block.detail.overview.title.producer">
+              {t("glossary.blockproducer")}{" "}
+            </TitleCard>
           </Box>
           <CustomTooltip title="Block minted by">
             <span>
@@ -137,6 +165,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           component={data?.poolView ? Link : Box}
           color={({ palette }) => `${data?.poolView ? palette.primary.main : palette.secondary.main}!important`}
           to={details.delegation(data?.poolView)}
+          data-testid="block.detail.overview.value.producer"
         >
           {data?.poolName ? (
             data.poolName
@@ -156,7 +185,7 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
         type="BLOCK"
         hash={data?.hash}
         bookmarkData={`${data?.blockNo || data?.hash}`}
-        title={t("head.page.blockDetails")}
+        title={<Box data-testid="block.detail.header">{t("head.page.blockDetails")}</Box>}
         lastUpdated={lastUpdated}
         epoch={
           data && {

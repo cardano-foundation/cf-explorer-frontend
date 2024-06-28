@@ -66,10 +66,26 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getBlockByHash = async (blockHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Blocks.Base + `/${blockHash}`,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
   return {
     getLastEpochData,
     getLatestBlockData,
     getEpochById,
-    getBlockByNumber
+    getBlockByNumber,
+    getBlockByHash
   };
 }

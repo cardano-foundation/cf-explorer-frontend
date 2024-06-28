@@ -196,7 +196,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             </BackButton>
           )}
           <HeaderContainer>
-            <HeaderTitle>{title}</HeaderTitle>
+            <HeaderTitle data-testid="detail.page.title">{title}</HeaderTitle>
             {bookmarkData && <Bookmark type={type} keyword={bookmarkData} />}
             {transactionStatus && <HeaderStatus status={transactionStatus}>{transactionStatus}</HeaderStatus>}
             {epoch?.status && (
@@ -237,7 +237,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </TimeDuration>
         </Box>
         {epoch ? (
-          <EpochDetail class-name="123">
+          <EpochDetail>
             <ProgressCircle
               size={100}
               pathWidth={8}
