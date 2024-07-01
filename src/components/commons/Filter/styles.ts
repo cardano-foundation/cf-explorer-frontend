@@ -43,7 +43,7 @@ export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
     box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    right: 152%;
+    right: 80%;
   }
 `;
 
