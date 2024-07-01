@@ -79,7 +79,7 @@ const DrepDetail = () => {
   const { drepId } = useParams<{ drepId: string }>();
   const theme = useTheme();
   const history = useHistory();
-  const { width } = useScreen();
+  const { width, isMobile } = useScreen();
 
   const [typeVote, setTypeVote] = useState("Default");
   const [openModal, setOpenModal] = useState(false);
@@ -305,7 +305,7 @@ const DrepDetail = () => {
       <DetailHeader
         type="DREP"
         title={
-          <TruncateSubTitleContainer>
+          <TruncateSubTitleContainer mr={isMobile ? 2 : 0}>
             <DynamicEllipsisText
               value={data?.drepId || ""}
               sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 70px)" }}
