@@ -350,7 +350,12 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
                 },
                 [theme.breakpoints.down("md")]: {
                   p: "0px !important",
-                  borderTop: "none  !important",
+                  borderTop:
+                    type !== VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH
+                      ? `1px solid ${
+                          theme.isDark ? theme.palette.secondary[700] : theme.palette.primary[200]
+                        }  !important`
+                      : "none  !important",
                   borderBottom: "none  !important",
                   borderLeft: "none  !important"
                 }
