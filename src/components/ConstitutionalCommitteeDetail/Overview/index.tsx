@@ -170,7 +170,7 @@ const Overview = ({ data, loading }: { data: CCDetailOVerview | null; loading: b
       ),
       value: (
         <Box>
-          <VoteRate data={dataChard} loading={loadingChard} />
+          <VoteRate data={dataChard} loading={loadingChard} showDataTooltip={true} />
         </Box>
       )
     },

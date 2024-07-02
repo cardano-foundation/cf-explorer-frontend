@@ -496,7 +496,15 @@ const DrepAccordion = () => {
   );
 };
 
-export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
+export const VoteRate = ({
+  data,
+  showDataTooltip = false,
+  loading
+}: {
+  data: DrepOverviewChart | null;
+  showDataTooltip?: boolean;
+  loading: boolean;
+}) => {
   const theme = useTheme();
   const totalVote = useMemo(() => {
     if (data) {
@@ -521,6 +529,7 @@ export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; lo
         numberVote={data?.numberOfYesVote || 0}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
+        showDataTooltip={showDataTooltip}
       />
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
@@ -528,6 +537,7 @@ export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; lo
         numberVote={data?.numberOfAbstainVotes || 0}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
+        showDataTooltip={showDataTooltip}
       />
       <VoteBar
         percentage={
@@ -544,6 +554,7 @@ export const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; lo
         numberVote={data?.numberOfNoVotes || 0}
         icon={<VotesNoIcon />}
         label={t("common.no")}
+        showDataTooltip={showDataTooltip}
       />
     </Box>
   );
@@ -554,13 +565,15 @@ const VoteBar = ({
   color,
   icon,
   label,
-  numberVote
+  numberVote,
+  showDataTooltip
 }: {
   percentage: string | number;
   numberVote: number;
   color: string;
   icon?: JSX.Element;
   label: string;
+  showDataTooltip: boolean;
 }) => (
   <Box display="flex" flexDirection="column" alignItems="center">
     <Typography fontSize="10px" fontWeight={400}>
@@ -571,7 +584,7 @@ const VoteBar = ({
         <Box height="39px" display="flex" alignItems="center" gap="8px">
           {icon}
           <Typography fontSize="12px" fontWeight={600}>
-            {numberVote} ({percentage})
+            {showDataTooltip ? numberVote : t("common.na")} ({percentage})
           </Typography>
         </Box>
       }
