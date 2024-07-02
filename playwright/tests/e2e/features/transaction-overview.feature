@@ -32,30 +32,30 @@ Feature: Check Transaction Cardano Explorer
 
   Scenario: Transaction detail page through info widget 
     Given the user is in the Transactions page for go to transaction detail from detail button in widget
-    Given the user open the info widget of one transaction record in the transactions table of transaction page
+    And the user open the info widget of one transaction record in the transactions table of transaction page
     When the user selects the view details button in the transcation info widget
     Then the transaction details page of the selected transaction should be opened
 
   Scenario: Address detail view page through info widget 
     Given the user is in the Transactions page to address detail from detail button in widget
-    Given the user open the info widget of one transaction record in transaction web
+    And the user open the info widget of one transaction record in transaction web
     When the user selects the Input or Output address hash in the transcation info widget
     Then the user should be redirected to the address detail page of the selected input address hash
 
    Scenario: Info widget summary link section
     Given the user is in the Transactions page for go to transaction detail from summary in widget
-    Given the user opens the info widget of any transaction in the transactions table from widget of transaction
+    And the user opens the info widget of any transaction in the transactions table from widget of transaction
     When the user selects the summary section in the info widget
     Then the transaction detail page of the selected transaction should be opened with the summary section displayed    
 
   Scenario:  Info widget UTXOs link section
     Given the user is in the Transactions page for go to transaction detail from widget
-    Given the user opens the info widget of any transaction in the transactions table from widget
+    And the user opens the info widget of any transaction in the transactions table from widget
     When the user selects the UTXOs section in the info widget of the selected transaction
     Then the transaction detail page of the selected transaction should be opened with the UTXOs section displayed   
 
   Scenario:  Info widget transaction signatores link section
     Given the user is in the Transactions page in the explorer page for go to transaction table from widget
-    Given the user opens the info widget of any transaction in the transactions table from widget tab
+    And the user opens the info widget of any transaction in the transactions table from widget tab
     When the user selects the transaction signatories section in the info widget of the selected transaction
     Then the transaction detail page of the selected transaction should be opened with the transaction signatories section displayed  

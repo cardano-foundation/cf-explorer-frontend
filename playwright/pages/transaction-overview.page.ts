@@ -5,7 +5,13 @@ import { TransactionInformationDto } from "playwright/api/dtos/transactionInform
 
 export function transactionOverviewPage(page: Page) {
   const firstTransactionInTable = page.getByTestId("transaction.table.value.txhash#0");
+  const firstBlockInTable = page.getByTestId("transaction.table.value.block#0");
+  const firstEpochInTable = page.getByTestId("transactions.table.value.epoch#0");
+  const transactionTableValueSlot = page.getByTestId("transactions.table.value.slot#0");
+  const firstInputAddressInTable = page.getByTestId("transaction.table.value.inputAddress#0").first();
+
   const searchBarEpoch = page.getByTestId("all-filters-dropdown");
+  const deatailPageTitle = page.getByTestId("detail.page.title");
   const sidebarBlockchainButton = page.getByTestId("menu-button-blockchain");
   const transactionTab = page.getByTestId("submenu-button-transactions");
   const transactionTableTitleTxhash = page.getByTestId("transactions.table.title.txhash");
@@ -16,21 +22,77 @@ export function transactionOverviewPage(page: Page) {
   const transactionTableTitleOutputInAda = page.getByTestId("transactions.table.title.outputInAda");
   const transactionTableTitleInputAddress = page.getByTestId("transactions.table.title.inputAddress");
   const transactionTableTitleOutputAddress = page.getByTestId("transactions.table.title.outputAddress");
-  const transactionTableValueSlot = page.getByTestId("transactions.table.value.slot#2");
-  const transactionWidgetTrxSignature = page.getByTestId("transaction.widget.signersInformation");
-  const addressDetailFromWidgetByInputAddress = page.getByTestId("transaction.widget.inputAddress");
-  const transactionWidgeSummary = page.getByTestId("transaction.widget.summary");
   const transactionWidgeDetailViewBtn = page.getByTestId("transaction.detailViewEpoch.viewDetail");
-  const transactionWidgeUtxo = page.getByTestId("transaction.widget.utxOs");
 
+  const addressDetailFromWidgetByInputAddress = page.getByTestId("transaction.widget.inputAddress");
+  const transactionWidgetTrxSignature = page.getByTestId("transaction.widget.signersInformation");
+  const transactionWidgeSummary = page.getByTestId("transaction.widget.summary");
+  const transactionWidgeUtxo = page.getByTestId("transaction.widget.utxOs");
   const transactionWidgetEpochNo = page.getByTestId("transaction.widget.epoch");
   const transactionWidgetBlockNo = page.getByTestId("transaction.widget.block");
   const transactionWidgetSlotNo = page.getByTestId("transaction.widget.slot");
   const transactionWidgetCreatedAt = page.getByTestId("transaction.widget.createdAt");
   const transactionWidgetEpochSlot = page.getByTestId("transaction.widget.epochSlot");
 
+  const getDetailBlockPageTitle = async () => {
+    await expect(deatailPageTitle, "Check title on block detail").toHaveText("Block Details");
+  };
+
+  const getDetailEpochPageTitle = async () => {
+    await expect(deatailPageTitle, "Check title on epoch detail").toHaveText("Epoch Details");
+  };
+  const getDetailAddressPageTitle = async () => {
+    await expect(deatailPageTitle, "Check title on epoch detail").toHaveText("Address Details");
+  };
+
   const goToTransactionDetailFromTable = async () => {
     await firstTransactionInTable.click();
+  };
+
+  const goToBlockDetailFromTable = async () => {
+    await firstBlockInTable.click();
+  };
+
+  const goToEpochDetailFromTable = async () => {
+    await firstEpochInTable.click();
+  };
+
+  const getAttributeTxHashWidget = async () => {
+    const ariaLabelValue = await firstTransactionInTable?.getAttribute("aria-label");
+    return ariaLabelValue;
+  };
+
+  const getLinkHrefByInputAddress = async () => {
+    const addressId = await firstInputAddressInTable?.getAttribute("href");
+    return addressId;
+  };
+
+  const getLinkHrefTxHash = async () => {
+    const trxHash = await firstTransactionInTable?.getAttribute("href");
+    return trxHash;
+  };
+  const getLinkHrefFromWidgeDetailViewBtn = async () => {
+    const trxHash = await transactionWidgeDetailViewBtn?.getAttribute("href");
+    return trxHash;
+  };
+
+  const getLinkHrefFromWidgetTrxSignature = async () => {
+    const trxHash = await transactionWidgetTrxSignature?.getAttribute("href");
+    return trxHash;
+  };
+
+  const getLinkHrefFromWidgetByUtxo = async () => {
+    const trxHash = await transactionWidgeUtxo?.getAttribute("href");
+    return trxHash;
+  };
+  const getLinkHrefFromWidgetBySummary = async () => {
+    const trxHash = await transactionWidgeSummary?.getAttribute("href");
+    return trxHash;
+  };
+
+  const getLinkHrefFromWidgetByInputAddress = async () => {
+    const trxHash = await addressDetailFromWidgetByInputAddress?.getAttribute("href");
+    return trxHash;
   };
 
   const searchBarOnTransaction = async () => {
@@ -50,9 +112,14 @@ export function transactionOverviewPage(page: Page) {
     await page.goto("/transactions");
   };
 
-  const goToTransactionDetailFromWidgetDetailViewBtn = async () => {
+  const goToTrxDetailFromWidgetDetailViewBtn = async () => {
     await transactionWidgeDetailViewBtn.click();
   };
+
+  const goToAddressDetailByInputAddreess = async () => {
+    await firstInputAddressInTable.click();
+  };
+
   const openWidget = async () => {
     await transactionTableValueSlot.click();
   };
@@ -112,6 +179,20 @@ export function transactionOverviewPage(page: Page) {
   };
 
   return {
+    goToAddressDetailByInputAddreess,
+    getLinkHrefByInputAddress,
+    getDetailAddressPageTitle,
+    getLinkHrefFromWidgetByInputAddress,
+    getLinkHrefFromWidgetBySummary,
+    getLinkHrefFromWidgetByUtxo,
+    getLinkHrefFromWidgetTrxSignature,
+    getLinkHrefFromWidgeDetailViewBtn,
+    getDetailEpochPageTitle,
+    goToEpochDetailFromTable,
+    getDetailBlockPageTitle,
+    getAttributeTxHashWidget,
+    getLinkHrefTxHash,
+    goToBlockDetailFromTable,
     goToTransactionDetailFromTable,
     checkCurrenTransactionWidget,
     openWidget,
@@ -122,7 +203,7 @@ export function transactionOverviewPage(page: Page) {
     goToTransactions,
     openLastestTransactionWidget,
     goToAddrssDetailFromWidgetByInputAddress,
-    goToTransactionDetailFromWidgetDetailViewBtn,
+    goToTrxDetailFromWidgetDetailViewBtn,
     goToTransactionDetailFromWidgetBySumary,
     goToTransactionDetailFromWidgetByUTXO,
     goToTransactionDetailFromWidgetByTrxTab

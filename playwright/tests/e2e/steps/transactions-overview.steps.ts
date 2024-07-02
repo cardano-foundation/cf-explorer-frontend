@@ -1,5 +1,4 @@
 import { createBdd } from "playwright-bdd";
-import { expect } from "@playwright/test";
 
 import { koiosApi } from "playwright/api/call-koios/koios.api";
 
@@ -38,8 +37,7 @@ When(
 Then(
   /^the user should see the Info widget data with the respective data of the selected transaction$/,
   async ({ page, request }) => {
-    const trxHash = await page.getByTestId("transaction.table.value.txhash#0");
-    const ariaLabelValue = await trxHash?.getAttribute("aria-label");
+    const ariaLabelValue = await transactionOverviewPage(page).getAttributeTxHashWidget();
     if (ariaLabelValue) {
       (await koiosApi(request).getTransactionByTrxHash(ariaLabelValue)).json().then(async (data) => {
         await transactionOverviewPage(page).checkCurrenTransactionWidget({ currentTransaction: data });
@@ -54,9 +52,8 @@ Given(/^the user is in the Transactions page$/, async ({ page }) => {
 When(
   /^the user selects the transaction hash of one record of the transactions table in the transactions page$/,
   async ({ page }) => {
-    const transactionsTableValueEpoch = page.getByTestId("transaction.table.value.txhash#0");
-    transactionHash = await transactionsTableValueEpoch.getAttribute("href");
-    await transactionsTableValueEpoch.click();
+    transactionHash = await transactionOverviewPage(page).getLinkHrefTxHash();
+    await transactionOverviewPage(page).goToTransactionDetailFromTable();
   }
 );
 Then(/^the transaction details page of the select transaction should be opened$/, async ({ page }) => {
@@ -69,13 +66,11 @@ Given(/^the user is in the Transactions page portal$/, async ({ page }) => {
 When(
   /^the user selects the block number of one record of the transactions table in the transactions page$/,
   async ({ page }) => {
-    const transactionsTableValueEpoch = page.getByTestId("transaction.table.value.block#0");
-    await transactionsTableValueEpoch.click();
+    await transactionOverviewPage(page).goToBlockDetailFromTable();
   }
 );
 Then(/^the user should be redirected to the block detail page of the selected block number$/, async ({ page }) => {
-  const deatailPageTitle = page.getByTestId("detail.page.title");
-  await expect(deatailPageTitle, "Check title on block detail").toHaveText("Block Details");
+  await transactionOverviewPage(page).getDetailBlockPageTitle();
 });
 
 Given(/^the user is in the Transactions page web$/, async ({ page }) => {
@@ -84,13 +79,11 @@ Given(/^the user is in the Transactions page web$/, async ({ page }) => {
 When(
   /^the user selects the epoch number of one record of the transactions table in the transactions page$/,
   async ({ page }) => {
-    const transactionsTableValueEpoch = page.getByTestId("transactions.table.value.epoch#0");
-    await transactionsTableValueEpoch.click();
+    await transactionOverviewPage(page).goToEpochDetailFromTable();
   }
 );
 Then(/^the user should be redirected to the epoch detail page of the selected epoch number$/, async ({ page }) => {
-  const deatailPageTitle = page.getByTestId("detail.page.title");
-  await expect(deatailPageTitle, "Check title on epoch detail").toHaveText("Epoch Details");
+  await transactionOverviewPage(page).getDetailEpochPageTitle();
 });
 
 Given(/^the user is in the Transactions page for go to address detail page$/, async ({ page }) => {
@@ -99,18 +92,12 @@ Given(/^the user is in the Transactions page for go to address detail page$/, as
 When(
   /^the user selects the input or output address of one record of the transactions table in the transactions page$/,
   async ({ page }) => {
-    const transactionsTableValueEpoch = page.getByTestId("transaction.table.value.inputAddress#0").first();
-    addressId = await transactionsTableValueEpoch.getAttribute("href");
-    await transactionsTableValueEpoch.click();
+    addressId = await transactionOverviewPage(page).getLinkHrefByInputAddress();
+    await transactionOverviewPage(page).goToAddressDetailByInputAddreess();
   }
 );
 Then(/^the user should be redirected to the address details page of the selected address hash$/, async ({ page }) => {
   await addressDetailPage(page).checkAddressDetail({ address: addressId || "" });
-});
-
-Then(/^the user should be redirected to the address detail page of the selected address hash$/, async ({ page }) => {
-  const deatailPageTitle = page.getByTestId("detail.page.title");
-  await expect(deatailPageTitle, "Check title on address detail").toHaveText("Address Details");
 });
 
 Given(
@@ -126,9 +113,8 @@ Given(
   }
 );
 When(/^the user selects the view details button in the transcation info widget$/, async ({ page }) => {
-  const transactionDetailFromWidgetDetailViewBtn = page.getByTestId("transaction.detailViewEpoch.viewDetail");
-  transactionHash = await transactionDetailFromWidgetDetailViewBtn.getAttribute("href");
-  await transactionDetailFromWidgetDetailViewBtn.click();
+  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgeDetailViewBtn();
+  await transactionOverviewPage(page).goToTrxDetailFromWidgetDetailViewBtn();
 });
 Then(/^the transaction details page of the selected transaction should be opened$/, async ({ page }) => {
   await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
@@ -141,9 +127,8 @@ Given(/^the user open the info widget of one transaction record in transaction w
   await transactionOverviewPage(page).openLastestTransactionWidget();
 });
 When(/^the user selects the Input or Output address hash in the transcation info widget$/, async ({ page }) => {
-  const addressDetailProducer = page.getByTestId("transaction.widget.inputAddress");
-  addressId = await addressDetailProducer.getAttribute("href");
-  await addressDetailProducer.click();
+  addressId = await transactionOverviewPage(page).getLinkHrefFromWidgetByInputAddress();
+  await transactionOverviewPage(page).goToAddrssDetailFromWidgetByInputAddress();
 });
 Then(
   /^the user should be redirected to the address detail page of the selected input address hash$/,
@@ -165,9 +150,8 @@ Given(
   }
 );
 When(/^the user selects the summary section in the info widget$/, async ({ page }) => {
-  const transactionDetailFromWidgetBySumary = page.getByTestId("transaction.widget.summary");
-  transactionHash = await transactionDetailFromWidgetBySumary.getAttribute("href");
-  await transactionDetailFromWidgetBySumary.click();
+  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetBySummary();
+  await transactionOverviewPage(page).goToTransactionDetailFromWidgetBySumary();
 });
 Then(
   /^the transaction detail page of the selected transaction should be opened with the summary section displayed$/,
@@ -183,9 +167,8 @@ Given(/^the user opens the info widget of any transaction in the transactions ta
   await transactionOverviewPage(page).openLastestTransactionWidget();
 });
 When(/^the user selects the UTXOs section in the info widget of the selected transaction$/, async ({ page }) => {
-  const transactionDetailFromWidgetByUTXO = page.getByTestId("transaction.widget.utxOs");
-  transactionHash = await transactionDetailFromWidgetByUTXO.getAttribute("href");
-  await transactionDetailFromWidgetByUTXO.click();
+  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetByUtxo();
+  await transactionOverviewPage(page).goToTransactionDetailFromWidgetByUTXO();
 });
 Then(
   /^the transaction detail page of the selected transaction should be opened with the UTXOs section displayed$/,
@@ -209,9 +192,8 @@ Given(
 When(
   /^the user selects the transaction signatories section in the info widget of the selected transaction$/,
   async ({ page }) => {
-    const transactionWidgetTrxSignature = page.getByTestId("transaction.widget.signersInformation");
-    transactionHash = await transactionWidgetTrxSignature.getAttribute("href");
-    await transactionWidgetTrxSignature.click();
+    transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetTrxSignature();
+    await transactionOverviewPage(page).goToTransactionDetailFromWidgetByTrxTab();
   }
 );
 Then(
