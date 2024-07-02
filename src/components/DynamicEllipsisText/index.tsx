@@ -10,7 +10,6 @@ import CustomTooltip from "../commons/CustomTooltip";
 const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   display: inline-block;
   white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
-  overflow: hidden;
   width: 100%;
   text-align: left;
   transform: translateY(2px);
@@ -29,7 +28,7 @@ const FirstPart = styled(SubPart)`
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
-  direction: rtl;
+  direction: ltl;
 `;
 
 const ContainerShortHand = styled(Box)`

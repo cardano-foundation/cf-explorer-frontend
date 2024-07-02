@@ -35,7 +35,7 @@ const BlockList = () => {
 
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
-
+  const { error } = fetchData;
   useEffect(() => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
@@ -155,11 +155,13 @@ const BlockList = () => {
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           {...fetchData}
           columns={columns}

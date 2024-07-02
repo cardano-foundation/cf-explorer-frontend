@@ -145,6 +145,18 @@ export const isExternalLink = (href?: string) => {
 
 export const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100 * 100) / 100}%`;
 
+export function truncateToTwoDecimals(number: number) {
+  const parts = number.toString().split(".");
+
+  if (parts.length === 1 || parts[1].length <= 2) {
+    return number;
+  }
+  const truncatedDecimal = parts[1].substring(0, 2);
+  const truncatedNumber = `${parts[0]}.${truncatedDecimal}`;
+
+  return parseFloat(truncatedNumber);
+}
+
 export function getPageInfo<T = ParsedUrlQuery>(
   search: string
 ): T & { page: number; size: number; sort: string; retired: string } {

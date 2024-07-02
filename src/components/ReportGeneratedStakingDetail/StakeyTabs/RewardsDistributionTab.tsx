@@ -24,6 +24,7 @@ const RewardsDistributionTab = () => {
   const fetchData = useFetchList<RewardDistributionItem>(reportId ? API.REPORT.SREPORT_DETAIL_REWARDS(reportId) : "", {
     ...pageInfo
   });
+  const { error } = fetchData;
   const theme = useTheme();
   const { total } = fetchData;
   const columns: Column<RewardDistributionItem>[] = [
@@ -70,15 +71,17 @@ const RewardsDistributionTab = () => {
   ];
   return (
     <>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
-        <Box />
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
-          </WrapFilterDescription>
+      {!error && (
+        <Box display="flex" alignItems="center" justifyContent="space-between" mt={3}>
+          <Box />
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+              {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
+            </WrapFilterDescription>
+          </Box>
         </Box>
-      </Box>
+      )}
       <Table
         {...fetchData}
         columns={columns}

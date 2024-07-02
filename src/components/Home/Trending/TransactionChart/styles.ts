@@ -24,7 +24,6 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   width: "50px",
   height: "28px",
   cursor: "pointer",
-  textTransform: "lowercase",
   borderRadius: 5,
   border: active ? "none" : `2px solid ${theme.palette.primary[200]}`,
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
@@ -152,4 +151,12 @@ export const ValueChart = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main,
   fontWeight: "bold",
   fontSize: "20px"
+}));
+export const XAxisChart = styled(Box)(() => ({
+  position: "absolute",
+  borderBottom: "2px solid #a0a2aa",
+  width: "calc(100% - 73px)",
+  bottom: "29px",
+  zIndex: 1,
+  left: "55px"
 }));

@@ -35,7 +35,7 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSu
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   useEffect(() => {
     if (fetchData.total && setCurrentHolder) {
       setCurrentHolder(fetchData.total || 0);
@@ -77,9 +77,11 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSu
 
   return (
     <>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}
@@ -89,7 +91,9 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSu
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
-        onClickRow={(_, r: ITokenTopHolderTable) => history.push(details.address(r.address))}
+        onClickRow={(_, r: ITokenTopHolderTable) =>
+          history.push(r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address))
+        }
       />
     </>
   );
