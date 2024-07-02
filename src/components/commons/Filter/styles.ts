@@ -42,9 +42,6 @@ export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
     transform: rotate(45deg);
     box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
   }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    right: 80%;
-  }
 `;
 
 export const FilterContainer = styled(Box)`
