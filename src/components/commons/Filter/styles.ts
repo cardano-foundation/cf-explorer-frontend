@@ -20,13 +20,13 @@ export const FilterButton = styled(Button)`
 
 export const FilterContent = styled(Box)<{ isMobile?: boolean }>`
   position: absolute;
-  right: ${({ isMobile }) => (isMobile ? "65%" : 0)};
+  right: ${({ isMobile }) => (isMobile ? "115%" : 0)};
   transform: ${({ isMobile }) => (isMobile ? "translateX(45%)" : "none")};
   top: calc(100% + 11px);
   background-color: ${({ theme }) => theme.palette.secondary[0]};
-  min-width: 250px;
+  min-width: ${({ isMobile }) => (isMobile ? "190px" : "250px")};
   border-radius: 6px;
-  padding: ${({ theme }) => theme.spacing(1)};
+  padding: ${({ theme, isMobile }) => (isMobile ? 0 : theme.spacing(1))};
   z-index: 10;
   box-shadow: 0 0.5rem 1.2rem rgb(189 197 209 / 20%);
   &::before {
