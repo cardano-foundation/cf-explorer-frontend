@@ -44,7 +44,7 @@ export const WrapButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ApplyFilterButton = styled(Button)(({ theme }) => ({
-  width: "100%",
+  width: theme.breakpoints.down("sm") ? "90%" : "100%",
   textTransform: "capitalize",
   fontWeight: "bold",
   fontSize: 16,
