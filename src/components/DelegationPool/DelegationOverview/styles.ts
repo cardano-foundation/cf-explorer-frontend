@@ -46,9 +46,6 @@ export const StyledCard = {
     box-shadow: ${(props) => props.theme.shadow.card};
     position: relative;
     display: flex;
-    ${({ theme }) => theme.breakpoints.down(350)} {
-      display: block;
-    }
   `,
   ClickAble: styled(Link)`
     height: 100%;
