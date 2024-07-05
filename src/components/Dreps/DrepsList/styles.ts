@@ -71,8 +71,8 @@ export const TopSearchContainer = styled(Box)`
   align-items: center;
   margin-bottom: 15px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    flex-direction: column;
-    align-items: flex-start;
+    // flex-direction: column;
+    // align-items: flex-start;
     gap: 15px;
   }
 `;
@@ -135,3 +135,9 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
     boxSizing: "border-box"
   }
 }));
+
+export const ListOfDreps = styled(Box)`
+  font-size: 24px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;

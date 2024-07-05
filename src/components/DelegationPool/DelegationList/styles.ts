@@ -136,3 +136,9 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
     boxSizing: "border-box"
   }
 }));
+
+export const ListOfPools = styled(Box)`
+  font-size: 24px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;
