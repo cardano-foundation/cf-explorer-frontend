@@ -1,3 +1,13 @@
+const Byron = "1. Byron - Cardano in federated consensus";
+const ByronReboot = "2. Byron reboot - modular node architecture";
+const Shelley = "3. Shelley - Cardano decentralized block production";
+const Allegra = "4. Allegra - Basic script addresses for multi-sig";
+const Mary = "5. Mary - Native assets on Cardano";
+const Alonzo = "6. Alonzo - Introduction of smart contracts";
+const AlonzoEu = "7. Alonzo - EUTxO improvements";
+const BabbageVasil = "8. Babbage Vasil - Reference scripts and extension to the EUTxO model";
+const BabbageValentine = "9. Babbage Valentine  - Improvements to the reference scripts";
+
 export const EconomicParameters = [
   {
     title: "The overall goals when managing the economic parameters are to:",
@@ -228,15 +238,15 @@ export const ExplanationDetailTechnical = [
     explanation: "",
     description: "Protocol version. Major versions are:",
     children: [
-      { description: "0. Byron - Cardano in federated consensus" },
-      { description: "1. Byron reboot - modular node architecture" },
-      { description: "2. Shelley - Cardano decentralized block production" },
-      { description: "3. Allegra - Basic script addresses for multi-sig" },
-      { description: "4. Mary - Native assets on Cardano" },
-      { description: "5. Alonzo - Introduction of smart contracts" },
-      { description: "6. Alonzo - EUTxO improvements" },
-      { description: "7. Babbage Vasil - Reference scripts and extension to the EUTxO model" },
-      { description: "8. Babbage Valentine  - Improvements to the reference scripts" }
+      { description: Byron },
+      { description: ByronReboot },
+      { description: Shelley },
+      { description: Allegra },
+      { description: Mary },
+      { description: Alonzo },
+      { description: AlonzoEu },
+      { description: BabbageVasil },
+      { description: BabbageValentine }
     ]
   },
   {
@@ -365,15 +375,15 @@ export const displayTooltipTechnical = {
   protocolMajor: {
     description: "Protocol version. Major versions are:",
     children: [
-      { description: "0. Byron - Cardano in federated consensus" },
-      { description: "1. Byron reboot - modular node architecture" },
-      { description: "2. Shelley - Cardano decentralized block production" },
-      { description: "3. Allegra - Basic script addresses for multi-sig" },
-      { description: "4. Mary - Native assets on Cardano" },
-      { description: "5. Alonzo - Introduction of smart contracts" },
-      { description: "6. Alonzo - EUTxO improvements" },
-      { description: "7. Babbage Vasil - Reference scripts and extension to the EUTxO model" },
-      { description: "8. Babbage Valentine  - Improvements to the reference scripts" }
+      { description: Byron },
+      { description: ByronReboot },
+      { description: Shelley },
+      { description: Allegra },
+      { description: Mary },
+      { description: Alonzo },
+      { description: AlonzoEu },
+      { description: BabbageVasil },
+      { description: BabbageValentine }
     ]
   },
   protocolMinor: {
