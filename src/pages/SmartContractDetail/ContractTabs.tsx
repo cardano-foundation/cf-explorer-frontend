@@ -78,7 +78,7 @@ const ContractTabs = ({ setVersion }: { setVersion: (v: string) => void }) => {
   };
 
   return (
-    <StyledContractTabs ref={tabRef}>
+    <StyledContractTabs ref={tabRef} mb={2}>
       {tabs?.map(({ key, icon: Icon, label, children }, index) => (
         <StyledAccordion
           key={key}

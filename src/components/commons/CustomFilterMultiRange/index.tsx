@@ -19,7 +19,7 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
@@ -224,7 +224,7 @@ const CustomFilterMultiRange: React.FC = () => {
                 +numericValue > maxValue
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
-                  ? +numericValue / 100
+                  ? truncateToTwoDecimals(+numericValue) / 100
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
@@ -291,7 +291,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? +numericValue / 100
+                    ? truncateToTwoDecimals(+numericValue) / 100
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
@@ -486,11 +486,11 @@ const CustomFilterMultiRange: React.FC = () => {
                           filterParams.minPoolSize || 0,
                           filterParams.maxPoolSize ?? (initParams.maxPoolSize || 0)
                         ]}
-                        min={dataRange?.minPoolSize || 0}
+                        min={dataRange?.minPoolSize ? dataRange.minPoolSize / 10 ** 6 : 0}
                         disableSwap
-                        step={1000000}
+                        step={100}
                         disabled={dataRange?.maxPoolSize === null}
-                        max={dataRange?.maxPoolSize || 0}
+                        max={dataRange?.maxPoolSize ? dataRange.maxPoolSize / 10 ** 6 : 0}
                       />
                       <Typography>
                         {formatADA(dataRange?.maxPoolSize, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}

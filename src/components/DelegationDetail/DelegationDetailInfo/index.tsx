@@ -359,7 +359,9 @@ const DelegationDetailInfo: React.FC<IDelegationDetailInfo> = ({ data, loading, 
             <InfoTitle>
               <StyledTitle data-testid="poolDetail.delegatorsTitle">{t("delegators")}</StyledTitle>
             </InfoTitle>
-            <InfoValue data-testid="poolDetail.delegatorsValue">{data?.delegators || ""}</InfoValue>
+            <InfoValue data-testid="poolDetail.delegatorsValue">
+              {data?.delegators === null || data?.delegators === undefined ? t("common.N/A") : data.delegators}
+            </InfoValue>
           </Item>
           <Item item xs={6} md={3}>
             <InfoValue>

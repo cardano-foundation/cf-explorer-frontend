@@ -22,13 +22,13 @@ export const useScreen = () => {
     };
   }, []);
 
-  const { sm, md, lg } = theme.breakpoints.values;
+  const { sm, md, lg, xl } = theme.breakpoints.values;
   const isMobile = width < sm;
   const isTablet = width < md;
   const isLaptop = width < lg;
   const isSmallScreen = (width < lg && sidebar) || isTablet;
   const isGalaxyFoldSmall = width <= SAMSUNG_FOLD_SMALL_WIDTH;
   const isLargeTablet = width <= IPAD_PRO;
-
-  return { isMobile, isTablet, isLaptop, isGalaxyFoldSmall, isLargeTablet, isSmallScreen, width };
+  const isLanrgeScreen = width <= xl;
+  return { isMobile, isTablet, isLaptop, isGalaxyFoldSmall, isLargeTablet, isSmallScreen, width, isLanrgeScreen };
 };

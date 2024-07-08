@@ -55,7 +55,7 @@ const DelegationLists: React.FC = () => {
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const fromPath = history.location.pathname as SpecialPath;
 
   const handleBlankSort = () => {
@@ -224,11 +224,13 @@ const DelegationLists: React.FC = () => {
   ];
   return (
     <DelegationContainer>
-      <TopSearchContainer sx={{ justifyContent: "end" }}>
-        <Box display="flex" gap="10px">
-          <CustomFilterMultiRange />
-        </Box>
-      </TopSearchContainer>
+      {!error && (
+        <TopSearchContainer sx={{ justifyContent: "end" }}>
+          <Box display="flex" gap="10px">
+            <CustomFilterMultiRange />
+          </Box>
+        </TopSearchContainer>
+      )}
       <Table
         {...fetchData}
         data-testid="delegationList.table"

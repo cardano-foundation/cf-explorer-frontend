@@ -70,7 +70,7 @@ const DrepsList: React.FC = () => {
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<Drep>[] = [
     {
       title: <div data-testid="drepList.drepIdTitle">{t("dreps.id")}</div>,
@@ -178,6 +178,26 @@ const DrepsList: React.FC = () => {
       }
     },
     {
+      title: (
+        <Box data-testid="drepList.participationRate" component={"span"}>
+          {t("governanceParticipationRate")}
+        </Box>
+      ),
+      minWidth: "120px",
+      key: "govParticipationRate",
+      render: (r) =>
+        r.govParticipationRate != null ? (
+          <Box data-testid="drepList.ParticipationValue" component={"span"} mr={1}>
+            {formatPercent(r.govParticipationRate) || `0%`}
+          </Box>
+        ) : (
+          t("common.N/A")
+        ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
+    },
+    {
       title: <div data-testid="drepList.statusTitle">{t("common.status")}</div>,
       key: "status",
       minWidth: "120px",
@@ -236,18 +256,20 @@ const DrepsList: React.FC = () => {
   ];
   return (
     <>
-      <TopSearchContainer
-        sx={{
-          justifyContent: "end",
-          [theme.breakpoints.down("sm")]: {
-            alignItems: "flex-end"
-          }
-        }}
-      >
-        <Box display="flex" gap="10px">
-          <DrepFilter loading={fetchData.loading} />
-        </Box>
-      </TopSearchContainer>
+      {!error && (
+        <TopSearchContainer
+          sx={{
+            justifyContent: "end",
+            [theme.breakpoints.down("sm")]: {
+              alignItems: "flex-end"
+            }
+          }}
+        >
+          <Box display="flex" gap="10px">
+            <DrepFilter loading={fetchData.loading} />
+          </Box>
+        </TopSearchContainer>
+      )}
       <Table
         {...fetchData}
         data-testid="drepList.table"

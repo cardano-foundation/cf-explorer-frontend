@@ -11,7 +11,7 @@ interface IStakeKey {
   poolNames: string[];
 }
 
-type StakeStatus = "ACTIVE" | "DEACTIVATED" | "INACTIVE" | "RETIRED";
+type StakeStatus = "ACTIVE" | "DEACTIVATED" | "INACTIVE" | "RETIRED" | "EXPIRED";
 
 interface IStakeKeyDetail {
   status: StakeStatus;
