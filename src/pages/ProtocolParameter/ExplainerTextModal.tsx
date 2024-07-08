@@ -1,11 +1,14 @@
 import { Typography, Box, styled } from "@mui/material";
+import { isArray } from "lodash";
 
 import StyledModal from "src/components/commons/StyledModal";
+
+import { SubTitleList } from "./styles";
 
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
-  explainerText: { content: string; title: string };
+  explainerText: { content: string | { description: string }[]; title: string };
 }
 
 export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Props) {
@@ -19,7 +22,17 @@ export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Pr
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
-            <Typography>{explainerText?.content || ""}</Typography>
+            <Box>
+              {isArray(explainerText.content) ? (
+                explainerText.content.map((item, i) => (
+                  <Box key={i}>
+                    <SubTitleList>{item?.description}</SubTitleList>
+                  </Box>
+                ))
+              ) : (
+                <Typography>{explainerText?.content || ""}</Typography>
+              )}
+            </Box>
           </NormalDescription>
         </ContentContainer>
       </WrapContent>

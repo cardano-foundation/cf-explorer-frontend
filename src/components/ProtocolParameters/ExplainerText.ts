@@ -1,12 +1,12 @@
-const Byron = "1. Byron - Cardano in federated consensus";
-const ByronReboot = "2. Byron reboot - modular node architecture";
-const Shelley = "3. Shelley - Cardano decentralized block production";
-const Allegra = "4. Allegra - Basic script addresses for multi-sig";
-const Mary = "5. Mary - Native assets on Cardano";
-const Alonzo = "6. Alonzo - Introduction of smart contracts";
-const AlonzoEu = "7. Alonzo - EUTxO improvements";
-const BabbageVasil = "8. Babbage Vasil - Reference scripts and extension to the EUTxO model";
-const BabbageValentine = "9. Babbage Valentine  - Improvements to the reference scripts";
+export const Byron = "1. Byron - Cardano in federated consensus";
+export const ByronReboot = "2. Byron reboot - modular node architecture";
+export const Shelley = "3. Shelley - Cardano decentralized block production";
+export const Allegra = "4. Allegra - Basic script addresses for multi-sig";
+export const Mary = "5. Mary - Native assets on Cardano";
+export const Alonzo = "6. Alonzo - Introduction of smart contracts";
+export const AlonzoEu = "7. Alonzo - EUTxO improvements";
+export const BabbageVasil = "8. Babbage Vasil - Reference scripts and extension to the EUTxO model";
+export const BabbageValentine = "9. Babbage Valentine  - Improvements to the reference scripts";
 
 export const EconomicParameters = [
   {

@@ -41,10 +41,19 @@ import { Column } from "src/types/table";
 import GroupProtocoParameters from "src/components/ProtocolParameters/GroupProtocolParameters/GroupProtocolParameters";
 import ProtocolHeader from "src/components/ProtocolParameters/ProtocolHeader";
 import {
+  Allegra,
+  Alonzo,
+  AlonzoEu,
+  BabbageValentine,
+  BabbageVasil,
+  Byron,
+  ByronReboot,
   displayTooltipEconomic,
   displayTooltipGovernance,
   displayTooltipNetwork,
-  displayTooltipTechnical
+  displayTooltipTechnical,
+  Mary,
+  Shelley
 } from "src/components/ProtocolParameters/ExplainerText";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
@@ -262,7 +271,10 @@ export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
-  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+  const [explainerText, setExplainerText] = useState<{
+    title: string;
+    content: string | { description: string }[];
+  } | null>(null);
 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const currentEpochNo = currentEpoch?.no || 0;
@@ -403,7 +415,20 @@ export const ProtocolParameterHistory = () => {
                 padding={"2px"}
                 onClick={() =>
                   setExplainerText({
-                    content: t(`explain.${r?.params}`),
+                    content:
+                      r?.params === "protocolMajor"
+                        ? [
+                            { description: Byron },
+                            { description: ByronReboot },
+                            { description: Shelley },
+                            { description: Allegra },
+                            { description: Mary },
+                            { description: Alonzo },
+                            { description: AlonzoEu },
+                            { description: BabbageVasil },
+                            { description: BabbageValentine }
+                          ]
+                        : t(`explain.${r?.params}`),
                     title: r?.params
                   })
                 }
@@ -628,7 +653,7 @@ export const ProtocolParameterHistory = () => {
       <ExplainerTextModal
         open={!!explainerText}
         handleCloseModal={() => setExplainerText(null)}
-        explainerText={explainerText || { content: "", title: "" }}
+        explainerText={explainerText || { content: "" || [{ description: "" }], title: "" }}
       />
       <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>
