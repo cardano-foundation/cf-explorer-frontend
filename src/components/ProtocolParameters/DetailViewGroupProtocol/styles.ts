@@ -111,6 +111,7 @@ export const SubTitleDetailChildren = styled("li")`
   color: ${(props) => props.theme.palette.secondary.light};
   text-align: left;
   white-space: "pre-wrap";
+  list-style-type: none !important;
 `;
 export const Header = styled(Box)(({ theme }) => ({ textAlign: "left", color: theme.palette.secondary.main }));
 

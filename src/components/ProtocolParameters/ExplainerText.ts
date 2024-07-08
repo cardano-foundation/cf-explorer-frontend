@@ -222,6 +222,27 @@ export const ExplanationDetailTechnical = [
     label: "Proportion of collateral needed for scripts",
     explanation: "collateralPercentage",
     description: "Percentage of fee that is used as collateral for a failed transaction."
+  },
+  {
+    label: "protocolMajor",
+    explanation: "",
+    description: "Protocol version. Major versions are:",
+    children: [
+      { description: "0. Byron - Cardano in federated consensus" },
+      { description: "1. Byron reboot - modular node architecture" },
+      { description: "2. Shelley - Cardano decentralized block production" },
+      { description: "3. Allegra - Basic script addresses for multi-sig" },
+      { description: "4. Mary - Native assets on Cardano" },
+      { description: "5. Alonzo - Introduction of smart contracts" },
+      { description: "6. Alonzo - EUTxO improvements" },
+      { description: "7. Babbage Vasil - Reference scripts and extension to the EUTxO model" },
+      { description: "8. Babbage Valentine  - Improvements to the reference scripts" }
+    ]
+  },
+  {
+    label: "protocolMinor",
+    explanation: "",
+    description: "Protocol version. Minor versions indicate software updates (will generally be 0)."
   }
 ];
 
@@ -340,6 +361,23 @@ export const displayTooltipTechnical = {
   },
   collateralPercentage: {
     description: "Percentage of fee that is used as collateral for a failed transaction."
+  },
+  protocolMajor: {
+    description: "Protocol version. Major versions are:",
+    children: [
+      { description: "0. Byron - Cardano in federated consensus" },
+      { description: "1. Byron reboot - modular node architecture" },
+      { description: "2. Shelley - Cardano decentralized block production" },
+      { description: "3. Allegra - Basic script addresses for multi-sig" },
+      { description: "4. Mary - Native assets on Cardano" },
+      { description: "5. Alonzo - Introduction of smart contracts" },
+      { description: "6. Alonzo - EUTxO improvements" },
+      { description: "7. Babbage Vasil - Reference scripts and extension to the EUTxO model" },
+      { description: "8. Babbage Valentine  - Improvements to the reference scripts" }
+    ]
+  },
+  protocolMinor: {
+    description: "Protocol version. Minor versions indicate software updates (will generally be 0)."
   }
 };
 
