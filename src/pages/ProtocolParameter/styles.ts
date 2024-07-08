@@ -121,3 +121,12 @@ export const TextDescription = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
   whiteSpace: "nowrap"
 }));
+
+export const SubTitleList = styled("li")`
+  font-size: var(--font-size-text-small);
+  color: ${(props) => props.theme.palette.secondary.light};
+  text-align: left;
+  white-space: "pre-wrap";
+  list-style-type: none !important;
+  margin-bottom: 12px;
+`;
