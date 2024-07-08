@@ -171,6 +171,18 @@ const ProtocolParameter: React.FC = () => {
       value: dataLastest?.collateralPercentage?.value,
       time: dataLastest?.collateralPercentage?.time,
       icon: false
+    },
+    {
+      name: "protocolMajor",
+      value: dataLastest?.protocolMajor?.value,
+      time: dataLastest?.protocolMajor?.time,
+      icon: false
+    },
+    {
+      name: "protocolMinor",
+      value: dataLastest?.protocolMinor?.value,
+      time: dataLastest?.protocolMinor?.time,
+      icon: false
     }
   ];
 
