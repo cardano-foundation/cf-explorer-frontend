@@ -116,6 +116,11 @@ export const menus: Menu[] = [
     icon: GovernanceHome,
     children: [
       {
+        title: "Overview",
+        key: "glossary.menu.overview",
+        href: details.overview("")
+      },
+      {
         title: "Constitutional Committee",
         key: "glossary.constitutionalCommittee",
         href: details.constitutionalCommittees("listMembers")
