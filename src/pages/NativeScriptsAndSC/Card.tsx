@@ -46,11 +46,11 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   return (
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.nativeScriptDetail(data.scriptHash)}>
-        <Row style={{ marginBottom: 2 }}>
+        <Row style={{ marginBottom: 4 }}>
           <Title data-testid="nativeScripts.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
           <Box
             data-testid="nativeScripts.card.scriptHashValue"
-            mb={"6px"}
+            mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
           >
