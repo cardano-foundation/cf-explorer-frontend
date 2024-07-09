@@ -25,19 +25,4 @@ export const StyledTable = styled(Table)`
   td {
     padding: 16px;
   }
-  tr {
-    position: relative;
-  }
-  th {
-    border-bottom:${(props) => (props.theme.isDark ? "0.5px solid #ffffff1f" : "0.5px solid #0000001f")}
-  }
-
-  tr::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 0.5px;
-    background-color: ${(props) => (props.theme.isDark ? "#ffffff1f" : "#0000001f")}
 `;
