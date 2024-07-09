@@ -9,6 +9,7 @@ import {
   CommunityIconDark,
   CommunityIconLight
 } from "src/commons/resources";
+import { routers } from "src/commons/routers";
 
 import { StyledCard, StyledImg, StyledSkeleton } from "./styles";
 interface TypeProps {
@@ -22,21 +23,21 @@ export default function CardOverview({ data, loading }: TypeProps) {
     {
       title: "Constitutional Committee",
       value: data.activeCommittees ?? t("N/A"),
-      linkTo: "constitutional-committees/listMembers",
+      linkTo: routers.CONSTITUIONAL_COMMITTEES,
       iconLight: TeamsIconLight,
       iconDark: TeamsIconDark
     },
     {
       title: "Delegated Representatives (DReps)",
       value: data.activeDReps ?? t("N/A"),
-      linkTo: "/dreps",
+      linkTo: routers.CONSTITUIONAL_COMMITTEES,
       iconLight: UserIconLight,
       iconDark: UserIconDark
     },
     {
       title: "Stake Pool Operators (SPO’s)",
       value: data.activeSPOs ?? t("N/A"),
-      linkTo: "/pools",
+      linkTo: routers.DELEGATION_POOLS,
       iconLight: CommunityIconLight,
       iconDark: CommunityIconDark
     }
