@@ -25,13 +25,18 @@ export default function TabOverview() {
   const { search } = useLocation<{ fromPath?: SpecialPath }>();
   const { t } = useTranslation();
   const history = useHistory();
+
   const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) });
   };
   const query = parse(search.split("?")[1]);
   const [value, setValue] = useState(query.actionStatus ? query.actionStatus : "OPEN_BALLOT");
   useEffect(() => {
-    setQuery({ actionStatus: value, page: 1, size: 50 });
+    setQuery({
+      actionStatus: value,
+      page: query.page ? Number(query.page) : 1,
+      size: query.size ? Number(query.size) : 50
+    });
   }, [value]);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -67,13 +72,13 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Type</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.type}</Box>
+      render: (r) => <Box component={"span"}>{mappingType(r.type)}</Box>
     },
     {
       title: <Box component={"span"}>Status</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.status}</Box>
+      render: (r) => <Box component={"span"}>{mappingStatus(r.status)}</Box>
     },
     {
       title: <Box component={"span"}>Date</Box>,
@@ -82,7 +87,6 @@ export default function TabOverview() {
       render: (r) => <DatetimeTypeTooltip>{formatDateLocal(r.createdAt)}</DatetimeTypeTooltip>
     }
   ];
-
   const TabTable = [
     {
       label: "Active",
@@ -96,7 +100,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -114,7 +118,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -132,7 +136,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -167,7 +171,11 @@ export default function TabOverview() {
               {TabTable.map((el) => {
                 return (
                   <Tab
-                    style={{ textTransform: "none", padding: "16.5px 47px" }}
+                    style={{
+                      textTransform: "none",
+                      padding: "16.5px 47px",
+                      fontSize: "16px"
+                    }}
                     key={el.value}
                     label={el.label}
                     value={el.value}
@@ -188,3 +196,48 @@ export default function TabOverview() {
     </ContainerTab>
   );
 }
+
+const mappingType = (ENUM: string) => {
+  let type = "";
+  switch (ENUM) {
+    case "NO_CONFIDENCE":
+      return (type = "No Confidence");
+
+    case "UPDATE_COMMITTEE":
+      return (type = "New Committee");
+
+    case "HARD_FORK_INITIATION_ACTION":
+      return (type = "Hard Fork");
+
+    case "NEW_CONSTITUTION":
+      return (type = "Update to the Constitution");
+
+    case "PARAMETER_CHANGE_ACTION":
+      return (type = "Protocol Parameter Change");
+
+    case "TREASURY_WITHDRAWALS_ACTION":
+      return (type = "Treasury Withdrawals");
+
+    case "INFO_ACTION":
+      return (type = "Info Action");
+  }
+  return type;
+};
+
+const mappingStatus = (ENUM: string) => {
+  let status = "";
+  switch (ENUM) {
+    case "OPEN_BALLOT":
+      return (status = "No Confidence");
+
+    case "RATIFIED":
+      return (status = "Accepted");
+
+    case "ENACTED":
+      return (status = "Enacted");
+
+    case "EXPIRED":
+      return (status = "Expired");
+  }
+  return status;
+};
