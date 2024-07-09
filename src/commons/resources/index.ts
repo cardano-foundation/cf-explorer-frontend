@@ -52,6 +52,12 @@ import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
 import ProtectIcon from "./icons/protect-icon.svg";
 import ProtectIconDark from "./icons/protect-icon-dark.svg";
+import TeamsIconLight from "./icons/team-icon-light.svg";
+import TeamsIconDark from "./icons/team-icon-dark.svg";
+import UserIconLight from "./icons/user-icon-light.svg";
+import UserIconDark from "./icons/user-icon-dark.svg";
+import CommunityIconLight from "./icons/community-icon-light.svg";
+import CommunityIconDark from "./icons/community-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
@@ -316,6 +322,12 @@ export {
   TickerIcon,
   TickerIconComponent,
   CalendarIcon,
+  TeamsIconLight,
+  TeamsIconDark,
+  UserIconDark,
+  UserIconLight,
+  CommunityIconDark,
+  CommunityIconLight,
   CalendarIconComponent,
   RewardIcon,
   UserIcon,
