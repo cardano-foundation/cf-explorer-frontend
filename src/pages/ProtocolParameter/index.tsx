@@ -273,7 +273,7 @@ export const ProtocolParameterHistory = () => {
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
   const [explainerText, setExplainerText] = useState<{
     title: string;
-    content: string | { description: string }[];
+    content: string | { description: string; list: { description: string }[] };
   } | null>(null);
 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
@@ -417,17 +417,20 @@ export const ProtocolParameterHistory = () => {
                   setExplainerText({
                     content:
                       r?.params === "protocolMajor"
-                        ? [
-                            { description: Byron },
-                            { description: ByronReboot },
-                            { description: Shelley },
-                            { description: Allegra },
-                            { description: Mary },
-                            { description: Alonzo },
-                            { description: AlonzoEu },
-                            { description: BabbageVasil },
-                            { description: BabbageValentine }
-                          ]
+                        ? {
+                            description: "Protocol version. Major versions are:",
+                            list: [
+                              { description: Byron },
+                              { description: ByronReboot },
+                              { description: Shelley },
+                              { description: Allegra },
+                              { description: Mary },
+                              { description: Alonzo },
+                              { description: AlonzoEu },
+                              { description: BabbageVasil },
+                              { description: BabbageValentine }
+                            ]
+                          }
                         : t(`explain.${r?.params}`),
                     title: r?.params
                   })
@@ -653,7 +656,7 @@ export const ProtocolParameterHistory = () => {
       <ExplainerTextModal
         open={!!explainerText}
         handleCloseModal={() => setExplainerText(null)}
-        explainerText={explainerText || { content: "" || [{ description: "" }], title: "" }}
+        explainerText={explainerText || { content: "" || { description: "", list: [{ description: "" }] }, title: "" }}
       />
       <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>
