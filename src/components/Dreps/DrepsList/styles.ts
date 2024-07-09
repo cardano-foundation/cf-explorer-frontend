@@ -70,6 +70,7 @@ export const TopSearchContainer = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  margin-top: 48px;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     // flex-direction: column;
     // align-items: flex-start;

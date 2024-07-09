@@ -76,6 +76,7 @@ export const TopSearchContainer = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  margin-top: 48px;
 `;
 
 export const ShowRetiredPools = styled(Box)`
