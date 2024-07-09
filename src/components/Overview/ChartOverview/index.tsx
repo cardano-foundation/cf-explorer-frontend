@@ -110,12 +110,12 @@ const ChartOverview = (props: TypeProps) => {
                     dy={-10}
                     value="Total"
                     position="centerBottom"
-                    style={{ fontSize: "12px", fill: theme.mode === "light" ? "#888" : "#fff" }}
+                    style={{ fontSize: "12px", fill: theme.mode === "light" ? "#737373" : "#fff" }}
                   />
                   <Label
                     value={totalGovActions}
                     position="centerTop"
-                    style={{ fontSize: "28px", fill: theme.mode === "light" ? "#888" : "#fff", fontWeight: "bold" }}
+                    style={{ fontSize: "28px", fill: theme.mode === "light" ? "#0A0A0A" : "#fff", fontWeight: "bold" }}
                   />
                 </Pie>
                 <Tooltip />
