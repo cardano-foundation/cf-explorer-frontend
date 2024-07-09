@@ -108,7 +108,6 @@ function GroupProtocoParameters(props: GroupType) {
                   <StyledCard.Content>
                     <StyledCard.ContainerTitile>
                       <CustomTooltip
-                        wOpacity={false}
                         title={
                           <Box style={{ textAlign: "left", whiteSpace: "pre-wrap" }}>
                             <Box>{data[el.name].description}</Box>
