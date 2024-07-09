@@ -154,7 +154,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
