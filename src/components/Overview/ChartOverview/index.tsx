@@ -1,4 +1,4 @@
-import { Grid, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label, LegendProps } from "recharts";
 
 import { LegendChart, StyledCard, StyledSkeleton } from "./styles";
@@ -37,6 +37,7 @@ interface TypeProps {
 }
 
 const ChartOverview = (props: TypeProps) => {
+  const theme = useTheme();
   const { data, loading } = props;
   const { totalGovActions, govStatusMap, govCountMap } = data;
   const dataGovStatusMap: DataItem[] = [
@@ -105,11 +106,16 @@ const ChartOverview = (props: TypeProps) => {
                   {dataGovCountMap.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
                   ))}
-                  <Label dy={-10} value="Total" position="centerBottom" style={{ fontSize: "12px", fill: "#888" }} />
+                  <Label
+                    dy={-10}
+                    value="Total"
+                    position="centerBottom"
+                    style={{ fontSize: "12px", fill: theme.mode === "light" ? "#888" : "#fff" }}
+                  />
                   <Label
                     value={totalGovActions}
                     position="centerTop"
-                    style={{ fontSize: "28px", fill: "#000", fontWeight: "bold" }}
+                    style={{ fontSize: "28px", fill: theme.mode === "light" ? "#888" : "#fff", fontWeight: "bold" }}
                   />
                 </Pie>
                 <Tooltip />
