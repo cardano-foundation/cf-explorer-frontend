@@ -117,7 +117,7 @@ export const menus: Menu[] = [
     children: [
       {
         title: "Overview",
-        key: "glossary.overview",
+        key: "glossary.menu.overview",
         href: details.overview("")
       },
       {
