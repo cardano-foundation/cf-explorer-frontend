@@ -38,6 +38,6 @@ export const StyledTable = styled(Table)`
     left: 0;
     right: 0;
     bottom: 0;
-    height: 1px;
+    height: 0.5px;
     background-color: ${(props) => (props.theme.isDark ? "#ffffff1f" : "#0000001f")}
 `;
