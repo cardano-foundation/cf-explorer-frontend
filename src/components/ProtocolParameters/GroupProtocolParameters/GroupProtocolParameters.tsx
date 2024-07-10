@@ -108,12 +108,11 @@ function GroupProtocoParameters(props: GroupType) {
                   <StyledCard.Content>
                     <StyledCard.ContainerTitile>
                       <CustomTooltip
-                        wOpacity={false}
                         title={
                           <Box style={{ textAlign: "left", whiteSpace: "pre-wrap" }}>
                             <Box>{data[el.name].description}</Box>
                             {data[el.name].children !== undefined && (
-                              <ExplainerHoverTooltip items={data[el.name].children} level={1} />
+                              <ExplainerHoverTooltip items={data[el.name].children} level={0} />
                             )}
                           </Box>
                         }
