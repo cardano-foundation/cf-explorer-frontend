@@ -1194,5 +1194,10 @@
   "drep.disclaimer.des1": "Please be aware that by clicking the link below, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
   "drep.disclaimer.des2": "By clicking the link, you acknowledge that you understand the risks associated with visiting external sites and agree to proceed at your own discretion.",
   "token.metadataCheck": "Metadata Check",
-  "status.inActive": "INACTIVE"
+  "status.inActive": "INACTIVE",
+  "overview.status.active": "Active",
+  "overview.status.accepted": "Accepted",
+  "overview.status.enacted": "Enacted",
+  "overview.status.expired": "Expired"
 }
+

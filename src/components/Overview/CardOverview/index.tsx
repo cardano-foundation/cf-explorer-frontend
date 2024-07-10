@@ -30,7 +30,7 @@ export default function CardOverview({ data, loading }: TypeProps) {
     {
       title: "Delegated Representatives (DReps)",
       value: data.activeDReps ?? t("N/A"),
-      linkTo: routers.CONSTITUIONAL_COMMITTEES,
+      linkTo: routers.DREPS,
       iconLight: UserIconLight,
       iconDark: UserIconDark
     },

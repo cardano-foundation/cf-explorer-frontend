@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, ParsedQs, stringify } from "qs";
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 import { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -13,6 +14,8 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatDateLocal, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { actionTypeListDrep } from "src/components/commons/CardGovernanceVotes";
+import { STATUS_OVERVIEW } from "src/commons/utils/constants";
 
 import { ContainerTab, StyledLink, StyledTable } from "./styles";
 interface Query {
@@ -20,18 +23,30 @@ interface Query {
   page: number;
   size: number;
 }
+export const statusOverview = [
+  { value: STATUS_OVERVIEW.OPEN_BALLOT, text: t("overview.status.active") },
+  { value: STATUS_OVERVIEW.EXPIRED, text: t("overview.status.expired") },
+  { value: STATUS_OVERVIEW.ENACTED, text: t("overview.status.enacted") },
+  { value: STATUS_OVERVIEW.RATIFIED, text: t("overview.status.accepted") }
+];
+
 export default function TabOverview() {
   const { pageInfo } = usePageInfo();
   const { search } = useLocation<{ fromPath?: SpecialPath }>();
   const { t } = useTranslation();
   const history = useHistory();
+
   const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) });
   };
   const query = parse(search.split("?")[1]);
   const [value, setValue] = useState(query.actionStatus ? query.actionStatus : "OPEN_BALLOT");
   useEffect(() => {
-    setQuery({ actionStatus: value, page: 1, size: 50 });
+    setQuery({
+      actionStatus: value,
+      page: query.page ? Number(query.page) : 1,
+      size: query.size ? Number(query.size) : 50
+    });
   }, [value]);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -44,6 +59,7 @@ export default function TabOverview() {
     },
     false
   );
+
   const columns: Column<OverViewDelegationTab>[] = [
     {
       title: <Box component={"span"}>Governance Name</Box>,
@@ -67,13 +83,13 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Type</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.type}</Box>
+      render: (r) => <Box component={"span"}>{actionTypeListDrep.find((el) => el.value === r.type)?.text}</Box>
     },
     {
       title: <Box component={"span"}>Status</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.status}</Box>
+      render: (r) => <Box component={"span"}>{statusOverview.find((el) => el.value === r.status)?.text}</Box>
     },
     {
       title: <Box component={"span"}>Date</Box>,
@@ -82,7 +98,6 @@ export default function TabOverview() {
       render: (r) => <DatetimeTypeTooltip>{formatDateLocal(r.createdAt)}</DatetimeTypeTooltip>
     }
   ];
-
   const TabTable = [
     {
       label: "Active",
@@ -96,7 +111,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -114,7 +129,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -132,7 +147,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -150,7 +165,7 @@ export default function TabOverview() {
             ...pageInfo,
             total: fetchData.total,
             onChange: (page, size) => {
-              history.replace({ search: stringify({ page, size }) });
+              history.replace({ search: stringify({ actionStatus: value, page, size }) });
             }
           }}
         />
@@ -167,7 +182,11 @@ export default function TabOverview() {
               {TabTable.map((el) => {
                 return (
                   <Tab
-                    style={{ textTransform: "none", padding: "16.5px 47px" }}
+                    style={{
+                      textTransform: "none",
+                      padding: "16.5px 47px",
+                      fontSize: "16px"
+                    }}
                     key={el.value}
                     label={el.label}
                     value={el.value}

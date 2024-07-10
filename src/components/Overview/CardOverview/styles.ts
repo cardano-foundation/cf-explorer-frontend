@@ -46,8 +46,8 @@ export const StyledCard = {
 };
 
 export const StyledImg = styled("img")`
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   position: absolute;
   top: 10px;
   right: 10px;

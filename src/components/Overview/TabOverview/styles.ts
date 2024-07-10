@@ -25,4 +25,5 @@ export const StyledTable = styled(Table)`
   td {
     padding: 16px;
   }
+  padding-bottom: 10px;
 `;
