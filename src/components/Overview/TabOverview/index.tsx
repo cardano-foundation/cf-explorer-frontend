@@ -186,7 +186,6 @@ export default function TabOverview() {
                       textTransform: "none",
                       padding: "16.5px 47px",
                       fontSize: "16px"
-                      // color: theme.mode === "light" && el.value !== value ? "red" : "yellow"
                     }}
                     key={el.value}
                     label={el.label}
