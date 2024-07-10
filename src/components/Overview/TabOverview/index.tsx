@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, ParsedQs, stringify } from "qs";
@@ -35,6 +35,7 @@ export default function TabOverview() {
   const { search } = useLocation<{ fromPath?: SpecialPath }>();
   const { t } = useTranslation();
   const history = useHistory();
+  const theme = useTheme();
 
   const setQuery = (query: Query) => {
     history.replace({ search: stringify(query) });
@@ -50,6 +51,11 @@ export default function TabOverview() {
   }, [value]);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+    setQuery({
+      actionStatus: value,
+      page: 1,
+      size: 50
+    });
   };
 
   const fetchData = useFetchList<OverViewDelegationTab>(
@@ -182,10 +188,14 @@ export default function TabOverview() {
               {TabTable.map((el) => {
                 return (
                   <Tab
-                    style={{
+                    sx={{
+                      color: theme.mode === "light" ? "#50596D" : "#D6E2FF",
                       textTransform: "none",
                       padding: "16.5px 47px",
-                      fontSize: "16px"
+                      fontSize: "16px",
+                      "&.Mui-selected": {
+                        color: theme.mode === "light" ? "#0033AD" : "#66BDFF"
+                      }
                     }}
                     key={el.value}
                     label={el.label}
