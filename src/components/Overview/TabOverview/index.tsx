@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { parse, ParsedQs, stringify } from "qs";
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 import { Column } from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -13,6 +14,8 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { formatDateLocal, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { actionTypeListDrep } from "src/components/commons/CardGovernanceVotes";
+import { STATUS_OVERVIEW } from "src/commons/utils/constants";
 
 import { ContainerTab, StyledLink, StyledTable } from "./styles";
 interface Query {
@@ -20,6 +23,13 @@ interface Query {
   page: number;
   size: number;
 }
+export const statusOverview = [
+  { value: STATUS_OVERVIEW.OPEN_BALLOT, text: t("overview.status.active") },
+  { value: STATUS_OVERVIEW.EXPIRED, text: t("overview.status.expired") },
+  { value: STATUS_OVERVIEW.ENACTED, text: t("overview.status.enacted") },
+  { value: STATUS_OVERVIEW.RATIFIED, text: t("overview.status.accepted") }
+];
+
 export default function TabOverview() {
   const { pageInfo } = usePageInfo();
   const { search } = useLocation<{ fromPath?: SpecialPath }>();
@@ -49,6 +59,7 @@ export default function TabOverview() {
     },
     false
   );
+
   const columns: Column<OverViewDelegationTab>[] = [
     {
       title: <Box component={"span"}>Governance Name</Box>,
@@ -72,13 +83,13 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Type</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{mappingType(r.type)}</Box>
+      render: (r) => <Box component={"span"}>{actionTypeListDrep.find((el) => el.value === r.type)?.text}</Box>
     },
     {
       title: <Box component={"span"}>Status</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{mappingStatus(r.status)}</Box>
+      render: (r) => <Box component={"span"}>{statusOverview.find((el) => el.value === r.status)?.text}</Box>
     },
     {
       title: <Box component={"span"}>Date</Box>,
@@ -175,6 +186,7 @@ export default function TabOverview() {
                       textTransform: "none",
                       padding: "16.5px 47px",
                       fontSize: "16px"
+                      // color: theme.mode === "light" && el.value !== value ? "red" : "yellow"
                     }}
                     key={el.value}
                     label={el.label}
@@ -196,48 +208,3 @@ export default function TabOverview() {
     </ContainerTab>
   );
 }
-
-const mappingType = (ENUM: string) => {
-  let type = "";
-  switch (ENUM) {
-    case "NO_CONFIDENCE":
-      return (type = "No Confidence");
-
-    case "UPDATE_COMMITTEE":
-      return (type = "New Committee");
-
-    case "HARD_FORK_INITIATION_ACTION":
-      return (type = "Hard Fork");
-
-    case "NEW_CONSTITUTION":
-      return (type = "Update to the Constitution");
-
-    case "PARAMETER_CHANGE_ACTION":
-      return (type = "Protocol Parameter Change");
-
-    case "TREASURY_WITHDRAWALS_ACTION":
-      return (type = "Treasury Withdrawals");
-
-    case "INFO_ACTION":
-      return (type = "Info Action");
-  }
-  return type;
-};
-
-const mappingStatus = (ENUM: string) => {
-  let status = "";
-  switch (ENUM) {
-    case "OPEN_BALLOT":
-      return (status = "No Confidence");
-
-    case "RATIFIED":
-      return (status = "Accepted");
-
-    case "ENACTED":
-      return (status = "Enacted");
-
-    case "EXPIRED":
-      return (status = "Expired");
-  }
-  return status;
-};
