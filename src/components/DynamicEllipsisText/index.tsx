@@ -12,7 +12,7 @@ const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
   width: 100%;
   text-align: left;
-  transform: translateY(2px);
+  transform: translateY(1px);
 `;
 
 const SubPart = styled("span")`
@@ -71,6 +71,7 @@ const DynamicEllipsisText = ({
   sx?: SxProps<Theme>;
   customTruncateFold?: [number, number];
   isNoLimitPixel?: boolean;
+  isSeparateCopyIcon?: boolean;
   whiteSpace?: "nowrap" | "normal";
 }) => {
   const randomIdRef = useRef(`ELIPSIS_${useId()}`);

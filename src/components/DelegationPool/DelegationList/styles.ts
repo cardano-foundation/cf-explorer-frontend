@@ -39,7 +39,6 @@ export const SearchContainer = styled("div")(({ theme }) => ({
     maxWidth: "unset"
   }
 }));
-
 export const DelegationContainer = styled("div")(() => ({
   "& .table-wrapper tbody": {
     zIndex: 1
@@ -137,3 +136,9 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
     boxSizing: "border-box"
   }
 }));
+
+export const ListOfPools = styled(Box)`
+  font-size: 24px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;

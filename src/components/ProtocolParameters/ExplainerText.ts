@@ -1,3 +1,13 @@
+export const Byron = "1. Byron - Cardano in federated consensus";
+export const ByronReboot = "2. Byron reboot - modular node architecture";
+export const Shelley = "3. Shelley - Cardano decentralized block production";
+export const Allegra = "4. Allegra - Basic script addresses for multi-sig";
+export const Mary = "5. Mary - Native assets on Cardano";
+export const Alonzo = "6. Alonzo - Introduction of smart contracts";
+export const AlonzoEu = "7. Alonzo - EUTxO improvements";
+export const BabbageVasil = "8. Babbage Vasil - Reference scripts and extension to the EUTxO model";
+export const BabbageValentine = "9. Babbage Valentine  - Improvements to the reference scripts";
+
 export const EconomicParameters = [
   {
     title: "The overall goals when managing the economic parameters are to:",
@@ -222,6 +232,27 @@ export const ExplanationDetailTechnical = [
     label: "Proportion of collateral needed for scripts",
     explanation: "collateralPercentage",
     description: "Percentage of fee that is used as collateral for a failed transaction."
+  },
+  {
+    label: "protocolMajor",
+    explanation: "",
+    description: "Protocol version. Major versions are:",
+    children: [
+      { description: Byron },
+      { description: ByronReboot },
+      { description: Shelley },
+      { description: Allegra },
+      { description: Mary },
+      { description: Alonzo },
+      { description: AlonzoEu },
+      { description: BabbageVasil },
+      { description: BabbageValentine }
+    ]
+  },
+  {
+    label: "protocolMinor",
+    explanation: "",
+    description: "Protocol version. Minor versions indicate software updates (will generally be 0)."
   }
 ];
 
@@ -340,6 +371,23 @@ export const displayTooltipTechnical = {
   },
   collateralPercentage: {
     description: "Percentage of fee that is used as collateral for a failed transaction."
+  },
+  protocolMajor: {
+    description: "Protocol version. Major versions are:",
+    children: [
+      { description: Byron },
+      { description: ByronReboot },
+      { description: Shelley },
+      { description: Allegra },
+      { description: Mary },
+      { description: Alonzo },
+      { description: AlonzoEu },
+      { description: BabbageVasil },
+      { description: BabbageValentine }
+    ]
+  },
+  protocolMinor: {
+    description: "Protocol version. Minor versions indicate software updates (will generally be 0)."
   }
 };
 

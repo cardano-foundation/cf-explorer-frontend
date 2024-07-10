@@ -44,14 +44,14 @@ export const WrapButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ApplyFilterButton = styled(Button)(({ theme }) => ({
-  width: "100%",
+  width: theme.breakpoints.down("sm") ? "90%" : "100%",
   textTransform: "capitalize",
   fontWeight: "bold",
   fontSize: 16,
   color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   background: theme.palette.primary.main,
   ":hover": {
-    background: theme.palette.primary.dark
+    background: `${theme.palette.primary.dark} !important`
   },
   ":disabled": {
     background: theme.palette.secondary[600],
