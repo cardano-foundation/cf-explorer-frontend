@@ -107,7 +107,7 @@ const ChartOverview = (props: TypeProps) => {
         ) : (
           <StyledCard.Container>
             <StyledCard.Title>Total Governance Actions</StyledCard.Title>
-            {!(isEmpty(data?.govCountMap) && sumValues(data?.govCountMap)) ? (
+            {isEmpty(data?.govCountMap) && !sumValues(data?.govCountMap) ? (
               <NoRecord />
             ) : (
               <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>
@@ -159,7 +159,7 @@ const ChartOverview = (props: TypeProps) => {
         ) : (
           <StyledCard.Container>
             <StyledCard.Title>Governance Status</StyledCard.Title>
-            {!(isEmpty(data?.govCountMap) && sumValues(data?.govCountMap)) ? (
+            {isEmpty(data?.govCountMap) && !sumValues(data?.govCountMap) ? (
               <NoRecord />
             ) : (
               <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>

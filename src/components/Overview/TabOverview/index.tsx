@@ -184,7 +184,14 @@ export default function TabOverview() {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value as string}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList variant="scrollable" scrollButtons allowScrollButtonsMobile onChange={handleChange} aria-label="">
+            <TabList
+              sx={{ borderBottom: theme.mode === "light" ? "1px solid #d6e2ff" : "1px solid #6c6f89" }}
+              variant="scrollable"
+              scrollButtons
+              allowScrollButtonsMobile
+              onChange={handleChange}
+              aria-label=""
+            >
               {TabTable.map((el) => {
                 return (
                   <Tab
