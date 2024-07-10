@@ -13,7 +13,6 @@ const Delegations = () => {
   return (
     <StyledContainer>
       <OverViews />
-      {/* <Horizon /> */}
       <DelegationLists />
     </StyledContainer>
   );

@@ -18,7 +18,6 @@ const Dreps = () => {
   return (
     <StyledContainer>
       <OverViews />
-      {/* <Horizon /> */}
       <DrepsList />
     </StyledContainer>
   );
