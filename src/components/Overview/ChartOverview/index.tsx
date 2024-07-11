@@ -1,6 +1,8 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label, LegendProps } from "recharts";
 
+import NoRecord from "src/components/commons/NoRecord";
+
 import { LegendChart, StyledCard, StyledSkeleton } from "./styles";
 
 interface DataItem {
@@ -36,10 +38,13 @@ interface TypeProps {
   loading: boolean;
 }
 
+type DataChart = Record<number, number> | undefined;
+
 const ChartOverview = (props: TypeProps) => {
   const theme = useTheme();
   const { data, loading } = props;
   const { totalGovActions, govStatusMap, govCountMap } = data;
+
   const dataGovStatusMap: DataItem[] = [
     { name: "Active", value: govStatusMap?.OPEN_BALLOT ?? 0, color: "#2196F3" },
     { name: "Accepted", value: govStatusMap?.RATIFIED ?? 0, color: "#14B8A6" },
@@ -81,10 +86,19 @@ const ChartOverview = (props: TypeProps) => {
       </ul>
     );
   };
-  const COLORS = dataGovStatusMap.map((entry) => entry.color);
-  const COLORS1 = dataGovCountMap.map((entry) => entry.color);
+  const COLORS_CHART_ACTIOS = dataGovStatusMap.map((entry) => entry.color);
+  const COLORS_CHART_TYPE = dataGovCountMap.map((entry) => entry.color);
   const middleScreen = useMediaQuery("(max-width:1250px)");
   const smallScreen = useMediaQuery("(max-width:600px)");
+
+  const sumValues = (data: DataChart) => {
+    return Object.values(data || {}).reduce((sum, value) => sum + value, 0);
+  };
+
+  const isEmpty = (data: DataChart) => {
+    return Object.entries(data || {}).length === 0;
+  };
+
   return (
     <Grid container mt={2} spacing={smallScreen || middleScreen ? 6 : 2}>
       <Grid item xl={6} md={middleScreen ? 12 : 6} xs={12}>
@@ -93,40 +107,48 @@ const ChartOverview = (props: TypeProps) => {
         ) : (
           <StyledCard.Container>
             <StyledCard.Title>Total Governance Actions</StyledCard.Title>
-            <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>
-              <PieChart>
-                <Pie
-                  animationDuration={500}
-                  innerRadius={80}
-                  data={dataGovCountMap}
-                  outerRadius={107}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {dataGovCountMap.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS1[index % COLORS1.length]} />
-                  ))}
-                  <Label
-                    dy={-10}
-                    value="Total"
-                    position="centerBottom"
-                    style={{ fontSize: "12px", fill: theme.mode === "light" ? "#737373" : "#fff" }}
+            {isEmpty(data?.govCountMap) && !sumValues(data?.govCountMap) ? (
+              <NoRecord />
+            ) : (
+              <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>
+                <PieChart>
+                  <Pie
+                    animationDuration={500}
+                    innerRadius={80}
+                    data={dataGovCountMap}
+                    outerRadius={107}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {dataGovCountMap.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS_CHART_TYPE[index % COLORS_CHART_TYPE.length]} />
+                    ))}
+                    <Label
+                      dy={-10}
+                      value="Total"
+                      position="centerBottom"
+                      style={{ fontSize: "12px", fill: theme.mode === "light" ? "#737373" : "#fff" }}
+                    />
+                    <Label
+                      value={totalGovActions}
+                      position="centerTop"
+                      style={{
+                        fontSize: "28px",
+                        fill: theme.mode === "light" ? "#24262E" : "#fff",
+                        fontWeight: "bold"
+                      }}
+                    />
+                  </Pie>
+                  <Tooltip />
+                  <Legend
+                    layout="vertical"
+                    align={smallScreen ? "center" : "right"}
+                    verticalAlign={smallScreen ? "bottom" : "middle"}
+                    content={(props) => renderLegend(props as LegendProps)}
                   />
-                  <Label
-                    value={totalGovActions}
-                    position="centerTop"
-                    style={{ fontSize: "28px", fill: theme.mode === "light" ? "#0A0A0A" : "#fff", fontWeight: "bold" }}
-                  />
-                </Pie>
-                <Tooltip />
-                <Legend
-                  layout="vertical"
-                  align={smallScreen ? "center" : "right"}
-                  verticalAlign={smallScreen ? "bottom" : "middle"}
-                  content={(props) => renderLegend(props as LegendProps)}
-                />
-              </PieChart>
-            </ResponsiveContainer>
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </StyledCard.Container>
         )}
       </Grid>
@@ -137,30 +159,34 @@ const ChartOverview = (props: TypeProps) => {
         ) : (
           <StyledCard.Container>
             <StyledCard.Title>Governance Status</StyledCard.Title>
-            <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>
-              <PieChart style={{ posistion: "relative" }}>
-                <Pie
-                  animationDuration={500}
-                  data={dataGovStatusMap}
-                  labelLine={false}
-                  outerRadius={107}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {dataGovStatusMap.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend
-                  layout="vertical"
-                  align={smallScreen ? "center" : "right"}
-                  style={{ paddingRight: "100px" }}
-                  verticalAlign={smallScreen ? "bottom" : "middle"}
-                  content={(props) => renderLegend(props as LegendProps)}
-                />
-              </PieChart>
-            </ResponsiveContainer>
+            {isEmpty(data?.govCountMap) && !sumValues(data?.govCountMap) ? (
+              <NoRecord />
+            ) : (
+              <ResponsiveContainer width="100%" height={smallScreen ? 450 : 250}>
+                <PieChart style={{ posistion: "relative" }}>
+                  <Pie
+                    animationDuration={500}
+                    data={dataGovStatusMap}
+                    labelLine={false}
+                    outerRadius={107}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {dataGovStatusMap.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS_CHART_ACTIOS[index % COLORS_CHART_ACTIOS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend
+                    layout="vertical"
+                    align={smallScreen ? "center" : "right"}
+                    style={{ paddingRight: "100px" }}
+                    verticalAlign={smallScreen ? "bottom" : "middle"}
+                    content={(props) => renderLegend(props as LegendProps)}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
           </StyledCard.Container>
         )}
       </Grid>

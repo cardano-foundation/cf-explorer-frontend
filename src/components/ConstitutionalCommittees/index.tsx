@@ -35,7 +35,7 @@ const Description = styled(Box)(({ theme }) => ({
   fontWeight: 400,
   marginTop: theme.spacing(1),
   textAlign: "left",
-  width: "80vw",
+  width: "90%",
   [theme.breakpoints.down("md")]: {
     width: "100%"
   }

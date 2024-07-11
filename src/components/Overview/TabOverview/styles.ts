@@ -22,8 +22,5 @@ export const StyledTable = styled(Table)`
   th {
     padding: 0 16px 16px 16px;
   }
-  td {
-    padding: 16px;
-  }
   padding-bottom: 10px;
 `;
