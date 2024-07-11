@@ -1,21 +1,20 @@
 import { useEffect } from "react";
 
-import ConstitutionalCommitteesComponent from "src/components/ConstitutionalCommittees";
+import OverviewComponent from "src/components/Overview";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
 import { StyledContainer } from "./styles";
 import NotFound from "../NotFound";
-
-const ConstitutionalCommittees = () => {
+const Overview = () => {
   useEffect(() => {
-    document.title = `Constitutional Committees | Cardano Blockchain Explorer`;
+    document.title = `Governance Overview | Cardano Blockchain Explorer`;
   }, []);
   if (!FF_GLOBAL_IS_CONWAY_ERA) return <NotFound />;
   return (
     <StyledContainer>
-      <ConstitutionalCommitteesComponent />
+      <OverviewComponent />
     </StyledContainer>
   );
 };
 
-export default ConstitutionalCommittees;
+export default Overview;

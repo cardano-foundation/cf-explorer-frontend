@@ -161,6 +161,10 @@ export const API = {
     HISTORY: "gov-actions/committee-history",
     CC_DETAIL: () => `gov-actions/voting-procedure-detail`,
     CC_DETAIL_CHART: (hash: string) => `committee/${hash}/vote-procedure-chart`
+  },
+  GOVERNANCE_OVERVIEW: {
+    OVERVIEW: "gov-actions/overview",
+    TAB: "gov-actions"
   }
 };
 

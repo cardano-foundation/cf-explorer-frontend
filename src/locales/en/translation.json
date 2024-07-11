@@ -44,6 +44,8 @@
   "glossary.simpleTxs": "Simple transactions",
   "glossary.governance": "Governance",
   "glossary.constitutionalCommittee": "Constitutional Committee",
+  "glossary.overview": "Governance Overview",
+  "glossary.menu.overview": "Overview",
   "cc.currentState": "Current State",
   "cc.proposalPolicy": "Proposal Policy",
   "cc.activeMembers": "Active Members",
@@ -70,6 +72,7 @@
   "cc.detail.resignationInformation": "Resignation Information",
   "cc.vote.title": "Governance Action Voting Name",
   "constitutionalCommittee.page.description": "Explore the role, composition, and current status of the Constitutional Committee responsible for Cardano's governance. Review member details, governance actions, and the proposal policy to understand the decision-making processes that shape the network.",
+  "overview.page.description": "Governance actions include types like protocol changes, treasury withdrawals, and hard-fork initiations. Each action has specific approval thresholds, requiring consensus from bodies such as the Constitutional Committee, Delegated Representatives (DReps), and Stake Pool Operators (SPOs), ensuring transparent and effective governance.",
   "time.24h": "24h",
   "time.1d": "1d",
   "time.1w": "1w",
@@ -1188,5 +1191,9 @@
   "drep.disclaimer": "Please be aware that by clicking the external links, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
   "drep.disclaimer.des1": "Please be aware that by clicking the link below, you will be directed to an external website. We do not control or endorse the content, products, or services provided on this site. Additionally, we cannot guarantee the accuracy, relevance, or security of the information found on external pages.",
   "drep.disclaimer.des2": "By clicking the link, you acknowledge that you understand the risks associated with visiting external sites and agree to proceed at your own discretion.",
-  "status.inActive": "INACTIVE"
+  "status.inActive": "INACTIVE",
+  "overview.status.active": "Active",
+  "overview.status.accepted": "Accepted",
+  "overview.status.enacted": "Enacted",
+  "overview.status.expired": "Expired"
 }
