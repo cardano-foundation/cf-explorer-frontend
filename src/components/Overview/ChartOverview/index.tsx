@@ -1,5 +1,6 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Label, LegendProps } from "recharts";
+import { t } from "i18next";
 
 import NoRecord from "src/components/commons/NoRecord";
 
@@ -53,19 +54,19 @@ const ChartOverview = (props: TypeProps) => {
   ];
 
   const dataGovCountMap: DataItem[] = [
-    { name: "No Confidence", value: govCountMap?.NO_CONFIDENCE ?? 0, color: "#14B8A6" },
-    { name: "New Committee", value: govCountMap?.UPDATE_COMMITTEE ?? 0, color: "#3B82F6" },
-    { name: "Hard Fork", value: govCountMap?.HARD_FORK_INITIATION_ACTION ?? 0, color: "#6366F1" },
-    { name: "Update to the Constitution", value: govCountMap?.NEW_CONSTITUTION ?? 0, color: "#EC4899" },
-    { name: "Protocol Parameter Change", value: govCountMap?.PARAMETER_CHANGE_ACTION ?? 0, color: "#F59E0B" },
-    { name: "Treasury Withdrawals", value: govCountMap?.TREASURY_WITHDRAWALS_ACTION ?? 0, color: "#FACC15" },
-    { name: "Info Action", value: govCountMap?.INFO_ACTION ?? 0, color: "#F880FB" }
+    { name: t("pool.typeMotion"), value: govCountMap?.NO_CONFIDENCE ?? 0, color: "#14B8A6" },
+    { name: t("pool.typeConstitutional"), value: govCountMap?.UPDATE_COMMITTEE ?? 0, color: "#3B82F6" },
+    { name: t("pool.typeHardFork"), value: govCountMap?.HARD_FORK_INITIATION_ACTION ?? 0, color: "#6366F1" },
+    { name: t("drep.updateConstitution"), value: govCountMap?.NEW_CONSTITUTION ?? 0, color: "#EC4899" },
+    { name: t("drep.protocolChange"), value: govCountMap?.PARAMETER_CHANGE_ACTION ?? 0, color: "#F59E0B" },
+    { name: t("drep.treasuryWithdrawals"), value: govCountMap?.TREASURY_WITHDRAWALS_ACTION ?? 0, color: "#FACC15" },
+    { name: t("pool.typeInfo"), value: govCountMap?.INFO_ACTION ?? 0, color: "#F880FB" }
   ];
   const renderLegend = (props: LegendProps) => {
     const { payload } = props;
 
     return (
-      <ul style={{ listStyleType: "none", paddingRight: "30px" }}>
+      <ul style={{ listStyleType: "none", paddingRight: "5px" }}>
         {payload?.map((entry, index) => {
           return (
             <LegendChart key={`item-${index}`}>
@@ -88,7 +89,7 @@ const ChartOverview = (props: TypeProps) => {
   };
   const COLORS_CHART_ACTIOS = dataGovStatusMap.map((entry) => entry.color);
   const COLORS_CHART_TYPE = dataGovCountMap.map((entry) => entry.color);
-  const middleScreen = useMediaQuery("(max-width:1250px)");
+  const middleScreen = useMediaQuery("(max-width:1255px)");
   const smallScreen = useMediaQuery("(max-width:600px)");
 
   const sumValues = (data: DataChart) => {
