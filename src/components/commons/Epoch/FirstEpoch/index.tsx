@@ -130,7 +130,9 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       ),
       value: (
         <Content data-testid="epoch.firstEpoch.slotValue">
-          {moment(currentEpochData.endTime).diff(moment()) >= 0 ? currentEpoch?.slot : MAX_SLOT_EPOCH}
+          {moment(formatDateTimeLocal(currentEpochData.endTime)).diff(moment()) >= 0
+            ? currentEpoch?.slot
+            : MAX_SLOT_EPOCH}
           <SubContent>/{MAX_SLOT_EPOCH}</SubContent>
         </Content>
       )
