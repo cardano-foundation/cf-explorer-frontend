@@ -260,6 +260,7 @@ const renderTooltipContent = (o: TooltipProps<string | number | (string | number
 const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
   const theme = useTheme();
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
+  const { isLanrgeScreen } = useScreen();
 
   if (!data) return <></>;
   return (
@@ -284,7 +285,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
             dataKey="date"
             tickFormatter={(date: string) => formatX(date, range)}
-            minTickGap={15}
+            minTickGap={isLanrgeScreen ? 15 : 5}
           />
           <YAxis
             tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
