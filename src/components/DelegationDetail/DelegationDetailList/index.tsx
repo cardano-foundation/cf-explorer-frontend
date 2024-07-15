@@ -172,9 +172,12 @@ const DelegationStakingDelegatorsList = ({
       minWidth: "50px",
       render: (data) =>
         (data.view || data.stakeAddress) && (
-          <div data-testid="stakingDelegators.delegatorValue" style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <CustomTooltip title={data.view || data.stakeAddress || ""}>
-              <StyledLink to={details.stake(data.view || data.stakeAddress)}>
+              <StyledLink
+                to={details.stake(data.view || data.stakeAddress)}
+                data-testid="stakingDelegators.delegatorValue"
+              >
                 {getShortHash(data.view || data.stakeAddress || "")}
               </StyledLink>
             </CustomTooltip>
