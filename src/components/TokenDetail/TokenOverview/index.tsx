@@ -131,17 +131,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
-            <WrapTitle>{t("glossary.numberOfHolders")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: RewardIconComponent,
-      value: numberWithCommas(currentHolders || data?.numberOfHolders || "")
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
             <CustomTooltip title={t("desc.InUnits4Native")}>
               <WrapTitle>{t("glossary.totalVolumn")}</WrapTitle>
             </CustomTooltip>
@@ -150,6 +139,19 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       ),
       icon: ExchageIcon,
       value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            <CustomTooltip title={t("desc.InUnits4Native")}>
+              <WrapTitle>{t("glossary.volume24h")}</WrapTitle>
+            </CustomTooltip>
+          </Box>
+        </Box>
+      ),
+      icon: USDIconComponent,
+      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
       title: (
