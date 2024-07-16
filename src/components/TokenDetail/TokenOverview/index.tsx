@@ -144,6 +144,19 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       title: (
         <Box display={"flex"} alignItems="center">
           <Box component={"span"} mr={1}>
+            <CustomTooltip title={t("desc.InUnits4Native")}>
+              <WrapTitle>{t("glossary.volume24h")}</WrapTitle>
+            </CustomTooltip>
+          </Box>
+        </Box>
+      ),
+      icon: USDIconComponent,
+      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
             <WrapTitle>{t("createdAt")}</WrapTitle>
           </Box>
         </Box>
