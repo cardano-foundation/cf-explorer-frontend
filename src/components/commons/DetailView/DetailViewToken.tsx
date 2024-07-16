@@ -202,12 +202,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.volume24h")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DatetimeTypeTooltip>
                   <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
