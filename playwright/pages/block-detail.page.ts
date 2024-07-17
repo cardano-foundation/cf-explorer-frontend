@@ -111,12 +111,21 @@ export function blockDetailPage(page: Page) {
     await expect(blocksDetailTrxTableoutput, "Check title on transaction table").toHaveText("Output in ADA");
   };
 
+  const checkBlockDetail = async ({ blockNo }: { blockNo: string | null }) => {
+    const deatailPageTitle = page.getByTestId("block.detail.header");
+
+    const url = page.url();
+    await expect(deatailPageTitle, "Check title on transaction detail").toHaveText("Block Details");
+    expect(url, "Check url transaction detail").toContain(`/block/${blockNo}`);
+  };
+
   return {
     assertBlockDataIsDisplayed,
     checkBlockOverviewDetailPage,
     checkTransactionsTable,
     goToTrxDetailFromTrxTable,
     goToAddressDetailFromTrxTable,
-    goToPoolDetailByBlockProducer
+    goToPoolDetailByBlockProducer,
+    checkBlockDetail
   };
 }

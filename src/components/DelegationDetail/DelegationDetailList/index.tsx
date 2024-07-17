@@ -298,10 +298,13 @@ const DelegationCertificatesHistory = ({
       title: <Box data-testid="poolHistory.txHashTitle">{t("certificatesHistory.txHash")}</Box>,
       key: "txHash",
       minWidth: "180px",
-      render: (data) =>
+      render: (data, idx) =>
         data.txHash && (
           <CustomTooltip title={data.txHash || ""}>
-            <StyledLink data-testid="poolHistory.txHashValue" to={details.transaction(data.txHash, "poolCertificates")}>
+            <StyledLink
+              data-testid={`poolHistory.txHashValue#${idx}`}
+              to={details.transaction(data.txHash, "poolCertificates")}
+            >
               {getShortHash(data.txHash || "")}
             </StyledLink>
           </CustomTooltip>
@@ -311,8 +314,8 @@ const DelegationCertificatesHistory = ({
       title: <Box data-testid="poolHistory.createdAtTitle">{t("common.createdAt")}</Box>,
       key: "createdAt",
       minWidth: "180px",
-      render: (data) => (
-        <DatetimeTypeTooltip data-testid="poolHistory.createdAtValue">
+      render: (data, idx) => (
+        <DatetimeTypeTooltip data-testid={`poolHistory.createdAtValue#${idx}`}>
           {formatDateTimeLocal(data.createdAt || "")}
         </DatetimeTypeTooltip>
       )
@@ -321,8 +324,8 @@ const DelegationCertificatesHistory = ({
       title: <Box data-testid="poolHistory.blockTitle">{t("certificatesHistory.block")}</Box>,
       key: "block",
       minWidth: "100px",
-      render: (data) => (
-        <StyledLink data-testid="poolHistory.blockValue" to={details.block(data.blockNo)}>
+      render: (data, idx) => (
+        <StyledLink data-testid={`poolHistory.blockValue#${idx}`} to={details.block(data.blockNo)}>
           {data.blockNo}
         </StyledLink>
       )
@@ -331,8 +334,8 @@ const DelegationCertificatesHistory = ({
       title: <Box data-testid="poolHistory.epochTitle">{t("epoch")}</Box>,
       key: "value",
       minWidth: "80px",
-      render: (data) => (
-        <StyledLink data-testid="poolHistory.epochValue" to={details.epoch(data.epochNo)}>
+      render: (data, idx) => (
+        <StyledLink data-testid={`poolHistory.epochValue#${idx}`} to={details.epoch(data.epochNo)}>
           {data.epochNo}
         </StyledLink>
       )
@@ -341,23 +344,23 @@ const DelegationCertificatesHistory = ({
       title: <Box data-testid="poolHistory.slotTitle">{t("common.slot")}</Box>,
       key: "slot",
       minWidth: "90px",
-      render: (data) => <Box data-testid="poolHistory.slotValue">{data.epochSlotNo || data.slotNo}</Box>
+      render: (data, idx) => <Box data-testid={`poolHistory.slotValue#${idx}`}>{data.epochSlotNo || data.slotNo}</Box>
     },
     {
       title: <Box data-testid="poolHistory.absoluteSlotTitle">{t("certificatesHistory.absoluteSlot")}</Box>,
       key: "absoluteSlot",
       minWidth: "130px",
-      render: (data) => {
-        return <Box data-testid="poolHistory.absoluteSlotTitle">{data.absoluteSlot || data.slotNo}</Box>;
+      render: (data, idx) => {
+        return <Box data-testid={`poolHistory.absoluteSlotTitle#${idx}`}>{data.absoluteSlot || data.slotNo}</Box>;
       }
     },
     {
       title: <Box data-testid="poolHistory.actionTitle">{t("common.action")}</Box>,
       key: "fees",
       minWidth: "210px",
-      render: (data) => {
+      render: (data, idx) => {
         return (
-          <Box data-testid="poolHistory.actionValue" display={"flex"} gap={2}>
+          <Box data-testid={`poolHistory.actionValue#${idx}`} display={"flex"} gap={2}>
             {(data.actions || data.actionTypes) &&
               removeDuplicate(data.actions || data.actionTypes).map((action: POOL_ACTION_TYPE, idx) => (
                 <React.Fragment key={"poolAction" + data.txHash + idx}>{renderAction(action)}</React.Fragment>

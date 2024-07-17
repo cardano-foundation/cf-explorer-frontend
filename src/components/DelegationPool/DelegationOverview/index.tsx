@@ -69,6 +69,7 @@ const OverViews: React.FC = () => {
   const hours = duration.hours();
   const minutes = duration.minutes();
   const seconds = duration.seconds();
+
   return (
     <Card title={t("head.page.pool")}>
       <TimeDuration>
