@@ -97,12 +97,6 @@ const Tokens = () => {
       }
     },
     {
-      title: t("glossary.numberOfHolders"),
-      key: "numberOfHolders",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.numberOfHolders)
-    },
-    {
       title: t("glossary.totalVolumn"),
       key: "TotalVolume",
       minWidth: "150px",
