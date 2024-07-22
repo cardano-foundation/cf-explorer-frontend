@@ -5,7 +5,7 @@ import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import DrepsList from "src/components/Dreps/DrepsList";
 
 import NotFound from "../NotFound";
-import { Horizon, StyledContainer } from "./styles";
+import { StyledContainer } from "./styles";
 
 const Dreps = () => {
   useEffect(() => {
@@ -18,7 +18,6 @@ const Dreps = () => {
   return (
     <StyledContainer>
       <OverViews />
-      <Horizon />
       <DrepsList />
     </StyledContainer>
   );

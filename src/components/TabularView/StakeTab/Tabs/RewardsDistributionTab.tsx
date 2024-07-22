@@ -62,7 +62,7 @@ const RewardsDistributionTab = () => {
       tab
     }
   );
-  const { total } = fetchData;
+  const { total, error } = fetchData;
   return (
     <>
       <WrapperDelegationTab>
@@ -71,21 +71,23 @@ const RewardsDistributionTab = () => {
           <Box mr={1}>Reward account:</Box>
           <AdaValue color={({ palette }) => palette.secondary.main} value={detailData?.rewardAvailable ?? 0} />
         </WrapWalletLabel>
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
-            {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
-          </WrapFilterDescription>
-          <CustomFilter
-            excludes={["search"]}
-            searchLabel=""
-            sortKey="id"
-            filterValue={omit(pageInfo, ["page", "size"])}
-            onSubmit={(params) => {
-              history.replace({ search: stringify({ page: 0, ...params }) });
-            }}
-          />
-        </Box>
+        {!error && (
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              {t("common.showing")} {Math.min(total, pageInfo.size)}{" "}
+              {Math.min(total, pageInfo.size) <= 1 ? t("common.result") : t("common.results")}
+            </WrapFilterDescription>
+            <CustomFilter
+              excludes={["search"]}
+              searchLabel=""
+              sortKey="id"
+              filterValue={omit(pageInfo, ["page", "size"])}
+              onSubmit={(params) => {
+                history.replace({ search: stringify({ page: 0, ...params }) });
+              }}
+            />
+          </Box>
+        )}
       </WrapperDelegationTab>
       <Table
         {...fetchData}

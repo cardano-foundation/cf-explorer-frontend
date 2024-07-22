@@ -10,7 +10,7 @@ import {
   alpha,
   useTheme
 } from "@mui/material";
-import { isEmpty, isObject } from "lodash";
+import { isEmpty } from "lodash";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,9 +27,8 @@ import { DateRangeIcon, FilterIcon, ProtocolParam, ResetIcon } from "src/commons
 import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import { details, lists } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { PROTOCOL_TYPE } from "src/commons/utils/constants";
-import { formatDateTimeLocal, getShortValue } from "src/commons/utils/helper";
-import ParseScriptModal from "src/components/ParseScriptModal";
+import { PROTOCOL_TYPE, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { getShortValue } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -37,12 +36,28 @@ import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import Table from "src/components/commons/Table";
-import { ProtocolFixed, ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
+import { ProtocolHistory, ProtocolTypeKey, TProtocolItem, TProtocolParam } from "src/types/protocol";
 import { Column } from "src/types/table";
-import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import GroupProtocoParameters from "src/components/ProtocolParameters/GroupProtocolParameters/GroupProtocolParameters";
+import ProtocolHeader from "src/components/ProtocolParameters/ProtocolHeader";
+import {
+  Allegra,
+  Alonzo,
+  AlonzoEu,
+  BabbageValentine,
+  BabbageVasil,
+  Byron,
+  ByronReboot,
+  displayTooltipEconomic,
+  displayTooltipGovernance,
+  displayTooltipNetwork,
+  displayTooltipTechnical,
+  Mary,
+  Shelley
+} from "src/components/ProtocolParameters/ExplainerText";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
-import { explainerTextGlobalConstants, explainerTextProtocolHistory } from "./explainerText";
+import { explainerTextProtocolHistory } from "./explainerText";
 import {
   AccordionContainer,
   AccordionSummary,
@@ -52,63 +67,18 @@ import {
   ButtonFilter,
   ColumnProtocol,
   FilterContainer,
-  Header,
-  HeaderButton,
   StyledDropdownItem,
   TextDescription
 } from "./styles";
 import TxsProtocolModal from "./TxsProtocolModal";
 
-interface IProtocolParamVertical {
-  name: string;
-  value: string;
-  epoch?: number;
-  timestamp?: string;
-}
-
-interface IVerticalLatestTable {
-  name: string;
-  value: string;
-  epochNo: number;
-  time: string;
-}
-
 const ProtocolParameter: React.FC = () => {
   const { t } = useTranslation();
-  const [costModelScript, setCostModelScript] = useState("");
-  const [titleModal, setTitleModal] = useState("");
+
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataFixed, initialized: initialFixed } = useFetch<ProtocolFixed>(PROTOCOL_PARAMETER.FIXED);
-  const { data: dataLastest, initialized: initialLastest } = useFetch<Partial<TProtocolParam>>(
-    PROTOCOL_PARAMETER.LASTEST
-  );
-
-  const dataFixedVertical =
-    isObject(dataFixed) &&
-    Object.entries(dataFixed).map(([name, value]: [string, string]) => ({
-      name,
-      value: isObject(value) ? JSON.stringify(value) : value
-    }));
-
-  const dataLatestVertical =
-    isObject(dataLastest) &&
-    Object.entries(dataLastest)
-      .map(([name, valueObject]) => {
-        const convertedObj = valueObject as Partial<
-          TProtocolItem & TProtocolParam["epochChange"] & { epochNo: number; time: string }
-        >;
-        return {
-          name,
-          value: name === "costModel" ? JSON.stringify(valueObject) : convertedObj?.value,
-          epochNo: convertedObj?.epochNo,
-          time: convertedObj?.time
-        };
-      })
-      .filter((item) => item.name !== "timestamp");
-
-  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+  const { data: dataLastest, loading, error } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -118,148 +88,147 @@ const ProtocolParameter: React.FC = () => {
 
   const theme = useTheme();
 
-  const columnsVerticalFixedTable: Column<IProtocolParamVertical>[] = [
-    {
-      title: t("common.parameterName"),
-      key: "name",
-      render: (r: IProtocolParamVertical) => {
-        const k = r.name;
-        return (
-          <Box>
-            {k}{" "}
-            {explainerTextGlobalConstants[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
-              <Box
-                component={IconButton}
-                padding={"2px"}
-                onClick={() =>
-                  setExplainerText({
-                    content: t(`explain.${k}`),
-                    title: k
-                  })
-                }
-              >
-                <InfoSolidIcon />
-              </Box>
-            )}
-          </Box>
-        );
-      }
-    },
-    {
-      title: t("common.value"),
-      key: "value",
-      maxWidth: 400,
-      render: (r) => {
-        const k = r.name;
-        const isModalType = k === "genDelegs";
-        const isTimeStamp = k === "timestamp";
-
-        return (
-          <Box
-            component={isModalType ? Button : Box}
-            onClick={() => {
-              if (isModalType) {
-                setCostModelScript(r.value);
-                setTitleModal(k);
-              }
-            }}
-            p={0}
-            justifyItems={"flex-start"}
-            textTransform={"capitalize"}
-          >
-            <Box
-              maxWidth={300}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
-            >
-              {isTimeStamp ? (
-                <DatetimeTypeTooltip>{formatDateTimeLocal(r.value || "")}</DatetimeTypeTooltip>
-              ) : (
-                getShortValue(r.value?.toString())
-              )}
-            </Box>
-          </Box>
-        );
-      }
-    }
-  ];
-
-  const columnsVerticalLatestTable: Column<IVerticalLatestTable>[] = [
-    {
-      title: t("common.parameterName"),
-      key: "name",
-      render: (r: IProtocolParamVertical) => {
-        const k = r.name;
-        return (
-          <Box>
-            {k}{" "}
-            {explainerTextProtocolHistory[k as keyof Omit<ProtocolHistory, "epochChanges">] && (
-              <Box
-                component={IconButton}
-                padding={"2px"}
-                onClick={() =>
-                  setExplainerText({
-                    content: t(`explain.${k}`),
-                    title: k
-                  })
-                }
-              >
-                <InfoSolidIcon />
-              </Box>
-            )}
-          </Box>
-        );
-      }
-    },
-    {
-      title: t("common.value"),
-      key: "value",
-      maxWidth: 400,
-      render: (r) => {
-        const k = r.name;
-        const isModalType = k === "costModel";
-        return (
-          <Box
-            component={isModalType ? Button : Box}
-            onClick={() => {
-              if (isModalType) {
-                setCostModelScript(r.value);
-                setTitleModal(k);
-              }
-            }}
-            p={0}
-            justifyItems={"flex-start"}
-            textTransform={"capitalize"}
-          >
-            <Box
-              maxWidth={300}
-              overflow={"hidden"}
-              whiteSpace={"nowrap"}
-              textOverflow={"ellipsis"}
-              color={({ palette }) => (isModalType ? palette.primary.main : "unset")}
-            >
-              {getShortValue(r.value?.toString())}
-            </Box>
-          </Box>
-        );
-      }
-    },
-    {
-      title: t("common.lastUpdatedInEpoch"),
-      key: "epochNo",
-      render: (r) => <Box>{r?.epochNo}</Box>
-    },
-    {
-      title: t("common.timestamp"),
-      key: "timestamp",
-      render: (r) => <DatetimeTypeTooltip>{r?.time ? formatDateTimeLocal(r.time) : ""}</DatetimeTypeTooltip>
-    }
-  ];
-
   if (histories && histories !== "histories") return <NoRecord />;
 
+  const Network = [
+    { name: "maxBBSize", value: dataLastest?.maxBBSize?.value, time: dataLastest?.maxBBSize?.time, icon: true },
+    { name: "maxTxSize", value: dataLastest?.maxTxSize?.value, time: dataLastest?.maxTxSize?.time, icon: true },
+    { name: "maxBHSize", value: dataLastest?.maxBHSize?.value, time: dataLastest?.maxBHSize?.time, icon: true },
+    { name: "maxValSize", value: dataLastest?.maxValSize?.value, time: dataLastest?.maxValSize?.time, icon: true },
+    {
+      name: "maxTxExMem",
+      value: dataLastest?.maxTxExMem?.value,
+      time: dataLastest?.maxTxExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxTxExSteps",
+      value: dataLastest?.maxTxExSteps?.value,
+      time: dataLastest?.maxTxExSteps?.time,
+      icon: false
+    },
+    {
+      name: "maxBlockExMem",
+      value: dataLastest?.maxBlockExMem?.value,
+      time: dataLastest?.maxBlockExMem?.time,
+      icon: false
+    },
+    {
+      name: "maxBlockExSteps",
+      value: dataLastest?.maxBlockExSteps?.value,
+      time: dataLastest?.maxBlockExSteps?.time,
+      icon: false
+    },
+    {
+      name: "maxCollateralInputs",
+      value: dataLastest?.maxCollateralInputs?.value,
+      time: dataLastest?.maxCollateralInputs?.time,
+      icon: false
+    }
+  ];
+
+  const Economic = [
+    { name: "minFeeA", value: dataLastest?.minFeeA?.value, time: dataLastest?.minFeeA?.time, icon: true },
+    { name: "minFeeB", value: dataLastest?.minFeeB?.value, time: dataLastest?.minFeeB?.time, icon: true },
+    { name: "keyDeposit", value: dataLastest?.keyDeposit?.value, time: dataLastest?.keyDeposit?.time, icon: false },
+    { name: "poolDeposit", value: dataLastest?.poolDeposit?.value, time: dataLastest?.poolDeposit?.time, icon: false },
+    {
+      name: "rho",
+      value: dataLastest?.rho?.value,
+      time: dataLastest?.rho?.time,
+      icon: false
+    },
+    {
+      name: "tau",
+      value: dataLastest?.tau?.value,
+      time: dataLastest?.tau?.time,
+      icon: false
+    },
+    {
+      name: "minPoolCost",
+      value: dataLastest?.minPoolCost?.value,
+      time: dataLastest?.minPoolCost?.time,
+      icon: false
+    },
+    {
+      name: "coinsPerUTxOByte",
+      value: dataLastest?.coinsPerUTxOByte?.value,
+      time: dataLastest?.coinsPerUTxOByte?.time,
+      icon: true
+    },
+    {
+      name: "priceStep",
+      value: dataLastest?.priceStep?.value,
+      time: dataLastest?.priceStep?.time,
+      icon: false
+    },
+    {
+      name: "priceMem",
+      value: dataLastest?.priceMem?.value,
+      time: dataLastest?.priceMem?.time,
+      icon: false
+    }
+  ];
+
+  const Technical = [
+    { name: "a0", value: dataLastest?.a0?.value, time: dataLastest?.a0?.time, icon: false },
+    { name: "eMax", value: dataLastest?.eMax?.value, time: dataLastest?.eMax?.time, icon: false },
+    { name: "nOpt", value: dataLastest?.nOpt?.value, time: dataLastest?.nOpt?.time, icon: false },
+    { name: "costModels", value: dataLastest?.costModels?.value, time: dataLastest?.costModels?.time, icon: false },
+    {
+      name: "collateralPercentage",
+      value: dataLastest?.collateralPercentage?.value,
+      time: dataLastest?.collateralPercentage?.time,
+      icon: false
+    },
+    {
+      name: "protocolMajor",
+      value: dataLastest?.protocolMajor?.value,
+      time: dataLastest?.protocolMajor?.time,
+      icon: false
+    },
+    {
+      name: "protocolMinor",
+      value: dataLastest?.protocolMinor?.value,
+      time: dataLastest?.protocolMinor?.time,
+      icon: false
+    }
+  ];
+
+  const Governance = [
+    {
+      name: "govActionLifetime",
+      value: dataLastest?.govActionLifetime?.value,
+      time: dataLastest?.govActionLifetime?.time,
+      icon: false
+    },
+    {
+      name: "govActionDeposit",
+      value: dataLastest?.govActionDeposit?.value,
+      time: dataLastest?.govActionDeposit?.time,
+      icon: true
+    },
+    { name: "drepDeposit", value: dataLastest?.drepDeposit?.value, time: dataLastest?.drepDeposit?.time, icon: false },
+    {
+      name: "drepActivity",
+      value: dataLastest?.drepActivity?.value,
+      time: dataLastest?.drepActivity?.time,
+      icon: false
+    },
+    {
+      name: "ccMinSize",
+      value: dataLastest?.ccMinSize?.value,
+      time: dataLastest?.ccMinSize?.time,
+      icon: false
+    },
+    {
+      name: "ccMaxTermLength",
+      value: dataLastest?.ccMaxTermLength?.value,
+      time: dataLastest?.ccMaxTermLength?.time,
+      icon: false
+    }
+  ];
+  if (error) return <NoRecord />;
   return (
     <Container>
       {histories && (
@@ -272,64 +241,21 @@ const ProtocolParameter: React.FC = () => {
       )}
       {histories && <ProtocolParameterHistory />}
       {!histories && (
-        <Card title={t("common.protocolParameters")}>
-          <Box pt={2}>
-            <>
-              <Box pb={"30px"} borderBottom={`1px solid ${alpha(theme.palette.common.black, 0.1)}`}>
-                <Box display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
-                  <Header>{t("common.updatableParameters")}</Header>
-                  <HeaderButton variant="contained" onClick={() => history.push(lists.protocolParameters("histories"))}>
-                    {t("common.viewUpdateHistory")}
-                  </HeaderButton>
-                </Box>
-                {!initialLastest && (
-                  <Box
-                    component={CommonSkeleton}
-                    mt={2}
-                    borderRadius={({ spacing }) => spacing(2)}
-                    variant="rectangular"
-                    height={280}
-                  />
-                )}
-                {initialLastest && <Table columns={columnsVerticalLatestTable} data={dataLatestVertical || []} />}
-              </Box>
-              <Box pt={"30px"}>
-                <Box>
-                  <Box
-                    textAlign={"left"}
-                    color={({ palette }) => palette.secondary.main}
-                    fontWeight={"bold"}
-                    fontSize={"1.25rem"}
-                  >
-                    {t("glossary.globalconstants")}
-                  </Box>
-                  {!initialFixed && (
-                    <Box
-                      component={CommonSkeleton}
-                      mt={2}
-                      borderRadius={({ spacing }) => spacing(2)}
-                      variant="rectangular"
-                      height={280}
-                    />
-                  )}
-                  {initialFixed && <Table columns={columnsVerticalFixedTable} data={dataFixedVertical || []} />}
-                </Box>
-              </Box>
-            </>
-          </Box>
-        </Card>
+        <Box marginBottom={"109px"} marginTop={"64px"}>
+          <ProtocolHeader />
+          <GroupProtocoParameters loading={loading} data={displayTooltipNetwork} group={Network} type="network" />
+          <GroupProtocoParameters loading={loading} group={Economic} data={displayTooltipEconomic} type="economic" />
+          <GroupProtocoParameters loading={loading} group={Technical} data={displayTooltipTechnical} type="technical" />
+          {FF_GLOBAL_IS_CONWAY_ERA && (
+            <GroupProtocoParameters
+              loading={loading}
+              data={displayTooltipGovernance}
+              group={Governance}
+              type="governance"
+            />
+          )}
+        </Box>
       )}
-      <ParseScriptModal
-        open={!!costModelScript}
-        onClose={() => setCostModelScript("")}
-        script={costModelScript}
-        title={titleModal || "CostModel"}
-      />
-      <ExplainerTextModal
-        open={!!explainerText}
-        handleCloseModal={() => setExplainerText(null)}
-        explainerText={explainerText || { content: "", title: "" }}
-      />
     </Container>
   );
 };
@@ -345,7 +271,10 @@ export const ProtocolParameterHistory = () => {
   const [filterParams, setFilterParams] = useState<string[]>([]);
   const [selectTxs, setSelectTxs] = useState<string[] | null>(null);
   const [dateRangeFilter, setDateRangeFilter] = useState<{ fromDate?: string; toDate?: string }>({});
-  const [explainerText, setExplainerText] = useState<{ title: string; content: string } | null>(null);
+  const [explainerText, setExplainerText] = useState<{
+    title: string;
+    content: string | { description: string; list: { description: string }[] };
+  } | null>(null);
 
   const { currentEpoch } = useSelector(({ system }: RootState) => system);
   const currentEpochNo = currentEpoch?.no || 0;
@@ -366,7 +295,13 @@ export const ProtocolParameterHistory = () => {
   }
 
   const url = `${historyUrlBase}/${historyUrlParams}${dateRangeQueryParams}`;
-  const { data: dataHistory, loading, initialized } = useFetch<ProtocolHistory>(url);
+  const {
+    data: dataHistory,
+    loading,
+    initialized,
+    error: errorHistory,
+    statusError: statusErrHistory
+  } = useFetch<ProtocolHistory>(url);
   const [isShowUpcomingEpoch, setIsShowUpcomingEpoch] = useState<boolean>(false);
 
   const [dataHistoryMapping, { push: pushHistory, clear }] = useList<{
@@ -438,7 +373,7 @@ export const ProtocolParameterHistory = () => {
             {(r[t as ProtocolTypeKey]?.status === "ADDED" || r[t as ProtocolTypeKey]?.status === "UPDATED") &&
             !r[t as ProtocolTypeKey]?.transactionHashs ? (
               <CustomTooltip title="No transaction">
-                <Box>
+                <Box component={"div"} style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
                   {r[t as ProtocolTypeKey]
                     ? r[t as ProtocolTypeKey]?.value
                       ? r[t as ProtocolTypeKey]?.value
@@ -480,7 +415,23 @@ export const ProtocolParameterHistory = () => {
                 padding={"2px"}
                 onClick={() =>
                   setExplainerText({
-                    content: t(`explain.${r?.params}`),
+                    content:
+                      r?.params === "protocolMajor"
+                        ? {
+                            description: "Protocol version. Major versions are:",
+                            list: [
+                              { description: Byron },
+                              { description: ByronReboot },
+                              { description: Shelley },
+                              { description: Allegra },
+                              { description: Mary },
+                              { description: Alonzo },
+                              { description: AlonzoEu },
+                              { description: BabbageVasil },
+                              { description: BabbageValentine }
+                            ]
+                          }
+                        : t(`explain.${r?.params}`),
                     title: r?.params
                   })
                 }
@@ -618,31 +569,33 @@ export const ProtocolParameterHistory = () => {
                     : t("glossary.showingNumberEpoch", { total: totalEpoch })}
                 </TextDescription>
               )}
-              <Box
-                component={Button}
-                variant="text"
-                textTransform={"capitalize"}
-                bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
-                border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
-                px={2}
-                onClick={() => setShowFiter(!showFilter)}
-              >
-                <CustomIcon
-                  icon={FilterIcon}
-                  fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
-                  height={18}
-                />
+              {!errorHistory && (
                 <Box
-                  ml={1}
-                  whiteSpace={"nowrap"}
-                  fontWeight={"bold"}
-                  color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                  component={Button}
+                  variant="text"
+                  textTransform={"capitalize"}
+                  bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[0] : palette.primary[200])}
+                  border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+                  px={2}
+                  onClick={() => setShowFiter(!showFilter)}
                 >
-                  {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                  <CustomIcon
+                    icon={FilterIcon}
+                    fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+                    height={18}
+                  />
+                  <Box
+                    ml={1}
+                    whiteSpace={"nowrap"}
+                    fontWeight={"bold"}
+                    color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+                  >
+                    {t("common.filter")} {totalFilter ? `(${totalFilter})` : ""}
+                  </Box>
                 </Box>
-              </Box>
+              )}
             </Box>
-            {showFilter && (
+            {showFilter && !errorHistory && (
               <FilterComponent
                 setFilterParams={setFilterParams}
                 setResetFilter={setResetFilter}
@@ -687,11 +640,15 @@ export const ProtocolParameterHistory = () => {
           <></>
         )}
         {columnsTable?.length > 1 && initialized && (
+          <TableStyled columns={columnsTable} data={dataTable} loading={loading} />
+        )}
+
+        {errorHistory && (
           <TableStyled
-            minHeight={"unset"}
-            maxHeight={"unset"}
             columns={columnsTable}
             data={dataTable}
+            error={errorHistory}
+            statusError={statusErrHistory}
             loading={loading}
           />
         )}
@@ -699,7 +656,7 @@ export const ProtocolParameterHistory = () => {
       <ExplainerTextModal
         open={!!explainerText}
         handleCloseModal={() => setExplainerText(null)}
-        explainerText={explainerText || { content: "", title: "" }}
+        explainerText={explainerText || { content: "" || { description: "", list: [{ description: "" }] }, title: "" }}
       />
       <TxsProtocolModal open={!!selectTxs} onClose={() => setSelectTxs(null)} txs={selectTxs} />
     </Box>

@@ -135,7 +135,14 @@ const OverViews: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xl={3} md={6} xs={12}>
-          <StyledCard.Container sx={{ justifyContent: "space-between" }}>
+          <StyledCard.Container
+            sx={{
+              justifyContent: "space-between",
+              [theme.breakpoints.down(350)]: {
+                display: "block"
+              }
+            }}
+          >
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>
               <StyledCard.Title data-testid="delegationOverview.liveStakeTitle">
                 {t("glossary.liveStake")} (<ADAicon />)

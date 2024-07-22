@@ -23,40 +23,46 @@ import {
   Tabs,
   Title,
   TransactionContainer,
-  ValueChart
+  ValueChart,
+  XAxisChart
 } from "./styles";
 
 export interface TransactionChartIF {
   date: string;
-  simpleTransactions: number;
-  smartContract: number;
-  metadata: number;
+  simpleTransactions: number | null;
+  smartContract: number | null;
+  metadata: number | null;
 }
 
-type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
+type Time = "ONE_MONTH" | "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export type TypeChart = "trx" | "simple" | "complex";
+type Key = "simpleTransactions" | "smartContract" | "metadata";
 
 const TransactionChart: React.FC = () => {
   const { t } = useTranslation();
-  const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<Time>("ONE_MONTH");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
-    ONE_DAY: {
-      label: t("time.24h"),
-      displayName: t("option.tx.in24h")
-    },
-    ONE_WEEK: {
-      label: t("time.1w"),
-      displayName: t("option.tx.aWeek")
-    },
-    TWO_WEEK: {
-      label: t("time.2w"),
-      displayName: t("option.tx.twoWeeks")
-    },
     ONE_MONTH: {
       label: t("time.1m"),
       displayName: t("option.tx.aMonth")
+    },
+    THREE_MONTH: {
+      label: t("time.3m"),
+      displayName: t("option.tx.threeMonth")
+    },
+    ONE_YEAR: {
+      label: t("time.1y"),
+      displayName: t("option.tx.aYear")
+    },
+    THREE_YEAR: {
+      label: t("time.3y"),
+      displayName: t("option.tx.threeYear")
+    },
+    ALL_TIME: {
+      label: t("time.all_time"),
+      displayName: t("option.tx.all_time")
     }
   };
 
@@ -66,10 +72,18 @@ const TransactionChart: React.FC = () => {
     false,
     blockKey
   );
-
-  const sumSimple = (data || []).reduce((prev, item) => prev + item.simpleTransactions, 0);
-  const sumMetadata = (data || []).reduce((prev, item) => prev + item.metadata, 0);
-  const sumSmartContract = (data || []).reduce((prev, item) => prev + item.smartContract, 0);
+  const getDisplayedValue = (list: Omit<TransactionChartIF, "date">[], key: Key) => {
+    let sum = 0;
+    if (list === null || list.length === 0) return "N/A";
+    for (let i = 0; i < list.length; i++) {
+      const val = list[i][key];
+      if (val === null) {
+        return "N/A";
+      }
+      sum += val;
+    }
+    return sum;
+  };
 
   const dataOverview = [
     {
@@ -79,14 +93,14 @@ const TransactionChart: React.FC = () => {
           {t("glossary.metadata")} <Box fontSize={"0.6875rem"}>({t("glossary.withoutSC")})</Box>
         </Box>
       ),
-      value: sumMetadata || 0
+      value: getDisplayedValue(data || [], "metadata")
     },
     {
       key: "simple",
       title: <Box textAlign={"left"}>{t("glossary.smartContracts")}</Box>,
-      value: sumSmartContract || 0
+      value: getDisplayedValue(data || [], "smartContract")
     },
-    { key: "complex", title: t("glossary.simpleTxs"), value: sumSimple || 0 }
+    { key: "complex", title: t("glossary.simpleTxs"), value: getDisplayedValue(data || [], "simpleTransactions") }
   ];
 
   const renderLoading = () => {
@@ -105,9 +119,7 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={8} md={8} lg={9}>
-          <Title>
-            {t("drawer.transactions")} {optionsTime[rangeTime].displayName}
-          </Title>
+          <Title>{t("drawer.transactionsHistory")}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
           <Box maxWidth={"260px"} mx={isMobile ? "auto" : "none"}>
@@ -143,7 +155,9 @@ const TransactionChart: React.FC = () => {
                     <StyledTransactionTypeItem>{item.title}</StyledTransactionTypeItem>
                   </Box>
 
-                  <ValueChart data-testid={item.key}>{numberWithCommas(item.value)}</ValueChart>
+                  <ValueChart data-testid={item.key}>
+                    {typeof item.value === "number" ? numberWithCommas(item.value) : item.value}
+                  </ValueChart>
                 </InfoItem>
               ))}
             </BoxInfo>
@@ -159,13 +173,13 @@ export default TransactionChart;
 const toPercent = (decimal: number) => `${(decimal * 100).toFixed()}%`;
 const formatTimeX = (date: Time) => {
   switch (date) {
-    case "ONE_DAY":
-      return "HH:mm";
-    case "ONE_WEEK":
-    case "TWO_WEEK":
     case "ONE_MONTH":
+    case "THREE_MONTH":
       return "MM/DD";
-
+    case "ONE_YEAR":
+    case "THREE_YEAR":
+    case "ALL_TIME":
+      return "MM/YYYY";
     default:
       break;
   }
@@ -173,12 +187,13 @@ const formatTimeX = (date: Time) => {
 
 const getLabel = (date: string, range: Time) => {
   switch (range) {
-    case "ONE_DAY":
-      return `${moment(date).format("DD MMM HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
-    case "ONE_WEEK":
-    case "TWO_WEEK":
     case "ONE_MONTH":
+    case "THREE_MONTH":
       return moment(date).format("DD MMM");
+    case "ONE_YEAR":
+    case "THREE_YEAR":
+    case "ALL_TIME":
+      return moment(date).format("MMM YYYY");
 
     default:
       break;
@@ -245,10 +260,12 @@ const renderTooltipContent = (o: TooltipProps<string | number | (string | number
 const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
   const theme = useTheme();
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
+  const { isLanrgeScreen } = useScreen();
 
   if (!data) return <></>;
   return (
-    <Box width={"100%"} minHeight={"250px"} height={250}>
+    <Box width={"100%"} minHeight={"250px"} height={250} sx={{ position: "relative" }}>
+      <XAxisChart></XAxisChart>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           height={500}
@@ -268,6 +285,7 @@ const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time
             tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
             dataKey="date"
             tickFormatter={(date: string) => formatX(date, range)}
+            minTickGap={isLanrgeScreen ? 15 : 3}
           />
           <YAxis
             tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}

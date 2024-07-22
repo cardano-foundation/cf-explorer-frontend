@@ -25,6 +25,7 @@ import { FooterTable } from "src/components/commons/Table";
 import CustomIcon from "src/components/commons/CustomIcon";
 import { FilterIcon, MultiSig, ResetIcon, SortNative, TimeLock } from "src/commons/resources";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { NativeScriptCard } from "./Card";
 import {
@@ -124,7 +125,9 @@ const TabNativeScripts = () => {
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {data && data.length === 0 && fetchData.initialized && <NoRecord padding={`0 !important`} />}
+        {((data && data.length === 0 && fetchData.initialized && !fetchData.error) ||
+          (fetchData.error && fetchData.statusError !== 500)) && <NoRecord padding={`0 !important`} />}
+        {fetchData.error && fetchData.statusError === 500 && <FetchDataErr padding={`0 !important`} />}
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
@@ -138,55 +141,57 @@ const TabNativeScripts = () => {
 
   return (
     <Box data-testid="TabNativeScripts">
-      <ClickAwayListener
-        onClickAway={() => {
-          setShowFiter(false);
-        }}
-      >
-        <Box position={"relative"} mb={2} textAlign={"right"}>
-          <Box
-            data-testid="tabNativeScripts.filter"
-            component={Button}
-            variant="text"
-            px={2}
-            textTransform={"capitalize"}
-            bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[100] : palette.primary[200])}
-            border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
-            onClick={() => setShowFiter(!showFilter)}
-            sx={{
-              ":hover": {
-                bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
-              }
-            }}
-          >
-            <CustomIcon
-              icon={FilterIcon}
-              fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
-              height={18}
-            />
+      {!fetchData.error && (
+        <ClickAwayListener
+          onClickAway={() => {
+            setShowFiter(false);
+          }}
+        >
+          <Box position={"relative"} mb={2} textAlign={"right"}>
             <Box
-              ml={1}
-              whiteSpace={"nowrap"}
-              fontWeight={"bold"}
-              color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+              data-testid="tabNativeScripts.filter"
+              component={Button}
+              variant="text"
+              px={2}
+              textTransform={"capitalize"}
+              bgcolor={({ palette, mode }) => (mode === "dark" ? palette.secondary[100] : palette.primary[200])}
+              border={({ palette, mode }) => `1px solid ${mode === "dark" ? "none" : palette.primary[200]}`}
+              onClick={() => setShowFiter(!showFilter)}
+              sx={{
+                ":hover": {
+                  bgcolor: theme.mode === "dark" ? theme.palette.secondary[100] : theme.palette.primary[200]
+                }
+              }}
             >
-              {t("common.filter")}
+              <CustomIcon
+                icon={FilterIcon}
+                fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
+                height={18}
+              />
+              <Box
+                ml={1}
+                whiteSpace={"nowrap"}
+                fontWeight={"bold"}
+                color={({ palette, mode }) => (mode === "dark" ? palette.primary.main : palette.secondary.light)}
+              >
+                {t("common.filter")}
+              </Box>
             </Box>
+            {showFilter && (
+              <FilterComponent
+                handleApplyFilter={handleApplyFilter}
+                handleResetFilter={handleResetFilter}
+                openTimeLocked={openTimeLocked}
+                setOpenTimeLocked={setOpenTimeLocked}
+                isMultiSig={isMultiSig}
+                setIsMultiSig={setIsMultiSig}
+                setSort={setSort}
+                sort={sort}
+              />
+            )}
           </Box>
-          {showFilter && (
-            <FilterComponent
-              handleApplyFilter={handleApplyFilter}
-              handleResetFilter={handleResetFilter}
-              openTimeLocked={openTimeLocked}
-              setOpenTimeLocked={setOpenTimeLocked}
-              isMultiSig={isMultiSig}
-              setIsMultiSig={setIsMultiSig}
-              setSort={setSort}
-              sort={sort}
-            />
-          )}
-        </Box>
-      </ClickAwayListener>
+        </ClickAwayListener>
+      )}
       {renderCard()}
       <FooterTable
         pagination={{

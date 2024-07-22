@@ -166,7 +166,8 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
       );
     }
 
-    const slot = data.no === currentEpoch?.no ? currentEpoch.slot : data.maxSlot || MAX_SLOT_EPOCH;
+    const slot =
+      data.no === currentEpoch?.no && data.status !== "SYNCING" ? currentEpoch.slot : data.maxSlot || MAX_SLOT_EPOCH;
 
     const progress = data.no === currentEpoch?.no ? (currentEpoch?.syncingProgress || 0) * 100 : 100;
     return (
