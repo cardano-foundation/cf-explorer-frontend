@@ -29,6 +29,11 @@ export class BlockFrost {
       return `${BlockFrost.Epochs.Base}/latest`;
     }
   };
+  static Pools = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/pools`;
+    }
+  };
 }
 
 export class Koios {
