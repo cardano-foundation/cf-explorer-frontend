@@ -26,6 +26,7 @@ export const routers = {
   CONSTITUIONAL_COMMITTEES: "/constitutional-committees/:tabActive?",
   OVERVIEW: "/overview",
   CONSTITUIONAL_COMMITTEE_DETAIL: "/constitutional-committee/:CCid/:tabActive?",
+  NETWORK_MONITORING: "/network-monitoring",
   STAKE_ADDRESS_DEREGISTRATION: "/stake-address-de-registrations",
   STAKE_ADDRESS_DELEGATIONS: "/stake-address-delegations",
   INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
@@ -122,5 +123,6 @@ export const listRouters = [
   routers.STAKE_ADDRESS_DEREGISTRATION,
   routers.STAKE_ADDRESS_DELEGATIONS,
   routers.CONTRACT_LIST,
-  routers.TOP_DELEGATOR
+  routers.TOP_DELEGATOR,
+  routers.NETWORK_MONITORING
 ];

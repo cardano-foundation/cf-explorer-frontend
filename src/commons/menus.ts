@@ -6,6 +6,7 @@ import {
   BrowseIcon,
   DashboardIcon,
   GovernanceHome,
+  NetworkMonitoringIcon,
   OperationalIcon,
   ProtocolIcon,
   StakingLifecycleIcon,
@@ -126,6 +127,12 @@ export const menus: Menu[] = [
         href: details.constitutionalCommittees("listMembers")
       }
     ]
+  },
+  {
+    title: "Network Monitoring",
+    key: "glossary.networkMonitoring",
+    icon: NetworkMonitoringIcon,
+    href: routers.NETWORK_MONITORING
   }
 ];
 
