@@ -34,7 +34,7 @@ const TabAssociated: React.FC<TTabAssociatedProps> = ({ data, loading }) => {
   return (
     <Box>
       <StyledSubNameTab data-testid="sc.subNameTab">{t("AssociatedAddresses")}:</StyledSubNameTab>
-      <Box maxHeight={380} overflow="auto">
+      <Box maxHeight={380} overflow={"auto"} minHeight={24}>
         {renderData()}
       </Box>
     </Box>
