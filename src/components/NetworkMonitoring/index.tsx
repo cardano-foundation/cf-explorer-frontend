@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 import { styled } from "@mui/system";
 
 import Card from "../commons/Card";
-import RegisteredStakepoolsChart from "./RegisteredStakepools";
+import BlockPropagationChart from "./BlockPropagation";
 
 export default function NetworkMonitoringComponent() {
   const { t } = useTranslation();
   return (
     <WrapPage>
       <Card title={t("glossary.networkMonitoring")} />
-      <RegisteredStakepoolsChart />
+      <BlockPropagationChart />
     </WrapPage>
   );
 }
