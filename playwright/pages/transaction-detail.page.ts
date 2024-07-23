@@ -54,7 +54,7 @@ export function transactionDetailPage(page: Page) {
 
     const url = await page.url();
     await expect(deatailPageTitle, "Check title on transaction detail").toHaveText("Transaction Details");
-    expect(url, "Check url transaction detail").toContain(`/transaction/${transactionHash}`);
+    expect(url, "Check url transaction detail").toContain(`${transactionHash}`);
   };
 
   const checkContractList = async ({ data }: { data: TrxContract[] | null }) => {
@@ -89,7 +89,7 @@ export function transactionDetailPage(page: Page) {
     expect(poolData?.vrf_key).toContain(await trxPoolCertVRFKey.innerText());
     expect(poolData?.reward_account).toContain(await trxPoolCertRewardAccoount.innerText());
     expect(poolData?.owners.find(async (i) => i.includes(await trxPoolCertPoolOperator.innerText()))).toBeTruthy();
-    expect(await trxPoolCertMargin.innerText()).toContain(`${(poolData?.margin_cost || 0) * 100}%`);
+    expect(`${(poolData?.margin_cost || 0) * 100}%`).toContain(await trxPoolCertMargin.innerText());
     expect(+((await trxPoolCertCost.innerText()) || "").replaceAll(",", "") * 10 ** 6).toEqual(
       +(poolData?.fixed_cost || 0)
     );

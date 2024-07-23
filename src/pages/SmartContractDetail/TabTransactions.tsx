@@ -39,9 +39,11 @@ const TabTransactions = () => {
       title: t("glossary.txhash"),
       key: "hash",
       minWidth: "150px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.hash}>
-          <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+          <StyledLink data-testid={`sm.detail.trx.hash#${idx}`} to={details.transaction(r.hash)}>
+            {getShortHash(r.hash)}
+          </StyledLink>
         </CustomTooltip>
       )
     },

@@ -38,9 +38,9 @@ const InstantReards = () => {
       title: <div data-testid="instaneousRewards.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: 120,
       key: "txHash",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="instaneousRewards.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`instaneousRewards.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>

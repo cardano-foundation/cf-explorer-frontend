@@ -53,6 +53,11 @@ export class BlockFrost {
       return `${BlockFrost.Transaction.Base}/:hash/mirs`;
     }
   };
+  static Pools = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/pools`;
+    }
+  };
 }
 
 export class Koios {
@@ -61,6 +66,11 @@ export class Koios {
   static getEpochById = class {
     public static get Base() {
       return `${Koios.BASE_MAIN_NET_URL}/epoch_info`;
+    }
+  };
+  static Transactions = class {
+    public static get Base() {
+      return `${Koios.BASE_MAIN_NET_URL}/tx_info`;
     }
   };
 }

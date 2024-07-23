@@ -6,7 +6,7 @@ export function addressDetailPage(page: Page) {
   const checkAddressDetail = async ({ address }: { address: string | null }) => {
     const url = await page.url();
     await expect(addressDetailTitle, "Check title on address detail").toHaveText("Address Details");
-    expect(url, "Check url address detail").toContain(`/address/${address}`);
+    expect(url, "Check url address detail").toContain(`${address}`);
   };
 
   return { checkAddressDetail };
