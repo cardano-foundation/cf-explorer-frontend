@@ -10,7 +10,7 @@ import { footerMenus, menus } from "src/commons/menus";
 import { isExternalLink } from "src/commons/utils/helper";
 import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
-import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
+import { FF_GLOBAL_IS_CONWAY_ERA, NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import FooterMenu from "../FooterMenu";
 import {
@@ -102,6 +102,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
             (i) =>
               !((i.key === "glossary.governance" || i.key === "glossary.networkMonitoring") && !FF_GLOBAL_IS_CONWAY_ERA)
           )
+          .filter((i) => !(i.key === "glossary.networkMonitoring" && NETWORK !== NETWORKS.mainnet))
           .map((item, index) => {
             const { href, key, children, icon, tooltip } = item;
             const title = t(key || "");
