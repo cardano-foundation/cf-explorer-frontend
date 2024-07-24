@@ -102,10 +102,10 @@ const TransactionNumberChart: React.FC = () => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} lg={9}>
-          <Skeleton variant="rectangular" height={"250px"} style={{ borderRadius: 10 }} />
+          <Skeleton variant="rectangular" height={400} style={{ borderRadius: 10 }} />
         </Grid>
         <Grid item xs={12} lg={3}>
-          <Skeleton variant="rectangular" height={"250px"} />
+          <Skeleton variant="rectangular" height={400} />
         </Grid>
       </Grid>
     );

@@ -11,8 +11,8 @@ export default function NetworkMonitoringComponent() {
   return (
     <WrapPage>
       <Card title={t("glossary.networkMonitoring")} />
-      <RegisteredStakepoolsChart />
       <TransactionNumberChart />
+      <RegisteredStakepoolsChart />
     </WrapPage>
   );
 }
