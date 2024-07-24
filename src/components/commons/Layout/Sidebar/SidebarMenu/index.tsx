@@ -98,7 +98,10 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
     <SidebarMenuContainer>
       <Menu>
         {menus
-          .filter((i) => !(i.key === "glossary.governance" && !FF_GLOBAL_IS_CONWAY_ERA))
+          .filter(
+            (i) =>
+              !((i.key === "glossary.governance" || i.key === "glossary.networkMonitoring") && !FF_GLOBAL_IS_CONWAY_ERA)
+          )
           .map((item, index) => {
             const { href, key, children, icon, tooltip } = item;
             const title = t(key || "");

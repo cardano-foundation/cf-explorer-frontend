@@ -73,28 +73,28 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           sx={{
-            width: 14,
-            height: 14,
+            width: 20,
+            height: 20,
             backgroundColor: "#3B82F6",
             marginRight: "5px",
             borderRadius: "4px"
           }}
         ></Box>
-        <Box sx={{ marginRight: "8px", color: color }}>Registered</Box>
-        <Box sx={{ color: color }}>{registeredPool}</Box>
+        <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Registered</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{registeredPool}</Box>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           sx={{
-            width: 14,
-            height: 14,
+            width: 20,
+            height: 20,
             backgroundColor: "#FF8E72",
             marginRight: "5px",
             borderRadius: "4px"
           }}
         ></Box>
-        <Box sx={{ marginRight: "8px", color: color }}>Active</Box>
-        <Box sx={{ color: color }}>{activePool}</Box>
+        <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Active</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{activePool}</Box>
       </Box>
     </Box>
   );
