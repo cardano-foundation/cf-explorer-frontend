@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 
 import Card from "../commons/Card";
 import RegisteredStakepoolsChart from "./RegisteredStakepools";
+import TransactionNumberChart from "./TransactionNumberChart";
 
 export default function NetworkMonitoringComponent() {
   const { t } = useTranslation();
@@ -11,6 +12,7 @@ export default function NetworkMonitoringComponent() {
     <WrapPage>
       <Card title={t("glossary.networkMonitoring")} />
       <RegisteredStakepoolsChart />
+      <TransactionNumberChart />
     </WrapPage>
   );
 }
