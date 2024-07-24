@@ -6,6 +6,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { routers } from "src/commons/routers";
 import NoRecord from "src/components/commons/NoRecord";
+import { numberWithCommas } from "src/commons/utils/helper";
 
 import { StyledCard, StyledSkeleton } from "./styles";
 
@@ -81,7 +82,7 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
           }}
         ></Box>
         <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Registered</Box>
-        <Box sx={{ color: color, fontSize: "16px" }}>{registeredPool}</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{registeredPool ? numberWithCommas(registeredPool) : "N/A"}</Box>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -94,7 +95,7 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
           }}
         ></Box>
         <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Active</Box>
-        <Box sx={{ color: color, fontSize: "16px" }}>{activePool}</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{activePool ? numberWithCommas(activePool) : "N/A"}</Box>
       </Box>
     </Box>
   );
