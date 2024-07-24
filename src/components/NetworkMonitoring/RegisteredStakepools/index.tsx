@@ -1,11 +1,13 @@
 import { BarChart, Bar, XAxis, YAxis, Legend, ResponsiveContainer } from "recharts";
 import { Box, Grid, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { t } from "i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { routers } from "src/commons/routers";
 import NoRecord from "src/components/commons/NoRecord";
+import { numberWithCommas } from "src/commons/utils/helper";
 
 import { StyledCard, StyledSkeleton } from "./styles";
 
@@ -73,28 +75,30 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           sx={{
-            width: 14,
-            height: 14,
+            width: 20,
+            height: 20,
             backgroundColor: "#3B82F6",
             marginRight: "5px",
             borderRadius: "4px"
           }}
         ></Box>
-        <Box sx={{ marginRight: "8px", color: color }}>Registered</Box>
-        <Box sx={{ color: color }}>{registeredPool}</Box>
+        <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Registered</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>
+          {registeredPool ? numberWithCommas(registeredPool) : t("N/A")}
+        </Box>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           sx={{
-            width: 14,
-            height: 14,
+            width: 20,
+            height: 20,
             backgroundColor: "#FF8E72",
             marginRight: "5px",
             borderRadius: "4px"
           }}
         ></Box>
-        <Box sx={{ marginRight: "8px", color: color }}>Active</Box>
-        <Box sx={{ color: color }}>{activePool}</Box>
+        <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Active</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{activePool ? numberWithCommas(activePool) : t("N/A")}</Box>
       </Box>
     </Box>
   );
