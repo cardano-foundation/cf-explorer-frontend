@@ -60,6 +60,7 @@ import CommunityIconLight from "./icons/community-icon-light.svg";
 import CommunityIconDark from "./icons/community-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import NetworkMonitoringIcon from "./icons/menus/networkMonitoring.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import PolygonBlackIconUrl from "./icons/polygon-back.svg";
@@ -318,6 +319,7 @@ export {
   LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
+  NetworkMonitoringIcon,
   SeeMoreIcon,
   TickerIcon,
   TickerIconComponent,

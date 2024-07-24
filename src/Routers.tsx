@@ -56,6 +56,7 @@ import Dreps from "./pages/Dreps";
 import ConstitutionalCommittees from "./pages/ConstitutionalCommittees";
 import ConstitutionalCommitteeDetail from "./pages/ConstitutionalCommitteeDetail";
 import Overview from "./pages/Overview";
+import NetworkMonitoring from "./pages/NetworkMonitoring";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -111,6 +112,7 @@ const Routes: React.FC = () => {
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.CONSTITUIONAL_COMMITTEES} exact component={ConstitutionalCommittees} />
       <Route path={routers.OVERVIEW} exact component={Overview} />
+      <Route path={routers.NETWORK_MONITORING} exact component={NetworkMonitoring} />
       <Route path={routers.CONSTITUIONAL_COMMITTEE_DETAIL} exact component={ConstitutionalCommitteeDetail} />
       <Route path={routers.STAKING_LIFECYCLE} exact component={StakingLifecycle} />
       <PrivateRoute path={routers.REPORT_GENERATED_STAKING_DETAIL} exact component={ReportGeneratedStakingDetail} />
