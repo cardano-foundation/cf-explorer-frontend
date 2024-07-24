@@ -167,7 +167,8 @@ export const API = {
     TAB: "gov-actions"
   },
   NETWORK_MONITORING_API: {
-    REGISTERED_STAKEPOOLS: "pools/stake-pools-chart"
+    REGISTERED_STAKEPOOLS: "pools/stake-pools-chart",
+    BLOCK_PROPAGATION: (type: string, size: number) => `blocks/block-propagation?type=${type}&size=${size}`
   }
 };
 
