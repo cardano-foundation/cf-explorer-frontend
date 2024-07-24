@@ -1,6 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, Legend, ResponsiveContainer } from "recharts";
 import { Box, Grid, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { t } from "i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -82,7 +83,9 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
           }}
         ></Box>
         <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Registered</Box>
-        <Box sx={{ color: color, fontSize: "16px" }}>{registeredPool ? numberWithCommas(registeredPool) : "N/A"}</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>
+          {registeredPool ? numberWithCommas(registeredPool) : t("N/A")}
+        </Box>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
@@ -95,7 +98,7 @@ const renderLegend = ({ registeredPool, activePool, color, isMobile }: PropsLege
           }}
         ></Box>
         <Box sx={{ marginRight: "8px", color: color, fontWeight: "500" }}>Active</Box>
-        <Box sx={{ color: color, fontSize: "16px" }}>{activePool ? numberWithCommas(activePool) : "N/A"}</Box>
+        <Box sx={{ color: color, fontSize: "16px" }}>{activePool ? numberWithCommas(activePool) : t("N/A")}</Box>
       </Box>
     </Box>
   );
