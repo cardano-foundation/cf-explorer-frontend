@@ -103,7 +103,7 @@ const StakeHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean; tab
         total: fetchData.total,
         onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
       }}
-      minHeight={152}
+      minHeight={fetchData.total === 0 ? 360 : 152}
     />
   );
 };
