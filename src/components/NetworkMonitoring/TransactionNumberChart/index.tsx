@@ -142,7 +142,7 @@ const TransactionNumberChart: React.FC = () => {
           </Grid>
           <Grid item xs={12} lg={3}>
             <BoxInfo>
-              <StyledTransactionTypes>{t("glossary.txtypes")}</StyledTransactionTypes>
+              <StyledTransactionTypes>{t("glossary.txTypes")}</StyledTransactionTypes>
               {dataOverview.map((item) => (
                 <InfoItem key={item.key}>
                   <Box display={"flex"} alignItems={"center"} mb={1}>
