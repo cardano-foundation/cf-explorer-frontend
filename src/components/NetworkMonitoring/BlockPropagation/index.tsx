@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { StyledCard, StyledSkeleton } from "./styles";
 
@@ -23,14 +24,13 @@ export default function BlockPropagationChart() {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:600px)");
   const [value, setValue] = useState<string>("EPOCH");
-  const [size, setSize] = useState<number>(SIZE_EPOCHS);
+  const size = value === "DAY" ? SIZE_DAILY : SIZE_EPOCHS;
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const handleChange = (event: SelectChangeEvent<string>) => {
     setValue(event.target.value);
-    value === "DAY" ? setSize(SIZE_EPOCHS) : setSize(SIZE_DAILY);
   };
 
-  const { data, loading } = useFetch<BlockPropagationChart[]>(
+  const { data, loading, error } = useFetch<BlockPropagationChart[]>(
     API.NETWORK_MONITORING_API.BLOCK_PROPAGATION(value, size),
     undefined,
     false,
@@ -46,96 +46,112 @@ export default function BlockPropagationChart() {
 
   return (
     <StyledCard.Container sx={{ [theme.breakpoints.down("sm")]: { padding: "0 15px 15px 10px" } }}>
-      {loading ? (
-        <Grid>
-          <StyledSkeleton style={{ minHeight: "150px" }} variant="rectangular" />
-        </Grid>
+      {error ? (
+        <NoRecord />
       ) : (
         <Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              [theme.breakpoints.down("sm")]: {
-                flexDirection: "column"
-              }
-            }}
-          >
-            <StyledCard.Title>Block Propagation</StyledCard.Title>
+          {loading ? (
+            <Grid>
+              <StyledSkeleton style={{ minHeight: "150px" }} variant="rectangular" />
+            </Grid>
+          ) : (
             <Box>
-              <FormControl variant="outlined" size="small">
-                <Select
-                  sx={{
-                    borderRadius: "8px",
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderRadius: "8px",
-                      borderColor: theme.isDark ? "#6c6f89" : "#D6E2FF",
-                      borderWidth: "2px"
-                    },
-                    "& .MuiSelect-select": {
-                      color: theme.palette.secondary.main
-                    },
-                    "& .MuiSvgIcon-root": {
-                      color: theme.palette.secondary.main
-                    }
-                  }}
-                  MenuProps={{
-                    PaperProps: {
-                      sx: {
-                        bgcolor: theme.isDark ? "#24262e" : "#FFF",
-                        "& .MuiMenuItem-root": {
-                          color: theme.palette.secondary.main,
-                          "&.Mui-selected": {
-                            backgroundColor: theme.isDark ? "##6c6f89" : "#d6e2ff"
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  [theme.breakpoints.down("sm")]: {
+                    flexDirection: "column",
+                    alignItems: "start"
+                  }
+                }}
+              >
+                <StyledCard.Title>Block Propagation</StyledCard.Title>
+                <Box>
+                  <FormControl variant="outlined" size="small">
+                    <Select
+                      sx={{
+                        borderRadius: "8px",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderRadius: "8px",
+                          borderColor: theme.isDark ? "#6c6f89" : "#D6E2FF",
+                          borderWidth: "2px"
+                        },
+                        "& .MuiSelect-select": {
+                          color: theme.palette.secondary.main
+                        },
+                        "& .MuiSvgIcon-root": {
+                          color: theme.palette.secondary.main
+                        }
+                      }}
+                      MenuProps={{
+                        PaperProps: {
+                          sx: {
+                            bgcolor: theme.isDark ? "#24262e" : "#FFF",
+                            "& .MuiMenuItem-root": {
+                              color: theme.palette.secondary.main,
+                              "&.Mui-selected": {
+                                backgroundColor: theme.isDark ? "##6c6f89" : "#d6e2ff"
+                              }
+                            }
                           }
                         }
-                      }
-                    }
-                  }}
-                  displayEmpty
-                  labelId="epochs-select-label"
-                  id="epochs-select"
-                  value={value}
-                  onChange={handleChange}
+                      }}
+                      displayEmpty
+                      labelId="epochs-select-label"
+                      id="epochs-select"
+                      value={value}
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="EPOCH">Epochs</MenuItem>
+                      <MenuItem value="DAY">Daily</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Box>
+              <ResponsiveContainer width="100%" height={isMobile ? 700 : 400}>
+                <LineChart
+                  data={data ? [...data].reverse() : []}
+                  margin={{ top: 32, right: isMobile ? 15 : 40, left: 0 }}
                 >
-                  <MenuItem value="EPOCH">Epochs</MenuItem>
-                  <MenuItem value="DAY">Daily</MenuItem>
-                </Select>
-              </FormControl>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    tick={{ fontSize: 12, fill: theme.palette.secondary.light }}
+                    dy={10}
+                    minTickGap={10}
+                    dataKey="time"
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={formatXAxis}
+                  />
+                  <YAxis
+                    tick={{ fontSize: 12, fill: theme.palette.secondary.light }}
+                    dx={-10}
+                    axisLine={false}
+                    tickLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: theme.isDark ? "#24262ef5" : "#fffffff7",
+                      color: theme.palette.secondary.main,
+                      borderRadius: "4px"
+                    }}
+                  />
+                  <Legend
+                    layout={isMobile ? "horizontal" : "vertical"}
+                    verticalAlign={isMobile ? "bottom" : "middle"}
+                    align={isMobile ? "center" : "right"}
+                    content={<CustomLegend />}
+                  />
+                  <Line type="linear" dataKey="blockPropP95" strokeWidth={2} stroke="#14B8A6" dot={{ r: 4 }} />
+                  <Line type="linear" dataKey="blockPropP90" strokeWidth={2} stroke="#3B82F6" dot={{ r: 4 }} />
+                  <Line type="linear" dataKey="blockPropMean" strokeWidth={2} stroke="#FACC15" dot={{ r: 4 }} />
+                  <Line type="linear" dataKey="blockPropMedian" strokeWidth={2} stroke="#90E0EF" dot={{ r: 4 }} />
+                </LineChart>
+              </ResponsiveContainer>
             </Box>
-          </Box>
-          <ResponsiveContainer width="100%" height={isMobile ? 700 : 400}>
-            <LineChart data={data ? [...data].reverse() : []} margin={{ top: 32, right: 40, left: 0 }}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                tick={{ fontSize: 12, fill: theme.palette.secondary.light }}
-                dy={10}
-                minTickGap={10}
-                dataKey="time"
-                axisLine={false}
-                tickLine={false}
-                tickFormatter={formatXAxis}
-              />
-              <YAxis
-                tick={{ fontSize: 12, fill: theme.palette.secondary.light }}
-                dx={-10}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip />
-              <Legend
-                layout={isMobile ? "horizontal" : "vertical"}
-                verticalAlign={isMobile ? "bottom" : "middle"}
-                align={isMobile ? "center" : "right"}
-                content={<CustomLegend />}
-              />
-              <Line type="linear" dataKey="blockPropP95" strokeWidth={2} stroke="#14B8A6" dot={{ r: 4 }} />
-              <Line type="linear" dataKey="blockPropP90" strokeWidth={2} stroke="#3B82F6" dot={{ r: 4 }} />
-              <Line type="linear" dataKey="blockPropMean" strokeWidth={2} stroke="#FACC15" dot={{ r: 4 }} />
-              <Line type="linear" dataKey="blockPropMedian" strokeWidth={2} stroke="#90E0EF" dot={{ r: 4 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          )}
         </Box>
       )}
     </StyledCard.Container>
@@ -157,8 +173,10 @@ const CustomLegend = () => {
         flexDirection: "column",
         marginLeft: "48px",
         alignItems: "start",
+        width: "100%",
         [theme.breakpoints.down("sm")]: {
-          marginTop: "20px"
+          marginTop: "20px",
+          marginLeft: "6px"
         }
       }}
     >
@@ -198,6 +216,7 @@ const LegendItem = ({ color, label, isLast }: LegendItemProps) => {
         position: "relative",
         marginTop: "16px",
         fontWeight: 500,
+        width: "100%",
         color: theme.palette.secondary.main,
         [theme.breakpoints.down("sm")]: {
           marginTop: "8px",
