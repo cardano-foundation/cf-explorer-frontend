@@ -56,13 +56,14 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Title = styled("h3")`
+export const Title = styled("p")`
   position: relative;
   text-align: left;
   margin-top: 0px;
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
   color: ${(props) => props.theme.palette.secondary.main};
+  font-weight: 500;
 `;
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
@@ -125,8 +126,8 @@ export const ColorChart = styled(Box)<{ type: TypeChart }>(({ theme, type }) => 
   };
 });
 
-export const StyledTransactionTypes = styled(Box)(({ theme }) => ({
-  fontWeight: "bold",
+export const StyledTransactionTypes = styled("p")(({ theme }) => ({
+  fontWeight: 500,
   fontSize: "20px",
   textAlign: "left",
   color: theme.palette.secondary.main,
