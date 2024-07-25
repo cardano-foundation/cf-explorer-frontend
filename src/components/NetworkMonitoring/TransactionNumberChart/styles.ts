@@ -38,7 +38,6 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   }
 }));
 export const TransactionContainer = styled(BoxRaised)`
-  margin-bottom: 24px;
   padding: 20px;
   height: calc(100% - 56px);
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -64,15 +63,6 @@ export const Title = styled("h3")`
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
   color: ${(props) => props.theme.palette.secondary.main};
-  &::after {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    content: "";
-    width: 50px;
-    height: 4px;
-    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
-  }
 `;
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
@@ -86,7 +76,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   },
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
   [theme.breakpoints.down("md")]: {
     border: "none",
     padding: 0,
@@ -100,6 +90,10 @@ export const InfoItem = styled(Box)(({ theme }) => ({
   ":last-child": {
     paddingBottom: 0,
     borderBottom: "none"
+  },
+  marginTop: "15px",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "5px"
   }
 }));
 export const Skeleton = styled(CommonSkeleton)(() => ({
