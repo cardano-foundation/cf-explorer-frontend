@@ -30,7 +30,7 @@ export default function RegisteredStakepoolsChart() {
   const activePool = data?.activePool;
   const registeredPool = data?.registeredPool;
   return (
-    <StyledCard.Container>
+    <StyledCard.Container sx={{ padding: isMobile ? "16px" : "12px 32px 32px 32px" }}>
       {error ? (
         <NoRecord />
       ) : (
