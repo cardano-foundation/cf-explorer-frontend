@@ -20,7 +20,7 @@ interface GOoverview {
 }
 
 interface OverViewDelegationTab {
-  name: string;
+  govActionName: string;
   txHash: string;
   index: number;
   type: string;
