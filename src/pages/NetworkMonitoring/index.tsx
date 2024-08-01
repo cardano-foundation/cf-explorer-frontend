@@ -8,7 +8,6 @@ const NetworkMonitoring = () => {
   useEffect(() => {
     document.title = `Network Monitoring | Cardano Blockchain Explorer`;
   }, []);
-
   return (
     <StyledContainer>
       <NetworkMonitoringComponent />
