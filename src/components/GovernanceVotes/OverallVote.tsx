@@ -614,7 +614,7 @@ const VoteBar = ({
   );
 };
 
-const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVote: string }) => {
+export const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; selectedVote: string }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);

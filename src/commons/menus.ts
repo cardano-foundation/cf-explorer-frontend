@@ -119,7 +119,7 @@ export const menus: Menu[] = [
       {
         title: "Overview",
         key: "glossary.menu.overview",
-        href: details.overview("")
+        href: details.overviews("")
       },
       {
         title: "Constitutional Committee",

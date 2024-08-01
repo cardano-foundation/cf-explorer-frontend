@@ -80,7 +80,9 @@ export default function TabOverview() {
       render: (r) => (
         <Box>
           <CustomTooltip title={r.txHash}>
-            <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+            <StyledLink to={details.overviewGovernanceAction(r.txHash, r.index.toString())}>
+              {getShortHash(r.txHash)}
+            </StyledLink>
           </CustomTooltip>
         </Box>
       )
