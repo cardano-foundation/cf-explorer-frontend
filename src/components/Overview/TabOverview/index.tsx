@@ -71,7 +71,7 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Name</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box>{r.name ?? t("N/A")}</Box>
+      render: (r) => <Box>{r?.govActionName ?? t("N/A")}</Box>
     },
     {
       title: <Box component={"span"}>Governance ID</Box>,
