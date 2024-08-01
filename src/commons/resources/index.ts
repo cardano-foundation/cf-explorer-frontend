@@ -209,6 +209,10 @@ import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import KingIcon from "./icons/king-icon.svg?react";
+import DateIcon from "./icons/date-icon.svg?react";
+import PencilIcon from "./icons/pencil-icon.svg?react";
+import ActionIcon from "./icons/action-icon.svg?react";
+import FeedbackIcon from "./icons/feedbackIcon-icon.svg?react";
 import BlockProducerIcon from "./icons/block-producer.svg?react";
 import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
@@ -325,6 +329,10 @@ export {
   TickerIconComponent,
   CalendarIcon,
   TeamsIconLight,
+  DateIcon,
+  PencilIcon,
+  ActionIcon,
+  FeedbackIcon,
   TeamsIconDark,
   UserIconDark,
   UserIconLight,
