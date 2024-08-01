@@ -122,7 +122,7 @@ const TabSmartContracts = () => {
         {fetchData.data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <SmartContractCard data={item} />
+              <SmartContractCard data={item} index={idx} />
             </Box>
           </Grid>
         ))}
@@ -252,7 +252,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <FilterVersionIcon fill={theme.palette.secondary.main} />
-                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                <Box ml={1} color={({ palette }) => palette.secondary.main} data-testid="">
                   {t("common.version")}
                 </Box>
               </Box>
@@ -303,7 +303,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={<Box lineHeight={1}>{t("smartContract.plutusv2")}</Box>}
+                label={
+                  <Box data-testid="nativeScripts.smartContract.filter.plutusv2" lineHeight={1}>
+                    {t("smartContract.plutusv2")}
+                  </Box>
+                }
               />
               <FormControlLabel
                 value="PLUTUSV3"

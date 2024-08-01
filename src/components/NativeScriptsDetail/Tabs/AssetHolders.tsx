@@ -28,9 +28,12 @@ const AssetHolders = () => {
       title: t("common.address"),
       key: "address",
       minWidth: "50px",
-      render: (r) => (
+      render: (r, index) => (
         <CustomTooltip title={r.address}>
-          <LinkComponent to={r.address.startsWith("stake") ? details.stake(r.address) : details.address(r.address)}>
+          <LinkComponent
+            data-testid={`ns.detail.assetHolder#${index}`}
+            to={r.address.startsWith("stake") ? details.stake(r.address) : details.address(r.address)}
+          >
             {getShortHash(r.address || "")}
           </LinkComponent>
         </CustomTooltip>
