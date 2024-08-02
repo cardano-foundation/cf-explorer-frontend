@@ -37,7 +37,7 @@ export default function GovernanceActionDetailsComponent() {
     {
       key: "description",
       icon: CClistMembers,
-      children: <Description />,
+      children: <Description data={data} />,
       label: <Box>Description</Box>
     },
     {

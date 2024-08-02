@@ -6,13 +6,13 @@ export default function CardVotesOverview() {
   return (
     <CardContainer>
       <ContainerField>
-        <TitleField>ID:</TitleField>
-        <ValueField>d32493bf99...00e03989bd</ValueField>
+        <TitleField>Voter Type:</TitleField>
+        <ValueField>DRep</ValueField>
       </ContainerField>
 
       <ContainerField>
-        <TitleField>Body</TitleField>
-        <ValueField>DRep</ValueField>
+        <TitleField>Voter Hash:</TitleField>
+        <ValueField>d32493bf99...00e03989bd</ValueField>
       </ContainerField>
 
       <ContainerField>
