@@ -186,6 +186,7 @@ import HeaderSearchIconComponent from "./icons/header-search.svg?react";
 import NoteEditIconComponent from "./icons/note-edit.svg?react";
 import WithdrawlIconComponent from "./icons/withdrawl.svg?react";
 import MintingIconComponent from "./icons/minting.svg?react";
+import GovBodyIcons from "./icons/gov-body-icon.svg?react";
 import HighestIconComponent from "./icons/highest-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
@@ -495,6 +496,7 @@ export {
   VerifiedIcon,
   InvalidIcon,
   DescriptonDrepIcon,
+  GovBodyIcons,
   CreateDrepIcon,
   ActiveVoteIcon,
   LiveStakeDrepIcon,

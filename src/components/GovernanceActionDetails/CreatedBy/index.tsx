@@ -6,6 +6,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { API } from "src/commons/utils/api";
 import { getShortHash } from "src/commons/utils/helper";
+import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
 
 interface Props {
@@ -50,13 +51,21 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
       title: <Box component={"span"}>Public Key</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{getShortHash(r.publicKey)}</Box>
+      render: (r) => (
+        <CustomTooltip title={r.publicKey} placement="top">
+          <Box component={"span"}>{getShortHash(r.publicKey)}</Box>
+        </CustomTooltip>
+      )
     },
     {
       title: <Box component={"span"}>Signature</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box component={"span"}>{r.signature}</Box>
+      render: (r) => (
+        <CustomTooltip title={r.signature} placement="top">
+          <Box component={"span"}>{getShortHash(r.signature)}</Box>
+        </CustomTooltip>
+      )
     }
   ];
   return (

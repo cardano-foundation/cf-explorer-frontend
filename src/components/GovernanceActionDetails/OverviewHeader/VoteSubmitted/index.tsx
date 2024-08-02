@@ -148,7 +148,7 @@ export default function VoteSubmitted() {
               borderRadius={2}
             />
           ) : (
-            <Box textAlign={"center"}>
+            <Box textAlign={"left"}>
               <VoteRate data={filterDataChart(selectVote) as VotingChart} selectedVote={selectVote} />
             </Box>
           )}

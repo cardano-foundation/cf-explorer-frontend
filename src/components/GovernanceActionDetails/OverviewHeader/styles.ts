@@ -39,6 +39,7 @@ export const BackButton = styled(Box)`
   @media screen and (max-width: ${breakpoints.values.md}px) {
     position: relative;
     top: 5px;
+    margin-top: 30px;
   }
 `;
 
@@ -67,6 +68,9 @@ export const SlotLeaderValue = styled("span")<{ sidebar?: boolean }>`
   word-break: break-word;
   line-height: 1.5;
   font-weight: bold;
+  ${({ theme }) => theme.breakpoints.down(600)} {
+    max-width: 70%;
+  }
 `;
 
 export const HeaderTitle = styled(Box)`
@@ -84,7 +88,7 @@ export const HeaderTitle = styled(Box)`
 export const SlotLeader = styled("p")`
   display: flex;
   gap: 8px;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
+  ${({ theme }) => theme.breakpoints.down(430)} {
     flex-direction: column;
   }
 `;
