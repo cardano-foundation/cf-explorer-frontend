@@ -30,6 +30,7 @@ export const ContainerField = styled(Box)`
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const StyledLink = styled(Link)`

@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import { Box, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { VoteStatus } from "src/components/commons/CardGovernanceVotes";
@@ -74,6 +74,8 @@ export default function CardVotesOverview({ data }: Vote) {
     checkLink(data.voterType);
   }, [data.voterType]);
 
+  const lagerScreen = useMediaQuery("(min-width:1400px)");
+
   return (
     <CardContainer>
       <ContainerField>
@@ -89,7 +91,9 @@ export default function CardVotesOverview({ data }: Vote) {
               sx={{ color: theme.palette.primary.main, fontWeight: 500, textDecoration: "underline" }}
               component={"span"}
             >
-              <StyledLink to={link}>{getShortHash(data.voterHash, 5, 5)}</StyledLink>
+              <StyledLink to={link}>
+                {getShortHash(data.voterHash, lagerScreen ? 10 : 5, lagerScreen ? 10 : 5)}
+              </StyledLink>
             </Box>
           </CustomTooltip>
         </ValueField>
