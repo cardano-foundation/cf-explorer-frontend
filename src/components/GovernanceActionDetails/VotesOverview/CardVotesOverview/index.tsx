@@ -1,39 +1,129 @@
+import { t } from "i18next";
+import { Box, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+
 import { VoteStatus } from "src/components/commons/CardGovernanceVotes";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { VOTE_TYPE_GOV_ACTIONS } from "src/commons/utils/constants";
+import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { details } from "src/commons/routers";
 
-import { CardContainer, ContainerField, TitleField, ValueField } from "./styles";
+import { CardContainer, ContainerField, StyledLink, TitleField, ValueField } from "./styles";
 
-export default function CardVotesOverview() {
+interface Vote {
+  data: {
+    voterHash: string;
+    timestamp: string;
+    voterType:
+      | "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
+      | "CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH"
+      | "DREP_KEY_HASH"
+      | "DREP_SCRIPT_HASH"
+      | "STAKING_POOL_KEY_HASH";
+    votingStake: number | null;
+    votingPower: number | null;
+    vote: "NO" | "YES" | "ABSTAIN" | "NONE" | "ANY";
+    isRepeatVote: boolean;
+  };
+}
+
+export default function CardVotesOverview({ data }: Vote) {
+  const theme = useTheme();
+  const [link, setLink] = useState("");
+  const VOTER_TYPE = [
+    {
+      value: VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH,
+      text: t("vote.committee"),
+      link: details.constitutionalCommitteeDetail(data.voterHash)
+    },
+    {
+      value: VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH,
+      text: t("vote.committee"),
+      link: details.constitutionalCommitteeDetail(data.voterHash)
+    },
+    { value: VOTE_TYPE_GOV_ACTIONS.DREP_KEY_HASH, text: t("vote.drep"), link: details.drep(data.voterHash) },
+    { value: VOTE_TYPE_GOV_ACTIONS.DREP_SCRIPT_HASH, text: t("vote.drep"), link: details.drep(data.voterHash) },
+    {
+      value: VOTE_TYPE_GOV_ACTIONS.STAKING_POOL_KEY_HASH,
+      text: t("vote.stakePool"),
+      link: details.delegation(data.voterHash)
+    }
+  ];
+
+  useEffect(() => {
+    const checkLink = (voteType: string) => {
+      switch (voteType) {
+        case VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH:
+          setLink(details.constitutionalCommitteeDetail(data.voterHash));
+          return;
+        case VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH:
+          setLink(details.constitutionalCommitteeDetail(data.voterHash));
+          return;
+        case VOTE_TYPE_GOV_ACTIONS.DREP_KEY_HASH:
+          setLink(details.drep(data.voterHash));
+          return;
+        case VOTE_TYPE_GOV_ACTIONS.DREP_SCRIPT_HASH:
+          setLink(details.drep(data.voterHash));
+          return;
+        case VOTE_TYPE_GOV_ACTIONS.STAKING_POOL_KEY_HASH:
+          setLink(details.delegation(data.voterHash));
+          return;
+      }
+    };
+    checkLink(data.voterType);
+  }, [data.voterType]);
+
   return (
     <CardContainer>
       <ContainerField>
         <TitleField>Voter Type:</TitleField>
-        <ValueField>DRep</ValueField>
+        <ValueField>{VOTER_TYPE.find((el) => el.value === data?.voterType)?.text}</ValueField>
       </ContainerField>
 
       <ContainerField>
         <TitleField>Voter Hash:</TitleField>
-        <ValueField>d32493bf99...00e03989bd</ValueField>
+        <ValueField>
+          <CustomTooltip title={data.voterHash} placement="top">
+            <Box
+              sx={{ color: theme.palette.primary.main, fontWeight: 500, textDecoration: "underline" }}
+              component={"span"}
+            >
+              <StyledLink to={link}>{getShortHash(data.voterHash, 5, 5)}</StyledLink>
+            </Box>
+          </CustomTooltip>
+        </ValueField>
       </ContainerField>
 
       <ContainerField>
         <TitleField>Timestamp:</TitleField>
-        <ValueField>02/26/2024 15:59:13</ValueField>
+        <ValueField>
+          <DatetimeTypeTooltip>{formatDateTimeLocal(data?.timestamp)}</DatetimeTypeTooltip>
+        </ValueField>
       </ContainerField>
 
       <ContainerField>
         <TitleField>Vote:</TitleField>
-        <VoteStatus status="YES" />
+        <VoteStatus status={data.vote} />
       </ContainerField>
 
-      <ContainerField>
-        <TitleField>Voting Stake:</TitleField>
-        <ValueField>1,000,200.001 ADA</ValueField>
-      </ContainerField>
+      {data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH &&
+        data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH && (
+          <ContainerField>
+            <TitleField>{`${t("filter.voitingStake")}:`}</TitleField>
+            <ValueField>
+              {data.votingStake === null ? t("N/A") : `${numberWithCommas(data.votingStake)} ADA`}
+            </ValueField>
+          </ContainerField>
+        )}
 
-      <ContainerField>
-        <TitleField>Voting Power:</TitleField>
-        <ValueField>50%</ValueField>
-      </ContainerField>
+      {data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH &&
+        data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH && (
+          <ContainerField>
+            <TitleField>Voting Power:</TitleField>
+            <ValueField>{data.votingPower ? `${data.votingPower}%` : t("N/A")}</ValueField>
+          </ContainerField>
+        )}
     </CardContainer>
   );
 }

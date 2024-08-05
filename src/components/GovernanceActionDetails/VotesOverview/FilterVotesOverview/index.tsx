@@ -9,11 +9,14 @@ import {
   RadioGroup,
   Typography
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useLocation } from "react-router-dom";
-import { parse } from "qs";
+import { useHistory, useLocation } from "react-router-dom";
+import { parse, stringify } from "qs";
+import { isEmpty, pickBy } from "lodash";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import BigNumber from "bignumber.js";
 
 import {
   CurrentStatusIcon,
@@ -34,41 +37,35 @@ import {
 import { StyledInput } from "src/components/share/styled";
 import { StyledSlider } from "src/components/commons/CustomFilterMultiRange/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
+import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateToTwoDecimals } from "src/commons/utils/helper";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
+import usePageInfo from "src/commons/hooks/usePageInfo";
+import useFetch from "src/commons/hooks/useFetch";
 
 import { Input } from "./styles";
 
-interface PoolResponse {
+interface RequestParams {
   page?: number;
-  query?: string;
   size?: number;
-  sort?: string;
-  isShowRetired?: boolean;
-  retired?: boolean;
-  minPoolSize?: number;
-  maxPoolSize?: number;
-  minPledge?: number;
-  maxPledge?: number;
-  minSaturation?: number;
-  maxSaturation?: number;
-  minBlockLifetime?: number;
-  maxBlockLifetime?: number;
-  maxLifetimeBlock?: number;
-  minLifetimeBlock?: number;
+  query?: string;
+  voterType?: string | null;
+  voterHash?: string | null;
+  maxActiveStake?: number;
+  minActiveStake?: number;
   minVotingPower?: number;
   maxVotingPower?: number;
-  minGovParticipationRate?: number;
-  maxGovParticipationRate?: number;
 }
+
 export default function FilterVotesOverview() {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
   const query = parse(search.split("?")[1]);
-  const [filterParams, setFilterParams] = useState<PoolResponse>({});
+  const { pageInfo } = usePageInfo();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [filterParams, setFilterParams] = useState<RequestParams>({});
+  const history = useHistory();
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
   const [dateRange, setDateRange] = useState<{
     fromDate?: string;
@@ -77,38 +74,63 @@ export default function FilterVotesOverview() {
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
-  const dataRange = {
-    maxGovParticipationRate: "0.014492753623188406",
-    maxLifetimeBlock: 630334,
-    maxPledge: 10000000000,
-    maxPoolSize: null,
-    maxSaturation: null,
-    maxVotingPower: 0.5,
-    minGovParticipationRate: 0,
-    minLifetimeBlock: 0,
-    minPledge: 0,
-    minPoolSize: null,
-    minSaturation: null,
-    minVotingPower: 0.2
+
+  const fetchDataRange = useFetch<RequestParams>("/gov-actions/range-values");
+
+  const defaultParams = { page: 0, size: 3, sort: "" };
+
+  const dataRange = fetchDataRange.data;
+
+  const initParams: RequestParams = {
+    page: 0,
+    size: 6,
+    voterType: "NONE",
+    voterHash: "",
+    minActiveStake: +(dataRange?.minActiveStake || 0),
+    maxActiveStake: +(dataRange?.maxActiveStake || 0),
+    minVotingPower: +(dataRange?.minVotingPower || 0),
+    maxVotingPower: +(dataRange?.maxVotingPower || 0)
   };
 
-  const initParams = {
-    page: 0,
-    size: 50,
-    query: "",
-    sort: "",
-    maxPoolSize: +(dataRange?.maxPoolSize || 0),
-    minPoolSize: +(dataRange?.minPoolSize || 0),
-    minPledge: +(dataRange?.minPledge || 0),
-    maxPledge: +(dataRange?.maxPledge || 0),
-    minSaturation: +(dataRange?.minSaturation || 0),
-    maxSaturation: +(dataRange?.maxSaturation || 0),
-    minBlockLifetime: +(dataRange?.minLifetimeBlock || 0),
-    maxBlockLifetime: +(dataRange?.maxLifetimeBlock || 0),
-    minVotingPower: +(dataRange?.minVotingPower || 0),
-    maxVotingPower: +(dataRange?.maxVotingPower || 0),
-    minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
-    maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
+  const isDisableFilter = useMemo(() => {
+    // Todo
+    return false;
+  }, [filterParams]);
+
+  useEffect(() => {
+    setFilterParams({
+      page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
+      size: +(query?.size || "") || 6,
+      query: "",
+      voterType: (query?.voterType || "NONE").toString(),
+      voterHash: "",
+      ...(query?.minActiveStake && { minActiveStake: +(query?.minActiveStake || 0) }),
+      ...(query?.maxActiveStake && { maxActiveStake: +(query?.maxActiveStake || 0) }),
+      ...(query?.minVotingPower && { minVotingPower: +(query?.minVotingPower || 0) }),
+      ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) })
+    });
+    setDateRange({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
+  }, [JSON.stringify(query)]);
+
+  const handleReset = () => {
+    setExpanded(false);
+    setOpen(false);
+    setFilterParams({ ...initParams });
+    setDateRange({});
+    history.replace({
+      search: stringify(
+        pickBy(
+          {
+            ...defaultParams,
+            size: pageInfo.size,
+            sort: pageInfo.sort,
+            page: 1
+          },
+          (value) => value !== "" && value !== undefined
+        )
+      ),
+      state: undefined
+    });
   };
 
   const handleChangeValueRange = (event: Event, newValue: number | number[], minKey: string, maxKey: string) => {
@@ -119,9 +141,32 @@ export default function FilterVotesOverview() {
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
 
+  const handleFilter = () => {
+    setExpanded(false);
+    setOpen(false);
+    setFilterParams({ ...filterParams });
+    history.replace({
+      search: stringify(
+        pickBy(
+          {
+            ...filterParams,
+            voterType: filterParams.voterType === "NONE" ? null : filterParams.voterType,
+            voterHash: filterParams.voterHash,
+            fromDate: dateRange.fromDate,
+            toDate: dateRange.toDate,
+            size: +(query?.size || "") || 6,
+            page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0
+          },
+          (value) => value !== "" && value !== undefined
+        )
+      ),
+      state: undefined
+    });
+  };
+
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
-      //   handleFilter();
+      handleFilter();
     }
   };
 
@@ -182,7 +227,7 @@ export default function FilterVotesOverview() {
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
                   ? truncateToTwoDecimals(+numericValue) / 100
-                  : ["minPledge"].includes(keyOnChangeMin)
+                  : ["maxActiveStake"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
                   ? parseFloat(numericValue).toFixed(2)
@@ -196,7 +241,6 @@ export default function FilterVotesOverview() {
           component={Input}
           type="number"
           disabled={disabled}
-          data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
@@ -228,7 +272,7 @@ export default function FilterVotesOverview() {
                 ...filterParams,
                 [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
                   ? +minValue / 100
-                  : ["maxPledge"].includes(keyOnChangeMax)
+                  : ["maxActiveStake"].includes(keyOnChangeMax)
                   ? +minValue * 10 ** 6
                   : ["maxSaturation"].includes(keyOnChangeMax)
                   ? parseFloat(`${minValue}`).toFixed(2)
@@ -250,7 +294,7 @@ export default function FilterVotesOverview() {
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
                     ? truncateToTwoDecimals(+numericValue) / 100
-                    : ["maxPledge"].includes(keyOnChangeMax)
+                    : ["maxActiveStake"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
                     ? parseFloat(numericValue).toFixed(2)
@@ -304,12 +348,8 @@ export default function FilterVotesOverview() {
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
                       <CustomIcon icon={GovernanceIcon} fill={theme.palette.secondary.light} height={24} width={24} />
-                      <Box
-                        data-testid="governance.filter.actionIdTitle"
-                        ml={1}
-                        color={({ palette }) => palette.secondary.main}
-                      >
-                        {t("dreps.anchorHash")}
+                      <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                        Governance Body ID
                       </Box>
                     </Box>
                     <Box>
@@ -323,34 +363,25 @@ export default function FilterVotesOverview() {
                 </AccordionSummary>
                 <AccordionDetailsFilter sx={{ background: "unset" }}>
                   <StyledInput
-                    data-testid="governance.filter.actionIdValue"
                     sx={{
                       p: "0px 12px",
                       width: "100% !important",
                       color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
                     }}
                     placeholder={"Search ID"}
-                    //   onChange={({ target: { value } }) => setParams({ ...params, governanceActionTxHash: value })}
+                    onChange={({ target: { value } }) => setFilterParams({ ...filterParams, voterHash: value })}
                     onKeyPress={handleKeyPress}
                   />
                 </AccordionDetailsFilter>
               </AccordionContainer>
             </Box>
 
-            <AccordionContainer
-              data-testid="filterRange.drep.status"
-              expanded={expanded === "status"}
-              onChange={handleChange("status")}
-            >
+            <AccordionContainer expanded={expanded === "status"} onChange={handleChange("status")}>
               <AccordionSummary>
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={24} width={24} />
-                    <Box
-                      data-testid="filterRange.drep.statusTitle"
-                      ml={"3px"}
-                      color={({ palette }) => palette.secondary.main}
-                    >
+                    <Box ml={"3px"} color={({ palette }) => palette.secondary.main}>
                       {t("drep.filter.status")}
                     </Box>
                   </Box>
@@ -367,11 +398,11 @@ export default function FilterVotesOverview() {
                 <AccordionDetailsFilter>
                   <RadioGroup
                     name="controlled-radio-buttons-group"
-                    // value={filterParams.drepStatus || ""}
-                    // onChange={({ target: { value } }) => setFilterParams({ ...filterParams, drepStatus: value })}
+                    value={filterParams.voterType || ""}
+                    onChange={({ target: { value } }) => setFilterParams({ ...filterParams, voterType: value })}
                   >
                     <FormControlLabel
-                      value={""}
+                      value="NONE"
                       control={
                         <Radio
                           sx={{
@@ -382,7 +413,7 @@ export default function FilterVotesOverview() {
                       label={<Box lineHeight={1}>{t("smartContract.any")}</Box>}
                     />
                     <FormControlLabel
-                      value="ACTIVE"
+                      value="CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
                       control={
                         <Radio
                           sx={{
@@ -393,7 +424,7 @@ export default function FilterVotesOverview() {
                       label={<Box lineHeight={1}>{t("filter.constitutionalCommittee")}</Box>}
                     />
                     <FormControlLabel
-                      value={"INACTIVE"}
+                      value="DREP_KEY_HASH"
                       control={
                         <Radio
                           sx={{
@@ -404,7 +435,7 @@ export default function FilterVotesOverview() {
                       label={<Box lineHeight={1}>{t("filter.dreps")}</Box>}
                     />
                     <FormControlLabel
-                      value={"RETIRED"}
+                      value="STAKING_POOL_KEY_HASH"
                       control={
                         <Radio
                           sx={{
@@ -419,22 +450,18 @@ export default function FilterVotesOverview() {
               </Box>
             </AccordionContainer>
 
-            <AccordionContainer data-testid="filterRange.saturation">
+            <AccordionContainer>
               <AccordionSummary onClick={() => setShowDaterange(true)}>
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
                     <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={20} />
-                    <Box
-                      data-testid="filterRange.drep.statusTitle"
-                      ml={"4px"}
-                      color={({ palette }) => palette.secondary.main}
-                    >
+                    <Box ml={"4px"} color={({ palette }) => palette.secondary.main}>
                       {t("drep.filter.registrationDate")}
                     </Box>
                   </Box>
-                  {/* {!isEmpty(pickBy(dateRange, (value) => value !== "" && value !== undefined)) && (
-                  <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
-                )} */}
+                  {!isEmpty(pickBy(dateRange, (value) => value !== "" && value !== undefined)) && (
+                    <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
+                  )}
                 </Box>
               </AccordionSummary>
             </AccordionContainer>
@@ -453,8 +480,16 @@ export default function FilterVotesOverview() {
 
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box
-                component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
-                title={dataRange?.maxVotingPower === null ? t("common.noDataAvaiable") : undefined}
+                component={
+                  Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
+                    ? CustomTooltip
+                    : Box
+                }
+                title={
+                  Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
+                    ? t("common.noDataAvaiable")
+                    : undefined
+                }
                 slotProps={{
                   popper: {
                     modifiers: [
@@ -468,9 +503,12 @@ export default function FilterVotesOverview() {
                   }
                 }}
               >
-                <AccordionContainer expanded={expanded === "poolVoting"} onChange={handleChange("poolVoting")}>
+                <AccordionContainer
+                  expanded={expanded === "govActionVoting"}
+                  onChange={handleChange("govActionVoting")}
+                >
                   <AccordionSummary
-                    disabled={dataRange?.maxVotingPower === null}
+                    disabled={Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"}
                     sx={{
                       "&.Mui-disabled": {
                         opacity: 0.9
@@ -482,7 +520,7 @@ export default function FilterVotesOverview() {
                         <CustomIcon
                           icon={GovBodyIcons}
                           fill={
-                            dataRange?.maxVotingPower === null
+                            Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
                               : theme.palette.secondary.light
                           }
@@ -490,20 +528,21 @@ export default function FilterVotesOverview() {
                           width={24}
                         />
                         <Box
-                          data-testid="filterRange.poolVotingTitle"
                           ml={1}
                           color={({ palette }) =>
-                            dataRange?.maxVotingPower === null ? palette.secondary[600] : palette.secondary.main
+                            Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
+                              ? palette.secondary[600]
+                              : palette.secondary.main
                           }
                         >
                           {t("pool.poolVoting")}
                         </Box>
                       </Box>
                       <Box>
-                        {expanded === "poolVoting" ? (
+                        {expanded === "govActionVoting" ? (
                           <IoIosArrowUp
                             color={
-                              dataRange?.maxVotingPower === null
+                              Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -511,7 +550,7 @@ export default function FilterVotesOverview() {
                         ) : (
                           <IoIosArrowDown
                             color={
-                              dataRange?.maxVotingPower === null
+                              Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -525,7 +564,6 @@ export default function FilterVotesOverview() {
                       <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
                       <StyledSlider
                         valueLabelFormat={(value) => formatPercent(value)}
-                        data-testid="filterRange.poolVotingValue"
                         getAriaLabel={() => "Minimum distance"}
                         defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
                         onChange={(e, newValue) =>
@@ -549,7 +587,7 @@ export default function FilterVotesOverview() {
                       filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
                       "minVotingPower",
                       "maxVotingPower",
-                      initParams.maxVotingPower,
+                      initParams.maxVotingPower || 0,
                       dataRange?.maxVotingPower === null
                     )}
                   </AccordionDetailsFilter>
@@ -559,8 +597,16 @@ export default function FilterVotesOverview() {
 
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box
-                component={dataRange?.maxVotingPower === null ? CustomTooltip : Box}
-                title={dataRange?.maxVotingPower === null ? t("common.noDataAvaiable") : undefined}
+                component={
+                  Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                    ? CustomTooltip
+                    : Box
+                }
+                title={
+                  Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                    ? t("common.noDataAvaiable")
+                    : undefined
+                }
                 slotProps={{
                   popper: {
                     modifiers: [
@@ -574,9 +620,9 @@ export default function FilterVotesOverview() {
                   }
                 }}
               >
-                <AccordionContainer expanded={expanded === "test"} onChange={handleChange("test")}>
+                <AccordionContainer expanded={expanded === "voitingStake"} onChange={handleChange("voitingStake")}>
                   <AccordionSummary
-                    disabled={dataRange?.maxVotingPower === null}
+                    disabled={Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"}
                     sx={{
                       "&.Mui-disabled": {
                         opacity: 0.9
@@ -588,7 +634,7 @@ export default function FilterVotesOverview() {
                         <CustomIcon
                           icon={GovBodyIcons}
                           fill={
-                            dataRange?.maxVotingPower === null
+                            Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
                               : theme.palette.secondary.light
                           }
@@ -598,17 +644,19 @@ export default function FilterVotesOverview() {
                         <Box
                           ml={1}
                           color={({ palette }) =>
-                            dataRange?.maxVotingPower === null ? palette.secondary[600] : palette.secondary.main
+                            Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                              ? palette.secondary[600]
+                              : palette.secondary.main
                           }
                         >
                           {t("filter.voitingStake")}
                         </Box>
                       </Box>
                       <Box>
-                        {expanded === "poolVoting" ? (
+                        {expanded === "voitingStake" ? (
                           <IoIosArrowUp
                             color={
-                              dataRange?.maxVotingPower === null
+                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -616,7 +664,7 @@ export default function FilterVotesOverview() {
                         ) : (
                           <IoIosArrowDown
                             color={
-                              dataRange?.maxVotingPower === null
+                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -627,42 +675,62 @@ export default function FilterVotesOverview() {
                   </AccordionSummary>
                   <AccordionDetailsFilter sx={{ background: "unset" }}>
                     <Box padding={"0 8px"} display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
-                      <Typography>{formatPercent(dataRange?.minVotingPower || 0)}</Typography>
+                      <Typography>
+                        {formatADA(dataRange?.minActiveStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
                       <StyledSlider
-                        valueLabelFormat={(value) => formatPercent(value)}
-                        data-testid="filterRange.poolVotingValue"
+                        valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                         getAriaLabel={() => "Minimum distance"}
-                        defaultValue={[filterParams.minVotingPower || 0, initParams.maxVotingPower || 0]}
-                        onChange={(e, newValue) =>
-                          handleChangeValueRange(e, newValue, "minVotingPower", "maxVotingPower")
-                        }
+                        defaultValue={[filterParams.minActiveStake || 0, initParams.maxActiveStake || 0]}
                         value={[
-                          filterParams.minVotingPower || 0,
-                          filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0)
+                          filterParams.minActiveStake || 0,
+                          filterParams.maxActiveStake ?? (initParams.maxActiveStake || 0)
                         ]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minActiveStake", "maxActiveStake")
+                        }
                         valueLabelDisplay="auto"
                         disableSwap
-                        min={dataRange?.minVotingPower || 0}
-                        step={0.0001}
-                        max={dataRange?.maxVotingPower || 0}
-                        disabled={dataRange?.maxVotingPower === null}
+                        step={1000000}
+                        min={dataRange?.minActiveStake || 0}
+                        max={dataRange?.maxActiveStake || 0}
+                        disabled={Boolean(!dataRange?.maxActiveStake)}
                       />
-                      <Typography>{formatPercent(dataRange?.maxVotingPower || 0)}</Typography>
+                      <Typography>
+                        {formatADA(dataRange?.maxActiveStake, LARGE_NUMBER_ABBREVIATIONS, 6, 2) || 0}
+                      </Typography>
                     </Box>
                     {groupInputRange(
-                      filterParams.minVotingPower || 0,
-                      filterParams.maxVotingPower ?? (initParams.maxVotingPower || 0),
-                      "minVotingPower",
-                      "maxVotingPower",
-                      initParams.maxVotingPower,
-                      dataRange?.maxVotingPower === null
+                      BigNumber(filterParams.minActiveStake || 0)
+                        .div(10 ** 6)
+                        .toNumber(),
+                      filterParams.maxActiveStake !== undefined && !isNaN(filterParams.maxActiveStake)
+                        ? BigNumber(filterParams.maxActiveStake)
+                            .div(10 ** 6)
+                            .toNumber()
+                        : BigNumber(initParams.maxActiveStake || 0)
+                            .div(10 ** 6)
+                            .toNumber(),
+                      "minActiveStake",
+                      "maxActiveStake",
+                      BigNumber(initParams.maxActiveStake || 0)
+                        .div(10 ** 6)
+                        .toNumber(),
+                      Boolean(!dataRange?.maxActiveStake)
                     )}
                   </AccordionDetailsFilter>
                 </AccordionContainer>
               </Box>
             </Box>
             <Box my={1} p="0px 16px">
-              <ApplyFilterButton>{t("common.applyFilters")}</ApplyFilterButton>
+              <ApplyFilterButton
+                onClick={() => {
+                  handleFilter();
+                }}
+                disabled={JSON.stringify(defaultParams) === JSON.stringify(filterParams) && !isDisableFilter}
+              >
+                {t("common.applyFilters")}
+              </ApplyFilterButton>
             </Box>
             <Box
               component={Button}
@@ -671,10 +739,9 @@ export default function FilterVotesOverview() {
               display={"flex"}
               alignItems={"center"}
               color={({ palette }) => `${palette.primary.main} !important`}
+              onClick={handleReset}
             >
-              <Box data-testid="governance.resetTitle" mr={1}>
-                {t("common.reset")}
-              </Box>
+              <Box mr={1}>{t("common.reset")}</Box>
               <CustomIcon icon={ResetIcon} fill={theme.palette.primary.main} width={18} />
             </Box>
           </FilterContainer>

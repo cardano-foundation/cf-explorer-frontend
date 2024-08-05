@@ -1,4 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import Card from "src/components/commons/Card";
 
@@ -29,4 +30,9 @@ export const ContainerField = styled(Box)`
   display: flex;
   gap: 8px;
   align-items: center;
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  cursor: pointer;
 `;
