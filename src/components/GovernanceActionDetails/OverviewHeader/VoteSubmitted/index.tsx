@@ -26,7 +26,11 @@ type Props = {
 };
 
 export default function VoteSubmitted({ allowedVoteByCC, allowedVoteBySPO }: Props) {
-  const [selectVote, setSelectVote] = useState<VoteType | "">("SPOs");
+  const checkVoterType = () => {
+    if (allowedVoteBySPO) return "SPOs";
+    return "DReps";
+  };
+  const [selectVote, setSelectVote] = useState<VoteType | "">(checkVoterType());
 
   const { txHash, index } = useParams<{ txHash: string; index: string }>();
 
