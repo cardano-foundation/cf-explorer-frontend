@@ -53,4 +53,6 @@ interface OverviewGovActions {
   anchorHash: string | null;
   anchorUrl: string | null;
   abstract: string | null;
+  allowedVoteByCC: boolean;
+  allowedVoteBySPO: boolean;
 }

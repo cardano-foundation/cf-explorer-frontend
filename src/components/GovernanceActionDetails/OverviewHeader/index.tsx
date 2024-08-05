@@ -110,7 +110,7 @@ export default function OverviewHeader({ data }: Props) {
         </Grid>
         <Grid item container lg={6} md={12} sm={12}>
           <StyledCard.Container>
-            <VoteSubmitted />
+            <VoteSubmitted allowedVoteByCC={data?.allowedVoteByCC} allowedVoteBySPO={data?.allowedVoteBySPO} />
           </StyledCard.Container>
         </Grid>
       </Grid>

@@ -73,10 +73,10 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
       <Table
         {...data}
         columns={columns}
-        total={{ count: data?.totalPages ?? 0, title: "Total", isDataOverSize: data?.isDataOverSize }}
+        total={{ count: data?.totalItems ?? 0, title: "Total", isDataOverSize: data?.isDataOverSize }}
         pagination={{
           ...pageInfo,
-          total: data?.totalPages,
+          total: data?.totalItems,
           onChange: (page, size) => {
             history.replace({ search: stringify({ page, size }) });
           }

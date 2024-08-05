@@ -20,7 +20,12 @@ const voterType = {
   CC: "CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH"
 };
 
-export default function VoteSubmitted() {
+type Props = {
+  allowedVoteByCC: boolean | undefined;
+  allowedVoteBySPO: boolean | undefined;
+};
+
+export default function VoteSubmitted({ allowedVoteByCC, allowedVoteBySPO }: Props) {
   const [selectVote, setSelectVote] = useState<VoteType | "">("SPOs");
 
   const { txHash, index } = useParams<{ txHash: string; index: string }>();
@@ -73,8 +78,8 @@ export default function VoteSubmitted() {
   };
 
   const disableButtonSelect = (key: string) => {
-    if (key === "SPOs") return true;
-    if (key === "CC") return true;
+    if (key === "SPOs" && !allowedVoteBySPO) return true;
+    if (key === "CC" && !allowedVoteByCC) return true;
     return false;
   };
 

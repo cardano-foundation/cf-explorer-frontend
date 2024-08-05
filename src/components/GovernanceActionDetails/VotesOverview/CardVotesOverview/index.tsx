@@ -89,7 +89,7 @@ export default function CardVotesOverview({ data }: Vote) {
               sx={{ color: theme.palette.primary.main, fontWeight: 500, textDecoration: "underline" }}
               component={"span"}
             >
-              <StyledLink to={link}>{getShortHash(data.voterHash, 5, 5)}</StyledLink>
+              <StyledLink to={link}>{getShortHash(data.voterHash)}</StyledLink>
             </Box>
           </CustomTooltip>
         </ValueField>
