@@ -188,6 +188,10 @@ import WithdrawlIconComponent from "./icons/withdrawl.svg?react";
 import MintingIconComponent from "./icons/minting.svg?react";
 import GovBodyIcons from "./icons/gov-body-icon.svg?react";
 import HighestIconComponent from "./icons/highest-icon.svg?react";
+import DescriptionIcon from "./icons/description-icon.svg?react";
+import GovIDIcon from "./icons/govID-icon.svg?react";
+import GovBodycon from "./icons/govBody-icon.svg?react";
+import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
@@ -391,6 +395,10 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
+  DescriptionIcon,
+  GovIDIcon,
+  GovBodycon,
+  TimeStampIcon,
   CardanoBlueLogo,
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,

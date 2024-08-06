@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
 export const StyledDescription = {
-  Container: styled(Box)``,
+  Container: styled(Box)`
+    padding: 8px;
+  `,
   Title: styled(Box)`
     font-size: 16px;
     font-weight: 700;

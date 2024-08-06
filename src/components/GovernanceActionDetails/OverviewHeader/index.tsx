@@ -49,7 +49,7 @@ export default function OverviewHeader({ data }: Props) {
           {data?.txHash && (
             <SlotLeader>
               <Box sx={{ paddingTop: "1.5px", color: theme.palette.secondary.light, whiteSpace: "nowrap" }}>
-                Governance Action ID:
+                {t("pool.actionIdgovAction.govActionID")}
               </Box>
               <SlotLeaderValue>
                 <TruncateSubTitleContainer>
@@ -72,7 +72,7 @@ export default function OverviewHeader({ data }: Props) {
                     height={24}
                     width={24}
                   />
-                  <StyledCard.Title>Action Type</StyledCard.Title>
+                  <StyledCard.Title>{t("actionType")}</StyledCard.Title>
                   <StyledCard.Value>{actionsType}</StyledCard.Value>
                 </StyledCard.Container>
               </Grid>
@@ -86,7 +86,7 @@ export default function OverviewHeader({ data }: Props) {
                     height={24}
                     width={24}
                   />
-                  <StyledCard.Title>Date Created</StyledCard.Title>
+                  <StyledCard.Title>{t("govAction.dateCreated")}</StyledCard.Title>
                   <StyledCard.Value>
                     <DatetimeTypeTooltip>{formatDateLocal(data?.dateCreated ?? "")}</DatetimeTypeTooltip>
                   </StyledCard.Value>
@@ -101,7 +101,7 @@ export default function OverviewHeader({ data }: Props) {
                     height={24}
                     width={24}
                   />
-                  <StyledCard.Title>Status</StyledCard.Title>
+                  <StyledCard.Title>{t("govAction.status")}</StyledCard.Title>
                   <StyledCard.Value>{statusOverview.find((el) => el.value === data?.status)?.text}</StyledCard.Value>
                 </StyledCard.Container>
               </Grid>
