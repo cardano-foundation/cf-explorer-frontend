@@ -122,7 +122,7 @@ const TabSmartContracts = () => {
         {fetchData.data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <SmartContractCard data={item} />
+              <SmartContractCard data={item} index={idx} />
             </Box>
           </Grid>
         ))}

@@ -110,7 +110,7 @@ const Spendviews: React.FC<SpendViewProps> = ({ data, isMobile }) => {
       <SpendBlueBox ref={leftBoxRef}>
         <UTXO hash={data?.utxoHash} index={data?.utxoIndex} detail={details.transaction} />
         <SpendRounded>
-          <LongButton onClick={() => setOpenRedeemer(!openRedeemer)}>
+          <LongButton onClick={() => setOpenRedeemer(!openRedeemer)} data-testid="trx.contract.open.redeemer">
             {t("contract.redeemer")}
             <CustomIcon
               style={{ cursor: "pointer" }}

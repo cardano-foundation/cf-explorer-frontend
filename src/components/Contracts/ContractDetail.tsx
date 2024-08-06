@@ -60,7 +60,11 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
         <Typography fontWeight="500" color={theme.palette.secondary.light}>
           {t("contract.title")}:{" "}
           <CustomTooltip title={contract}>
-            <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract || "")}>
+            <StyledLink
+              style={{ fontWeight: "500", textDecoration: "underline" }}
+              to={detail(contract || "")}
+              data-testid="trx.contract.detail.address"
+            >
               {getShortHash(contract || "")}
             </StyledLink>
           </CustomTooltip>

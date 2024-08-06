@@ -62,13 +62,15 @@ const Tokens = () => {
       title: t("glossary.assetName"),
       key: "assetName",
       minWidth: "100px",
-      render: (r) =>
+      render: (r, idx) =>
         r.displayName && r.displayName.length > 20 ? (
           <CustomTooltip placement={"top"} title={r.displayName}>
-            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortHash(r.displayName || "")}</AssetName>
+            <AssetName data-testid={`token.assetName#${idx}`} to={details.token(r?.fingerprint ?? "")}>
+              {getShortHash(r.displayName || "")}
+            </AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName to={details.token(r?.fingerprint ?? "")}>
+          <AssetName data-testid={`token.assetName#${idx}`} to={details.token(r?.fingerprint ?? "")}>
             {r.displayName || getShortHash(r.fingerprint || "")}
           </AssetName>
         )
@@ -77,10 +79,11 @@ const Tokens = () => {
       title: t("glossary.scriptHash"),
       key: "policy",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.policy}>
           <AssetName
             to={r.policyIsNativeScript ? details.nativeScriptDetail(r.policy) : details.smartContract(r.policy)}
+            data-testid={`token.scriptHash#${idx}`}
           >
             {getShortHash(r.policy)}
           </AssetName>

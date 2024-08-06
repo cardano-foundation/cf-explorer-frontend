@@ -81,6 +81,20 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getTrxContractByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.Contract.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
   const getListPools = async ({ count, page }: { count: number; page: number }) => {
     return BaseApi.getData(
       request,
@@ -96,6 +110,20 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getTrxStakeCertByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.StakeCert.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
   const getStakePools = async (poolId: string) => {
     return BaseApi.getData(
       request,
@@ -111,6 +139,20 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getTrxRegisPoolCertByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.RegisPoolCert.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
   const getMetadataPools = async (poolId: string) => {
     return BaseApi.getData(
       request,
@@ -126,6 +168,50 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getTrxDeregisPoolCertByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.DeregisPoolCert.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getTrxDelegationCertByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.DelegationCert.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getTrxInstantaneousRewardByHash = async (trxHash: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Transaction.InstantaneousReward.replace(":hash", trxHash),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
   const getHistoryPools = async (poolId: string) => {
     return BaseApi.getData(
       request,
@@ -147,6 +233,12 @@ export function blockfrostApi(request: APIRequestContext) {
     getEpochById,
     getBlockByNumber,
     getBlockByHash,
+    getTrxContractByHash,
+    getTrxStakeCertByHash,
+    getTrxRegisPoolCertByHash,
+    getTrxDeregisPoolCertByHash,
+    getTrxDelegationCertByHash,
+    getTrxInstantaneousRewardByHash,
     getListPools,
     getStakePools,
     getMetadataPools,

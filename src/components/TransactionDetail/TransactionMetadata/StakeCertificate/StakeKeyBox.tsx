@@ -9,9 +9,10 @@ import { EllipsisContainer, StyledItem, TextLabel, TextValue } from "./styles";
 
 type TProps = {
   data: TStakeCertificated;
+  index?: number;
 };
 
-const StakeKeyBox = ({ data }: TProps) => {
+const StakeKeyBox = ({ data, index }: TProps) => {
   const { t } = useTranslation();
   const leftRow = [
     {
@@ -36,7 +37,13 @@ const StakeKeyBox = ({ data }: TProps) => {
                     to={details.stake(value)}
                   >
                     <EllipsisContainer>
-                      <DynamicEllipsisText value={value} isCopy isTooltip customTruncateFold={[4, 6]} />
+                      <DynamicEllipsisText
+                        dataTestIdFirstPath={`trx.stake.cert.address#${index}`}
+                        value={value}
+                        isCopy
+                        isTooltip
+                        customTruncateFold={[4, 6]}
+                      />
                     </EllipsisContainer>
                   </Box>
                 </TextValue>
