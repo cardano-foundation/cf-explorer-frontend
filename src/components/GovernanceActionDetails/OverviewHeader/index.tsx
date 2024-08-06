@@ -49,7 +49,7 @@ export default function OverviewHeader({ data }: Props) {
           {data?.txHash && (
             <SlotLeader>
               <Box sx={{ paddingTop: "1.5px", color: theme.palette.secondary.light, whiteSpace: "nowrap" }}>
-                {t("pool.actionIdgovAction.govActionID")}
+                {`${t("pool.actionId")}:`}
               </Box>
               <SlotLeaderValue>
                 <TruncateSubTitleContainer>
