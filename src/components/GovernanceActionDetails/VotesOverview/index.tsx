@@ -97,7 +97,7 @@ export default function VotesOverview() {
           size: +params.size || 6,
           total: total,
           onChange: (page, size) => {
-            history.replace({ search: stringify({ page, size }) });
+            history.replace({ search: stringify({ ...params, page, size }) });
           }
         }}
         total={{ count: total || 0, title: "", isDataOverSize }}
