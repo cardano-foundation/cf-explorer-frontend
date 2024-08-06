@@ -6,6 +6,7 @@ import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import Card from "../commons/Card";
 import RegisteredStakepoolsChart from "./RegisteredStakepools";
+import TransactionNumberChart from "./TransactionNumberChart";
 import BlockPropagationChart from "./BlockPropagation";
 import TransactionNumberChart from "./TransactionNumberChart";
 
