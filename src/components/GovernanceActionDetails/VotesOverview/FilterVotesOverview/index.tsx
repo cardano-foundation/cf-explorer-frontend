@@ -703,7 +703,7 @@ export default function FilterVotesOverview() {
                       </Typography>
                     </Box>
                     {groupInputRange(
-                      BigNumber(filterParams.activeStakeFrom || 0)
+                      BigNumber(filterParams.activeStakeFrom ?? (dataRange?.minActiveStake || 0))
                         .div(10 ** 6)
                         .toNumber(),
                       filterParams.activeStakeTo !== undefined && !isNaN(filterParams.activeStakeTo)
