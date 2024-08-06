@@ -103,7 +103,7 @@ export default function CardVotesOverview({ data }: Vote) {
       </ContainerField>
 
       <ContainerField>
-        <TitleField>{`${t("common.timestamp")}:`}</TitleField>
+        <TitleField>{`${t("pool.vote")}:`}</TitleField>
         <VoteStatus status={data.vote} />
       </ContainerField>
 
