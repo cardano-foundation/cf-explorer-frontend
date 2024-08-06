@@ -1,4 +1,4 @@
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, CircularProgress } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { stringify } from "querystring";
 import { useEffect, useState } from "react";
@@ -74,6 +74,13 @@ export default function VotesOverview() {
       </Box>
     );
   };
+
+  if (loading)
+    return (
+      <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"100%"} height={"450px"}>
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { Box, useTheme } from "@mui/material";
+import { t } from "i18next";
 import { stringify } from "qs";
 import { useHistory } from "react-router-dom";
 
@@ -36,19 +37,19 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
 
   const columns: Column<Data>[] = [
     {
-      title: <Box component={"span"}>Name</Box>,
+      title: <Box component={"span"}>{t("glossary.name")}</Box>,
       key: "overview",
       minWidth: "120px",
       render: (r) => <Box sx={{ fontSize: "14px", color: theme.palette.primary.main }}>{r.name}</Box>
     },
     {
-      title: <Box component={"span"}>WitnessAlgorithm</Box>,
+      title: <Box component={"span"}>{t("tab.witnessAlgorithm")}</Box>,
       key: "overview",
       minWidth: "120px",
       render: (r) => <Box sx={{ fontSize: "14px", color: theme.palette.primary.main }}>{r.witnessAlgorithm}</Box>
     },
     {
-      title: <Box component={"span"}>Public Key</Box>,
+      title: <Box component={"span"}>{t("tab.publicKey")}</Box>,
       key: "overview",
       minWidth: "120px",
       render: (r) => (
@@ -58,7 +59,7 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
       )
     },
     {
-      title: <Box component={"span"}>Signature</Box>,
+      title: <Box component={"span"}>{t("tab.signature")}</Box>,
       key: "overview",
       minWidth: "120px",
       render: (r) => (

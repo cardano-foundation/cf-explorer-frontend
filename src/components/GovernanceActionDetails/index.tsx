@@ -2,7 +2,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 
 import { details } from "src/commons/routers";
-import { CCGorvernanceVote, CClistMembers, PencilIcon } from "src/commons/resources";
+import { CCGorvernanceVote, DescriptionIcon, PencilIcon } from "src/commons/resources";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 
@@ -36,7 +36,7 @@ export default function GovernanceActionDetailsComponent() {
     },
     {
       key: "description",
-      icon: CClistMembers,
+      icon: DescriptionIcon,
       children: <Description data={data} />,
       label: <Box>Description</Box>
     },

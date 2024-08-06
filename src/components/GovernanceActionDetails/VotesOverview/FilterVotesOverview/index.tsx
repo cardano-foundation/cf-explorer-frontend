@@ -18,14 +18,7 @@ import { isEmpty, pickBy } from "lodash";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import BigNumber from "bignumber.js";
 
-import {
-  CurrentStatusIcon,
-  ExpiryIcon,
-  FilterIcon,
-  GovBodyIcons,
-  GovernanceIcon,
-  ResetIcon
-} from "src/commons/resources";
+import { FilterIcon, GovBodycon, GovernanceIcon, GovIDIcon, ResetIcon, TimeStampIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 import {
   AccordionContainer,
@@ -356,9 +349,9 @@ export default function FilterVotesOverview() {
                 <AccordionSummary>
                   <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                     <Box display={"flex"} alignItems={"center"}>
-                      <CustomIcon icon={GovernanceIcon} fill={theme.palette.secondary.light} height={24} width={24} />
+                      <CustomIcon icon={GovIDIcon} fill={theme.palette.secondary.light} height={24} width={24} />
                       <Box ml={1} color={({ palette }) => palette.secondary.main}>
-                        Governance Body ID
+                        {t("filter.govID")}
                       </Box>
                     </Box>
                     <Box>
@@ -389,9 +382,9 @@ export default function FilterVotesOverview() {
               <AccordionSummary>
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
-                    <CustomIcon icon={CurrentStatusIcon} fill={theme.palette.secondary.main} height={24} width={24} />
+                    <CustomIcon icon={GovBodycon} fill={theme.palette.secondary.main} height={24} width={24} />
                     <Box ml={"3px"} color={({ palette }) => palette.secondary.main}>
-                      {t("drep.filter.status")}
+                      {t("filter.governanceBody")}
                     </Box>
                   </Box>
                   <Box>
@@ -463,9 +456,9 @@ export default function FilterVotesOverview() {
               <AccordionSummary onClick={() => setShowDaterange(true)}>
                 <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                   <Box display={"flex"} alignItems={"center"}>
-                    <CustomIcon icon={ExpiryIcon} fill={theme.palette.secondary.main} height={20} />
+                    <CustomIcon icon={TimeStampIcon} fill={theme.palette.secondary.main} height={24} width={24} />
                     <Box ml={"4px"} color={({ palette }) => palette.secondary.main}>
-                      {t("drep.filter.registrationDate")}
+                      {t("filter.timeStamp")}
                     </Box>
                   </Box>
                   {!isEmpty(pickBy(dateRange, (value) => value !== "" && value !== undefined)) && (
@@ -527,7 +520,7 @@ export default function FilterVotesOverview() {
                     <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                       <Box display={"flex"} alignItems={"center"}>
                         <CustomIcon
-                          icon={GovBodyIcons}
+                          icon={GovernanceIcon}
                           fill={
                             Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
@@ -641,7 +634,7 @@ export default function FilterVotesOverview() {
                     <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
                       <Box display={"flex"} alignItems={"center"}>
                         <CustomIcon
-                          icon={GovBodyIcons}
+                          icon={GovernanceIcon}
                           fill={
                             Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
