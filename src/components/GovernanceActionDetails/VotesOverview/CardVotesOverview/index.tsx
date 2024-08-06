@@ -108,7 +108,7 @@ export default function CardVotesOverview({ data }: Vote) {
       </ContainerField>
 
       <ContainerField>
-        <TitleField>{`${t("pool.vote")}:`}</TitleField>
+        <TitleField>{`${t("filter.voitingStake")}:`}</TitleField>
         <ValueField>{data.votingStake === null ? t("N/A") : `${formatADAFull(data.votingStake)} ADA`}</ValueField>
       </ContainerField>
 
