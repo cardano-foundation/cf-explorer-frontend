@@ -412,7 +412,7 @@
   "totalValue": "Total Value",
   "stakedTime": "Staked Time",
   "fees": "Fees",
-  "vote.drep" : "DRep",
+  "vote.drep" : "DReps",
   "vote.committee": "Constitutional Committee",
   "vote.stakePool":"Stake Pool Operator",
   "tab.witnessAlgorithm":"WitnessAlgorithm",
