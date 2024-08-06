@@ -174,6 +174,9 @@ export const API = {
     OVERVIEW: (hash: string, index: string) => `/gov-actions/${hash}/${index}`,
     CREATE_BY: (anchorUrl: string, anchorHash: string, page: number, size: number) =>
       `gov-actions/authors?anchorUrl=${anchorUrl}&anchorHash=${anchorHash}&page=${page}&size=${size}`
+  },
+  GOV_ACTIONS_DETAIL: {
+    RANGE_VALUE: "gov-actions/:txHash/:index/votes/range-values"
   }
 };
 

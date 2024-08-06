@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { VoteStatus } from "src/components/commons/CardGovernanceVotes";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { VOTE_TYPE_GOV_ACTIONS } from "src/commons/utils/constants";
-import { formatDateTimeLocal, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import { details } from "src/commons/routers";
 
@@ -111,9 +111,7 @@ export default function CardVotesOverview({ data }: Vote) {
         data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH && (
           <ContainerField>
             <TitleField>{`${t("filter.voitingStake")}:`}</TitleField>
-            <ValueField>
-              {data.votingStake === null ? t("N/A") : `${numberWithCommas(data.votingStake)} ADA`}
-            </ValueField>
+            <ValueField>{data.votingStake === null ? t("N/A") : `${formatADAFull(data.votingStake)} ADA`}</ValueField>
           </ContainerField>
         )}
 
