@@ -47,16 +47,9 @@ export default function VotesOverview() {
 
   useEffect(() => {
     setParams({
+      ...query,
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.size || "") || 6
-      // // voterType: (query?.voterType || "NONE").toString(),
-      // // voterHash: (query?.voterType ?? "").toString(),
-      // // fromDate: (query?.fromDate ?? "").toString(),
-      // // toDate: (query?.toDate ?? "").toString(),
-      // // activeStakeFrom: +(query?.minActiveStake || 0),
-      // // activeStakeTo: +(query?.activeStakeTo || 0),
-      // // votingPowerFrom: +(query?.votingPowerFrom || 0),
-      // // votingPowerTo: +(query?.votingPowerTo || 0)
     });
   }, [JSON.stringify(query)]);
 

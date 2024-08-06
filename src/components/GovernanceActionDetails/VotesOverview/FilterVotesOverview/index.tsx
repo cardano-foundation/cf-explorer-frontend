@@ -12,7 +12,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { parse, stringify } from "qs";
 import { isEmpty, pickBy } from "lodash";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -41,6 +41,7 @@ import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateToTwoDeci
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 
 import { Input } from "./styles";
 
@@ -50,6 +51,8 @@ interface RequestParams {
   query?: string;
   voterType?: string | null;
   voterHash?: string | null;
+  activeStakeTo?: number;
+  activeStakeFrom?: number;
   maxActiveStake?: number;
   minActiveStake?: number;
   minVotingPower?: number;
@@ -57,25 +60,31 @@ interface RequestParams {
 }
 
 export default function FilterVotesOverview() {
-  const theme = useTheme();
-  const { t } = useTranslation();
-  const { search } = useLocation();
-  const query = parse(search.split("?")[1]);
-  const { pageInfo } = usePageInfo();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
   const [filterParams, setFilterParams] = useState<RequestParams>({});
-  const history = useHistory();
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
+  const { search } = useLocation();
+  const query = parse(search.split("?")[1]);
   const [dateRange, setDateRange] = useState<{
     fromDate?: string;
     toDate?: string;
   }>({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
+  const theme = useTheme();
+  const { t } = useTranslation();
+  const history = useHistory();
+
+  const { pageInfo } = usePageInfo();
+
+  const { index, txHash } = useParams<{ index?: string; txHash?: string }>();
+
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const fetchDataRange = useFetch<RequestParams>("/gov-actions/range-values");
+  const fetchDataRange = useFetch<RequestParams>(
+    API.GOV_ACTIONS_DETAIL.RANGE_VALUE.replace(":txHash", txHash || "").replace(":index", index || "")
+  );
 
   const defaultParams = { page: 0, size: 3, sort: "" };
 
@@ -86,8 +95,8 @@ export default function FilterVotesOverview() {
     size: 6,
     voterType: "NONE",
     voterHash: "",
-    minActiveStake: +(dataRange?.minActiveStake || 0),
-    maxActiveStake: +(dataRange?.maxActiveStake || 0),
+    activeStakeFrom: +(dataRange?.minActiveStake || 0),
+    activeStakeTo: +(dataRange?.maxActiveStake || 0),
     minVotingPower: +(dataRange?.minVotingPower || 0),
     maxVotingPower: +(dataRange?.maxVotingPower || 0)
   };
@@ -104,8 +113,8 @@ export default function FilterVotesOverview() {
       query: "",
       voterType: (query?.voterType || "NONE").toString(),
       voterHash: "",
-      ...(query?.minActiveStake && { minActiveStake: +(query?.minActiveStake || 0) }),
-      ...(query?.maxActiveStake && { maxActiveStake: +(query?.maxActiveStake || 0) }),
+      ...(query?.activeStakeFrom && { activeStakeFrom: +(query?.activeStakeFrom || 0) }),
+      ...(query?.activeStakeTo && { activeStakeTo: +(query?.activeStakeTo || 0) }),
       ...(query?.minVotingPower && { minVotingPower: +(query?.minVotingPower || 0) }),
       ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) })
     });
@@ -227,7 +236,7 @@ export default function FilterVotesOverview() {
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
                   ? truncateToTwoDecimals(+numericValue) / 100
-                  : ["maxActiveStake"].includes(keyOnChangeMin)
+                  : ["activeStakeTo"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
                   ? parseFloat(numericValue).toFixed(2)
@@ -272,7 +281,7 @@ export default function FilterVotesOverview() {
                 ...filterParams,
                 [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
                   ? +minValue / 100
-                  : ["maxActiveStake"].includes(keyOnChangeMax)
+                  : ["activeStakeTo"].includes(keyOnChangeMax)
                   ? +minValue * 10 ** 6
                   : ["maxSaturation"].includes(keyOnChangeMax)
                   ? parseFloat(`${minValue}`).toFixed(2)
@@ -294,7 +303,7 @@ export default function FilterVotesOverview() {
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
                     ? truncateToTwoDecimals(+numericValue) / 100
-                    : ["maxActiveStake"].includes(keyOnChangeMax)
+                    : ["activeStakeTo"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
                     ? parseFloat(numericValue).toFixed(2)
@@ -681,13 +690,13 @@ export default function FilterVotesOverview() {
                       <StyledSlider
                         valueLabelFormat={(value) => formatADA(value, LARGE_NUMBER_ABBREVIATIONS, 6, 2)}
                         getAriaLabel={() => "Minimum distance"}
-                        defaultValue={[filterParams.minActiveStake || 0, initParams.maxActiveStake || 0]}
+                        defaultValue={[filterParams.activeStakeFrom || 0, initParams.activeStakeTo || 0]}
                         value={[
-                          filterParams.minActiveStake || 0,
-                          filterParams.maxActiveStake ?? (initParams.maxActiveStake || 0)
+                          filterParams.activeStakeFrom || 0,
+                          filterParams.activeStakeTo ?? (initParams.activeStakeTo || 0)
                         ]}
                         onChange={(e, newValue) =>
-                          handleChangeValueRange(e, newValue, "minActiveStake", "maxActiveStake")
+                          handleChangeValueRange(e, newValue, "activeStakeFrom", "activeStakeTo")
                         }
                         valueLabelDisplay="auto"
                         disableSwap
@@ -701,19 +710,19 @@ export default function FilterVotesOverview() {
                       </Typography>
                     </Box>
                     {groupInputRange(
-                      BigNumber(filterParams.minActiveStake || 0)
+                      BigNumber(filterParams.activeStakeFrom || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      filterParams.maxActiveStake !== undefined && !isNaN(filterParams.maxActiveStake)
-                        ? BigNumber(filterParams.maxActiveStake)
+                      filterParams.activeStakeTo !== undefined && !isNaN(filterParams.activeStakeTo)
+                        ? BigNumber(filterParams.activeStakeTo)
                             .div(10 ** 6)
                             .toNumber()
-                        : BigNumber(initParams.maxActiveStake || 0)
+                        : BigNumber(initParams.activeStakeTo || 0)
                             .div(10 ** 6)
                             .toNumber(),
-                      "minActiveStake",
-                      "maxActiveStake",
-                      BigNumber(initParams.maxActiveStake || 0)
+                      "activeStakeFrom",
+                      "activeStakeTo",
+                      BigNumber(initParams.activeStakeTo || 0)
                         .div(10 ** 6)
                         .toNumber(),
                       Boolean(!dataRange?.maxActiveStake)
