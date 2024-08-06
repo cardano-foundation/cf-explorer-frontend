@@ -1,25 +1,25 @@
-import React from "react";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import {
-  TimeIconComponent,
-  OutputIcon,
   CubeIconComponent,
-  SlotIcon,
-  User2Component,
   ExchageIcon,
-  RewardIconComponent
+  OutputIcon,
+  RewardIconComponent,
+  SlotIcon,
+  TimeIconComponent,
+  User2Component
 } from "src/commons/resources";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import DetailHeader from "src/components/commons/DetailHeader";
 import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import DetailHeader from "src/components/commons/DetailHeader";
 
-import { Output, Subtext, TitleCard } from "./styles";
+import { Subtext, TitleCard } from "./styles";
 
 interface EpochOverviewProps {
   data: IDataEpoch | null;
@@ -141,10 +141,9 @@ const EpochOverview: React.FC<EpochOverviewProps> = ({ data, loading, lastUpdate
       value: (
         <div data-testId="epoch.overview.rewardsDistributedValue">
           {data?.rewardsDistributed ? (
-            <Output>
-              {formatADAFull(data?.rewardsDistributed)}
-              <ADAicon />
-            </Output>
+            <span>
+              {formatADAFull(data?.rewardsDistributed)} <ADAicon />
+            </span>
           ) : (
             t("common.N/A")
           )}
