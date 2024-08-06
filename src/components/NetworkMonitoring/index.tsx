@@ -8,7 +8,6 @@ import Card from "../commons/Card";
 import RegisteredStakepoolsChart from "./RegisteredStakepools";
 import TransactionNumberChart from "./TransactionNumberChart";
 import BlockPropagationChart from "./BlockPropagation";
-import TransactionNumberChart from "./TransactionNumberChart";
 
 export default function NetworkMonitoringComponent() {
   const { t } = useTranslation();
