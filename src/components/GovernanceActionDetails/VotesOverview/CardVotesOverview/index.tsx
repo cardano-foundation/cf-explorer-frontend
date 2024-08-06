@@ -96,32 +96,26 @@ export default function CardVotesOverview({ data }: Vote) {
       </ContainerField>
 
       <ContainerField>
-        <TitleField>Timestamp:</TitleField>
+        <TitleField>{`${t("common.timestamp")}:`}</TitleField>
         <ValueField>
           <DatetimeTypeTooltip>{formatDateTimeLocal(data?.timestamp)}</DatetimeTypeTooltip>
         </ValueField>
       </ContainerField>
 
       <ContainerField>
-        <TitleField>Vote:</TitleField>
+        <TitleField>{`${t("common.timestamp")}:`}</TitleField>
         <VoteStatus status={data.vote} />
       </ContainerField>
 
-      {data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH &&
-        data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH && (
-          <ContainerField>
-            <TitleField>{`${t("filter.voitingStake")}:`}</TitleField>
-            <ValueField>{data.votingStake === null ? t("N/A") : `${formatADAFull(data.votingStake)} ADA`}</ValueField>
-          </ContainerField>
-        )}
+      <ContainerField>
+        <TitleField>{`${t("pool.vote")}:`}</TitleField>
+        <ValueField>{data.votingStake === null ? t("N/A") : `${formatADAFull(data.votingStake)} ADA`}</ValueField>
+      </ContainerField>
 
-      {data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH &&
-        data.voterType !== VOTE_TYPE_GOV_ACTIONS.CONSTITUTIONAL_COMMITTEE_HOT_SCRIPT_HASH && (
-          <ContainerField>
-            <TitleField>Voting Power:</TitleField>
-            <ValueField>{data.votingPower ? `${data.votingPower}%` : t("N/A")}</ValueField>
-          </ContainerField>
-        )}
+      <ContainerField>
+        <TitleField>{`${t("pool.poolVoting")}:`}</TitleField>
+        <ValueField>{data.votingPower ? `${data.votingPower}%` : t("N/A")}</ValueField>
+      </ContainerField>
     </CardContainer>
   );
 }
