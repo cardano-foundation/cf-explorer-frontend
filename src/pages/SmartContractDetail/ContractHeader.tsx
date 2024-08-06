@@ -16,7 +16,10 @@ const ContractHeader = ({ version }: { version: string | undefined }) => {
   return (
     <DetailHeader>
       <ButtonBack sx={{ marginTop: "30px" }} />
-      <Card title={t("SmartContractDetails")} titleSx={{ marginTop: "18px" }} />
+      <Card
+        title={<Box data-testid="sc.detail.title">{t("SmartContractDetails")}</Box>}
+        titleSx={{ marginTop: "18px" }}
+      />
       <Box sx={{ width: "100%" }}>
         <Box display={"flex"}>
           <SubHeaderLabel minWidth={90} data-testid="sc.scriptHash">
