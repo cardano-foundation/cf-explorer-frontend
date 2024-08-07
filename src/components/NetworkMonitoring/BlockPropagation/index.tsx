@@ -37,6 +37,10 @@ export default function BlockPropagationChart() {
     blockKey
   );
 
+  const formatTooltip = (value: number, name: string) => {
+    return [`${value} ms`, name];
+  };
+
   const formatXAxis = (tickItem: string) => {
     const date = new Date(tickItem);
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -115,7 +119,7 @@ export default function BlockPropagationChart() {
                   data={data ? [...data].reverse() : []}
                   margin={{ top: 32, right: isMobile ? 15 : 40, left: 0 }}
                 >
-                  <CartesianGrid vertical={false} />
+                  <CartesianGrid vertical={false} strokeOpacity={theme.isDark ? 0.4 : 1} />
                   <XAxis
                     tick={{ fontSize: 12, fill: theme.palette.secondary.light }}
                     dy={10}
@@ -130,6 +134,13 @@ export default function BlockPropagationChart() {
                     dx={-10}
                     axisLine={false}
                     tickLine={false}
+                    label={{
+                      value: "(ms)",
+                      angle: 0,
+                      position: "top",
+                      offset: 20,
+                      style: { textAnchor: "middle", fill: theme.palette.secondary.light, fontSize: 12 }
+                    }}
                   />
                   <Tooltip
                     contentStyle={{
@@ -137,6 +148,7 @@ export default function BlockPropagationChart() {
                       color: theme.palette.secondary.main,
                       borderRadius: "4px"
                     }}
+                    formatter={formatTooltip}
                   />
                   <Legend
                     layout={isMobile ? "horizontal" : "vertical"}
