@@ -59,10 +59,13 @@ const CustomFilterMultiRange: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -188,18 +191,21 @@ const CustomFilterMultiRange: React.FC = () => {
         <Box
           component={Input}
           disabled={disabled}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(minValue || 0).toString()}
+          value={Number(minValue || 0).toString() + (addDotMin ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -226,6 +232,11 @@ const CustomFilterMultiRange: React.FC = () => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMin(false);
+            }
+
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
@@ -245,7 +256,7 @@ const CustomFilterMultiRange: React.FC = () => {
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           disabled={disabled}
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
@@ -253,11 +264,14 @@ const CustomFilterMultiRange: React.FC = () => {
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(maxValue).toString()}
+          value={Number(maxValue).toString() + (addDotMax ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -287,10 +301,15 @@ const CustomFilterMultiRange: React.FC = () => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
+
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
 
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
