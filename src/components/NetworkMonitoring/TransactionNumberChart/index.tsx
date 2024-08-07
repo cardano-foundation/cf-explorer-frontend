@@ -174,7 +174,7 @@ const formatTimeX = (date: Time) => {
     case "ONE_YEAR":
     case "THREE_YEAR":
     case "ALL_TIME":
-      return "MM/YYYY";
+      return "MM/YY";
     default:
       break;
   }
