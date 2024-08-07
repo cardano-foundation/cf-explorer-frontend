@@ -79,9 +79,6 @@ jobs:
 
       - name: 🔨 Build and Push docker image
         uses: docker/build-push-action@v4
-        if: |
-          ( steps.metadata.outputs.BRANCH == 'main' && steps.metadata.outputs.SKIP_DOCKER_PUSH != 'true' ) ||
-          github.event_name == 'pull_request'
         with:
           file: ./Dockerfile
           context: .
