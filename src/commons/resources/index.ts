@@ -186,7 +186,12 @@ import HeaderSearchIconComponent from "./icons/header-search.svg?react";
 import NoteEditIconComponent from "./icons/note-edit.svg?react";
 import WithdrawlIconComponent from "./icons/withdrawl.svg?react";
 import MintingIconComponent from "./icons/minting.svg?react";
+import GovBodyIcons from "./icons/gov-body-icon.svg?react";
 import HighestIconComponent from "./icons/highest-icon.svg?react";
+import DescriptionIcon from "./icons/description-icon.svg?react";
+import GovIDIcon from "./icons/govID-icon.svg?react";
+import GovBodycon from "./icons/govBody-icon.svg?react";
+import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
@@ -209,6 +214,10 @@ import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import KingIcon from "./icons/king-icon.svg?react";
+import DateIcon from "./icons/date-icon.svg?react";
+import PencilIcon from "./icons/pencil-icon.svg?react";
+import ActionIcon from "./icons/action-icon.svg?react";
+import FeedbackIcon from "./icons/feedbackIcon-icon.svg?react";
 import BlockProducerIcon from "./icons/block-producer.svg?react";
 import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
@@ -325,6 +334,10 @@ export {
   TickerIconComponent,
   CalendarIcon,
   TeamsIconLight,
+  DateIcon,
+  PencilIcon,
+  ActionIcon,
+  FeedbackIcon,
   TeamsIconDark,
   UserIconDark,
   UserIconLight,
@@ -382,6 +395,10 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
+  DescriptionIcon,
+  GovIDIcon,
+  GovBodycon,
+  TimeStampIcon,
   CardanoBlueLogo,
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
@@ -487,6 +504,7 @@ export {
   VerifiedIcon,
   InvalidIcon,
   DescriptonDrepIcon,
+  GovBodyIcons,
   CreateDrepIcon,
   ActiveVoteIcon,
   LiveStakeDrepIcon,

@@ -169,6 +169,14 @@ export const API = {
   NETWORK_MONITORING_API: {
     REGISTERED_STAKEPOOLS: "pools/stake-pools-chart",
     BLOCK_PROPAGATION: (type: string, size: number) => `blocks/block-propagation?type=${type}&size=${size}`
+  },
+  OVERVIEW_GOV_ACTIONS: {
+    OVERVIEW: (hash: string, index: string) => `/gov-actions/${hash}/${index}`,
+    CREATE_BY: (anchorUrl: string, anchorHash: string, page: number, size: number) =>
+      `gov-actions/authors?anchorUrl=${anchorUrl}&anchorHash=${anchorHash}&page=${page}&size=${size}`
+  },
+  GOV_ACTIONS_DETAIL: {
+    RANGE_VALUE: "gov-actions/:txHash/:index/votes/range-values"
   }
 };
 
