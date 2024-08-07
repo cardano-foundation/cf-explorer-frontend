@@ -30,7 +30,7 @@ import {
 import { StyledInput } from "src/components/share/styled";
 import { StyledSlider } from "src/components/commons/CustomFilterMultiRange/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateToTwoDecimals } from "src/commons/utils/helper";
+import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS } from "src/commons/utils/helper";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import useFetch from "src/commons/hooks/useFetch";
@@ -50,6 +50,8 @@ interface RequestParams {
   minActiveStake?: number;
   minVotingPower?: number;
   maxVotingPower?: number;
+  votingPowerFrom?: number;
+  votingPowerTo?: number;
 }
 
 export default function FilterVotesOverview() {
@@ -90,8 +92,8 @@ export default function FilterVotesOverview() {
     voterHash: "",
     activeStakeFrom: +(dataRange?.minActiveStake || 0),
     activeStakeTo: +(dataRange?.maxActiveStake || 0),
-    minVotingPower: +(dataRange?.minVotingPower || 0),
-    maxVotingPower: +(dataRange?.maxVotingPower || 0)
+    votingPowerTo: +(dataRange?.minVotingPower || 0),
+    votingPowerFrom: +(dataRange?.maxVotingPower || 0)
   };
 
   const isDisableFilter = useMemo(() => {
@@ -103,7 +105,6 @@ export default function FilterVotesOverview() {
     setFilterParams({
       page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0,
       size: +(query?.size || "") || 6,
-      query: "",
       voterType: (query?.voterType || "NONE").toString(),
       voterHash: "",
       ...(query?.activeStakeFrom && { activeStakeFrom: +(query?.activeStakeFrom || 0) }),
@@ -201,10 +202,7 @@ export default function FilterVotesOverview() {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
-                ((keyOnChangeMin === "minVotingPower" ||
-                  keyOnChangeMin === "minGovParticipationRate" ||
-                  keyOnChangeMin === "minSaturation") &&
-                  key === ".") ||
+                (keyOnChangeMin === "activeStakeFrom" && key === ".") ||
                 /^\d$/.test(key)
               )
             ) {
@@ -227,18 +225,16 @@ export default function FilterVotesOverview() {
               [keyOnChangeMin]:
                 +numericValue > maxValue
                   ? 0
-                  : ["minGovParticipationRate"].includes(keyOnChangeMin)
-                  ? truncateToTwoDecimals(+numericValue) / 100
-                  : ["activeStakeTo"].includes(keyOnChangeMin)
+                  : ["activeStakeFrom"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
-                  : ["minSaturation"].includes(keyOnChangeMin)
-                  ? parseFloat(numericValue).toFixed(2)
                   : numericValue
             });
           }}
           onKeyPress={handleKeyPress}
         />
+
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
+
         <Box
           component={Input}
           type="number"
@@ -258,10 +254,7 @@ export default function FilterVotesOverview() {
                 key === "ArrowRight" ||
                 key === "Backspace" ||
                 key === "Delete" ||
-                ((keyOnChangeMax === "maxVotingPower" ||
-                  keyOnChangeMax === "maxSaturation" ||
-                  keyOnChangeMax === "maxGovParticipationRate") &&
-                  key === ".") ||
+                (keyOnChangeMax === "activeStakeTo" && key === ".") ||
                 /^\d$/.test(key)
               )
             ) {
@@ -276,8 +269,6 @@ export default function FilterVotesOverview() {
                   ? +minValue / 100
                   : ["activeStakeTo"].includes(keyOnChangeMax)
                   ? +minValue * 10 ** 6
-                  : ["maxSaturation"].includes(keyOnChangeMax)
-                  ? parseFloat(`${minValue}`).toFixed(2)
                   : minValue
               });
           }}
@@ -294,12 +285,8 @@ export default function FilterVotesOverview() {
                 [keyOnChangeMax]:
                   +numericValue > maxValueDefault
                     ? maxValueDefault
-                    : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? truncateToTwoDecimals(+numericValue) / 100
                     : ["activeStakeTo"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
-                    : ["maxSaturation"].includes(keyOnChangeMax)
-                    ? parseFloat(numericValue).toFixed(2)
                     : numericValue
               });
           }}
@@ -600,13 +587,17 @@ export default function FilterVotesOverview() {
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box
                 component={
-                  Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                  Boolean(!dataRange?.maxActiveStake) ||
+                  filterParams.voterType !== "DREP_KEY_HASH" ||
+                  dataRange?.maxActiveStake === dataRange?.minActiveStake
                     ? CustomTooltip
                     : Box
                 }
                 title={
                   Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                     ? t("common.noDataAvaiable")
+                    : dataRange?.maxActiveStake === dataRange?.minActiveStake
+                    ? t("common.notFilter")
                     : undefined
                 }
                 slotProps={{
@@ -658,7 +649,9 @@ export default function FilterVotesOverview() {
                         {expanded === "voitingStake" ? (
                           <IoIosArrowUp
                             color={
-                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                              Boolean(!dataRange?.maxActiveStake) ||
+                              filterParams.voterType !== "DREP_KEY_HASH" ||
+                              dataRange?.maxActiveStake === dataRange?.minActiveStake
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -666,7 +659,9 @@ export default function FilterVotesOverview() {
                         ) : (
                           <IoIosArrowDown
                             color={
-                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
+                              Boolean(!dataRange?.maxActiveStake) ||
+                              filterParams.voterType !== "DREP_KEY_HASH" ||
+                              dataRange?.maxActiveStake === dataRange?.minActiveStake
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -685,7 +680,7 @@ export default function FilterVotesOverview() {
                         getAriaLabel={() => "Minimum distance"}
                         defaultValue={[filterParams.activeStakeFrom || 0, initParams.activeStakeTo || 0]}
                         value={[
-                          filterParams.activeStakeFrom || 0,
+                          filterParams.activeStakeFrom ?? (initParams.activeStakeFrom || 0),
                           filterParams.activeStakeTo ?? (initParams.activeStakeTo || 0)
                         ]}
                         onChange={(e, newValue) =>
@@ -703,9 +698,13 @@ export default function FilterVotesOverview() {
                       </Typography>
                     </Box>
                     {groupInputRange(
-                      BigNumber(filterParams.activeStakeFrom ?? (dataRange?.minActiveStake || 0))
-                        .div(10 ** 6)
-                        .toNumber(),
+                      filterParams.activeStakeFrom !== undefined && !isNaN(filterParams.activeStakeFrom)
+                        ? BigNumber(filterParams.activeStakeFrom || 0)
+                            .div(10 ** 6)
+                            .toNumber()
+                        : BigNumber(initParams.activeStakeFrom || 0)
+                            .div(10 ** 6)
+                            .toNumber(),
                       filterParams.activeStakeTo !== undefined && !isNaN(filterParams.activeStakeTo)
                         ? BigNumber(filterParams.activeStakeTo)
                             .div(10 ** 6)
@@ -718,7 +717,7 @@ export default function FilterVotesOverview() {
                       BigNumber(initParams.activeStakeTo || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      Boolean(!dataRange?.maxActiveStake)
+                      dataRange?.maxActiveStake === dataRange?.minActiveStake
                     )}
                   </AccordionDetailsFilter>
                 </AccordionContainer>
