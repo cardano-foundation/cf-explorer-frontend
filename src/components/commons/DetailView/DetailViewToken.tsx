@@ -196,19 +196,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailValue>{data.txCount}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.numberOfHolders")}</DetailLabel>
-                <DetailValue>{numberWithCommas(data.numberOfHolders || 0)}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
                 <DetailLabel>{t("glossary.totalVolumn")}</DetailLabel>
                 <DetailValue>
                   {formatNumberDivByDecimals(data.totalVolume || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.volume24h")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
