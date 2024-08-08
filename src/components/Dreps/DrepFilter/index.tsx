@@ -61,7 +61,9 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
