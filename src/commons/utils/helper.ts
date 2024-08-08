@@ -50,6 +50,18 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
 
+export function truncateDecimals(number: number, toDecimals: number) {
+  const parts = number.toString().split(".");
+
+  if (parts.length === 1 || parts[1].length <= toDecimals) {
+    return number;
+  }
+  const truncatedDecimal = parts[1].substring(0, toDecimals);
+  const truncatedNumber = `${parts[0]}.${truncatedDecimal}`;
+
+  return parseFloat(truncatedNumber);
+}
+
 export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
   const bnValue = new BigNumber(value);
