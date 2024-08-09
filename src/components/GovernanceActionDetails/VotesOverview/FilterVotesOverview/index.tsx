@@ -286,8 +286,8 @@ export default function FilterVotesOverview() {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["activeStakeTo"].includes(keyOnChangeMax)
-                    ? +numericValue * 10 ** 6
-                    : numericValue
+                    ? truncateDecimals(+numericValue, 6) * 10 ** 6
+                    : truncateDecimals(+numericValue, 6)
               });
           }}
           onKeyPress={handleKeyPress}
