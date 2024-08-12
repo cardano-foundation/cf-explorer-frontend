@@ -14,10 +14,11 @@ import { CLButton, CLCardContaienr, WrapLabel } from "./styles";
 
 export interface ContractItemProps {
   data: IContractItemTx;
+  index: number;
   onClick?: (data: IContractItemTx) => void;
 }
 
-const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
+const ContractItem: React.FC<ContractItemProps> = ({ data, index, onClick }) => {
   const { t } = useTranslation();
   const containerRef = useRef<SVGSVGElement>(null);
   const [open, setOpen] = useState(false);
@@ -91,12 +92,16 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
           }}
           to={contractAddress?.detail(contractAddress.value) || "/"}
         >
-          <DynamicEllipsisText value={contractAddress?.value || ""} isTooltip />
+          <DynamicEllipsisText
+            dataTestIdFirstPath={`trxdetail.contract.address#${index}`}
+            value={contractAddress?.value || ""}
+            isTooltip
+          />
         </StyledLink>
       </Box>
       <Box>
         <WrapLabel>{t("contract.purpose")}:</WrapLabel>
-        <Typography>{data.purpose}</Typography>
+        <Typography data-testid={`trxdetail.contract.purpose#${index}`}>{data.purpose}</Typography>
         {!!data?.burningTokens?.length && (
           <span>
             (
@@ -121,7 +126,9 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, onClick }) => {
         )}
       </Box>
       <Box>
-        <CLButton onClick={() => onClick?.(data)}>{t("contract.viewContract")}</CLButton>
+        <CLButton data-testid={`trxdetail.contract.bth.detai#${index}`} onClick={() => onClick?.(data)}>
+          {t("contract.viewContract")}
+        </CLButton>
       </Box>
     </CLCardContaienr>
   );

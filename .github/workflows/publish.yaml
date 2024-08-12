@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    runs-on: [arc-runner-set]
+    runs-on: ubuntu-latest
     if: |
       ${{ github.actor != 'dependabot[bot]' }} &&
       ( "contains(github.event.head_commit.message, 'release-please--branches--main')" ||
@@ -54,11 +54,10 @@ jobs:
             echo "DOCKER_LATEST_IMAGE_TAG=" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
           else
             ARTIFACT_VERSION="$(sed -n 's/.*\"version\": *\"\([^\"]*\)\".*/\1/p' package.json)"
+            BRANCH=${GITHUB_REF##*/}
             echo "ARTIFACT_VERSION=${ARTIFACT_VERSION}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
             echo "DOCKER_COMMIT_TAG=${ARTIFACT_VERSION}-${GIT_SHORT_COMMIT}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
-            echo "DOCKER_COMMIT_GHRUNID_TAG=${ARTIFACT_VERSION}-PR${PR_NUMBER}-${GIT_SHORT_COMMIT}-${GITHUB_RUN_ID}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
-
-            BRANCH=${GITHUB_REF##*/}
+            echo "DOCKER_COMMIT_GHRUNID_TAG=${ARTIFACT_VERSION}-${BRANCH}-${GIT_SHORT_COMMIT}-${GITHUB_RUN_ID}" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
             echo "BRANCH=$BRANCH" | tee -a "$GITHUB_ENV" | tee -a "$GITHUB_OUTPUT"
 
             # if tag for this is version is already there, skip docker build

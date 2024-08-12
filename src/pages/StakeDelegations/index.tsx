@@ -39,9 +39,9 @@ const StakeDelegations = () => {
       title: <div data-testid="stakeDelegations.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: "150px",
       key: "txHash",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="stakeDelegations.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`stakeDelegations.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>
