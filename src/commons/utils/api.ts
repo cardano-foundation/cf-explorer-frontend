@@ -153,7 +153,31 @@ export const API = {
     ASSOCIATED_ADDRESS: (scriptHash: string) => `scripts/contracts/${scriptHash}`,
     SCRIPT_TXS_DETAIL: (scriptHash: string) => `scripts/contracts/${scriptHash}/txs`
   },
-  ADAHandle: (name: string) => `/addresses/by-ada-handle/${name}`
+  ADAHandle: (name: string) => `/addresses/by-ada-handle/${name}`,
+  COMMITTEE: {
+    OVERVIEW: "committee/overview",
+    DETAIL_OVERVIEW: (hash: string) => `committee/${hash}`,
+    MEMBERS: "committee/members",
+    HISTORY: "gov-actions/committee-history",
+    CC_DETAIL: () => `gov-actions/voting-procedure-detail`,
+    CC_DETAIL_CHART: (hash: string) => `committee/${hash}/vote-procedure-chart`
+  },
+  GOVERNANCE_OVERVIEW: {
+    OVERVIEW: "gov-actions/overview",
+    TAB: "gov-actions"
+  },
+  NETWORK_MONITORING_API: {
+    REGISTERED_STAKEPOOLS: "pools/stake-pools-chart",
+    BLOCK_PROPAGATION: (type: string, size: number) => `blocks/block-propagation?type=${type}&size=${size}`
+  },
+  OVERVIEW_GOV_ACTIONS: {
+    OVERVIEW: (hash: string, index: string) => `/gov-actions/${hash}/${index}`,
+    CREATE_BY: (anchorUrl: string, anchorHash: string, page: number, size: number) =>
+      `gov-actions/authors?anchorUrl=${anchorUrl}&anchorHash=${anchorHash}&page=${page}&size=${size}`
+  },
+  GOV_ACTIONS_DETAIL: {
+    RANGE_VALUE: "gov-actions/:txHash/:index/votes/range-values"
+  }
 };
 
 export const USER_API = {

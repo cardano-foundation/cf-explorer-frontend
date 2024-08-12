@@ -50,8 +50,17 @@ import QrCodeDarkMode from "./images/qr-code-dark-mode.png";
 import QrCodeLightMode from "./images/qr-code-light-mode.png";
 import EmptyDarkIcon from "./icons/EmptyIconDark.svg";
 import FetchDataErrLight from "./icons/fetch-data-err-light.svg";
+import ProtectIcon from "./icons/protect-icon.svg";
+import ProtectIconDark from "./icons/protect-icon-dark.svg";
+import TeamsIconLight from "./icons/team-icon-light.svg";
+import TeamsIconDark from "./icons/team-icon-dark.svg";
+import UserIconLight from "./icons/user-icon-light.svg";
+import UserIconDark from "./icons/user-icon-dark.svg";
+import CommunityIconLight from "./icons/community-icon-light.svg";
+import CommunityIconDark from "./icons/community-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import NetworkMonitoringIcon from "./icons/menus/networkMonitoring.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
 import PolygonBlackIconUrl from "./icons/polygon-back.svg";
@@ -148,6 +157,7 @@ import LinkOff from "./icons/link-off.svg";
 import User2 from "./icons/user2.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
+import GovernanceHome from "./icons/governanceHome.svg";
 //only component
 
 import SignOutComponent from "./icons/sign-out.svg?react";
@@ -176,7 +186,12 @@ import HeaderSearchIconComponent from "./icons/header-search.svg?react";
 import NoteEditIconComponent from "./icons/note-edit.svg?react";
 import WithdrawlIconComponent from "./icons/withdrawl.svg?react";
 import MintingIconComponent from "./icons/minting.svg?react";
+import GovBodyIcons from "./icons/gov-body-icon.svg?react";
 import HighestIconComponent from "./icons/highest-icon.svg?react";
+import DescriptionIcon from "./icons/description-icon.svg?react";
+import GovIDIcon from "./icons/govID-icon.svg?react";
+import GovBodycon from "./icons/govBody-icon.svg?react";
+import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
@@ -199,6 +214,10 @@ import CubeIconComponent from "./icons/blockIcon.svg?react";
 import TxConfirm from "./icons/txConfirm.svg?react";
 import SlotIcon from "./icons/slot.svg?react";
 import KingIcon from "./icons/king-icon.svg?react";
+import DateIcon from "./icons/date-icon.svg?react";
+import PencilIcon from "./icons/pencil-icon.svg?react";
+import ActionIcon from "./icons/action-icon.svg?react";
+import FeedbackIcon from "./icons/feedbackIcon-icon.svg?react";
 import BlockProducerIcon from "./icons/block-producer.svg?react";
 import TooltipIcon from "./icons/tooltip-icon.svg?react";
 import TxInputIcon from "./icons/txInput.svg?react";
@@ -245,8 +264,14 @@ import PoolSaturationIcon from "./icons/pool-saturation.svg?react";
 import PoolBlocksIcon from "./icons/pool-block.svg?react";
 import PoolParticipationIcon from "./icons/pool-participation.svg?react";
 import PoolVotingIcon from "./icons/pool-voting.svg?react";
+import ParticipationIcon from "./icons/participation-rate.svg?react";
 import DrepIdIcon from "./icons/DrepId.svg?react";
 import ActiveStakeDrepIcon from "./icons/activeStakeDrep.svg?react";
+import CCDetailRegistrared from "./icons/ccDetailRegistrared.svg?react";
+import CCDetailVotingParticipation from "./icons/CCVotingParticipation.svg?react";
+import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
+import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
+import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -303,10 +328,21 @@ export {
   LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
+  NetworkMonitoringIcon,
   SeeMoreIcon,
   TickerIcon,
   TickerIconComponent,
   CalendarIcon,
+  TeamsIconLight,
+  DateIcon,
+  PencilIcon,
+  ActionIcon,
+  FeedbackIcon,
+  TeamsIconDark,
+  UserIconDark,
+  UserIconLight,
+  CommunityIconDark,
+  CommunityIconLight,
   CalendarIconComponent,
   RewardIcon,
   UserIcon,
@@ -359,6 +395,10 @@ export {
   HomeUpIcon,
   DashboardIcon,
   HomeDownIcon,
+  DescriptionIcon,
+  GovIDIcon,
+  GovBodycon,
+  TimeStampIcon,
   CardanoBlueLogo,
   CardanoBlueDarkmodeLogo,
   TwitterXIcon,
@@ -399,6 +439,11 @@ export {
   TotalOutput,
   FileGuard,
   HighestIconComponent,
+  CCDetailRegistrared,
+  CCDetailVotingParticipation,
+  CCDetailLifetimeVotes,
+  CCStatusHistory,
+  CCDetailRegistrationInformation,
   LowestIconComponent,
   UserIconComponent,
   DropIconComponent,
@@ -459,9 +504,11 @@ export {
   VerifiedIcon,
   InvalidIcon,
   DescriptonDrepIcon,
+  GovBodyIcons,
   CreateDrepIcon,
   ActiveVoteIcon,
   LiveStakeDrepIcon,
+  GovernanceHome,
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
   governanceVotesIcon,
@@ -477,6 +524,8 @@ export {
   ActionTypeIcon,
   VoteIcon,
   historyIcon,
+  ProtectIcon,
+  ProtectIconDark,
   CurrentStatusIcon,
   VotingPowerIcon,
   SubmissionDateIcon,
@@ -496,7 +545,8 @@ export {
   PoolParticipationIcon,
   PoolBlocksIcon,
   GovernanceIcon,
-  PoolVotingIcon
+  PoolVotingIcon,
+  ParticipationIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
@@ -684,6 +734,16 @@ import NativeType from "./icons/NativeType.svg?react";
 import NativeOneMint from "./icons/NativeOneMint.svg?react";
 import BolsiniAddress from "./icons/bolsiniAddress.svg?react";
 import DrawerClose from "./icons/drawerClose.svg?react";
+import CCCurentState from "./icons/CCCurentState.svg?react";
+import CCProposalPolicy from "./icons/CCProposalPolicy.svg?react";
+import CCActiveMembers from "./icons/CCActiveMembers.svg?react";
+import CCThreshold from "./icons/CCThreshold.svg?react";
+import CCGovernanceVotes from "./icons/CCGovernanceVotes.svg?react";
+import CCUpcomingChange from "./icons/CCUpcomingChange.svg?react";
+import CCLastChange from "./icons/CCLastChange.svg?react";
+import CClistMembers from "./icons/CClistMembers.svg?react";
+import CCGorvernanceVote from "./icons/CCGorvernanceVote.svg?react";
+import CCHistoryStatus from "./icons/CCHistoryStatus.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -871,5 +931,15 @@ export {
   NativeType,
   NativeOneMint,
   BolsiniAddress,
-  DrawerClose
+  DrawerClose,
+  CCCurentState,
+  CCProposalPolicy,
+  CCActiveMembers,
+  CCThreshold,
+  CCGovernanceVotes,
+  CCUpcomingChange,
+  CCLastChange,
+  CClistMembers,
+  CCGorvernanceVote,
+  CCHistoryStatus
 };

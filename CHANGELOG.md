@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.3.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.3.0...v1.3.0) (2024-07-22)
+
+
+### Bug Fixes
+
+* MET-2052 pools filters ([ee4a82d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ee4a82df6687e82fb6d62154f2ecd833e1e7b312))
+* MET-2055 remove flag mock data ([7bd9b6b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7bd9b6bb949701473d449c2439cc34336223b50b))
+* MET-2055 update link ([f7f475c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f7f475cdd6cfb39f90800281cb935311cc5d225e))
+* MET-2150 Bug UI ([b03a20f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b03a20f2bec6a7727134c5f9bcd3262fe5b8683f))
+* spelling mistake ([a0b8e1a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a0b8e1a2907b0f8c95f892fe183904ea983659ec))
+* UAT Preprod Pool Details Cards are not loading ([707dbba](https://github.com/cardano-foundation/cf-explorer-frontend/commit/707dbba174f1b8084f7f11196d1d1b0789b8ccaa))
+
+## [1.3.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.3.0...v1.3.0) (2024-06-07)
+
+
+### Bug Fixes
+
+* MET-2052 pools filters ([ee4a82d](https://github.com/cardano-foundation/cf-explorer-frontend/commit/ee4a82df6687e82fb6d62154f2ecd833e1e7b312))
+* MET-2055 remove flag mock data ([7bd9b6b](https://github.com/cardano-foundation/cf-explorer-frontend/commit/7bd9b6bb949701473d449c2439cc34336223b50b))
+* MET-2055 update link ([f7f475c](https://github.com/cardano-foundation/cf-explorer-frontend/commit/f7f475cdd6cfb39f90800281cb935311cc5d225e))
+* MET-2150 Bug UI ([b03a20f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b03a20f2bec6a7727134c5f9bcd3262fe5b8683f))
+* spelling mistake ([a0b8e1a](https://github.com/cardano-foundation/cf-explorer-frontend/commit/a0b8e1a2907b0f8c95f892fe183904ea983659ec))
+* UAT Preprod Pool Details Cards are not loading ([707dbba](https://github.com/cardano-foundation/cf-explorer-frontend/commit/707dbba174f1b8084f7f11196d1d1b0789b8ccaa))
+
 ## [1.3.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.2.0...v1.3.0) (2024-05-21)
 
 

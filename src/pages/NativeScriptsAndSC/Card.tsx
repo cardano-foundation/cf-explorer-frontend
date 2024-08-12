@@ -46,10 +46,11 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   return (
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.nativeScriptDetail(data.scriptHash)}>
-        <Row>
+        <Row style={{ marginBottom: 4 }}>
           <Title data-testid="nativeScripts.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
           <Box
             data-testid="nativeScripts.card.scriptHashValue"
+            mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
           >
@@ -158,7 +159,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   );
 };
 
-const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) => {
+const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data, index }) => {
   const theme = useTheme();
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {
@@ -170,10 +171,11 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) =
   return (
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.smartContract(data.scriptHash)}>
-        <Row>
+        <Row style={{ marginBottom: 4 }}>
           <Title data-testid="nativeScripts.smartContract.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
           <Box
             data-testid="nativeScripts.smartContract.card.scriptHashValue"
+            mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
           >

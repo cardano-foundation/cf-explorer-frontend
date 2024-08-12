@@ -5,6 +5,8 @@ import {
   BlockChainMenuIcon,
   BrowseIcon,
   DashboardIcon,
+  GovernanceHome,
+  NetworkMonitoringIcon,
   OperationalIcon,
   ProtocolIcon,
   StakingLifecycleIcon,
@@ -108,6 +110,29 @@ export const menus: Menu[] = [
     icon: ProtocolIcon,
     href: lists.protocolParameters(),
     children: []
+  },
+  {
+    title: "Governance",
+    key: "glossary.governance",
+    icon: GovernanceHome,
+    children: [
+      {
+        title: "Overview",
+        key: "glossary.menu.overview",
+        href: details.overviews("")
+      },
+      {
+        title: "Constitutional Committee",
+        key: "glossary.constitutionalCommittee",
+        href: details.constitutionalCommittees("listMembers")
+      }
+    ]
+  },
+  {
+    title: "Network Monitoring",
+    key: "glossary.networkMonitoring",
+    icon: NetworkMonitoringIcon,
+    href: routers.NETWORK_MONITORING
   }
 ];
 

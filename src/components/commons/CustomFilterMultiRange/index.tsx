@@ -19,7 +19,7 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
@@ -59,10 +59,15 @@ const CustomFilterMultiRange: React.FC = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -180,18 +185,21 @@ const CustomFilterMultiRange: React.FC = () => {
         <Box
           component={Input}
           disabled={disabled}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(minValue || 0).toString()}
+          value={Number(minValue || 0).toString() + (addDotMin ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -218,13 +226,18 @@ const CustomFilterMultiRange: React.FC = () => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMin(false);
+            }
+
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
                 +numericValue > maxValue
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
-                  ? +numericValue / 100
+                  ? truncateToTwoDecimals(+numericValue) / 100
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
@@ -237,7 +250,7 @@ const CustomFilterMultiRange: React.FC = () => {
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           disabled={disabled}
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
@@ -245,11 +258,14 @@ const CustomFilterMultiRange: React.FC = () => {
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(maxValue).toString()}
+          value={Number(maxValue).toString() + (addDotMax ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -279,10 +295,15 @@ const CustomFilterMultiRange: React.FC = () => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
+
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
 
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
@@ -291,7 +312,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? +numericValue / 100
+                    ? truncateToTwoDecimals(+numericValue) / 100
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
@@ -326,6 +347,7 @@ const CustomFilterMultiRange: React.FC = () => {
             icon={FilterIcon}
             fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
             height={18}
+            data-testid="filter.common.btn"
           />
           <Box
             ml={1}

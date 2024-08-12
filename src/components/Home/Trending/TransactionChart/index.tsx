@@ -33,31 +33,35 @@ export interface TransactionChartIF {
   metadata: number | null;
 }
 
-type Time = "ONE_DAY" | "ONE_WEEK" | "TWO_WEEK" | "ONE_MONTH";
+type Time = "ONE_MONTH" | "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export type TypeChart = "trx" | "simple" | "complex";
 type Key = "simpleTransactions" | "smartContract" | "metadata";
 
 const TransactionChart: React.FC = () => {
   const { t } = useTranslation();
-  const [rangeTime, setRangeTime] = useState<Time>("ONE_DAY");
+  const [rangeTime, setRangeTime] = useState<Time>("ONE_MONTH");
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const { isMobile } = useScreen();
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
-    ONE_DAY: {
-      label: t("time.24h"),
-      displayName: t("option.tx.in24h")
-    },
-    ONE_WEEK: {
-      label: t("time.1w"),
-      displayName: t("option.tx.aWeek")
-    },
-    TWO_WEEK: {
-      label: t("time.2w"),
-      displayName: t("option.tx.twoWeeks")
-    },
     ONE_MONTH: {
       label: t("time.1m"),
       displayName: t("option.tx.aMonth")
+    },
+    THREE_MONTH: {
+      label: t("time.3m"),
+      displayName: t("option.tx.threeMonth")
+    },
+    ONE_YEAR: {
+      label: t("time.1y"),
+      displayName: t("option.tx.aYear")
+    },
+    THREE_YEAR: {
+      label: t("time.3y"),
+      displayName: t("option.tx.threeYear")
+    },
+    ALL_TIME: {
+      label: t("time.all_time"),
+      displayName: t("option.tx.all_time")
     }
   };
 
@@ -67,7 +71,6 @@ const TransactionChart: React.FC = () => {
     false,
     blockKey
   );
-
   const getDisplayedValue = (list: Omit<TransactionChartIF, "date">[], key: Key) => {
     let sum = 0;
     if (list === null || list.length === 0) return "N/A";
@@ -103,10 +106,10 @@ const TransactionChart: React.FC = () => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} lg={9}>
-          <Skeleton variant="rectangular" height={"250px"} style={{ borderRadius: 10 }} />
+          <Skeleton variant="rectangular" height={400} style={{ borderRadius: 10 }} />
         </Grid>
         <Grid item xs={12} lg={3}>
-          <Skeleton variant="rectangular" height={"250px"} />
+          <Skeleton variant="rectangular" height={400} />
         </Grid>
       </Grid>
     );
@@ -115,9 +118,7 @@ const TransactionChart: React.FC = () => {
     <TransactionContainer>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={8} md={8} lg={9}>
-          <Title>
-            {t("drawer.transactions")} {optionsTime[rangeTime].displayName}
-          </Title>
+          <Title>{t("drawer.transactionsHistory")}</Title>
         </Grid>
         <Grid item xs={12} sm={4} md={4} lg={3}>
           <Box maxWidth={"260px"} mx={isMobile ? "auto" : "none"}>
@@ -171,13 +172,13 @@ export default TransactionChart;
 const toPercent = (decimal: number) => `${(decimal * 100).toFixed()}%`;
 const formatTimeX = (date: Time) => {
   switch (date) {
-    case "ONE_DAY":
-      return "HH:mm";
-    case "ONE_WEEK":
-    case "TWO_WEEK":
     case "ONE_MONTH":
+    case "THREE_MONTH":
       return "MM/DD";
-
+    case "ONE_YEAR":
+    case "THREE_YEAR":
+    case "ALL_TIME":
+      return "MM/YY";
     default:
       break;
   }
@@ -185,12 +186,13 @@ const formatTimeX = (date: Time) => {
 
 const getLabel = (date: string, range: Time) => {
   switch (range) {
-    case "ONE_DAY":
-      return `${moment(date).format("DD MMM HH:mm")} - ${moment(date).add(1, "hour").format("HH:mm")} (UTC)`;
-    case "ONE_WEEK":
-    case "TWO_WEEK":
     case "ONE_MONTH":
+    case "THREE_MONTH":
       return moment(date).format("DD MMM");
+    case "ONE_YEAR":
+    case "THREE_YEAR":
+    case "ALL_TIME":
+      return moment(date).format("MMM YYYY");
 
     default:
       break;
@@ -208,9 +210,9 @@ const getPercent = (value: number, total: number) => {
 const renderTooltipContent = (o: TooltipProps<string | number | (string | number)[], string | number>, range: Time) => {
   const { payload = [], label } = o;
   const nameTooltips = {
-    simpleTransactions: "Simple transactions",
+    metadata: "Metadata",
     smartContract: "Smart contracts",
-    metadata: "Metadata"
+    simpleTransactions: "Simple transactions"
   };
   const total = (payload || []).reduce(
     (result: number, entry: Payload<string | number | (string | number)[], string | number>) => {
@@ -239,7 +241,7 @@ const renderTooltipContent = (o: TooltipProps<string | number | (string | number
                     nameTooltips[entry.name as keyof typeof nameTooltips]
                   }`}</Box>
                   <Box display={"flex"} alignItems={"center"} mt={1}>
-                    <Box width={"20px"} height={"20px"} bgcolor={entry.fill} borderRadius={"4px"} mr={1} />
+                    <Box width={"20px"} height={"20px"} bgcolor={entry.color} borderRadius={"4px"} mr={1} />
                     <Box fontWeight={"bold"} color={({ palette }) => palette.secondary.main}>
                       {`${numberWithCommas(entry.value as number)} (${getPercent(entry.value as number, total)})`}
                     </Box>
@@ -256,63 +258,74 @@ const renderTooltipContent = (o: TooltipProps<string | number | (string | number
 
 const Chart = ({ data, range }: { data: TransactionChartIF[] | null; range: Time }) => {
   const theme = useTheme();
+  const { isLanrgeScreen } = useScreen();
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
-
   if (!data) return <></>;
   return (
-    <Box width={"100%"} minHeight={"250px"} height={250}>
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          height={500}
-          width={500}
-          data={data}
-          stackOffset="expand"
-          margin={{
-            top: 10,
-            right: 20,
-            left: 0,
-            bottom: 0
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
-            tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
-            dataKey="date"
-            tickFormatter={(date: string) => formatX(date, range)}
-          />
-          <YAxis
-            tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
-            tickLine={{ stroke: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
-            tickFormatter={toPercent}
-          />
-          <Tooltip content={(o) => renderTooltipContent(o, range)} />
-          <Area
-            type="monotone"
-            dataKey="simpleTransactions"
-            stackId="1"
-            strokeWidth={3}
-            stroke={theme.palette.secondary[0]}
-            fill={theme.palette.warning[700]}
-          />
-          <Area
-            type="monotone"
-            dataKey="smartContract"
-            stackId="1"
-            strokeWidth={3}
-            stroke={theme.palette.secondary[0]}
-            fill={theme.mode === "light" ? theme.palette.primary[500] : theme.palette.primary.main}
-          />
-          <Area
-            type="monotone"
-            dataKey="metadata"
-            strokeWidth={3}
-            stackId="1"
-            stroke={theme.palette.secondary[0]}
-            fill={theme.palette.success[700]}
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </Box>
+    <ResponsiveContainer width="100%" height={400}>
+      <AreaChart
+        height={500}
+        width={500}
+        data={data}
+        stackOffset="expand"
+        margin={{
+          top: 10,
+          right: 20,
+          left: 0,
+          bottom: 0
+        }}
+      >
+        <defs>
+          <linearGradient id="colorMetadata" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#14B8A6" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#14B8A6" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorSmartContracts" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+          </linearGradient>
+          <linearGradient id="colorSimpleTransactions" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#FACC15" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#FACC15" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <XAxis
+          tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
+          dataKey="date"
+          tickFormatter={(date: string) => formatX(date, range)}
+          minTickGap={isLanrgeScreen ? 15 : 3}
+        />
+        <YAxis
+          tick={{ fill: themeMode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800] }}
+          tickFormatter={toPercent}
+        />
+        <CartesianGrid horizontal={true} vertical={false} />
+        <Tooltip content={(o) => renderTooltipContent(o, range)} />
+        <Area
+          type="monotone"
+          dataKey="simpleTransactions"
+          stroke="#FACC15"
+          fillOpacity={1}
+          stackId="1"
+          fill="url(#colorSimpleTransactions)"
+        />
+        <Area
+          type="monotone"
+          dataKey="smartContract"
+          stroke="#3B82F6"
+          fillOpacity={1}
+          stackId="1"
+          fill="url(#colorSmartContracts)"
+        />
+        <Area
+          type="monotone"
+          stackId="1"
+          dataKey="metadata"
+          stroke="#14B8A6"
+          fillOpacity={1}
+          fill="url(#colorMetadata)"
+        />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 };

@@ -1,32 +1,31 @@
-import { Box, Button, useTheme } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { stringify } from "qs";
+import { Box, Button } from "@mui/material";
 import { pickBy } from "lodash";
 import moment from "moment";
+import { stringify } from "qs";
+import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import useFetchList from "src/commons/hooks/useFetchList";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { formatADAFull, formatDateTimeLocal, formatPercent, getShortHash } from "src/commons/utils/helper";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import Table, { Column } from "src/components/commons/Table";
-import usePageInfo from "src/commons/hooks/usePageInfo";
-import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
-import ADAicon from "src/components/commons/ADAIcon";
 import { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
-import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import ADAicon from "src/components/commons/ADAIcon";
 import { DATETIME_PARTTEN } from "src/components/commons/CustomFilter/DateRangeModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { StakeKeyStatus } from "src/components/commons/DetailHeader/styles";
+import Table, { Column } from "src/components/commons/Table";
 
-import { PoolName, TopSearchContainer } from "./styles";
 import DrepFilter from "../DrepFilter";
+import { ListOfDreps, PoolName, TopSearchContainer } from "./styles";
 
 const DrepsList: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const theme = useTheme();
   const { pageInfo, setSort } = usePageInfo();
   const [metadataUrl, setMetadataUrl] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
@@ -94,27 +93,30 @@ const DrepsList: React.FC = () => {
       ),
       key: "anchorLink",
       minWidth: "100px",
-      render: (r) => (
-        <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
-          <Box
-            data-testid="drepList.anchorLinkValue"
-            component={Button}
-            textTransform={"lowercase"}
-            fontWeight={400}
-            display={(r.anchorUrl || "").length > 20 ? "inline-block" : "inline"}
-            width={"150px"}
-            textOverflow={"ellipsis"}
-            whiteSpace={"nowrap"}
-            overflow={"hidden"}
-            color={(theme) => `${theme.palette.primary.main} !important`}
-            onClick={() => setMetadataUrl(r.anchorUrl)}
-            disableRipple={true}
-            sx={{ ":hover": { background: "none" } }}
-          >
-            {`${r.anchorUrl || ""}`}
-          </Box>
-        </CustomTooltip>
-      )
+      render: (r) =>
+        r.anchorUrl != null ? (
+          <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
+            <Box
+              data-testid="drepList.anchorLinkValue"
+              component={Button}
+              textTransform={"lowercase"}
+              fontWeight={400}
+              display={(r.anchorUrl || "").length > 20 ? "inline-block" : "inline"}
+              width={"150px"}
+              textOverflow={"ellipsis"}
+              whiteSpace={"nowrap"}
+              overflow={"hidden"}
+              color={(theme) => `${theme.palette.primary.main} !important`}
+              onClick={() => setMetadataUrl(r.anchorUrl)}
+              disableRipple={true}
+              sx={{ ":hover": { background: "none" } }}
+            >
+              {`${r.anchorUrl || ""}`}
+            </Box>
+          </CustomTooltip>
+        ) : (
+          <Box padding={"6px 8px"}>{t("common.N/A")}</Box>
+        )
     },
     {
       title: (
@@ -124,21 +126,24 @@ const DrepsList: React.FC = () => {
       ),
       key: "pu.anchorHash",
       minWidth: "120px",
-      render: (r) => (
-        <CustomTooltip title={r.anchorHash ? r.anchorHash : undefined}>
-          <Box
-            data-testid="drepList.anchorHashValue"
-            component={"span"}
-            display={"inline-block"}
-            width={"150px"}
-            textOverflow={"ellipsis"}
-            whiteSpace={"nowrap"}
-            overflow={"hidden"}
-          >
-            {r.anchorHash}
-          </Box>
-        </CustomTooltip>
-      )
+      render: (r) =>
+        r.anchorHash != null ? (
+          <CustomTooltip title={r.anchorHash ? r.anchorHash : undefined}>
+            <Box
+              data-testid="drepList.anchorHashValue"
+              component={"span"}
+              display={"inline-block"}
+              width={"150px"}
+              textOverflow={"ellipsis"}
+              whiteSpace={"nowrap"}
+              overflow={"hidden"}
+            >
+              {r.anchorHash}
+            </Box>
+          </CustomTooltip>
+        ) : (
+          t("common.N/A")
+        )
     },
     {
       title: (
@@ -169,6 +174,26 @@ const DrepsList: React.FC = () => {
         r.votingPower != null ? (
           <Box data-testid="drepList.votingPowerValue" component={"span"} mr={1}>
             {formatPercent(r.votingPower / 100) || `0%`}
+          </Box>
+        ) : (
+          t("common.N/A")
+        ),
+      sort: ({ columnKey, sortValue }) => {
+        sortValue ? setSort(`${columnKey},${sortValue}`) : handleBlankSort();
+      }
+    },
+    {
+      title: (
+        <Box data-testid="drepList.participationRate" component={"span"}>
+          {t("governanceParticipationRate")}
+        </Box>
+      ),
+      minWidth: "120px",
+      key: "govParticipationRate",
+      render: (r) =>
+        r.govParticipationRate != null ? (
+          <Box data-testid="drepList.ParticipationValue" component={"span"} mr={1}>
+            {formatPercent(r.govParticipationRate) || `0%`}
           </Box>
         ) : (
           t("common.N/A")
@@ -239,12 +264,10 @@ const DrepsList: React.FC = () => {
       {!error && (
         <TopSearchContainer
           sx={{
-            justifyContent: "end",
-            [theme.breakpoints.down("sm")]: {
-              alignItems: "flex-end"
-            }
+            justifyContent: "space-between"
           }}
         >
+          <ListOfDreps>{t("dreps.listOfDreps")}</ListOfDreps>
           <Box display="flex" gap="10px">
             <DrepFilter loading={fetchData.loading} />
           </Box>

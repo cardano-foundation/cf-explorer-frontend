@@ -2,10 +2,17 @@ import { Typography, Box, styled } from "@mui/material";
 
 import StyledModal from "src/components/commons/StyledModal";
 
+import { SubTitleList } from "./styles";
+
+interface ExplainerTextType {
+  content: string | { description: string; list: { description: string }[] };
+  title: string;
+}
+
 interface Props {
   open: boolean;
   handleCloseModal: () => void;
-  explainerText: { content: string; title: string };
+  explainerText: ExplainerTextType;
 }
 
 export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Props) {
@@ -19,7 +26,20 @@ export function ExplainerTextModal({ open, handleCloseModal, explainerText }: Pr
       <WrapContent>
         <ContentContainer>
           <NormalDescription>
-            <Typography>{explainerText?.content || ""}</Typography>
+            <Box>
+              {explainerText.title === "protocolMajor" ? (
+                <>
+                  <Typography mb={1}>{explainerText?.content?.description || ""}</Typography>
+                  {explainerText?.content?.list.map((item, i) => (
+                    <Box key={i}>
+                      <SubTitleList>{item?.description}</SubTitleList>
+                    </Box>
+                  ))}
+                </>
+              ) : (
+                <Typography>{(explainerText?.content as string) || ""}</Typography>
+              )}
+            </Box>
           </NormalDescription>
         </ContentContainer>
       </WrapContent>
