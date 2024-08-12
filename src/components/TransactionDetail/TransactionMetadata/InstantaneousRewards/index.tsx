@@ -33,7 +33,7 @@ export default InstantaneousRewards;
 const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRewards"] }) => {
   return (
     <Box>
-      {data?.map((item) => (
+      {data?.map((item, index) => (
         <Item key={item.stakeAddress} overflow={"auto"}>
           <ItemContent>
             <Content sx={{ width: "60vw" }}>
@@ -43,12 +43,19 @@ const ItemInstantaneousRewards = ({ data }: { data: Transaction["instantaneousRe
                 style={{ width: "100%" }}
               >
                 <Title>
-                  <DynamicEllipsisText value={item.stakeAddress} isCopy isTooltip />
+                  <DynamicEllipsisText
+                    dataTestIdFirstPath={`trx.detail.instantaneous.address#${index}`}
+                    value={item.stakeAddress}
+                    isCopy
+                    isTooltip
+                  />
                 </Title>
               </Link>
             </Content>
             <Content>
-              <Value component={"span"}>{formatADAFull(item.amount)}</Value>
+              <Value component={"span"} data-testid={`trx.detail.instantaneous.amount#${index}`}>
+                {formatADAFull(item.amount)}
+              </Value>
               <ADAicon />
             </Content>
           </ItemContent>

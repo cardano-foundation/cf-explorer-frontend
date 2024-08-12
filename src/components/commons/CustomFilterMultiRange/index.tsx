@@ -347,6 +347,7 @@ const CustomFilterMultiRange: React.FC = () => {
             icon={FilterIcon}
             fill={theme.mode === "dark" ? theme.palette.primary.main : theme.palette.secondary.light}
             height={18}
+            data-testid="filter.common.btn"
           />
           <Box
             ml={1}

@@ -45,7 +45,7 @@ const ContractsList: React.FC<ContractsListProps> = ({ data }) => {
           {data &&
             data.map((item, index) => (
               <Grid key={index} item xs={12} sm={6} md={6} lg={4} xl={3}>
-                <ContractItem onClick={goToDetail} data={item} />
+                <ContractItem onClick={goToDetail} data={item} index={index} />
               </Grid>
             ))}
         </Grid>

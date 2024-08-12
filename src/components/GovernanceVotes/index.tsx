@@ -953,6 +953,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                             overflow="hidden"
                             textOverflow="ellipsis"
                             maxWidth="15rem"
+                            data-testid="governance.filter.actionTypeText"
                           >
                             {i.text}
                           </Typography>
@@ -1016,6 +1017,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                             overflow="hidden"
                             textOverflow="ellipsis"
                             maxWidth="15rem"
+                            data-testid="governance.filter.currentStatusText"
                           >
                             {i.text}
                           </Typography>

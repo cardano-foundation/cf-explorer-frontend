@@ -69,6 +69,7 @@ const OverViews: React.FC = () => {
   const hours = duration.hours();
   const minutes = duration.minutes();
   const seconds = duration.seconds();
+
   return (
     <Card title={t("head.page.pool")}>
       <TimeDuration>
@@ -76,7 +77,7 @@ const OverViews: React.FC = () => {
       </TimeDuration>
       <Grid container spacing={2}>
         <Grid item xl={3} md={6} xs={12}>
-          <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
+          <StyledCard.ClickAble to={details.epoch(data?.epochNo)} data-testid="delegationOverview.epochCard">
             <StyledCard.Content>
               <StyledCard.Title data-testid="delegationOverview.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
               <StyledCard.Link data-testid="delegationOverview.epochValue" to={details.epoch(data?.epochNo)}>
