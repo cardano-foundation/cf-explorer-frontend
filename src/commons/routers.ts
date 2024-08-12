@@ -24,8 +24,10 @@ export const routers = {
   TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
   STAKE_ADDRESS_REGISTRATION: "/stake-address-registrations",
   CONSTITUIONAL_COMMITTEES: "/constitutional-committees/:tabActive?",
-  OVERVIEW: "/overview",
+  OVERVIEW: "/overviews",
+  OVERVIEW_GOVERNANCE_ACTION: "/overview/:txHash/:index/:tabActive?",
   CONSTITUIONAL_COMMITTEE_DETAIL: "/constitutional-committee/:CCid/:tabActive?",
+  NETWORK_MONITORING: "/network-monitoring",
   STAKE_ADDRESS_DEREGISTRATION: "/stake-address-de-registrations",
   STAKE_ADDRESS_DELEGATIONS: "/stake-address-delegations",
   INSTANTANEOUS_REWARDS: "/instantaneous-rewards",
@@ -104,7 +106,11 @@ export const details = {
     routers.NATIVE_SCRIPTS_AND_SC.replace(":address", address ?? "").replace(":tabActive?", tab),
   drep: (drepId: string) => routers.DREP_DETAILS.replace(":drepId", drepId ?? ""),
   constitutionalCommittees: (tab: string) => routers.CONSTITUIONAL_COMMITTEES.replace(":tabActive", tab ?? ""),
-  overview: (tab: string) => routers.OVERVIEW.replace(":tabActive", tab ?? ""),
+  overviews: (tab: string) => routers.OVERVIEW.replace(":tabActive", tab ?? ""),
+  overviewGovernanceAction: (txHash: string, index: string, tabActive = "createBy") =>
+    routers.OVERVIEW_GOVERNANCE_ACTION.replace(":txHash", txHash)
+      .replace(":index", index)
+      .replace(":tabActive?", tabActive ?? ""),
   constitutionalCommitteeDetail: (id: string, tab?: string) =>
     routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? "")
 };
@@ -122,5 +128,6 @@ export const listRouters = [
   routers.STAKE_ADDRESS_DEREGISTRATION,
   routers.STAKE_ADDRESS_DELEGATIONS,
   routers.CONTRACT_LIST,
-  routers.TOP_DELEGATOR
+  routers.TOP_DELEGATOR,
+  routers.NETWORK_MONITORING
 ];

@@ -20,7 +20,7 @@ interface GOoverview {
 }
 
 interface OverViewDelegationTab {
-  name: string;
+  govActionName: string;
   txHash: string;
   index: number;
   type: string;
@@ -31,4 +31,28 @@ interface OverViewDelegationTab {
   isRepeatVote: null;
   voterHash: null;
   createdAt: string;
+}
+
+interface OverviewGovActions {
+  txHash: string;
+  index: string;
+  dateCreated: string;
+  actionType:
+    | "PARAMETER_CHANGE_ACTION"
+    | "HARD_FORK_INITIATION_ACTION"
+    | "TREASURY_WITHDRAWALS_ACTION"
+    | "NO_CONFIDENCE"
+    | "UPDATE_COMMITTEE"
+    | "NEW_CONSTITUTION"
+    | "INFO_ACTION"
+    | "ALL";
+  status: string;
+  motivation: string | null;
+  rationale: string | null;
+  isValidHash: boolean;
+  anchorHash: string | null;
+  anchorUrl: string | null;
+  abstract: string | null;
+  allowedVoteByCC: boolean;
+  allowedVoteBySPO: boolean;
 }

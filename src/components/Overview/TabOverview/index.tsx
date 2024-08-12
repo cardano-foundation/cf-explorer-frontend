@@ -71,7 +71,7 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Name</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box>{r.name ?? t("N/A")}</Box>
+      render: (r) => <Box>{r?.govActionName ?? t("N/A")}</Box>
     },
     {
       title: <Box component={"span"}>Governance ID</Box>,
@@ -80,7 +80,9 @@ export default function TabOverview() {
       render: (r) => (
         <Box>
           <CustomTooltip title={r.txHash}>
-            <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+            <StyledLink to={details.overviewGovernanceAction(r.txHash, r.index.toString())}>
+              {getShortHash(r.txHash)}
+            </StyledLink>
           </CustomTooltip>
         </Box>
       )
