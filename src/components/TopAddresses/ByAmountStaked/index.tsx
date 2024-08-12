@@ -24,7 +24,7 @@ const TopAddressesByAmountStaked = () => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
-  const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
+  const { error, statusError, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
@@ -77,9 +77,7 @@ const TopAddressesByAmountStaked = () => {
   return (
     <Box mt={"18px"}>
       <Actions>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
+        <TimeDuration>{!error && <FormNowMessage time={lastUpdated} />}</TimeDuration>
         <PageSize>
           <SelectMui
             value={pageSize}
@@ -112,6 +110,7 @@ const TopAddressesByAmountStaked = () => {
         onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
         data={data}
         error={error}
+        statusError={statusError}
         loading={loading}
         initialized={initialized}
         columns={columns}

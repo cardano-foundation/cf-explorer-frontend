@@ -45,6 +45,9 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const { isMobile } = useScreen();
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockKey);
+
+  const { error } = fetchData;
+
   const stakeDataWithKey = fetchData.data.map((item, id) => {
     return { ...item, txKey: `key${id}` };
   });
@@ -161,9 +164,11 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               : t("head.page.stakeAddressDeregistration")
           }
         >
-          <TimeDuration>
-            <FormNowMessage time={_fetchData.lastUpdated} />
-          </TimeDuration>
+          {!error && (
+            <TimeDuration>
+              <FormNowMessage time={_fetchData.lastUpdated} />
+            </TimeDuration>
+          )}
           <Table
             data-testid="stake.table"
             {..._fetchData}

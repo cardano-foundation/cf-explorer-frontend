@@ -1,13 +1,13 @@
-import { DetailContainer } from "./styles";
+import { StyledContainer } from "./styles";
 import ContractHeader from "./ContractHeader";
 import Tabs from "./Tabs";
 
 const NativeScriptsAndSC = () => {
   return (
-    <DetailContainer>
+    <StyledContainer>
       <ContractHeader />
       <Tabs />
-    </DetailContainer>
+    </StyledContainer>
   );
 };
 

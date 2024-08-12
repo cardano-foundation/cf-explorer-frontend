@@ -59,9 +59,17 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, index, onClick }) => 
           detail: details.smartContract
         };
       case "VOTING":
-        return;
+        return {
+          value: data.scriptHash,
+          explain: t("explain.voting.desc"),
+          detail: details.smartContract
+        };
       case "PROPOSING":
-        return;
+        return {
+          value: data.scriptHash,
+          explain: t("explain.proposing.desc"),
+          detail: details.smartContract
+        };
     }
   }, [data]);
 
@@ -70,7 +78,6 @@ const ContractItem: React.FC<ContractItemProps> = ({ data, index, onClick }) => 
       setOpen(false);
     }
   };
-
   return (
     <CLCardContaienr data-testid="contract-card-item">
       <Box>

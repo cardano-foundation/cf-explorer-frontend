@@ -10,7 +10,6 @@ import FooterMenu from "../Sidebar/FooterMenu";
 import CustomTooltip from "../../CustomTooltip";
 
 const StyledFooter = styled("footer")`
-  margin-top: 10px;
   height: 60px;
   padding: 0px 10px;
   border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
@@ -107,7 +106,10 @@ const Footer: React.FC = () => {
             {t("common.faqs")}
           </LinkTo>
           <DotDivide />
-          <CustomTooltip title="Report security issues here">
+          <CustomTooltip
+            componentsProps={{ transition: { style: { marginBottom: "10px" } } }}
+            title={t("common.tooltipBugBounty")}
+          >
             <StyledLinkExternal href={BUG_BOUNTY_URL} target="_blank" rel="noopener noreferrer">
               {t("common.bugBounty")}
             </StyledLinkExternal>

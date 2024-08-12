@@ -47,7 +47,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
     if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
-
+  const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
       title: <Box data-testid="transactions.table.title.txhash">{t("glossary.txhash")}</Box>,
@@ -178,11 +178,13 @@ const TransactionList: React.FC<TransactionListProps> = ({
       title={pathname?.includes("/transactions") ? "Transactions" : ""}
       underline={underline}
     >
-      <Actions>
-        <TimeDuration>
-          <FormNowMessage time={fetchData.lastUpdated} />
-        </TimeDuration>
-      </Actions>
+      {!error && (
+        <Actions>
+          <TimeDuration>
+            <FormNowMessage time={fetchData.lastUpdated} />
+          </TimeDuration>
+        </Actions>
+      )}
       <Table
         {...fetchData}
         columns={columns}

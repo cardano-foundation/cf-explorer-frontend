@@ -36,7 +36,7 @@ const RedeemerModal: React.FC<RedeemerModalProps> = ({ open = false, onClose, da
           <Typography>{t("explain.redeemer.desc2")}</Typography>
         </ExplainationDropdown>
         <SlotContainer>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} style={{ marginBottom: " 6px" }}>
             {data &&
               data.length > 0 &&
               data.map((item) => (

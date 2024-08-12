@@ -1,11 +1,12 @@
-import { useTranslation } from "react-i18next";
 import { Box, CircularProgress } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import useFetch from "src/commons/hooks/useFetch";
+import { details } from "src/commons/routers";
+import { API } from "src/commons/utils/api";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import CustomModal from "src/components/commons/CustomModal";
-import { API } from "src/commons/utils/api";
-import { details } from "src/commons/routers";
+import { EmptyRecord } from "src/components/commons/Table";
 
 import { ContentModal, StyledAddressModal, StyledLink, SubTitleModal, TitleModal } from "./styles";
 
@@ -27,18 +28,24 @@ const ViewAddressesModal: React.FC<TViewAddressesModalProps> = ({ open, onClose,
           <CircularProgress />
         </Box>
       )}
-      {!loading && data?.length && (
-        <ContentModal>
-          <SubTitleModal>{t("glossary.address")}:</SubTitleModal>
-          <StyledAddressModal>
-            {data &&
-              data.map((add: string) => (
-                <StyledLink to={add.startsWith("stake") ? details.stake(add) : details.address(add)} key={add}>
-                  <DynamicEllipsisText value={add} isTooltip sxFirstPart={{ maxWidth: "calc(100% - 80px)" }} />
-                </StyledLink>
-              ))}
-          </StyledAddressModal>
-        </ContentModal>
+      {!loading ? (
+        data?.length ? (
+          <ContentModal>
+            <SubTitleModal>{t("glossary.address")}:</SubTitleModal>
+            <StyledAddressModal>
+              {data &&
+                data.map((add: string) => (
+                  <StyledLink to={add.startsWith("stake") ? details.stake(add) : details.address(add)} key={add}>
+                    <DynamicEllipsisText value={add} isTooltip sxFirstPart={{ maxWidth: "calc(100% - 80px)" }} />
+                  </StyledLink>
+                ))}
+            </StyledAddressModal>
+          </ContentModal>
+        ) : (
+          <EmptyRecord />
+        )
+      ) : (
+        <></>
       )}
     </CustomModal>
   );

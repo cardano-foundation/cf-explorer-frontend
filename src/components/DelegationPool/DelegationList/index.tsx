@@ -1,23 +1,23 @@
 import { Box } from "@mui/material";
+import { isNumber, isUndefined, omitBy } from "lodash";
 import { stringify } from "qs";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { isUndefined, omitBy, isNumber } from "lodash";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
+import { CONWAY_ERE_FEILD, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 import { formatADAFull, formatPercent, getShortHash } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomFilterMultiRange from "src/components/commons/CustomFilterMultiRange";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import Table, { Column } from "src/components/commons/Table";
-import { CONWAY_ERE_FEILD, FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
 
-import { DelegationContainer, PoolName, TopSearchContainer } from "./styles";
+import { DelegationContainer, ListOfPools, PoolName, TopSearchContainer } from "./styles";
 
 const DelegationLists: React.FC = () => {
   const { t } = useTranslation();
@@ -55,7 +55,7 @@ const DelegationLists: React.FC = () => {
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const fromPath = history.location.pathname as SpecialPath;
 
   const handleBlankSort = () => {
@@ -227,11 +227,14 @@ const DelegationLists: React.FC = () => {
 
   return (
     <DelegationContainer>
-      <TopSearchContainer sx={{ justifyContent: "end" }}>
-        <Box display="flex" gap="10px">
-          <CustomFilterMultiRange />
-        </Box>
-      </TopSearchContainer>
+      {!error && (
+        <TopSearchContainer sx={{ justifyContent: "space-between" }}>
+          <ListOfPools>{t("pool.listOfPools")}</ListOfPools>
+          <Box display="flex" gap="10px">
+            <CustomFilterMultiRange />
+          </Box>
+        </TopSearchContainer>
+      )}
       <Table
         {...fetchData}
         data-testid="delegationList.table"

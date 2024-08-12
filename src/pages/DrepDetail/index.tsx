@@ -32,7 +32,8 @@ import {
   VotesYesIcon,
   VotesAbstainIcon,
   VotesNoIcon,
-  DropdownIcon
+  DropdownIcon,
+  CCDetailVotingParticipation
 } from "src/commons/resources";
 import {
   DelegationCertificatesHistory,
@@ -56,15 +57,16 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants";
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import NoRecord from "src/components/commons/NoRecord";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
 
-const voteOption = [
+export const voteOption = [
   { title: "Action Type", value: "Default" },
   { title: "All", value: "ALL" },
   { title: "Motion of No-Confidence", value: "NO_CONFIDENCE" },
-  { title: "Constitutional Committe Updates", value: "UPDATE_COMMITTEE" },
+  { title: "Constitutional Committee Updates", value: "UPDATE_COMMITTEE" },
   { title: "Update to the Constitution", value: "NEW_CONSTITUTION" },
   { title: "Hard-Fork Initiation", value: "HARD_FORK_INITIATION_ACTION" },
   { title: "Protocol Parameter Changes", value: "PARAMETER_CHANGE_ACTION" },
@@ -76,11 +78,11 @@ const DrepDetail = () => {
   const { drepId } = useParams<{ drepId: string }>();
   const theme = useTheme();
   const history = useHistory();
-  const { width } = useScreen();
+  const { width, isMobile } = useScreen();
 
   const [typeVote, setTypeVote] = useState("Default");
   const [openModal, setOpenModal] = useState(false);
-  const { data, loading } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+  const { data, loading, error } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
@@ -119,6 +121,7 @@ const DrepDetail = () => {
                 sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
                 isNoLimitPixel={true}
                 isTooltip
+                whiteSpace="normal"
               />
             </Box>
           )}
@@ -154,7 +157,7 @@ const DrepDetail = () => {
       ),
       value: (
         <ValueCard>
-          {data?.liveStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
+          {data?.activeVoteStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
         </ValueCard>
       )
     },
@@ -181,7 +184,7 @@ const DrepDetail = () => {
       value: <ValueCard>{data?.delegators} </ValueCard>
     },
     {
-      icon: CreateDrepIcon,
+      icon: CCDetailVotingParticipation,
       sizeIcon: 26,
       title: (
         <TitleCard display={"flex"} alignItems="center">
@@ -211,8 +214,8 @@ const DrepDetail = () => {
             IconComponent={DropdownIcon}
             sx={{
               bgcolor: theme.palette.primary[100],
-              maxWidth: "200px",
-              [theme.breakpoints.down("sm")]: { maxWidth: 100 }
+              width: "200px",
+              [theme.breakpoints.down("sm")]: { width: "100%" }
             }}
             MenuProps={{
               style: { zIndex: 1303 },
@@ -271,7 +274,7 @@ const DrepDetail = () => {
       )
     }
   ];
-
+  if (error) return <NoRecord />;
   if (!FF_GLOBAL_IS_CONWAY_ERA) {
     return <NotFound />;
   }
@@ -301,7 +304,7 @@ const DrepDetail = () => {
       <DetailHeader
         type="DREP"
         title={
-          <TruncateSubTitleContainer>
+          <TruncateSubTitleContainer mr={isMobile ? 2 : 0}>
             <DynamicEllipsisText
               value={data?.drepId || ""}
               sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 130px)" : "calc(100% - 70px)" }}
@@ -313,7 +316,6 @@ const DrepDetail = () => {
         }
         loading={false}
         listItem={listOverview}
-        bookmarkData={"1"}
         subTitle={`Type: ${data?.type || ""}`}
         stakeKeyStatus={data?.status}
       />
@@ -376,12 +378,14 @@ const DrepAccordion = () => {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     label: React.ReactNode;
     key: TabDrepDetail;
+    errorFetchData: boolean;
     component: React.ReactNode;
   }[] = [
     {
       icon: governanceVotesIcon,
       label: t("drep.governanceVotes"),
       key: "governanceVotes",
+      errorFetchData: Boolean(null),
       component: (
         <div ref={tableRef}>
           <DelegationGovernanceVotes hash={drepId} type={VOTE_TYPE.DREP_KEY_HASH} />
@@ -392,6 +396,7 @@ const DrepAccordion = () => {
       icon: StakingDelegators,
       label: t("stakingDelegators"),
       key: "delegators",
+      errorFetchData: Boolean(fetchDataDelegator.error),
       component: (
         <div ref={tableRef}>
           <DelegationStakingDelegatorsList {...fetchDataDelegator} scrollEffect={scrollEffect} />
@@ -402,6 +407,7 @@ const DrepAccordion = () => {
       icon: TimelineIconComponent,
       label: <Box data-testid="certificatesHistory">{t("drep.certificatesHistory")}</Box>,
       key: "certificatesHistory",
+      errorFetchData: Boolean(fetchDataCertificatesHistory.error),
       component: (
         <div ref={tableRef}>
           <DelegationCertificatesHistory {...fetchDataCertificatesHistory} scrollEffect={scrollEffect} />
@@ -441,8 +447,8 @@ const DrepAccordion = () => {
   };
 
   return (
-    <Box ref={tableRef} mt={"30px"}>
-      {tabs.map(({ key, icon: Icon, label, component }, index) => (
+    <Box ref={tableRef} mt={"30px"} mb={2}>
+      {tabs.map(({ key, icon: Icon, label, component, errorFetchData }, index) => (
         <StyledAccordion
           key={key}
           expanded={tab === key}
@@ -471,9 +477,15 @@ const DrepAccordion = () => {
             </TitleTab>
           </AccordionSummary>
           <AccordionDetails>
-            {tab != "governanceVotes" && (
+            {tab != "governanceVotes" && !errorFetchData && (
               <TimeDuration>
-                <FormNowMessage time={fetchDataCertificatesHistory.lastUpdated} />
+                <FormNowMessage
+                  time={
+                    tab === "certificatesHistory"
+                      ? fetchDataCertificatesHistory.lastUpdated
+                      : fetchDataDelegator.lastUpdated
+                  }
+                />
               </TimeDuration>
             )}
             {component}
@@ -484,7 +496,15 @@ const DrepAccordion = () => {
   );
 };
 
-const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: boolean }) => {
+export const VoteRate = ({
+  data,
+  showDataTooltip = false,
+  loading
+}: {
+  data: DrepOverviewChart | null;
+  showDataTooltip?: boolean;
+  loading: boolean;
+}) => {
   const theme = useTheme();
   const totalVote = useMemo(() => {
     if (data) {
@@ -509,6 +529,7 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
         numberVote={data?.numberOfYesVote || 0}
         icon={<VotesYesIcon />}
         label={t("common.yes")}
+        showDataTooltip={showDataTooltip}
       />
       <VoteBar
         percentage={totalVote > 0 ? formatPercent((data?.numberOfAbstainVotes || 0) / totalVote) : 0}
@@ -516,6 +537,7 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
         numberVote={data?.numberOfAbstainVotes || 0}
         icon={<VotesAbstainIcon />}
         label={t("common.abstain")}
+        showDataTooltip={showDataTooltip}
       />
       <VoteBar
         percentage={
@@ -532,6 +554,7 @@ const VoteRate = ({ data, loading }: { data: DrepOverviewChart | null; loading: 
         numberVote={data?.numberOfNoVotes || 0}
         icon={<VotesNoIcon />}
         label={t("common.no")}
+        showDataTooltip={showDataTooltip}
       />
     </Box>
   );
@@ -542,13 +565,15 @@ const VoteBar = ({
   color,
   icon,
   label,
-  numberVote
+  numberVote,
+  showDataTooltip
 }: {
   percentage: string | number;
   numberVote: number;
   color: string;
   icon?: JSX.Element;
   label: string;
+  showDataTooltip: boolean;
 }) => (
   <Box display="flex" flexDirection="column" alignItems="center">
     <Typography fontSize="10px" fontWeight={400}>
@@ -559,11 +584,11 @@ const VoteBar = ({
         <Box height="39px" display="flex" alignItems="center" gap="8px">
           {icon}
           <Typography fontSize="12px" fontWeight={600}>
-            {numberVote} ({percentage})
+            {showDataTooltip ? numberVote : t("common.na")} ({percentage})
           </Typography>
         </Box>
       }
-      placement="right"
+      placement="top"
     >
       <Box
         sx={{ background: color, borderRadius: "4px" }}
@@ -583,8 +608,9 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: theme.palette.primary[200],
+    backgroundColor: theme.palette.primary[100],
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: 11
+    fontSize: 11,
+    border: `1px solid ${theme.palette.primary[200]}`
   }
 }));

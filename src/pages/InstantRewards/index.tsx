@@ -28,6 +28,7 @@ const InstantReards = () => {
   const fetchData = useFetchList<Contracts>(API.STAKE.INSTANT_REWARDS, pageInfo, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
+  const { error } = fetchData;
 
   useEffect(() => {
     document.title = `Stake Delegations | Cardano Blockchain Explorer`;
@@ -111,11 +112,13 @@ const InstantReards = () => {
   return (
     <StyledContainer>
       <Card title={t("drawer.instaneousRewards")}>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           data-testid="instaneousRewards.table"
           {...fetchData}

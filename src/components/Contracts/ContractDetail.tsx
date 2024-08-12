@@ -9,11 +9,13 @@ import { getShortHash } from "src/commons/utils/helper";
 import Mintviews from "./Mintviews";
 import Certviews from "./Certviews";
 import Rewardviews from "./Rewardviews";
+import Votingviews from "./Votingviews";
 import { DetailContainer, DetailContent, DetailHeader, ReferenceButton, ReferenceCount } from "./styles";
 import { StyledLink } from "../share/styled";
 import CustomTooltip from "../commons/CustomTooltip";
 import Spendviews from "./SpendViews";
 import ReferenceInputModal from "./modals/ReferenceInputModal";
+import Proposingviews from "./Proposingviews";
 
 export interface ContractDetailProps {
   view?: "SPEND" | "MINT" | "CERT" | "REWARD";
@@ -44,6 +46,16 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
     },
     SPEND: {
       component: <Spendviews data={data} isMobile={isMobile} />,
+      contract: data?.scriptHash,
+      detail: routerDetals.smartContract
+    },
+    VOTING: {
+      component: <Votingviews data={data} isMobile={isMobile} />,
+      contract: data?.scriptHash,
+      detail: routerDetals.smartContract
+    },
+    PROPOSING: {
+      component: <Proposingviews data={data} isMobile={isMobile} />,
       contract: data?.scriptHash,
       detail: routerDetals.smartContract
     }

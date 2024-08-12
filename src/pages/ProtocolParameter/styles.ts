@@ -13,24 +13,6 @@ export const BackText = styled("small")`
   font-weight: var(--font-weight-bold);
 `;
 
-export const Header = styled(Box)(({ theme }) => ({
-  fontWeight: "bold",
-  color: theme.palette.secondary.main,
-  fontSize: "1.25rem",
-  textAlign: "left"
-}));
-
-export const HeaderButton = styled(Button)(({ theme }) => ({
-  textTransform: "capitalize",
-  fontWeight: "bold",
-  fontSize: "0.875rem",
-  color: theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[0],
-  [theme.breakpoints.down("sm")]: {
-    whiteSpace: "nowrap",
-    padding: "10px 25px"
-  }
-}));
-
 export const FilterContainer = styled(Box)(({ theme }) => ({
   width: 300,
   backgroundColor: theme.palette.secondary[0],
@@ -139,3 +121,12 @@ export const TextDescription = styled("small")(({ theme }) => ({
   color: theme.palette.secondary.light,
   whiteSpace: "nowrap"
 }));
+
+export const SubTitleList = styled("li")`
+  font-size: var(--font-size-text-small);
+  color: ${(props) => props.theme.palette.secondary.light};
+  text-align: left;
+  white-space: "pre-wrap";
+  list-style-type: none !important;
+  margin-bottom: 12px;
+`;
