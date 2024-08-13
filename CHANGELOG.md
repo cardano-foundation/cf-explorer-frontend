@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.7.0...v1.7.0) (2024-08-13)
+
+
+### Bug Fixes
+
+* sync up code 1.5.0 ([66bee0f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/66bee0fb3ca02d518bb84e5fa0311dfd6ecd9694))
+
 ## [1.7.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.3.0...v1.7.0) (2024-08-12)
 
 
