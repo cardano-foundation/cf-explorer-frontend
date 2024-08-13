@@ -72,7 +72,7 @@ export default function OverviewHeader({ data }: Props) {
                     height={24}
                     width={24}
                   />
-                  <StyledCard.Title>{t("actionType")}</StyledCard.Title>
+                  <StyledCard.Title>{t("govAction.actionType")}</StyledCard.Title>
                   <StyledCard.Value>{actionsType}</StyledCard.Value>
                 </StyledCard.Container>
               </Grid>

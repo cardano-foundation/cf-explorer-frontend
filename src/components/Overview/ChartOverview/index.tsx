@@ -128,7 +128,11 @@ const ChartOverview = (props: TypeProps) => {
                       dy={-10}
                       value="Total"
                       position="centerBottom"
-                      style={{ fontSize: "12px", fill: theme.mode === "light" ? "#737373" : "#fff" }}
+                      style={{
+                        fontSize: "12px",
+                        fill: theme.mode === "light" ? "#737373" : "#fff",
+                        pointerEvents: "none"
+                      }}
                     />
                     <Label
                       value={totalGovActions}
@@ -136,7 +140,8 @@ const ChartOverview = (props: TypeProps) => {
                       style={{
                         fontSize: "28px",
                         fill: theme.mode === "light" ? "#24262E" : "#fff",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        pointerEvents: "none"
                       }}
                     />
                   </Pie>
