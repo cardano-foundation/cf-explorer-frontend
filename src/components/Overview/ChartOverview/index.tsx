@@ -122,7 +122,11 @@ const ChartOverview = (props: TypeProps) => {
                     dataKey="value"
                   >
                     {dataGovCountMap.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS_CHART_TYPE[index % COLORS_CHART_TYPE.length]} />
+                      <Cell
+                        style={{ outline: "none" }}
+                        key={`cell-${index}`}
+                        fill={COLORS_CHART_TYPE[index % COLORS_CHART_TYPE.length]}
+                      />
                     ))}
                     <Label
                       dy={-10}
@@ -179,7 +183,11 @@ const ChartOverview = (props: TypeProps) => {
                     dataKey="value"
                   >
                     {dataGovStatusMap.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS_CHART_ACTIOS[index % COLORS_CHART_ACTIOS.length]} />
+                      <Cell
+                        style={{ outline: "none" }}
+                        key={`cell-${index}`}
+                        fill={COLORS_CHART_ACTIOS[index % COLORS_CHART_ACTIOS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
