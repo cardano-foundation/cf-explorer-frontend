@@ -108,7 +108,7 @@ const DrepsList: React.FC = () => {
               overflow={"hidden"}
               color={(theme) => `${theme.palette.primary.main} !important`}
               onClick={() => {
-                r.anchorUrl.includes("http") ? setMetadataUrl(r.anchorUrl) : setMetadataUrl(`https://${r.anchorUrl}`);
+                r.anchorUrl.includes("http") ? setMetadataUrl(r.anchorUrl) : setMetadataUrl(`//${r.anchorUrl}`);
               }}
               disableRipple={true}
               sx={{ ":hover": { background: "none" }, textAlign: "left" }}
