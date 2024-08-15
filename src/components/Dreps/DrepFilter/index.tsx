@@ -30,7 +30,13 @@ import {
   PoolParticipationIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
+import {
+  LARGE_NUMBER_ABBREVIATIONS,
+  formatADA,
+  formatPercent,
+  truncateDecimals,
+  truncateToTwoDecimals
+} from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -218,6 +224,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                 key === "Delete" ||
                 ((keyOnChangeMin === "minVotingPower" ||
                   keyOnChangeMin === "minGovParticipationRate" ||
+                  keyOnChangeMin === "minActiveVoteStake" ||
                   keyOnChangeMin === "minSaturation") &&
                   key === ".") ||
                 /^\d$/.test(key)
@@ -252,6 +259,8 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
                   ? parseFloat(numericValue).toFixed(2)
+                  : ["minActiveVoteStake"].includes(keyOnChangeMin)
+                  ? truncateDecimals(+numericValue, 6)
                   : numericValue
             });
           }}
@@ -282,6 +291,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                 key === "Delete" ||
                 ((keyOnChangeMax === "maxVotingPower" ||
                   keyOnChangeMax === "maxSaturation" ||
+                  keyOnChangeMax === "maxActiveVoteStake" ||
                   keyOnChangeMax === "maxGovParticipationRate") &&
                   key === ".") ||
                 /^\d$/.test(key)
@@ -320,6 +330,8 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
                     ? parseFloat(numericValue).toFixed(2)
+                    : ["maxActiveVoteStake"].includes(keyOnChangeMax)
+                    ? truncateDecimals(+numericValue, 6)
                     : numericValue
               });
           }}

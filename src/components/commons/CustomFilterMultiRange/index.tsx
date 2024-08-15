@@ -19,7 +19,13 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
+import {
+  LARGE_NUMBER_ABBREVIATIONS,
+  formatADA,
+  formatPercent,
+  truncateDecimals,
+  truncateToTwoDecimals
+} from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
@@ -76,6 +82,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
+
   const initParams = {
     page: 0,
     size: 50,
@@ -94,6 +101,7 @@ const CustomFilterMultiRange: React.FC = () => {
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
     maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
+
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
@@ -103,6 +111,8 @@ const CustomFilterMultiRange: React.FC = () => {
       size: +(query?.voteSize || "") || 50,
       sort: (query?.sort || "").toString(),
       query: "",
+
+      ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.minPoolSize && { minPoolSize: +(query?.minPoolSize || 0) }),
       ...(query?.minPledge && { minPledge: +(query?.minPledge || 0) }),
@@ -117,6 +127,7 @@ const CustomFilterMultiRange: React.FC = () => {
       ...(query?.maxGovParticipationRate && { maxGovParticipationRate: +(query?.maxGovParticipationRate || 0) })
     });
   }, [JSON.stringify(query)]);
+
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
@@ -140,11 +151,13 @@ const CustomFilterMultiRange: React.FC = () => {
       state: undefined
     });
   };
+
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
       handleFilter();
     }
   };
+
   const handleChangeValueRange = (event: Event, newValue: number | number[], minKey: string, maxKey: string) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -152,6 +165,7 @@ const CustomFilterMultiRange: React.FC = () => {
     const [min, max] = newValue || [];
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
+
   const isDisableFilter = useMemo(
     () =>
       (filterParams.query || "") !== initParams.query ||
@@ -242,6 +256,8 @@ const CustomFilterMultiRange: React.FC = () => {
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
                   ? parseFloat(numericValue).toFixed(2)
+                  : ["minActiveStake"].includes(keyOnChangeMin)
+                  ? truncateDecimals(+numericValue, 6) * 10 ** 6
                   : numericValue
             });
           }}
@@ -1071,7 +1087,6 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </>
               )}
-
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
                   data-testid="filterRange.applyFilters"
