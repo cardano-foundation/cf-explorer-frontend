@@ -58,6 +58,12 @@ export class BlockFrost {
       return `${BlockFrost.BASE_MAIN_NET_URL}/pools`;
     }
   };
+
+  static Token = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/assets`;
+    }
+  };
 }
 
 export class Koios {

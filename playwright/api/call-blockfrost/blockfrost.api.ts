@@ -227,6 +227,21 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getAssetNameByAssetToken = async (assetToken: string | null) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.Token.Base + `/${assetToken}`,
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
   return {
     getLastEpochData,
     getLatestBlockData,
@@ -242,6 +257,7 @@ export function blockfrostApi(request: APIRequestContext) {
     getListPools,
     getStakePools,
     getMetadataPools,
-    getHistoryPools
+    getHistoryPools,
+    getAssetNameByAssetToken
   };
 }
