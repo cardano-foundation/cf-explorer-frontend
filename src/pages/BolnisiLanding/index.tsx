@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Box, Button, Container, Grid, Select, styled, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { useUpdateEffect } from "react-use";
 import CountUp from "react-countup";
@@ -7,6 +7,7 @@ import CountUp from "react-countup";
 import "./index.css";
 import {
   bodyBackground,
+  BolnisiDropdown,
   bolnisiHeaderBackgroundDark,
   bolnisiHeaderBackgroundLight,
   bolnisiHeaderLaptop
@@ -255,14 +256,31 @@ const BolnisiTrx = () => {
             <Box color={theme.palette.primary.main} fontSize={"2.25rem"}>
               Recent Transactions
             </Box>
-            <Box>
-              <Select
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{ cursor: "pointer" }}
+              height={"44px"}
+              width={"140px"}
+              border={`2px solid ${theme.palette.primary.main}`}
+              justifyContent={"center"}
+              borderRadius={"100px"}
+              color={theme.palette.primary.main}
+            >
+              <Box fontSize={"1rem"} fontWeight={"500"}>
+                Conformity
+              </Box>
+              <BolnisiDropdown fill={theme.palette.primary.main} />
+              {/* <Select
                 label="Age"
                 sx={{ height: 44, width: 140, borderRadius: 100, borderColor: theme.palette.primary.main }}
                 hiddenLabel={true}
-                IconComponent={() => <Box>m</Box>}
+                IconComponent={() => (
+                  <Box>
+                  </Box>
+                )}
                 inputProps={{ style: { borderColor: theme.palette.primary.main } }}
-              ></Select>
+              ></Select> */}
             </Box>
           </Box>
           <StyledTable columns={columns} data={data} minHeight={600} />

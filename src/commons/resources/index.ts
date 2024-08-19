@@ -747,6 +747,7 @@ import CCLastChange from "./icons/CCLastChange.svg?react";
 import CClistMembers from "./icons/CClistMembers.svg?react";
 import CCGorvernanceVote from "./icons/CCGorvernanceVote.svg?react";
 import CCHistoryStatus from "./icons/CCHistoryStatus.svg?react";
+import BolnisiDropdown from "./icons/bolnisi-dropdown.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -964,5 +965,6 @@ export {
   bolnisiHeaderMobile,
   bolnisiHeaderTablet,
   bodyBackground,
-  bolnisiAnimation
+  bolnisiAnimation,
+  BolnisiDropdown
 };
