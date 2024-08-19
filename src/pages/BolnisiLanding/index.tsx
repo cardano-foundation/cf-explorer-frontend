@@ -224,7 +224,7 @@ const BolnisiTrx = () => {
     {
       title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
       key: "no",
-      render: (r) => <Box>{getShortHash(r.txHash)}</Box>
+      render: (r) => <Box color={theme.palette.primary.main}>{getShortHash(r.txHash)}</Box>
     },
     {
       title: <Box data-testid="bolnisi.landing.table.date">{t("bolnisi.landing.table.date")}</Box>,
