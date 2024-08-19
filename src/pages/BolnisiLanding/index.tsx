@@ -224,7 +224,7 @@ const BolnisiTrx = () => {
     {
       title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
       key: "no",
-      render: (r) => <Box>{getShortHash(r.txHash)}</Box>
+      render: (r) => <Box color={theme.palette.primary.main}>{getShortHash(r.txHash)}</Box>
     },
     {
       title: <Box data-testid="bolnisi.landing.table.date">{t("bolnisi.landing.table.date")}</Box>,
@@ -294,12 +294,14 @@ const BolnisiTrx = () => {
       </Grid>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <Box
-          width={"60%"}
           mx={"auto"}
           sx={{
-            [theme.breakpoints.down("md")]: { flexDirection: "column" },
-            width: "calc(100% - 32px)",
-            padding: theme.spacing(2)
+            width: "60%",
+            [theme.breakpoints.down("md")]: {
+              flexDirection: "column",
+              width: "calc(100% - 32px)",
+              padding: theme.spacing(2)
+            }
           }}
         >
           <Box
