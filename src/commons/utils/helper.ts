@@ -30,6 +30,7 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   if (address?.length <= 18) return address;
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
+
 export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
 };
@@ -48,6 +49,18 @@ export const formatPrice = (value?: string | number, abbreviations: string[] = L
   const syntax = abbreviations[exponential / 3];
   return `${newValue && newValue[0]}${syntax ?? `x 10^${exponential}`}`;
 };
+
+export function truncateDecimals(number: number, toDecimals: number) {
+  const parts = number.toString().split(".");
+
+  if (parts.length === 1 || parts[1].length <= toDecimals) {
+    return number;
+  }
+  const truncatedDecimal = parts[1].substring(0, toDecimals);
+  const truncatedNumber = `${parts[0]}.${truncatedDecimal}`;
+
+  return parseFloat(truncatedNumber);
+}
 
 export const numberWithCommas = (value?: number | string, decimal = 6) => {
   if (!value) return "0";
@@ -383,7 +396,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 

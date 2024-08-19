@@ -30,7 +30,7 @@ import {
 import { StyledInput } from "src/components/share/styled";
 import { StyledSlider } from "src/components/commons/CustomFilterMultiRange/styles";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS } from "src/commons/utils/helper";
+import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateDecimals } from "src/commons/utils/helper";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import useFetch from "src/commons/hooks/useFetch";
@@ -158,7 +158,7 @@ export default function FilterVotesOverview() {
             fromDate: dateRange.fromDate,
             toDate: dateRange.toDate,
             size: +(query?.size || "") || 6,
-            page: query?.page && +query?.page >= 1 ? +query?.page - 1 : 0
+            page: 1
           },
           (value) => value !== "" && value !== undefined
         )
@@ -190,7 +190,9 @@ export default function FilterVotesOverview() {
           sx={{
             fontSize: "14px",
             width: "100% !important",
-            color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+            "& .MuiInputBase-input.Mui-disabled": {
+              WebkitTextFillColor: theme.isDark ? "#8c93a466 !important" : "#50596d66 !important"
+            }
           }}
           value={Number(minValue || 0).toString()}
           onKeyDown={(event) => {
@@ -226,8 +228,8 @@ export default function FilterVotesOverview() {
                 +numericValue > maxValue
                   ? 0
                   : ["activeStakeFrom"].includes(keyOnChangeMin)
-                  ? +numericValue * 10 ** 6
-                  : numericValue
+                  ? truncateDecimals(+numericValue, 6) * 10 ** 6
+                  : truncateDecimals(+numericValue, 6)
             });
           }}
           onKeyPress={handleKeyPress}
@@ -242,7 +244,9 @@ export default function FilterVotesOverview() {
           sx={{
             fontSize: "14px",
             width: "100% !important",
-            color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
+            "& .MuiInputBase-input.Mui-disabled": {
+              WebkitTextFillColor: theme.isDark ? "#8c93a466 !important" : "#50596d66 !important"
+            }
           }}
           value={Number(maxValue).toString()}
           onKeyDown={(event) => {
@@ -265,11 +269,7 @@ export default function FilterVotesOverview() {
             maxValue < minValue &&
               setFilterParams({
                 ...filterParams,
-                [keyOnChangeMax]: ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                  ? +minValue / 100
-                  : ["activeStakeTo"].includes(keyOnChangeMax)
-                  ? +minValue * 10 ** 6
-                  : minValue
+                [keyOnChangeMax]: ["activeStakeTo"].includes(keyOnChangeMax) ? +minValue * 10 ** 6 : minValue
               });
           }}
           onChange={({ target: { value } }) => {
@@ -286,8 +286,8 @@ export default function FilterVotesOverview() {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["activeStakeTo"].includes(keyOnChangeMax)
-                    ? +numericValue * 10 ** 6
-                    : numericValue
+                    ? truncateDecimals(+numericValue, 6) * 10 ** 6
+                    : truncateDecimals(+numericValue, 6)
               });
           }}
           onKeyPress={handleKeyPress}
@@ -511,7 +511,7 @@ export default function FilterVotesOverview() {
                           fill={
                             Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
-                              : theme.palette.secondary.light
+                              : theme.palette.secondary.main
                           }
                           height={24}
                           width={24}
@@ -627,9 +627,9 @@ export default function FilterVotesOverview() {
                         <CustomIcon
                           icon={GovernanceIcon}
                           fill={
-                            Boolean(!dataRange?.maxVotingPower) || filterParams.voterType !== "DREP_KEY_HASH"
+                            Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                               ? theme.palette.secondary[600]
-                              : theme.palette.secondary.light
+                              : theme.palette.secondary.main
                           }
                           height={24}
                           width={24}
@@ -649,9 +649,7 @@ export default function FilterVotesOverview() {
                         {expanded === "voitingStake" ? (
                           <IoIosArrowUp
                             color={
-                              Boolean(!dataRange?.maxActiveStake) ||
-                              filterParams.voterType !== "DREP_KEY_HASH" ||
-                              dataRange?.maxActiveStake === dataRange?.minActiveStake
+                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
@@ -659,9 +657,7 @@ export default function FilterVotesOverview() {
                         ) : (
                           <IoIosArrowDown
                             color={
-                              Boolean(!dataRange?.maxActiveStake) ||
-                              filterParams.voterType !== "DREP_KEY_HASH" ||
-                              dataRange?.maxActiveStake === dataRange?.minActiveStake
+                              Boolean(!dataRange?.maxActiveStake) || filterParams.voterType !== "DREP_KEY_HASH"
                                 ? theme.palette.secondary[600]
                                 : theme.palette.secondary.main
                             }
