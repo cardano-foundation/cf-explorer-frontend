@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, useLocation, withRouter } from "react-router-dom";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import {
@@ -44,6 +44,8 @@ const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 const Header: React.FC<RouteComponentProps> = (props) => {
   const { history } = props;
   const { isMobile } = useScreen();
+  const { pathname } = useLocation();
+
   const home = history.location.pathname === "/";
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
@@ -88,7 +90,9 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               />
             </Box>
           </Title>
-          <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
+          {routers.BOLNISI_LANDING !== pathname && (
+            <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
+          )}
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
