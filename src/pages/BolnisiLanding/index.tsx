@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Box, Button, Container, Grid, Select, styled, useTheme } from "@mui/material";
+import { Box, Button, Container, Grid, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { useUpdateEffect } from "react-use";
 import CountUp from "react-countup";
@@ -7,6 +7,7 @@ import CountUp from "react-countup";
 import "./index.css";
 import {
   bodyBackground,
+  BolnisiDropdown,
   bolnisiHeaderBackgroundDark,
   bolnisiHeaderBackgroundLight,
   bolnisiHeaderLaptop
@@ -136,19 +137,48 @@ const ProgressSession = () => {
                   fontSize={"1.125rem"}
                   lineHeight={"1.875rem"}
                   width={"85%"}
+                  sx={{
+                    [theme.breakpoints.down("md")]: {
+                      mt: 4
+                    }
+                  }}
                 >
                   <Box>
                     Thanks to Cardano’s unique features, the Traceability Program tracks, certifies, and authenticates
-                    Georgian wines, ensuring they comply with the commercial industry standard set by the International
-                    Organisation of Vine and Wine (OIV). All the while increasing consumer engagement and trust.
+                    Georgian wines, ensuring they comply with the commercial industry standard set by the{" "}
+                    <Box
+                      component={"span"}
+                      sx={{
+                        color: theme.palette.primary.main,
+                        [theme.breakpoints.down("md")]: {
+                          color: theme.palette.secondary.light,
+                          textDecoration: "underline"
+                        }
+                      }}
+                    >
+                      International Organisation of Vine and Wine
+                    </Box>{" "}
+                    (OIV). All the while increasing consumer engagement and trust.
                   </Box>
                   <Box mt={2}>
                     The pilot for the Bolnisi region includes more than 30 wineries with several thousand wine bottles
                     already registered on the Cardano blockchain. This innovative track and trace solution creates
                     verifiable on-chain records for the detailed supply chain data provided by the wineries, plus the
-                    certificates of conformity issued by Georgia’s National Wine Agency. It creates a tamper-proof
-                    certification that is easy to validate and not only fights counterfeiting but also gives greater
-                    visibility to the wines’ premium quality.
+                    certificates of conformity issued by Georgia’s{" "}
+                    <Box
+                      component={"span"}
+                      sx={{
+                        color: theme.palette.primary.main,
+                        [theme.breakpoints.down("md")]: {
+                          color: theme.palette.secondary.light,
+                          textDecoration: "underline"
+                        }
+                      }}
+                    >
+                      National Wine Agency
+                    </Box>{" "}
+                    . It creates a tamper-proof certification that is easy to validate and not only fights
+                    counterfeiting but also gives greater visibility to the wines’ premium quality.
                   </Box>
                 </Box>
               </MotionDiv>
@@ -167,7 +197,14 @@ const ProgressSession = () => {
           "::before": { background: theme.isDark ? theme.palette.background.default : theme.palette.primary[100] }
         }}
       >
-        <Box component={"img"} sx={{ objectFit: "cover" }} width={"100%"} src={bodyBackground} alt="background body" />
+        <Box
+          component={"img"}
+          sx={{ objectFit: "cover" }}
+          minHeight={"320px"}
+          width={"100%"}
+          src={bodyBackground}
+          alt="background body"
+        />
       </Box>
     </Box>
   );
@@ -238,31 +275,67 @@ const BolnisiTrx = () => {
         </Container>
       </MotionDiv>
 
-      <Grid container width={"60%"} mx={"auto"} spacing={6} mb={"5rem"}>
-        <Grid item lg={4} sm={6} xs={12}>
+      <Grid
+        container
+        sx={{ width: "60%", [theme.breakpoints.down("lg")]: { width: "100%", pr: theme.spacing(2) } }}
+        mx={"auto"}
+        spacing={theme.breakpoints.down("lg") ? 2 : 6}
+        mb={"5rem"}
+      >
+        <Grid item lg={4} md={4} sm={6} xs={12}>
           <Card count={100000} title="Bottles registered on-chain" />
         </Grid>
-        <Grid item lg={4} sm={6} xs={12}>
+        <Grid item lg={4} md={4} sm={6} xs={12}>
           <Card count={30} title="Wineries joining" />
         </Grid>
-        <Grid item lg={4} sm={6} xs={12}>
+        <Grid item lg={4} md={4} sm={6} xs={12}>
           <Card count={1000} title="Certificates issued" />
         </Grid>
       </Grid>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-        <Box width={"60%"} mx={"auto"}>
-          <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <Box
+          width={"60%"}
+          mx={"auto"}
+          sx={{
+            [theme.breakpoints.down("md")]: { flexDirection: "column" },
+            width: "calc(100% - 32px)",
+            padding: theme.spacing(2)
+          }}
+        >
+          <Box
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            sx={{ [theme.breakpoints.down("md")]: { flexDirection: "column" } }}
+          >
             <Box color={theme.palette.primary.main} fontSize={"2.25rem"}>
               Recent Transactions
             </Box>
-            <Box>
-              <Select
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              sx={{ cursor: "pointer", [theme.breakpoints.down("md")]: { mt: theme.spacing(1) } }}
+              height={"44px"}
+              width={"140px"}
+              border={`2px solid ${theme.palette.primary.main}`}
+              justifyContent={"center"}
+              borderRadius={"100px"}
+              color={theme.palette.primary.main}
+            >
+              <Box fontSize={"1rem"} fontWeight={"500"}>
+                Conformity
+              </Box>
+              <BolnisiDropdown fill={theme.palette.primary.main} />
+              {/* <Select
                 label="Age"
                 sx={{ height: 44, width: 140, borderRadius: 100, borderColor: theme.palette.primary.main }}
                 hiddenLabel={true}
-                IconComponent={() => <Box>m</Box>}
+                IconComponent={() => (
+                  <Box>
+                  </Box>
+                )}
                 inputProps={{ style: { borderColor: theme.palette.primary.main } }}
-              ></Select>
+              ></Select> */}
             </Box>
           </Box>
           <StyledTable columns={columns} data={data} minHeight={600} />
