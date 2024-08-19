@@ -60,6 +60,7 @@ import CommunityIconLight from "./icons/community-icon-light.svg";
 import CommunityIconDark from "./icons/community-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import BolnisiDashboard from "./icons/bolnisi-dashboard.svg";
 import NetworkMonitoringIcon from "./icons/menus/networkMonitoring.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -417,6 +418,7 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
+  BolnisiDashboard,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
@@ -942,4 +944,24 @@ export {
   CClistMembers,
   CCGorvernanceVote,
   CCHistoryStatus
+};
+
+// Bolnisi Landing
+
+import bolnisiHeaderBackgroundDark from "./bolnisiLanding/background-header-dark.png";
+import bolnisiHeaderBackgroundLight from "./bolnisiLanding/background-header-light.png";
+import bolnisiHeaderLaptop from "./bolnisiLanding/header-laptop.png";
+import bolnisiHeaderMobile from "./bolnisiLanding/header-mobile.png";
+import bolnisiHeaderTablet from "./bolnisiLanding/header-tablet.png";
+import bodyBackground from "./bolnisiLanding/body-background.png";
+import bolnisiAnimation from "./bolnisiLanding/Bolnisi_Animation.gif";
+
+export {
+  bolnisiHeaderBackgroundDark,
+  bolnisiHeaderBackgroundLight,
+  bolnisiHeaderLaptop,
+  bolnisiHeaderMobile,
+  bolnisiHeaderTablet,
+  bodyBackground,
+  bolnisiAnimation
 };

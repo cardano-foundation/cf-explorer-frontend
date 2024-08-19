@@ -111,7 +111,7 @@ const border = {
 };
 const background = {
   paper: COMMON.white,
-  default: "#F7F7F7",
+  default: "#141416",
   neutral: GREY["A200"]
 };
 
