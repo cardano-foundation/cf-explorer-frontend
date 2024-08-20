@@ -97,6 +97,7 @@ const DrepsList: React.FC = () => {
         r.anchorUrl != null ? (
           <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
             <Box
+              padding={"6px 8px 6px 0"}
               data-testid="drepList.anchorLinkValue"
               component={Button}
               textTransform={"lowercase"}
@@ -117,7 +118,7 @@ const DrepsList: React.FC = () => {
             </Box>
           </CustomTooltip>
         ) : (
-          <Box padding={"6px 8px"}>{t("common.N/A")}</Box>
+          <Box padding={"6px 8px 6px 0"}>{t("common.N/A")}</Box>
         )
     },
     {
