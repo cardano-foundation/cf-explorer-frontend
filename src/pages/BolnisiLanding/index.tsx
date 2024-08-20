@@ -16,7 +16,6 @@ import {
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import { MotionDiv } from "src/commons/animation/motion-div";
-import { MotionImg } from "src/commons/animation/motion-img";
 import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 
@@ -73,27 +72,18 @@ const Header = () => {
         </Container>
       </div>
       <Box
-        component={MotionImg}
-        className="bottom-to-top"
+        component={MotionDiv}
+        viewRate={0.2}
         maxWidth={"80%"}
-        initial={{ y: "50%", opacity: 0 }}
-        animate={{ y: "0", opacity: 1 }}
-        src={isLaptop ? (isTablet ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
-      />
-      {/* <Box
-        component={"img"}
-        className="bottom-to-top"
-        maxWidth={"80%"}
-        srcSet={`
-          ${bolnisiHeaderMobile} 480w,
-          ${bolnisiHeaderTablet} 1024w,
-          ${bolnisiHeaderLaptop} 1440w`}
-        sizes="(max-width: 480px) 480px,
-              (max-width: 1024px) 1024px,
-              1440px"
-        src="image-1440px.jpg"
-        alt="Responsive"
-      /> */}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        marginX={"auto"}
+      >
+        <img
+          alt="bolnisi "
+          src={isLaptop ? (isTablet ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
+        />
+      </Box>
     </Box>
   );
 };
@@ -107,8 +97,8 @@ const ProgressSession = () => {
         <Box mx={"auto"}>
           <Grid container>
             <Grid item md={6} sm={6} xs={12}>
-              <MotionDiv initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-                <Box width={"80%"}>
+              <MotionDiv initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} style={{ height: "100%" }}>
+                <Box width={"80%"} height={"100%"}>
                   <Box
                     color={theme.palette.primary.main}
                     textAlign={"left"}

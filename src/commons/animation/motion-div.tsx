@@ -13,6 +13,7 @@ interface Props {
   ease?: Easing | Easing[];
   once?: boolean;
   delay?: number;
+  viewRate?: number;
   style?: MotionStyle;
 }
 
@@ -26,9 +27,10 @@ export const MotionDiv = ({
   ease,
   once = true,
   delay = 0,
-  style
+  style,
+  viewRate = 0.1
 }: Props) => {
-  const [ref, inView] = useInView(0.5);
+  const [ref, inView] = useInView(viewRate);
   return (
     <motion.div
       ref={ref as LegacyRef<HTMLDivElement> | undefined}
