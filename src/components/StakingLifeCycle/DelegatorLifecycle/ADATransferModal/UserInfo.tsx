@@ -74,7 +74,7 @@ const UserInfo = ({
         </Box>
       </Box>
       <TextTx sx={{ marginTop: isTablet ? "10px" : "0px" }}>
-        {total} {t("glossary.transactions")}
+        {total} {total > 1 ? t("glossary.transactions") : t("glossary.transaction")}
       </TextTx>
     </Box>
   );

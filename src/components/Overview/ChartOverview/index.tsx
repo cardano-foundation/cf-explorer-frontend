@@ -122,13 +122,21 @@ const ChartOverview = (props: TypeProps) => {
                     dataKey="value"
                   >
                     {dataGovCountMap.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS_CHART_TYPE[index % COLORS_CHART_TYPE.length]} />
+                      <Cell
+                        style={{ outline: "none" }}
+                        key={`cell-${index}`}
+                        fill={COLORS_CHART_TYPE[index % COLORS_CHART_TYPE.length]}
+                      />
                     ))}
                     <Label
                       dy={-10}
                       value="Total"
                       position="centerBottom"
-                      style={{ fontSize: "12px", fill: theme.mode === "light" ? "#737373" : "#fff" }}
+                      style={{
+                        fontSize: "12px",
+                        fill: theme.mode === "light" ? "#737373" : "#fff",
+                        pointerEvents: "none"
+                      }}
                     />
                     <Label
                       value={totalGovActions}
@@ -136,7 +144,8 @@ const ChartOverview = (props: TypeProps) => {
                       style={{
                         fontSize: "28px",
                         fill: theme.mode === "light" ? "#24262E" : "#fff",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        pointerEvents: "none"
                       }}
                     />
                   </Pie>
@@ -174,7 +183,11 @@ const ChartOverview = (props: TypeProps) => {
                     dataKey="value"
                   >
                     {dataGovStatusMap.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS_CHART_ACTIOS[index % COLORS_CHART_ACTIOS.length]} />
+                      <Cell
+                        style={{ outline: "none" }}
+                        key={`cell-${index}`}
+                        fill={COLORS_CHART_ACTIOS[index % COLORS_CHART_ACTIOS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
