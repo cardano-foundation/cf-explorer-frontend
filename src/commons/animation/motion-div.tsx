@@ -1,5 +1,7 @@
 import { Easing, motion, MotionStyle, Target } from "framer-motion";
-import { ReactNode } from "react";
+import { LegacyRef, ReactNode } from "react";
+
+import useInView from "../hooks/useInView";
 
 interface Props {
   children: ReactNode;
@@ -26,10 +28,12 @@ export const MotionDiv = ({
   delay = 0,
   style
 }: Props) => {
+  const [ref, inView] = useInView(0.5);
   return (
     <motion.div
+      ref={ref as LegacyRef<HTMLDivElement> | undefined}
       style={style}
-      whileInView={enabled ? animate : undefined}
+      whileInView={enabled ? (inView ? animate : {}) : undefined}
       transition={{ duration, ease, delay }}
       initial={enabled ? initial : undefined}
       className={className}

@@ -8,15 +8,17 @@ import "./index.css";
 import {
   bodyBackground,
   BolnisiDropdown,
-  bolnisiHeaderBackgroundDark,
   bolnisiHeaderBackgroundLight,
-  bolnisiHeaderLaptop
+  bolnisiHeaderLaptop,
+  bolnisiHeaderMobile,
+  bolnisiHeaderTablet
 } from "src/commons/resources";
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
 import { MotionDiv } from "src/commons/animation/motion-div";
 import { MotionImg } from "src/commons/animation/motion-img";
 import { getShortHash } from "src/commons/utils/helper";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 const BolnisiLanding = () => {
   useEffect(() => {
@@ -35,8 +37,8 @@ const BolnisiLanding = () => {
 export default BolnisiLanding;
 
 const Header = () => {
-  const theme = useTheme();
   const topRef = useRef<HTMLDivElement>();
+  const { isLaptop, isTablet } = useScreen();
 
   useUpdateEffect(() => {
     if (topRef.current) {
@@ -47,7 +49,7 @@ const Header = () => {
     <Box>
       <div
         style={{
-          backgroundImage: `url(${theme.isDark ? bolnisiHeaderBackgroundDark : bolnisiHeaderBackgroundLight})`,
+          backgroundImage: `url(${bolnisiHeaderBackgroundLight})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -62,7 +64,7 @@ const Header = () => {
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
-              color={theme.palette.secondary.main}
+              color={"#000"}
               fontSize={"clamp(3rem, 3.5vw, 4rem);"}
             >
               {t("bolnisi.landing.header")}
@@ -76,7 +78,7 @@ const Header = () => {
         maxWidth={"80%"}
         initial={{ y: "50%", opacity: 0 }}
         animate={{ y: "0", opacity: 1 }}
-        src={bolnisiHeaderLaptop}
+        src={isLaptop ? (isTablet ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
       />
       {/* <Box
         component={"img"}
@@ -115,13 +117,7 @@ const ProgressSession = () => {
                   >
                     Traceability from grape to glass
                   </Box>
-                  <Box
-                    textAlign={"left"}
-                    color={theme.palette.secondary.light}
-                    fontSize={"0.875rem"}
-                    lineHeight={"1.375rem"}
-                    pt={3}
-                  >
+                  <Box textAlign={"left"} color={"#666666"} fontSize={"0.875rem"} lineHeight={"1.375rem"} pt={3}>
                     The advanced supply chain solution brings Georgian wines into the future with the help of the
                     Cardano blockchain.
                   </Box>
@@ -133,7 +129,7 @@ const ProgressSession = () => {
                 <Box
                   className={"right-to-center"}
                   textAlign={"left"}
-                  color={theme.palette.secondary.light}
+                  color={"000000"}
                   fontSize={"1.125rem"}
                   lineHeight={"1.875rem"}
                   width={"85%"}
@@ -149,7 +145,7 @@ const ProgressSession = () => {
                     <Box
                       component={"span"}
                       sx={{
-                        color: theme.palette.primary.main,
+                        color: "#2F59DB",
                         [theme.breakpoints.down("md")]: {
                           color: theme.palette.secondary.light,
                           textDecoration: "underline"
@@ -168,7 +164,7 @@ const ProgressSession = () => {
                     <Box
                       component={"span"}
                       sx={{
-                        color: theme.palette.primary.main,
+                        color: "#2F59DB",
                         [theme.breakpoints.down("md")]: {
                           color: theme.palette.secondary.light,
                           textDecoration: "underline"
@@ -193,8 +189,8 @@ const ProgressSession = () => {
         width={"100%"}
         position={"relative"}
         sx={{
-          "::after": { background: theme.isDark ? theme.palette.background.default : theme.palette.primary[100] },
-          "::before": { background: theme.isDark ? theme.palette.background.default : theme.palette.primary[100] }
+          "::after": { background: "#fff" },
+          "::before": { background: "#fff" }
         }}
       >
         <Box
@@ -269,7 +265,7 @@ const BolnisiTrx = () => {
     <Box>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <Container maxWidth="md">
-          <Box color={theme.palette.secondary.main} fontSize={"2.5rem"} lineHeight={"2.625rem"} mb={"5rem"}>
+          <Box color={"#000000"} fontSize={"2.5rem"} lineHeight={"2.625rem"} mb={"5rem"}>
             Revolutionizing the wine industry with Cardano’s enterprise-grade blockchain
           </Box>
         </Container>
@@ -358,6 +354,7 @@ const BolnisiTrx = () => {
             width={"186px"}
             borderRadius={"100px"}
             mt={"2rem"}
+            color={"#fff"}
           >
             Read Case Study
           </Box>
@@ -371,7 +368,7 @@ const Card = ({ count, title }: { count: number; title: string }) => {
   const theme = useTheme();
   return (
     <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-      <Box px={3} py={4} bgcolor={theme.palette.secondary[0]} borderRadius={"1.5rem"}>
+      <Box px={3} py={4} bgcolor={"#F5F7FA"} borderRadius={"1.5rem"}>
         <Box
           color={theme.palette.primary.main}
           fontSize={"2.5rem"}
@@ -382,7 +379,7 @@ const Card = ({ count, title }: { count: number; title: string }) => {
           <CountUp end={count} duration={2} />
           {count === 30 ? "+" : ""}
         </Box>
-        <Box color={theme.palette.secondary.light} fontSize={"0.875rem"} lineHeight={"1rem"} textAlign={"left"} pt={1}>
+        <Box color={"#000000"} fontSize={"0.875rem"} lineHeight={"1rem"} textAlign={"left"} pt={1}>
           {title}
         </Box>
       </Box>
@@ -392,13 +389,18 @@ const Card = ({ count, title }: { count: number; title: string }) => {
 
 const StyledTable = styled(Table)(({ theme }) => ({
   ".table-wrapper": { background: "transparent" },
-  th: { background: "transparent", borderBottom: "1px solid #E3E5E9", ":first-child": { marginLeft: "10px" } },
-  td: { background: "transparent" },
+  th: {
+    background: "transparent",
+    color: "#000000",
+    borderBottom: "1px solid #E3E5E9",
+    ":first-child": { marginLeft: "10px" }
+  },
+  td: { background: "transparent", color: "#000000" },
   "tbody > tr": {
     ":nth-child(2n)": {
-      background: theme.palette.secondary[0],
+      background: "#F5F7FA",
       borderRadius: theme.spacing(0.5),
-      ":hover": { background: theme.palette.secondary[0] }
+      ":hover": { background: "#F5F7FA" }
     }
   }
 }));
