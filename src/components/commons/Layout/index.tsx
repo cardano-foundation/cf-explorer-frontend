@@ -97,7 +97,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
           component="main"
           open={sidebar ? 1 : 0}
           // To dos
-          bgcolor={routers.BOLNISI_LANDING.includes(history.location.pathname) ? "#fff" : ""}
+          bgcolor={routers.BOLNISI_LANDING === history.location.pathname ? "#fff" : ""}
         >
           {NETWORK === NETWORKS.sanchonet && (
             <Box
