@@ -1,4 +1,7 @@
+import { LegacyRef } from "react";
 import { Easing, motion, Target } from "framer-motion";
+
+import useInView from "../hooks/useInView";
 
 interface Props {
   className?: string;
@@ -23,9 +26,12 @@ export const MotionImg = ({
   delay = 0,
   src
 }: Props) => {
+  const [ref, inView] = useInView(0.5);
+
   return (
     <motion.img
-      whileInView={enabled ? animate : undefined}
+      ref={ref as LegacyRef<HTMLImageElement> | undefined}
+      whileInView={enabled ? (inView ? animate : {}) : undefined}
       transition={{ duration, ease, delay }}
       initial={enabled ? initial : undefined}
       className={className}
