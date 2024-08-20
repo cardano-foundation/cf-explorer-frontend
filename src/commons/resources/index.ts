@@ -956,7 +956,7 @@ import bolnisiHeaderLaptop from "./bolnisiLanding/header-laptop.png";
 import bolnisiHeaderMobile from "./bolnisiLanding/header-mobile.png";
 import bolnisiHeaderTablet from "./bolnisiLanding/header-tablet.png";
 import bodyBackground from "./bolnisiLanding/body-background.png";
-import bolnisiAnimation from "./bolnisiLanding/Bolnisi_Animation.gif";
+import bolnisiProgress from "./bolnisiLanding/bolnisi-progress.png";
 
 export {
   bolnisiHeaderBackgroundDark,
@@ -965,6 +965,6 @@ export {
   bolnisiHeaderMobile,
   bolnisiHeaderTablet,
   bodyBackground,
-  bolnisiAnimation,
+  bolnisiProgress,
   BolnisiDropdown
 };

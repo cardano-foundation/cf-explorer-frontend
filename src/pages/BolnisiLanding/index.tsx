@@ -11,7 +11,8 @@ import {
   bolnisiHeaderBackgroundLight,
   bolnisiHeaderLaptop,
   bolnisiHeaderMobile,
-  bolnisiHeaderTablet
+  bolnisiHeaderTablet,
+  bolnisiProgress
 } from "src/commons/resources";
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
@@ -81,6 +82,7 @@ const Header = () => {
       >
         <img
           alt="bolnisi "
+          style={{ width: "100%" }}
           src={isLaptop ? (isTablet ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
         />
       </Box>
@@ -172,7 +174,17 @@ const ProgressSession = () => {
           </Grid>
         </Box>
       </Container>
-      {/* <Box component={"img"} style={{ width: "60%" }} src={bolnisiAnimation} /> */}
+      <Box
+        component={MotionDiv}
+        viewRate={0.2}
+        maxWidth={"80%"}
+        mt={6}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        marginX={"auto"}
+      >
+        <img style={{ width: "100%" }} alt="bolnisi " src={bolnisiProgress} />
+      </Box>
 
       <Box
         className="bolnisi-body-background"
