@@ -109,13 +109,14 @@ const DrepsList: React.FC = () => {
               color={(theme) => `${theme.palette.primary.main} !important`}
               onClick={() => setMetadataUrl(r.anchorUrl)}
               disableRipple={true}
-              sx={{ ":hover": { background: "none" } }}
+              sx={{ ":hover": { background: "none" }, textAlign: "left" }}
+              padding={"6px 8px 6px 0"}
             >
               {`${r.anchorUrl || ""}`}
             </Box>
           </CustomTooltip>
         ) : (
-          <Box padding={"6px 8px"}>{t("common.N/A")}</Box>
+          <Box padding={"6px 8px 6px 0"}>{t("common.N/A")}</Box>
         )
     },
     {

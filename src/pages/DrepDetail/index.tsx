@@ -115,7 +115,7 @@ const DrepDetail = () => {
             >
               <DynamicEllipsisText
                 value={data?.anchorUrl || ""}
-                sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)", minWidth: 16 }}
                 postfix={5}
                 sxLastPart={{ direction: "inherit" }}
                 sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
@@ -128,7 +128,9 @@ const DrepDetail = () => {
           <ActionMetadataModalConfirm
             open={openModal}
             onClose={() => setOpenModal(false)}
-            anchorUrl={data?.anchorUrl || ""}
+            anchorUrl={
+              data?.anchorUrl ? (data?.anchorUrl.includes("http") ? data?.anchorUrl : `//${data.anchorUrl}`) : ""
+            }
           />
         </ValueCard>
       )
