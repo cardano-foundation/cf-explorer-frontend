@@ -148,7 +148,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {(usdMarket || usdDataLocal) && (btcMarket || btcDataLocal) && !loadingBtcData && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
+            <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -193,7 +193,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {(usdMarket || usdDataLocal) && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
+            <Item data-testid="market-cap-box" smallitem="true" thememode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -221,7 +221,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid="current-epoch-box" themeMode={themeMode}>
+            <Item data-testid="current-epoch-box" thememode={themeMode}>
               <VerticalContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -282,7 +282,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && (usdMarket || usdDataLocal) ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
-            <Item data-testid="live-stake-box" themeMode={themeMode}>
+            <Item data-testid="live-stake-box" thememode={themeMode}>
               <VerticalContent>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -313,7 +313,7 @@ const HomeStatistic = () => {
                       </CustomTooltip>
                       <ProgressPending
                         data-testid="live-stake-progress-pending"
-                        rate={currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100}
+                        rate={(currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100) || 0}
                       >
                         {isShowOtherStakePercentText && (
                           <Box color={({ palette }) => palette.secondary.main}>

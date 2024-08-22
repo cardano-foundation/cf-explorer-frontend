@@ -280,13 +280,13 @@ export const StyledPagination = styled(Pagination)(({ theme }) => ({
   },
   [theme.breakpoints.down(430)]: {
     width: "80%",
-    "ul li:nth-child(1)": {
+    "ul li:nth-of-type(1)": {
       order: 5
     },
-    "ul li:nth-child(2)": {
+    "ul li:nth-of-type(2)": {
       order: 6
     },
-    "ul li:nth-child(3)": {
+    "ul li:nth-of-type(3)": {
       order: 1,
       width: "100%",
       marginBottom: "8px",
@@ -294,11 +294,11 @@ export const StyledPagination = styled(Pagination)(({ theme }) => ({
         textAlign: "left"
       }
     },
-    "ul li:nth-child(10)": {
+    "ul li:nth-of-type(10)": {
       order: 7,
       marginLeft: "auto"
     },
-    "ul li:nth-child(11)": {
+    "ul li:nth-of-type(11)": {
       order: 8
     }
   }
