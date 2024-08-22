@@ -38,7 +38,7 @@ export default BolnisiLanding;
 
 const Header = () => {
   const topRef = useRef<HTMLDivElement>();
-  const { isLaptop, isTablet } = useScreen();
+  const { isLaptop, isMobile } = useScreen();
   const theme = useTheme();
 
   useUpdateEffect(() => {
@@ -48,13 +48,18 @@ const Header = () => {
   }, [topRef.current]);
   return (
     <Box>
-      <div
+      <Box
         style={{
           backgroundImage: `url(${theme.isDark ? bolnisiHeaderBackgroundDark : bolnisiHeaderBackgroundLight})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          height: 350
+          backgroundPosition: "center"
+        }}
+        sx={{
+          height: 350,
+          [theme.breakpoints.down("md")]: {
+            height: "calc(100vh - 550px)"
+          }
         }}
       >
         <Container maxWidth="lg" style={{ height: "100%" }}>
@@ -67,12 +72,18 @@ const Header = () => {
               justifyContent={"center"}
               color={theme.isDark ? "#F7F9FF" : "#000"}
               fontSize={"clamp(3rem, 3.5vw, 4rem);"}
+              fontWeight={600}
+              sx={{
+                [theme.breakpoints.down("md")]: {
+                  paddingY: "30px"
+                }
+              }}
             >
               {t("bolnisi.landing.header")}
             </Box>
           </MotionDiv>
         </Container>
-      </div>
+      </Box>
       <Box
         component={MotionDiv}
         viewRate={0.2}
@@ -80,11 +91,17 @@ const Header = () => {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         marginX={"auto"}
+        sx={{
+          [theme.breakpoints.down("md")]: {
+            maxWidth: "100%",
+            px: 2
+          }
+        }}
       >
         <img
           alt="bolnisi "
           style={{ width: "100%" }}
-          src={isLaptop ? (isTablet ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
+          src={isLaptop ? (isMobile ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
         />
       </Box>
     </Box>
@@ -133,7 +150,7 @@ const ProgressSession = () => {
                   lineHeight={"1.875rem"}
                   width={"85%"}
                   sx={{
-                    [theme.breakpoints.down("md")]: {
+                    [theme.breakpoints.down("sm")]: {
                       mt: 4
                     }
                   }}
@@ -185,8 +202,7 @@ const ProgressSession = () => {
       >
         <Box
           component={"img"}
-          sx={{ objectFit: "cover" }}
-          minHeight={"320px"}
+          sx={{ minHeight: "320px", objectFit: "cover", [theme.breakpoints.down("md")]: { minHeight: "450px" } }}
           width={"100%"}
           src={bodyBackground}
           alt="background body"
@@ -248,6 +264,9 @@ const BolnisiTrx = () => {
     { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
     { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
     { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
+    { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
+    { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
+    { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 },
     { txHash: "536d38469c1m8fcewcn...77f0f8c7f8cwcw89cds", date: "11/16/2023", cert: "Conformity", amount: 1234 }
   ];
 
@@ -255,7 +274,13 @@ const BolnisiTrx = () => {
     <Box>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <Container maxWidth="md">
-          <Box color={theme.isDark ? "#F7F9FF" : "#000000"} fontSize={"2.5rem"} lineHeight={"2.625rem"} mb={"5rem"}>
+          <Box
+            color={theme.isDark ? "#F7F9FF" : "#000000"}
+            fontSize={"2.5rem"}
+            lineHeight={"2.625rem"}
+            mb={"5rem"}
+            fontWeight={600}
+          >
             Revolutionizing the wine industry with Cardano’s enterprise-grade blockchain
           </Box>
         </Container>
@@ -263,19 +288,35 @@ const BolnisiTrx = () => {
 
       <Grid
         container
-        sx={{ width: "60%", [theme.breakpoints.down("lg")]: { width: "100%", pr: theme.spacing(2) } }}
+        sx={{
+          width: "60%",
+          [theme.breakpoints.down("lg")]: { width: "90%", pr: theme.spacing(2) },
+          [theme.breakpoints.down("sm")]: { width: "100%", pr: theme.spacing(2) }
+        }}
         mx={"auto"}
         spacing={theme.breakpoints.down("lg") ? 2 : 6}
         mb={"5rem"}
       >
-        <Grid item lg={4} md={4} sm={6} xs={12}>
-          <Card count={100000} title="Bottles registered on-chain" />
+        <Grid item lg={4} md={4} sm={4} xs={12}>
+          <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
+            <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
+              <Card count={100000} title="Bottles registered on-chain" />
+            </Box>
+          </MotionDiv>
         </Grid>
-        <Grid item lg={4} md={4} sm={6} xs={12}>
-          <Card count={30} title="Wineries joining" />
+        <Grid item lg={4} md={4} sm={4} xs={12}>
+          <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
+            <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
+              <Card count={30} title="Wineries joining" />
+            </Box>
+          </MotionDiv>
         </Grid>
-        <Grid item lg={4} md={4} sm={6} xs={12}>
-          <Card count={1000} title="Certificates issued" />
+        <Grid item lg={4} md={4} sm={4} xs={12}>
+          <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
+            <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
+              <Card count={1000} title="Certificates issued" />
+            </Box>
+          </MotionDiv>
         </Grid>
       </Grid>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
@@ -316,7 +357,17 @@ const BolnisiTrx = () => {
               <BolnisiDropdown fill={theme.palette.primary.main} />
             </Box>
           </Box>
-          <StyledTable columns={columns} data={data} minHeight={600} />
+          <StyledTable
+            columns={columns}
+            data={data}
+            minHeight={765}
+            pagination={{
+              size: 10,
+              total: data.length || 0
+            }}
+            total={{ count: data.length || 0, title: "" }}
+            loading={false}
+          />
         </Box>
       </MotionDiv>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
@@ -353,29 +404,27 @@ const BolnisiTrx = () => {
 const Card = ({ count, title }: { count: number; title: string }) => {
   const theme = useTheme();
   return (
-    <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-      <Box px={3} py={4} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-        <Box
-          color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
-          fontSize={"2.5rem"}
-          lineHeight={"2.875rem"}
-          fontWeight={500}
-          textAlign={"left"}
-        >
-          <CountUp end={count} duration={2} />
-          {count === 30 ? "+" : ""}
-        </Box>
-        <Box
-          color={theme.isDark ? "#F7F9FF" : "#000000"}
-          fontSize={"0.875rem"}
-          lineHeight={"1rem"}
-          textAlign={"left"}
-          pt={1}
-        >
-          {title}
-        </Box>
+    <Box px={3} py={4}>
+      <Box
+        color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
+        fontSize={"2.5rem"}
+        lineHeight={"2.875rem"}
+        fontWeight={500}
+        sx={{ textAlign: "left", [theme.breakpoints.down("md")]: { textAlign: "center" } }}
+      >
+        <CountUp end={count} duration={2} />
+        {count === 30 ? "+" : ""}
       </Box>
-    </MotionDiv>
+      <Box
+        color={theme.isDark ? "#F7F9FF" : "#000000"}
+        fontSize={"0.875rem"}
+        lineHeight={"1rem"}
+        sx={{ textAlign: "left", [theme.breakpoints.down("md")]: { textAlign: "center" } }}
+        pt={1}
+      >
+        {title}
+      </Box>
+    </Box>
   );
 };
 
@@ -393,6 +442,20 @@ const StyledTable = styled(Table)(({ theme }) => ({
       background: theme.isDark ? "#23262E" : "#F5F7FA",
       borderRadius: theme.spacing(0.5),
       ":hover": { background: theme.isDark ? "#23262E" : "#F5F7FA" }
+    }
+  },
+  "div:last-child": {
+    "> div": {
+      color: theme.isDark ? "#F7F9FF" : "#000000"
+    },
+    "> div > div > div": {
+      color: theme.isDark ? "#F7F9FF" : "#000000"
+    },
+    "> nav > ul > li > div > span": {
+      color: theme.isDark ? "#F7F9FF" : "#000000"
+    },
+    "> nav > ul > li > div > input": {
+      color: theme.isDark ? "#F7F9FF" : "#000000"
     }
   }
 }));
