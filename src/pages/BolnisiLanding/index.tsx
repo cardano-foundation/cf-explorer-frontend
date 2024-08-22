@@ -8,11 +8,11 @@ import "./index.css";
 import {
   bodyBackground,
   BolnisiDropdown,
+  bolnisiHeaderBackgroundDark,
   bolnisiHeaderBackgroundLight,
   bolnisiHeaderLaptop,
   bolnisiHeaderMobile,
-  bolnisiHeaderTablet,
-  bolnisiProgress
+  bolnisiHeaderTablet
 } from "src/commons/resources";
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
@@ -39,6 +39,7 @@ export default BolnisiLanding;
 const Header = () => {
   const topRef = useRef<HTMLDivElement>();
   const { isLaptop, isTablet } = useScreen();
+  const theme = useTheme();
 
   useUpdateEffect(() => {
     if (topRef.current) {
@@ -49,11 +50,11 @@ const Header = () => {
     <Box>
       <div
         style={{
-          backgroundImage: `url(${bolnisiHeaderBackgroundLight})`,
+          backgroundImage: `url(${theme.isDark ? bolnisiHeaderBackgroundDark : bolnisiHeaderBackgroundLight})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          height: 300
+          height: 350
         }}
       >
         <Container maxWidth="lg" style={{ height: "100%" }}>
@@ -64,7 +65,7 @@ const Header = () => {
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
-              color={"#000"}
+              color={theme.isDark ? "#F7F9FF" : "#000"}
               fontSize={"clamp(3rem, 3.5vw, 4rem);"}
             >
               {t("bolnisi.landing.header")}
@@ -102,14 +103,20 @@ const ProgressSession = () => {
               <MotionDiv initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} style={{ height: "100%" }}>
                 <Box width={"80%"} height={"100%"}>
                   <Box
-                    color={theme.palette.primary.main}
+                    color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
                     textAlign={"left"}
                     fontSize={"clamp(2.25rem, 3vw, 2.5rem);"}
                     fontWeight={"bold"}
                   >
                     Traceability from grape to glass
                   </Box>
-                  <Box textAlign={"left"} color={"#666666"} fontSize={"0.875rem"} lineHeight={"1.375rem"} pt={3}>
+                  <Box
+                    textAlign={"left"}
+                    color={theme.isDark ? "#D3DFFA" : "#666666"}
+                    fontSize={"0.875rem"}
+                    lineHeight={"1.375rem"}
+                    pt={3}
+                  >
                     The advanced supply chain solution brings Georgian wines into the future with the help of the
                     Cardano blockchain.
                   </Box>
@@ -121,7 +128,7 @@ const ProgressSession = () => {
                 <Box
                   className={"right-to-center"}
                   textAlign={"left"}
-                  color={"000000"}
+                  color={theme.isDark ? "#F7F9FF" : "000000"}
                   fontSize={"1.125rem"}
                   lineHeight={"1.875rem"}
                   width={"85%"}
@@ -137,11 +144,7 @@ const ProgressSession = () => {
                     <Box
                       component={"span"}
                       sx={{
-                        color: "#2F59DB",
-                        [theme.breakpoints.down("md")]: {
-                          color: theme.palette.secondary.light,
-                          textDecoration: "underline"
-                        }
+                        color: theme.isDark ? "#64BCFD" : "#2F59DB"
                       }}
                     >
                       International Organisation of Vine and Wine
@@ -156,11 +159,7 @@ const ProgressSession = () => {
                     <Box
                       component={"span"}
                       sx={{
-                        color: "#2F59DB",
-                        [theme.breakpoints.down("md")]: {
-                          color: theme.palette.secondary.light,
-                          textDecoration: "underline"
-                        }
+                        color: theme.isDark ? "#64BCFD" : "#2F59DB"
                       }}
                     >
                       National Wine Agency
@@ -174,25 +173,14 @@ const ProgressSession = () => {
           </Grid>
         </Box>
       </Container>
-      <Box
-        component={MotionDiv}
-        viewRate={0.2}
-        maxWidth={"80%"}
-        mt={6}
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        marginX={"auto"}
-      >
-        <img style={{ width: "100%" }} alt="bolnisi " src={bolnisiProgress} />
-      </Box>
 
       <Box
         className="bolnisi-body-background"
         width={"100%"}
         position={"relative"}
         sx={{
-          "::after": { background: "#fff" },
-          "::before": { background: "#fff" }
+          "::after": { background: theme.isDark ? "#131316" : "#fff" },
+          "::before": { background: theme.isDark ? "#131316" : "#fff" }
         }}
       >
         <Box
@@ -267,7 +255,7 @@ const BolnisiTrx = () => {
     <Box>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <Container maxWidth="md">
-          <Box color={"#000000"} fontSize={"2.5rem"} lineHeight={"2.625rem"} mb={"5rem"}>
+          <Box color={theme.isDark ? "#F7F9FF" : "#000000"} fontSize={"2.5rem"} lineHeight={"2.625rem"} mb={"5rem"}>
             Revolutionizing the wine industry with Cardano’s enterprise-grade blockchain
           </Box>
         </Container>
@@ -308,7 +296,7 @@ const BolnisiTrx = () => {
             alignItems={"center"}
             sx={{ [theme.breakpoints.down("md")]: { flexDirection: "column" } }}
           >
-            <Box color={theme.palette.primary.main} fontSize={"2.25rem"}>
+            <Box color={theme.isDark ? "#64BCFD" : theme.palette.primary.main} fontSize={"2.25rem"}>
               Recent Transactions
             </Box>
             <Box
@@ -317,25 +305,15 @@ const BolnisiTrx = () => {
               sx={{ cursor: "pointer", [theme.breakpoints.down("md")]: { mt: theme.spacing(1) } }}
               height={"44px"}
               width={"140px"}
-              border={`2px solid ${theme.palette.primary.main}`}
+              border={`2px solid ${theme.isDark ? "#64BCFD" : theme.palette.primary.main}`}
               justifyContent={"center"}
               borderRadius={"100px"}
-              color={theme.palette.primary.main}
+              color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
             >
               <Box fontSize={"1rem"} fontWeight={"500"}>
                 Conformity
               </Box>
               <BolnisiDropdown fill={theme.palette.primary.main} />
-              {/* <Select
-                label="Age"
-                sx={{ height: 44, width: 140, borderRadius: 100, borderColor: theme.palette.primary.main }}
-                hiddenLabel={true}
-                IconComponent={() => (
-                  <Box>
-                  </Box>
-                )}
-                inputProps={{ style: { borderColor: theme.palette.primary.main } }}
-              ></Select> */}
             </Box>
           </Box>
           <StyledTable columns={columns} data={data} minHeight={600} />
@@ -343,20 +321,26 @@ const BolnisiTrx = () => {
       </MotionDiv>
       <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
         <Container maxWidth="md" sx={{ my: "5rem" }}>
-          <Box color={theme.palette.primary.main} fontSize={"2.5rem"} lineHeight={"2.625rem"} fontWeight={"bold"}>
+          <Box
+            color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
+            fontSize={"2.5rem"}
+            lineHeight={"2.625rem"}
+            fontWeight={"bold"}
+          >
             Discover the full advantages of a future-proof blockchain to empower businessess
           </Box>
 
           <Box
             component={Button}
             variant="contained"
-            bgcolor={theme.palette.primary.main}
+            bgcolor={theme.isDark ? "#65BDFE" : theme.palette.primary.main}
             fontSize={"1rem"}
             height={"67px"}
             width={"186px"}
             borderRadius={"100px"}
             mt={"2rem"}
-            color={"#fff"}
+            color={theme.isDark ? "#24262E" : "#fff"}
+            textTransform={"capitalize"}
           >
             Read Case Study
           </Box>
@@ -370,9 +354,9 @@ const Card = ({ count, title }: { count: number; title: string }) => {
   const theme = useTheme();
   return (
     <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-      <Box px={3} py={4} bgcolor={"#F5F7FA"} borderRadius={"1.5rem"}>
+      <Box px={3} py={4} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
         <Box
-          color={theme.palette.primary.main}
+          color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
           fontSize={"2.5rem"}
           lineHeight={"2.875rem"}
           fontWeight={500}
@@ -381,7 +365,13 @@ const Card = ({ count, title }: { count: number; title: string }) => {
           <CountUp end={count} duration={2} />
           {count === 30 ? "+" : ""}
         </Box>
-        <Box color={"#000000"} fontSize={"0.875rem"} lineHeight={"1rem"} textAlign={"left"} pt={1}>
+        <Box
+          color={theme.isDark ? "#F7F9FF" : "#000000"}
+          fontSize={"0.875rem"}
+          lineHeight={"1rem"}
+          textAlign={"left"}
+          pt={1}
+        >
           {title}
         </Box>
       </Box>
@@ -393,16 +383,16 @@ const StyledTable = styled(Table)(({ theme }) => ({
   ".table-wrapper": { background: "transparent" },
   th: {
     background: "transparent",
-    color: "#000000",
+    color: theme.isDark ? "#F7F9FF" : "#000000",
     borderBottom: "1px solid #E3E5E9",
     ":first-child": { marginLeft: "10px" }
   },
-  td: { background: "transparent", color: "#000000" },
+  td: { background: "transparent", color: theme.isDark ? "#F7F9FF" : "#000000" },
   "tbody > tr": {
     ":nth-child(2n)": {
-      background: "#F5F7FA",
+      background: theme.isDark ? "#23262E" : "#F5F7FA",
       borderRadius: theme.spacing(0.5),
-      ":hover": { background: "#F5F7FA" }
+      ":hover": { background: theme.isDark ? "#23262E" : "#F5F7FA" }
     }
   }
 }));
