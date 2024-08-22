@@ -430,10 +430,12 @@ const Card = ({ count, title }: { count: number; title: string }) => {
 
 const StyledTable = styled(Table)(({ theme }) => ({
   ".table-wrapper": { background: "transparent" },
+
   th: {
     background: "transparent",
     color: theme.isDark ? "#F7F9FF" : "#000000",
     borderBottom: "1px solid #E3E5E9",
+    fontWeight: "normal",
     ":first-child": { marginLeft: "10px" }
   },
   td: { background: "transparent", color: theme.isDark ? "#F7F9FF" : "#000000" },
