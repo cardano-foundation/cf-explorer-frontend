@@ -337,7 +337,7 @@ const BolnisiTrx = () => {
             alignItems={"center"}
             sx={{ px: 2, [theme.breakpoints.down("sm")]: { flexDirection: "column" } }}
           >
-            <Box color={theme.isDark ? "#64BCFD" : theme.palette.primary.main} fontSize={"2.25rem"}>
+            <Box color={theme.isDark ? "#64BCFD" : theme.palette.primary.main} fontSize={"2.25rem"} fontWeight={"bold"}>
               Recent Transactions
             </Box>
             <Box
@@ -360,7 +360,7 @@ const BolnisiTrx = () => {
           <StyledTable
             columns={columns}
             data={data}
-            minHeight={765}
+            minHeight={780}
             pagination={{
               size: 10,
               total: data.length || 0
