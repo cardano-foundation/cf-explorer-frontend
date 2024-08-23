@@ -125,9 +125,9 @@ const TabNativeScripts = () => {
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {((data && data.length === 0 && fetchData.initialized && !fetchData.error) ||
-          (fetchData.error && fetchData.statusError !== 500)) && <NoRecord padding={`0 !important`} />}
-        {fetchData.error && fetchData.statusError === 500 && <FetchDataErr padding={`0 !important`} />}
+        {((data && data.length === 0 && !fetchData.error) ||
+          (fetchData.error && (fetchData.statusError || 0) < 500)) && <NoRecord padding={`0 !important`} />}
+        {fetchData.error && (fetchData.statusError || 0) >= 500 && <FetchDataErr padding={`0 !important`} />}
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
