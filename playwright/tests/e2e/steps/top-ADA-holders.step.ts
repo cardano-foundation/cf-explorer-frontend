@@ -4,6 +4,9 @@ import { expect } from "@playwright/test";
 import { blockfrostApi } from "playwright/api/call-blockfrost/blockfrost.api";
 import { koiosApi } from "playwright/api/call-koios/koios.api";
 import { topADAHoldersPage } from "playwright/pages/top-ADA-holders.page";
+import { addressDetailPage } from "playwright/pages/address-detail.page";
+import { poolDetailPage } from "playwright/pages/pool-detail.page";
+import { stakeDetailPage } from "playwright/pages/stake-detail.page";
 
 const { Given, When, Then } = createBdd();
 
@@ -87,7 +90,7 @@ When(/^the user selects the Address hash of one the Top ADA Holders$/, async ({ 
   await firstAddresses.click();
 });
 Then(/^the user should be redirected to the Address detail page of the selected Address hash$/, async ({ page }) => {
-  await topADAHoldersPage(page).checkAddressDetailPage({ firstAddressValue });
+  await addressDetailPage(page).checkAddressDetail({ address: firstAddressValue });
 });
 
 Given(/^the user is in the Top ADA Holders section tab Address ADA Balance$/, async ({ page }) => {
@@ -104,7 +107,7 @@ When(/^the user selects the Stake Address hash of one the Top ADA Holders$/, asy
 Then(
   /^the user should be redirected to the Stake Address detail page of the selected Stake Address hash$/,
   async ({ page }) => {
-    await topADAHoldersPage(page).checkAddressStakeDetailPage({ firstStakeAddress });
+    stakeDetailPage(page).checkStakeDetail({ address: firstStakeAddress });
   }
 );
 
@@ -119,5 +122,5 @@ When(/^the user selects the pool link of one the Top ADA Holders$/, async ({ pag
   await firstPool.click();
 });
 Then(/^the user should be redirected to the Pool detail page of the selected pool link$/, async ({ page }) => {
-  await topADAHoldersPage(page).checkPoolDetailPage({ firstPoolID });
+  await poolDetailPage(page).checkPoolDetail({ poolId: firstPoolID });
 });

@@ -5,8 +5,6 @@ import { DataTabAddADABalance, DataTabAmountStake } from "playwright/api/dtos/to
 export function topADAHoldersPage(page: Page) {
   const topADAHoldersTab = page.getByTestId("submenu-button-top_ada_holders");
   const sidebarBlockchainButton = page.getByTestId("menu-button-blockchain");
-  const detailTitle = page.getByTestId("address-detail-title");
-  const detailTitleAddressDetail = page.getByTestId("detail.page.title");
   const tabAmountStaked = page.getByTestId("topAddresses.amount-staked");
 
   //get element in tab Address ADA Holder
@@ -117,20 +115,6 @@ export function topADAHoldersPage(page: Page) {
     );
   };
 
-  const checkAddressDetailPage = async ({ firstAddressValue = "" }: { firstAddressValue: string | null }) => {
-    expect(page.url().includes(`/address/${firstAddressValue}`)).toBe(true);
-    await expect(detailTitle).toHaveText("Address Details");
-  };
-
-  const checkAddressStakeDetailPage = async ({ firstStakeAddress = "" }: { firstStakeAddress: string | null }) => {
-    expect(page.url().includes(`/stake-address/${firstStakeAddress}`)).toBe(true);
-    await expect(detailTitleAddressDetail).toHaveText("Stake Address Details");
-  };
-
-  const checkPoolDetailPage = async ({ firstPoolID = "" }: { firstPoolID: string | null }) => {
-    expect(page.url().includes(`/pool/${firstPoolID}`)).toBe(true);
-  };
-
   return {
     goToDashboard,
     goToTopADAHolders,
@@ -142,9 +126,6 @@ export function topADAHoldersPage(page: Page) {
     checkAddressAndBalace,
     checkTxCount,
     getAttributeAddressStake,
-    checkStakeAddressAndStakeAmount,
-    checkAddressDetailPage,
-    checkAddressStakeDetailPage,
-    checkPoolDetailPage
+    checkStakeAddressAndStakeAmount
   };
 }
