@@ -7,9 +7,10 @@ import { parse } from "qs";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { TimeDuration } from "src/components/TransactionLists/styles";
-import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import { FooterTable } from "src/components/commons/Table";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import CardVotesOverview from "./CardVotesOverview";
 import FilterVotesOverview from "./FilterVotesOverview";
@@ -60,8 +61,8 @@ export default function VotesOverview() {
   );
 
   const renderCard = () => {
-    if (data.length === 0 || error) return <NoRecord />;
-    if (error && (statusError ?? 0) >= 500) return <EmptyRecord />;
+    if ((!error && data.length === 0) || (error && (statusError || 0) < 500)) return <NoRecord />;
+    if (error && (statusError || 0) >= 500) return <FetchDataErr />;
     return (
       <Box>
         <Grid container spacing={3}>
