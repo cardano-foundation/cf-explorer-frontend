@@ -8,7 +8,6 @@ export function nativeTokenPage(page: Page) {
   const searchBarNativeTokens = page.getByTestId("all-filters-dropdown");
   const deatailPageTitle = page.getByTestId("ns.title");
   const deatailPagesTitle = page.getByTestId("detail.page.title");
-  const deatailAddressPageTitle = page.getByTestId("address-detail-title");
   const deatailTopHolderTab = page.getByTestId("token.detail.topHoldersTab");
   const deatailMintingTab = page.getByTestId("token.detail.mintingTab");
   const policyScript = page.getByTestId("token.policyScript");
@@ -37,10 +36,10 @@ export function nativeTokenPage(page: Page) {
   const viewDetailBtn = page.getByTestId("token.widget.viewDetail");
 
   //Native Token detail - Transactions Table
-  const tokenTransactionTxhash = page.getByTestId("token.transaction.txHash#1");
-  const tokenTransactionBlock = page.getByTestId("token.transaction.block#1");
-  const tokenTransactionEpoch = page.getByTestId("token.transaction.epoch#1");
-  const tokenTransactionAddress = page.getByTestId("token.transaction.address#1");
+  const tokenTransactionTxhash = page.getByTestId("token.transaction.txHash#0");
+  const tokenTransactionBlock = page.getByTestId("token.transaction.block#0");
+  const tokenTransactionEpoch = page.getByTestId("token.transaction.epoch#0");
+  const tokenTransactionAddress = page.getByTestId("token.transaction.address#0");
 
   const goToDashboard = async () => {
     await page.goto("/");
@@ -111,18 +110,6 @@ export function nativeTokenPage(page: Page) {
 
   const getDetailTokenPageTitle = async () => {
     await expect(deatailPageTitle, "Check title on token detail").toHaveText("Native Script Details");
-  };
-  const getDetailTransactionPageTitle = async () => {
-    await expect(deatailPagesTitle, "Check title on transactions detail").toHaveText("Transaction Details");
-  };
-  const getDetailBlockPageTitle = async () => {
-    await expect(deatailPagesTitle, "Check title on block detail").toHaveText("Block Details");
-  };
-  const getDetailEpochPageTitle = async () => {
-    await expect(deatailPagesTitle, "Check title on epoch detail").toHaveText("Epoch Details");
-  };
-  const getDetailAddressPageTitle = async () => {
-    await expect(deatailAddressPageTitle, "Check title on address detail").toHaveText("Address Details");
   };
 
   const getLinkHrefFromWidgetByTokenID = async () => {
@@ -197,15 +184,11 @@ export function nativeTokenPage(page: Page) {
     goToTokenDetailFromWidgetByScriptHash,
     goToTokenDetailFromWidgetByTransaction,
     goToDashboard,
-    getDetailTransactionPageTitle,
     goToBlockDetailFromTransactionTableByBlock,
     goToEpochDetailFromTransactionTableByEpoch,
     goToTokenDetailFromWidgetByViewDetailBtn,
     getLinkHrefFromWidgetByTransaction,
     getLinkHrefFromWidgetByViewDetailBtn,
-    getDetailBlockPageTitle,
-    getDetailEpochPageTitle,
-    getDetailAddressPageTitle,
     checkCurrentTokenWidget,
     checkCurrentAssetDetail,
     openPolicyScriptModal,
