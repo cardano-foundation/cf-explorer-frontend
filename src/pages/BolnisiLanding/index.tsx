@@ -56,10 +56,10 @@ const Header = () => {
           backgroundPosition: "center"
         }}
         sx={{
-          height: 350,
-          [theme.breakpoints.down("md")]: {
-            height: "calc(100vh - 550px)"
-          }
+          height: 320
+          // [theme.breakpoints.down("md")]: {
+          //   height: "calc(100vh - 550px)"
+          // }
         }}
       >
         <Container maxWidth="lg" style={{ height: "100%" }}>
@@ -335,7 +335,7 @@ const BolnisiTrx = () => {
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
-            sx={{ [theme.breakpoints.down("md")]: { flexDirection: "column" } }}
+            sx={{ px: 2, [theme.breakpoints.down("sm")]: { flexDirection: "column" } }}
           >
             <Box color={theme.isDark ? "#64BCFD" : theme.palette.primary.main} fontSize={"2.25rem"}>
               Recent Transactions
