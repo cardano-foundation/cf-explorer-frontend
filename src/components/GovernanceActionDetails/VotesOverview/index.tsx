@@ -85,12 +85,14 @@ export default function VotesOverview() {
 
   return (
     <>
-      <Box marginBottom={"32px"} display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterVotesOverview />
-      </Box>
+      {!error && (
+        <Box marginBottom={"32px"} display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterVotesOverview />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{
