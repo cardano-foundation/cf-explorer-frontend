@@ -3,6 +3,7 @@ import { Box, Button, Container, Grid, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { useUpdateEffect } from "react-use";
 import CountUp from "react-countup";
+import Lottie from "react-lottie";
 
 import "./index.css";
 import {
@@ -19,6 +20,8 @@ import Table from "src/components/commons/Table";
 import { MotionDiv } from "src/commons/animation/motion-div";
 import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
+
+import Bolnisi_Animation_Desktop from "./resource/Bolnisi_Animation_Desktop.json";
 
 const BolnisiLanding = () => {
   useEffect(() => {
@@ -111,6 +114,17 @@ const Header = () => {
 const ProgressSession = () => {
   const theme = useTheme();
 
+  const { isLaptop } = useScreen();
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: Bolnisi_Animation_Desktop,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return (
     <Box>
       <Container maxWidth="md" sx={{ height: "100%", mt: 8 }}>
@@ -190,7 +204,25 @@ const ProgressSession = () => {
           </Grid>
         </Box>
       </Container>
-
+      {!isLaptop && (
+        <Box
+          component={MotionDiv}
+          viewRate={0.2}
+          maxWidth={"80%"}
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          marginX={"auto"}
+          mt={5}
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              maxWidth: "100%",
+              px: 2
+            }
+          }}
+        >
+          <Lottie options={defaultOptions} width={"100%"} />
+        </Box>
+      )}
       <Box
         className="bolnisi-body-background"
         width={"100%"}
