@@ -1,10 +1,9 @@
 **/node_modules/
 **/dist
-**/build
+\*\*/build
 .git
 .githooks
 .github
-cypress/
 .env
 env.global.js
 .dockerignore
