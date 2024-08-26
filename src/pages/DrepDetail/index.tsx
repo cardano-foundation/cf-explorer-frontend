@@ -117,7 +117,7 @@ const DrepDetail = () => {
                 value={data?.anchorUrl || ""}
                 sxFirstPart={{
                   maxWidth:
-                    width < 600 || (width > 900 && width < 1080)
+                    width < 1024
                       ? "calc(100% - 70px)"
                       : data?.anchorUrl.length > 23
                       ? "calc(100% - 48px)"
