@@ -116,13 +116,13 @@ const DrepDetail = () => {
               <DynamicEllipsisText
                 value={data?.anchorUrl || ""}
                 sxFirstPart={{
-                  maxWidth: (width > 600 && width < 900) || width > 1310 ? "calc(100% - 48px)" : "calc(100% - 70px)",
+                  maxWidth: "calc(100% - 60px)",
                   minWidth: 16
                 }}
+                customTruncateFold={[4, 4]}
                 postfix={5}
                 sxLastPart={{ direction: "inherit" }}
-                sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
-                isNoLimitPixel={true}
+                sx={{ cursor: "pointer" }}
                 isTooltip
                 whiteSpace="normal"
               />
