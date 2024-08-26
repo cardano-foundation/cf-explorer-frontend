@@ -116,7 +116,12 @@ const DrepDetail = () => {
               <DynamicEllipsisText
                 value={data?.anchorUrl || ""}
                 sxFirstPart={{
-                  maxWidth: (width > 600 && width < 900) || width > 1310 ? "calc(100% - 48px)" : "calc(100% - 70px)",
+                  maxWidth:
+                    width < 600 || (width > 900 && width < 1080)
+                      ? "calc(100% - 70px)"
+                      : data?.anchorUrl.length > 23
+                      ? "calc(100% - 48px)"
+                      : "calc(100% - 36px)",
                   minWidth: 16
                 }}
                 postfix={5}
