@@ -8,6 +8,7 @@ import { API } from "src/commons/utils/api";
 import { routers } from "src/commons/routers";
 import NoRecord from "src/components/commons/NoRecord";
 import { numberWithCommas } from "src/commons/utils/helper";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledCard, StyledSkeleton } from "./styles";
 
@@ -26,9 +27,36 @@ interface REGISTERED_STAKEPOOLS {
 export default function RegisteredStakepoolsChart() {
   const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:600px)");
-  const { data, loading, error } = useFetch<REGISTERED_STAKEPOOLS>(API.NETWORK_MONITORING_API.REGISTERED_STAKEPOOLS);
+  const { data, loading, error, statusError } = useFetch<REGISTERED_STAKEPOOLS>(
+    API.NETWORK_MONITORING_API.REGISTERED_STAKEPOOLS
+  );
   const activePool = data?.activePool;
   const registeredPool = data?.registeredPool;
+
+  if (loading)
+    return (
+      <StyledCard.Container>
+        <Grid>
+          <StyledSkeleton style={{ minHeight: "150px" }} variant="rectangular" />
+        </Grid>
+      </StyledCard.Container>
+    );
+
+  if (error && (statusError || 0) < 500)
+    return (
+      <StyledCard.Container>
+        <StyledCard.Title>Registered Stakepools</StyledCard.Title>
+        <NoRecord />
+      </StyledCard.Container>
+    );
+
+  if (error && (statusError || 0) >= 500)
+    return (
+      <StyledCard.Container>
+        <StyledCard.Title>Registered Stakepools</StyledCard.Title>
+        <FetchDataErr />
+      </StyledCard.Container>
+    );
   return (
     <StyledCard.Container sx={{ padding: isMobile ? "16px" : "12px 32px 32px 32px" }}>
       {error ? (

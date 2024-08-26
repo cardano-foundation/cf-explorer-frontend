@@ -19,6 +19,7 @@ import { Capitalize } from "src/components/commons/CustomText/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
@@ -34,7 +35,7 @@ const Epoch: React.FC = () => {
   const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo }, false, epochNo);
   const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
 
-  const { error } = fetchData;
+  const { error, statusError } = fetchData;
 
   const EPOCH_STATUS_MAPPING = {
     [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
@@ -164,7 +165,8 @@ const Epoch: React.FC = () => {
     if (epochNo !== undefined && latestEpoch?.no !== undefined && epochNo !== latestEpoch.no) setKey(epochNo);
   }, [epochNo, latestEpoch?.no]);
 
-  if (error) return <NoRecord />;
+  if (error && (statusError || 0) < 500) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
   return (
     <StyledContainer>
       <Card data-testid="epoch.epochsTitle" title={t("glossary.epochs")}>
