@@ -11,6 +11,8 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import {
   BoxInfo,
@@ -65,7 +67,7 @@ const TransactionNumberChart: React.FC = () => {
     }
   };
 
-  const { data, loading } = useFetch<TransactionChartIF[]>(
+  const { data, loading, error, statusError } = useFetch<TransactionChartIF[]>(
     `${API.TRANSACTION.GRAPH}/${rangeTime}`,
     undefined,
     false,
@@ -110,6 +112,24 @@ const TransactionNumberChart: React.FC = () => {
       </Grid>
     );
   };
+  if (error && (statusError || 0) < 500)
+    return (
+      <TransactionContainer>
+        <Grid item xs={12} sm={8} md={8} lg={9}>
+          <Title>{t("drawer.transactionsHistory")}</Title>
+        </Grid>
+        <NoRecord />
+      </TransactionContainer>
+    );
+  if (error && (statusError || 0) >= 500)
+    return (
+      <TransactionContainer>
+        <Grid item xs={12} sm={8} md={8} lg={9}>
+          <Title>{t("drawer.transactionsHistory")}</Title>
+        </Grid>
+        <FetchDataErr />
+      </TransactionContainer>
+    );
   return (
     <TransactionContainer>
       <Grid container spacing={2}>
