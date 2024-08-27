@@ -85,7 +85,7 @@ const HomeStatistic = () => {
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
-  const progress = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+  const progress = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
@@ -239,7 +239,7 @@ const HomeStatistic = () => {
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
-                      {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      {moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                         ? numberWithCommas(currentEpoch?.slot)
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
@@ -50,10 +51,12 @@ const Epoch: React.FC = () => {
       minWidth: "50px",
       render: (r, idx) => (
         <EpochNumber data-testid={`epoch.epochValue#${idx}`}>
-          <StyledBox>{r.no || 0}</StyledBox>
-          <StatusTableRow status={r.status as keyof typeof EPOCH_STATUS}>
-            {EPOCH_STATUS_MAPPING[EPOCH_STATUS[r.status]]}
-          </StatusTableRow>
+          <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
+            <StyledBox>{r.no || 0}</StyledBox>
+            <StatusTableRow status={r.status as keyof typeof EPOCH_STATUS}>
+              {EPOCH_STATUS_MAPPING[EPOCH_STATUS[r.status]]}
+            </StatusTableRow>
+          </Box>
         </EpochNumber>
       )
     },
