@@ -126,7 +126,7 @@ export const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
   const theme = useTheme();
 
   return (
-    <DetailsInfo isClickAble={0} container length={listItem.length}>
+    <DetailsInfo isclickable={0} container length={listItem.length}>
       {(listItem || [])?.map((item, index) => {
         return (
           <CardItem
@@ -138,7 +138,7 @@ export const OverralCard: React.FC<OverralCardIF> = ({ listItem }) => {
             length={listItem.length}
             key={index}
             wide={0}
-            itemOnRow={4}
+            itemonrow={4}
             textAlign={"left"}
           >
             <Box position="relative">

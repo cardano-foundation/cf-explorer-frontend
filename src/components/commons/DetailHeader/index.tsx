@@ -163,7 +163,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 length={numberOfItems}
                 key={index}
                 wide={+isDetailToken}
-                itemOnRow={itemOnRow}
+                itemonrow={itemOnRow}
               >
                 <IconSkeleton variant="circular" />
                 <DetailValueSkeleton variant="rectangular" />
@@ -260,7 +260,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
         )}
       </WrapHeader>
       {listItem && (
-        <DetailsInfo isClickAble={+Boolean(isClickAble)} container length={numberOfItems}>
+        <DetailsInfo isclickable={+Boolean(isClickAble)} container length={numberOfItems}>
           {(listItem || [])?.map((item, index) => {
             const keyItem = item.key || "";
             return (
@@ -273,7 +273,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 length={numberOfItems}
                 key={index}
                 wide={+isDetailToken}
-                itemOnRow={itemOnRow}
+                itemonrow={itemOnRow}
               >
                 <Box position="relative" display={item.hideHeader ? "none" : ""}>
                   {item.icon ? (
@@ -414,7 +414,7 @@ const BufferList = memo(({ numberOfItems, wide, children, itemOnRow }: BufferLis
               length={numberOfItems + numberOfBuffer}
               key={index}
               wide={wide}
-              itemOnRow={itemOnRow}
+              itemonrow={itemOnRow}
             >
               {children}
             </CardItem>
