@@ -58,6 +58,7 @@ import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants"
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
@@ -82,7 +83,7 @@ const DrepDetail = () => {
 
   const [typeVote, setTypeVote] = useState("Default");
   const [openModal, setOpenModal] = useState(false);
-  const { data, loading, error } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+  const { data, loading, error, statusError } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
@@ -279,7 +280,8 @@ const DrepDetail = () => {
       )
     }
   ];
-  if (error) return <NoRecord />;
+  if (error && (statusError || 0) < 500) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
   if (!FF_GLOBAL_IS_CONWAY_ERA) {
     return <NotFound />;
   }
