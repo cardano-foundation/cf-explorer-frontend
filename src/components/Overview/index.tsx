@@ -10,9 +10,10 @@ import CardOverview from "./CardOverview";
 import ChartOverview from "./ChartOverview";
 import TabOverview from "./TabOverview";
 import NoRecord from "../commons/NoRecord";
+import FetchDataErr from "../commons/FetchDataErr";
 
 export default function OverviewComponent() {
-  const { data, loading, error } = useFetch<GOoverview>(API.GOVERNANCE_OVERVIEW.OVERVIEW);
+  const { data, loading, error, statusError } = useFetch<GOoverview>(API.GOVERNANCE_OVERVIEW.OVERVIEW);
   const dataCard = {
     activeDReps: data?.activeDReps,
     activeSPOs: data?.activeSPOs,
@@ -24,7 +25,8 @@ export default function OverviewComponent() {
     govStatusMap: data?.govStatusMap,
     govCountMap: data?.govCountMap
   };
-  if (error) return <NoRecord />;
+  if (error && (statusError || 0) < 500) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
   return (
     <Box>
       <Card marginBottom={"32px"} title={t("glossary.overview")}>

@@ -11,6 +11,7 @@ import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter"
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
@@ -27,7 +28,7 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({});
-  const { data, total, loading, initialized, error, query } = useFetchList<WithdrawItem>(
+  const { data, total, loading, initialized, error, query, statusError } = useFetchList<WithdrawItem>(
     stakeId ? API.STAKE_LIFECYCLE.WITHDRAW(stakeId) : "",
     { ...pageInfo, ...params, txHash: params.search }
   );
@@ -97,7 +98,10 @@ const RecentWithdraws: React.FC<Props> = ({ onSelect, setShowBackButton }) => {
             );
           })}
       </GridBox>
-      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {error && (statusError || 0) >= 500 && <FetchDataErr />}
+      {((!loading && initialized && data?.length === 0 && !error) || (error && (statusError || 0) < 500)) && (
+        <EmptyRecord />
+      )}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           pagination={{
