@@ -77,7 +77,12 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
       case OPTIONS_CHART_ANALYTICS.ONE_DAY:
-        return `${moment(label).format("DD MMM HH:mm")} - ${moment(label).add(2, "hour").format("HH:mm")}`;
+        return `${moment(label, "YYYY-MM-DDTHH:mm:ssZ").format("DD MMM HH:mm")} - ${moment(
+          label,
+          "YYYY-MM-DDTHH:mm:ssZ"
+        )
+          .add(2, "hour")
+          .format("HH:mm")}`;
       case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
         return moment(label).format("DD MMM");
       case OPTIONS_CHART_ANALYTICS.ONE_MONTH:
@@ -141,7 +146,9 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   </defs>
                   <XAxis
                     dataKey="date"
-                    tickFormatter={(value) => moment(value).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")}
+                    tickFormatter={(value) =>
+                      moment(value, "YYYY-MM-DDTHH:mm:ssZ").format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")
+                    }
                     tickLine={false}
                     tickMargin={5}
                     dx={-15}
