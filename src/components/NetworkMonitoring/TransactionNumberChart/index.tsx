@@ -11,6 +11,8 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import {
   BoxInfo,
@@ -65,7 +67,7 @@ const TransactionNumberChart: React.FC = () => {
     }
   };
 
-  const { data, loading } = useFetch<TransactionChartIF[]>(
+  const { data, loading, error, statusError } = useFetch<TransactionChartIF[]>(
     `${API.TRANSACTION.GRAPH}/${rangeTime}`,
     undefined,
     false,
@@ -110,6 +112,24 @@ const TransactionNumberChart: React.FC = () => {
       </Grid>
     );
   };
+  if (error && (statusError || 0) < 500)
+    return (
+      <TransactionContainer>
+        <Grid item xs={12} sm={8} md={8} lg={9}>
+          <Title>{t("drawer.transactionsHistory")}</Title>
+        </Grid>
+        <NoRecord />
+      </TransactionContainer>
+    );
+  if (error && (statusError || 0) >= 500)
+    return (
+      <TransactionContainer>
+        <Grid item xs={12} sm={8} md={8} lg={9}>
+          <Title>{t("drawer.transactionsHistory")}</Title>
+        </Grid>
+        <FetchDataErr />
+      </TransactionContainer>
+    );
   return (
     <TransactionContainer>
       <Grid container spacing={2}>
@@ -184,18 +204,18 @@ const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_MONTH":
     case "THREE_MONTH":
-      return moment(date).format("DD MMM");
+      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("DD MMM");
     case "ONE_YEAR":
     case "THREE_YEAR":
     case "ALL_TIME":
-      return moment(date).format("MMM YYYY");
+      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("MMM YYYY");
 
     default:
       break;
   }
 };
 
-const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
+const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
   const ratio = total > 0 ? value / total : 0;

@@ -33,7 +33,9 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
   const { page, size } = pageInfo;
 
   const history = useHistory();
-  const { data } = useFetch<Data>(API.OVERVIEW_GOV_ACTIONS.CREATE_BY(anchorUrl, anchorHash, page, size));
+  const { data, statusError, error } = useFetch<Data>(
+    API.OVERVIEW_GOV_ACTIONS.CREATE_BY(anchorUrl, anchorHash, page, size)
+  );
 
   const columns: Column<Data>[] = [
     {
@@ -73,6 +75,8 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
     <Box>
       <Table
         {...data}
+        statusError={statusError}
+        error={error}
         columns={columns}
         total={{ count: data?.totalItems ?? 0, title: "Total", isDataOverSize: data?.isDataOverSize }}
         pagination={{

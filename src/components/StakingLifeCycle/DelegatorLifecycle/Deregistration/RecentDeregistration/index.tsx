@@ -12,6 +12,7 @@ import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter"
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
@@ -28,7 +29,7 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
   const [pageInfo, setPageInfo] = useState({ page: 0, size: 50 });
   const [params, setParams] = useState<FilterParams>({});
 
-  const { data, total, loading, initialized, error, query } = useFetchList<DeregistrationItem>(
+  const { data, total, loading, initialized, error, query, statusError } = useFetchList<DeregistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.DEREGISTRATION(stakeId) : "",
     { ...pageInfo, ...params, txHash: params.search }
   );
@@ -91,7 +92,10 @@ const RecentDeregistrations: React.FC<Props> = ({ setShowBackButton }) => {
             );
           })}
       </GridBox>
-      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {error && (statusError || 0) >= 500 && <FetchDataErr />}
+      {((!loading && initialized && data?.length === 0 && !error) || (error && (statusError || 0) < 500)) && (
+        <EmptyRecord />
+      )}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           pagination={{
