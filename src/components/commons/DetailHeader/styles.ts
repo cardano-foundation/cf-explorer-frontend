@@ -10,7 +10,7 @@ import { CommonSkeleton } from "../CustomSkeleton";
 interface CardItemProps {
   length: number;
   wide?: number;
-  itemOnRow: number;
+  itemonrow: number;
 }
 
 export const HeaderDetailContainer = styled(Box)`
@@ -180,7 +180,7 @@ export const SlotLeaderCopy = styled(CopyButton)`
   margin-bottom: 3px;
 `;
 
-export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }>`
+export const DetailsInfo = styled(Grid)<{ length: number; isclickable?: number }>`
   padding: 30px ${(props) => (props.length > 6 ? 25 : 15)}px;
   margin-top: 15px;
   background: ${(props) => props.theme.palette.secondary[0]};
@@ -193,8 +193,8 @@ export const DetailsInfo = styled(Grid)<{ length: number; isClickAble?: number }
   }
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   &:hover {
-    box-shadow: ${({ theme, isClickAble }) =>
-      isClickAble ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
+    box-shadow: ${({ theme, isclickable }) =>
+      isclickable ? "1px 2px 15px 0px " + alpha(theme.palette.secondary.light, 0.25) : ""};
   }
 `;
 
@@ -314,7 +314,7 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemOnRow }) => ({
+export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemonrow }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${theme.palette.primary[200]}`,
@@ -326,13 +326,13 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
     ? {
         borderBottomWidth: 1,
         [theme.breakpoints.up("lg")]: {
-          [`:nth-of-type(${itemOnRow}n+1)`]: {
+          [`:nth-of-type(${itemonrow}n+1)`]: {
             borderLeftWidth: 0,
             paddingLeft: 0
           },
-          [`:nth-last-of-type(-n + ${itemOnRow})`]: {
+          [`:nth-last-of-type(-n + ${itemonrow})`]: {
             borderBottom: "none !important",
-            [`:nth-of-type(${itemOnRow}n + 1)`]: {
+            [`:nth-of-type(${itemonrow}n + 1)`]: {
               "&~div": {
                 borderBottomWidth: 0,
                 paddingTop: 20,
