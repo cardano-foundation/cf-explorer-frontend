@@ -38,7 +38,7 @@ When(/^the user opens the info widget of a given token$/, async ({ page }) => {
 Then(
   /^the user should see the Info widget data with the same data of the selected token$/,
   async ({ page, request }) => {
-    const policyName = await page.getByTestId("token.widget.policyName").getAttribute("data-policyName");
+    const policyName = await nativeTokenPage(page).getDataPolicyName();
     (await blockfrostApi(request).getAssetNameByAssetToken(policyName)).json().then(async (data) => {
       await nativeTokenPage(page).checkCurrentTokenWidget({ currentNativeToken: data });
     });
@@ -52,7 +52,7 @@ When(/^the user selects an Asset name of one of the Tokens record in the table$/
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 Then(/^the user should see the Token detail page of the selected Token in the table$/, async ({ page, request }) => {
-  const policyName = await page.getByTestId("token.asset.name").getAttribute("data-assetName");
+  const policyName = await nativeTokenPage(page).getTokenAssetName();
   (await blockfrostApi(request).getAssetNameByAssetToken(policyName)).json().then(async (data) => {
     await nativeTokenPage(page).checkCurrentAssetDetail({ currentNativeToken: data });
   });
@@ -136,8 +136,7 @@ Given(/^the user open the detail page of a token in the native tokens page$/, as
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the Transaction hash of a transaction in the transactions table$/, async ({ page }) => {
-  const nativeDetailTrxTableValueTrx = page.getByTestId("token.transaction.txHash#0");
-  transactionHash = await nativeDetailTrxTableValueTrx.getAttribute("aria-label");
+  transactionHash = await nativeTokenPage(page).getTransactionByTableValueTrx();
   await nativeTokenPage(page).goToTransactionDetailFromTransactionTableByTxHash();
 });
 Then(
@@ -152,8 +151,7 @@ Given(/^the user open the detail page of a token in the native tokens site$/, as
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the Block number in the transactions table$/, async ({ page }) => {
-  const nativeDetailTrxTableValueEpcch = page.getByTestId("token.transaction.block#0");
-  blockNo = await nativeDetailTrxTableValueEpcch.getAttribute("aria-label");
+  blockNo = await nativeTokenPage(page).getBlockByTableValueTrx();
   await nativeTokenPage(page).goToBlockDetailFromTransactionTableByBlock();
 });
 Then(/^the user should be redirected to the Block details page of the selected block number$/, async ({ page }) => {
@@ -165,8 +163,7 @@ Given(/^the user open the detail page of a token in the native tokens web$/, asy
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the Epoch number in the transactions table$/, async ({ page }) => {
-  const nativeDetailTrxTableValueEpoch = page.getByTestId("token.transaction.epoch#0");
-  epochNo = await nativeDetailTrxTableValueEpoch.getAttribute("aria-label");
+  epochNo = await nativeTokenPage(page).getEpochByTableValueTrx();
   await nativeTokenPage(page).goToEpochDetailFromTransactionTableByEpoch();
 });
 Then(/^the user should be redirected to the Epoch details page of the selected epoch number$/, async ({ page }) => {
@@ -178,8 +175,7 @@ Given(/^the user open the detail page of a token in the native tokens page site$
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the input addres link in the transactions table$/, async ({ page }) => {
-  const nativeDetailTrxTableValueEpoch = page.getByTestId("token.transaction.epoch#0");
-  epochNo = await nativeDetailTrxTableValueEpoch.getAttribute("aria-label");
+  epochNo = await nativeTokenPage(page).getEpochByTableValueTrx();
   await nativeTokenPage(page).goToEpochDetailFromTransactionTableByEpoch();
 });
 Then(/^the user should be redirected to the Address details page of the selected address link$/, async ({ page }) => {
@@ -191,8 +187,7 @@ Given(/^the user open the detail page of a token in the native tokens page in we
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the input addres link in the transactions table in web$/, async ({ page }) => {
-  const tokenDetailTrxTableValueAddr = page.getByTestId("token.transaction.address#0");
-  address = await tokenDetailTrxTableValueAddr.getAttribute("aria-label");
+  address = await nativeTokenPage(page).getAddressByTableValueTrx();
   await nativeTokenPage(page).goToAddressDetailFromTransactionTableByAddress();
 });
 Then(
@@ -207,8 +202,7 @@ Given(/^the user open the detail page of a token in the native tokens page in we
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the addres link in the top holders section in web site$/, async ({ page }) => {
-  const tokenDetailTrxTableValueAddr = page.getByTestId("token.transaction.address#0");
-  address = await tokenDetailTrxTableValueAddr.getAttribute("aria-label");
+  address = await nativeTokenPage(page).getAddressByTableValueTrx();
   await nativeTokenPage(page).goToStakeAddressDetailFromTopHolderTableByAddress();
 });
 Then(
@@ -223,8 +217,7 @@ Given(/^the user open the detail page of a token in the native tokens in webpage
   await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
 });
 When(/^the user selects the transaction hash in the minting section in webpage$/, async ({ page }) => {
-  const tokenDetailTrxTableValueTrx = page.getByTestId("token.detail.minting.trxHash#0");
-  transactionHash = await tokenDetailTrxTableValueTrx.getAttribute("aria-label");
+  transactionHash = await nativeTokenPage(page).getMintingByTableValueTrx();
   await nativeTokenPage(page).goToTransactionDetailFromMintingTableByTxHash();
 });
 Then(

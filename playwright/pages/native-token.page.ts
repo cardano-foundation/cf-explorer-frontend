@@ -40,6 +40,9 @@ export function nativeTokenPage(page: Page) {
   const tokenTransactionBlock = page.getByTestId("token.transaction.block#0");
   const tokenTransactionEpoch = page.getByTestId("token.transaction.epoch#0");
   const tokenTransactionAddress = page.getByTestId("token.transaction.address#0");
+  const widgetPolicyName = page.getByTestId("token.widget.policyName");
+  const tokenAssetName = page.getByTestId("token.asset.name");
+  const tokenMinting = page.getByTestId("token.detail.minting.trxHash#0");
 
   const goToDashboard = async () => {
     await page.goto("/");
@@ -120,6 +123,15 @@ export function nativeTokenPage(page: Page) {
     const tokenId = await viewDetailBtn?.getAttribute("data-policyName");
     return tokenId;
   };
+  const getDataPolicyName = async () => {
+    const policyName = await widgetPolicyName?.getAttribute("data-policyName");
+    return policyName;
+  };
+
+  const getTokenAssetName = async () => {
+    const assetName = await tokenAssetName?.getAttribute("data-assetName");
+    return assetName;
+  };
   const getLinkHrefFromWidgetByTransaction = async () => {
     const tokenId = await transactionFromWidgetToken?.getAttribute("href");
     return tokenId;
@@ -127,6 +139,26 @@ export function nativeTokenPage(page: Page) {
   const getLinkHrefFromWidgetByScriptHash = async () => {
     const scriptHash = await scriptHashFromWidgetToken?.getAttribute("href");
     return scriptHash;
+  };
+  const getTransactionByTableValueTrx = async () => {
+    const trxHash = await tokenTransactionTxhash.getAttribute("aria-label");
+    return trxHash;
+  };
+  const getEpochByTableValueTrx = async () => {
+    const epochTrx = await tokenTransactionEpoch.getAttribute("aria-label");
+    return epochTrx;
+  };
+  const getBlockByTableValueTrx = async () => {
+    const blockTrx = await tokenTransactionBlock.getAttribute("aria-label");
+    return blockTrx;
+  };
+  const getAddressByTableValueTrx = async () => {
+    const addressTrx = await tokenTransactionAddress.getAttribute("aria-label");
+    return addressTrx;
+  };
+  const getMintingByTableValueTrx = async () => {
+    const tokenMintingTrx = await tokenMinting.getAttribute("aria-label");
+    return tokenMintingTrx;
   };
 
   const checkNativeTokenTable = async () => {
@@ -189,11 +221,18 @@ export function nativeTokenPage(page: Page) {
     goToTokenDetailFromWidgetByViewDetailBtn,
     getLinkHrefFromWidgetByTransaction,
     getLinkHrefFromWidgetByViewDetailBtn,
+    getTransactionByTableValueTrx,
     checkCurrentTokenWidget,
     checkCurrentAssetDetail,
     openPolicyScriptModal,
     checkNativeTokenTable,
     searchBarOnTokens,
-    openWidget
+    openWidget,
+    getDataPolicyName,
+    getTokenAssetName,
+    getEpochByTableValueTrx,
+    getAddressByTableValueTrx,
+    getMintingByTableValueTrx,
+    getBlockByTableValueTrx
   };
 }
