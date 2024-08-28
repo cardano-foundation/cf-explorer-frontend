@@ -49,11 +49,14 @@ const RegistrationPools: React.FC<Props> = ({ poolType }) => {
     {
       title: <Box data-testid="registrationPools.transactionHashTitle">{t("glossary.txHash")}</Box>,
       key: "bk.time",
-      render: (pool) => {
+      render: (pool, idx) => {
         return (
           <>
             <CustomTooltip title={pool.txHash}>
-              <StyledLink data-testid="registrationPools.transactionHashValue" to={details.transaction(pool.txHash)}>
+              <StyledLink
+                data-testid={`registrationPools.transactionHashValue#${idx}`}
+                to={details.transaction(pool.txHash)}
+              >
                 {getShortHash(pool.txHash || "")}
               </StyledLink>
             </CustomTooltip>

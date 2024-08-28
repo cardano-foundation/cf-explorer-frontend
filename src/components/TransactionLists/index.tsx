@@ -50,14 +50,16 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
-      title: t("glossary.txhash"),
+      title: <Box data-testid="transactions.table.title.txhash">{t("glossary.txhash")}</Box>,
       key: "hash",
       minWidth: 120,
 
-      render: (r) => (
+      render: (r, index) => (
         <div>
           <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+            <StyledLink data-testid={`transaction.table.value.txhash#${index}`} to={details.transaction(r.hash)}>
+              {getShortHash(r.hash)}
+            </StyledLink>
           </CustomTooltip>
           <Box mt={1} color={({ palette }) => palette.secondary.light}>
             <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
@@ -66,31 +68,35 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: t("glossary.block"),
+      title: <Box data-testid="transactions.table.title.block">{t("glossary.block")}</Box>,
       key: "block",
       minWidth: 50,
-      render: (r) => {
+      render: (r, index) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
           <StyledLink to={details.block(r.blockNo || r.blockHash)}>
             <CustomTooltip title={tooltip}>
-              <span>{blockName}</span>
+              <span data-testid={`transaction.table.value.block#${index}`}>{blockName}</span>
             </CustomTooltip>
           </StyledLink>
         );
       }
     },
     {
-      title: t("glossary.epoch"),
+      title: <Box data-testid="transactions.table.title.epoch">{t("glossary.epoch")}</Box>,
       key: "epochNo",
       minWidth: 60,
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r, index) => (
+        <StyledLink to={details.epoch(r.epochNo)}>
+          <span data-testid={`transactions.table.value.epoch#${index}`}>{r.epochNo}</span>
+        </StyledLink>
+      )
     },
     {
-      title: t("glossary.slot"),
+      title: <Box data-testid="transactions.table.title.slot">{t("glossary.slot")}</Box>,
       key: "epochSlotNo",
       minWidth: 60,
-      render: (r) => r.epochSlotNo
+      render: (r, index) => <Box data-testid={`transactions.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
       title: t("glossary.absoluteSlot"),
@@ -98,7 +104,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: 60
     },
     {
-      title: t("common.fees"),
+      title: <Box data-testid="transactions.table.title.fees">{t("common.fees")}</Box>,
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -112,11 +118,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: t("glossary.outputInAda"),
+      title: <Box data-testid="transactions.table.title.outputInAda">{t("glossary.outputInAda")}</Box>,
       minWidth: 120,
       key: "outSum",
-      render: (r) => (
-        <Box display="inline-flex" alignItems="center">
+      render: (r, index) => (
+        <Box display="inline-flex" alignItems="center" data-testid={`transaction.table.value.outputInAda#${index}`}>
           <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
           {selected === r.hash && <SelectedIcon />}
@@ -127,15 +133,17 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: t("glossary.inputAddress"),
+      title: <Box data-testid="transactions.table.title.inputAddress">{t("glossary.inputAddress")}</Box>,
       key: "addressesInput",
       minWidth: 120,
-      render: (r) => (
+      render: (r, index) => (
         <Box key={r.hash + "input"}>
           {r?.addressesInput?.slice(0, 2).map((address, idx) => (
             <Box key={"addressesInput" + address + idx}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
+                <StyledLink data-testid={`transaction.table.value.inputAddress#${index}`} to={details.address(address)}>
+                  {getShortHash(address)}
+                </StyledLink>
               </CustomTooltip>
             </Box>
           ))}
@@ -144,15 +152,17 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: t("glossary.outpuAddress"),
+      title: <Box data-testid="transactions.table.title.outputAddress">{t("glossary.outpuAddress")}</Box>,
       key: "addressesOutput",
       minWidth: 120,
-      render: (r) => (
+      render: (r, index) => (
         <Box key={r.hash + "output"}>
           {r?.addressesOutput?.slice(0, 2).map((address, idx) => (
             <Box key={"addressesOutput" + address + idx}>
               <CustomTooltip title={address}>
-                <StyledLink to={details.address(address)}>{getShortHash(address)}</StyledLink>
+                <StyledLink data-testid={`transaction.table.value.outpuAddress#${index}`} to={details.address(address)}>
+                  {getShortHash(address)}
+                </StyledLink>
               </CustomTooltip>
             </Box>
           ))}
