@@ -1211,7 +1211,7 @@
   "drep.abstainInfoDescriptionDrep": "The active voting stake is decreased if any of the participating DRep’s ADA is used to vote abstain. This then changes the amount of ADA required to reach the governance action’s ratification threshold.",
   "drep.abstainInfoDescriptionSPOs": "The active voting stake is decreased if any of the participating SPO’s ADA is used to vote abstain. This then changes the amount of ADA required to reach the governance action’s ratification threshold.",
   "drep.abstainInfoDescriptionCC": "The number of Constitutional Committee (CC) Members are decreased if any of the participating CC’s vote abstain. This then changes the amount of CC Members required to reach the governance action’s ratification threshold.",
-  "drep.certificatesHistory": "Drep Certificates History",
+  "drep.certificatesHistory": "DRep Certificates History",
   "drep.abstainActiveVoteStake": "Starting Active Voting Stake",
   "drep.abstainCurrentVoteStake": "Current Active Voting Stake",
   "drep.abstainCCTotal": "Starting CC Members",
