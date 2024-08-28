@@ -300,69 +300,69 @@ const BolnisiTrx = () => {
 
   const data = [
     {
-      txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
+      txHash: "969c9141d978b305244b68b92c18aa323cd94f05ff67133af2f070d3e358705e",
       date: "11/16/2023",
       cert: "Conformity",
       amount: 1234
     },
     {
+      txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
+      date: "11/16/2023",
+      cert: "SCM",
+      amount: 1234
+    },
+    {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "4c5a896ec4a76b947b08f03cbe988b4dfb0068d5d9367431a1856e84623bb20c",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "c717dce01998ce714886649dc4681053cc527013002a912ceb4e4400296e1145",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "0beec12e8d65d922eee9b0510fe8aadde19e813be158796112b126e1cad56e2f",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "1b0c149a78e544ad1a1bcdf6d471294695dcbb3793783d68f7cad6ec8ceeb7d7",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "4072199d747ae5b1f882ed2e200c4d5aaa8c20485111774396aa486d23456c6f",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "e5213469590eee4e75d437d1ffbbe9ffc490f2e78b57f992b975a72146e77d85",
       date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     },
     {
       txHash: "8ed32fad1d88367a743be7a36a7105b7be864c98decbf306c45e497ef41357e2",
       date: "11/16/2023",
-      cert: "Conformity",
-      amount: 1234
-    },
-    {
-      txHash: "969c9141d978b305244b68b92c18aa323cd94f05ff67133af2f070d3e358705e",
-      date: "11/16/2023",
-      cert: "Conformity",
+      cert: "SCM",
       amount: 1234
     }
   ];

@@ -30,6 +30,7 @@ export const getShortHashXs = (address = "", firstpart?: number, lastPart?: numb
   if (address?.length <= 18) return address;
   return address ? `${address.slice(0, firstpart ? firstpart : 7)}...${address.slice(-(lastPart ? lastPart : 5))}` : "";
 };
+
 export const getShortValue = (address = "", length = 50) => {
   return address.slice(0, length);
 };
@@ -242,7 +243,7 @@ export const formatDateTimeLocal = (date: string) => {
     timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
-  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
+  return dateFormat.format(moment(moment.utc(date, "YYYY-MM-DDTHH:mm:ssZ")) as never as Date);
 };
 
 export const formatDateLocal = (date: string) => {
@@ -257,7 +258,7 @@ export const formatDateLocal = (date: string) => {
     timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
-  return dateFormat.format(moment(moment.utc(`${date}`)) as never as Date);
+  return dateFormat.format(moment(moment.utc(date, "YYYY-MM-DDTHH:mm:ssZ")) as never as Date);
 };
 
 export const formatTypeDate = () => {
@@ -289,7 +290,7 @@ export const formatTypeDate = () => {
   const timeZoneText =
     timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
   return `Date format ${dateFormat
-    .format(moment("2023/08/03") as never as Date)
+    .format(moment("2023/08/03", "YYYY-MM-DDTHH:mm:ssZ") as never as Date)
     .replace("2023", "YYYY")
     .replace("08", "MM")
     .replace("03", "DD")} ${timeZoneText}`;
@@ -395,7 +396,6 @@ export function validateTokenExpired() {
     return now.isBefore(exp);
   } catch (e) {
     removeAuthInfo();
-    return false;
   }
 }
 

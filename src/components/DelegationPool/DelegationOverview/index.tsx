@@ -60,7 +60,7 @@ const OverViews: React.FC = () => {
     );
   }
 
-  const slot = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+  const slot = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
     ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
     : MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
@@ -79,9 +79,9 @@ const OverViews: React.FC = () => {
           <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
               <StyledCard.Title data-testid="delegationOverview.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
-              <StyledCard.Link data-testid="delegationOverview.epochValue" to={details.epoch(data?.epochNo)}>
+              <StyledCard.NumberEpoch data-testid="delegationOverview.epochValue">
                 {data?.epochNo}
-              </StyledCard.Link>
+              </StyledCard.NumberEpoch>
               <Box
                 component="span"
                 data-testid="delegationOverview.endIn"
@@ -111,7 +111,7 @@ const OverViews: React.FC = () => {
                 <StyledCard.Content>
                   <StyledCard.Title data-testid="delegationOverview.slotTitle">{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value data-testid="delegationOverview.slotValue">
-                    {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                    {moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                       ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
                       : MAX_SLOT_EPOCH}
                     <Box component="span" sx={{ color: (theme) => theme.palette.secondary.light, fontWeight: "400" }}>
@@ -125,7 +125,7 @@ const OverViews: React.FC = () => {
                 <StyledLinearProgress
                   variant="determinate"
                   value={
-                    moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                    moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                       ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
                       : 100
                   }

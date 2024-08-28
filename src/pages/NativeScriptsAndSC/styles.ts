@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active: string }>(({ active, theme }) => ({
   marginLeft: "8px",
   fontWeight: "bold",
   textTransform: "capitalize",
   fontSize: "18px",
-  color: active ? theme.palette.primary.main : theme.palette.secondary.light
+  color: active === "1" ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 
 export const StyledLink = styled(Link)`
@@ -176,8 +176,8 @@ export const StyledContractTabs = styled(Box)(() => ({
   width: "100%"
 }));
 
-export const StyledAccordionSummary = styled(AccordionSummaryMUI)<{ active: number }>(({ active }) => ({
-  padding: `18px 25px ${active ? 0 : "18px"} 25px`
+export const StyledAccordionSummary = styled(AccordionSummaryMUI)<{ active: string }>(({ active }) => ({
+  padding: `18px 25px ${active === "1" ? 0 : "18px"} 25px`
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
@@ -219,14 +219,14 @@ export const FilterWrapper = styled(Box)`
 `;
 
 export const FilterContainer = styled(Box)(({ theme }) => ({
-  width: 300,
+  width: "300px",
   backgroundColor: theme.palette.secondary[0],
   zIndex: 15,
   position: "absolute",
   top: "calc(100% + 10px)",
   right: 0,
   borderRadius: theme.spacing(1),
-  boxShadow: "2px 2px 10px 0px #43465633",
+  boxShadow: "rgba(189, 197, 209, 0.2) 0px 0.5rem 1.2rem",
   [theme.breakpoints.down("sm")]: {
     width: 250,
     right: -17,

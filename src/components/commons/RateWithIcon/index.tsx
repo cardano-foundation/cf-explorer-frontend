@@ -25,13 +25,13 @@ const ImageRate = styled("img")<{ sign: number }>`
   height: 10px;
 `;
 
-const PriceValue = styled("span")<{ sign: number; themeMode: ThemeType }>`
-  color: ${({ theme, sign, themeMode }) =>
+const PriceValue = styled("span")<{ sign: number; thememode: ThemeType }>`
+  color: ${({ theme, sign, thememode }) =>
     sign > 0
-      ? themeMode === "light"
+      ? thememode === "light"
         ? theme.palette.success[800]
         : theme.palette.success[700]
-      : themeMode === "light"
+      : thememode === "light"
       ? theme.palette.error[700]
       : theme.palette.error[700]};
   font-weight: var(--font-weight-bold);
@@ -71,7 +71,7 @@ const RateWithIcon = ({ value, size, multiple = 1, showIcon = true }: Props) => 
             alt="rate"
           />
         )}
-        <PriceValue sign={sign} themeMode={themeMode}>
+        <PriceValue sign={sign} thememode={themeMode}>
           {sign > 0 ? "+" : ""}
           {multiplied.toFixed(2, BigNumber.ROUND_DOWN).toString().replace(".", ",")} %
         </PriceValue>

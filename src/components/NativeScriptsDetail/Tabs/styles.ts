@@ -18,15 +18,15 @@ export const ItemMint = styled(Grid)(({ theme }) => ({
     border: "none !important"
   },
   [theme.breakpoints.down("lg")]: {
-    ":nth-child(2n) >div": {
+    ":nth-of-type(2n) >div": {
       border: "none !important"
     },
-    ":nth-child(-n+2) >div": {
+    ":nth-of-type(-n+2) >div": {
       borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.07)} !important`
     }
   },
   [theme.breakpoints.down("sm")]: {
-    ":nth-child(-n+4) >div": {
+    ":nth-of-type(-n+4) >div": {
       border: "none !important",
       borderBottom: `1px solid ${alpha(theme.palette.secondary.main, 0.07)} !important`
     },
