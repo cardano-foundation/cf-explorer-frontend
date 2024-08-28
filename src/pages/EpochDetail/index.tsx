@@ -7,6 +7,7 @@ import { API } from "src/commons/utils/api";
 import NoRecord from "src/components/commons/NoRecord";
 import EpochBlockList from "src/components/EpochDetail/EpochBlockList";
 import EpochOverview from "src/components/EpochDetail/EpochOverview";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer } from "./styles";
 
@@ -17,7 +18,7 @@ const EpochDetail: React.FC = () => {
   const { state } = useLocation<{ data?: IDataEpoch }>();
   const [key, setKey] = useState(0);
 
-  const { data, loading, initialized, error, lastUpdated } = useFetch<IDataEpoch>(
+  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<IDataEpoch>(
     `${API.EPOCH.DETAIL}/${epochId}`,
     state?.data,
     false,
@@ -39,8 +40,8 @@ const EpochDetail: React.FC = () => {
   if (!initialized) {
     return null;
   }
-
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if ((initialized && !data) || (error && (statusError || 0) < 500)) return <NoRecord />;
 
   return (
     <StyledContainer>

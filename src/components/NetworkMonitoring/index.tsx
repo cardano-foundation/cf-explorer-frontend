@@ -6,6 +6,7 @@ import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 
 import Card from "../commons/Card";
 import RegisteredStakepoolsChart from "./RegisteredStakepools";
+import TransactionNumberChart from "./TransactionNumberChart";
 import BlockPropagationChart from "./BlockPropagation";
 
 export default function NetworkMonitoringComponent() {
@@ -13,6 +14,7 @@ export default function NetworkMonitoringComponent() {
   return (
     <WrapPage>
       <Card title={t("glossary.networkMonitoring")} />
+      <TransactionNumberChart />
       {NETWORK === NETWORKS.mainnet && <BlockPropagationChart />}
       <RegisteredStakepoolsChart />
     </WrapPage>

@@ -68,12 +68,17 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
   const [fixMax, setFixMax] = useState<number>(6);
   const [fixMin, setFixMin] = useState<number>(0);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -227,7 +232,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
       <Box display="flex" alignItems="center" gap="30px">
         <Box
           component={Input}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
             fontSize: "14px",
@@ -237,12 +242,15 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
           value={
             ["minActiveVoteStake"].includes(keyOnChangeMin)
               ? Number(minValue || 0).toFixed(fixMin)
-              : Number(minValue || 0).toString()
+              : Number(minValue || 0).toString() + (addDotMin ? "," : "")
           }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -279,6 +287,10 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               setFixMin(0);
             }
 
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMin(false);
+            }
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
@@ -300,7 +312,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
             fontSize: "14px",
@@ -310,12 +322,15 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
           value={
             ["maxActiveVoteStake"].includes(keyOnChangeMax)
               ? Number(maxValue).toFixed(fixMax)
-              : Number(maxValue).toString()
+              : Number(maxValue).toString() + (addDotMax ? "," : "")
           }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -340,7 +355,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
@@ -352,24 +367,28 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               setFixMax(6);
             } else {
               setFixMax(0);
-            }
+              if (addDotMax) {
+                numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+                setAddDotMax(false);
+              }
 
-            Number(numericValue) <= maxValueDefault &&
-              setFilterParams({
-                ...filterParams,
-                [keyOnChangeMax]:
-                  +numericValue > maxValueDefault
-                    ? maxValueDefault
-                    : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? truncateToTwoDecimals(+numericValue) / 100
-                    : ["maxPledge"].includes(keyOnChangeMax)
-                    ? +numericValue * 10 ** 6
-                    : ["maxSaturation"].includes(keyOnChangeMax)
-                    ? parseFloat(numericValue).toFixed(2)
-                    : ["maxActiveVoteStake"].includes(keyOnChangeMax)
-                    ? truncateDecimals(+numericValue, 6)
-                    : numericValue
-              });
+              Number(numericValue) <= maxValueDefault &&
+                setFilterParams({
+                  ...filterParams,
+                  [keyOnChangeMax]:
+                    +numericValue > maxValueDefault
+                      ? maxValueDefault
+                      : ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                      ? truncateToTwoDecimals(+numericValue) / 100
+                      : ["maxPledge"].includes(keyOnChangeMax)
+                      ? +numericValue * 10 ** 6
+                      : ["maxSaturation"].includes(keyOnChangeMax)
+                      ? parseFloat(numericValue).toFixed(2)
+                      : ["maxActiveVoteStake"].includes(keyOnChangeMax)
+                      ? truncateDecimals(+numericValue, 6)
+                      : numericValue
+                });
+            }
           }}
           onKeyPress={handleKeyPress}
         />
