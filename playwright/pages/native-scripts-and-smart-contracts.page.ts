@@ -82,7 +82,6 @@ export function nativeScriptAndSmartContractPage(page: Page) {
     }, 10000);
   };
 
-  // Todo
   const checkNativeScriptDetail = async () => {
     expect(nativeScriptTitle).toContainText("Native Script Details");
     expect(mintBurnTab).toContainText("Minting / Burning Policy");
@@ -92,7 +91,6 @@ export function nativeScriptAndSmartContractPage(page: Page) {
     expect(associatedAddressesTab).toContainText("Associated Addresses");
   };
 
-  // Todo
   const checkSmartContractDetail = async () => {
     expect(smartContractTitle).toContainText("Smart Contract Details");
     expect(transactionTab).toContainText("Transactions");
