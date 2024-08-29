@@ -67,7 +67,7 @@ const DelegationLists: React.FC = () => {
       title: <div data-testid="poolList.poolNameTitle">{t("glossary.pool")}</div>,
       key: "poolName",
       minWidth: "150px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip
           title={
             r.tickerName ? (
@@ -80,9 +80,11 @@ const DelegationLists: React.FC = () => {
             ) : undefined
           }
         >
-          <PoolName to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}>
+          <PoolName
+            data-testid={`poolList.poolNameValue#${idx}`}
+            to={{ pathname: details.delegation(r.poolId), state: { fromPath } }}
+          >
             <Box
-              data-testid="poolList.poolNameValue"
               component={"span"}
               textOverflow={"ellipsis"}
               display={(r.poolName || r.poolId || "").length > 20 ? "inline-block" : "inline"}
@@ -104,8 +106,8 @@ const DelegationLists: React.FC = () => {
       ),
       key: "poolSize",
       minWidth: "120px",
-      render: (r) => (
-        <Box component={"span"} data-testid="poolList.poolSizeValue">
+      render: (r, idx) => (
+        <Box component={"span"} data-testid={`poolList.poolSizeValue#${idx}`}>
           {r.poolSize != null ? formatADAFull(r.poolSize) : t("common.N/A")}
         </Box>
       ),
@@ -121,8 +123,8 @@ const DelegationLists: React.FC = () => {
       ),
       key: "pu.pledge",
       minWidth: "120px",
-      render: (r) => (
-        <Box component={"span"} data-testid="poolList.declaredPledgeValue">
+      render: (r, idx) => (
+        <Box component={"span"} data-testid={`poolList.declaredPledgeValue#${idx}`}>
           {formatADAFull(r.pledge)}
         </Box>
       ),
@@ -138,9 +140,9 @@ const DelegationLists: React.FC = () => {
       ),
       minWidth: "120px",
       key: "saturation",
-      render: (r) =>
+      render: (r, idx) =>
         r.saturation != null ? (
-          <Box component={"span"} mr={1} data-testid="poolList.saturationValue">
+          <Box component={"span"} mr={1} data-testid={`poolList.saturationValue#${idx}`}>
             {formatPercent(r.saturation / 100) || `0%`}
           </Box>
         ) : (
@@ -158,8 +160,8 @@ const DelegationLists: React.FC = () => {
       ),
       key: "epochBlock",
       minWidth: "120px",
-      render: (r) => (
-        <Box component={"span"} data-testid="poolList.blockInEpochValue">
+      render: (r, idx) => (
+        <Box component={"span"} data-testid={`poolList.blockInEpochValue#${idx}`}>
           {r.epochBlock || 0}
         </Box>
       ),
@@ -175,8 +177,8 @@ const DelegationLists: React.FC = () => {
       ),
       minWidth: "100px",
       key: "lifetimeBlock",
-      render: (r) => (
-        <Box component={"span"} data-testid="poolList.blockLifetimeValue">
+      render: (r, idx) => (
+        <Box component={"span"} data-testid={`poolList.blockLifetimeValue#${idx}`}>
           {r.lifetimeBlock || 0}
         </Box>
       ),
@@ -192,9 +194,9 @@ const DelegationLists: React.FC = () => {
       ),
       key: "votingPower",
       minWidth: "120px",
-      render: (r) =>
+      render: (r, idx) =>
         r.votingPower != null ? (
-          <CustomTooltip data-testid="poolList.votingPowerValue" title={`${r.votingPower * 100}%`}>
+          <CustomTooltip data-testid={`poolList.votingPowerValue#${idx}`} title={`${r.votingPower * 100}%`}>
             <Box component={"span"}>{formatPercent(r.votingPower)}</Box>
           </CustomTooltip>
         ) : (
@@ -212,8 +214,8 @@ const DelegationLists: React.FC = () => {
       ),
       key: "governanceParticipationRate",
       minWidth: "120px",
-      render: (r) => (
-        <div data-testid="poolList.participationRateValue">
+      render: (r, idx) => (
+        <div data-testid={`poolList.participationRateValue#${idx}`}>
           {r.governanceParticipationRate != null ? `${formatPercent(r.governanceParticipationRate)}` : t("common.N/A")}
         </div>
       ),
@@ -222,6 +224,7 @@ const DelegationLists: React.FC = () => {
       }
     }
   ];
+
   return (
     <DelegationContainer>
       {!error && (

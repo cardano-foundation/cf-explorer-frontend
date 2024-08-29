@@ -159,7 +159,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   );
 };
 
-const SmartContractCard: React.FC<{ data: ScriptSmartContracts }> = ({ data }) => {
+const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data }) => {
   const theme = useTheme();
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {

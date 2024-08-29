@@ -59,9 +59,11 @@ const DynamicEllipsisText = ({
   sx,
   customTruncateFold,
   isNoLimitPixel,
-  whiteSpace
+  whiteSpace,
+  dataTestIdFirstPath
 }: {
   value: string;
+  dataTestIdFirstPath?: string;
   postfix?: number;
   isCopy?: boolean;
   isTooltip?: boolean;
@@ -138,7 +140,9 @@ const DynamicEllipsisText = ({
         title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}
       >
         <Box component={"span"} data-testid="ellipsis-text">
-          <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
+          <FirstPart data-testid={dataTestIdFirstPath} sx={sxFirstPart}>
+            {firstPart}
+          </FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
         </Box>
       </CustomTooltip>

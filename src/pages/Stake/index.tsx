@@ -85,9 +85,9 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       title: <div data-testid="stake.txHashTitle">{t("glossary.txHash")}</div>,
       key: "txHash",
       minWidth: isMobile ? 245 : 80,
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="stake.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`stake.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>

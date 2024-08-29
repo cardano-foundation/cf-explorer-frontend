@@ -10,16 +10,23 @@ import { EllipsisContainer, LeftRowContainer, TextLabel, TextRightValue, TextVal
 
 type TProps = {
   data: TPoolCertificated;
+  index?: number;
 };
 
-const StakeKeyBox = ({ data }: TProps) => {
+const StakeKeyBox = ({ data, index }: TProps) => {
   const { t } = useTranslation();
   const leftRow = [
     {
       label: t("common.poolID"),
       value: (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.poolId} isTooltip isCopy customTruncateFold={[7, 8]} />
+          <DynamicEllipsisText
+            dataTestIdFirstPath={`trx.pool.cert.id#${index}`}
+            value={data.poolId}
+            isTooltip
+            isCopy
+            customTruncateFold={[7, 8]}
+          />
         </EllipsisContainer>
       ),
       isHyperLink: true,
@@ -30,7 +37,13 @@ const StakeKeyBox = ({ data }: TProps) => {
       label: t("common.vrfKey"),
       value: data?.vrfKey ? (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.vrfKey} isTooltip isCopy customTruncateFold={[7, 8]} />
+          <DynamicEllipsisText
+            dataTestIdFirstPath={`trx.pool.cert.vrfKey#${index}`}
+            value={data.vrfKey}
+            isTooltip
+            isCopy
+            customTruncateFold={[7, 8]}
+          />
         </EllipsisContainer>
       ) : (
         ""
@@ -42,7 +55,13 @@ const StakeKeyBox = ({ data }: TProps) => {
       label: t("common.rewardAccount"),
       value: data.rewardAccount ? (
         <EllipsisContainer>
-          <DynamicEllipsisText value={data.rewardAccount} isTooltip isCopy customTruncateFold={[5, 5]} />
+          <DynamicEllipsisText
+            dataTestIdFirstPath={`trx.pool.cert.rewardAccount#${index}`}
+            value={data.rewardAccount}
+            isTooltip
+            isCopy
+            customTruncateFold={[5, 5]}
+          />
         </EllipsisContainer>
       ) : (
         ""
@@ -63,15 +82,23 @@ const StakeKeyBox = ({ data }: TProps) => {
   const rightRow = [
     {
       label: t("margin"),
-      value: data.margin ? `${data.margin * 100}%` : 0
+      value: <span data-testid={`trx.pool.cert.margin#${index}`}>{data.margin ? `${data.margin * 100}%` : 0}</span>
     },
     {
       label: t("glossary.cost"),
-      value: <AdaValue value={data.cost} />
+      value: (
+        <span data-testid={`trx.pool.cert.cost#${index}`}>
+          <AdaValue value={data.cost} />
+        </span>
+      )
     },
     {
       label: t("glossary.pledge"),
-      value: <AdaValue value={data.pledge} />
+      value: (
+        <span data-testid={`trx.pool.cert.pledge#${index}`}>
+          <AdaValue value={data.pledge} />
+        </span>
+      )
     }
   ];
 
@@ -93,12 +120,13 @@ const StakeKeyBox = ({ data }: TProps) => {
                         gap: "5px"
                       }}
                     >
-                      {value.map((item) => (
+                      {value.map((item, idx) => (
                         <Box className="ValueItem" key={item}>
                           <TextValue>
                             <Link to={details.stake(item || "")}>
                               <EllipsisContainer width={"100%"}>
                                 <DynamicEllipsisText
+                                  dataTestIdFirstPath={`trx.pool.cert.poolOperator#${idx}`}
                                   sx={{
                                     width: "100%"
                                   }}
