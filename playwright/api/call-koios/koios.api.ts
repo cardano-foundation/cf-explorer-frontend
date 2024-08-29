@@ -24,7 +24,24 @@ export function koiosApi(request: APIRequestContext) {
     );
   };
 
+  const getTransactionByTrxHash = async (trxHash: string) => {
+    return BaseApi.postData(
+      request,
+      Endpoint.Koios.Transactions.Base,
+      {
+        _tx_hashes: [trxHash]
+      },
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        authorization: KOIOS_TOKEN
+      }
+    );
+  };
+
   return {
-    getEpochById
+    getEpochById,
+    getTransactionByTrxHash
   };
 }

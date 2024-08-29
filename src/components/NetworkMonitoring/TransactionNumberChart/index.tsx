@@ -204,18 +204,18 @@ const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_MONTH":
     case "THREE_MONTH":
-      return moment(date).format("DD MMM");
+      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("DD MMM");
     case "ONE_YEAR":
     case "THREE_YEAR":
     case "ALL_TIME":
-      return moment(date).format("MMM YYYY");
+      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("MMM YYYY");
 
     default:
       break;
   }
 };
 
-const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
+const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
   const ratio = total > 0 ? value / total : 0;

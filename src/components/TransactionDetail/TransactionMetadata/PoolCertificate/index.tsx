@@ -25,7 +25,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
           return (
             <Box px="15px" key={index} mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
               <CardHeader>{t("title.poolRegistrations")}</CardHeader>
-              <StakeKeyBox key={index} data={item} />
+              <StakeKeyBox key={index} index={index} data={item} />
             </Box>
           );
         })}
@@ -50,7 +50,13 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                           to={details.delegation(item.poolId || "")}
                         >
                           <EllipsisContainer>
-                            <DynamicEllipsisText value={item.poolId} isTooltip isCopy customTruncateFold={[8, 8]} />
+                            <DynamicEllipsisText
+                              dataTestIdFirstPath={`trx.deregis.pool.id#${index}`}
+                              value={item.poolId}
+                              isTooltip
+                              isCopy
+                              customTruncateFold={[8, 8]}
+                            />
                           </EllipsisContainer>
                         </Link>
                       </TextValue>
@@ -60,10 +66,7 @@ const PoolCertificate: React.FC<IProps> = ({ data }) => {
                         {t("glossary.epoch")}:{" "}
                       </TextLabel>
                       <TextValue>
-                        <Link
-                          data-testid="transactionMetadata.poolCertificate.epochValue"
-                          to={details.epoch(item.epoch)}
-                        >
+                        <Link to={details.epoch(item.epoch)} data-testid={`trx.deregis.pool.epoch#${index}`}>
                           {item.epoch}
                         </Link>
                       </TextValue>

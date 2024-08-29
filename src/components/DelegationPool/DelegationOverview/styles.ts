@@ -79,7 +79,7 @@ export const StyledCard = {
     margin-bottom: 8px;
     color: ${(props) => props.theme.palette.secondary.main};
   `,
-  Link: styled(Link)`
+  NumberEpoch: styled(Box)`
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-title);
     margin-bottom: 8px;

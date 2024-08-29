@@ -21,7 +21,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
   return (
     <Wrapper>
       <Header>{t("common.stakeAddress")}</Header>
-      {data?.map((item) => (
+      {data?.map((item, index) => (
         <StyledItem key={item.address}>
           <ItemContainer>
             <Box display="flex" alignItems="center" flex={1}>
@@ -40,6 +40,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   <AddressLink to={details.stake(item.address)} style={{ width: "100%" }}>
                     <EllipsisContainer>
                       <DynamicEllipsisText
+                        dataTestIdFirstPath={`trx.detail.delegation.address#${index}`}
                         value={item.address || ""}
                         isCopy
                         isTooltip
@@ -56,6 +57,7 @@ const Delegations: React.FC<DelegationProps> = ({ data }) => {
                   <AddressLink to={details.delegation(item.poolId)} style={{ width: "100%" }}>
                     <EllipsisContainer>
                       <DynamicEllipsisText
+                        dataTestIdFirstPath={`trx.detail.delegation.poolId#${index}`}
                         value={item.poolId || ""}
                         isCopy
                         isTooltip

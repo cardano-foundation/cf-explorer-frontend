@@ -20,7 +20,7 @@ const StakeCertificate: React.FC<IProps> = ({ data }) => {
         ?.map((item, index) => (
           <Box key={index} px="15px" mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
             <CardHeader>{t("glossary.stakeAddressRegistrations")}</CardHeader>
-            <StakeKeyBox key={index} data={item} />
+            <StakeKeyBox key={index} data={item} index={index} />
           </Box>
         ))}
       {data
@@ -28,7 +28,7 @@ const StakeCertificate: React.FC<IProps> = ({ data }) => {
         ?.map((item, index) => (
           <Box key={index} px="15px" mb="15px" bgcolor={theme.palette.secondary[0]} textAlign="left">
             <CardHeader>{t("glossary.stakeAddressDeregistrations")}</CardHeader>
-            <StakeKeyBox key={index} data={item} />
+            <StakeKeyBox key={index} data={item} index={index} />
           </Box>
         ))}
     </Wrapper>

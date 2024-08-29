@@ -59,7 +59,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "tokenMint",
-      label: t("tab.minting"),
+      label: <div data-testid="token.detail.mintingTab">{t("tab.minting")}</div>,
       children: <TokenMinting tabActive={tabActive} tokenId={tokenId} metadata={metadata} />,
       icon: UnionTokenIcon
     },

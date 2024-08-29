@@ -2,10 +2,10 @@ import { Grid, styled } from "@mui/material";
 interface CardItemProps {
   length: number;
   wide?: number;
-  itemOnRow: number;
+  itemonrow: number;
 }
 
-export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemOnRow }) => ({
+export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemonrow }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${theme.palette.primary[200]}`,
@@ -19,13 +19,13 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
         borderBottomWidth: 1,
 
         [theme.breakpoints.up("lg")]: {
-          [`:nth-of-type(${itemOnRow}n+1)`]: {
+          [`:nth-of-type(${itemonrow}n+1)`]: {
             borderLeftWidth: 0,
             paddingLeft: 0
           },
-          [`:nth-last-of-type(-n + ${itemOnRow - 1})`]: {
+          [`:nth-last-of-type(-n + ${itemonrow - 1})`]: {
             borderBottom: "none !important",
-            [`:nth-of-type(${itemOnRow}n + 1)`]: {
+            [`:nth-of-type(${itemonrow}n + 1)`]: {
               "&~div": {
                 borderBottomWidth: 0,
                 paddingTop: 20,

@@ -9,7 +9,7 @@ import { RootState } from "src/stores/types";
 import { setSidebar } from "src/stores/user";
 import { ThemeType } from "src/types/theme";
 
-export const Menu = styled(List)<{ open: number; bottom: number; themeMode: ThemeType }>`
+export const Menu = styled(List)<{ open: number; bottom: number; thememode: ThemeType }>`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -22,8 +22,8 @@ export const Menu = styled(List)<{ open: number; bottom: number; themeMode: Them
   flex-direction: row;
   padding: 0px 10px;
   z-index: 1305;
-  background: ${({ theme, bottom, themeMode }) =>
-    bottom ? "none" : themeMode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
+  background: ${({ theme, bottom, thememode }) =>
+    bottom ? "none" : thememode === "light" ? theme.palette.primary[100] : theme.palette.secondary[100]};
   border-top: 1px solid ${(props) => props.theme.palette.primary[200]};
   ${({ theme }) => theme.breakpoints.down("md")} {
     border-top: 0px;
@@ -95,7 +95,7 @@ const FooterMenu = ({ bottom = false }: TProps) => {
   const { sidebar } = useSelector(({ user }: RootState) => user);
   const { theme } = useSelector(({ theme }: RootState) => theme);
   return (
-    <Menu open={+sidebar} bottom={+bottom} themeMode={theme}>
+    <Menu open={+sidebar} bottom={+bottom} thememode={theme}>
       {socials.map((item, index) => {
         const { href, title, icon: Icon } = item;
         return (

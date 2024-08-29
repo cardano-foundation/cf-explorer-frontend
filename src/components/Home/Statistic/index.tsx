@@ -85,7 +85,7 @@ const HomeStatistic = () => {
   const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
   const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
   const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
-  const progress = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+  const progress = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
@@ -148,7 +148,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {(usdMarket || usdDataLocal) && (btcMarket || btcDataLocal) && !loadingBtcData && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallItem themeMode={themeMode}>
+            <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -193,7 +193,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {(usdMarket || usdDataLocal) && !loadingUsdData ? (
           <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box" smallItem themeMode={themeMode}>
+            <Item data-testid="market-cap-box" smallitem="true" thememode={themeMode}>
               <WrapCardContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -221,7 +221,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
-            <Item data-testid="current-epoch-box" themeMode={themeMode}>
+            <Item data-testid="current-epoch-box" thememode={themeMode}>
               <VerticalContent>
                 <Box display={"flex"} alignItems={"center"} height={"40px"}>
                   <ItemIcon
@@ -239,7 +239,7 @@ const HomeStatistic = () => {
                     <Title data-testid="current-epoch-number">{numberWithCommas(currentEpoch?.no)}</Title>
                     <Box color={({ palette }) => palette.secondary.light}>
                       {t("common.slot")}:{" "}
-                      {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                      {moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                         ? numberWithCommas(currentEpoch?.slot)
                         : numberWithCommas(MAX_SLOT_EPOCH)}
                       / {numberWithCommas(MAX_SLOT_EPOCH)}
@@ -282,7 +282,7 @@ const HomeStatistic = () => {
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {data && (usdMarket || usdDataLocal) ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
-            <Item data-testid="live-stake-box" themeMode={themeMode}>
+            <Item data-testid="live-stake-box" thememode={themeMode}>
               <VerticalContent>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -313,7 +313,7 @@ const HomeStatistic = () => {
                       </CustomTooltip>
                       <ProgressPending
                         data-testid="live-stake-progress-pending"
-                        rate={currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100}
+                        rate={(currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100) || 0}
                       >
                         {isShowOtherStakePercentText && (
                           <Box color={({ palette }) => palette.secondary.main}>

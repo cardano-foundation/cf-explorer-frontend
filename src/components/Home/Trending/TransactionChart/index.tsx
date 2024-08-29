@@ -199,7 +199,7 @@ const getLabel = (date: string, range: Time) => {
   }
 };
 
-const formatX = (date: string, range: Time) => moment(date).format(formatTimeX(range));
+const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
   const ratio = total > 0 ? value / total : 0;
