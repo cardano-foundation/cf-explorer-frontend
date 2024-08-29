@@ -116,11 +116,14 @@ const DrepDetail = () => {
             >
               <DynamicEllipsisText
                 value={data?.anchorUrl || ""}
-                sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                sxFirstPart={{
+                  maxWidth: "calc(100% - 60px)",
+                  minWidth: 16
+                }}
+                customTruncateFold={[4, 4]}
                 postfix={5}
                 sxLastPart={{ direction: "inherit" }}
-                sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
-                isNoLimitPixel={true}
+                sx={{ cursor: "pointer" }}
                 isTooltip
                 whiteSpace="normal"
               />
@@ -129,7 +132,9 @@ const DrepDetail = () => {
           <ActionMetadataModalConfirm
             open={openModal}
             onClose={() => setOpenModal(false)}
-            anchorUrl={data?.anchorUrl || ""}
+            anchorUrl={
+              data?.anchorUrl ? (data?.anchorUrl.includes("http") ? data?.anchorUrl : `//${data.anchorUrl}`) : ""
+            }
           />
         </ValueCard>
       )

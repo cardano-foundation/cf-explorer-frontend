@@ -38,7 +38,7 @@ const MinttingBurningPolicy = () => {
       return (
         <Box>
           <DatetimeTypeTooltip>
-            <Box display={"flex"} alignContent={"center"} gap={1}>
+            <Box display={"flex"} alignContent={"center"} gap={1} mr={1}>
               until: {isMoreThan10years(after) ? t("moreThan10Years") : formatDateTimeLocal(after)}
             </Box>
           </DatetimeTypeTooltip>

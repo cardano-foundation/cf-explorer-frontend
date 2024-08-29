@@ -51,7 +51,7 @@ export const ApplyFilterButton = styled(Button)(({ theme }) => ({
   color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   background: theme.palette.primary.main,
   ":hover": {
-    background: theme.palette.primary.dark
+    background: `${theme.palette.primary.dark} !important`
   },
   ":disabled": {
     background: theme.palette.secondary[600],
