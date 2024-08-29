@@ -660,7 +660,6 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
   const [expanded, setExpanded] = useState<string | false>("");
   const [openDateRange, setOpenDateRange] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-  const { isMobile } = useScreen();
 
   const filterValue = {
     sort: "ASC",
@@ -767,6 +766,8 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
       handleFilter();
     }
   };
+
+  const { isMobile } = useScreen();
 
   return (
     <ClickAwayListener onClickAway={() => setOpen(false)}>
