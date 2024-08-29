@@ -71,7 +71,20 @@ export default function TabOverview() {
       title: <Box component={"span"}>Governance Name</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box>{r?.govActionName ?? t("N/A")}</Box>
+      render: (r) => (
+        <CustomTooltip title={r.govActionName ? r.govActionName : undefined}>
+          <Box
+            component={"span"}
+            display={"inline-block"}
+            width={"150px"}
+            textOverflow={"ellipsis"}
+            whiteSpace={"nowrap"}
+            overflow={"hidden"}
+          >
+            {r?.govActionName ?? t("N/A")}
+          </Box>
+        </CustomTooltip>
+      )
     },
     {
       title: <Box component={"span"}>Governance ID</Box>,
