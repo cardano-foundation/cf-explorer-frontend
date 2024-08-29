@@ -23,7 +23,9 @@ import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 
-import Bolnisi_Animation_Desktop from "./resource/Bolnisi_Animation_Desktop.json";
+import Bolnisi_Animation_Light_Mode from "./resource/Bolnisi_Animation_Light_Mode.json";
+import Bolnisi_Animation_Dark_Mode from "./resource/Bolnisi_Animation_Dark_Mode.json";
+import bolnisiAnimationmobileLightMode from "./resource/Bolnisi_Animation_mobile_Light_Mode.png";
 
 const BolnisiLanding = () => {
   useEffect(() => {
@@ -116,12 +118,12 @@ const Header = () => {
 const ProgressSession = () => {
   const theme = useTheme();
 
-  const { isLaptop } = useScreen();
+  const { isMobile } = useScreen();
 
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: Bolnisi_Animation_Desktop,
+    animationData: theme.isDark ? Bolnisi_Animation_Dark_Mode : Bolnisi_Animation_Light_Mode,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -206,25 +208,27 @@ const ProgressSession = () => {
           </Grid>
         </Box>
       </Container>
-      {!isLaptop && (
-        <Box
-          component={MotionDiv}
-          viewRate={0.2}
-          maxWidth={"80%"}
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          marginX={"auto"}
-          mt={5}
-          sx={{
-            [theme.breakpoints.down("md")]: {
-              maxWidth: "100%",
-              px: 2
-            }
-          }}
-        >
+      <Box
+        component={MotionDiv}
+        viewRate={0.2}
+        maxWidth={"80%"}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        marginX={"auto"}
+        mt={5}
+        sx={{
+          [theme.breakpoints.down("md")]: {
+            maxWidth: "100%",
+            px: 5
+          }
+        }}
+      >
+        {!isMobile ? (
           <Lottie options={defaultOptions} width={"100%"} />
-        </Box>
-      )}
+        ) : (
+          <img alt="bolnisi " style={{ width: "100%" }} src={bolnisiAnimationmobileLightMode} />
+        )}
+      </Box>
       <Box
         className="bolnisi-body-background"
         width={"100%"}
@@ -386,7 +390,7 @@ const BolnisiTrx = () => {
       <Grid
         container
         sx={{
-          width: "60%",
+          width: "65%",
           [theme.breakpoints.down("lg")]: { width: "90%", pr: theme.spacing(2) },
           [theme.breakpoints.down("sm")]: { width: "100%", pr: theme.spacing(2) }
         }}
@@ -420,7 +424,8 @@ const BolnisiTrx = () => {
         <Box
           mx={"auto"}
           sx={{
-            width: "60%",
+            width: "80%",
+            [theme.breakpoints.down("lg")]: { width: "90%" },
             [theme.breakpoints.down("md")]: {
               flexDirection: "column",
               width: "calc(100% - 32px)",
