@@ -955,6 +955,7 @@ const FilterGovernanceVotes: React.FC<FilterGovernanceVotes> = ({ query, setQuer
                             noWrap
                             overflow="hidden"
                             textOverflow="ellipsis"
+                            data-testid="governance.filter.actionTypeText"
                             maxWidth={isMobile ? "12rem" : "15rem"}
                           >
                             {i.text}
