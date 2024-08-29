@@ -454,8 +454,8 @@ const DrepAccordion = () => {
         <StyledAccordion
           key={key}
           expanded={tab === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          customborderradius={needBorderRadius(key)}
+          isdisplaybordertop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary
