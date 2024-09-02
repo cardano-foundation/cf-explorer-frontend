@@ -227,6 +227,51 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getTxCountTopADAHolder = async (address: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.TopADAHolder.TxCount.replace(":address", address),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getDataAmountStaked = async (stakedAddress: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.TopADAHolder.dataTabAmountStaked.replace(":stake_address", stakedAddress),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
+  const getPoolIDAcount = async (stakedAddress: string) => {
+    return BaseApi.getData(
+      request,
+      Endpoint.BlockFrost.TopADAHolder.poolIDAcount.replace(":stake_address", stakedAddress),
+      {},
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        project_id: BLOCKFROST_TOKEN
+      },
+      false
+    );
+  };
+
   return {
     getLastEpochData,
     getLatestBlockData,
@@ -242,6 +287,9 @@ export function blockfrostApi(request: APIRequestContext) {
     getListPools,
     getStakePools,
     getMetadataPools,
-    getHistoryPools
+    getHistoryPools,
+    getTxCountTopADAHolder,
+    getDataAmountStaked,
+    getPoolIDAcount
   };
 }
