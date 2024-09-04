@@ -76,7 +76,7 @@ export default function TabOverview() {
           <Box
             component={"span"}
             display={"inline-block"}
-            width={"150px"}
+            maxWidth={"150px"}
             textOverflow={"ellipsis"}
             whiteSpace={"nowrap"}
             overflow={"hidden"}
