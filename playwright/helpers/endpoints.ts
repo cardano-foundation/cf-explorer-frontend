@@ -64,6 +64,20 @@ export class BlockFrost {
       return `${BlockFrost.BASE_MAIN_NET_URL}/assets`;
     }
   };
+  static TopADAHolder = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/addresses`;
+    }
+    public static get TxCount() {
+      return `${BlockFrost.TopADAHolder.Base}/:address/total`;
+    }
+    public static get dataTabAmountStaked() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/accounts/:stake_address`;
+    }
+    public static get poolIDAcount() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/accounts/:stake_address/delegations`;
+    }
+  };
 }
 
 export class Koios {
@@ -77,6 +91,11 @@ export class Koios {
   static Transactions = class {
     public static get Base() {
       return `${Koios.BASE_MAIN_NET_URL}/tx_info`;
+    }
+  };
+  static getAddress = class {
+    public static get Base() {
+      return `${Koios.BASE_MAIN_NET_URL}/address_info`;
     }
   };
 }
