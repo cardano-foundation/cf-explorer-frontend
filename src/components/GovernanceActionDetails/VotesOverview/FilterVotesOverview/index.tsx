@@ -141,7 +141,7 @@ export default function FilterVotesOverview() {
     } else {
       setFixMax(6);
     }
-  }, [dataRange]);
+  }, [dataRange, expanded]);
 
   const handleReset = () => {
     setExpanded(false);
@@ -201,13 +201,19 @@ export default function FilterVotesOverview() {
     }
   };
 
+  function toFixedWithoutRounding(value: number, decimals: number) {
+    const factor = Math.pow(10, decimals);
+    return (Math.floor(value * factor) / factor).toFixed(decimals);
+  }
+
   const groupInputRange = (
     minValue: number,
     maxValue: number,
     keyOnChangeMin: string,
     keyOnChangeMax: string,
     maxValueDefault: number,
-    disabled = false
+    disabled = false,
+    minValueDefault?: number
   ) => {
     return (
       <Box display="flex" alignItems="center" gap="30px">
@@ -224,7 +230,7 @@ export default function FilterVotesOverview() {
           }}
           value={
             ["activeStakeFrom"].includes(keyOnChangeMin)
-              ? Number(minValue || 0).toFixed(fixMin)
+              ? toFixedWithoutRounding(Number(minValue || 0), fixMin)
               : Number(minValue || 0).toString()
           }
           onKeyDown={(event) => {
@@ -248,6 +254,12 @@ export default function FilterVotesOverview() {
               setFilterParams({
                 ...filterParams,
                 [keyOnChangeMin]: maxValue
+              });
+            minValueDefault &&
+              minValue < minValueDefault &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMin]: minValueDefault * 10 ** 6
               });
           }}
           onChange={({ target: { value } }) => {
@@ -290,7 +302,9 @@ export default function FilterVotesOverview() {
             }
           }}
           value={
-            ["activeStakeTo"].includes(keyOnChangeMax) ? Number(maxValue).toFixed(fixMax) : Number(maxValue).toString()
+            ["activeStakeTo"].includes(keyOnChangeMax)
+              ? toFixedWithoutRounding(Number(maxValue), fixMax)
+              : Number(maxValue).toString()
           }
           onKeyDown={(event) => {
             const key = event.key;
@@ -765,7 +779,10 @@ export default function FilterVotesOverview() {
                       BigNumber(initParams.activeStakeTo || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      dataRange?.maxActiveStake === dataRange?.minActiveStake
+                      dataRange?.maxActiveStake === dataRange?.minActiveStake,
+                      BigNumber(initParams.activeStakeFrom || 0)
+                        .div(10 ** 6)
+                        .toNumber()
                     )}
                   </AccordionDetailsFilter>
                 </AccordionContainer>
