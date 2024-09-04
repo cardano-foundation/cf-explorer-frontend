@@ -169,6 +169,15 @@ export default function FilterVotesOverview() {
       return;
     }
     const [min, max] = newValue || [];
+
+    if (maxKey === "activeStakeTo" && initParams?.activeStakeTo && initParams?.activeStakeTo > 10 ** 12) {
+      if (min !== filterParams.activeStakeFrom) {
+        fixMin > 0 && setFixMin(0);
+      }
+      if (max !== filterParams.activeStakeTo) {
+        fixMax > 0 && setFixMax(0);
+      }
+    }
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
 
