@@ -345,16 +345,16 @@ export default function FilterVotesOverview() {
               .replace(/^0+(?=\d)/, "")
               .replace("%", "");
 
-            const decimals = numericValue.split(".")[1]?.length;
-            if (decimals <= 6 && decimals > 0) {
-              setFixMax(decimals);
-            } else if (decimals > 6) {
-              setFixMax(6);
-            } else {
-              setFixMax(0);
-            }
+            if (Number(numericValue) <= maxValueDefault) {
+              const decimals = numericValue.split(".")[1]?.length;
+              if (decimals <= 6 && decimals > 0) {
+                setFixMax(decimals);
+              } else if (decimals > 6) {
+                setFixMax(6);
+              } else {
+                setFixMax(0);
+              }
 
-            Number(numericValue) <= maxValueDefault &&
               setFilterParams({
                 ...filterParams,
                 [keyOnChangeMax]:
@@ -364,6 +364,7 @@ export default function FilterVotesOverview() {
                     ? Math.round(truncateDecimals(+numericValue, 6) * 10 ** 6)
                     : truncateDecimals(+numericValue, 6)
               });
+            }
           }}
           onKeyPress={handleKeyPress}
         />

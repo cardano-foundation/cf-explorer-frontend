@@ -360,34 +360,35 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
 
-            const decimals = numericValue.split(".")[1]?.length;
-            if (decimals <= 6 && decimals > 0) {
-              setFixMax(decimals);
-            } else if (decimals > 6) {
-              setFixMax(6);
-            } else {
-              setFixMax(0);
-              if (addDotMax) {
-                numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
-                setAddDotMax(false);
+            if (Number(numericValue) <= maxValueDefault) {
+              const decimals = numericValue.split(".")[1]?.length;
+              if (decimals <= 6 && decimals > 0) {
+                setFixMax(decimals);
+              } else if (decimals > 6) {
+                setFixMax(6);
+              } else {
+                setFixMax(0);
+                if (addDotMax) {
+                  numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+                  setAddDotMax(false);
+                }
               }
 
-              Number(numericValue) <= maxValueDefault &&
-                setFilterParams({
-                  ...filterParams,
-                  [keyOnChangeMax]:
-                    +numericValue > maxValueDefault
-                      ? maxValueDefault
-                      : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                      ? truncateToTwoDecimals(+numericValue) / 100
-                      : ["maxPledge"].includes(keyOnChangeMax)
-                      ? +numericValue * 10 ** 6
-                      : ["maxSaturation"].includes(keyOnChangeMax)
-                      ? parseFloat(numericValue).toFixed(2)
-                      : ["maxActiveVoteStake"].includes(keyOnChangeMax)
-                      ? truncateDecimals(+numericValue, 6)
-                      : numericValue
-                });
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMax]:
+                  +numericValue > maxValueDefault
+                    ? maxValueDefault
+                    : ["maxGovParticipationRate"].includes(keyOnChangeMax)
+                    ? truncateToTwoDecimals(+numericValue) / 100
+                    : ["maxPledge"].includes(keyOnChangeMax)
+                    ? +numericValue * 10 ** 6
+                    : ["maxSaturation"].includes(keyOnChangeMax)
+                    ? parseFloat(numericValue).toFixed(2)
+                    : ["maxActiveVoteStake"].includes(keyOnChangeMax)
+                    ? truncateDecimals(+numericValue, 6)
+                    : numericValue
+              });
             }
           }}
           onKeyPress={handleKeyPress}
