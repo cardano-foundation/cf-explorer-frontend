@@ -140,6 +140,12 @@ export const menus: Menu[] = [
     key: "glossary.bolnisi",
     icon: BolnisiDashboard,
     href: routers.BOLNISI_LANDING
+  },
+  {
+    title: "Micar",
+    key: "glossary.micar",
+    icon: BolnisiDashboard,
+    href: routers.MICAR
   }
 ];
 
