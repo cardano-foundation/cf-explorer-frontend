@@ -10,10 +10,9 @@ import CustomTooltip from "../commons/CustomTooltip";
 const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   display: inline-block;
   white-space: ${({ whiteSpace }) => whiteSpace ?? "nowrap"};
-  overflow: hidden;
   width: 100%;
   text-align: left;
-  transform: translateY(2px);
+  transform: translateY(1px);
 `;
 
 const SubPart = styled("span")`
@@ -29,7 +28,7 @@ const FirstPart = styled(SubPart)`
   text-overflow: ellipsis;
 `;
 const Lastpart = styled(SubPart)`
-  direction: rtl;
+  direction: ltl;
 `;
 
 const ContainerShortHand = styled(Box)`
@@ -60,9 +59,11 @@ const DynamicEllipsisText = ({
   sx,
   customTruncateFold,
   isNoLimitPixel,
-  whiteSpace
+  whiteSpace,
+  dataTestIdFirstPath
 }: {
   value: string;
+  dataTestIdFirstPath?: string;
   postfix?: number;
   isCopy?: boolean;
   isTooltip?: boolean;
@@ -138,7 +139,9 @@ const DynamicEllipsisText = ({
         title={isTooltip ? <ScrollTooltipContent>{value}</ScrollTooltipContent> : ""}
       >
         <Box component={"span"} data-testid="ellipsis-text">
-          <FirstPart sx={sxFirstPart}>{firstPart}</FirstPart>
+          <FirstPart data-testid={dataTestIdFirstPath} sx={sxFirstPart}>
+            {firstPart}
+          </FirstPart>
           <Lastpart sx={sxLastPart}>{lastPart}</Lastpart>
         </Box>
       </CustomTooltip>

@@ -45,6 +45,9 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
   const { isMobile } = useScreen();
 
   const fetchData = useFetchList<IStakeKey>(`${API.STAKE.DETAIL}/${stakeAddressType}`, pageInfo, false, blockKey);
+
+  const { error } = fetchData;
+
   const stakeDataWithKey = fetchData.data.map((item, id) => {
     return { ...item, txKey: `key${id}` };
   });
@@ -82,9 +85,9 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
       title: <div data-testid="stake.txHashTitle">{t("glossary.txHash")}</div>,
       key: "txHash",
       minWidth: isMobile ? 245 : 80,
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="stake.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`stake.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>
@@ -161,9 +164,11 @@ const Stake: React.FC<Props> = ({ stakeAddressType }) => {
               : t("head.page.stakeAddressDeregistration")
           }
         >
-          <TimeDuration>
-            <FormNowMessage time={_fetchData.lastUpdated} />
-          </TimeDuration>
+          {!error && (
+            <TimeDuration>
+              <FormNowMessage time={_fetchData.lastUpdated} />
+            </TimeDuration>
+          )}
           <Table
             data-testid="stake.table"
             {..._fetchData}

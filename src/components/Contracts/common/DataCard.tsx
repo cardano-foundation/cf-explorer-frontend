@@ -11,7 +11,7 @@ const DataCard: React.FC<DataCardProps> = ({ value, title }) => {
   return (
     <DataCardBox>
       <DataTitle>{title}:</DataTitle>
-      <DataValue>{value}</DataValue>
+      <DataValue datap-testid={`trx.contract.redeemer.${title}`}>{value}</DataValue>
     </DataCardBox>
   );
 };

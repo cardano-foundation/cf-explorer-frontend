@@ -34,15 +34,17 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tabActive, tokenId, metadata })
     false,
     blockKey
   );
-
+  const { error } = fetchData;
   const columns: Column<ITokenMintingTable>[] = [
     {
       title: t("glossary.txhash"),
       key: "trxHash",
       minWidth: "200px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink to={details.transaction(r.txHash)}>{getShortHash(r.txHash)}</StyledLink>
+          <StyledLink data-testid={`token.detail.minting.trxHash#${idx}`} to={details.transaction(r.txHash)}>
+            {getShortHash(r.txHash)}
+          </StyledLink>
         </CustomTooltip>
       )
     },
@@ -70,9 +72,11 @@ const TokenMinting: React.FC<ITokenMinting> = ({ tabActive, tokenId, metadata })
 
   return (
     <>
-      <TimeDuration>
-        <FormNowMessage time={fetchData.lastUpdated} />
-      </TimeDuration>
+      {!error && (
+        <TimeDuration>
+          <FormNowMessage time={fetchData.lastUpdated} />
+        </TimeDuration>
+      )}
       <Table
         {...fetchData}
         columns={columns}

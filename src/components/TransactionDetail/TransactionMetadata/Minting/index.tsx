@@ -26,7 +26,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
 
   const columns: Column<Required<Transaction>["mints"][number]>[] = [
     {
-      title: t("glossary.assetName"),
+      title: <Box data-testid="trx.minting.title.name">{t("glossary.assetName")}</Box>,
       isHiddenBorder: true,
       key: "Assetname",
       minWidth: "40px",
@@ -54,7 +54,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       }
     },
     {
-      title: t("glossary.amountedMinted"),
+      title: <Box data-testid="trx.minting.title.amount"> {t("glossary.amountedMinted")}</Box>,
       isHiddenBorder: true,
       key: "Amount",
       minWidth: "40px",
@@ -63,7 +63,7 @@ const Minting: React.FC<MintingProps> = ({ data }) => {
       }
     },
     {
-      title: t("common.policyScript"),
+      title: <Box data-testid="trx.minting.title.policyScript"> {t("common.policyScript")}</Box>,
       key: "Policy",
       minWidth: "40px",
       maxWidth: "120px",

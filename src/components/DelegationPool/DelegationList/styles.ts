@@ -76,6 +76,7 @@ export const TopSearchContainer = styled(Box)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  margin-top: 48px;
 `;
 
 export const ShowRetiredPools = styled(Box)`
@@ -137,3 +138,9 @@ export const AntSwitch = styled(Switch)(({ theme }) => ({
     boxSizing: "border-box"
   }
 }));
+
+export const ListOfPools = styled(Box)`
+  font-size: 24px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.palette.secondary.light};
+`;

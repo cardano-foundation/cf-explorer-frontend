@@ -24,7 +24,6 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   width: "50px",
   height: "28px",
   cursor: "pointer",
-  textTransform: "lowercase",
   borderRadius: 5,
   border: active ? "none" : `2px solid ${theme.palette.primary[200]}`,
   color: active ? `${theme.palette.secondary[0]} !important` : theme.palette.secondary.main,
@@ -58,22 +57,14 @@ export const WrapHeader = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const Title = styled("h3")`
+export const Title = styled("p")`
   position: relative;
   text-align: left;
   margin-top: 0px;
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
   color: ${(props) => props.theme.palette.secondary.main};
-  &::after {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    content: "";
-    width: 50px;
-    height: 4px;
-    background: ${({ theme }) => (theme.mode === "light" ? theme.palette.primary[200] : theme.palette.primary.main)};
-  }
+  font-weight: 500 !important;
 `;
 
 export const BoxInfo = styled(Box)(({ theme }) => ({
@@ -87,7 +78,7 @@ export const BoxInfo = styled(Box)(({ theme }) => ({
   },
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
+  justifyContent: "flex-start",
   [theme.breakpoints.down("md")]: {
     border: "none",
     padding: 0,
@@ -101,6 +92,10 @@ export const InfoItem = styled(Box)(({ theme }) => ({
   ":last-child": {
     paddingBottom: 0,
     borderBottom: "none"
+  },
+  marginTop: "15px",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "5px"
   }
 }));
 export const Skeleton = styled(CommonSkeleton)(() => ({
@@ -152,4 +147,12 @@ export const ValueChart = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main,
   fontWeight: "bold",
   fontSize: "20px"
+}));
+export const XAxisChart = styled(Box)(() => ({
+  position: "absolute",
+  borderBottom: "2px solid #a0a2aa",
+  width: "calc(100% - 73px)",
+  bottom: "29px",
+  zIndex: 1,
+  left: "55px"
 }));

@@ -227,7 +227,7 @@ const CustomFilter: React.FC<Props> = (props) => {
                 onClose={() => setOpenDateRange(false)}
               />
             </AdditionContainer>
-            <Box my={1}>
+            <Box my={1} textAlign={"center"}>
               <ApplyFilterButton
                 data-testid="apply-filters"
                 onClick={() => {

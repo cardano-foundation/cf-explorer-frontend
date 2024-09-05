@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import OverViews from "src/components/DelegationPool/DelegationOverview";
 import DelegationLists from "src/components/DelegationPool/DelegationList";
 
-import { Horizon, StyledContainer } from "./styles";
+import { StyledContainer } from "./styles";
 
 const Delegations = () => {
   useEffect(() => {
@@ -13,7 +13,6 @@ const Delegations = () => {
   return (
     <StyledContainer>
       <OverViews />
-      <Horizon />
       <DelegationLists />
     </StyledContainer>
   );

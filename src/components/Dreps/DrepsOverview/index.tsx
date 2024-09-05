@@ -157,7 +157,10 @@ const DrepsOverview: React.FC = () => {
         <Grid item lg={6} xl={3} md={6} sm={6} xs={12}>
           <StyledCard.Container
             sx={{
-              justifyContent: "space-between"
+              justifyContent: "space-between",
+              [theme.breakpoints.down(350)]: {
+                display: "block"
+              }
             }}
           >
             <StyledCard.Content style={{ padding: "30px 0 0 30px" }}>

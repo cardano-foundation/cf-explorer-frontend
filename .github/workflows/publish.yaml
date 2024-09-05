@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    runs-on: [arc-runner-set]
+    runs-on: ubuntu-latest
     if: |
       ${{ github.actor != 'dependabot[bot]' }} &&
       ( "contains(github.event.head_commit.message, 'release-please--branches--main')" ||
@@ -78,9 +78,6 @@ jobs:
 
       - name: 🔨 Build and Push docker image
         uses: docker/build-push-action@v4
-        if: |
-          ( steps.metadata.outputs.BRANCH == 'main' && steps.metadata.outputs.SKIP_DOCKER_PUSH != 'true' ) ||
-          github.event_name == 'pull_request'
         with:
           file: ./Dockerfile
           context: .

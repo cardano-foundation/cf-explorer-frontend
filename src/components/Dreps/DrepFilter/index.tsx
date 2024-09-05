@@ -26,10 +26,11 @@ import {
   FilterIcon,
   GovernanceIdIcon,
   PoolVotingIcon,
-  ResetIcon
+  ResetIcon,
+  PoolParticipationIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent } from "src/commons/utils/helper";
+import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import CustomTooltip from "src/components/commons/CustomTooltip";
@@ -50,6 +51,8 @@ interface PoolResponse {
   maxVotingPower?: number;
   maxActiveVoteStake?: number;
   minActiveVoteStake?: number;
+  minGovParticipationRate?: number;
+  maxGovParticipationRate?: number;
 }
 
 const defaultParams = { page: 0, size: 50, sort: "" };
@@ -58,10 +61,15 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { search } = useLocation();
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -78,7 +86,9 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
     maxActiveVoteStake: +(dataRange?.maxActiveVoteStake || 0),
     minActiveVoteStake: +(dataRange?.minActiveVoteStake || 0),
     minVotingPower: +(dataRange?.minVotingPower || 0),
-    maxVotingPower: +(dataRange?.maxVotingPower || 0)
+    maxVotingPower: +(dataRange?.maxVotingPower || 0),
+    minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
+    maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
 
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
@@ -100,7 +110,9 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
       ...(query?.maxActiveVoteStake && { maxActiveVoteStake: +(query?.maxActiveVoteStake || 0) }),
       ...(query?.minActiveVoteStake && { minActiveVoteStake: +(query?.minActiveVoteStake || 0) }),
       ...(query?.minVotingPower && { minVotingPower: +(query?.minVotingPower || 0) }),
-      ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) })
+      ...(query?.maxVotingPower && { maxVotingPower: +(query?.maxVotingPower || 0) }),
+      ...(query?.minGovParticipationRate && { minGovParticipationRate: +(query?.minGovParticipationRate || 0) }),
+      ...(query?.maxGovParticipationRate && { maxGovParticipationRate: +(query?.maxGovParticipationRate || 0) })
     });
     setDateRange({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
   }, [JSON.stringify(query)]);
@@ -165,7 +177,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
       (filterParams.maxActiveVoteStake || initParams.maxActiveVoteStake) !== initParams.maxActiveVoteStake ||
       (filterParams.minActiveVoteStake || initParams.minActiveVoteStake) !== initParams.minActiveVoteStake ||
       (filterParams.minVotingPower || initParams.minVotingPower) !== initParams.minVotingPower ||
-      (filterParams.maxVotingPower || initParams.maxVotingPower) !== initParams.maxVotingPower,
+      (filterParams.maxVotingPower || initParams.maxVotingPower) !== initParams.maxVotingPower ||
+      (filterParams.minGovParticipationRate || initParams.minGovParticipationRate) !==
+        initParams.minGovParticipationRate ||
+      (filterParams.maxGovParticipationRate || initParams.maxGovParticipationRate) !==
+        initParams.maxGovParticipationRate,
     [filterParams]
   );
 
@@ -180,18 +196,21 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
       <Box display="flex" alignItems="center" gap="30px">
         <Box
           component={Input}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMin}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(minValue || 0).toString()}
+          value={Number(minValue || 0).toString() + (addDotMin ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -218,13 +237,17 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMin(false);
+            }
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
                 +numericValue > maxValue
                   ? 0
                   : ["minGovParticipationRate"].includes(keyOnChangeMin)
-                  ? +numericValue / 100
+                  ? truncateToTwoDecimals(+numericValue) / 100
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
@@ -237,18 +260,21 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
         <Box sx={{ width: "15px", height: "2px", background: theme.palette.info.light }}></Box>
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           data-testid={`filterRange.${keyOnChangeMax}`}
           sx={{
             fontSize: "14px",
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(maxValue).toString()}
+          value={Number(maxValue).toString() + (addDotMax ? "," : "")}
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -272,10 +298,15 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
+
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
 
             Number(numericValue) <= maxValueDefault &&
               setFilterParams({
@@ -284,7 +315,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["maxGovParticipationRate"].includes(keyOnChangeMax)
-                    ? +numericValue / 100
+                    ? truncateToTwoDecimals(+numericValue) / 100
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
@@ -725,6 +756,116 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                   </Box>
                 </AccordionSummary>
               </AccordionContainer>
+
+              <Box
+                component={dataRange?.maxGovParticipationRate === null ? CustomTooltip : Box}
+                title={dataRange?.maxGovParticipationRate === null ? t("common.noDataAvaiable") : undefined}
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      {
+                        name: "offset",
+                        options: {
+                          offset: [0, -18]
+                        }
+                      }
+                    ]
+                  }
+                }}
+              >
+                <AccordionContainer
+                  data-testid="filterRange.drepParticipation"
+                  expanded={expanded === "drepParticipation"}
+                  onChange={handleChange("drepParticipation")}
+                >
+                  <AccordionSummary
+                    disabled={dataRange?.maxGovParticipationRate === null}
+                    sx={{
+                      "&.Mui-disabled": {
+                        opacity: 0.9
+                      }
+                    }}
+                  >
+                    <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Box display={"flex"} alignItems={"center"}>
+                        <CustomIcon
+                          icon={PoolParticipationIcon}
+                          fill={
+                            dataRange?.maxGovParticipationRate === null
+                              ? theme.palette.secondary[600]
+                              : theme.palette.secondary[800]
+                          }
+                          height={18}
+                        />
+                        <Box
+                          data-testid="filterRange.drepParticipationTitle"
+                          ml={1}
+                          color={({ palette }) =>
+                            dataRange?.maxGovParticipationRate === null
+                              ? palette.secondary[600]
+                              : palette.secondary.main
+                          }
+                        >
+                          {t("dreps.participationRate")}
+                        </Box>
+                      </Box>
+                      <Box>
+                        {expanded === "drepParticipation" ? (
+                          <IoIosArrowUp
+                            color={
+                              dataRange?.maxGovParticipationRate === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        ) : (
+                          <IoIosArrowDown
+                            color={
+                              dataRange?.maxGovParticipationRate === null
+                                ? theme.palette.secondary[600]
+                                : theme.palette.secondary.main
+                            }
+                          />
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetailsFilter sx={{ background: "unset" }}>
+                    <Box display="flex" alignItems="center" mb={1} sx={{ gap: "14px" }}>
+                      <Typography>{formatPercent(dataRange?.minGovParticipationRate) || `0%`}</Typography>
+                      <StyledSlider
+                        valueLabelFormat={(value) => formatPercent(value)}
+                        data-testid="filterRange.drepParticipationValue"
+                        getAriaLabel={() => "Minimum distance"}
+                        defaultValue={[filterParams.minGovParticipationRate || 0, initParams.maxGovParticipationRate]}
+                        onChange={(e, newValue) =>
+                          handleChangeValueRange(e, newValue, "minGovParticipationRate", "maxGovParticipationRate")
+                        }
+                        value={[
+                          filterParams.minGovParticipationRate || 0,
+                          filterParams.maxGovParticipationRate ?? initParams.maxGovParticipationRate
+                        ]}
+                        valueLabelDisplay="auto"
+                        disableSwap
+                        step={0.000001}
+                        min={dataRange?.minGovParticipationRate || 0}
+                        max={dataRange?.maxGovParticipationRate || 0}
+                        disabled={dataRange?.maxGovParticipationRate === null}
+                      />
+                      <Typography>{formatPercent(dataRange?.maxGovParticipationRate || 0) || `0%`}</Typography>
+                    </Box>
+                    {groupInputRange(
+                      +formatPercent(filterParams.minGovParticipationRate || 0).replace("%", ""),
+                      filterParams.maxGovParticipationRate !== undefined
+                        ? +formatPercent(filterParams.maxGovParticipationRate || 0).replace("%", "")
+                        : +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", ""),
+                      "minGovParticipationRate",
+                      "maxGovParticipationRate",
+                      +formatPercent(initParams.maxGovParticipationRate || 0).replace("%", "")
+                    )}
+                  </AccordionDetailsFilter>
+                </AccordionContainer>
+              </Box>
 
               <DateRangeModal
                 onClose={() => {

@@ -24,7 +24,7 @@ const TopAddressesByAmountStaked = () => {
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
   const history = useHistory();
   const [pageSize, setPageSize] = useState("50");
-  const { error, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
+  const { error, statusError, data, initialized, loading, lastUpdated } = useFetchList<Contracts>(
     API.STAKE.TOP_DELEGATOR,
     { page: 0, size: +pageSize },
     false,
@@ -33,41 +33,59 @@ const TopAddressesByAmountStaked = () => {
 
   const columns: Column<TopDelegator>[] = [
     {
-      title: t("common.stakeAddress"),
+      title: <div data-testid="topAddresses.byAmountStake.stakeAddressTitle">{t("common.stakeAddress")}</div>,
       minWidth: 170,
       key: "addresses",
       maxWidth: "30vw",
-      render: (r) => (
-        <StyledLink to={details.stake(r.stakeKey)}>
+      render: (r, index) => (
+        <StyledLink
+          aria-label={r.stakeKey}
+          data-testid={`topAddresses.byAmountStaked.addressValue#${index}`}
+          to={details.stake(r.stakeKey)}
+        >
           <DynamicEllipsisText value={r.stakeKey} isTooltip />
         </StyledLink>
       )
     },
     {
-      title: t("glossary.pool"),
+      title: <div data-testid="topAddresses.byAmountStake.poolTitle">{t("glossary.pool")}</div>,
       key: "pool",
       minWidth: 170,
       maxWidth: "30vw",
-      render: (r) => {
+      render: (r, index) => {
         if (r.poolName) {
           return (
             <CustomTooltip title={r.poolName}>
-              <StyledLink to={details.delegation(r.poolId)}>{r.poolName}</StyledLink>
+              <StyledLink
+                aria-label={r.poolId}
+                data-testid={`topAddresses.byAmountStaked.pool#${index}`}
+                to={details.delegation(r.poolId)}
+              >
+                {r.poolName}
+              </StyledLink>
             </CustomTooltip>
           );
         }
         return (
-          <StyledLink to={details.delegation(r.poolId)}>
+          <StyledLink
+            aria-label={r.poolId}
+            data-testid={`topAddresses.byAmountStaked.pool#${index}`}
+            to={details.delegation(r.poolId)}
+          >
             <DynamicEllipsisText value={r.poolId} isTooltip />
           </StyledLink>
         );
       }
     },
     {
-      title: t("stakeAmount"),
+      title: <div data-testid="topAddresses.byAmountStake.stakeAmountTitle">{t("stakeAmount")}</div>,
       key: "Stakeamount",
-      render: (r) => (
-        <Box component={"span"}>
+      render: (r, index) => (
+        <Box
+          aria-label={`${r.balance}`}
+          data-testid={`topAddresses.byAmountStake.stakeAmount${index}`}
+          component={"span"}
+        >
           {formatADAFull(r.balance)} <ADAicon />
         </Box>
       )
@@ -77,9 +95,7 @@ const TopAddressesByAmountStaked = () => {
   return (
     <Box mt={"18px"}>
       <Actions>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
+        <TimeDuration>{!error && <FormNowMessage time={lastUpdated} />}</TimeDuration>
         <PageSize>
           <SelectMui
             value={pageSize}
@@ -112,6 +128,7 @@ const TopAddressesByAmountStaked = () => {
         onClickRow={(_, r) => history.push(details.stake(r.stakeKey))}
         data={data}
         error={error}
+        statusError={statusError}
         loading={loading}
         initialized={initialized}
         columns={columns}

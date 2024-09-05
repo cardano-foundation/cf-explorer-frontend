@@ -29,9 +29,53 @@ export class BlockFrost {
       return `${BlockFrost.Epochs.Base}/latest`;
     }
   };
+
+  static Transaction = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/txs`;
+    }
+    public static get Contract() {
+      return `${BlockFrost.Transaction.Base}/:hash/redeemers`;
+    }
+    public static get StakeCert() {
+      return `${BlockFrost.Transaction.Base}/:hash/stakes`;
+    }
+    public static get RegisPoolCert() {
+      return `${BlockFrost.Transaction.Base}/:hash/pool_updates`;
+    }
+    public static get DeregisPoolCert() {
+      return `${BlockFrost.Transaction.Base}/:hash/pool_retires`;
+    }
+    public static get DelegationCert() {
+      return `${BlockFrost.Transaction.Base}/:hash/delegations`;
+    }
+    public static get InstantaneousReward() {
+      return `${BlockFrost.Transaction.Base}/:hash/mirs`;
+    }
+  };
   static Pools = class {
     public static get Base() {
       return `${BlockFrost.BASE_MAIN_NET_URL}/pools`;
+    }
+  };
+
+  static Token = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/assets`;
+    }
+  };
+  static TopADAHolder = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/addresses`;
+    }
+    public static get TxCount() {
+      return `${BlockFrost.TopADAHolder.Base}/:address/total`;
+    }
+    public static get dataTabAmountStaked() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/accounts/:stake_address`;
+    }
+    public static get poolIDAcount() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/accounts/:stake_address/delegations`;
     }
   };
 }
@@ -47,6 +91,11 @@ export class Koios {
   static Transactions = class {
     public static get Base() {
       return `${Koios.BASE_MAIN_NET_URL}/tx_info`;
+    }
+  };
+  static getAddress = class {
+    public static get Base() {
+      return `${Koios.BASE_MAIN_NET_URL}/address_info`;
     }
   };
 }

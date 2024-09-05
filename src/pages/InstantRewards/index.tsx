@@ -28,6 +28,7 @@ const InstantReards = () => {
   const fetchData = useFetchList<Contracts>(API.STAKE.INSTANT_REWARDS, pageInfo, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
+  const { error } = fetchData;
 
   useEffect(() => {
     document.title = `Stake Delegations | Cardano Blockchain Explorer`;
@@ -38,9 +39,9 @@ const InstantReards = () => {
       title: <div data-testid="instaneousRewards.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: 120,
       key: "txHash",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="instaneousRewards.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`instaneousRewards.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>
@@ -111,11 +112,13 @@ const InstantReards = () => {
   return (
     <StyledContainer>
       <Card title={t("drawer.instaneousRewards")}>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           data-testid="instaneousRewards.table"
           {...fetchData}

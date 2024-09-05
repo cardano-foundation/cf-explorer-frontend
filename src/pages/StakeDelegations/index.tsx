@@ -28,6 +28,7 @@ const StakeDelegations = () => {
   const fetchData = useFetchList<Contracts>(API.STAKE.STAKE_DELEGATIONS, { ...pageInfo }, false, blockKey);
 
   const mainRef = useRef(document.querySelector("#main"));
+  const { error } = fetchData;
 
   useEffect(() => {
     document.title = `Stake Delegations | Cardano Blockchain Explorer`;
@@ -38,9 +39,9 @@ const StakeDelegations = () => {
       title: <div data-testid="stakeDelegations.txHashTitle">{t("glossary.txHash")}</div>,
       minWidth: "150px",
       key: "txHash",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.txHash}>
-          <StyledLink data-testid="stakeDelegations.txHashValue" to={details.transaction(r.txHash)}>
+          <StyledLink data-testid={`stakeDelegations.txHashValue#${idx}`} to={details.transaction(r.txHash)}>
             {getShortHash(r.txHash)}
           </StyledLink>
         </CustomTooltip>
@@ -142,11 +143,13 @@ const StakeDelegations = () => {
   return (
     <StyledContainer>
       <Card title={t("head.page.stakeDelegation")}>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           {...fetchData}
           data-testid="stakeDelegations.poolTitle"

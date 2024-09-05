@@ -45,7 +45,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "topHolders",
-      label: t("glossary.topHolders"),
+      label: <div data-testid="token.detail.topHoldersTab">{t("glossary.topHolders")}</div>,
       children: (
         <TokenTopHolder
           tabActive={tabActive}
@@ -59,7 +59,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "tokenMint",
-      label: t("tab.minting"),
+      label: <div data-testid="token.detail.mintingTab">{t("tab.minting")}</div>,
       children: <TokenMinting tabActive={tabActive} tokenId={tokenId} metadata={metadata} />,
       icon: UnionTokenIcon
     },
@@ -78,7 +78,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   };
 
   return (
-    <Box mt={3}>
+    <Box mt={3} mb={2}>
       <CustomAccordion tabs={tabs} onTabChange={handleTabChange} loading={loading} />
     </Box>
   );

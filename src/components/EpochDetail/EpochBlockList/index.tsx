@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
-import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -42,6 +41,8 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
     false,
     epochNo?.toString() === epochId && pageInfo.page === 0 ? blockNo : 0
   );
+
+  const { error } = fetchData;
 
   const columns: Column<BlockDetail>[] = [
     {
@@ -132,15 +133,18 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card title={<Box data-testid="epoch.blockList.blocksTitle">{t("head.page.blocks")}</Box>} underline>
-        <Actions>
-          <TimeDuration>
-            <FormNowMessage time={fetchData.lastUpdated} />
-          </TimeDuration>
-        </Actions>
+      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
+        {!error && (
+          <Actions>
+            <TimeDuration>
+              <FormNowMessage time={fetchData.lastUpdated} />
+            </TimeDuration>
+          </Actions>
+        )}
         <Table
           data-testid="epoch.blockList.table"
           {...fetchData}
+          error={error}
           columns={columns}
           total={{ title: t("common.totalBlocks"), count: fetchData.total }}
           pagination={{

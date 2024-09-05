@@ -6,5 +6,11 @@ export function tokenDetailPage(page: Page) {
 
     await expect(deatailPageHash, "Check token hash detail").toContainText(tokenId?.slice(0, 12) || "");
   };
-  return { checkTokenDetail };
+
+  const checkTokenID = async ({ tokenID }: { tokenID: string | null }) => {
+    const url = await page.url();
+    expect(url, "Check url token ID").toContain(`${tokenID}`);
+  };
+
+  return { checkTokenID, checkTokenDetail };
 }

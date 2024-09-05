@@ -33,6 +33,7 @@ const DelegationTab = () => {
   const fetchData = useFetchList<DelegationItem>(reportId ? API.REPORT.SREPORT_DETAIL_DELEGATIONS(reportId) : "", {
     ...pageInfo
   });
+  const { error } = fetchData;
 
   const { total } = fetchData;
   const columns: Column<DelegationItem>[] = [
@@ -84,14 +85,16 @@ const DelegationTab = () => {
   ];
   return (
     <>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mt={4}>
-        <Box />
-        <Box display={"flex"} alignItems={"center"} gap={2}>
-          <WrapFilterDescription>
-            Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
-          </WrapFilterDescription>
+      {!error && (
+        <Box display="flex" alignItems="center" justifyContent="space-between" mt={4}>
+          <Box />
+          <Box display={"flex"} alignItems={"center"} gap={2}>
+            <WrapFilterDescription>
+              Showing {Math.min(total, pageInfo.size)} {Math.min(total, pageInfo.size) > 1 ? "results" : "result"}
+            </WrapFilterDescription>
+          </Box>
         </Box>
-      </Box>
+      )}
       <Table
         {...fetchData}
         columns={columns}

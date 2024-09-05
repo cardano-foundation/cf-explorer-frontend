@@ -9,11 +9,13 @@ import { getShortHash } from "src/commons/utils/helper";
 import Mintviews from "./Mintviews";
 import Certviews from "./Certviews";
 import Rewardviews from "./Rewardviews";
+import Votingviews from "./Votingviews";
 import { DetailContainer, DetailContent, DetailHeader, ReferenceButton, ReferenceCount } from "./styles";
 import { StyledLink } from "../share/styled";
 import CustomTooltip from "../commons/CustomTooltip";
 import Spendviews from "./SpendViews";
 import ReferenceInputModal from "./modals/ReferenceInputModal";
+import Proposingviews from "./Proposingviews";
 
 export interface ContractDetailProps {
   view?: "SPEND" | "MINT" | "CERT" | "REWARD";
@@ -46,6 +48,16 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
       component: <Spendviews data={data} isMobile={isMobile} />,
       contract: data?.scriptHash,
       detail: routerDetals.smartContract
+    },
+    VOTING: {
+      component: <Votingviews data={data} isMobile={isMobile} />,
+      contract: data?.scriptHash,
+      detail: routerDetals.smartContract
+    },
+    PROPOSING: {
+      component: <Proposingviews data={data} isMobile={isMobile} />,
+      contract: data?.scriptHash,
+      detail: routerDetals.smartContract
     }
   };
   const { component, contract, detail } = details[(data?.purpose as ContractDetailProps["view"]) || "SPEND"];
@@ -60,7 +72,11 @@ const ContractDetail: React.FC<ContractDetailProps> = ({ data, onGoBack, isMobil
         <Typography fontWeight="500" color={theme.palette.secondary.light}>
           {t("contract.title")}:{" "}
           <CustomTooltip title={contract}>
-            <StyledLink style={{ fontWeight: "500", textDecoration: "underline" }} to={detail(contract || "")}>
+            <StyledLink
+              style={{ fontWeight: "500", textDecoration: "underline" }}
+              to={detail(contract || "")}
+              data-testid="trx.contract.detail.address"
+            >
               {getShortHash(contract || "")}
             </StyledLink>
           </CustomTooltip>

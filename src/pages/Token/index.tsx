@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 
 import { details } from "src/commons/routers";
 import {
@@ -39,7 +40,7 @@ const Tokens = () => {
   const queries = new URLSearchParams(search);
 
   const mainRef = useRef(document.querySelector("#main"));
-  const { data, lastUpdated, ...fetchData } = useFetchList<ITokenOverview>(
+  const { data, lastUpdated, error, statusError, ...fetchData } = useFetchList<ITokenOverview>(
     API.TOKEN.LIST,
     { ...pageInfo, query: queries.get("tokenName") || "" },
     false,
@@ -53,34 +54,41 @@ const Tokens = () => {
 
   const columns: Column<IToken>[] = [
     {
-      title: t("glossary.icon"),
+      title: <Box data-testid="tokens.table.title.icon">{t("glossary.icon")}</Box>,
       key: "icon",
       minWidth: "50px",
       render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : "")
     },
     {
-      title: t("glossary.assetName"),
+      title: <Box data-testid="tokens.table.title.assetName">{t("glossary.assetName")}</Box>,
       key: "assetName",
       minWidth: "100px",
-      render: (r) =>
+      render: (r, idx) =>
         r.displayName && r.displayName.length > 20 ? (
           <CustomTooltip placement={"top"} title={r.displayName}>
-            <AssetName to={details.token(r?.fingerprint ?? "")}>{getShortHash(r.displayName || "")}</AssetName>
+            <AssetName data-testid={`token.assetName#${idx}`} to={details.token(r?.fingerprint ?? "")}>
+              {getShortHash(r.displayName || "")}
+            </AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName to={details.token(r?.fingerprint ?? "")}>
+          <AssetName
+            data-testid={`token.assetName#${idx}`}
+            to={details.token(r?.fingerprint ?? "")}
+            data-policy={`${r?.policy}${r?.name}`}
+          >
             {r.displayName || getShortHash(r.fingerprint || "")}
           </AssetName>
         )
     },
     {
-      title: t("glossary.scriptHash"),
+      title: <Box data-testid="tokens.table.title.scriptHash">{t("glossary.scriptHash")}</Box>,
       key: "policy",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.policy}>
           <AssetName
             to={r.policyIsNativeScript ? details.nativeScriptDetail(r.policy) : details.smartContract(r.policy)}
+            data-testid={`token.scriptHash#${idx}`}
           >
             {getShortHash(r.policy)}
           </AssetName>
@@ -88,7 +96,7 @@ const Tokens = () => {
       )
     },
     {
-      title: t("common.totalTxs"),
+      title: <Box data-testid="tokens.table.title.totalTxs">{t("common.totalTxs")}</Box>,
       key: "txCount",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.txCount),
@@ -97,25 +105,29 @@ const Tokens = () => {
       }
     },
     {
-      title: t("glossary.numberOfHolders"),
+      title: <Box data-testid="tokens.table.title.numberOfHolders">{t("glossary.numberOfHolders")}</Box>,
       key: "numberOfHolders",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.numberOfHolders)
     },
     {
-      title: t("glossary.totalVolumn"),
+      title: <Box data-testid="tokens.table.title.totalVolumn">{t("glossary.totalVolumn")}</Box>,
       key: "TotalVolume",
       minWidth: "150px",
       render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
     },
     {
-      title: t("glossary.volume24h"),
+      title: <Box data-testid="tokens.table.title.volume24h">{t("glossary.volume24h")}</Box>,
       key: "volumeIn24h",
       minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
+      render: (r, index) => (
+        <Box data-testid={`tokens.table.value.volume24h#${index}`}>
+          {formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)}
+        </Box>
+      )
     },
     {
-      title: t("common.totalSupply"),
+      title: <Box data-testid="tokens.table.title.totalSupply">{t("common.totalSupply")}</Box>,
       key: "supply",
       minWidth: "150px",
       render: (r) => {
@@ -127,7 +139,7 @@ const Tokens = () => {
       }
     },
     {
-      title: t("createdAt"),
+      title: <Box data-testid="tokens.table.title.createdAt">{t("createdAt")}</Box>,
       key: "time",
       minWidth: "150px",
       render: (r) => (
@@ -158,11 +170,15 @@ const Tokens = () => {
   return (
     <StyledContainer>
       <Card title={t("glossary.nativeTokens")}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
+        {!error && (
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+        )}
         <Table
           {...fetchData}
+          statusError={statusError}
+          error={error}
           data={data}
           columns={columns}
           total={{ title: "Total", count: fetchData.total, isDataOverSize: fetchData.isDataOverSize }}
