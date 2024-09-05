@@ -149,6 +149,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailValue>
                   <CustomTooltip title={data.policy}>
                     <StyledLink
+                      data-testid="token.widget.scriptHash"
                       to={
                         data.policyIsNativeScript
                           ? details.nativeScriptDetail(data.policy)
@@ -165,7 +166,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLabel>{t("common.tokenID")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={tokenId}>
-                    <StyledLink to={details.token(tokenId)}>{getShortHash(tokenId || "")}</StyledLink>
+                    <StyledLink to={details.token(tokenId)} data-testid="token.widget.tokenId">
+                      {getShortHash(tokenId || "")}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={tokenId} />
                 </DetailValue>
@@ -180,7 +183,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                           <div>{getShortHash(data.displayName)}</div>
                         </CustomTooltip>
                       ) : data.displayName ? (
-                        data.displayName
+                        <div data-testid="token.widget.assetName">{data.displayName}</div>
                       ) : (
                         <CustomTooltip title={data.fingerprint || ""}>
                           <div>{getShortHash(data.fingerprint || "")}</div>
@@ -219,7 +222,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailsInfoItem>
             </Group>
             <Group>
-              <DetailLink to={details.token(tokenId)}>
+              <DetailLink data-testid="token.widget.transactions" to={details.token(tokenId)}>
                 <DetailLabel>
                   <DetailLinkIcon>
                     <TransactionIcon />
@@ -280,7 +283,12 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.token(tokenId)} />
+        <ViewMoreButton
+          to={details.token(tokenId)}
+          data-testid="token.widget.viewDetail"
+          data-policyName={`${data?.policy}${data?.name}`}
+        />
+        <div data-testid="token.widget.policyName" data-policyName={`${data?.policy}${data?.name}`}></div>
       </>
     );
   };

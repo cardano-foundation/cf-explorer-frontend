@@ -227,6 +227,9 @@ export function blockfrostApi(request: APIRequestContext) {
     );
   };
 
+  const getAssetNameByAssetToken = async (assetToken: string | null) => {
+    return BaseApi.getData(request, Endpoint.BlockFrost.Token.Base + `/${assetToken}`);
+  };
   const getTxCountTopADAHolder = async (address: string) => {
     return BaseApi.getData(
       request,
@@ -288,6 +291,7 @@ export function blockfrostApi(request: APIRequestContext) {
     getStakePools,
     getMetadataPools,
     getHistoryPools,
+    getAssetNameByAssetToken,
     getTxCountTopADAHolder,
     getDataAmountStaked,
     getPoolIDAcount

@@ -59,6 +59,11 @@ export class BlockFrost {
     }
   };
 
+  static Token = class {
+    public static get Base() {
+      return `${BlockFrost.BASE_MAIN_NET_URL}/assets`;
+    }
+  };
   static TopADAHolder = class {
     public static get Base() {
       return `${BlockFrost.BASE_MAIN_NET_URL}/addresses`;
