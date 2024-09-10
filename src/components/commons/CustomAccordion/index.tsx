@@ -42,7 +42,7 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
       if (newExpanded) {
         setTimeout(() => {
           tabRef?.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }, 0);
+        }, 100);
         tabRef?.current?.removeEventListener("transitionend", handleTransitionEnd);
       }
     };
@@ -65,8 +65,8 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
         <StyledAccordion
           key={key}
           expanded={tabActive === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tabActive !== key && index !== indexExpand + 1}
+          customborderradius={needBorderRadius(key)}
+          isdisplaybordertop={tabActive !== key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary

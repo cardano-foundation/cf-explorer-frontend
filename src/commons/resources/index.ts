@@ -39,7 +39,6 @@ import MediumIcon from "./icons/medium.svg";
 import RocketBackground from "./icons/rocket-bg.svg";
 import USDIcon from "./icons/usd.svg";
 import SeeMoreIcon from "./icons/seemore.svg";
-import SignOut from "./icons/sign-out.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -99,6 +98,10 @@ import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
+import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
+import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
+import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
+import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import ArrowDownIcon from "./icons/arrow-down-red.svg";
 import ArrowDownDarkIcon from "./icons/arrow-down-red-dark.svg";
 import PolicyDark from "./icons/policy-dark.svg";
@@ -110,10 +113,6 @@ import PoolSizeDarkIcon from "./images/PoolSizeDark.png";
 import PoolSizeLightIcon from "./images/PoolSizeLight.png";
 import DelegatingToDarkIcon from "./images/DelegatingToDark.png";
 import RewardsWithdrawDarkIcon from "./images/RewardsWithdrawDark.png";
-import DisableArrowUpLightIcon from "./icons/disable-arrow-up-light.svg";
-import DisableArrowDownLightIcon from "./icons/disable-arrow-down-light.svg";
-import DisableArrowUpDarkIcon from "./icons/disable-arrow-up-dark.svg";
-import DisableArrowDownDarkIcon from "./icons/disable-arrow-down-dark.svg";
 import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
 import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
 import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
@@ -159,6 +158,7 @@ import User2 from "./icons/user2.svg";
 import WhiteSearchIcon from "./icons/white-search-icon.svg";
 import CopyOutlineIcon from "./icons/copy-outline.svg";
 import GovernanceHome from "./icons/governanceHome.svg";
+import SignOut from "./icons/sign-out.svg";
 //only component
 
 import SignOutComponent from "./icons/sign-out.svg?react";
@@ -233,12 +233,10 @@ import DelegatorsDrepIcon from "./icons/delegatorsDrep.svg?react";
 import LifetimeVoteDrepIcon from "./icons/liifetimeVoteDrep.svg?react";
 import governanceVotesIcon from "./icons/governanceVotes.svg?react";
 import StakingLifecycleComponent from "./icons/menus/stakingLifecycle.svg?react";
+import VotesIcon from "./icons/votes.svg?react";
 import VotesYesIcon from "./icons/voteYes.svg?react";
 import VotesNoIcon from "./icons/voteNo.svg?react";
 import VotesAbstainIcon from "./icons/voteAbstain.svg?react";
-import DropdownIcon from "./icons/dropdown.svg?react";
-import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
-import VotesIcon from "./icons/votes.svg?react";
 import VotesNoneIcon from "./icons/voteNone.svg?react";
 import ArrowLeftWhiteIcon from "./icons/arrow-left-white.svg?react";
 import GovernanceIdIcon from "./icons/governanceId.svg?react";
@@ -252,6 +250,8 @@ import ExpiryIcon from "./icons/expiry-date.svg?react";
 import AnchorTextIcon from "./icons/anchor-text.svg?react";
 import BlackWarningIcon from "./icons/warning-black.svg?react";
 import BlackCircleIcon from "./icons/black-cirle-copy.svg?react";
+import DropdownIcon from "./icons/dropdown.svg?react";
+import DisclaimerIcon from "./icons/DisclaimerIcon.svg?react";
 import RepeatVotesIcon from "./icons/repeat-votes.svg?react";
 import historyIcon from "./icons/history.svg?react";
 import multiYesIcon from "./icons/multiyes.svg?react";
@@ -419,6 +419,7 @@ export {
   RegistrationDarkIcon,
   RegistrationLightIcon,
   BolnisiDashboard,
+
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
@@ -514,12 +515,12 @@ export {
   DelegatorsDrepIcon,
   LifetimeVoteDrepIcon,
   governanceVotesIcon,
-  DisclaimerIcon,
-  DropdownIcon,
   VotesIcon,
   VotesYesIcon,
   VotesNoIcon,
   VotesAbstainIcon,
+  DisclaimerIcon,
+  DropdownIcon,
   VotesNoneIcon,
   ArrowLeftWhiteIcon,
   GovernanceIdIcon,
@@ -932,9 +933,6 @@ export {
   CheckedCIPIcon,
   SmallInfoIcon,
   CIP60WarningIcon,
-  PlusSquareIcon,
-  CloseSquareIcon,
-  MinusSquareIcon,
   OpenTimeLock,
   LockedTimelock,
   SigNative,
@@ -964,7 +962,10 @@ export {
   TreeWhite,
   WasteWhite,
   Clock,
-  ClockWhite
+  ClockWhite,
+  PlusSquareIcon,
+  CloseSquareIcon,
+  MinusSquareIcon
 };
 
 // Bolnisi Landing

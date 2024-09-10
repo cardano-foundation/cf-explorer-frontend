@@ -3,7 +3,7 @@ import { Accordion, styled, Box } from "@mui/material";
 export const StyledAccordion = styled(Accordion)<{
   expanded: boolean;
   customborderradius: string;
-  isdisplaybordertop: string;
+  isdisplaybordertop: string | boolean;
 }>(({ expanded, customborderradius, isdisplaybordertop, theme }) => ({
   borderRadius: expanded ? "12px" : customborderradius,
   background: theme.palette.secondary[0],
@@ -19,7 +19,7 @@ export const StyledAccordion = styled(Accordion)<{
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.05)"
   },
   "&:before": {
-    display: isdisplaybordertop === "1" ? "flex" : "none",
+    display: isdisplaybordertop == "1" ? "flex" : "none",
     width: "calc(100% - 40px)",
     margin: "0 auto",
     height: "1px",
