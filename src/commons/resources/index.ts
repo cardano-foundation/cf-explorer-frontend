@@ -747,6 +747,16 @@ import CClistMembers from "./icons/CClistMembers.svg?react";
 import CCGorvernanceVote from "./icons/CCGorvernanceVote.svg?react";
 import CCHistoryStatus from "./icons/CCHistoryStatus.svg?react";
 import BolnisiDropdown from "./icons/bolnisi-dropdown.svg?react";
+import Lighning from "./icons/Lighning.svg?react";
+import LighningWhite from "./icons/lighning-white.svg?react";
+import Earch from "./icons/Earch.svg?react";
+import EarchWhite from "./icons/earch-white.svg?react";
+import Wash from "./icons/wash.svg?react";
+import Tree from "./icons/tree.svg?react";
+import TreeWhite from "./icons/tree-white.svg?react";
+import WasteWhite from "./icons/waste-white.svg?react";
+import Clock from "./icons/clock.svg?react";
+import ClockWhite from "./icons/clock-white.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -944,7 +954,17 @@ export {
   CCLastChange,
   CClistMembers,
   CCGorvernanceVote,
-  CCHistoryStatus
+  CCHistoryStatus,
+  Lighning,
+  LighningWhite,
+  Earch,
+  EarchWhite,
+  Wash,
+  Tree,
+  TreeWhite,
+  WasteWhite,
+  Clock,
+  ClockWhite
 };
 
 // Bolnisi Landing
