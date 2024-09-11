@@ -6,6 +6,18 @@ export const StyledBox = styled(Box)(() => ({
   justifyContent: "flex-end",
   flexDirection: "column"
 }));
+export const StyledCard = styled(Box)(({ theme }) => ({
+  padding: "24px",
+  backgroundColor: theme.isDark ? "#54596E" : "#FFFFFF",
+  color: theme.isDark ? "#F7F9FF" : "#000000",
+  borderRadius: "24px",
+  minHeight: "350px",
+  textAlign: "left",
+  [theme.breakpoints.down("sm")]: {
+    padding: "18px",
+    minHeight: "250px"
+  }
+}));
 export const StyledBoxIcon = styled(Box)(() => ({
   borderRadius: "20%",
   padding: 1.5,
@@ -19,8 +31,11 @@ export const StyledBoxIcon = styled(Box)(() => ({
 export const Title = styled(Typography)(() => ({
   fontWeight: 700
 }));
-export const Value = styled(Typography)(() => ({
+export const Value = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 500,
-  marginBottom: "32px"
+  marginBottom: "32px",
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "12px"
+  }
 }));

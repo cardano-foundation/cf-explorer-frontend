@@ -1,10 +1,13 @@
 import { Box, Button, Card, styled, Typography } from "@mui/material";
 
-export const StyledTitle = styled(Typography)(() => ({
+export const StyledTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
   textAlign: "left",
   marginTop: "42px",
-  marginBottom: "20px"
+  marginBottom: "20px",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "0px"
+  }
 }));
 export const StyledCard = styled(Card)(() => ({
   padding: "2rem",

@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Container, Divider, Grid, Typography, useTheme 
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { StyledBox, StyledBoxIcon, Title, Value } from "./styles";
+import { StyledBox, StyledBoxIcon, StyledCard, Title, Value } from "./styles";
 
 interface MicarProps {
   title: string;
@@ -67,16 +67,7 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
                     marginTop: isSmallScreen ? 0 : 8
                   }}
                 >
-                  <Box
-                    sx={{
-                      padding: isSmallScreen ? 4 : 6,
-                      backgroundColor: theme.isDark ? "#54596E" : "#FFFFFF",
-                      color: theme.isDark ? "#F7F9FF" : "#000000",
-                      borderRadius: 6,
-                      minHeight: "350px"
-                    }}
-                    textAlign={"left"}
-                  >
+                  <StyledCard>
                     <Title fontSize={isMobile ? "16px" : isLaptop ? "20px" : "24px"}>{des1}</Title>
                     <Value>{value1}</Value>
                     <Divider />
@@ -89,7 +80,7 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
                       {des3}
                     </Title>
                     <Value> {value3}</Value>
-                  </Box>
+                  </StyledCard>
                 </Grid>
               </Grid>
             </CardContent>
