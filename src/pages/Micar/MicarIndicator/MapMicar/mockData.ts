@@ -47,7 +47,7 @@ export const data = [
         city: "Djibouti City",
         lat: "11.588",
         long: "43.1448",
-        noOfSample: 0
+        noOfSample: 1
       }
     ]
   },
@@ -119,13 +119,13 @@ export const data = [
   {
     countryCode: "LY",
     country: "Libya",
-    noOfSample: 0,
+    noOfSample: 20,
     cities: [
       {
         city: "Tripoli",
         lat: "32.8866",
         long: "13.1897",
-        noOfSample: 0
+        noOfSample: 20
       }
     ]
   },
@@ -202,13 +202,13 @@ export const data = [
   {
     countryCode: "QA",
     country: "Qatar",
-    noOfSample: 0,
+    noOfSample: 30,
     cities: [
       {
         city: "Doha",
         lat: "25.2769",
         long: "51.5414",
-        noOfSample: 0
+        noOfSample: 30
       }
     ]
   },

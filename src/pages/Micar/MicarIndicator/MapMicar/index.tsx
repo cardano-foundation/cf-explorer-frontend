@@ -33,9 +33,9 @@ HighchartsMap(Highcharts);
 type HighchartsMapRefObject = HighchartsReactRefObject & { chart: MapChart };
 
 const LEGENDS: [number, string, string][] = [
-  [10, "rgb(214 226 255)", "#666666"],
-  [20, "rgb(92 141 255)", "#ACBBEC"],
-  [Infinity, "rgb(0 51 173)", "#2F59DB"]
+  [10, "#D6E2FF", "#D6E2FF"],
+  [20, "#5C8DFF", "#5C8DFF"],
+  [Infinity, "#0033AD", "#0033AD"]
 ];
 
 export const WorldMap = (props: BoxProps) => {
