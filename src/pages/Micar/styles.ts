@@ -2,6 +2,7 @@ import { Box, styled } from "@mui/material";
 
 export const WrapHeading = styled(Box)`
   margin-bottom: 132px;
+  padding: 0 24px;
 `;
 
 export const HeadingPage = styled("h1")(({ theme }) => ({

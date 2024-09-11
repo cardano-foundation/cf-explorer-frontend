@@ -13,7 +13,7 @@ export const WorldMapContainer = styled(Box)<{ fullscreen?: number }>(({ fullscr
   lineHeight: "14px",
   fontWeight: 400,
   color: "#434656",
-  padding: 0,
+  padding: " 0 24px",
   backgroundColor: "white",
 
   ">div:first-of-type": {
@@ -42,7 +42,7 @@ export const IndentifyValue = styled("span")({
 export const MapNavigation = styled(Box)`
   position: absolute;
   bottom: 0px;
-  left: 0px;
+  left: 24px;
   display: flex;
   align-items: center;
   border: 1px solid #bdbfcb;
@@ -133,5 +133,5 @@ export const MapNavigationDivider = styled(Box)(({ theme }) => ({
 export const MapOption = styled(Box)`
   position: absolute;
   bottom: 0px;
-  left: 136px;
+  left: 160px;
 `;
