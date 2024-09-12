@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+// import axios from "axios";
 
 import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -19,6 +20,10 @@ const Micar = () => {
   useEffect(() => {
     document.title = `Micar | Cardano Blockchain Explorer`;
   }, []);
+
+  // axios.get(`/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP`).then(() => {
+
+  // });
 
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>

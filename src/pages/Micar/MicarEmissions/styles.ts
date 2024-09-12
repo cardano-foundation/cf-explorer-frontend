@@ -1,4 +1,5 @@
 import { Box, Button, Card, styled, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 700,
@@ -7,6 +8,27 @@ export const StyledTitle = styled(Typography)(({ theme }) => ({
   marginBottom: "20px",
   [theme.breakpoints.down("sm")]: {
     marginTop: "0px"
+  }
+}));
+export const StyledTypography = styled(Typography)(({ theme }) => ({
+  fontWeight: 700,
+  textAlign: "left",
+  marginTop: "12px",
+  marginBottom: "2px",
+  fontSize: "24px",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "16px",
+    marginTop: "0px"
+  }
+}));
+export const StyledValue = styled(Typography)(({ theme }) => ({
+  textAlign: "left",
+  marginTop: "12px",
+  marginBottom: "20px",
+  fontSize: "20px",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "0px",
+    fontSize: "14px"
   }
 }));
 export const StyledCard = styled(Card)(() => ({
@@ -63,4 +85,9 @@ export const SubmitButton = styled(Button)`
   min-width: 60px;
   width: 60px;
   height: 60px;
+`;
+
+export const StyledLink = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
 `;
