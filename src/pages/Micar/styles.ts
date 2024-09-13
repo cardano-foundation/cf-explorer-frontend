@@ -1,9 +1,16 @@
 import { Box, styled } from "@mui/material";
 
-export const WrapHeading = styled(Box)`
-  margin-bottom: 132px;
-  padding: 0 24px;
-`;
+export const WrapHeading = styled(Box)(({ theme }) => ({
+  marginBottom: "132px",
+  padding: "0 24px",
+
+  [theme.breakpoints.down(1024)]: {
+    marginBottom: "85px"
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "40px"
+  }
+}));
 
 export const HeadingPage = styled("h1")(({ theme }) => ({
   color: theme.palette.secondary.main,
@@ -27,6 +34,7 @@ export const DescriptionText = styled("p")(({ theme }) => ({
   fontWeight: 500,
   maxWidth: "700px",
   marginTop: 0,
+  opacity: "0.6",
 
   [theme.breakpoints.down(1024)]: {
     fontSize: "16px",

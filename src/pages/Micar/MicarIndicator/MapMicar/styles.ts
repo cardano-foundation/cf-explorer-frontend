@@ -1,20 +1,19 @@
 import { Box, IconButton, alpha, styled } from "@mui/material";
 
-export const WorldMapContainer = styled(Box)<{ fullscreen?: number }>(({ fullscreen }) => ({
+export const WorldMapContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   boxSizing: "border-box",
-  width: fullscreen ? "100vw" : "100%",
-  height: fullscreen ? "100vh" : 628,
-  minHeight: fullscreen ? "100vh" : 408,
+  width: "100%",
+  height: "612px",
   maxWidth: "100%",
-  maxHeight: fullscreen ? "fil-available" : "unset",
+  maxHeight: "unset",
   overflow: "hidden",
   fontSize: 12,
   lineHeight: "14px",
   fontWeight: 400,
   color: "#434656",
   padding: " 0 24px",
-  backgroundColor: "white",
+  backgroundColor: theme.isDark ? "black" : "white",
 
   ">div:first-of-type": {
     width: "100%",
@@ -24,6 +23,13 @@ export const WorldMapContainer = styled(Box)<{ fullscreen?: number }>(({ fullscr
 
   ".highcharts-cluster-point": {
     filter: `drop-shadow(0px 0px 6px ${alpha("#434656", 0.5)})`
+  },
+  [theme.breakpoints.down("md")]: {
+    height: "500px"
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    height: "200px"
   }
 }));
 
@@ -39,8 +45,8 @@ export const IndentifyValue = styled("span")({
   fontWeight: 600
 });
 
-export const MapNavigation = styled(Box)`
-  position: absolute;
+export const MapNavigation = styled(Box)<{ ismobile?: boolean }>`
+  position: ${({ ismobile }) => (ismobile ? "unset" : "absolute")};
   bottom: 0px;
   left: 24px;
   display: flex;
@@ -130,8 +136,8 @@ export const MapNavigationDivider = styled(Box)(({ theme }) => ({
   }
 }));
 
-export const MapOption = styled(Box)`
-  position: absolute;
+export const MapOption = styled(Box)<{ ismobile?: boolean }>`
+  position: ${({ ismobile }) => (ismobile ? "unset" : "absolute")};
   bottom: 0px;
   left: 160px;
 `;

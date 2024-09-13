@@ -314,5 +314,96 @@ export const data = [
         noOfSample: 0
       }
     ]
+  },
+  {
+    countryCode: "US",
+    country: "United States",
+    noOfSample: 30,
+    cities: [
+      {
+        city: "New York",
+        lat: "40.7128",
+        long: "-74.006",
+        noOfSample: 30
+      }
+    ]
+  },
+  {
+    countryCode: "CA",
+    country: "Canada",
+    noOfSample: 18,
+    cities: [
+      {
+        city: "Toronto",
+        lat: "43.65107",
+        long: "-79.347015",
+        noOfSample: 18
+      }
+    ]
+  },
+  {
+    countryCode: "RU",
+    country: "Russia",
+    noOfSample: 7,
+    cities: [
+      {
+        city: "Toronto",
+        lat: "59.9905",
+        long: "32.7736",
+        noOfSample: 7
+      }
+    ]
+  },
+  {
+    countryCode: "AU",
+    country: "Australia",
+    noOfSample: 7,
+    cities: [
+      {
+        city: "Melbourne",
+        lat: "-37.8136",
+        long: "144.9631",
+        noOfSample: 7
+      }
+    ]
+  },
+  {
+    countryCode: "BR",
+    country: "Brazil",
+    noOfSample: 33,
+    cities: [
+      {
+        city: "Brasilia",
+        lat: "-15.7801",
+        long: "-47.9292",
+        noOfSample: 33
+      }
+    ]
+  },
+  {
+    countryCode: "CN",
+    country: "China",
+    noOfSample: 34,
+    cities: [
+      {
+        city: "Kunming",
+        lat: "25.0389",
+        long: "102.7183",
+        noOfSample: 34
+      }
+    ]
+  },
+  {
+    countryCode: "NA",
+    country: "Namibia",
+    noOfSample: 34,
+    cities: [
+      {
+        city: "Windhoek",
+        lat: "-22.5609",
+        long: "17.0658",
+        noOfSample: 34
+      }
+    ]
   }
 ];
