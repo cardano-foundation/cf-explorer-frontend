@@ -119,7 +119,20 @@ function GroupProtocoParameters(props: GroupType) {
                       >
                         <StyledCard.Title data-testid="drep.epochTitle">{el.name}</StyledCard.Title>
                       </CustomTooltip>
-                      {el.icon && <StyledImg src={theme === "light" ? ProtectIcon : ProtectIconDark} alt="Protect" />}
+                      {el.icon && (
+                        <CustomTooltip
+                          title={
+                            <Box style={{ textAlign: "left", whiteSpace: "pre-wrap" }}>
+                              <Box>
+                                Security Protocol Parameter. Any proposal attempting to change one or more of these
+                                parameters requires an additional vote of the SPO.
+                              </Box>
+                            </Box>
+                          }
+                        >
+                          <StyledImg src={theme === "light" ? ProtectIcon : ProtectIconDark} alt="Protect" />
+                        </CustomTooltip>
+                      )}
                     </StyledCard.ContainerTitile>
                     <StyledCard.ContainerValue>
                       <StyledCard.Value>{t("glossary.value")}</StyledCard.Value>
