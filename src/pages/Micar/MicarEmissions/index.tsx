@@ -76,7 +76,7 @@ const EmissionsCalculator = () => {
             <Box>
               <StyledTypography>{t("micar.indicators.caculator.address")}</StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
-                <StyledLink>
+                <StyledLink to="/">
                   {isMobile
                     ? getShortHash(data?.stakeAddress || (data?.address as string))
                     : data?.stakeAddress || data?.address}

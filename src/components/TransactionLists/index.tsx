@@ -104,7 +104,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       minWidth: 60
     },
     {
-      title: <Box data-testid="transactions.table.title.fees">{t("common.fees")}</Box>,
+      title: (
+        <Box data-testid="transactions.table.title.fees" component={"span"}>
+          {t("common.fees")}
+        </Box>
+      ),
       key: "fee",
       minWidth: 120,
       render: (r) => (
@@ -118,7 +122,11 @@ const TransactionList: React.FC<TransactionListProps> = ({
       }
     },
     {
-      title: <Box data-testid="transactions.table.title.outputInAda">{t("glossary.outputInAda")}</Box>,
+      title: (
+        <Box data-testid="transactions.table.title.outputInAda" component={"span"}>
+          {t("glossary.outputInAda")}
+        </Box>
+      ),
       minWidth: 120,
       key: "outSum",
       render: (r, index) => (
