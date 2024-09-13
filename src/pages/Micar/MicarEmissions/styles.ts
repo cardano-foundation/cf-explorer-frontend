@@ -10,27 +10,6 @@ export const StyledTitle = styled(Typography)(({ theme }) => ({
     marginTop: "0px"
   }
 }));
-export const StyledTypography = styled(Typography)(({ theme }) => ({
-  fontWeight: 700,
-  textAlign: "left",
-  marginTop: "12px",
-  marginBottom: "2px",
-  fontSize: "24px",
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "16px",
-    marginTop: "0px"
-  }
-}));
-export const StyledValue = styled(Typography)(({ theme }) => ({
-  textAlign: "left",
-  marginTop: "12px",
-  marginBottom: "20px",
-  fontSize: "20px",
-  [theme.breakpoints.down("sm")]: {
-    marginTop: "0px",
-    fontSize: "14px"
-  }
-}));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
   fontWeight: 700,

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { Box, Button, Container, Grid, styled, useTheme } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
+import { Box, Container, Grid, MenuItem, Select, styled, useTheme } from "@mui/material";
 import { t } from "i18next";
 import { useUpdateEffect } from "react-use";
 import CountUp from "react-countup";
@@ -22,6 +22,7 @@ import { MotionDiv } from "src/commons/animation/motion-div";
 import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
+import { BOLNISI_LANDING_NWA, BOLNISI_LANDING_OIV, BOLNISI_LANDING_READ_CASE_STUDY } from "src/commons/utils/constants";
 
 import Bolnisi_Animation_Light_Mode from "./resource/Bolnisi_Animation_Light_Mode.json";
 import Bolnisi_Animation_Dark_Mode from "./resource/Bolnisi_Animation_Dark_Mode.json";
@@ -177,9 +178,12 @@ const ProgressSession = () => {
                     Thanks to Cardano’s unique features, the Traceability Program tracks, certifies, and authenticates
                     Georgian wines, ensuring they comply with the commercial industry standard set by the{" "}
                     <Box
-                      component={"span"}
+                      component={"a"}
+                      href={BOLNISI_LANDING_OIV}
+                      target="_blank"
                       sx={{
-                        color: theme.isDark ? "#64BCFD" : "#2F59DB"
+                        color: theme.isDark ? "#64BCFD !important" : "#2F59DB!important",
+                        cursor: "pointer"
                       }}
                     >
                       International Organisation of Vine and Wine
@@ -192,9 +196,12 @@ const ProgressSession = () => {
                     verifiable on-chain records for the detailed supply chain data provided by the wineries, plus the
                     certificates of conformity issued by Georgia’s{" "}
                     <Box
-                      component={"span"}
+                      component={"a"}
+                      href={BOLNISI_LANDING_NWA}
+                      target="_blank"
                       sx={{
-                        color: theme.isDark ? "#64BCFD" : "#2F59DB"
+                        color: theme.isDark ? "#64BCFD !important" : "#2F59DB !important",
+                        cursor: "pointer"
                       }}
                     >
                       National Wine Agency
@@ -260,6 +267,8 @@ interface BolnisiTx {
 const BolnisiTrx = () => {
   const theme = useTheme();
   const history = useHistory();
+  const [cert, setCert] = useState("Scm");
+
   const columns: Column<BolnisiTx>[] = [
     {
       title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
@@ -305,9 +314,9 @@ const BolnisiTrx = () => {
   const data = [
     {
       txHash: "969c9141d978b305244b68b92c18aa323cd94f05ff67133af2f070d3e358705e",
-      date: "11/16/2023",
+      date: "06/14/2024",
       cert: "Conformity",
-      amount: 1234
+      amount: 0
     },
     {
       txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
@@ -317,57 +326,57 @@ const BolnisiTrx = () => {
     },
     {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "03/06/2024",
+      cert: "Scm",
+      amount: 13832
     },
     {
       txHash: "4c5a896ec4a76b947b08f03cbe988b4dfb0068d5d9367431a1856e84623bb20c",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "02/16/2024",
+      cert: "Scm",
+      amount: 20100
     },
     {
       txHash: "c717dce01998ce714886649dc4681053cc527013002a912ceb4e4400296e1145",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "01/20/2024",
+      cert: "Scm",
+      amount: 2500
     },
     {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "03/06/2024",
+      cert: "Scm",
+      amount: 13820
     },
     {
       txHash: "0beec12e8d65d922eee9b0510fe8aadde19e813be158796112b126e1cad56e2f",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "03/15/2024",
+      cert: "Scm",
+      amount: 13800
     },
     {
       txHash: "1b0c149a78e544ad1a1bcdf6d471294695dcbb3793783d68f7cad6ec8ceeb7d7",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "06/22/2024",
+      cert: "Scm",
+      amount: 500
     },
     {
       txHash: "4072199d747ae5b1f882ed2e200c4d5aaa8c20485111774396aa486d23456c6f",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "11/24/2023",
+      cert: "Scm",
+      amount: 33700
     },
     {
       txHash: "e5213469590eee4e75d437d1ffbbe9ffc490f2e78b57f992b975a72146e77d85",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "02/13/2024",
+      cert: "Scm",
+      amount: 4200
     },
     {
       txHash: "8ed32fad1d88367a743be7a36a7105b7be864c98decbf306c45e497ef41357e2",
-      date: "11/16/2023",
-      cert: "SCM",
-      amount: 1234
+      date: "06/08/2024",
+      cert: "Scm",
+      amount: 5950
     }
   ];
 
@@ -437,37 +446,52 @@ const BolnisiTrx = () => {
             display={"flex"}
             justifyContent={"space-between"}
             alignItems={"center"}
-            sx={{ px: 2, [theme.breakpoints.down("sm")]: { flexDirection: "column" } }}
+            sx={{
+              px: 2,
+              fieldset: { border: "transparent !important", ":hover": { border: "transparent !important" } },
+              ".MuiInputBase-root > div": {
+                paddingRight: "0 !important"
+              },
+
+              [theme.breakpoints.down("sm")]: { flexDirection: "column" }
+            }}
           >
             <Box color={theme.isDark ? "#64BCFD" : theme.palette.primary.main} fontSize={"2.25rem"} fontWeight={"bold"}>
               Recent Transactions
             </Box>
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              sx={{ cursor: "pointer", [theme.breakpoints.down("md")]: { mt: theme.spacing(1) } }}
-              height={"44px"}
-              width={"140px"}
-              border={`2px solid ${theme.isDark ? "#64BCFD" : theme.palette.primary.main}`}
-              justifyContent={"center"}
-              borderRadius={"100px"}
-              color={theme.isDark ? "#64BCFD" : theme.palette.primary.main}
+            <Select
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                color: theme.isDark ? "#64BCFD" : theme.palette.primary.main,
+                height: "44px",
+                width: "140px",
+                border: `2px solid ${theme.isDark ? "#64BCFD" : theme.palette.primary.main}`,
+                justifyContent: "center",
+                borderRadius: "100px",
+                [theme.breakpoints.down("md")]: { mt: theme.spacing(1) }
+              }}
+              value={cert}
+              onChange={(e) => setCert(e.target?.value)}
+              inputProps={{ style: { border: "transparent" } }}
+              IconComponent={() => (
+                <BolnisiDropdown fill={theme.palette.primary.main} style={{ marginRight: "10px" }} />
+              )}
+              MenuProps={{ MenuListProps: { style: { background: theme.palette.secondary[0] } } }}
             >
-              <Box fontSize={"1rem"} fontWeight={"500"}>
+              <MenuItem sx={{ color: theme.palette.secondary.light }} value={"Scm"}>
+                Scm
+              </MenuItem>
+              <MenuItem sx={{ color: theme.palette.secondary.light }} value={"Conformity"}>
                 Conformity
-              </Box>
-              <BolnisiDropdown fill={theme.palette.primary.main} />
-            </Box>
+              </MenuItem>
+            </Select>
           </Box>
           <StyledTable
             columns={columns}
-            data={data}
-            minHeight={780}
-            pagination={{
-              size: 10,
-              total: data.length || 0
-            }}
-            total={{ count: data.length || 0, title: "" }}
+            data={data.filter((i) => i.cert === cert)}
+            pagination={undefined}
             loading={false}
           />
         </Box>
@@ -480,20 +504,25 @@ const BolnisiTrx = () => {
             lineHeight={"2.625rem"}
             fontWeight={"bold"}
           >
-            Discover the full advantages of a future-proof blockchain to empower businessess
+            Discover the full advantages of a future-proof blockchain to empower businesses
           </Box>
 
           <Box
-            component={Button}
-            variant="contained"
+            component={"a"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            display={"inline-flex"}
             bgcolor={theme.isDark ? "#65BDFE" : theme.palette.primary.main}
             fontSize={"1rem"}
             height={"67px"}
             width={"186px"}
             borderRadius={"100px"}
             mt={"2rem"}
-            color={theme.isDark ? "#24262E" : "#fff"}
+            color={theme.isDark ? "#24262E !important" : "#fff !important"}
             textTransform={"capitalize"}
+            sx={{ ":hover": { color: theme.isDark ? "#24262E !important" : "#fff !important" }, cursor: "pointer" }}
+            href={BOLNISI_LANDING_READ_CASE_STUDY}
+            target="_blank"
           >
             Read Case Study
           </Box>
@@ -531,7 +560,7 @@ const Card = ({ count, title }: { count: number; title: string }) => {
 };
 
 const StyledTable = styled(Table)(({ theme }) => ({
-  ".table-wrapper": { background: "transparent" },
+  ".table-wrapper": { background: "transparent", maxHeight: "unset", height: "unset" },
 
   th: {
     background: "transparent",
