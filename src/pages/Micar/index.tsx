@@ -46,9 +46,11 @@ const Micar = () => {
     document.title = `Micar | Cardano Blockchain Explorer`;
   }, []);
 
-  axios.get(`/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP`).then(({ data }) => {
-    setIndicator(data);
-  });
+  useEffect(() => {
+    axios.get(`/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP`).then(({ data }) => {
+      setIndicator(data);
+    });
+  }, []);
 
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>
@@ -99,8 +101,8 @@ const Micar = () => {
         bgColor={"#D9FFE0"}
         icon={theme.isDark ? <TreeWhite /> : <Tree />}
         title={t("micar.indicators.natural")}
-        value1={"123,144 kWh"}
         des1={indicartor?.indicator_10?.title}
+        value1={`${indicartor?.indicator_10?.result?.value} ${indicartor?.indicator_10?.unit}`}
         content={t("micar.indicators.natural.des")}
       />
     </Box>

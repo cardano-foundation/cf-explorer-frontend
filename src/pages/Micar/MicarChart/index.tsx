@@ -1,39 +1,69 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from "recharts";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import moment from "moment";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
 
 import { StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 
-const dataMock = [
-  { date: "01/21", emissions: 55 },
-  { date: "02/21", emissions: 60 },
-  { date: "03/21", emissions: 58 },
-  { date: "04/21", emissions: 50 },
-  { date: "05/21", emissions: 53 },
-  { date: "06/21", emissions: 55 },
-  { date: "07/21", emissions: 52 },
-  { date: "08/21", emissions: 50 },
-  { date: "09/21", emissions: 53 },
-  { date: "10/21", emissions: 55 }
-];
-
 type Time = "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export interface EmissionsChartIF {
   date: string;
-  emissions: number | null;
+  emissions_24h: number | null;
 }
 const EmissionsAreaChart = () => {
+  const [rangeTime, setRangeTime] = useState<Time>("THREE_MONTH");
+  const [dataChart, setDataChart] = useState();
+
   const { t } = useTranslation();
   const { isMobile, isLaptop } = useScreen();
   const theme = useTheme();
 
-  const [rangeTime, setRangeTime] = useState<Time>("THREE_MONTH");
-  // const [dataChart, setDataChart] = useState();
+  const formatTimeX = (date: Time) => {
+    switch (date) {
+      case "THREE_MONTH":
+        return "MM/DD";
+      case "ONE_YEAR":
+      case "THREE_YEAR":
+      case "ALL_TIME":
+        return "MM/YY";
+      default:
+        break;
+    }
+  };
+
+  const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
+
+  const filterDataByOption = (data: EmissionsChartIF[], option: Time) => {
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
+
+    let days;
+    switch (option) {
+      case "THREE_MONTH":
+        days = 90;
+        break;
+      case "ONE_YEAR":
+        days = 365;
+        break;
+      case "THREE_YEAR":
+        days = 3 * 365;
+        break;
+      case "ALL_TIME":
+        return data;
+      default:
+        return data;
+    }
+
+    return data.slice(-days);
+  };
+
+  const filteredData = filterDataByOption(dataChart, rangeTime);
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     THREE_MONTH: {
       label: t("time.3m"),
@@ -53,9 +83,15 @@ const EmissionsAreaChart = () => {
     }
   };
 
-  axios.get(`/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP`).then(() => {
-    // setDataChart(data);
-  });
+  useEffect(() => {
+    axios.get(`/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP`).then(({ data }) => {
+      const converdata = data.entries.map((it: EmissionsChartIF) => ({
+        date: it.date,
+        emissions: it.emissions_24h
+      }));
+      setDataChart(converdata);
+    });
+  }, []);
 
   const TabsComponent = () => {
     return (
@@ -94,7 +130,7 @@ const EmissionsAreaChart = () => {
           {t("micar.indicators.emissions.title")}
         </StyledTitle>
         <ResponsiveContainer width="100%" height={300} style={{ alignSelf: "flex-start" }}>
-          <AreaChart data={dataMock}>
+          <AreaChart data={filteredData}>
             <defs>
               <linearGradient id="colorEmissions" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -102,7 +138,7 @@ const EmissionsAreaChart = () => {
               </linearGradient>
             </defs>
 
-            <XAxis dataKey="date" />
+            <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, rangeTime)} />
             <YAxis label={{ value: isMobile ? "" : "Emissions (T CO₂e)", angle: -90, position: "insideLeft" }} />
             <Tooltip />
 
