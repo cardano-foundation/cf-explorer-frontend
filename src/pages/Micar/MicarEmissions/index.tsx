@@ -7,7 +7,6 @@ import { HeaderSearchIconComponent } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
-import { details } from "src/commons/routers";
 import { getShortHash } from "src/commons/utils/helper";
 
 import {
@@ -31,10 +30,9 @@ interface CarbonEmissionData {
 const EmissionsCalculator = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { isMobile, isLaptop } = useScreen();
+  const { isMobile } = useScreen();
   const [address, setAddress] = useState<string>();
   const [value, setValue] = useState<string>("");
-
   const { data } = useFetch<CarbonEmissionData>(`${API.MICAR?.CARBON_EMISSION}/${address}`, undefined, false);
   const handleSearch = (value: string) => {
     if (!value.trim()) return;
@@ -50,13 +48,8 @@ const EmissionsCalculator = () => {
   return (
     <Box mt={10}>
       <Container maxWidth="lg" sx={{ height: "100%", mt: 8 }}>
-        <StyledCard elevation={2} sx={{ backgroundColor: theme.isDark ? "#24262E" : "#FFFFFF" }}>
-          <StyledTitle
-            sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }}
-            fontSize={isMobile ? "20px" : isLaptop ? "40px" : "48px"}
-          >
-            {t("micar.indicators.calculator")}
-          </StyledTitle>
+        <StyledCard elevation={2}>
+          <StyledTitle>{t("micar.indicators.calculator")}</StyledTitle>
           <Typography sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }} textAlign={"left"}>
             Geonera galoska nögon, dol danera, i vamätt tiras trirtad, att äl, det vill säga kromäsamma. Lara par
             autoponing bikroligen ode prelapp bevis bjudkaffe. Prodiv rode lalig. Spesade däbesk för att viprement
@@ -79,11 +72,11 @@ const EmissionsCalculator = () => {
               />
             </SubmitButton>
           </SearchContainer>
-          {address && (
+          {(data?.address || data?.stakeAddress) && (
             <Box>
               <StyledTypography>{t("micar.indicators.caculator.address")}</StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
-                <StyledLink to={details.addressMicar(data?.stakeAddress || (data?.address as string))}>
+                <StyledLink>
                   {isMobile
                     ? getShortHash(data?.stakeAddress || (data?.address as string))
                     : data?.stakeAddress || data?.address}

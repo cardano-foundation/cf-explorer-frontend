@@ -180,6 +180,9 @@ export const API = {
   },
   EMISSIONS: {
     GRAPH: "txs/graph"
+  },
+  MICAR: {
+    CARBON_EMISSION: "MiCAR/carbon-emission"
   }
 };
 

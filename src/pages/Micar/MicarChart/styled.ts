@@ -64,7 +64,7 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
 
 export const StyledCard = styled(Card)(() => ({
   padding: "2rem",
-  borderRadius: "2rem",
+  borderRadius: "48px",
   textAlign: "center",
   margin: "auto",
   marginTop: "2rem",
@@ -76,4 +76,16 @@ export const StyledTitle = styled(Typography)(() => ({
   textAlign: "left",
   marginTop: "22px",
   marginBottom: "20px"
+}));
+
+export const StyledBoxIcon = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.isDark ? "#2E303B" : "#FFFFFF",
+  borderRadius: "20%",
+  padding: 1.5,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  mb: 4,
+  width: "56px",
+  height: "56px"
 }));
