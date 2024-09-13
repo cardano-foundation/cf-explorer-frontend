@@ -9,7 +9,7 @@ interface MicarProps {
   title: string;
   icon: ReactNode;
   bgColor: string;
-  des1: string;
+  des1?: string;
   des2?: string;
   des3?: string;
   value1: string;
