@@ -55,8 +55,8 @@ import {
   ViewWineButton,
   Wrapper
 } from "./styles";
-import BolnisiWineDrawer from "./BolnisiWineDrawer";
 import DefaultImageWine from "./DefaultImageWine";
+import BolnisiWineDrawerConformity from "./BolnisiWineDrawerConformity";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -690,7 +690,8 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
           })}
         </Box>
       )}
-      <BolnisiWineDrawer />
+      {/* <BolnisiWineDrawer /> */}
+      <BolnisiWineDrawerConformity />
     </Box>
   );
 };

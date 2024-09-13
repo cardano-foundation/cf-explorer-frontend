@@ -1,7 +1,8 @@
 import { Box, useTheme, IconButton, styled, Grid, AccordionSummary, Drawer } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { useParams } from "react-router-dom";
 
 import { ShowMore, VerifiedIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -36,7 +37,8 @@ const data1 = [
 ];
 
 export default function BolnisiWineDrawerConformity() {
-  const [openDrawer, setOpenDrawer] = useState<boolean>(true);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+  const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
 
   const theme = useTheme();
 
@@ -49,6 +51,12 @@ export default function BolnisiWineDrawerConformity() {
     { label: "Exam Protocol Number", value: data.exam_protocol_number || "-" },
     { label: "Tasting Protocol Number", value: data.tasting_protocol_number || "-" }
   ];
+
+  useEffect(() => {
+    if (wineryId) {
+      setOpenDrawer(true);
+    }
+  }, [wineryId]);
 
   return (
     <ViewDetailDrawer
@@ -277,16 +285,6 @@ export const HeadingDrawer = styled("span")(({ theme }) => ({
   fontWeight: "500",
   marginBottom: "12px",
   display: "block"
-
-  //   [theme.breakpoints.down("md")]: {
-  //     fontSize: "48px"
-  //   },
-  //   [theme.breakpoints.down("sm")]: {
-  //     fontSize: "36px"
-  //   },
-  //   [theme.breakpoints.down("xs")]: {
-  //     fontSize: "28px"
-  //   }
 }));
 
 export const TitleItem = styled("p")(({ theme }) => ({
