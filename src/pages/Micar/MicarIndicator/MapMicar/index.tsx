@@ -1,5 +1,5 @@
 import mapData from "@highcharts/map-collection/custom/world-highres3.geo.json";
-import { BoxProps } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import Highcharts, { MapChart } from "highcharts";
 import HighchartsReact, { HighchartsReactRefObject } from "highcharts-react-official";
 import HighchartsMap from "highcharts/modules/map";
@@ -10,6 +10,7 @@ import { useTheme } from "@emotion/react";
 
 import { FindLocationIcon, ZoomInIcon, ZoomOutIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
+import { useScreen } from "src/commons/hooks/useScreen";
 
 import { IMapCity, IMapCountry } from "./type";
 import {
@@ -46,6 +47,7 @@ export const WorldMap = (props: BoxProps) => {
 
   const [userLocation, setUserLocation] = useState<{ lat: number; lon: number } | null>(null);
 
+  const { isMobile } = useScreen();
   const theme = useTheme();
   const { countries, cities } = useMemo(() => {
     const countries: IMapCountry[] =
@@ -293,6 +295,33 @@ export const WorldMap = (props: BoxProps) => {
       ]
     };
   }, [data, theme.isDark, userLocation]);
+
+  if (isMobile)
+    return (
+      <Box>
+        <WorldMapContainer data-testid="world-map" ref={containerRef} {...props}>
+          {!!data && (
+            <HighchartsReact ref={mapRef} constructorType="mapChart" highcharts={Highcharts} options={options} />
+          )}
+        </WorldMapContainer>
+        <Box display={"flex"} justifyContent={"center"} marginTop={"10px"} gap={"16px"}>
+          <MapNavigation ismobile={isMobile}>
+            <MapNavigationMinusButton onClick={handleZoomOut}>
+              <CustomIcon height={24} width={24} icon={ZoomOutIcon} fill={theme.palette.secondary.main} />
+            </MapNavigationMinusButton>
+            <MapNavigationDivider />
+            <MapNavigationPlusButton onClick={handleZoomIn}>
+              <CustomIcon height={24} width={24} icon={ZoomInIcon} fill={theme.palette.secondary.main} />
+            </MapNavigationPlusButton>
+          </MapNavigation>
+          <MapOption ismobile={isMobile}>
+            <MapOptionButton onClick={getUserLocation}>
+              <CustomIcon height={24} width={24} icon={FindLocationIcon} fill={theme.palette.secondary.main} />
+            </MapOptionButton>
+          </MapOption>
+        </Box>
+      </Box>
+    );
 
   return (
     <WorldMapContainer data-testid="world-map" ref={containerRef} {...props}>

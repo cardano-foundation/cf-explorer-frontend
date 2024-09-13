@@ -48,8 +48,8 @@ const EmissionsCalculator = () => {
   };
 
   return (
-    <Box mt={10}>
-      <Container maxWidth="lg" sx={{ height: "100%", mt: 8 }}>
+    <Box mt={isMobile ? 0 : 10}>
+      <Container maxWidth="lg" sx={{ height: "100%" }}>
         <StyledCard elevation={2} sx={{ backgroundColor: theme.isDark ? "#24262E" : "#FFFFFF" }}>
           <StyledTitle
             sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }}
