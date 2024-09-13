@@ -8,7 +8,7 @@ import moment from "moment";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
 
-import { StyledCard, StyledTitle, Tab, Tabs } from "./styled";
+import { StyledBoxIcon, StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 
 type Time = "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export interface EmissionsChartIF {
@@ -120,7 +120,7 @@ const EmissionsAreaChart = () => {
           alignItems={isMobile ? "flex-start" : "center"}
           flexDirection={isMobile ? "column" : "row"}
         >
-          {theme.isDark ? <ClockWhite /> : <Clock />}
+          <StyledBoxIcon>{theme.isDark ? <ClockWhite /> : <Clock />}</StyledBoxIcon>
           {!isMobile && <TabsComponent />}
         </Box>
         <StyledTitle
@@ -139,7 +139,7 @@ const EmissionsAreaChart = () => {
             </defs>
 
             <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, rangeTime)} />
-            <YAxis label={{ value: isMobile ? "" : "Emissions (T CO₂e)", angle: -90, position: "insideLeft" }} />
+            <YAxis label={{ value: "Emissions (T CO₂e)", angle: -90, position: "insideLeft" }} />
             <Tooltip />
 
             <Area type="monotone" dataKey="emissions" stroke="#3B82F6" fill="url(#colorEmissions)" strokeWidth={2} />

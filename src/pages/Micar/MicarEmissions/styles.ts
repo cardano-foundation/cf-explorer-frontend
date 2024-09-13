@@ -2,16 +2,24 @@ import { Box, Button, Card, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
+  color: theme.isDark ? "#F7F9FF" : "#000000",
   fontWeight: 700,
   textAlign: "left",
   marginTop: "42px",
   marginBottom: "20px",
+  fontSize: "48px",
+  [theme.breakpoints.down("md")]: {
+    fontSize: "40px",
+    marginTop: "0px"
+  },
   [theme.breakpoints.down("sm")]: {
+    fontSize: "20px",
     marginTop: "0px"
   }
 }));
 
 export const StyledTypography = styled(Typography)(({ theme }) => ({
+  color: theme.isDark ? "#F7F9FF" : "#000000",
   fontWeight: 700,
   textAlign: "left",
   marginTop: "12px",
@@ -23,6 +31,7 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   }
 }));
 export const StyledValue = styled(Typography)(({ theme }) => ({
+  color: theme.isDark ? "#F7F9FF" : "#000000",
   textAlign: "left",
   marginTop: "12px",
   marginBottom: "20px",
@@ -32,9 +41,11 @@ export const StyledValue = styled(Typography)(({ theme }) => ({
     fontSize: "14px"
   }
 }));
-export const StyledCard = styled(Card)(() => ({
+export const StyledCard = styled(Card)(({ theme }) => ({
   padding: "2rem",
-  borderRadius: "2rem",
+  border: `1px solid ${theme.isDark ? "#000000" : "#CCCCCC"}`,
+  backgroundColor: theme.isDark ? "#24262E" : "#FFFFFF",
+  borderRadius: "48px",
   textAlign: "center",
   margin: "auto",
   marginTop: "2rem"
