@@ -57,6 +57,7 @@ export const routers = {
   SMARTCONTRACT_DETAIL: "/smartcontract/:id",
   DREP_DETAILS: "/drep/:drepId",
   BOLNISI_LANDING: "/bolnisi",
+  MICAR: "/micar",
   NOT_FOUND: "/*"
 } as const;
 
@@ -113,7 +114,8 @@ export const details = {
       .replace(":index", index)
       .replace(":tabActive?", tabActive ?? ""),
   constitutionalCommitteeDetail: (id: string, tab?: string) =>
-    routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? "")
+    routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? ""),
+  addressMicar: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? "")
 };
 
 export const listRouters = [

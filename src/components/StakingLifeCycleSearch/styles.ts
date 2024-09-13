@@ -146,3 +146,38 @@ export const StyledIconQuestion = styled(AiOutlineQuestionCircle)`
     margin: 8px auto;
   }
 `;
+
+export const OptionsWrapper = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  top: 61,
+  left: 145,
+  width: "calc(100% - 280px)",
+  boxSizing: "border-box",
+  backgroundColor: theme.palette.secondary[0],
+  textAlign: "left",
+  padding: "0 10px",
+  borderBottomLeftRadius: 10,
+  borderBottomRightRadius: 10,
+  zIndex: 1000,
+  boxShadow: theme.shadow.card,
+  [theme.breakpoints.down("md")]: {
+    top: 61
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    left: 0
+  }
+}));
+
+export const Option = styled(Button)(({ theme }) => ({
+  textTransform: "inherit",
+  color: theme.palette.secondary.light,
+  width: "100%",
+  justifyContent: "space-between",
+  margin: "4px 0"
+}));
+
+export const ValueOption = styled("span")(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontWeight: "500"
+}));

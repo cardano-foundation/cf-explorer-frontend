@@ -319,6 +319,12 @@ const BolnisiTrx = () => {
       amount: 0
     },
     {
+      txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
+      date: "11/16/2023",
+      cert: "SCM",
+      amount: 1234
+    },
+    {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
       date: "03/06/2024",
       cert: "Scm",

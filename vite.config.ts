@@ -61,8 +61,16 @@ export default defineConfig(({ mode }) => {
       })
     ],
     server: {
-      open: true,
-      port: 1102
+      proxy: {
+        "/currencies/ada": {
+          target: "https://v2.api.carbon-ratings.com/",
+          changeOrigin: true
+        },
+        "/mica/overview/ada": {
+          target: "https://v2.api.carbon-ratings.com/",
+          changeOrigin: true
+        }
+      }
     },
     build: {
       minify: false,
