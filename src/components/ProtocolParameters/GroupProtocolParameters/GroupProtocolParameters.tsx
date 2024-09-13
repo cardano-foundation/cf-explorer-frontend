@@ -123,10 +123,7 @@ function GroupProtocoParameters(props: GroupType) {
                         <CustomTooltip
                           title={
                             <Box style={{ textAlign: "left", whiteSpace: "pre-wrap" }}>
-                              <Box>
-                                Security Protocol Parameter. Any proposal attempting to change one or more of these
-                                parameters requires an additional vote of the SPO.
-                              </Box>
+                              <Box>{t("protocolParameters.explainerShield")}</Box>
                             </Box>
                           }
                         >
