@@ -7,6 +7,8 @@ import axios from "axios";
 import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 
+import { DescriptionText, HeadingPage, WrapHeading } from "./styles";
+import { WorldMap } from "./MicarIndicator/MapMicar";
 import MicarIndicator from "./MicarIndicator";
 import EmissionsChart from "./MicarChart";
 import EmissionsCalculator from "./MicarEmissions";
@@ -52,6 +54,11 @@ const Micar = () => {
 
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>
+      <WrapHeading>
+        <HeadingPage>{t("title.Cardanosustainability")}</HeadingPage>
+        <DescriptionText>{t("subTitle.Cardanosustainability")}</DescriptionText>
+      </WrapHeading>
+      <WorldMap />
       <EmissionsCalculator />
       <EmissionsChart />
       <MicarIndicator
