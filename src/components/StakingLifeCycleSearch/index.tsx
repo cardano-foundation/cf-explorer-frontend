@@ -112,7 +112,9 @@ const StakingLifeCycleSearch = () => {
     loading,
     update: setSearchResult,
     initialized: searchResultInitialized
-  } = useFetch<SearchIF>(valueSearch ? `${API.STAKE_LIFECYCLE.SEARCH}?page=${page}&size=8&query=${valueSearch}` : "");
+  } = useFetch<SearchIF>(
+    valueSearch ? `${API.STAKE_LIFECYCLE.SEARCH}?page=${page}&size=8&query=${encodeURIComponent(valueSearch)}` : ""
+  );
 
   useEffect(() => {
     document.title = `${t("common.welcomeStakingLifecycle")} | ${t("head.page.dashboard")}`;
@@ -248,7 +250,7 @@ const StakingLifeCycleSearch = () => {
             type="search"
             placeholder={t("slc.typeStakeOrPool")}
             onChange={(e) => {
-              setValue(e.target.value.trim());
+              setValue(e.target.value);
               setShowSuggestOption(false);
               setShowNoRecord(false);
               setSearchResult(null);

@@ -3,7 +3,8 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 export const StyledContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    paddingBottom: "50px"
+    paddingBottom: "50px",
+    minHeight: "calc(100vh - 360px)"
   },
   [theme.breakpoints.down("sm")]: {
     padding: "37px 5px"
