@@ -8,7 +8,7 @@ export const routers = {
   BLOCK_LIST: "/blocks",
   BLOCK_DETAIL: "/block/:blockId",
   TRANSACTION_LIST: "/transactions",
-  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?/:wineryId?",
+  TRANSACTION_DETAIL: "/transaction/:trxHash/:tabActive?/:wineryId?/:certNo?",
   EPOCH_LIST: "/epochs",
   EPOCH_DETAIL: "/epoch/:epochId",
   DELEGATION_POOLS: "/pools",
@@ -68,10 +68,11 @@ export const lists = {
 
 export const details = {
   block: (blockId?: number | string) => routers.BLOCK_DETAIL.replace(":blockId", `${blockId ?? ""}`),
-  transaction: (trxHash?: string, tab = "summary", wineryId = "") =>
+  transaction: (trxHash?: string, tab = "summary", wineryId = "", certNo = "") =>
     routers.TRANSACTION_DETAIL.replace(":trxHash", trxHash ?? "")
       .replace(":tabActive?", tab)
-      .replace(":wineryId?", wineryId),
+      .replace(":wineryId?", wineryId)
+      .replace(":certNo?", certNo),
   epoch: (epochId?: number | string) => routers.EPOCH_DETAIL.replace(":epochId", `${epochId ?? ""}`),
   delegation: (poolId?: number | string) => routers.DELEGATION_POOL_DETAIL.replace(":poolId", `${poolId}` ?? ""),
   story: (storyId?: string) => routers.STORY_DETAIL.replace(":storyId", storyId ?? ""),
