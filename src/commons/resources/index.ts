@@ -225,6 +225,7 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import RevokedIcon from "./icons/revoked-icon.svg?react";
 import DescriptonDrepIcon from "./icons/descriptonDrep.svg?react";
 import CreateDrepIcon from "./icons/createdrep.svg?react";
 import ActiveVoteIcon from "./icons/activeVote.svg?react";
@@ -505,6 +506,7 @@ export {
   DarkModeMobile,
   VerifiedIcon,
   InvalidIcon,
+  RevokedIcon,
   DescriptonDrepIcon,
   GovBodyIcons,
   CreateDrepIcon,
