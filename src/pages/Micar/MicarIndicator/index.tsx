@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Container, Divider, Grid, Typography, useTheme 
 
 import { useScreen } from "src/commons/hooks/useScreen";
 
-import { StyledBox, StyledBoxIcon, StyledCard, Title, Value } from "./styles";
+import { StyledBox, StyledBoxContent, StyledBoxIcon, Title, Value } from "./styles";
 
 interface MicarProps {
   title: string;
@@ -28,15 +28,9 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
           <Card sx={{ backgroundColor: theme.isDark ? "#24262E" : bgColor, borderRadius: 8, boxShadow: "none" }}>
             <CardContent>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
                   <StyledBox sx={{ padding: isSmallScreen ? 1 : 8 }}>
-                    <StyledBoxIcon
-                      sx={{
-                        backgroundColor: theme.isDark ? "#2E303B" : "#FFFFFF"
-                      }}
-                    >
-                      {icon}
-                    </StyledBoxIcon>
+                    <StyledBoxIcon>{icon}</StyledBoxIcon>
                     <Typography
                       mt={2}
                       fontWeight="bold"
@@ -62,13 +56,15 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
                 <Grid
                   item
                   xs={12}
+                  sm={6}
                   md={6}
+                  lg={6}
                   sx={{
                     padding: isSmallScreen ? 0 : 8,
                     marginTop: isSmallScreen ? 0 : 8
                   }}
                 >
-                  <StyledCard>
+                  <StyledBoxContent>
                     <Title fontSize={isMobile ? "16px" : isLaptop ? "20px" : "24px"}>{des1}</Title>
                     <Value>{value1}</Value>
                     <Divider />
@@ -81,7 +77,7 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
                       {des3}
                     </Title>
                     <Value> {value3}</Value>
-                  </StyledCard>
+                  </StyledBoxContent>
                 </Grid>
               </Grid>
             </CardContent>

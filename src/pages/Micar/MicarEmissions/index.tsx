@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Typography, Container, useTheme, Divider } from "@mui/material";
+import { Box, Typography, Container, useTheme } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
 import { HeaderSearchIconComponent } from "src/commons/resources";
@@ -8,8 +9,10 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { getShortHash } from "src/commons/utils/helper";
+import { details } from "src/commons/routers";
 
 import {
+  Line,
   SearchContainer,
   StyledCard,
   StyledInput,
@@ -33,15 +36,32 @@ const EmissionsCalculator = () => {
   const { isMobile } = useScreen();
   const [address, setAddress] = useState<string>();
   const [value, setValue] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [isSearched, setIsSearched] = useState(false);
   const { data } = useFetch<CarbonEmissionData>(`${API.MICAR?.CARBON_EMISSION}/${address}`, undefined, false);
+  const history = useHistory();
+  const fromPath = history.location.pathname as SpecialPath;
+  useEffect(() => {
+    if (isSearched && !data?.address && !data?.stakeAddress) {
+      setError(t("message.noRecordsFound"));
+    } else {
+      setError("");
+    }
+  }, [data, data, isSearched]);
   const handleSearch = (value: string) => {
-    if (!value.trim()) return;
-    setAddress(value.trim());
+    if (!value.trim()) {
+      setError(t("message.noRecordsFound"));
+      return;
+    } else {
+      setAddress(value.trim());
+      setError("");
+    }
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearch(value);
+      setIsSearched(true);
     }
   };
 
@@ -57,13 +77,22 @@ const EmissionsCalculator = () => {
           </Typography>
           <SearchContainer>
             <StyledInput
-              type="search"
               placeholder="Search Stake ID or Address"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+                if (!e.target.value) {
+                  setIsSearched(false);
+                }
+              }}
               value={value}
               onKeyUp={handleKeyUp}
             />
-            <SubmitButton onClick={() => handleSearch(value)}>
+            <SubmitButton
+              onClick={() => {
+                handleSearch(value);
+                setIsSearched(true);
+              }}
+            >
               <CustomIcon
                 icon={HeaderSearchIconComponent}
                 stroke={theme.palette.secondary.light}
@@ -72,21 +101,31 @@ const EmissionsCalculator = () => {
               />
             </SubmitButton>
           </SearchContainer>
-          {(data?.address || data?.stakeAddress) && (
+          {error && (
+            <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>
+              {error}
+            </Box>
+          )}
+          {isSearched && (data?.address || data?.stakeAddress) && (
             <Box>
               <StyledTypography>{t("micar.indicators.caculator.address")}</StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
-                <StyledLink to="/">
+                <StyledLink
+                  to={{
+                    pathname: details?.stake(data?.address || (data.stakeAddress as string)),
+                    state: { fromPath }
+                  }}
+                >
                   {isMobile
                     ? getShortHash(data?.stakeAddress || (data?.address as string))
                     : data?.stakeAddress || data?.address}
                 </StyledLink>
               </Box>
-              <Divider sx={{ marginY: 2 }} />
+              <Line />
 
               <StyledTypography>{t("micar.indicators.caculator.noTransaction")}</StyledTypography>
               <StyledValue>{data?.txCount}</StyledValue>
-              <Divider sx={{ marginY: 2 }} />
+              <Line />
 
               <StyledTypography>{t("micar.indicators.caculator.emissions")}</StyledTypography>
               <StyledValue>{data?.carbonEmissionPerTx ? `${data?.carbonEmissionPerTx} kWh` : ""}</StyledValue>

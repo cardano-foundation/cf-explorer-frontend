@@ -1,4 +1,4 @@
-import { Box, Button, Card, styled, Typography } from "@mui/material";
+import { Box, Button, Card, Divider, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
@@ -55,13 +55,14 @@ export const SearchContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "start",
   alignItems: "center",
-  background: theme.palette.secondary[0],
+  background: theme.isDark ? "#000000" : "#F9F9F9",
   paddingLeft: 30,
   borderRadius: 10,
   marginBottom: 35,
   marginTop: 25,
   height: 58,
-  border: `1.5px solid ${theme.palette.primary[200]}`,
+  opacity: theme.isDark ? "40%" : "100%",
+  border: `1.5px solid ${theme.isDark ? "#24262E" : "#FFFFFF"}`,
   "&:focus-within": {
     borderColor: theme.palette.secondary.light
   },
@@ -78,7 +79,7 @@ export const StyledInput = styled("input")`
   border-radius: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: ${({ theme }) => theme.palette.secondary[0]};
+  background: ${({ theme }) => (theme.isDark ? "#000000" : "#F9F9F9")};
   color: ${({ theme }) => theme.palette.secondary.light};
 
   &::-webkit-search-cancel-button {
@@ -103,3 +104,9 @@ export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${(props) => props.theme.palette.primary.main} !important;
 `;
+
+export const Line = styled(Divider)(({ theme }) => ({
+  marginBottom: "32px",
+  borderColor: theme.isDark ? "#434656" : "#0000001F",
+  marginTop: "32px"
+}));

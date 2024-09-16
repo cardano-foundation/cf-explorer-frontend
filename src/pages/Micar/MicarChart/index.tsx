@@ -7,6 +7,7 @@ import moment from "moment";
 
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
 
 import { StyledBoxIcon, StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 
@@ -20,7 +21,7 @@ const EmissionsAreaChart = () => {
   const [dataChart, setDataChart] = useState();
 
   const { t } = useTranslation();
-  const { isMobile, isLaptop } = useScreen();
+  const { isMobile, isGalaxyFoldSmall, isLaptop } = useScreen();
   const theme = useTheme();
 
   const formatTimeX = (date: Time) => {
@@ -84,7 +85,7 @@ const EmissionsAreaChart = () => {
   };
 
   useEffect(() => {
-    axios.get(`/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP`).then(({ data }) => {
+    axios.get(API.MICAR.HISTORYCAL).then(({ data }) => {
       const converdata = data.entries.map((it: EmissionsChartIF) => ({
         date: it.date,
         emissions: it.emissions_24h
@@ -95,7 +96,7 @@ const EmissionsAreaChart = () => {
 
   const TabsComponent = () => {
     return (
-      <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+      <Tabs>
         {Object.keys(optionsTime).map((option) => {
           return (
             <Tab
@@ -113,15 +114,15 @@ const EmissionsAreaChart = () => {
 
   return (
     <Container>
-      <StyledCard elevation={2} sx={{ backgroundColor: theme.isDark ? "#24262E" : "#F9F9F9" }}>
+      <StyledCard elevation={2}>
         <Box
           display="flex"
-          justifyContent={isMobile ? "flex-start" : "space-between"}
-          alignItems={isMobile ? "flex-start" : "center"}
-          flexDirection={isMobile ? "column" : "row"}
+          justifyContent={isGalaxyFoldSmall ? "flex-start" : "space-between"}
+          alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
+          flexDirection={isGalaxyFoldSmall ? "column" : "row"}
         >
           <StyledBoxIcon>{theme.isDark ? <ClockWhite /> : <Clock />}</StyledBoxIcon>
-          {!isMobile && <TabsComponent />}
+          {!isGalaxyFoldSmall && <TabsComponent />}
         </Box>
         <StyledTitle
           sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }}
@@ -139,13 +140,20 @@ const EmissionsAreaChart = () => {
             </defs>
 
             <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, rangeTime)} />
-            <YAxis label={{ value: "Emissions (T CO₂e)", angle: -90, position: "insideLeft" }} />
+            <YAxis
+              label={{
+                value: "Emissions (T CO₂e)",
+                angle: -90,
+                position: "insideLeft",
+                style: { textAnchor: "middle" }
+              }}
+            />
             <Tooltip />
 
             <Area type="monotone" dataKey="emissions" stroke="#3B82F6" fill="url(#colorEmissions)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
-        {isMobile && <TabsComponent />}
+        {isGalaxyFoldSmall && <TabsComponent />}
       </StyledCard>
     </Container>
   );
