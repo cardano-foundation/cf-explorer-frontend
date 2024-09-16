@@ -185,8 +185,8 @@ export const API = {
   },
   MICAR: {
     CARBON_EMISSION: "MiCAR/carbon-emission",
-    INDICATOR: "/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP",
-    HISTORYCAL: "/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP"
+    INDICATOR: "/MiCAR/carbon-emission/overview?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP",
+    HISTORYCAL: "/MiCAR/carbon-emission/historical?key=zy5ZrBDZpv420Oi3WIPwXP"
   }
 };
 
