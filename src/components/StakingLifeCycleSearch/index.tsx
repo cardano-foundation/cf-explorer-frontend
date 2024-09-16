@@ -247,7 +247,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <StyledInput
-            type="search"
+            type="text"
             placeholder={t("slc.typeStakeOrPool")}
             onChange={(e) => {
               setValue(e.target.value);
