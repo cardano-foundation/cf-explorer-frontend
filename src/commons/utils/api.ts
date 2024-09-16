@@ -62,7 +62,8 @@ export const API = {
     LIST: "txs",
     GRAPH: "txs/graph",
     HASH_CONTRACT: (txHash: string, address: string) => `txs/${txHash}/contract?address=${address}`,
-    WINERY_DETAIL: (txHash: string, wineryId: string) => `txs/${txHash}/${wineryId}`
+    WINERY_DETAIL: (txHash: string, wineryId: string) => `txs/${txHash}/${wineryId}`,
+    CERTIFICATE_DETAIL: (txHash: string, certNo: string) => `txs/${txHash}/certData/${certNo}`
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",

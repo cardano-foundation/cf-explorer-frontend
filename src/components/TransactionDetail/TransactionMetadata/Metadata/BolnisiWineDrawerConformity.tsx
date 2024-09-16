@@ -1,62 +1,61 @@
-import { Box, useTheme, IconButton, styled, Grid, AccordionSummary, Drawer } from "@mui/material";
+import { Box, useTheme, IconButton, styled, Grid, AccordionSummary, Drawer, CircularProgress } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import { ShowMore, VerifiedIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
+import { details } from "src/commons/routers";
 
 import DefaultImageWine from "./DefaultImageWine";
 
-const data = {
-  certificate_number: "93828",
-  certificate_type: "Conformity",
-  export_country: "Georgia",
-  company_name: "National Wine Agency",
-  company_rs_code: "-",
-  exam_protocol_number: "-",
-  tasting_protocol_number: "-"
-};
-
-const data1 = [
-  { label: "Bottle Count", value: "500" },
-  { label: "Bottle Type", value: "A" },
-  { label: "Bottle Volume", value: "0.75" },
-  { label: "Bottling Date", value: "2023-05-10" },
-  { label: "Colour", value: "Red" },
-  { label: "Delayed on Chacha", value: "False" },
-  { label: "Grape Variety", value: "Saperavi" },
-  { label: "Harvest Year", value: "2022" },
-  { label: "Lot Number", value: "202345161616" },
-  { label: "Origin", value: "Georgia" },
-  { label: "Sugar Content Category", value: "Dry" },
-  { label: "Type", value: "Red" },
-  { label: "Viticulture Area", value: "Kakheti" },
-  { label: "Wine Name", value: "Saperavi" }
+const dataMapping: Array<{ label: string; key: keyof Product }> = [
+  { label: "Bottle Count", key: "bottle_count_in_lot" },
+  { label: "Bottle Type", key: "bottle_type" },
+  { label: "Bottle Volume", key: "bottle_volume" },
+  { label: "Bottling Date", key: "bottling_date" },
+  { label: "Colour", key: "color" },
+  { label: "Delayed on Chacha", key: "delayed_on_chacha" },
+  { label: "Grape Variety", key: "grape_variety" },
+  { label: "Harvest Year", key: "harvest_year" },
+  { label: "Lot Number", key: "lot_number" },
+  { label: "Origin", key: "origin" },
+  { label: "Sugar Content Category", key: "sugar_content_category" },
+  { label: "Type", key: "type" },
+  { label: "Viticulture Area", key: "viticulture_area" },
+  { label: "Wine Name", key: "wine_name" }
 ];
 
 export default function BolnisiWineDrawerConformity() {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const { wineryId } = useParams<{ wineryId: string; trxHash: string }>();
+  const { certNo, trxHash } = useParams<{ certNo: string; trxHash: string; wineryId: string }>();
 
   const theme = useTheme();
+  const history = useHistory();
+  const { data: dataConformity, loading } = useFetch<CertificateData>(
+    API.TRANSACTION.CERTIFICATE_DETAIL(trxHash, certNo)
+  );
 
   const infoFields = [
-    { label: "Certificate No.", value: data.certificate_number },
-    { label: "Certificate Type", value: data.certificate_type },
-    { label: "Export country", value: data.export_country },
-    { label: "Company name", value: data.company_name },
-    { label: "Company RS Code", value: data.company_rs_code || "-" },
-    { label: "Exam Protocol Number", value: data.exam_protocol_number || "-" },
-    { label: "Tasting Protocol Number", value: data.tasting_protocol_number || "-" }
+    { label: "Certificate No.", value: dataConformity?.offChainData.certificate_number || "-" },
+    { label: "Certificate Type", value: dataConformity?.offChainData.certificate_type || "-" },
+    { label: "Export country", value: dataConformity?.offChainData.export_country || "-" },
+    { label: "Company name", value: dataConformity?.offChainData.company_name || "-" },
+    { label: "Company RS Code", value: dataConformity?.offChainData.company_rs_code || "-" },
+    { label: "Exam Protocol Number", value: dataConformity?.offChainData.exam_protocol_number || "-" },
+    { label: "Tasting Protocol Number", value: dataConformity?.offChainData.tasting_protocol_number || "-" }
   ];
 
   useEffect(() => {
-    if (wineryId) {
+    if (certNo) {
       setOpenDrawer(true);
     }
-  }, [wineryId]);
+  }, [certNo]);
+
+  if (loading) return renderLoading();
 
   return (
     <ViewDetailDrawer
@@ -66,7 +65,7 @@ export default function BolnisiWineDrawerConformity() {
       variant="temporary"
       onClose={() => {
         setOpenDrawer(false);
-        // history.push(details.transaction(trxHash, "metadata"));
+        history.push(details.transaction(trxHash, "metadata"));
       }}
     >
       <Box
@@ -82,7 +81,7 @@ export default function BolnisiWineDrawerConformity() {
         <CloseButton
           onClick={() => {
             setOpenDrawer(false);
-            // history.push(details.transaction(trxHash, "metadata"));
+            history.push(details.transaction(trxHash, "metadata"));
           }}
           data-testid="close-modal-button"
         >
@@ -91,7 +90,12 @@ export default function BolnisiWineDrawerConformity() {
         <Box>
           <Header>
             <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
-              <DefaultImageWine width={"100px"} height={"100px"} fontSize="36px" name={"khanh" || ""} />
+              <DefaultImageWine
+                width={"100px"}
+                height={"100px"}
+                fontSize="36px"
+                name={dataConformity?.offChainData.company_name || ""}
+              />
 
               {/* <Box
             position={"absolute"}
@@ -132,7 +136,7 @@ export default function BolnisiWineDrawerConformity() {
                 padding={"8px 10px 26px 10px"}
                 color={theme.palette.secondary.main}
               >
-                J-97
+                {dataConformity?.offChainData.company_name}
               </Box>
             </Box>
           </Header>
@@ -167,86 +171,52 @@ export default function BolnisiWineDrawerConformity() {
                 padding: "19.5px"
               }}
             >
-              <HeadingDrawer>Products: 2</HeadingDrawer>
+              <HeadingDrawer>Products: {dataConformity?.offChainData.products.length}</HeadingDrawer>
               <Box>
-                <Accordion>
-                  <AccordionSummary
-                    sx={{
-                      border: "none",
-                      "&.Mui-expanded": {
-                        borderBottom: "1px solid #CCCC"
-                      }
-                    }}
-                    expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
-                  >
-                    <TitleAccordion>Lot Number:</TitleAccordion>
-                    <TitleAccordion>123456</TitleAccordion>
-                  </AccordionSummary>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid container sx={{ padding: "0 16px" }}>
-                      {data1.map((item, index) => (
-                        <Grid
-                          container
-                          padding={"0 16px"}
-                          item
-                          xs={12}
-                          key={index}
+                {dataConformity?.offChainData.products.map((el, i) => {
+                  return (
+                    <Box key={i}>
+                      <Accordion>
+                        <AccordionSummary
                           sx={{
-                            borderBottom: index === data1.length - 1 ? "none:" : "1px dashed #ccc",
-                            padding: "17.5px 0px"
-                            // marginBottom: index !== infoFields.length - 1 ? "17.5px" : "0"
+                            border: "none",
+                            "&.Mui-expanded": {
+                              borderBottom: "1px solid #CCCC"
+                            }
                           }}
+                          expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
                         >
-                          <Grid item xs={6}>
-                            <ItemListProduct>{item.label}</ItemListProduct>
+                          <TitleAccordion>Lot Number:</TitleAccordion>
+                          <TitleAccordion>{el.lot_number}</TitleAccordion>
+                        </AccordionSummary>
+                        <Box sx={{ width: "100%" }}>
+                          <Grid container sx={{ padding: "0 16px" }}>
+                            {dataMapping.map((itemMapping, index) => (
+                              <Grid
+                                container
+                                padding={"0 16px"}
+                                item
+                                xs={12}
+                                key={index}
+                                sx={{
+                                  borderBottom: index === dataMapping.length - 1 ? "none:" : "1px dashed #ccc",
+                                  padding: "17.5px 0px"
+                                }}
+                              >
+                                <Grid item xs={6}>
+                                  <ItemListProduct>{itemMapping.label}</ItemListProduct>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <ValueItemListProduct>{String(el[itemMapping.key] || "-")}</ValueItemListProduct>
+                                </Grid>
+                              </Grid>
+                            ))}
                           </Grid>
-                          <Grid item xs={6}>
-                            <ValueItemListProduct>{item.value}</ValueItemListProduct>
-                          </Grid>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Box>
-                </Accordion>
-                <Accordion>
-                  <AccordionSummary
-                    sx={{
-                      border: "none",
-                      "&.Mui-expanded": {
-                        borderBottom: "1px solid #CCCC"
-                      }
-                    }}
-                    expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
-                  >
-                    <TitleAccordion>Lot Number:</TitleAccordion>
-                    <TitleAccordion>123456</TitleAccordion>
-                  </AccordionSummary>
-                  <Box sx={{ width: "100%" }}>
-                    <Grid container sx={{ padding: "0 16px" }}>
-                      {data1.map((item, index) => (
-                        <Grid
-                          container
-                          padding={"0 16px"}
-                          item
-                          xs={12}
-                          key={index}
-                          sx={{
-                            borderBottom: index === data1.length - 1 ? "none:" : "1px dashed #ccc",
-                            padding: "17.5px 0px"
-                            // marginBottom: index !== infoFields.length - 1 ? "17.5px" : "0"
-                          }}
-                        >
-                          <Grid item xs={6}>
-                            <ItemListProduct>{item.label}</ItemListProduct>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <ValueItemListProduct>{item.value}</ValueItemListProduct>
-                          </Grid>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Box>
-                </Accordion>
+                        </Box>
+                      </Accordion>
+                    </Box>
+                  );
+                })}
               </Box>
             </Box>
           </Box>
@@ -255,6 +225,14 @@ export default function BolnisiWineDrawerConformity() {
     </ViewDetailDrawer>
   );
 }
+
+const renderLoading = () => {
+  return (
+    <Box>
+      <CircularProgress />
+    </Box>
+  );
+};
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
@@ -300,7 +278,8 @@ export const ValueItem = styled("p")(({ theme }) => ({
   fontSize: "16px",
   fontWeight: "400",
   padding: 0,
-  margin: 0
+  margin: 0,
+  textAlign: "start"
 }));
 
 export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
