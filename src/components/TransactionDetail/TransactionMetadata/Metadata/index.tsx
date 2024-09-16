@@ -55,8 +55,8 @@ import {
   ViewWineButton,
   Wrapper
 } from "./styles";
-import BolnisiWineDrawer from "./BolnisiWineDrawer";
 import DefaultImageWine from "./DefaultImageWine";
+import BolnisiWineDrawer from "./BolnisiWineDrawer";
 
 interface MetadataProps {
   data?: Transaction["metadata"];

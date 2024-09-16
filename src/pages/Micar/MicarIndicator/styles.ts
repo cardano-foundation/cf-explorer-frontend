@@ -32,8 +32,11 @@ export const StyledBoxIcon = styled(Box)(({ theme }) => ({
 export const Title = styled(Typography)(() => ({
   fontWeight: 700
 }));
-export const Value = styled(Typography)(() => ({
+export const Value = styled(Typography)(({ theme }) => ({
   fontSize: "20px",
   fontWeight: 500,
-  marginBottom: "32px"
+  marginBottom: "32px",
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "12px"
+  }
 }));

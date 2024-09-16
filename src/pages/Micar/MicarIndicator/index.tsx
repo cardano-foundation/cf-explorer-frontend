@@ -20,6 +20,7 @@ interface MicarProps {
 const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value1, value2, value3 }: MicarProps) => {
   const { isSmallScreen, isLaptop, isMobile } = useScreen();
   const theme = useTheme();
+
   return (
     <Box>
       <Container maxWidth="lg" sx={{ height: "100%", mt: 8 }}>
