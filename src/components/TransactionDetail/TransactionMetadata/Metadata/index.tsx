@@ -523,15 +523,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
 
 export default Metadata;
 
-export const VerifyBadge = ({
-  status,
-  type,
-  signatureVerified = true
-}: {
-  status: boolean;
-  type?: string;
-  signatureVerified?: boolean;
-}) => {
+export const VerifyBadge = ({ status, type }: { status: boolean; type?: string }) => {
   const theme = useTheme();
   if (type === "conformityCertRevoke") {
     return (
@@ -551,7 +543,7 @@ export const VerifyBadge = ({
       </BadgeContainerVerify>
     );
   }
-  if (!status || !signatureVerified) {
+  if (!status) {
     return (
       <BadgeContainerVerify type="Invalid">
         <Box
@@ -762,7 +754,7 @@ const ConformityCert: React.FC<{
             <Box display="flex" flexDirection="column" height="100%">
               <ItemBolnisi style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                 <Box display="flex" justifyContent="flex-end" mb={1}>
-                  <VerifyBadge signatureVerified={el.signatureVerified} type={type} status={el.signatureVerified} />
+                  <VerifyBadge type={type} status={el.signatureVerified} />
                 </Box>
 
                 <Box display="flex" alignItems="center" flexWrap="wrap" gap={"10px"}>
