@@ -6,6 +6,7 @@ import axios from "axios";
 
 import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
+import { API } from "src/commons/utils/api";
 
 import MicarIndicator from "./MicarIndicator";
 import EmissionsChart from "./MicarChart";
@@ -45,7 +46,7 @@ const Micar = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP`).then(({ data }) => {
+    axios.get(API.MICAR.INDICATOR).then(({ data }) => {
       setIndicator(data);
     });
   }, []);

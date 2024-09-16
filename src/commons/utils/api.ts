@@ -182,7 +182,9 @@ export const API = {
     GRAPH: "txs/graph"
   },
   MICAR: {
-    CARBON_EMISSION: "MiCAR/carbon-emission"
+    CARBON_EMISSION: "MiCAR/carbon-emission",
+    INDICATOR: "/mica/overview/ada?responseType=recent&key=zy5ZrBDZpv420Oi3WIPwXP",
+    HISTORYCAL: "/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP"
   }
 };
 
