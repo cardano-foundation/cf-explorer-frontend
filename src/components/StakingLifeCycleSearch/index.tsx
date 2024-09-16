@@ -189,8 +189,8 @@ const StakingLifeCycleSearch = () => {
 
   const hanldeSearch = async () => {
     if (!value) return;
-    setValueSearch(value);
-    const data = await adaHandleSearch(value);
+    setValueSearch(value.trim());
+    const data = await adaHandleSearch(value.trim());
     if (data.stakeAddress) {
       setADAHanlde(data);
     }
