@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Container, useTheme } from "@mui/material";
 import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from "recharts";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 import moment from "moment";
 
+import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
@@ -14,15 +14,21 @@ import { StyledBoxIcon, StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 type Time = "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export interface EmissionsChartIF {
   date: string;
-  emissions_24h: number | null;
+  emissions_24h: number | string | null;
+}
+export interface EmissionChartType {
+  entries: EmissionsChartIF[];
 }
 const EmissionsAreaChart = () => {
   const [rangeTime, setRangeTime] = useState<Time>("THREE_MONTH");
-  const [dataChart, setDataChart] = useState();
-
   const { t } = useTranslation();
   const { isMobile, isGalaxyFoldSmall, isLaptop } = useScreen();
   const theme = useTheme();
+  const { data } = useFetch<EmissionChartType>(`${API.MICAR?.HISTORYCAL}`, undefined, false);
+  const dataHistoryChart = data?.entries?.map((it: EmissionsChartIF) => ({
+    date: it.date,
+    emissions: it.emissions_24h
+  }));
 
   const formatTimeX = (date: Time) => {
     switch (date) {
@@ -64,7 +70,7 @@ const EmissionsAreaChart = () => {
     return data.slice(-days);
   };
 
-  const filteredData = filterDataByOption(dataChart, rangeTime);
+  const filteredData = filterDataByOption(dataHistoryChart, rangeTime);
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     THREE_MONTH: {
       label: t("time.3m"),
@@ -83,16 +89,6 @@ const EmissionsAreaChart = () => {
       displayName: t("option.tx.all_time")
     }
   };
-
-  useEffect(() => {
-    axios.get(API.MICAR.HISTORYCAL).then(({ data }) => {
-      const converdata = data.entries.map((it: EmissionsChartIF) => ({
-        date: it.date,
-        emissions: it.emissions_24h
-      }));
-      setDataChart(converdata);
-    });
-  }, []);
 
   const TabsComponent = () => {
     return (
