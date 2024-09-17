@@ -197,6 +197,7 @@ import GovIDIcon from "./icons/govID-icon.svg?react";
 import GovBodycon from "./icons/govBody-icon.svg?react";
 import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
+import AvatarIcon from "./icons/avatar-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
 import RewardIconComponent from "./icons/reward.svg?react";
@@ -459,6 +460,7 @@ export {
   UserIconComponent,
   DropIconComponent,
   DelegatorIconComponent,
+  AvatarIcon,
   HeaderSearchIconComponent,
   sunIcon,
   moonIcon,

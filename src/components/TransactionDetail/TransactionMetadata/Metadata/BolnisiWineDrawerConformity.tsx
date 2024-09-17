@@ -4,14 +4,12 @@ import { Dispatch, SetStateAction } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
 
-import { InvalidIcon, ShowMore, VerifiedIcon } from "src/commons/resources";
+import { AvatarIcon, InvalidIcon, ShowMore, VerifiedIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
-
-import DefaultImageWine from "./DefaultImageWine";
 
 const dataMapping: Array<{ label: string; key: keyof Product }> = [
   { label: "Bottle Count", key: "bottle_count_in_lot" },
@@ -48,13 +46,13 @@ export default function BolnisiWineDrawerConformity({
   );
 
   const infoFields = [
-    { label: "Certificate No.", value: dataConformity?.offChainData.certificate_number || "-" },
-    { label: "Certificate Type", value: dataConformity?.offChainData.certificate_type || "-" },
-    { label: "Export country", value: dataConformity?.offChainData.export_country || "-" },
-    { label: "Company name", value: dataConformity?.offChainData.company_name || "-" },
-    { label: "Company RS Code", value: dataConformity?.offChainData.company_rs_code || "-" },
-    { label: "Exam Protocol Number", value: dataConformity?.offChainData.exam_protocol_number || "-" },
-    { label: "Tasting Protocol Number", value: dataConformity?.offChainData.tasting_protocol_number || "-" }
+    { label: "Certificate No.", value: dataConformity?.offChainData?.certificate_number || "-" },
+    { label: "Certificate Type", value: dataConformity?.offChainData?.certificate_type || "-" },
+    { label: "Export country", value: dataConformity?.offChainData?.export_country || "-" },
+    { label: "Company name", value: dataConformity?.offChainData?.company_name || "-" },
+    { label: "Company RS Code", value: dataConformity?.offChainData?.company_rs_code || "-" },
+    { label: "Exam Protocol Number", value: dataConformity?.offChainData?.exam_protocol_number || "-" },
+    { label: "Tasting Protocol Number", value: dataConformity?.offChainData?.tasting_protocol_number || "-" }
   ];
 
   return (
@@ -93,12 +91,19 @@ export default function BolnisiWineDrawerConformity({
           <Box>
             <Header>
               <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
-                <DefaultImageWine
-                  width={"100px"}
-                  height={"100px"}
-                  fontSize="36px"
-                  name={dataConformity?.offChainData.company_name || ""}
-                />
+                <Box
+                  width={100}
+                  height={100}
+                  sx={{
+                    background: "#BD2F2D",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%"
+                  }}
+                >
+                  <CustomIcon height={68} width={48} icon={AvatarIcon} />
+                </Box>
                 {dataConformity?.signatureVerified ? (
                   <Box
                     position={"absolute"}
@@ -140,7 +145,7 @@ export default function BolnisiWineDrawerConformity({
                   padding={"8px 10px 26px 10px"}
                   color={theme.palette.secondary.main}
                 >
-                  {dataConformity?.offChainData.company_name}
+                  National Wine Agency
                 </Box>
               </Box>
             </Header>
@@ -163,7 +168,7 @@ export default function BolnisiWineDrawerConformity({
                           <TitleItem>{field.label}</TitleItem>
                         </Grid>
                         <Grid item>
-                          <ValueItem>{field.value}</ValueItem>
+                          <ValueItem>{field.label === "Company name" ? "National Wine Agency" : field.value}</ValueItem>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -175,9 +180,9 @@ export default function BolnisiWineDrawerConformity({
                   padding: "19.5px"
                 }}
               >
-                <HeadingDrawer>Products: {dataConformity?.offChainData.products.length}</HeadingDrawer>
+                <HeadingDrawer>Products: {dataConformity?.offChainData?.products.length}</HeadingDrawer>
                 <Box>
-                  {dataConformity?.offChainData.products.map((el, i) => {
+                  {dataConformity?.offChainData?.products.map((el, i) => {
                     return (
                       <Box key={i}>
                         <Accordion>
@@ -195,26 +200,33 @@ export default function BolnisiWineDrawerConformity({
                           </AccordionSummary>
                           <Box sx={{ width: "100%" }}>
                             <Grid container sx={{ padding: "0 16px" }}>
-                              {dataMapping.map((itemMapping, index) => (
-                                <Grid
-                                  container
-                                  padding={"0 16px"}
-                                  item
-                                  xs={12}
-                                  key={index}
-                                  sx={{
-                                    borderBottom: index === dataMapping.length - 1 ? "none:" : "1px dashed #ccc",
-                                    padding: "17.5px 0px"
-                                  }}
-                                >
-                                  <Grid item xs={6}>
-                                    <ItemListProduct>{itemMapping.label}</ItemListProduct>
+                              {dataMapping.map((itemMapping, index) => {
+                                const valueDelayedOnChacha = el["delayed_on_chacha"] ? "True" : "False";
+                                const valueItem =
+                                  itemMapping.key === "delayed_on_chacha"
+                                    ? valueDelayedOnChacha
+                                    : String(el[itemMapping.key] || "-");
+                                return (
+                                  <Grid
+                                    container
+                                    padding={"0 16px"}
+                                    item
+                                    xs={12}
+                                    key={index}
+                                    sx={{
+                                      borderBottom: index === dataMapping.length - 1 ? "none:" : "1px dashed #ccc",
+                                      padding: "17.5px 0px"
+                                    }}
+                                  >
+                                    <Grid item xs={6}>
+                                      <ItemListProduct>{itemMapping.label}</ItemListProduct>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                      <ValueItemListProduct>{valueItem}</ValueItemListProduct>
+                                    </Grid>
                                   </Grid>
-                                  <Grid item xs={6}>
-                                    <ValueItemListProduct>{String(el[itemMapping.key] || "-")}</ValueItemListProduct>
-                                  </Grid>
-                                </Grid>
-                              ))}
+                                );
+                              })}
                             </Grid>
                           </Box>
                         </Accordion>
