@@ -141,6 +141,7 @@ const DrepsList: React.FC = () => {
               textOverflow={"ellipsis"}
               whiteSpace={"nowrap"}
               overflow={"hidden"}
+              paddingTop={"3px"}
             >
               {r.anchorHash}
             </Box>
