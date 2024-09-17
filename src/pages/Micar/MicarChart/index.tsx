@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from "recharts";
+import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, TooltipProps } from "recharts";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
+import { numberWithCommas } from "src/commons/utils/helper";
 
 import { StyledBoxIcon, StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 
@@ -108,6 +110,48 @@ const EmissionsAreaChart = () => {
     );
   };
 
+  const renderTooltipContent = (o: TooltipProps<string | number | (string | number)[], string | number>) => {
+    const { payload = [], label } = o;
+    const getDayOfWeek = (dateString: string) => {
+      const date = new Date(dateString);
+      const options = { weekday: "long" };
+      const dayOfWeek = date.toLocaleDateString(undefined, options as object);
+
+      return dayOfWeek;
+    };
+
+    return (
+      <Box>
+        {(payload || [])
+          .map(
+            (
+              entry: Payload<string | number | (string | number)[], string | number> & { fill?: string },
+              index: number
+            ) => {
+              return (
+                <Box
+                  key={`item-${index}`}
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "#000000",
+                    padding: "4px 8px 4px 8px",
+                    color: "#FFFFFF",
+                    borderRadius: "8px"
+                  }}
+                >
+                  <Box>
+                    <Box>{`${getDayOfWeek(label)}, ${moment(label).format("DD/MM/YY")}`}</Box>
+                    <Box>{`Emissions (annualized, total) ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
+                  </Box>
+                </Box>
+              );
+            }
+          )
+          .reverse()}
+      </Box>
+    );
+  };
+
   return (
     <Container>
       <StyledCard elevation={2}>
@@ -144,7 +188,7 @@ const EmissionsAreaChart = () => {
                 style: { textAnchor: "middle" }
               }}
             />
-            <Tooltip />
+            <Tooltip content={(o) => renderTooltipContent(o)} />
 
             <Area type="monotone" dataKey="emissions" stroke="#3B82F6" fill="url(#colorEmissions)" strokeWidth={2} />
           </AreaChart>

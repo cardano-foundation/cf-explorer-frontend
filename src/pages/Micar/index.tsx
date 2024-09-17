@@ -7,6 +7,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
+import { numberWithCommas } from "src/commons/utils/helper";
 
 import MicarIndicator from "./MicarIndicator";
 import EmissionsChart from "./MicarChart";
@@ -41,11 +42,11 @@ const Micar = () => {
   const { isMobile, isLaptop } = useScreen();
   const theme = useTheme();
   useEffect(() => {
-    document.title = `Micar | Cardano Blockchain Explorer`;
+    document.title = `MiCAR | Cardano Blockchain Explorer`;
   }, []);
+  const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100) / 100} %`;
 
   const { data } = useFetch<MicarIndicatorProps>(`${API.MICAR?.INDICATOR}`, undefined, false);
-
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>
       <EmissionsCalculator />
@@ -57,9 +58,9 @@ const Micar = () => {
         des1={data?.indicator_1?.title}
         des2={data?.indicator_2?.title}
         des3={data?.indicator_3?.title}
-        value1={`${data?.indicator_1?.result?.value} ${data?.indicator_1?.unit}`}
-        value2={`${data?.indicator_2?.result?.value} ${data?.indicator_2?.unit}`}
-        value3={`${data?.indicator_3?.result?.value} ${data?.indicator_3?.unit}`}
+        value1={`${numberWithCommas(data?.indicator_1?.result?.value)} kWh`}
+        value2={formatPercent(data?.indicator_2?.result?.value)}
+        value3={`${numberWithCommas(data?.indicator_3?.result?.value)} kWh`}
         content={t("micar.indicators.enegy.des")}
       />
       <MicarIndicator
@@ -69,9 +70,9 @@ const Micar = () => {
         des1={data?.indicator_4?.title}
         des2={data?.indicator_5?.title}
         des3={data?.indicator_6?.title}
-        value1={`${data?.indicator_4?.result?.value} ${data?.indicator_4?.unit}`}
-        value2={`${data?.indicator_5?.result?.value} ${data?.indicator_5?.unit}`}
-        value3={`${data?.indicator_6?.result?.value} ${data?.indicator_6?.unit}`}
+        value1={`${numberWithCommas(data?.indicator_4?.result?.value)} tCO2e`}
+        value2={`${numberWithCommas(data?.indicator_5?.result?.value)} tCO2e`}
+        value3={`${numberWithCommas(data?.indicator_6?.result?.value)} kgCO2e`}
         content={t("micar.indicators.emissions.des")}
       />
       <MicarIndicator
@@ -81,9 +82,9 @@ const Micar = () => {
         des1={data?.indicator_7?.title}
         des2={data?.indicator_8?.title}
         des3={data?.indicator_9?.title}
-        value1={`${data?.indicator_7?.result?.value} ${data?.indicator_7?.unit}`}
-        value2={`${data?.indicator_8?.result?.value} ${data?.indicator_8?.unit}`}
-        value3={`${data?.indicator_9?.result?.value} ${data?.indicator_9?.unit}`}
+        value1={`${numberWithCommas(data?.indicator_7?.result?.value)} kg`}
+        value2={formatPercent(data?.indicator_8?.result?.value)}
+        value3={`${numberWithCommas(data?.indicator_9?.result?.value)} t`}
         content={t("micar.indicators.waste.des")}
       />
       <MicarIndicator
@@ -91,7 +92,7 @@ const Micar = () => {
         icon={theme.isDark ? <TreeWhite /> : <Tree />}
         title={t("micar.indicators.natural")}
         des1={data?.indicator_10?.title}
-        value1={`${data?.indicator_10?.result?.value} ${data?.indicator_10?.unit}`}
+        value1={`${numberWithCommas(data?.indicator_10?.result?.value)} kg`}
         content={t("micar.indicators.natural.des")}
       />
     </Box>
