@@ -18,6 +18,10 @@ export interface EmissionsChartIF {
   date: string;
   emissions_24h: number | string | null;
 }
+export interface EmissionsChartItem {
+  date: string;
+  emissions: number | string | null;
+}
 export interface EmissionChartType {
   entries: EmissionsChartIF[];
 }
@@ -73,6 +77,26 @@ const EmissionsAreaChart = () => {
   };
 
   const filteredData = filterDataByOption(dataHistoryChart, rangeTime);
+  const removeDuplicateDates = (filteredData: EmissionsChartItem, rangeTime: Time) => {
+    if (!Array.isArray(filteredData) || filteredData === null) {
+      return [];
+    }
+    if (rangeTime === "THREE_MONTH") {
+      return filteredData;
+    }
+    return filteredData.reduce((acc, current) => {
+      const currentYearMonth = current.date.slice(0, 7);
+      const existingIndex = acc.findIndex((item: EmissionsChartItem) => item.date.slice(0, 7) === currentYearMonth);
+      if (existingIndex !== -1) {
+        acc[existingIndex] = current;
+      } else {
+        acc.push(current);
+      }
+
+      return acc;
+    }, []);
+  };
+  const result = removeDuplicateDates(filteredData, rangeTime);
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     THREE_MONTH: {
       label: t("time.3m"),
@@ -141,7 +165,7 @@ const EmissionsAreaChart = () => {
                 >
                   <Box>
                     <Box>{`${getDayOfWeek(label)}, ${moment(label).format("DD/MM/YY")}`}</Box>
-                    <Box>{`Emissions (annualized, total) ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
+                    <Box>{`Emissions: ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
                   </Box>
                 </Box>
               );
@@ -171,7 +195,7 @@ const EmissionsAreaChart = () => {
           {t("micar.indicators.emissions.title")}
         </StyledTitle>
         <ResponsiveContainer width="100%" height={300} style={{ alignSelf: "flex-start" }}>
-          <AreaChart data={filteredData}>
+          <AreaChart data={result}>
             <defs>
               <linearGradient id="colorEmissions" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
