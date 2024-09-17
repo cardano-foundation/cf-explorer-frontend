@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@emotion/react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
@@ -50,10 +50,12 @@ const Micar = () => {
 
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>
-      <WrapHeading>
-        <HeadingPage>{t("title.Cardanosustainability")}</HeadingPage>
-        <DescriptionText>{t("subTitle.Cardanosustainability")}</DescriptionText>
-      </WrapHeading>
+      <Container sx={{ padding: "0px !important" }}>
+        <WrapHeading>
+          <HeadingPage>{t("title.Cardanosustainability")}</HeadingPage>
+          <DescriptionText>{t("subTitle.Cardanosustainability")}</DescriptionText>
+        </WrapHeading>
+      </Container>
       <WorldMap />
       <EmissionsCalculator />
       <EmissionsChart />

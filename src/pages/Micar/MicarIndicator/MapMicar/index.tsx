@@ -1,5 +1,5 @@
 import mapData from "@highcharts/map-collection/custom/world-highres3.geo.json";
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Container } from "@mui/material";
 import Highcharts, { MapChart } from "highcharts";
 import HighchartsReact, { HighchartsReactRefObject } from "highcharts-react-official";
 import HighchartsMap from "highcharts/modules/map";
@@ -187,11 +187,11 @@ export const WorldMap = (props: BoxProps) => {
             });
             if (Object.keys(cities).length > 1) return false;
             if (data[0].options.isTop) return `<b>${data[0].options.name}</b>`;
-            return `<b>${Object.keys(cities)[0]}<br/>${cities[Object.keys(cities)[0]]} node</b>`;
+            return `<b>${Object.keys(cities)[0]}<br/>${cities[Object.keys(cities)[0]]} nodes</b>`;
           }
           if ((this.point.options as IMapCity).isTop) return `<b>${this.point.name}</b>`;
 
-          return `<b>${this.point.name}<br/>${this.point.value} node</b>`;
+          return `<b>${this.point.name}<br/>${this.point.value} nodes</b>`;
         }
       },
       series: [
@@ -324,22 +324,26 @@ export const WorldMap = (props: BoxProps) => {
     );
 
   return (
-    <WorldMapContainer data-testid="world-map" ref={containerRef} {...props}>
-      {!!data && <HighchartsReact ref={mapRef} constructorType="mapChart" highcharts={Highcharts} options={options} />}
-      <MapNavigation>
-        <MapNavigationMinusButton onClick={handleZoomOut}>
-          <CustomIcon height={24} width={24} icon={ZoomOutIcon} fill={theme.palette.secondary.main} />
-        </MapNavigationMinusButton>
-        <MapNavigationDivider />
-        <MapNavigationPlusButton onClick={handleZoomIn}>
-          <CustomIcon height={24} width={24} icon={ZoomInIcon} fill={theme.palette.secondary.main} />
-        </MapNavigationPlusButton>
-      </MapNavigation>
-      <MapOption>
-        <MapOptionButton onClick={getUserLocation}>
-          <CustomIcon height={24} width={24} icon={FindLocationIcon} fill={theme.palette.secondary.main} />
-        </MapOptionButton>
-      </MapOption>
-    </WorldMapContainer>
+    <Container sx={{ padding: "0px !important" }}>
+      <WorldMapContainer data-testid="world-map" ref={containerRef} {...props}>
+        {!!data && (
+          <HighchartsReact ref={mapRef} constructorType="mapChart" highcharts={Highcharts} options={options} />
+        )}
+        <MapNavigation>
+          <MapNavigationMinusButton onClick={handleZoomOut}>
+            <CustomIcon height={24} width={24} icon={ZoomOutIcon} fill={theme.palette.secondary.main} />
+          </MapNavigationMinusButton>
+          <MapNavigationDivider />
+          <MapNavigationPlusButton onClick={handleZoomIn}>
+            <CustomIcon height={24} width={24} icon={ZoomInIcon} fill={theme.palette.secondary.main} />
+          </MapNavigationPlusButton>
+        </MapNavigation>
+        <MapOption>
+          <MapOptionButton onClick={getUserLocation}>
+            <CustomIcon height={24} width={24} icon={FindLocationIcon} fill={theme.palette.secondary.main} />
+          </MapOptionButton>
+        </MapOption>
+      </WorldMapContainer>
+    </Container>
   );
 };
