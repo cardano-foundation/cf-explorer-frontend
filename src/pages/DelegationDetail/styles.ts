@@ -104,8 +104,8 @@ export const TextareaAutosize = styled(BaseTextareaAutosize)<{ error?: number }>
     &:focus-visible {
       outline: 0;
     }
-
     &::placeholder {
       color:${theme.palette.secondary[600]}
+    }
   `
 );

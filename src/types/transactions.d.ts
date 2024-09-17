@@ -179,6 +179,7 @@ type TTCIPProperties = {
   valid: boolean;
   valueFormat?: string;
   checkNotRequired?: boolean;
+  valueFormat?: string;
 };
 
 interface Transaction {
@@ -274,15 +275,91 @@ interface Transaction {
       cidVerified: boolean;
       externalApiAvailable: boolean;
       wineryData: WineryData[];
+      certData: CertData;
+      tag: string;
     };
   }[];
 }
+
+type CertData = {
+  certs: CertDetailsData[];
+  externalApiAvailable: boolean;
+  pkeyVerified: boolean;
+};
+
+type CertDetailsData = {
+  signature: string;
+  offChainData: OffChainData;
+  signatureVerified: boolean;
+};
+
+type OffChainData = {
+  certificate_number: string;
+  certificate_type: string;
+  company_name: string;
+  company_rs_code: string;
+  exam_protocol_number: string;
+  export_country: string;
+  products: Product[];
+  tasting_protocol_number: string;
+};
+
+type Product = {
+  bottle_count_in_lot: number;
+  bottle_type: string;
+  bottle_volume: number;
+  bottling_date: string;
+  color: string;
+  delayed_on_chacha: boolean;
+  grape_variety: string;
+  harvest_year: number;
+  lot_number: string;
+  origin: string;
+  sugar_content_category: string;
+  type: string;
+  viticulture_area: string;
+  wine_name: string;
+};
 
 interface WineryData {
   pkeyVerified: boolean;
   wineryId: string;
   lots: BolnisiWineLots[];
   externalApiAvailable: boolean;
+}
+
+interface CertificateData {
+  signature: string;
+  offChainData: OffChainData;
+  signatureVerified: boolean;
+}
+
+interface Product {
+  bottle_count_in_lot: number;
+  bottle_type: string;
+  bottle_volume: number;
+  bottling_date: string;
+  color: string;
+  delayed_on_chacha: boolean;
+  grape_variety: string;
+  harvest_year: number;
+  lot_number: string;
+  origin: string;
+  sugar_content_category: string;
+  type: string;
+  viticulture_area: string;
+  wine_name: string;
+}
+
+interface OffChainData {
+  certificate_number: string;
+  certificate_type: string;
+  company_name: string;
+  company_rs_code: string;
+  exam_protocol_number: string;
+  export_country: string;
+  products: Product[];
+  tasting_protocol_number: string;
 }
 interface BolnisiWineLots {
   offChainData: {

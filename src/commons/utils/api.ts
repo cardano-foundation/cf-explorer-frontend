@@ -62,7 +62,8 @@ export const API = {
     LIST: "txs",
     GRAPH: "txs/graph",
     HASH_CONTRACT: (txHash: string, address: string) => `txs/${txHash}/contract?address=${address}`,
-    WINERY_DETAIL: (txHash: string, wineryId: string) => `txs/${txHash}/${wineryId}`
+    WINERY_DETAIL: (txHash: string, wineryId: string) => `txs/${txHash}/${wineryId}`,
+    CERTIFICATE_DETAIL: (txHash: string, certNo: string) => `txs/${txHash}/certData/${certNo}`
   },
   STAKE: {
     ANALYTICS: "stakes/analytics",
@@ -89,7 +90,8 @@ export const API = {
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
     REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
-    TABS: (stakeKey: string) => `stake-lifecycle/${stakeKey}`
+    TABS: (stakeKey: string) => `stake-lifecycle/${stakeKey}`,
+    SEARCH: "search/staking-lifecycle"
   },
   SPO_LIFECYCLE: {
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
