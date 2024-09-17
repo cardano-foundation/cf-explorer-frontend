@@ -13,7 +13,7 @@ export const WrapHeading = styled(Box)(({ theme }) => ({
 }));
 
 export const HeadingPage = styled("h1")(({ theme }) => ({
-  color: theme.palette.secondary.main,
+  color: theme.isDark ? "#fff" : "#000",
   textAlign: "left",
   fontSize: "64px",
   paddingBottom: 0,
@@ -28,14 +28,12 @@ export const HeadingPage = styled("h1")(({ theme }) => ({
 }));
 
 export const DescriptionText = styled("p")(({ theme }) => ({
-  color: theme.palette.secondary.light,
+  color: theme.isDark ? "#F7F9FF99" : "#00000099",
   textAlign: "left",
   fontSize: "18px",
   fontWeight: 500,
   maxWidth: "700px",
   marginTop: 0,
-  opacity: "0.6",
-
   [theme.breakpoints.down(1024)]: {
     fontSize: "16px",
     maxWidth: "500px"
