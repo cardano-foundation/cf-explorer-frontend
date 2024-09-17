@@ -279,6 +279,7 @@ import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
 import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
 import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
 import MicarIcon from "./icons/micar.svg";
+import SearchMicarIcon from "./icons/search-icon.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -561,7 +562,8 @@ export {
   GovernanceIcon,
   PoolVotingIcon,
   ParticipationIcon,
-  MicarIcon
+  MicarIcon,
+  SearchMicarIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

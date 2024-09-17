@@ -41,3 +41,13 @@ export const Value = styled(Typography)(({ theme }) => ({
     marginBottom: "12px"
   }
 }));
+
+export const Content = styled(Typography)(({ theme }) => ({
+  fontWeight: 500,
+  fontSize: "16px",
+  lineHeight: 2,
+  color: theme.isDark ? "#F7F9FF" : "#000000",
+  marginTop: 8,
+  textAlign: "left",
+  maxWidth: 500
+}));

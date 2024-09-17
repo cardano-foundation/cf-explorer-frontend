@@ -194,7 +194,11 @@ const EmissionsAreaChart = () => {
         >
           {t("micar.indicators.emissions.title")}
         </StyledTitle>
-        <ResponsiveContainer width="100%" height={300} style={{ alignSelf: "flex-start" }}>
+        <ResponsiveContainer
+          width={isGalaxyFoldSmall ? "120%" : "100%"}
+          height={300}
+          style={{ alignSelf: "flex-start", position: "relative", left: `${isGalaxyFoldSmall ? "-30px" : "0px"}` }}
+        >
           <AreaChart data={result}>
             <defs>
               <linearGradient id="colorEmissions" x1="0" y1="0" x2="0" y2="1">
@@ -206,7 +210,7 @@ const EmissionsAreaChart = () => {
             <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, rangeTime)} />
             <YAxis
               label={{
-                value: "Emissions (T CO₂e)",
+                value: `${isGalaxyFoldSmall ? "" : "Emissions (t CO₂e)"}`,
                 angle: -90,
                 position: "insideLeft",
                 style: { textAnchor: "middle" }

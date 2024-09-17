@@ -1,4 +1,4 @@
-import { Box, Button, Card, Divider, styled, Typography } from "@mui/material";
+import { Box, Card, Divider, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
@@ -80,7 +80,6 @@ export const StyledInput = styled("input")`
   overflow: hidden;
   text-overflow: ellipsis;
   background: ${({ theme }) => (theme.isDark ? "#000000" : "#F9F9F9")};
-  color: ${({ theme }) => theme.palette.secondary.light};
 
   &::-webkit-search-cancel-button {
     filter: ${({ theme }) => (theme.mode === "dark" ? "brightness(0) invert(0.8)" : "brightness(0) invert(0.4)")};
@@ -88,7 +87,7 @@ export const StyledInput = styled("input")`
   }
 `;
 
-export const SubmitButton = styled(Button)`
+export const SubmitButton = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,6 +97,9 @@ export const SubmitButton = styled(Button)`
   min-width: 60px;
   width: 60px;
   height: 60px;
+  background-color: "red" !important;
+  color: "red" !important;
+  cursor: pointer;
 `;
 
 export const StyledLink = styled(Link)`
