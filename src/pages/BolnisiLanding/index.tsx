@@ -316,7 +316,25 @@ const BolnisiTrx = () => {
       txHash: "969c9141d978b305244b68b92c18aa323cd94f05ff67133af2f070d3e358705e",
       date: "06/14/2024",
       cert: "Conformity",
-      amount: 0
+      amount: 500
+    },
+    {
+      txHash: "8ed32fad1d88367a743be7a36a7105b7be864c98decbf306c45e497ef41357e2",
+      date: "06/08/2024",
+      cert: "SCM",
+      amount: 5950
+    },
+    {
+      txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
+      date: "05/11/2024",
+      cert: "SCM",
+      amount: 69145
+    },
+    {
+      txHash: "0beec12e8d65d922eee9b0510fe8aadde19e813be158796112b126e1cad56e2f",
+      date: "03/15/2024",
+      cert: "SCM",
+      amount: 13800
     },
     {
       txHash: "f1b124c1be12e484fcc7c9bfc210ac0501ec7b4ff387707584b989546844dd29",
@@ -331,46 +349,22 @@ const BolnisiTrx = () => {
       amount: 19100
     },
     {
-      txHash: "c717dce01998ce714886649dc4681053cc527013002a912ceb4e4400296e1145",
-      date: "01/20/2024",
-      cert: "SCM",
-      amount: 2500
-    },
-    {
-      txHash: "0beec12e8d65d922eee9b0510fe8aadde19e813be158796112b126e1cad56e2f",
-      date: "03/15/2024",
-      cert: "SCM",
-      amount: 13800
-    },
-    {
-      txHash: "1b0c149a78e544ad1a1bcdf6d471294695dcbb3793783d68f7cad6ec8ceeb7d7",
-      date: "06/22/2024",
-      cert: "SCM",
-      amount: 0
-    },
-    {
-      txHash: "4072199d747ae5b1f882ed2e200c4d5aaa8c20485111774396aa486d23456c6f",
-      date: "11/24/2023",
-      cert: "SCM",
-      amount: 34400
-    },
-    {
       txHash: "e5213469590eee4e75d437d1ffbbe9ffc490f2e78b57f992b975a72146e77d85",
       date: "02/13/2024",
       cert: "SCM",
       amount: 4200
     },
     {
-      txHash: "8ed32fad1d88367a743be7a36a7105b7be864c98decbf306c45e497ef41357e2",
-      date: "06/08/2024",
+      txHash: "c717dce01998ce714886649dc4681053cc527013002a912ceb4e4400296e1145",
+      date: "01/20/2024",
       cert: "SCM",
-      amount: 5950
+      amount: 2500
     },
     {
-      txHash: "a9474320cc89c4c86558ead4a2e6c90113ac687eea63ad562d36ee1462a71c40",
-      date: "05/11/2024",
+      txHash: "4072199d747ae5b1f882ed2e200c4d5aaa8c20485111774396aa486d23456c6f",
+      date: "11/24/2023",
       cert: "SCM",
-      amount: 69145
+      amount: 34400
     }
   ];
 
