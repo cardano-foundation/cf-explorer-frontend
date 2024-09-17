@@ -187,11 +187,11 @@ export const WorldMap = (props: BoxProps) => {
             });
             if (Object.keys(cities).length > 1) return false;
             if (data[0].options.isTop) return `<b>${data[0].options.name}</b>`;
-            return `<b>${Object.keys(cities)[0]}<br/>${cities[Object.keys(cities)[0]]} artefacts</b>`;
+            return `<b>${Object.keys(cities)[0]}<br/>${cities[Object.keys(cities)[0]]} node</b>`;
           }
           if ((this.point.options as IMapCity).isTop) return `<b>${this.point.name}</b>`;
 
-          return `<b>${this.point.name}<br/>${this.point.value} artefacts</b>`;
+          return `<b>${this.point.name}<br/>${this.point.value} node</b>`;
         }
       },
       series: [
