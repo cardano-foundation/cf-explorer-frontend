@@ -276,7 +276,7 @@ export const CIPLabel = styled(Typography)`
   font-size: 12px;
   color: ${({ theme }) => theme.palette.secondary.light};
 `;
-export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" | "Warning" }>`
+export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" | "Warning" | "Revoked" }>`
   border-radius: 15px;
   display: flex;
   justify-content: space-between;
@@ -296,6 +296,8 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
         return theme.palette.success[100];
       case "Warning":
         return theme.palette.warning[100];
+      case "Revoked":
+        return "#EF6C000A";
       default:
         return theme.palette.error[100];
     }
@@ -307,6 +309,8 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
           return theme.palette.success[800];
         case "Warning":
           return theme.palette.warning[700];
+        case "Revoked":
+          return "#EF6C00";
         default:
           return theme.palette.error[800];
       }
@@ -314,6 +318,9 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
 `;
 
 export const ItemBolnisi = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.spacing(2)};
   position: relative;
   background: ${({ theme }) => (theme.isDark ? theme.palette.secondary[100] : theme.palette.secondary[700])};
@@ -329,6 +336,7 @@ export const ViewWineButton = styled(Button)(({ theme }) => ({
   textTransform: "capitalize",
   fontWeight: "bold",
   fontSize: 16,
+  borderRadius: "8px",
   color: theme.isDark ? theme.palette.secondary[100] : theme.palette.primary[100],
   background: theme.palette.primary.main,
   ":hover": {

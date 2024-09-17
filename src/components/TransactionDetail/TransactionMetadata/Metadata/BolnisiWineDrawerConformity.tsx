@@ -1,14 +1,15 @@
-import { Box, useTheme, IconButton, styled, Grid, AccordionSummary, Drawer, CircularProgress } from "@mui/material";
+import { Box, useTheme, IconButton, styled, Grid, AccordionSummary, Drawer } from "@mui/material";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { IoMdClose } from "react-icons/io";
 import { useHistory, useParams } from "react-router-dom";
 
-import { ShowMore, VerifiedIcon } from "src/commons/resources";
+import { InvalidIcon, ShowMore, VerifiedIcon } from "src/commons/resources";
 import CustomIcon from "src/components/commons/CustomIcon";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
+import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 
 import DefaultImageWine from "./DefaultImageWine";
 
@@ -29,14 +30,21 @@ const dataMapping: Array<{ label: string; key: keyof Product }> = [
   { label: "Wine Name", key: "wine_name" }
 ];
 
-export default function BolnisiWineDrawerConformity() {
-  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const { certNo, trxHash } = useParams<{ certNo: string; trxHash: string; wineryId: string }>();
+export default function BolnisiWineDrawerConformity({
+  openDrawer,
+  setOpenDrawer,
+  certNo
+}: {
+  openDrawer: boolean;
+  setOpenDrawer: Dispatch<SetStateAction<boolean>>;
+  certNo: string;
+}) {
+  const { trxHash } = useParams<{ trxHash: string }>();
 
   const theme = useTheme();
   const history = useHistory();
   const { data: dataConformity, loading } = useFetch<CertificateData>(
-    API.TRANSACTION.CERTIFICATE_DETAIL(trxHash, certNo)
+    openDrawer ? API.TRANSACTION.CERTIFICATE_DETAIL(trxHash, certNo) : ""
   );
 
   const infoFields = [
@@ -49,14 +57,6 @@ export default function BolnisiWineDrawerConformity() {
     { label: "Tasting Protocol Number", value: dataConformity?.offChainData.tasting_protocol_number || "-" }
   ];
 
-  useEffect(() => {
-    if (certNo) {
-      setOpenDrawer(true);
-    }
-  }, [certNo]);
-
-  if (loading) return renderLoading();
-
   return (
     <ViewDetailDrawer
       sx={{ zIndex: 1000 }}
@@ -68,171 +68,168 @@ export default function BolnisiWineDrawerConformity() {
         history.push(details.transaction(trxHash, "metadata"));
       }}
     >
-      <Box
-        height={"100%"}
-        position={"relative"}
-        sx={{
-          [theme.breakpoints.up("md")]: {
-            minWidth: 420
-          }
-        }}
-        bgcolor={theme.isDark ? "#0000" : "#FFF"}
-      >
-        <CloseButton
-          onClick={() => {
-            setOpenDrawer(false);
-            history.push(details.transaction(trxHash, "metadata"));
+      {loading ? (
+        <CommonSkeleton variant="rectangular" width={"444px"} height={"100%"} />
+      ) : (
+        <Box
+          height={"100%"}
+          position={"relative"}
+          sx={{
+            [theme.breakpoints.up("md")]: {
+              minWidth: 420
+            }
           }}
-          data-testid="close-modal-button"
+          bgcolor={theme.isDark ? "#0000" : "#FFF"}
         >
-          <IoMdClose color={theme.palette.secondary.light} />
-        </CloseButton>
-        <Box>
-          <Header>
-            <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
-              <DefaultImageWine
-                width={"100px"}
-                height={"100px"}
-                fontSize="36px"
-                name={dataConformity?.offChainData.company_name || ""}
-              />
-
-              {/* <Box
-            position={"absolute"}
-            width={32}
-            height={32}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            bgcolor={theme.palette.warning[700]}
-            borderRadius={"50%"}
-            bottom={0}
-            right={0}
+          <CloseButton
+            onClick={() => {
+              setOpenDrawer(false);
+              history.push(details.transaction(trxHash, "metadata"));
+            }}
+            data-testid="close-modal-button"
           >
-            <InvalidIcon fill={theme.palette.secondary.main} />
-          </Box> */}
-
-              <Box
-                position={"absolute"}
-                width={32}
-                height={32}
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"center"}
-                bgcolor={theme.palette.success[700]}
-                borderRadius={"50%"}
-                bottom={0}
-                right={0}
-              >
-                <VerifiedIcon width={20} height={20} />
-              </Box>
-            </Box>
-
-            <Box mt={2}>
-              <Box
-                fontWeight={"bold"}
-                mb={1}
-                fontSize={20}
-                padding={"8px 10px 26px 10px"}
-                color={theme.palette.secondary.main}
-              >
-                {dataConformity?.offChainData.company_name}
-              </Box>
-            </Box>
-          </Header>
-          <Box sx={{ backgroundColor: theme.isDark ? "#000" : "#fff" }}>
-            <Box sx={{ padding: "19.5px" }}>
-              <HeadingDrawer>Certificate of Conformity Info</HeadingDrawer>
-              <Grid container sx={{ border: "1px solid #CCCCCC", borderRadius: "16px", padding: "0 16px" }}>
-                {infoFields.map((field, index) => (
-                  <Grid
-                    item
-                    xs={12}
-                    key={index}
-                    sx={{
-                      borderBottom: index !== infoFields.length - 1 ? "1px dashed #ccc" : "none",
-                      padding: "17.5px 0px"
-                    }}
+            <IoMdClose color={theme.palette.secondary.light} />
+          </CloseButton>
+          <Box>
+            <Header>
+              <Box width={100} height={100} borderRadius={"50%"} mx={"auto"} position={"relative"}>
+                <DefaultImageWine
+                  width={"100px"}
+                  height={"100px"}
+                  fontSize="36px"
+                  name={dataConformity?.offChainData.company_name || ""}
+                />
+                {dataConformity?.signatureVerified ? (
+                  <Box
+                    position={"absolute"}
+                    width={32}
+                    height={32}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.success[700]}
+                    borderRadius={"50%"}
+                    bottom={0}
+                    right={0}
                   >
-                    <Grid container justifyContent="space-between">
-                      <Grid item>
-                        <TitleItem>{field.label}</TitleItem>
-                      </Grid>
-                      <Grid item>
-                        <ValueItem>{field.value}</ValueItem>
+                    <VerifiedIcon width={20} height={20} />
+                  </Box>
+                ) : (
+                  <Box
+                    position={"absolute"}
+                    width={32}
+                    height={32}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    bgcolor={theme.palette.warning[700]}
+                    borderRadius={"50%"}
+                    bottom={0}
+                    right={0}
+                  >
+                    <InvalidIcon fill={theme.palette.secondary.main} />
+                  </Box>
+                )}
+              </Box>
+
+              <Box mt={2}>
+                <Box
+                  fontWeight={"bold"}
+                  mb={1}
+                  fontSize={20}
+                  padding={"8px 10px 26px 10px"}
+                  color={theme.palette.secondary.main}
+                >
+                  {dataConformity?.offChainData.company_name}
+                </Box>
+              </Box>
+            </Header>
+            <Box sx={{ backgroundColor: theme.isDark ? "#000" : "#fff" }}>
+              <Box sx={{ padding: "19.5px" }}>
+                <HeadingDrawer>Certificate of Conformity Info</HeadingDrawer>
+                <Grid container sx={{ border: "1px solid #CCCCCC", borderRadius: "16px", padding: "0 16px" }}>
+                  {infoFields.map((field, index) => (
+                    <Grid
+                      item
+                      xs={12}
+                      key={index}
+                      sx={{
+                        borderBottom: index !== infoFields.length - 1 ? "1px dashed #ccc" : "none",
+                        padding: "17.5px 0px"
+                      }}
+                    >
+                      <Grid container justifyContent="space-between">
+                        <Grid item>
+                          <TitleItem>{field.label}</TitleItem>
+                        </Grid>
+                        <Grid item>
+                          <ValueItem>{field.value}</ValueItem>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-            <Box
-              sx={{
-                padding: "19.5px"
-              }}
-            >
-              <HeadingDrawer>Products: {dataConformity?.offChainData.products.length}</HeadingDrawer>
-              <Box>
-                {dataConformity?.offChainData.products.map((el, i) => {
-                  return (
-                    <Box key={i}>
-                      <Accordion>
-                        <AccordionSummary
-                          sx={{
-                            border: "none",
-                            "&.Mui-expanded": {
-                              borderBottom: "1px solid #CCCC"
-                            }
-                          }}
-                          expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
-                        >
-                          <TitleAccordion>Lot Number:</TitleAccordion>
-                          <TitleAccordion>{el.lot_number}</TitleAccordion>
-                        </AccordionSummary>
-                        <Box sx={{ width: "100%" }}>
-                          <Grid container sx={{ padding: "0 16px" }}>
-                            {dataMapping.map((itemMapping, index) => (
-                              <Grid
-                                container
-                                padding={"0 16px"}
-                                item
-                                xs={12}
-                                key={index}
-                                sx={{
-                                  borderBottom: index === dataMapping.length - 1 ? "none:" : "1px dashed #ccc",
-                                  padding: "17.5px 0px"
-                                }}
-                              >
-                                <Grid item xs={6}>
-                                  <ItemListProduct>{itemMapping.label}</ItemListProduct>
+                  ))}
+                </Grid>
+              </Box>
+              <Box
+                sx={{
+                  padding: "19.5px"
+                }}
+              >
+                <HeadingDrawer>Products: {dataConformity?.offChainData.products.length}</HeadingDrawer>
+                <Box>
+                  {dataConformity?.offChainData.products.map((el, i) => {
+                    return (
+                      <Box key={i}>
+                        <Accordion>
+                          <AccordionSummary
+                            sx={{
+                              border: "none",
+                              "&.Mui-expanded": {
+                                borderBottom: "1px solid #CCCC"
+                              }
+                            }}
+                            expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
+                          >
+                            <TitleAccordion>Lot Number:</TitleAccordion>
+                            <TitleAccordion>{el.lot_number}</TitleAccordion>
+                          </AccordionSummary>
+                          <Box sx={{ width: "100%" }}>
+                            <Grid container sx={{ padding: "0 16px" }}>
+                              {dataMapping.map((itemMapping, index) => (
+                                <Grid
+                                  container
+                                  padding={"0 16px"}
+                                  item
+                                  xs={12}
+                                  key={index}
+                                  sx={{
+                                    borderBottom: index === dataMapping.length - 1 ? "none:" : "1px dashed #ccc",
+                                    padding: "17.5px 0px"
+                                  }}
+                                >
+                                  <Grid item xs={6}>
+                                    <ItemListProduct>{itemMapping.label}</ItemListProduct>
+                                  </Grid>
+                                  <Grid item xs={6}>
+                                    <ValueItemListProduct>{String(el[itemMapping.key] || "-")}</ValueItemListProduct>
+                                  </Grid>
                                 </Grid>
-                                <Grid item xs={6}>
-                                  <ValueItemListProduct>{String(el[itemMapping.key] || "-")}</ValueItemListProduct>
-                                </Grid>
-                              </Grid>
-                            ))}
-                          </Grid>
-                        </Box>
-                      </Accordion>
-                    </Box>
-                  );
-                })}
+                              ))}
+                            </Grid>
+                          </Box>
+                        </Accordion>
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </ViewDetailDrawer>
   );
 }
-
-const renderLoading = () => {
-  return (
-    <Box>
-      <CircularProgress />
-    </Box>
-  );
-};
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
