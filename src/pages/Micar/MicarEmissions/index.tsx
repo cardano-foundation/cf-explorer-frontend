@@ -4,7 +4,7 @@ import { Box, Typography, Container, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
-import { HeaderSearchIconComponent } from "src/commons/resources";
+import { SearchMicarIcon } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -40,7 +40,7 @@ const EmissionsCalculator = () => {
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
 
-  const { data } = useFetch<CarbonEmissionData>(
+  const { data, loading } = useFetch<CarbonEmissionData>(
     address ? `${API.MICAR?.CARBON_EMISSION}/${address}` : "",
     undefined,
     false
@@ -68,12 +68,16 @@ const EmissionsCalculator = () => {
         <StyledCard elevation={2}>
           <StyledTitle>{t("micar.indicators.calculator")}</StyledTitle>
           <Typography sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }} textAlign={"left"}>
-            Geonera galoska nögon, dol danera, i vamätt tiras trirtad, att äl, det vill säga kromäsamma. Lara par
-            autoponing bikroligen ode prelapp bevis bjudkaffe. Prodiv rode lalig. Spesade däbesk för att viprement
-            eulagen, däck så kavän det stadsutglesning.
+            {t("micar.emission.caculator.des")}
           </Typography>
           <SearchContainer>
             <StyledInput
+              style={{
+                color:
+                  !loading && !data?.address && !data?.stakeAddress && isSearched
+                    ? "#c20024"
+                    : theme.palette.secondary.light
+              }}
               placeholder="Search Stake ID or Address"
               onChange={(e) => {
                 setValue(e.target.value);
@@ -91,16 +95,19 @@ const EmissionsCalculator = () => {
               }}
             >
               <CustomIcon
-                icon={HeaderSearchIconComponent}
+                bgcolor={"#FFFFFF"}
+                icon={SearchMicarIcon}
+                fill={"#434656"}
                 stroke={theme.palette.secondary.light}
-                fill={theme.palette.secondary[0]}
                 height={22}
+                padding={1.2}
+                borderRadius={2}
               />
             </SubmitButton>
           </SearchContainer>
-          {!data?.address && !data?.stakeAddress && isSearched && (
-            <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>
-              {t("message.noRecordsFound")}
+          {!loading && !data?.address && !data?.stakeAddress && isSearched && (
+            <Box color={"#c20024"} sx={{ marginBottom: "20px" }} textAlign={"left"} ml={4}>
+              {t("message.addressNotFound")}
             </Box>
           )}
           {isSearched && (data?.address || data?.stakeAddress) && (
