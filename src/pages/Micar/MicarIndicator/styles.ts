@@ -8,14 +8,15 @@ export const StyledBox = styled(Box)(() => ({
 }));
 export const StyledBoxContent = styled(Box)(({ theme }) => ({
   padding: "24px",
-  backgroundColor: theme.isDark ? "#54596E" : "#FFFFFF",
+  backgroundColor: theme.isDark ? "rgba(84, 89, 110, 0.2)" : "#FFFFFF",
   color: theme.isDark ? "#F7F9FF" : "#000000",
   borderRadius: "24px",
   minHeight: "350px",
   textAlign: "left",
-  opacity: theme.isDark ? "20%" : "70%",
+  opacity: theme.isDark ? "100%" : "70%",
   [theme.breakpoints.down("sm")]: {
-    padding: 0
+    padding: 30,
+    minHeight: "100px"
   }
 }));
 export const StyledBoxIcon = styled(Box)(({ theme }) => ({

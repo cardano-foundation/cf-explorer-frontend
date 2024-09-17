@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, Typography, Container, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
@@ -36,25 +36,22 @@ const EmissionsCalculator = () => {
   const { isMobile } = useScreen();
   const [address, setAddress] = useState<string>();
   const [value, setValue] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [isSearched, setIsSearched] = useState(false);
-  const { data } = useFetch<CarbonEmissionData>(`${API.MICAR?.CARBON_EMISSION}/${address}`, undefined, false);
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
-  useEffect(() => {
-    if (isSearched && !data?.address && !data?.stakeAddress) {
-      setError(t("message.noRecordsFound"));
-    } else {
-      setError("");
-    }
-  }, [data, data, isSearched]);
+
+  const { data } = useFetch<CarbonEmissionData>(
+    address ? `${API.MICAR?.CARBON_EMISSION}/${address}` : "",
+    undefined,
+    false
+  );
+
   const handleSearch = (value: string) => {
     if (!value.trim()) {
-      setError(t("message.noRecordsFound"));
+      setAddress("");
       return;
     } else {
       setAddress(value.trim());
-      setError("");
     }
   };
 
@@ -101,9 +98,9 @@ const EmissionsCalculator = () => {
               />
             </SubmitButton>
           </SearchContainer>
-          {error && (
+          {!data?.address && !data?.stakeAddress && isSearched && (
             <Box color={({ palette }) => palette.error[700]} sx={{ marginBottom: "20px" }}>
-              {error}
+              {t("message.noRecordsFound")}
             </Box>
           )}
           {isSearched && (data?.address || data?.stakeAddress) && (
@@ -112,7 +109,9 @@ const EmissionsCalculator = () => {
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
                 <StyledLink
                   to={{
-                    pathname: details?.stake(data?.address || (data.stakeAddress as string)),
+                    pathname: data?.address
+                      ? details?.address(data.address as string)
+                      : details?.stake(data.stakeAddress as string),
                     state: { fromPath }
                   }}
                 >
