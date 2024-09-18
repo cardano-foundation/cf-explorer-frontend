@@ -780,7 +780,7 @@ const ConformityCert: React.FC<{
                       <CustomIcon height={34} width={24} icon={AvatarIcon} />
                     </Box>
                     <Box>
-                      <Box fontWeight="bold" mb={1} color={theme.palette.secondary.main}>
+                      <Box maxWidth={"140px"} fontWeight="bold" mb={1} color={theme.palette.secondary.main}>
                         National Wine Agency
                       </Box>
                     </Box>
