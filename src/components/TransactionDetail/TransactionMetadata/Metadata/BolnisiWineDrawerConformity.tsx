@@ -10,6 +10,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 import { details } from "src/commons/routers";
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
+import { formatDateLocal } from "src/commons/utils/helper";
 
 const dataMapping: Array<{ label: string; key: keyof Product }> = [
   { label: "Bottle Count", key: "bottle_count_in_lot" },
@@ -194,17 +195,24 @@ export default function BolnisiWineDrawerConformity({
                             }}
                             expandIcon={<CustomIcon width={24} icon={ShowMore} fill={theme.isDark ? "#fff" : "#000"} />}
                           >
-                            <TitleAccordion>Lot Number:</TitleAccordion>
-                            <TitleAccordion>{el.lot_number}</TitleAccordion>
+                            <Box sx={{ display: "flex", flexWrap: "wrap", gap: { xs: "8px" } }}>
+                              <TitleAccordion>Lot Number:</TitleAccordion>
+                              <TitleAccordion>{el.lot_number}</TitleAccordion>
+                            </Box>
                           </AccordionSummary>
                           <Box sx={{ width: "100%" }}>
                             <Grid container sx={{ padding: "0 16px" }}>
                               {dataMapping.map((itemMapping, index) => {
-                                const valueDelayedOnChacha = el["delayed_on_chacha"] ? "True" : "False";
-                                const valueItem =
-                                  itemMapping.key === "delayed_on_chacha"
-                                    ? valueDelayedOnChacha
-                                    : String(el[itemMapping.key] || "-");
+                                const returnValue = (key: keyof Product) => {
+                                  switch (key) {
+                                    case "delayed_on_chacha":
+                                      return el[key] ? "True" : "False";
+                                    case "bottling_date":
+                                      return formatDateLocal(el["bottling_date"] || "");
+                                    default:
+                                      return String(el[itemMapping.key] || "-");
+                                  }
+                                };
                                 return (
                                   <Grid
                                     container
@@ -221,7 +229,7 @@ export default function BolnisiWineDrawerConformity({
                                       <ItemListProduct>{itemMapping.label}</ItemListProduct>
                                     </Grid>
                                     <Grid item xs={6}>
-                                      <ValueItemListProduct>{valueItem}</ValueItemListProduct>
+                                      <ValueItemListProduct>{returnValue(itemMapping.key)}</ValueItemListProduct>
                                     </Grid>
                                   </Grid>
                                 );
@@ -327,7 +335,7 @@ const Accordion = styled((props: AccordionProps) => <MuiAccordion elevation={0} 
 
 export const ItemListProduct = styled("span")(({ theme }) => ({
   display: "block",
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
   textAlign: "start",
   fontSize: "16px",
   fontWeight: "400",
@@ -336,7 +344,7 @@ export const ItemListProduct = styled("span")(({ theme }) => ({
 
 export const ValueItemListProduct = styled("span")(({ theme }) => ({
   display: "block",
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
   textAlign: "end",
   fontSize: "16px",
   fontWeight: "400",
