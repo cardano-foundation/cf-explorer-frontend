@@ -614,7 +614,7 @@ export const ActionMetadataModalConfirm: React.FC<{
         fontWeight="700"
         target="_blank"
         rel="noopener noreferrer"
-        href={anchorUrl || "/"}
+        href={anchorUrl?.includes("ipfs://") ? anchorUrl.replace("ipfs://", "//ipfs.io/ipfs/") : anchorUrl || "/"}
       >
         <ViewGovernanceProposingButton>
           {t("common.proceedToExternalLink")}
