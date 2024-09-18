@@ -37,6 +37,7 @@ const EmissionsCalculator = () => {
   const [address, setAddress] = useState<string>();
   const [value, setValue] = useState<string>("");
   const [isSearched, setIsSearched] = useState(false);
+  const [isInput, setIsInput] = useState(true);
   const history = useHistory();
   const fromPath = history.location.pathname as SpecialPath;
 
@@ -81,6 +82,7 @@ const EmissionsCalculator = () => {
               placeholder="Search Stake ID or Address"
               onChange={(e) => {
                 setValue(e.target.value);
+                setIsInput(e.target.value.trim() === "");
                 if (!e.target.value) {
                   setIsSearched(false);
                 }
@@ -89,6 +91,7 @@ const EmissionsCalculator = () => {
               onKeyUp={handleKeyUp}
             />
             <SubmitButton
+              disabled={isInput}
               onClick={() => {
                 handleSearch(value);
                 setIsSearched(true);
@@ -109,7 +112,7 @@ const EmissionsCalculator = () => {
               {t("message.addressNotFound")}
             </Box>
           )}
-          {isSearched && (data?.address || data?.stakeAddress) && (
+          {!loading && isSearched && (data?.address || data?.stakeAddress) && (
             <Box>
               <StyledTypography>{t("micar.indicators.caculator.address")}</StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
