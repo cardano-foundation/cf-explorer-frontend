@@ -95,10 +95,9 @@ const EmissionsCalculator = () => {
               }}
             >
               <CustomIcon
-                bgcolor={"#FFFFFF"}
+                bgcolor={theme.isDark ? "#24262E" : "#FFFFFF"}
                 icon={SearchMicarIcon}
-                fill={"#434656"}
-                stroke={theme.palette.secondary.light}
+                fill={theme.isDark ? "#666666" : "#434656"}
                 height={22}
                 padding={1.2}
                 borderRadius={2}
