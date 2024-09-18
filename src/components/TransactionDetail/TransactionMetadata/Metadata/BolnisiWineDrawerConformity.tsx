@@ -57,7 +57,6 @@ export default function BolnisiWineDrawerConformity({
 
   return (
     <ViewDetailDrawer
-      sx={{ zIndex: 1000 }}
       anchor={"right"}
       open={openDrawer}
       variant="temporary"
@@ -127,12 +126,12 @@ export default function BolnisiWineDrawerConformity({
                     display={"flex"}
                     alignItems={"center"}
                     justifyContent={"center"}
-                    bgcolor={theme.palette.warning[700]}
+                    bgcolor={theme.isDark ? "#FFEBEE" : "#c20024"}
                     borderRadius={"50%"}
                     bottom={0}
                     right={0}
                   >
-                    <InvalidIcon fill={theme.palette.secondary.main} />
+                    <CustomIcon width={3} height={11} fill={theme.palette.error[100]} icon={InvalidIcon} />
                   </Box>
                 )}
               </Box>
@@ -168,7 +167,7 @@ export default function BolnisiWineDrawerConformity({
                           <TitleItem>{field.label}</TitleItem>
                         </Grid>
                         <Grid item>
-                          <ValueItem>{field.label === "Company name" ? "National Wine Agency" : field.value}</ValueItem>
+                          <ValueItem>{field.value}</ValueItem>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -275,7 +274,7 @@ export const HeadingDrawer = styled("span")(({ theme }) => ({
 }));
 
 export const TitleItem = styled("p")(({ theme }) => ({
-  color: theme.palette.secondary.main,
+  color: theme.palette.secondary.light,
   textAlign: "left",
   fontSize: "16px",
   fontWeight: "600",
@@ -283,7 +282,7 @@ export const TitleItem = styled("p")(({ theme }) => ({
 }));
 
 export const ValueItem = styled("p")(({ theme }) => ({
-  color: theme.palette.secondary.light,
+  color: theme.palette.secondary.main,
   fontSize: "16px",
   fontWeight: "400",
   padding: 0,
@@ -305,13 +304,9 @@ export const ViewDetailDrawer = styled(Drawer)(({ theme }) => ({
       top: "76px"
     },
     [theme.breakpoints.down("sm")]: {
-      right: "auto",
       width: "100%",
-      overflowY: "hidden"
+      maxWidth: "100%"
     }
-  },
-  "& .MuiModal-backdrop": {
-    background: "transparent"
   }
 }));
 
