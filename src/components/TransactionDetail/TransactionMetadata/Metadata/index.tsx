@@ -318,19 +318,18 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         <Header>
           <Box>{t("common.metadataHash")}</Box>
         </Header>
-        <CustomTooltip title={hash || ""}>
-          <Box
-            textAlign={"left"}
-            fontWeight={"bold"}
-            display={"block"}
-            pt={2}
-            color={({ palette }) => `${palette.secondary.main}  !important`}
-            width={"fit-content"}
-            maxWidth={"100%"}
-          >
-            <DynamicEllipsisText value={hash || ""} isCopy />
-          </Box>
-        </CustomTooltip>
+
+        <Box
+          textAlign={"left"}
+          fontWeight={"bold"}
+          display={"block"}
+          pt={2}
+          color={({ palette }) => `${palette.secondary.main}  !important`}
+          width={"fit-content"}
+          maxWidth={"100%"}
+        >
+          <DynamicEllipsisText isTooltip value={hash || ""} isCopy />
+        </Box>
       </Wrapper>
       {(data || [])?.map((metadata, idx) => {
         return (
