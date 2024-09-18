@@ -61,7 +61,8 @@ export const SearchContainer = styled(Box)(({ theme }) => ({
   marginBottom: 35,
   marginTop: 25,
   height: 58,
-  opacity: theme.isDark ? "40%" : "100%",
+  fontSize: 500,
+  opacity: theme.isDark ? "70%" : "100%",
   border: `1.5px solid ${theme.isDark ? "#24262E" : "#FFFFFF"}`,
   "&:focus-within": {
     borderColor: theme.palette.secondary.light
@@ -80,11 +81,6 @@ export const StyledInput = styled("input")`
   overflow: hidden;
   text-overflow: ellipsis;
   background: ${({ theme }) => (theme.isDark ? "#000000" : "#F9F9F9")};
-
-  &::-webkit-search-cancel-button {
-    filter: ${({ theme }) => (theme.mode === "dark" ? "brightness(0) invert(0.8)" : "brightness(0) invert(0.4)")};
-    cursor: pointer;
-  }
 `;
 
 export const SubmitButton = styled(Box)`
