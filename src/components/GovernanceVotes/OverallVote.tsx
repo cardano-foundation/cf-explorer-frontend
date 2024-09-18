@@ -629,7 +629,7 @@ export const VoteRate = ({ data, selectedVote }: { data: VotingChart | null; sel
   const { isTablet, isGalaxyFoldSmall } = useScreen();
   const totalVote = useMemo(() => {
     if (data) {
-      return (data?.numberOfAbstainVotes || 0) + (data?.numberOfNoVotes || 0) + (data?.numberOfYesVote || 0);
+      return (data?.numberOfAbstainVotes || 0) + Number(data?.numberOfNoVotes || 0) + (data?.numberOfYesVote || 0);
     }
     return 0;
   }, [JSON.stringify(data)]);
