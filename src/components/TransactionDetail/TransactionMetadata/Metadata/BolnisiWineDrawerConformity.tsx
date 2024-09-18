@@ -344,7 +344,7 @@ export const ItemListProduct = styled("span")(({ theme }) => ({
 
 export const ValueItemListProduct = styled("span")(({ theme }) => ({
   display: "block",
-  color: theme.palette.secondary.light,
+  color: theme.palette.secondary.main,
   textAlign: "end",
   fontSize: "16px",
   fontWeight: "400",
