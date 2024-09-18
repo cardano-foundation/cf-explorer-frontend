@@ -1,4 +1,4 @@
-import { Box, Card, Divider, styled, Typography } from "@mui/material";
+import { Box, Card, Divider, styled, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export const StyledTitle = styled(Typography)(({ theme }) => ({
@@ -83,7 +83,7 @@ export const StyledInput = styled("input")`
   background: ${({ theme }) => (theme.isDark ? "#000000" : "#F9F9F9")};
 `;
 
-export const SubmitButton = styled(Box)`
+export const SubmitButton = styled(Button)`
   display: flex;
   justify-content: center;
   align-items: center;
