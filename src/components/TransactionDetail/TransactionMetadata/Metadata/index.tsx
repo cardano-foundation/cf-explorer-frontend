@@ -318,15 +318,19 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         <Header>
           <Box>{t("common.metadataHash")}</Box>
         </Header>
-        <Box
-          textAlign={"left"}
-          fontWeight={"bold"}
-          display={"block"}
-          pt={2}
-          color={({ palette }) => `${palette.secondary.main}  !important`}
-        >
-          <DynamicEllipsisText value={hash || ""} isCopy />
-        </Box>
+        <CustomTooltip title={hash || ""}>
+          <Box
+            textAlign={"left"}
+            fontWeight={"bold"}
+            display={"block"}
+            pt={2}
+            color={({ palette }) => `${palette.secondary.main}  !important`}
+            width={"fit-content"}
+            maxWidth={"100%"}
+          >
+            <DynamicEllipsisText value={hash || ""} isCopy />
+          </Box>
+        </CustomTooltip>
       </Wrapper>
       {(data || [])?.map((metadata, idx) => {
         return (
@@ -800,14 +804,18 @@ const ConformityCert: React.FC<{
                           {certificateMapping.map((field, fieldIndex) => {
                             const value = cert?.offChainData[field.key];
                             return value ? (
-                              <Box
-                                key={fieldIndex}
-                                sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}
-                              >
-                                <Box sx={{ fontSize: "16px", fontWeight: "600", color: theme.palette.secondary.main }}>
+                              <Box key={fieldIndex} sx={{ display: "flex", flexWrap: "wrap" }}>
+                                <Box
+                                  sx={{
+                                    fontSize: "16px",
+                                    fontWeight: "600",
+                                    color: theme.isDark ? "#F6F9FF" : "#434556",
+                                    marginRight: { lg: "20px", md: "12px", sm: "8px", xs: "8px" }
+                                  }}
+                                >
                                   {field.label}
                                 </Box>
-                                <Box sx={{ fontSize: "16px", fontWeight: "400", color: theme.palette.secondary.light }}>
+                                <Box sx={{ fontSize: "16px", fontWeight: "400", color: theme.palette.secondary.main }}>
                                   {String(cert.offChainData?.[field.key] || "N/A")}
                                 </Box>
                               </Box>
