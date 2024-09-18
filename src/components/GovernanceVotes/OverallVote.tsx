@@ -538,15 +538,7 @@ const OverallVote: React.FC<{ data: GovernanceVoteDetail | null; voteId: string;
         setOpenModal={setOpenModal}
         onClose={() => setOpenActionMetadataModal(false)}
       />
-      <ActionMetadataModalConfirm
-        open={openModal}
-        anchorUrl={
-          data?.anchorUrl?.startsWith("ipfs://")
-            ? data.anchorUrl.replace("ipfs://", "//ipfs.io/ipfs/")
-            : data?.anchorUrl
-        }
-        onClose={() => setOpenModal(false)}
-      />
+      <ActionMetadataModalConfirm open={openModal} anchorUrl={data?.anchorUrl} onClose={() => setOpenModal(false)} />
     </DataContainer>
   );
 };
