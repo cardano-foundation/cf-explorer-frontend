@@ -232,7 +232,7 @@ const StakingLifeCycleSearch = () => {
               }
             }}
           />
-          <SubmitButton onClick={hanldeSearch}>
+          <SubmitButton onClick={hanldeSearch} disabled={!value}>
             {loading ? (
               <CircularProgress size={22} />
             ) : (
