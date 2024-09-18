@@ -49,6 +49,7 @@ const DefaultImageWine = ({
     <Avatar
       {...stringAvatar(name)}
       sx={{
+        color: "#fff",
         width: width || 60,
         height: height || 60,
         fontSize: fontSize || 24,

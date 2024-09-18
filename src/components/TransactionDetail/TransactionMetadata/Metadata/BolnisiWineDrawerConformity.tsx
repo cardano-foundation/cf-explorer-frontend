@@ -180,7 +180,10 @@ export default function BolnisiWineDrawerConformity({
                   padding: "19.5px"
                 }}
               >
-                <HeadingDrawer>Products: {dataConformity?.offChainData?.products.length}</HeadingDrawer>
+                <HeadingDrawer>
+                  {`${(dataConformity?.offChainData?.products.length || 0) <= 1 ? "Product" : "Products"}`}:{" "}
+                  {dataConformity?.offChainData?.products.length}
+                </HeadingDrawer>
                 <Box>
                   {dataConformity?.offChainData?.products.map((el, i) => {
                     return (
