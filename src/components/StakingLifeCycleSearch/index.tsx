@@ -135,7 +135,11 @@ const StakingLifeCycleSearch = () => {
         history.push(details.staking(searchResult?.address.stakeAddressView));
         return;
       }
-      if (searchResult?.address === null && searchResult.poolList.data.length === 0 && searchResult !== null) {
+      if (
+        searchResult?.address === null &&
+        (searchResult.poolList === null || searchResult.poolList.data.length === 0) &&
+        searchResult !== null
+      ) {
         setShowNoRecord(true);
         return;
       }
