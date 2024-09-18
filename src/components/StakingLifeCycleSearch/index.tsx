@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, CircularProgress, useTheme, Backdrop } from "@mui/material";
 import { useKey } from "react-use";
-import axios from "axios";
 import { GoChevronRight } from "react-icons/go";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
@@ -14,7 +13,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { getRandomInt, getShortHash } from "src/commons/utils/helper";
 import { API } from "src/commons/utils/api";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { API_ADA_HANDLE_API, NETWORK, NETWORKS } from "src/commons/utils/constants";
+import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import dataMainnet from "src/commons/configs/mainnet.json";
 import dataSanchonet from "src/commons/configs/sanchonet.json";
 import useFetch from "src/commons/hooks/useFetch";
@@ -74,11 +73,6 @@ const StakingLifeCycleSearch = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const [page] = useState(0);
-  const [ADAHanlde, setADAHanlde] = useState<{
-    paymentAddress: string;
-    stakeAddress: string;
-  } | null>(null);
-  const [loadingADAHanlde, setLoadingADAHanlde] = useState(false);
   const [showSuggestOption, setShowSuggestOption] = useState(false);
   const [showNoRecord, setShowNoRecord] = useState(false);
 
@@ -121,27 +115,19 @@ const StakingLifeCycleSearch = () => {
   }, [t]);
 
   useEffect(() => {
-    if (!loadingADAHanlde && !loading && searchResultInitialized) {
+    if (!loading && searchResultInitialized) {
       if (searchResult?.poolList?.data && (searchResult?.poolList?.data || []).length > 1) {
         setShowSuggestOption(true);
         return;
       }
-      if (searchResult?.poolList?.data && (searchResult?.poolList.data || []).length > 0 && ADAHanlde?.stakeAddress) {
-        setShowSuggestOption(true);
-        return;
-      }
 
-      if (
-        searchResult?.poolList?.data &&
-        (searchResult?.poolList.data || []).length === 1 &&
-        !ADAHanlde?.stakeAddress
-      ) {
+      if (searchResult?.poolList?.data && (searchResult?.poolList.data || []).length === 1) {
         history.push(details.spo(searchResult?.poolList?.data[0].poolId));
         return;
       }
 
-      if (searchResult?.poolList?.data && (searchResult?.poolList.data || []).length === 0 && ADAHanlde?.stakeAddress) {
-        history.push(details.staking(ADAHanlde?.stakeAddress));
+      if (searchResult?.poolList?.data && (searchResult?.poolList.data || []).length > 0) {
+        setShowSuggestOption(true);
         return;
       }
 
@@ -149,30 +135,14 @@ const StakingLifeCycleSearch = () => {
         history.push(details.staking(searchResult?.address.stakeAddressView));
         return;
       }
-      if (
-        ADAHanlde === null &&
-        searchResult?.address === null &&
-        searchResult.poolList.data.length === 0 &&
-        searchResult !== null
-      ) {
+      if (searchResult?.address === null && searchResult.poolList.data.length === 0 && searchResult !== null) {
         setShowNoRecord(true);
         return;
       }
     } else {
       setShowSuggestOption(false);
     }
-  }, [searchResult, ADAHanlde, loadingADAHanlde, loading]);
-
-  const adaHandleSearch = async (query: string) => {
-    try {
-      setLoadingADAHanlde(true);
-      return await axios.get(API_ADA_HANDLE_API + API.ADAHandle(query)).then((data) => data.data);
-    } catch (error) {
-      return {};
-    } finally {
-      setLoadingADAHanlde(false);
-    }
-  };
+  }, [searchResult, loading]);
 
   const BROWSER_OPTIONS = [
     {
@@ -190,10 +160,6 @@ const StakingLifeCycleSearch = () => {
   const hanldeSearch = async () => {
     if (!value) return;
     setValueSearch(value.trim());
-    const data = await adaHandleSearch(value.trim());
-    if (data.stakeAddress) {
-      setADAHanlde(data);
-    }
   };
   useKey("enter", hanldeSearch);
 
@@ -263,7 +229,7 @@ const StakingLifeCycleSearch = () => {
             }}
           />
           <SubmitButton onClick={hanldeSearch}>
-            {loading || loadingADAHanlde ? (
+            {loading ? (
               <CircularProgress size={22} />
             ) : (
               <CustomIcon
@@ -278,7 +244,6 @@ const StakingLifeCycleSearch = () => {
             <>
               <OptionsSearch
                 value={valueSearch}
-                ADAHandleOption={ADAHanlde}
                 showNoRecord={showNoRecord}
                 listOptions={searchResult?.poolList?.data || []}
               />
