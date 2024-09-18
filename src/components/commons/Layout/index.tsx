@@ -130,7 +130,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
             </Box>
           )}
           <Header />
-          {children}
+          <Box flexGrow={matchesBreakpoint ? 1 : undefined}>{children}</Box>
           {matchesBreakpoint && <Footer />}
         </Main>
         {!matchesBreakpoint && <Footer />}
