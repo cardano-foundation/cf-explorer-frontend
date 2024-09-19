@@ -145,7 +145,7 @@ const EmissionsCalculator = () => {
               <Line />
 
               <StyledTypography>{t("micar.indicators.caculator.noTransaction")}</StyledTypography>
-              <StyledValue>{data?.txCount}</StyledValue>
+              <StyledValue>{data?.txCount ? data?.txCount : "N/A"}</StyledValue>
               <Line />
 
               <StyledTypography>{t("micar.indicators.caculator.emissions")}</StyledTypography>
