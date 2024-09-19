@@ -181,6 +181,9 @@ import ProtocolUpdateComponent from "./icons/protocolUpdateIcon.svg?react";
 import InstantaneousHistoryComponent from "./icons/instantaneousHistoryIcon.svg?react";
 import PolygonDarkIcon from "./icons/polygon-dark.svg?react";
 import PolygonDarkRedIcon from "./icons/polygon-dark-red.svg?react";
+import ZoomInIcon from "./icons/zoom-in-icon.svg?react";
+import ZoomOutIcon from "./icons/zoom-out-icon.svg?react";
+import FindLocationIcon from "./icons/find-location-icon.svg?react";
 import ExchangeIcon from "./icons/exchange-alt.svg?react";
 import MenuIconComponent from "./icons/menus/hamburger.svg?react";
 import HeaderSearchIconComponent from "./icons/header-search.svg?react";
@@ -354,6 +357,9 @@ export {
   LightningIcon,
   LinkOff,
   SignOut,
+  ZoomInIcon,
+  ZoomOutIcon,
+  FindLocationIcon,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
