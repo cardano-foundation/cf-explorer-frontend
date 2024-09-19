@@ -28,7 +28,7 @@ export interface EmissionChartType {
 const EmissionsAreaChart = () => {
   const [rangeTime, setRangeTime] = useState<Time>("THREE_MONTH");
   const { t } = useTranslation();
-  const { isMobile, isGalaxyFoldSmall, isLaptop } = useScreen();
+  const { isMobile, isGalaxyFoldSmall, isLaptop, isTablet } = useScreen();
   const theme = useTheme();
   const { data } = useFetch<EmissionChartType>(`${API.MICAR?.HISTORYCAL}`, undefined, false);
   const dataHistoryChart = data?.entries?.map((it: EmissionsChartIF) => ({
@@ -163,7 +163,14 @@ const EmissionsAreaChart = () => {
                 >
                   <Box>
                     <Box>{`${getDayOfWeek(label)}, ${moment(label).format("DD/MM/YY")}`}</Box>
-                    <Box>{`Emissions: ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
+                    {isGalaxyFoldSmall ? (
+                      <Box>
+                        {`Emissions: ${numberWithCommas(entry.value as number)} `}
+                        <span style={{ display: "block" }}>tCO₂e</span>
+                      </Box>
+                    ) : (
+                      <Box>{`Emissions: ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
+                    )}
                   </Box>
                 </Box>
               );
@@ -205,7 +212,11 @@ const EmissionsAreaChart = () => {
               </linearGradient>
             </defs>
 
-            <XAxis dataKey="date" tickFormatter={(date: string) => formatX(date, rangeTime)} />
+            <XAxis
+              dataKey="date"
+              tickFormatter={(date: string) => formatX(date, rangeTime)}
+              minTickGap={isTablet ? 20 : 10}
+            />
             <YAxis
               label={{
                 value: `${isGalaxyFoldSmall ? "" : "Emissions (t CO₂e)"}`,
