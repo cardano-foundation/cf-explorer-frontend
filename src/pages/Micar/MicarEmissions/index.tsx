@@ -47,19 +47,26 @@ const EmissionsCalculator = () => {
     false
   );
 
-  const handleSearch = (value: string) => {
+  const handleSearch = async (value: string) => {
     if (!value.trim()) {
       setAddress("");
+      setIsSearched(false);
       return;
-    } else {
-      setAddress(value.trim());
     }
+    setIsSearched(false);
+    setAddress(value.trim());
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    setIsSearched(true);
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
     if (e.key === "Enter") {
       handleSearch(value);
       setIsSearched(true);
+    }
+    if (target.value === "") {
+      setIsSearched(false);
     }
   };
 
@@ -107,14 +114,20 @@ const EmissionsCalculator = () => {
               />
             </SubmitButton>
           </SearchContainer>
+          {!loading && !isSearched && <></>}
           {!loading && !data?.address && !data?.stakeAddress && isSearched && (
             <Box color={"#c20024"} sx={{ marginBottom: "20px" }} textAlign={"left"} ml={4}>
               {t("message.addressNotFound")}
             </Box>
           )}
+          {loading && <></>}
           {!loading && isSearched && (data?.address || data?.stakeAddress) && (
             <Box>
-              <StyledTypography>{t("micar.indicators.caculator.address")}</StyledTypography>
+              <StyledTypography>
+                {data?.stakeAddress
+                  ? t("micar.indicators.caculator.stakeAddress")
+                  : t("micar.indicators.caculator.address")}
+              </StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
                 <StyledLink
                   to={{
