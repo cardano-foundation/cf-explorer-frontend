@@ -90,7 +90,8 @@ export const API = {
     RECEIVED_REWARD: (stakeKey: string) => `stake-lifecycle/${stakeKey}/rewards`,
     WALLET_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/wallet-activity`,
     REWARDS_ACTIVITY: (stakeKey: string) => `stake-lifecycle/${stakeKey}/reward-activity`,
-    TABS: (stakeKey: string) => `stake-lifecycle/${stakeKey}`
+    TABS: (stakeKey: string) => `stake-lifecycle/${stakeKey}`,
+    SEARCH: "search/staking-lifecycle"
   },
   SPO_LIFECYCLE: {
     SPO_REGISTRATION: (poolId: string) => `pool-lifecycle/registration?poolView=${poolId}`,
