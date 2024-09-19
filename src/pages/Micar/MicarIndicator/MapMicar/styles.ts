@@ -13,7 +13,7 @@ export const WorldMapContainer = styled(Box)(({ theme }) => ({
   fontWeight: 400,
   color: "#434656",
   padding: " 0 24px",
-  backgroundColor: theme.isDark ? "black" : "white",
+  backgroundColor: theme.isDark ? "#131316" : "white",
 
   ">div:first-of-type": {
     width: "100%",
