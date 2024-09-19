@@ -11,6 +11,7 @@ import CIP60Modal from "src/components/CIPComplianceModal/CIP60Modal";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import {
+  AvatarIcon,
   BolsiniAddress,
   InvalidIcon,
   RevokedIcon,
@@ -32,6 +33,7 @@ import InfoSolidIcon from "src/components/commons/InfoSolidIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { CustomNumberBadge } from "src/components/commons/CustomNumberBadge";
 import { details } from "src/commons/routers";
+import CustomIcon from "src/components/commons/CustomIcon";
 
 import {
   BadgeContainer,
@@ -56,8 +58,9 @@ import {
   ViewWineButton,
   Wrapper
 } from "./styles";
-import BolnisiWineDrawer from "./BolnisiWineDrawer";
 import DefaultImageWine from "./DefaultImageWine";
+import BolnisiWineDrawer from "./BolnisiWineDrawer";
+import BolnisiWineDrawerConformity from "./BolnisiWineDrawerConformity";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -315,14 +318,17 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
         <Header>
           <Box>{t("common.metadataHash")}</Box>
         </Header>
+
         <Box
           textAlign={"left"}
           fontWeight={"bold"}
           display={"block"}
           pt={2}
           color={({ palette }) => `${palette.secondary.main}  !important`}
+          width={"fit-content"}
+          maxWidth={"100%"}
         >
-          <DynamicEllipsisText value={hash || ""} isCopy />
+          <DynamicEllipsisText isTooltip value={hash || ""} isCopy />
         </Box>
       </Wrapper>
       {(data || [])?.map((metadata, idx) => {
@@ -719,9 +725,9 @@ const ConformityCert: React.FC<{
   type?: string;
 }> = ({ certData, type }) => {
   const theme = useTheme();
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   if (!certData) return null;
-
   const certificateMapping: Array<{ label: string; key: keyof OffChainData }> = [
     { label: "Certificate No.", key: "certificate_number" },
     { label: "Certificate Type", key: "certificate_type" },
@@ -749,61 +755,96 @@ const ConformityCert: React.FC<{
       </Box>
 
       <Grid container spacing={2}>
-        {certData?.certs.map((el, idx) => (
-          <Grid item width="100%" lg={4} md={6} sm={6} xs={12} key={idx}>
-            <Box display="flex" flexDirection="column" height="100%">
-              <ItemBolnisi style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <Box display="flex" justifyContent="flex-end" mb={1}>
-                  <VerifyBadge type={type} status={el.signatureVerified} />
-                </Box>
+        {certData?.certs.map((el, idx) => {
+          if (!el.offChainData) return null;
+          return (
+            <Grid item width="100%" lg={4} md={6} sm={6} xs={12} key={idx}>
+              <Box display="flex" flexDirection="column" height="100%">
+                <ItemBolnisi style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                  <Box display="flex" justifyContent="flex-end" mb={1}>
+                    <VerifyBadge type={type} status={el.signatureVerified} />
+                  </Box>
 
-                <Box display="flex" alignItems="center" flexWrap="wrap" gap={"10px"}>
-                  <Box component={DefaultImageWine} />
-                  <Box>
-                    <Box fontWeight="bold" mb={1} color={theme.palette.secondary.main}>
-                      National Wine Agency
+                  <Box display="flex" alignItems="center" flexWrap="wrap" gap={"10px"}>
+                    <Box
+                      width={48}
+                      height={48}
+                      sx={{
+                        background: "#BD2F2D",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "50%"
+                      }}
+                    >
+                      <CustomIcon height={34} width={24} icon={AvatarIcon} />
+                    </Box>
+                    <Box>
+                      <Box maxWidth={"140px"} fontWeight="bold" mb={1} color={theme.palette.secondary.main}>
+                        National Wine Agency
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: "12px",
-                    flexDirection: "column",
-                    marginTop: "24px",
-                    marginBottom: "16px"
-                  }}
-                >
-                  {certData.certs.map((cert, certIndex) => (
-                    <Box key={certIndex} sx={{ marginBottom: "16px" }}>
-                      {certificateMapping.map((field, fieldIndex) => {
-                        const value = cert?.offChainData[field.key];
-                        return value ? (
-                          <Box
-                            key={fieldIndex}
-                            sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}
-                          >
-                            <Box sx={{ fontSize: "16px", fontWeight: "600", color: theme.palette.secondary.main }}>
-                              {field.label}
-                            </Box>
-                            <Box sx={{ fontSize: "16px", fontWeight: "400", color: theme.palette.secondary.light }}>
-                              {String(cert.offChainData?.[field.key] || "N/A")}
-                            </Box>
-                          </Box>
-                        ) : null;
-                      })}
-                    </Box>
-                  ))}
-                </Box>
-                {type !== "conformityCertRevoke" && (
-                  <Box component={ViewWineButton} width={"100%"}>
-                    View Certificate
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "12px",
+                      flexDirection: "column",
+                      marginTop: "24px",
+                      marginBottom: "16px"
+                    }}
+                  >
+                    {certData.certs.map((cert, certIndex) => {
+                      return (
+                        <Box
+                          key={certIndex}
+                          sx={{ marginBottom: "16px", display: "flex", gap: "12px", flexDirection: "column" }}
+                        >
+                          {certificateMapping.map((field, fieldIndex) => {
+                            const value = cert?.offChainData[field.key];
+                            return value ? (
+                              <Box key={fieldIndex} sx={{ display: "flex", flexWrap: "wrap" }}>
+                                <Box
+                                  sx={{
+                                    fontSize: "16px",
+                                    fontWeight: "600",
+                                    color: theme.isDark ? "#F6F9FF" : "#434556",
+                                    marginRight: { lg: "20px", md: "12px", sm: "8px", xs: "8px" }
+                                  }}
+                                >
+                                  {field.label}
+                                </Box>
+                                <Box sx={{ fontSize: "16px", fontWeight: "400", color: theme.palette.secondary.main }}>
+                                  {String(cert.offChainData?.[field.key] || "N/A")}
+                                </Box>
+                              </Box>
+                            ) : null;
+                          })}
+                        </Box>
+                      );
+                    })}
                   </Box>
-                )}
-              </ItemBolnisi>
-            </Box>
-          </Grid>
-        ))}
+                  {type !== "conformityCertRevoke" && (
+                    <Box
+                      onClick={() => {
+                        setOpenDrawer(true);
+                      }}
+                      component={ViewWineButton}
+                      width={"100%"}
+                    >
+                      View Certificate
+                    </Box>
+                  )}
+                  <BolnisiWineDrawerConformity
+                    certNo={el.offChainData?.certificate_number}
+                    openDrawer={openDrawer}
+                    setOpenDrawer={setOpenDrawer}
+                  />
+                </ItemBolnisi>
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
