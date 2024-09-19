@@ -77,26 +77,24 @@ const EmissionsAreaChart = () => {
   };
 
   const filteredData = filterDataByOption(dataHistoryChart, rangeTime);
-  const removeDuplicateDates = (filteredData: EmissionsChartItem, rangeTime: Time) => {
+  const removeDuplicateDates = (filteredData: EmissionsChartItem) => {
     if (!Array.isArray(filteredData) || filteredData === null) {
       return [];
     }
-    if (rangeTime === "THREE_MONTH") {
+    const totalPoints = 12;
+    const dataLength = filteredData.length;
+
+    if (dataLength <= totalPoints) {
       return filteredData;
     }
-    return filteredData.reduce((acc, current) => {
-      const currentYearMonth = current.date.slice(0, 7);
-      const existingIndex = acc.findIndex((item: EmissionsChartItem) => item.date.slice(0, 7) === currentYearMonth);
-      if (existingIndex !== -1) {
-        acc[existingIndex] = current;
-      } else {
-        acc.push(current);
-      }
 
-      return acc;
-    }, []);
+    const step = Math.floor(dataLength / totalPoints);
+    const result = filteredData.filter((_, index) => index % step === 0).slice(0, totalPoints);
+
+    return result;
   };
-  const result = removeDuplicateDates(filteredData, rangeTime);
+
+  const result = removeDuplicateDates(filteredData);
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     THREE_MONTH: {
       label: t("time.3m"),
