@@ -134,7 +134,7 @@ export const WorldMap = (props: BoxProps) => {
     return {
       constructorType: "mapChart",
       chart: {
-        backgroundColor: theme.isDark ? "black" : "white",
+        backgroundColor: theme.isDark ? "#131316" : "white",
         map: mapData,
         margin: 0,
         events: {

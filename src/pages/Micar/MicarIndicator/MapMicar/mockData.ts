@@ -28,26 +28,26 @@ export const data = [
   {
     countryCode: "KM",
     country: "Comoros",
-    noOfSample: 1,
+    noOfSample: 2,
     cities: [
       {
         city: "Moroni",
         lat: "-11.7172",
         long: "43.2478",
-        noOfSample: 1
+        noOfSample: 2
       }
     ]
   },
   {
     countryCode: "DJ",
     country: "Djibouti",
-    noOfSample: 0,
+    noOfSample: 3,
     cities: [
       {
         city: "Djibouti City",
         lat: "11.588",
         long: "43.1448",
-        noOfSample: 1
+        noOfSample: 3
       }
     ]
   },
@@ -273,13 +273,13 @@ export const data = [
   {
     countryCode: "TN",
     country: "Tunisia",
-    noOfSample: 1,
+    noOfSample: 4,
     cities: [
       {
         city: "Tunis",
         lat: "36.8065",
         long: "10.1815",
-        noOfSample: 1
+        noOfSample: 4
       }
     ]
   },
@@ -347,7 +347,7 @@ export const data = [
     noOfSample: 7,
     cities: [
       {
-        city: "Toronto",
+        city: "Saint Petersburg",
         lat: "59.9905",
         long: "32.7736",
         noOfSample: 7
