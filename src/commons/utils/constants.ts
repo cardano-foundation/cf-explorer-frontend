@@ -332,3 +332,7 @@ export enum VOTE_TYPE_GOV_ACTIONS {
   DREP_SCRIPT_HASH = "DREP_SCRIPT_HASH",
   STAKING_POOL_KEY_HASH = "STAKING_POOL_KEY_HASH"
 }
+
+export const BOLNISI_LANDING_READ_CASE_STUDY = "https://cardanofoundation.org/case-studies/bolnisi";
+export const BOLNISI_LANDING_OIV = "https://www.oiv.int/";
+export const BOLNISI_LANDING_NWA = "https://wine.gov.ge/En/";
