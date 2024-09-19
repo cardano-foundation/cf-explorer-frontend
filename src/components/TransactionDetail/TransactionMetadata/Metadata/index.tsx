@@ -13,6 +13,7 @@ import ParseScriptModal from "src/components/ParseScriptModal";
 import {
   BolsiniAddress,
   InvalidIcon,
+  RevokedIcon,
   SeeMoreIconHome,
   ShowLess,
   ShowMore,
@@ -91,7 +92,6 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   useEffect(() => {
     hanldeDecrypt();
   }, []);
-
   const hanldeDecrypt = () => {
     try {
       if (data && data.length > 0) {
@@ -303,7 +303,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
           </MetaDataValue>
         </MetadataContent>
 
-        {data.cidVerified && <Wineries wineryData={data.wineryData} />}
+        {data.cidVerified && data.tag === "scm" && <Wineries wineryData={data.wineryData} />}
+        {data.tag !== "scm" && <ConformityCert type={data.tag} certData={data.certData} />}
       </Box>
     );
   };
@@ -522,8 +523,26 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
 
 export default Metadata;
 
-export const VerifyBadge = ({ status }: { status: boolean }) => {
+export const VerifyBadge = ({ status, type }: { status: boolean; type?: string }) => {
   const theme = useTheme();
+  if (type === "conformityCertRevoke") {
+    return (
+      <BadgeContainerVerify type="Revoked">
+        <Box
+          width={23}
+          height={23}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          bgcolor={"#EF6C00"}
+          borderRadius={"50%"}
+        >
+          <RevokedIcon />
+        </Box>
+        Revoked
+      </BadgeContainerVerify>
+    );
+  }
   if (!status) {
     return (
       <BadgeContainerVerify type="Invalid">
@@ -560,9 +579,9 @@ export const VerifyBadge = ({ status }: { status: boolean }) => {
   );
 };
 
-const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadataBolnisi"]["wineryData"] }> = ({
-  wineryData
-}) => {
+const Wineries: React.FC<{
+  wineryData?: Transaction["metadata"][number]["metadataBolnisi"]["wineryData"];
+}> = ({ wineryData }) => {
   const theme = useTheme();
   const history = useHistory();
   const { trxHash } = useParams<{ trxHash: string }>();
@@ -620,8 +639,8 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
 
             return (
               <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
-                <Box height={"100%"}>
-                  <ItemBolnisi>
+                <Box height={"100%"} display="flex" flexDirection="column">
+                  <ItemBolnisi display="flex" flexDirection="column" height="100%" justifyContent="space-between">
                     <Box display={"flex"} width={"100%"} justifyContent={"flex-end"} mb={1}>
                       {winery.externalApiAvailable && <VerifyBadge status={winery.pkeyVerified} />}
                       {!winery.externalApiAvailable && (
@@ -651,7 +670,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                         </CustomTooltip>
                       )}
                     </Box>
-                    <Box display={"flex"} alignItems={"center"} flexWrap={"wrap"} gap={2}>
+                    <Box display={"flex"} mb={2} alignItems={"center"} flexGrow={1} flexWrap={"wrap"} gap={2}>
                       <Box component={DefaultImageWine} name={getWineName(winery.wineryId) || ""} />
                       <Box mt={1}>
                         <Box fontWeight={"bold"} mb={1} color={theme.palette.secondary.main}>
@@ -675,7 +694,7 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
                     <Box
                       component={ViewWineButton}
                       width={"100%"}
-                      mt={2}
+                      marginTop={"auto"}
                       onClick={() => {
                         history.push(details.transaction(trxHash, "metadata", winery.wineryId));
                       }}
@@ -691,6 +710,101 @@ const Wineries: React.FC<{ wineryData?: Transaction["metadata"][number]["metadat
         </Box>
       )}
       <BolnisiWineDrawer />
+    </Box>
+  );
+};
+
+const ConformityCert: React.FC<{
+  certData?: Transaction["metadata"][number]["metadataBolnisi"]["certData"];
+  type?: string;
+}> = ({ certData, type }) => {
+  const theme = useTheme();
+
+  if (!certData) return null;
+
+  const certificateMapping: Array<{ label: string; key: keyof OffChainData }> = [
+    { label: "Certificate No.", key: "certificate_number" },
+    { label: "Certificate Type", key: "certificate_type" },
+    { label: "Export country", key: "export_country" }
+  ];
+
+  return (
+    <Box>
+      <Box alignItems="center" display="flex" mb={2}>
+        <MetadataJSONTitle
+          display="flex"
+          gap={2}
+          sx={{
+            [theme.breakpoints.down("sm")]: {
+              width: "unset",
+              mr: 2
+            }
+          }}
+        >
+          Certification Entity
+        </MetadataJSONTitle>
+        <MetaDataValue display="flex" alignItems="center">
+          <CustomNumberBadge ml="0px" value={certData?.certs.length || 0} />
+        </MetaDataValue>
+      </Box>
+
+      <Grid container spacing={2}>
+        {certData?.certs.map((el, idx) => (
+          <Grid item width="100%" lg={4} md={6} sm={6} xs={12} key={idx}>
+            <Box display="flex" flexDirection="column" height="100%">
+              <ItemBolnisi style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box display="flex" justifyContent="flex-end" mb={1}>
+                  <VerifyBadge type={type} status={el.signatureVerified} />
+                </Box>
+
+                <Box display="flex" alignItems="center" flexWrap="wrap" gap={"10px"}>
+                  <Box component={DefaultImageWine} />
+                  <Box>
+                    <Box fontWeight="bold" mb={1} color={theme.palette.secondary.main}>
+                      National Wine Agency
+                    </Box>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: "12px",
+                    flexDirection: "column",
+                    marginTop: "24px",
+                    marginBottom: "16px"
+                  }}
+                >
+                  {certData.certs.map((cert, certIndex) => (
+                    <Box key={certIndex} sx={{ marginBottom: "16px" }}>
+                      {certificateMapping.map((field, fieldIndex) => {
+                        const value = cert?.offChainData[field.key];
+                        return value ? (
+                          <Box
+                            key={fieldIndex}
+                            sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}
+                          >
+                            <Box sx={{ fontSize: "16px", fontWeight: "600", color: theme.palette.secondary.main }}>
+                              {field.label}
+                            </Box>
+                            <Box sx={{ fontSize: "16px", fontWeight: "400", color: theme.palette.secondary.light }}>
+                              {String(cert.offChainData?.[field.key] || "N/A")}
+                            </Box>
+                          </Box>
+                        ) : null;
+                      })}
+                    </Box>
+                  ))}
+                </Box>
+                {type !== "conformityCertRevoke" && (
+                  <Box component={ViewWineButton} width={"100%"}>
+                    View Certificate
+                  </Box>
+                )}
+              </ItemBolnisi>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };
