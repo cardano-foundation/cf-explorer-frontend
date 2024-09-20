@@ -1,39 +1,100 @@
 import { useState } from "react";
 import { Box, Container, useTheme } from "@mui/material";
-import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from "recharts";
+import { AreaChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, TooltipProps } from "recharts";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
+import moment from "moment";
+import { Payload } from "recharts/types/component/DefaultTooltipContent";
 
+import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { Clock, ClockWhite } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { numberWithCommas } from "src/commons/utils/helper";
 
-import { StyledCard, StyledTitle, Tab, Tabs } from "./styled";
-
-const dataMock = [
-  { date: "01/21", emissions: 55 },
-  { date: "02/21", emissions: 60 },
-  { date: "03/21", emissions: 58 },
-  { date: "04/21", emissions: 50 },
-  { date: "05/21", emissions: 53 },
-  { date: "06/21", emissions: 55 },
-  { date: "07/21", emissions: 52 },
-  { date: "08/21", emissions: 50 },
-  { date: "09/21", emissions: 53 },
-  { date: "10/21", emissions: 55 }
-];
+import { StyledBoxIcon, StyledCard, StyledTitle, Tab, Tabs } from "./styled";
 
 type Time = "THREE_MONTH" | "ONE_YEAR" | "THREE_YEAR" | "ALL_TIME";
 export interface EmissionsChartIF {
   date: string;
-  emissions: number | null;
+  emissions_24h: number | string | null;
+}
+export interface EmissionsChartItem {
+  date: string;
+  emissions: number | string | null;
+}
+export interface EmissionChartType {
+  entries: EmissionsChartIF[];
 }
 const EmissionsAreaChart = () => {
-  const { t } = useTranslation();
-  const { isMobile, isLaptop } = useScreen();
-  const theme = useTheme();
-
   const [rangeTime, setRangeTime] = useState<Time>("THREE_MONTH");
-  // const [dataChart, setDataChart] = useState();
+  const { t } = useTranslation();
+  const { isMobile, isGalaxyFoldSmall, isLaptop, isTablet } = useScreen();
+  const theme = useTheme();
+  const { data } = useFetch<EmissionChartType>(`${API.MICAR?.HISTORYCAL}`, undefined, false);
+  const dataHistoryChart = data?.entries?.map((it: EmissionsChartIF) => ({
+    date: it.date,
+    emissions: it.emissions_24h
+  }));
+
+  const formatTimeX = (date: Time) => {
+    switch (date) {
+      case "THREE_MONTH":
+        return "MM/DD";
+      case "ONE_YEAR":
+      case "THREE_YEAR":
+      case "ALL_TIME":
+        return "MM/YY";
+      default:
+        break;
+    }
+  };
+
+  const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
+
+  const filterDataByOption = (data: EmissionsChartIF[], option: Time) => {
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
+
+    let days;
+    switch (option) {
+      case "THREE_MONTH":
+        days = 90;
+        break;
+      case "ONE_YEAR":
+        days = 365;
+        break;
+      case "THREE_YEAR":
+        days = 3 * 365;
+        break;
+      case "ALL_TIME":
+        return data;
+      default:
+        return data;
+    }
+
+    return data.slice(-days);
+  };
+
+  const filteredData = filterDataByOption(dataHistoryChart, rangeTime);
+  const removeDuplicateDates = (filteredData: EmissionsChartItem) => {
+    if (!Array.isArray(filteredData) || filteredData === null) {
+      return [];
+    }
+    const totalPoints = 12;
+    const dataLength = filteredData.length;
+
+    if (dataLength <= totalPoints) {
+      return filteredData;
+    }
+
+    const step = Math.floor(dataLength / totalPoints);
+    const result = filteredData.filter((_, index) => index % step === 0).slice(0, totalPoints);
+
+    return result;
+  };
+
+  const result = removeDuplicateDates(filteredData);
   const optionsTime: Record<Time, { label: string; displayName: string }> = {
     THREE_MONTH: {
       label: t("time.3m"),
@@ -53,13 +114,9 @@ const EmissionsAreaChart = () => {
     }
   };
 
-  axios.get(`/currencies/ada/emissions/network?key=zy5ZrBDZpv420Oi3WIPwXP`).then(() => {
-    // setDataChart(data);
-  });
-
   const TabsComponent = () => {
     return (
-      <Tabs display="flex" justifyContent="space-between" width={isMobile ? "100%" : "auto"}>
+      <Tabs>
         {Object.keys(optionsTime).map((option) => {
           return (
             <Tab
@@ -75,17 +132,66 @@ const EmissionsAreaChart = () => {
     );
   };
 
+  const renderTooltipContent = (o: TooltipProps<string | number | (string | number)[], string | number>) => {
+    const { payload = [], label } = o;
+    const getDayOfWeek = (dateString: string) => {
+      const date = new Date(dateString);
+      const options = { weekday: "long" };
+      const dayOfWeek = date.toLocaleDateString(undefined, options as object);
+
+      return dayOfWeek;
+    };
+
+    return (
+      <Box>
+        {(payload || [])
+          .map(
+            (
+              entry: Payload<string | number | (string | number)[], string | number> & { fill?: string },
+              index: number
+            ) => {
+              return (
+                <Box
+                  key={`item-${index}`}
+                  style={{
+                    textAlign: "left",
+                    backgroundColor: "#000000",
+                    padding: "4px 8px 4px 8px",
+                    color: "#FFFFFF",
+                    borderRadius: "8px"
+                  }}
+                >
+                  <Box>
+                    <Box>{`${getDayOfWeek(label)}, ${moment(label).format("DD/MM/YY")}`}</Box>
+                    {isGalaxyFoldSmall ? (
+                      <Box>
+                        {`Emissions: ${numberWithCommas(entry.value as number)} `}
+                        <span style={{ display: "block" }}>tCO₂e</span>
+                      </Box>
+                    ) : (
+                      <Box>{`Emissions: ${numberWithCommas(entry.value as number)} tCO₂e`}</Box>
+                    )}
+                  </Box>
+                </Box>
+              );
+            }
+          )
+          .reverse()}
+      </Box>
+    );
+  };
+
   return (
     <Container>
-      <StyledCard elevation={2} sx={{ backgroundColor: theme.isDark ? "#24262E" : "#F9F9F9" }}>
+      <StyledCard elevation={2}>
         <Box
           display="flex"
-          justifyContent={isMobile ? "flex-start" : "space-between"}
-          alignItems={isMobile ? "flex-start" : "center"}
-          flexDirection={isMobile ? "column" : "row"}
+          justifyContent={isGalaxyFoldSmall ? "flex-start" : "space-between"}
+          alignItems={isGalaxyFoldSmall ? "flex-start" : "center"}
+          flexDirection={isGalaxyFoldSmall ? "column" : "row"}
         >
-          {theme.isDark ? <ClockWhite /> : <Clock />}
-          {!isMobile && <TabsComponent />}
+          <StyledBoxIcon>{theme.isDark ? <ClockWhite /> : <Clock />}</StyledBoxIcon>
+          {!isGalaxyFoldSmall && <TabsComponent />}
         </Box>
         <StyledTitle
           sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }}
@@ -93,8 +199,12 @@ const EmissionsAreaChart = () => {
         >
           {t("micar.indicators.emissions.title")}
         </StyledTitle>
-        <ResponsiveContainer width="100%" height={300} style={{ alignSelf: "flex-start" }}>
-          <AreaChart data={dataMock}>
+        <ResponsiveContainer
+          width={isGalaxyFoldSmall ? "120%" : "100%"}
+          height={300}
+          style={{ alignSelf: "flex-start", position: "relative", left: `${isGalaxyFoldSmall ? "-30px" : "0px"}` }}
+        >
+          <AreaChart data={result}>
             <defs>
               <linearGradient id="colorEmissions" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -102,14 +212,25 @@ const EmissionsAreaChart = () => {
               </linearGradient>
             </defs>
 
-            <XAxis dataKey="date" />
-            <YAxis label={{ value: isMobile ? "" : "Emissions (T CO₂e)", angle: -90, position: "insideLeft" }} />
-            <Tooltip />
+            <XAxis
+              dataKey="date"
+              tickFormatter={(date: string) => formatX(date, rangeTime)}
+              minTickGap={isTablet ? 20 : 10}
+            />
+            <YAxis
+              label={{
+                value: `${isGalaxyFoldSmall ? "" : "Emissions (t CO₂e)"}`,
+                angle: -90,
+                position: "insideLeft",
+                style: { textAnchor: "middle" }
+              }}
+            />
+            <Tooltip content={(o) => renderTooltipContent(o)} />
 
             <Area type="monotone" dataKey="emissions" stroke="#3B82F6" fill="url(#colorEmissions)" strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
-        {isMobile && <TabsComponent />}
+        {isGalaxyFoldSmall && <TabsComponent />}
       </StyledCard>
     </Container>
   );

@@ -30,6 +30,10 @@ export const Title = styled(Typography)`
 `;
 
 export const Tabs = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  width: "auto",
+  maxWidth: "300px",
   [theme.breakpoints.up("md")]: {
     textAlign: "end"
   },
@@ -38,8 +42,8 @@ export const Tabs = styled(Box)(({ theme }) => ({
     justifyContent: "space-between"
   },
   [theme.breakpoints.down("sm")]: {
-    marginBottom: theme.spacing(2),
-    overflow: "auto"
+    overflow: "auto",
+    width: "100%"
   }
 }));
 
@@ -62,9 +66,10 @@ export const Tab = styled("button")<{ active: number }>(({ theme, active }) => (
   }
 }));
 
-export const StyledCard = styled(Card)(() => ({
+export const StyledCard = styled(Card)(({ theme }) => ({
+  backgroundColor: theme.isDark ? "#24262E" : "#F9F9F9",
   padding: "2rem",
-  borderRadius: "2rem",
+  borderRadius: "48px",
   textAlign: "center",
   margin: "auto",
   marginTop: "2rem",
@@ -76,4 +81,16 @@ export const StyledTitle = styled(Typography)(() => ({
   textAlign: "left",
   marginTop: "22px",
   marginBottom: "20px"
+}));
+
+export const StyledBoxIcon = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.isDark ? "#2E303B" : "#FFFFFF",
+  borderRadius: "20%",
+  padding: 1.5,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  mb: 4,
+  width: "56px",
+  height: "56px"
 }));

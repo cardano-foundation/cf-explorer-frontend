@@ -197,6 +197,7 @@ import GovIDIcon from "./icons/govID-icon.svg?react";
 import GovBodycon from "./icons/govBody-icon.svg?react";
 import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
+import AvatarIcon from "./icons/avatar-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
 import RewardIconComponent from "./icons/reward.svg?react";
@@ -228,6 +229,7 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import RevokedIcon from "./icons/revoked-icon.svg?react";
 import DescriptonDrepIcon from "./icons/descriptonDrep.svg?react";
 import CreateDrepIcon from "./icons/createdrep.svg?react";
 import ActiveVoteIcon from "./icons/activeVote.svg?react";
@@ -276,6 +278,8 @@ import CCDetailVotingParticipation from "./icons/CCVotingParticipation.svg?react
 import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
 import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
 import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
+import MicarIcon from "./icons/micar.svg";
+import SearchMicarIcon from "./icons/search-icon.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -456,6 +460,7 @@ export {
   UserIconComponent,
   DropIconComponent,
   DelegatorIconComponent,
+  AvatarIcon,
   HeaderSearchIconComponent,
   sunIcon,
   moonIcon,
@@ -511,6 +516,7 @@ export {
   DarkModeMobile,
   VerifiedIcon,
   InvalidIcon,
+  RevokedIcon,
   DescriptonDrepIcon,
   GovBodyIcons,
   CreateDrepIcon,
@@ -554,7 +560,9 @@ export {
   PoolBlocksIcon,
   GovernanceIcon,
   PoolVotingIcon,
-  ParticipationIcon
+  ParticipationIcon,
+  MicarIcon,
+  SearchMicarIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";

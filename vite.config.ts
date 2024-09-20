@@ -61,12 +61,7 @@ export default defineConfig(({ mode }) => {
       })
     ],
     server: {
-      proxy: {
-        "/currencies/ada": {
-          target: "https://v2.api.carbon-ratings.com/",
-          changeOrigin: true
-        }
-      }
+      proxy: {}
     },
     build: {
       minify: false,
