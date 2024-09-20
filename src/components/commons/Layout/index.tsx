@@ -97,7 +97,13 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
           component="main"
           open={sidebar ? 1 : 0}
           // To dos
-          bgcolor={routers.BOLNISI_LANDING === history.location.pathname ? (theme.isDark ? "#131316" : "#fff") : ""}
+          bgcolor={
+            routers.BOLNISI_LANDING === history.location.pathname || routers.MICAR === history.location.pathname
+              ? theme.isDark
+                ? "#131316"
+                : "#fff"
+              : ""
+          }
         >
           {NETWORK === NETWORKS.sanchonet && (
             <Box
@@ -124,7 +130,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
             </Box>
           )}
           <Header />
-          {children}
+          <Box flexGrow={matchesBreakpoint ? 1 : undefined}>{children}</Box>
           {matchesBreakpoint && <Footer />}
         </Main>
         {!matchesBreakpoint && <Footer />}

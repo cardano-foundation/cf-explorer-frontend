@@ -1,6 +1,6 @@
 import { Box, Chip, Skeleton, useTheme } from "@mui/material";
 import { t } from "i18next";
-import { stringify } from "querystring";
+import { stringify } from "qs";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
