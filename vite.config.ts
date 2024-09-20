@@ -61,7 +61,8 @@ export default defineConfig(({ mode }) => {
       })
     ],
     server: {
-      proxy: {}
+      open: true,
+      port: 1102
     },
     build: {
       minify: false,
