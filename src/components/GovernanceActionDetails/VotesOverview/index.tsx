@@ -1,8 +1,7 @@
 import { Grid, Box, CircularProgress } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
-import { parse } from "qs";
+import { parse, stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
