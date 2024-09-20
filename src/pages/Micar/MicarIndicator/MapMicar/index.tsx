@@ -49,7 +49,7 @@ export const WorldMap = (props: BoxProps) => {
 
   const { isMobile } = useScreen();
   const theme = useTheme();
-  const { countries, cities } = useMemo(() => {
+  const { countries } = useMemo(() => {
     const countries: IMapCountry[] =
       data
         ?.filter((item) => !!item.noOfSample)
@@ -104,18 +104,6 @@ export const WorldMap = (props: BoxProps) => {
     }
   };
 
-  const points = useMemo(() => {
-    const points: IMapCity[] = [];
-    cities.forEach((item) => {
-      const cityPoints = new Array(item.value || 0).fill({ ...item, value: 1 });
-      // visual cluster if city have one sample
-      if (item.value === 1) points.push({ ...item, value: 0 });
-      cityPoints[0].id = item.name;
-      points.push(...cityPoints);
-    });
-    return points;
-  }, [cities]);
-
   useEffect(() => {
     if (data) {
       const fullscreenListener = () => {
@@ -128,6 +116,20 @@ export const WorldMap = (props: BoxProps) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const handleMouseUpOrLeave = () => {
+      document.body.style.cursor = "";
+    };
+
+    document.addEventListener("mouseup", handleMouseUpOrLeave);
+    document.addEventListener("mouseleave", handleMouseUpOrLeave);
+
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUpOrLeave);
+      document.removeEventListener("mouseleave", handleMouseUpOrLeave);
+    };
+  }, []);
+
   const handleZoomIn = () => mapRef.current?.chart.mapZoom(0.5);
   const handleZoomOut = () => mapRef.current?.chart.mapZoom(2);
   const options: Highcharts.Options = useMemo(() => {
@@ -138,6 +140,15 @@ export const WorldMap = (props: BoxProps) => {
         map: mapData,
         margin: 0,
         events: {
+          pan: () => {
+            document.body.style.cursor = "move";
+          },
+          mousedown: () => {
+            document.body.style.cursor = "move";
+          },
+          mouseup: () => {
+            document.body.style.cursor = "";
+          },
           redraw: () => {
             if (!allowRedraw.current) {
               allowRedraw.current = true;
@@ -228,7 +239,6 @@ export const WorldMap = (props: BoxProps) => {
           enableMouseTracking: true,
           colorKey: "clusterPointsAmount",
           name: "Cities",
-          data: points,
           color: Highcharts.getOptions().colors?.[1],
           states: { inactive: { opacity: 1 } },
           cluster: {
