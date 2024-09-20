@@ -179,6 +179,14 @@ export const API = {
   },
   GOV_ACTIONS_DETAIL: {
     RANGE_VALUE: "gov-actions/:txHash/:index/votes/range-values"
+  },
+  EMISSIONS: {
+    GRAPH: "txs/graph"
+  },
+  MICAR: {
+    CARBON_EMISSION: "MiCAR/carbon-emission",
+    INDICATOR: "/MiCAR/carbon-emission/overview",
+    HISTORYCAL: "/MiCAR/carbon-emission/historical"
   }
 };
 
