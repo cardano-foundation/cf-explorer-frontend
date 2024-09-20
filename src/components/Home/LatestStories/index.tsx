@@ -85,7 +85,7 @@ const LatestStories = () => {
   };
 
   return (
-    <LatestStoriesContainer data-testid="home-latest-stories">
+    <LatestStoriesContainer data-testid="latestStories.home-latest-stories">
       <Header>
         <Title>{t("common.latestStories")}</Title>
         <ViewAllButtonExternal to={CARDANO_NEWS_URL as string} tooltipTitle={t("common.viewAll")} />
