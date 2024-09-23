@@ -11,6 +11,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 import { TooltipBody } from "src/components/commons/Layout/styles";
+import { DATE_FORMAT } from "src/commons/utils/constants";
 
 import {
   BoxInfo,
@@ -199,7 +200,7 @@ const getLabel = (date: string, range: Time) => {
   }
 };
 
-const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
+const formatX = (date: string, range: Time) => moment(date, DATE_FORMAT).format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
   const ratio = total > 0 ? value / total : 0;

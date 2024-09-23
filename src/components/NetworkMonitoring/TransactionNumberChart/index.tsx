@@ -13,6 +13,7 @@ import { numberWithCommas } from "src/commons/utils/helper";
 import { TooltipBody } from "src/components/commons/Layout/styles";
 import NoRecord from "src/components/commons/NoRecord";
 import FetchDataErr from "src/components/commons/FetchDataErr";
+import { DATE_FORMAT } from "src/commons/utils/constants";
 
 import {
   BoxInfo,
@@ -204,18 +205,18 @@ const getLabel = (date: string, range: Time) => {
   switch (range) {
     case "ONE_MONTH":
     case "THREE_MONTH":
-      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("DD MMM");
+      return moment(date, DATE_FORMAT).format("DD MMM");
     case "ONE_YEAR":
     case "THREE_YEAR":
     case "ALL_TIME":
-      return moment(date, "YYYY-MM-DDTHH:mm:ssZ").format("MMM YYYY");
+      return moment(date, DATE_FORMAT).format("MMM YYYY");
 
     default:
       break;
   }
 };
 
-const formatX = (date: string, range: Time) => moment(date, "YYYY-MM-DDTHH:mm:ssZ").format(formatTimeX(range));
+const formatX = (date: string, range: Time) => moment(date, DATE_FORMAT).format(formatTimeX(range));
 
 const getPercent = (value: number, total: number) => {
   const ratio = total > 0 ? value / total : 0;

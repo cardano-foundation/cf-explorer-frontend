@@ -77,7 +77,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const handleToggle = () => {
     setSidebar(!sidebar);
   };
-  // const isLanding =
+
   return (
     <Layout sidebar={+sidebar}>
       <BackDrop isShow={+sidebar} onClick={handleToggle} />
@@ -96,7 +96,6 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
           ref={mainRef}
           component="main"
           open={sidebar ? 1 : 0}
-          // To dos
           bgcolor={routers.BOLNISI_LANDING === history.location.pathname ? (theme.isDark ? "#131316" : "#fff") : ""}
         >
           {NETWORK === NETWORKS.sanchonet && (

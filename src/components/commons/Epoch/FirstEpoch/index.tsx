@@ -4,7 +4,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 import { CubeIconComponent, ExchangeIcon, SlotIcon, TimeIconComponent } from "src/commons/resources";
-import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { DATE_FORMAT, EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import { Status } from "src/pages/Epoch/styles";
 
@@ -130,7 +130,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
       ),
       value: (
         <Content data-testid="epoch.firstEpoch.slotValue">
-          {moment(formatDateTimeLocal(currentEpochData.endTime), "YYYY-MM-DDTHH:mm:ssZ").diff(moment()) >= 0
+          {moment(formatDateTimeLocal(currentEpochData.endTime), DATE_FORMAT).diff(moment()) >= 0
             ? currentEpoch?.slot
             : MAX_SLOT_EPOCH}
           <SubContent>/{MAX_SLOT_EPOCH}</SubContent>

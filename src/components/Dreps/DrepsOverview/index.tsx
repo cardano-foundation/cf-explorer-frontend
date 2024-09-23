@@ -16,7 +16,7 @@ import {
 } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { DATE_FORMAT, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { formatADA, formatADAFull, numberWithCommas } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import Card from "src/components/commons/Card";
@@ -65,7 +65,7 @@ const DrepsOverview: React.FC = () => {
     );
   }
 
-  const slot = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
+  const slot = moment.utc(currentEpoch?.endTime, DATE_FORMAT).isAfter(moment().utc())
     ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
     : MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
@@ -127,7 +127,7 @@ const DrepsOverview: React.FC = () => {
                 <StyledCard.Content>
                   <StyledCard.Title data-testid="drep.slotTitle">{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value data-testid="drep.slotValue">
-                    {moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
+                    {moment.utc(currentEpoch?.endTime, DATE_FORMAT).isAfter(moment().utc())
                       ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
                       : MAX_SLOT_EPOCH}
                     <Box
@@ -145,7 +145,7 @@ const DrepsOverview: React.FC = () => {
                 <StyledLinearProgress
                   variant="determinate"
                   value={
-                    moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
+                    moment.utc(currentEpoch?.endTime, DATE_FORMAT).isAfter(moment().utc())
                       ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
                       : 100
                   }

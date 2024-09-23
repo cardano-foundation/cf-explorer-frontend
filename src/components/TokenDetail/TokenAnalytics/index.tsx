@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import useFetch from "src/commons/hooks/useFetch";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
+import { DATE_FORMAT, OPTIONS_CHART_ANALYTICS } from "src/commons/utils/constants";
 import { formatNumberDivByDecimals, formatPrice, getIntervalAnalyticChart } from "src/commons/utils/helper";
 import { TextCardHighlight } from "src/components/AddressDetail/AddressAnalytics/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
@@ -77,10 +77,7 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
   const getLabelTimeTooltip = (label: string) => {
     switch (rangeTime) {
       case OPTIONS_CHART_ANALYTICS.ONE_DAY:
-        return `${moment(label, "YYYY-MM-DDTHH:mm:ssZ").format("DD MMM HH:mm")} - ${moment(
-          label,
-          "YYYY-MM-DDTHH:mm:ssZ"
-        )
+        return `${moment(label, DATE_FORMAT).format("DD MMM HH:mm")} - ${moment(label, DATE_FORMAT)
           .add(2, "hour")
           .format("HH:mm")}`;
       case OPTIONS_CHART_ANALYTICS.ONE_WEEK:
@@ -147,7 +144,7 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
                   <XAxis
                     dataKey="date"
                     tickFormatter={(value) =>
-                      moment(value, "YYYY-MM-DDTHH:mm:ssZ").format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")
+                      moment(value, DATE_FORMAT).format(rangeTime === "ONE_DAY" ? "HH:mm" : "DD MMM")
                     }
                     tickLine={false}
                     tickMargin={5}

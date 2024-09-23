@@ -10,7 +10,15 @@ import { ParsedUrlQuery } from "querystring";
 import { setUserData } from "src/stores/user";
 import breakpoints from "src/themes/breakpoints";
 
-import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
+import {
+  APP_LANGUAGES,
+  DATE_FORMAT,
+  MAX_SLOT_EPOCH,
+  NETWORK,
+  NETWORKS,
+  NETWORK_TYPES,
+  OPTIONS_CHART_ANALYTICS
+} from "./constants";
 import { getInfo, signIn } from "./userRequest";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
@@ -242,7 +250,7 @@ export const formatDateTimeLocal = (date: string) => {
     timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
-  return dateFormat.format(moment(moment.utc(date, "YYYY-MM-DDTHH:mm:ssZ")) as never as Date);
+  return dateFormat.format(moment(moment.utc(date, DATE_FORMAT)) as never as Date);
 };
 
 export const formatDateLocal = (date: string) => {
@@ -257,7 +265,7 @@ export const formatDateLocal = (date: string) => {
     timeZone: timeZone == "UTC" ? "UTC" : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
-  return dateFormat.format(moment(moment.utc(date, "YYYY-MM-DDTHH:mm:ssZ")) as never as Date);
+  return dateFormat.format(moment(moment.utc(date, DATE_FORMAT)) as never as Date);
 };
 
 export const formatTypeDate = () => {
@@ -289,7 +297,7 @@ export const formatTypeDate = () => {
   const timeZoneText =
     timeZone == "UTC" ? "(UTC)" : `${zoneNameShort.indexOf("+") != -1 ? zoneName : zoneNameShort} (UTC ${timezone})`;
   return `Date format ${dateFormat
-    .format(moment("2023/08/03", "YYYY-MM-DDTHH:mm:ssZ") as never as Date)
+    .format(moment("2023/08/03", DATE_FORMAT) as never as Date)
     .replace("2023", "YYYY")
     .replace("08", "MM")
     .replace("03", "DD")} ${timeZoneText}`;
