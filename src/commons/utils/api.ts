@@ -187,6 +187,9 @@ export const API = {
     CARBON_EMISSION: "MiCAR/carbon-emission",
     INDICATOR: "/MiCAR/carbon-emission/overview",
     HISTORYCAL: "/MiCAR/carbon-emission/historical"
+  },
+  BOLNISI: {
+    OVERVIEW: "bolnisi/overview"
   }
 };
 
