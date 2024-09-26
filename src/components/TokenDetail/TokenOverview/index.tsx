@@ -52,7 +52,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
       ),
       value: (
         <TokenDescription>
-          <Box mb={1}>
+          <Box mb={1} data-assetName={`${data?.policy}${data?.name}`} data-testid="token.asset.name">
             {t("common.hexFormat")}: #{data?.name || data?.fingerprint}
           </Box>
           {data?.metadata?.description || ""}
@@ -75,13 +75,14 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
         <>
           <Box position={"relative"}>
             <CustomTooltip title={data?.policy}>
-              <PolicyId>{data?.policy || ""}</PolicyId>
+              <PolicyId data-testid="token.asset.script">{data?.policy || ""}</PolicyId>
             </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
           </Box>
           <PolicyScriptBtn
+            data-testid="token.policyScript"
             onClick={() => {
               setOpenModal(true);
               setPolicyId(data?.policy || "");
