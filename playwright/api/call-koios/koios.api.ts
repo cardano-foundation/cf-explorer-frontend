@@ -40,8 +40,25 @@ export function koiosApi(request: APIRequestContext) {
     );
   };
 
+  const getAddress = async (address: string) => {
+    return BaseApi.postData(
+      request,
+      Endpoint.Koios.getAddress.Base,
+      {
+        _addresses: [address]
+      },
+      {
+        Accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Content-Type": "application/json",
+        authorization: KOIOS_TOKEN
+      }
+    );
+  };
+
   return {
     getEpochById,
-    getTransactionByTrxHash
+    getTransactionByTrxHash,
+    getAddress
   };
 }

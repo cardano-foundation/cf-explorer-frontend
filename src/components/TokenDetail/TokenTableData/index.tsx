@@ -45,7 +45,7 @@ const TokenTableData: React.FC<ITokenTableData> = ({
     },
     {
       key: "topHolders",
-      label: t("glossary.topHolders"),
+      label: <div data-testid="token.detail.topHoldersTab">{t("glossary.topHolders")}</div>,
       children: (
         <TokenTopHolder
           tabActive={tabActive}
