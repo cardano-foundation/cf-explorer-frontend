@@ -3,14 +3,7 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  ExchageIcon,
-  FileGuard,
-  RewardIconComponent,
-  SlotIcon,
-  TimeIconComponent,
-  USDIconComponent
-} from "src/commons/resources";
+import { ExchageIcon, FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
 import {
   formatDateTimeLocal,
   formatNumberDivByDecimals,
@@ -33,11 +26,10 @@ BigNumber.config({ DECIMAL_PLACES: 40 });
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
-  currentHolders: number;
   lastUpdated?: number;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders, lastUpdated }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated }) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
@@ -126,17 +118,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           )}
         </>
       )
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("glossary.numberOfHolders")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: RewardIconComponent,
-      value: numberWithCommas(currentHolders || data?.numberOfHolders || "")
     },
     {
       title: (

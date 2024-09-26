@@ -6,10 +6,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { details } from "src/commons/routers";
 import CustomAccordion, { TTab } from "src/components/commons/CustomAccordion";
 
-import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "../../../commons/resources";
+import { MetadataIcon, TransactionIcon, UnionTokenIcon } from "../../../commons/resources";
 import TokenMetaData from "./TokenMetadata";
 import TokenMinting from "./TokenMinting";
-import TokenTopHolder from "./TokenTopHolder";
 import TokenTransaction from "./TokenTransaction";
 
 interface ITokenTableData {
@@ -23,10 +22,8 @@ interface ITokenTableData {
 }
 
 const TokenTableData: React.FC<ITokenTableData> = ({
-  totalSupply,
   metadata,
   metadataJson,
-  setCurrentHolder,
   loading,
   metadataCIP25,
   metadataCIP60
@@ -42,20 +39,6 @@ const TokenTableData: React.FC<ITokenTableData> = ({
       label: t("glossary.transactions"),
       children: <TokenTransaction tabActive={tabActive} tokenId={tokenId} />,
       icon: TransactionIcon
-    },
-    {
-      key: "topHolders",
-      label: t("glossary.topHolders"),
-      children: (
-        <TokenTopHolder
-          tabActive={tabActive}
-          tokenId={tokenId}
-          totalSupply={totalSupply}
-          decimal={metadata?.decimals}
-          setCurrentHolder={setCurrentHolder}
-        />
-      ),
-      icon: PeopleIcon
     },
     {
       key: "tokenMint",
