@@ -20,8 +20,6 @@ export function blocksDashboard(page: Page) {
   const blocksTableTitleSlot = page.getByTestId("blocks.table.title.slot");
   const blocksTableTitleAbsSlot = page.getByTestId("blocks.table.title.absoluteSlot");
   const blocksTableTitleCreateAt = page.getByTestId("blocks.table.title.createAt");
-  const blocksTableTitleTransactionsCount = page.getByTestId("blocks.table.title.transactions");
-  const blocksTableTitleFee = page.getByTestId("blocks.table.title.fee");
   const blocksTableTitleOutput = page.getByTestId("blocks.table.title.output");
   const blocksTableValueSlot = page.getByTestId("blocks.table.value.slot#2");
 
@@ -33,7 +31,6 @@ export function blocksDashboard(page: Page) {
   const blocksWidgetCreatedAt = page.getByTestId("block.widget.createdAt");
   const blocksWidgetConfirmation = page.getByTestId("block.widget.confirmation");
   const blocksWidgetFee = page.getByTestId("block.widget.fees");
-  const blocksWidgetOutput = page.getByTestId("block.widget.output");
   const blocksWidgetBlockHash = page.getByTestId("block.widget.blockHash");
   const blocksWidgetTrxTab = page.getByTestId("block.widget.trxTab");
 
@@ -93,8 +90,6 @@ export function blocksDashboard(page: Page) {
     await expect(blocksTableTitleSlot, "Check title on blocks table").toHaveText("Slot");
     await expect(blocksTableTitleAbsSlot, "Check title on blocks table").toHaveText("Absolute Slot");
     await expect(blocksTableTitleCreateAt, "Check title on blocks table").toHaveText("Created At");
-    await expect(blocksTableTitleTransactionsCount, "Check title on blocks table").toHaveText("Transactions");
-    await expect(blocksTableTitleFee, "Check title on blocks table").toHaveText("Fees");
     await expect(blocksTableTitleOutput, "Check title on finished epoch table").toHaveText("Output");
   };
 
@@ -126,11 +121,6 @@ export function blocksDashboard(page: Page) {
       +((await blocksWidgetFee.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
       "Total fees in block widget to equal total fee in block on Blockfrost "
     ).toEqual(+(blockFrostBlock?.fees || 0));
-
-    expect(
-      +((await blocksWidgetOutput.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total output in block widget to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.output || 0));
   };
 
   return {

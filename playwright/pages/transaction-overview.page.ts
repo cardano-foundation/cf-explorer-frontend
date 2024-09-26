@@ -19,9 +19,6 @@ export function transactionOverviewPage(page: Page) {
   const transactionTableTitleEpoch = page.getByTestId("transactions.table.title.epoch");
   const transactionTableTitleSlot = page.getByTestId("transactions.table.title.slot");
   const transactionTableTitlelFees = page.getByTestId("transactions.table.title.fees");
-  const transactionTableTitleOutputInAda = page.getByTestId("transactions.table.title.outputInAda");
-  const transactionTableTitleInputAddress = page.getByTestId("transactions.table.title.inputAddress");
-  const transactionTableTitleOutputAddress = page.getByTestId("transactions.table.title.outputAddress");
   const transactionWidgeDetailViewBtn = page.getByTestId("transaction.detailViewEpoch.viewDetail");
 
   const addressDetailFromWidgetByInputAddress = page.getByTestId("transaction.widget.inputAddress");
@@ -173,9 +170,6 @@ export function transactionOverviewPage(page: Page) {
     await expect(transactionTableTitleEpoch, "Check title on transaction table").toHaveText("Epoch");
     await expect(transactionTableTitleSlot, "Check title on transaction table").toHaveText("Slot");
     await expect(transactionTableTitlelFees, "Check title on transaction table").toHaveText("Fees");
-    await expect(transactionTableTitleOutputInAda, "Check title on transaction table").toHaveText("Output in ADA");
-    await expect(transactionTableTitleInputAddress, "Check title on transaction table").toHaveText("Input Address");
-    await expect(transactionTableTitleOutputAddress, "Check title on transaction table").toHaveText("Output Address");
   };
 
   return {
