@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 import { ExchageIcon, FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
 import {
   formatDateTimeLocal,
-  formatNumberDivByDecimals,
   getShortHash,
   numberWithCommas,
   formatNumberTotalSupply,
-  tokenRegistry
+  tokenRegistry,
+  formatNumberDivByDecimals
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";

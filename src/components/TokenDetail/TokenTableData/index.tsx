@@ -15,7 +15,6 @@ interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
   metadataJson?: string;
-  setCurrentHolder?: (holders: number) => void;
   loading?: boolean;
   metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
   metadataCIP60?: Transaction["metadata"][0]["metadataCIP25"];
