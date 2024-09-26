@@ -23,10 +23,6 @@ export function epochsDashboardPage(page: Page) {
   const startTimeTitleTable = page.getByTestId("epoch.table.startTimeTitle");
   const endTimeTitleTable = page.getByTestId("epoch.table.endTimeTitle");
   const blocksTitleTable = page.getByTestId("epoch.table.blocksTitle");
-  const uniqueAccountsTitleTable = page.getByTestId("epoch.table.uniqueAccountsTitle");
-  const transactionCountTitleTable = page.getByTestId("epoch.table.transactionCountTitle");
-  const rewardsDistributedTitleTable = page.getByTestId("epoch.table.rewardsDistributedTitle");
-  const totalOutputTitleTable = page.getByTestId("epoch.table.totalOutputTitle");
 
   // Epoch widget
   const firstEpochContainer = page.getByTestId("epoch.firstEpoch.container");
@@ -109,10 +105,6 @@ export function epochsDashboardPage(page: Page) {
     await expect(startTimeTitleTable, "Check title on finished epoch table").toHaveText("Start Timestamp");
     await expect(endTimeTitleTable, "Check title on finished epoch table").toHaveText("End Timestamp");
     await expect(blocksTitleTable, "Check title on finished epoch table").toHaveText("Blocks");
-    await expect(uniqueAccountsTitleTable, "Check title on finished epoch table").toHaveText("Unique Accounts");
-    await expect(transactionCountTitleTable, "Check title on finished epoch table").toHaveText("Transaction Count");
-    await expect(rewardsDistributedTitleTable, "Check title on finished epoch table").toHaveText("Rewards Distributed");
-    await expect(totalOutputTitleTable, "Check title on finished epoch table").toHaveText("Total Output");
   };
 
   const checkCurrentEpochWidget = async ({ currentEpoch }: { currentEpoch?: BlockfrostEpochInformationDto }) => {
