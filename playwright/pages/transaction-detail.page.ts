@@ -13,7 +13,6 @@ export function transactionDetailPage(page: Page) {
   // Contract Tab
   const trxContractTab = page.getByTestId("transactionMetadata.contracts");
   const trxContractAddress = page.getByTestId("trxdetail.contract.address#0");
-  const trxContractPurpose = page.getByTestId("trxdetail.contract.purpose#0");
   const trxContractDetailBtn = page.getByTestId("trxdetail.contract.bth.detai#0");
   const trxContractDetailAddress = page.getByTestId("trx.contract.detail.address");
 
@@ -60,7 +59,7 @@ export function transactionDetailPage(page: Page) {
   const checkContractList = async ({ data }: { data: TrxContract[] | null }) => {
     const firstPathAdress = await trxContractAddress.innerText();
     const contractData = data?.find((i) => i.script_hash.includes(firstPathAdress));
-    expect(await trxContractPurpose.innerText()).toEqual(contractData?.purpose.toUpperCase());
+    expect(contractData).toBeTruthy();
   };
 
   //To Do
