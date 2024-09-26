@@ -18,7 +18,8 @@ export const WorldMapContainer = styled(Box)(({ theme }) => ({
   ">div:first-of-type": {
     width: "100%",
     height: "100%",
-    overflow: "hidden"
+    overflow: "hidden",
+    borderRadius: "12px"
   },
 
   ".highcharts-cluster-point": {
