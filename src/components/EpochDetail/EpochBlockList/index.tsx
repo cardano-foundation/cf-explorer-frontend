@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
@@ -133,7 +134,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   return (
     <StyledContainer>
-      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
+      <Card title={<Box data-testid="epoch.blockList.blocksTitle">{t("head.page.blocks")}</Box>} underline>
         {!error && (
           <Actions>
             <TimeDuration>
