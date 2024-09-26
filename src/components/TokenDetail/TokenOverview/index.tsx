@@ -9,7 +9,8 @@ import {
   getShortHash,
   numberWithCommas,
   formatNumberTotalSupply,
-  tokenRegistry
+  tokenRegistry,
+  formatNumberDivByDecimals
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
@@ -118,6 +119,32 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           )}
         </>
       )
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            <CustomTooltip title={t("desc.InUnits4Native")}>
+              <WrapTitle>{t("glossary.totalVolumn")}</WrapTitle>
+            </CustomTooltip>
+          </Box>
+        </Box>
+      ),
+      icon: ExchageIcon,
+      value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
+    },
+    {
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <Box component={"span"} mr={1}>
+            <CustomTooltip title={t("desc.InUnits4Native")}>
+              <WrapTitle>{t("glossary.volume24h")}</WrapTitle>
+            </CustomTooltip>
+          </Box>
+        </Box>
+      ),
+      icon: USDIconComponent,
+      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
       title: (
