@@ -5,13 +5,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  formatNumberTotalSupply,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
@@ -98,24 +92,6 @@ const Tokens = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: t("glossary.numberOfHolders"),
-      key: "numberOfHolders",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.numberOfHolders)
-    },
-    {
-      title: t("glossary.totalVolumn"),
-      key: "TotalVolume",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
-    },
-    {
-      title: t("glossary.volume24h"),
-      key: "volumeIn24h",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
     },
     {
       title: t("common.totalSupply"),
