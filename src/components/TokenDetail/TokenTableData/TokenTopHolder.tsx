@@ -47,9 +47,12 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSu
       title: t("common.address"),
       key: "address",
       minWidth: "200px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.address}>
-          <StyledLink to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}>
+          <StyledLink
+            to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}
+            data-testid={`transaction.topholder.address#${idx}`}
+          >
             {getShortHash(r.address)}
           </StyledLink>
         </CustomTooltip>
