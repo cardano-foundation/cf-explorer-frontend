@@ -6,13 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Box } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  formatNumberTotalSupply,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
@@ -105,29 +99,7 @@ const Tokens = () => {
       }
     },
     {
-      title: <Box data-testid="tokens.table.title.numberOfHolders">{t("glossary.numberOfHolders")}</Box>,
-      key: "numberOfHolders",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.numberOfHolders)
-    },
-    {
-      title: <Box data-testid="tokens.table.title.totalVolumn">{t("glossary.totalVolumn")}</Box>,
-      key: "TotalVolume",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
-    },
-    {
-      title: <Box data-testid="tokens.table.title.volume24h">{t("glossary.volume24h")}</Box>,
-      key: "volumeIn24h",
-      minWidth: "150px",
-      render: (r, index) => (
-        <Box data-testid={`tokens.table.value.volume24h#${index}`}>
-          {formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)}
-        </Box>
-      )
-    },
-    {
-      title: <Box data-testid="tokens.table.title.totalSupply">{t("common.totalSupply")}</Box>,
+      title: t("common.totalSupply"),
       key: "supply",
       minWidth: "150px",
       render: (r) => {
