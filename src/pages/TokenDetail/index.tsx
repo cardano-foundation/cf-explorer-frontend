@@ -25,7 +25,6 @@ export const OverviewMetadataTokenContext = createContext<IOverviewMetadataConte
 const TokenDetail: React.FC = () => {
   const mainRef = useRef(document.querySelector("#main"));
 
-  const [currentHolders, setCurrentHolder] = useState(0);
   const { tokenId } = useParams<{ tokenId: string }>();
   const { state } = useLocation<{ data?: IToken }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
@@ -56,10 +55,9 @@ const TokenDetail: React.FC = () => {
       }}
     >
       <StyledContainer>
-        <TokenOverview currentHolders={currentHolders} data={data} loading={loading} lastUpdated={lastUpdated} />
+        <TokenOverview data={data} loading={loading} lastUpdated={lastUpdated} />
         <TokenAnalytics dataToken={data} />
         <TokenTableData
-          setCurrentHolder={setCurrentHolder}
           totalSupply={data?.supply}
           metadata={data?.metadata}
           metadataJson={data?.metadataJson}

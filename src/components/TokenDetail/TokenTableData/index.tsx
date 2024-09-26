@@ -16,7 +16,6 @@ interface ITokenTableData {
   totalSupply?: number;
   metadata?: ITokenMetadata;
   metadataJson?: string;
-  setCurrentHolder?: (holders: number) => void;
   loading?: boolean;
   metadataCIP25?: Transaction["metadata"][0]["metadataCIP25"];
   metadataCIP60?: Transaction["metadata"][0]["metadataCIP25"];
@@ -26,7 +25,6 @@ const TokenTableData: React.FC<ITokenTableData> = ({
   totalSupply,
   metadata,
   metadataJson,
-  setCurrentHolder,
   loading,
   metadataCIP25,
   metadataCIP60
@@ -52,7 +50,6 @@ const TokenTableData: React.FC<ITokenTableData> = ({
           tokenId={tokenId}
           totalSupply={totalSupply}
           decimal={metadata?.decimals}
-          setCurrentHolder={setCurrentHolder}
         />
       ),
       icon: PeopleIcon
