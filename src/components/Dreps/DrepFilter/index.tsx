@@ -127,30 +127,52 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   }, [JSON.stringify(query)]);
 
   useEffect(() => {
-    const initDecimalMin = BigNumber(
-      filterParams?.minActiveVoteStake ? filterParams?.minActiveVoteStake : initParams?.minActiveVoteStake || 0
-    )
-      .div(10 ** 6)
-      .toString()
-      .split(".")[1]?.length;
+    let initDecimalMin = 0;
+
+    switch (expanded) {
+      case "activeStake":
+        initDecimalMin = BigNumber(
+          filterParams?.minActiveVoteStake ? filterParams?.minActiveVoteStake : initParams?.minActiveVoteStake || 0
+        )
+          .div(10 ** 6)
+          .toString()
+          .split(".")[1]?.length;
+        break;
+      case "drepParticipation":
+        initDecimalMin = filterParams?.minGovParticipationRate
+          ? (filterParams?.minGovParticipationRate * 100).toString().split(".")[1]?.length
+          : 0;
+        break;
+    }
     if (initDecimalMin > 0) {
       setFixMin(initDecimalMin);
     } else {
       setFixMin(0);
     }
+    let initDecimalMax = 0;
 
-    const initDecimalMax = BigNumber(
-      filterParams?.maxActiveVoteStake ? filterParams?.maxActiveVoteStake : initParams?.maxActiveVoteStake || 0
-    )
-      .div(10 ** 6)
-      .toString()
-      .split(".")[1]?.length;
+    switch (expanded) {
+      case "activeStake":
+        initDecimalMax = BigNumber(
+          filterParams?.maxActiveVoteStake ? filterParams?.maxActiveVoteStake : initParams?.maxActiveVoteStake || 0
+        )
+          .div(10 ** 6)
+          .toString()
+          .split(".")[1]?.length;
+        break;
+      case "drepParticipation":
+        initDecimalMax = filterParams?.maxGovParticipationRate
+          ? (filterParams?.maxGovParticipationRate * 100).toString().split(".")[1]?.length
+          : 0;
+        break;
+    }
+
     if (initDecimalMax > 0) {
       setFixMax(initDecimalMax);
     } else {
-      setFixMax(6);
+      setFixMax(expanded === "activeStake" ? 6 : 0);
     }
-  }, [dataRange]);
+  }, [dataRange, expanded]);
 
   const handleReset = () => {
     setExpanded(false);
@@ -240,7 +262,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
           value={
-            ["minActiveVoteStake"].includes(keyOnChangeMin)
+            ["minActiveVoteStake", "minGovParticipationRate"].includes(keyOnChangeMin)
               ? Number(minValue || 0).toFixed(fixMin)
               : Number(minValue || 0).toString() + (addDotMin ? "," : "")
           }
@@ -279,10 +301,17 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
             const decimals = numericValue.split(".")[1]?.length;
-            if (decimals <= 6 && decimals > 0) {
+
+            if (
+              ((keyOnChangeMin === "minActiveVoteStake" && decimals <= 6) ||
+                (keyOnChangeMin === "minGovParticipationRate" && decimals <= 2)) &&
+              decimals > 0
+            ) {
               setFixMin(decimals);
-            } else if (decimals > 6) {
+            } else if (keyOnChangeMin === "minActiveVoteStake" && decimals > 6) {
               setFixMin(6);
+            } else if (keyOnChangeMin === "minGovParticipationRate" && decimals > 2) {
+              setFixMin(2);
             } else {
               setFixMin(0);
             }
@@ -320,7 +349,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
           value={
-            ["maxActiveVoteStake"].includes(keyOnChangeMax)
+            ["maxActiveVoteStake", "maxGovParticipationRate"].includes(keyOnChangeMax)
               ? Number(maxValue).toFixed(fixMax)
               : Number(maxValue).toString() + (addDotMax ? "," : "")
           }
@@ -362,10 +391,16 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
 
             if (Number(numericValue) <= maxValueDefault) {
               const decimals = numericValue.split(".")[1]?.length;
-              if (decimals <= 6 && decimals > 0) {
+              if (
+                ((keyOnChangeMax === "maxActiveVoteStake" && decimals <= 6) ||
+                  (keyOnChangeMax === "maxGovParticipationRate" && decimals <= 2)) &&
+                decimals > 0
+              ) {
                 setFixMax(decimals);
-              } else if (decimals > 6) {
+              } else if (keyOnChangeMax === "maxActiveVoteStake" && decimals > 6) {
                 setFixMax(6);
+              } else if (keyOnChangeMax === "maxGovParticipationRate" && decimals > 2) {
+                setFixMax(2);
               } else {
                 setFixMax(0);
                 if (addDotMax) {
