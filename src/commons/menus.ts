@@ -7,6 +7,7 @@ import {
   BrowseIcon,
   DashboardIcon,
   GovernanceHome,
+  MicarIcon,
   NetworkMonitoringIcon,
   OperationalIcon,
   ProtocolIcon,
@@ -140,6 +141,12 @@ export const menus: Menu[] = [
     key: "glossary.bolnisi",
     icon: BolnisiDashboard,
     href: routers.BOLNISI_LANDING
+  },
+  {
+    title: "Micar",
+    key: "glossary.micar",
+    icon: MicarIcon,
+    href: routers.MICAR
   }
 ];
 

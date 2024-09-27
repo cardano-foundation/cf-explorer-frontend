@@ -97,12 +97,14 @@ const DrepsList: React.FC = () => {
         r.anchorUrl != null ? (
           <CustomTooltip title={r.anchorUrl ? r.anchorUrl : undefined} sx={{ width: 150 }}>
             <Box
+              padding={"6px 0px"}
               data-testid="drepList.anchorLinkValue"
               component={Button}
               textTransform={"lowercase"}
               fontWeight={400}
               display={(r.anchorUrl || "").length > 20 ? "inline-block" : "inline"}
-              width={"150px"}
+              width={(r.anchorUrl || "").length > 20 ? "150px" : "fit-content"}
+              minWidth={0}
               textOverflow={"ellipsis"}
               whiteSpace={"nowrap"}
               overflow={"hidden"}
@@ -117,7 +119,7 @@ const DrepsList: React.FC = () => {
             </Box>
           </CustomTooltip>
         ) : (
-          <Box padding={"6px 8px"}>{t("common.N/A")}</Box>
+          <Box padding={"6px 8px 6px 0"}>{t("common.N/A")}</Box>
         )
     },
     {
@@ -139,6 +141,7 @@ const DrepsList: React.FC = () => {
               textOverflow={"ellipsis"}
               whiteSpace={"nowrap"}
               overflow={"hidden"}
+              paddingTop={"3px"}
             >
               {r.anchorHash}
             </Box>

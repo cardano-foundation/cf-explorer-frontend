@@ -51,7 +51,7 @@ export function poolOverviewPage(page: Page) {
   const poolDetaiRewardAccount = page.getByTestId("pool.detail.rewardAccountValue");
   const poolDetaiOwnerAccount = page.getByTestId("pool.detail.ownerAccountValue");
   const poolDetaiPoolSize = page.getByTestId("pool.detail.poolSizeValue");
-  const poolDetaiDelegatorsValue = page.getByTestId("pool.detail.delegatorsValue");
+  const poolDetaiDelegatorsValue = page.getByTestId("poolDetail.delegatorsValue");
   const poolDetaiFixedCostValue = page.getByTestId("delegationDetailOverview.fixedCostValue");
   const poolDetaiDeclaredPledgeValue = page.getByTestId("delegationDetailOverview.declaredPledgeValue");
   const poolDetaiEpochBlockValue = page.getByTestId("delegationDetailOverview.epochBlocksValue");

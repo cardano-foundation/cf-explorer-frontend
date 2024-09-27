@@ -5,6 +5,7 @@ import { defaultAxios, authAxios } from "../utils/axios";
 
 interface FetchReturnType<T> {
   data: T | null;
+  update: (data: T | null) => void;
   loading: boolean;
   error: string | null;
   initialized: boolean;
@@ -79,7 +80,16 @@ const useFetch = <T>(url: string, initial?: T, isAuth?: boolean, key?: number | 
     fetch(true);
   }, [fetch]);
 
-  return { data, loading, error, initialized, refresh: fetch, lastUpdated: lastFetch.current, statusError };
+  return {
+    data,
+    loading,
+    error,
+    initialized,
+    refresh: fetch,
+    lastUpdated: lastFetch.current,
+    statusError,
+    update: setData
+  };
 };
 
 export default useFetch;
