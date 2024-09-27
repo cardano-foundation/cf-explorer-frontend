@@ -131,10 +131,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
 
     switch (expanded) {
       case "activeStake":
-        initDecimalMin = BigNumber(
-          filterParams?.minActiveVoteStake ? filterParams?.minActiveVoteStake : initParams?.minActiveVoteStake || 0
+        initDecimalMin = (
+          filterParams?.minActiveVoteStake
+            ? BigNumber(filterParams?.minActiveVoteStake)
+            : BigNumber(initParams?.minActiveVoteStake).div(10 ** 6) || 0
         )
-          .div(10 ** 6)
           .toString()
           .split(".")[1]?.length;
         break;
@@ -153,10 +154,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
 
     switch (expanded) {
       case "activeStake":
-        initDecimalMax = BigNumber(
-          filterParams?.maxActiveVoteStake ? filterParams?.maxActiveVoteStake : initParams?.maxActiveVoteStake || 0
+        initDecimalMax = (
+          filterParams?.maxActiveVoteStake
+            ? BigNumber(filterParams?.maxActiveVoteStake)
+            : BigNumber(initParams?.maxActiveVoteStake).div(10 ** 6) || 0
         )
-          .div(10 ** 6)
           .toString()
           .split(".")[1]?.length;
         break;
