@@ -211,6 +211,11 @@ const CustomFilterMultiRange: React.FC = () => {
     [filterParams]
   );
 
+  function toFixedWithoutRounding(value: number, decimals: number) {
+    const factor = Math.pow(10, decimals);
+    return (Math.floor(value * factor) / factor).toFixed(decimals);
+  }
+
   const groupInputRange = (
     minValue: number,
     maxValue: number,
@@ -294,7 +299,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   : ["minPledge"].includes(keyOnChangeMin)
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
-                  ? parseFloat(numericValue).toFixed(2)
+                  ? toFixedWithoutRounding(parseFloat(numericValue), 2)
                   : ["minActiveStake"].includes(keyOnChangeMin)
                   ? truncateDecimals(+numericValue, 6) * 10 ** 6
                   : numericValue
@@ -384,7 +389,7 @@ const CustomFilterMultiRange: React.FC = () => {
                     : ["maxPledge"].includes(keyOnChangeMax)
                     ? +numericValue * 10 ** 6
                     : ["maxSaturation"].includes(keyOnChangeMax)
-                    ? parseFloat(numericValue).toFixed(2)
+                    ? toFixedWithoutRounding(parseFloat(numericValue), 2)
                     : numericValue
               });
             }
