@@ -144,14 +144,12 @@ const CustomFilterMultiRange: React.FC = () => {
         break;
       case "poolVoting":
         initDecimalMin = filterParams?.minVotingPower
-          ? (filterParams?.minVotingPower * 100).toString().split(".")[1]?.length
+          ? ((filterParams?.minVotingPower * 10000) / 100).toString().split(".")[1]?.length
           : 2;
         break;
     }
 
-    if (initDecimalMin >= 6 && expanded === "poolVoting") {
-      setFixMin(6);
-    } else if (initDecimalMin >= 2 && (expanded === "poolParticipation" || expanded === "poolSaturation")) {
+    if (initDecimalMin >= 2) {
       setFixMin(2);
     } else if (initDecimalMin > 0) {
       setFixMin(initDecimalMin);
@@ -190,9 +188,7 @@ const CustomFilterMultiRange: React.FC = () => {
         break;
     }
 
-    if (initDecimalMax >= 6 && expanded === "poolVoting") {
-      setFixMax(6);
-    } else if (initDecimalMax >= 2 && (expanded === "poolParticipation" || expanded === "poolSaturation")) {
+    if (initDecimalMax >= 2) {
       setFixMax(2);
     } else if (initDecimalMax > 0) {
       setFixMax(initDecimalMax);
@@ -294,7 +290,12 @@ const CustomFilterMultiRange: React.FC = () => {
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (isIOS && key === "." && !event.target.value.includes(".")) {
+            if (
+              isIOS &&
+              key === "." &&
+              !event.target.value.includes(".") &&
+              ["minSaturation", "minGovParticipationRate", "minVotingPower"].includes(keyOnChangeMin)
+            ) {
               event.preventDefault();
               setAddDotMin(true);
             } else if (
@@ -325,16 +326,10 @@ const CustomFilterMultiRange: React.FC = () => {
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
             const decimals = numericValue.split(".")[1]?.length;
-            if (
-              ((["minSaturation", "minGovParticipationRate"].includes(keyOnChangeMin) && decimals <= 2) ||
-                (["minVotingPower"].includes(keyOnChangeMin) && decimals <= 6)) &&
-              decimals > 0
-            ) {
+            if (decimals <= 2 && decimals > 0) {
               setFixMin(decimals);
-            } else if (["minSaturation", "minGovParticipationRate"].includes(keyOnChangeMin) && decimals > 2) {
+            } else if (decimals > 2) {
               setFixMin(2);
-            } else if (["minVotingPower"].includes(keyOnChangeMin) && decimals > 6) {
-              setFixMin(6);
             } else {
               setFixMin(0);
             }
@@ -359,7 +354,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   : ["minActiveStake"].includes(keyOnChangeMin)
                   ? truncateDecimals(+numericValue, 6) * 10 ** 6
                   : ["minVotingPower"].includes(keyOnChangeMin)
-                  ? truncateDecimals(+numericValue / 100, 8)
+                  ? truncateDecimals(+numericValue / 100, 4)
                   : numericValue
             });
           }}
@@ -386,7 +381,12 @@ const CustomFilterMultiRange: React.FC = () => {
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (isIOS && key === "." && !event.target.value.includes(".")) {
+            if (
+              isIOS &&
+              key === "." &&
+              !event.target.value.includes(".") &&
+              ["maxSaturation", "maxGovParticipationRate", "maxVotingPower"].includes(keyOnChangeMax)
+            ) {
               event.preventDefault();
               setAddDotMax(true);
             } else if (
@@ -434,16 +434,10 @@ const CustomFilterMultiRange: React.FC = () => {
               (["maxVotingPower"].includes(keyOnChangeMax) && +numericValue / 100 <= maxValueDefault)
             ) {
               const decimals = numericValue.split(".")[1]?.length;
-              if (
-                ((["maxSaturation", "maxGovParticipationRate"].includes(keyOnChangeMax) && decimals <= 2) ||
-                  (["maxVotingPower"].includes(keyOnChangeMax) && decimals <= 6)) &&
-                decimals > 0
-              ) {
+              if (decimals <= 2 && decimals > 0) {
                 setFixMax(decimals);
-              } else if (["maxSaturation", "maxGovParticipationRate"].includes(keyOnChangeMax) && decimals > 2) {
+              } else if (decimals > 2) {
                 setFixMax(2);
-              } else if (["maxVotingPower"].includes(keyOnChangeMax) && decimals > 6) {
-                setFixMax(6);
               } else if (addDotMax) {
                 setFixMax(1);
               } else {
@@ -459,7 +453,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   : ["maxSaturation"].includes(keyOnChangeMax)
                   ? toFixedWithoutRounding(parseFloat(numericValue), 2)
                   : ["maxVotingPower"].includes(keyOnChangeMax)
-                  ? truncateDecimals(+numericValue / 100, 8)
+                  ? truncateDecimals(+numericValue / 100, 4)
                   : numericValue
               });
             }
