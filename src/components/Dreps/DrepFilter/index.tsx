@@ -145,7 +145,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
           : 0;
         break;
     }
-    if (initDecimalMin > 0) {
+    if (initDecimalMin >= 6 && expanded === "activeStake") {
+      setFixMin(6);
+    } else if (initDecimalMin >= 2 && expanded === "drepParticipation") {
+      setFixMin(2);
+    } else if (initDecimalMin > 0) {
       setFixMin(initDecimalMin);
     } else {
       setFixMin(0);
@@ -164,12 +168,15 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
         break;
       case "drepParticipation":
         initDecimalMax = filterParams?.maxGovParticipationRate
-          ? (filterParams?.maxGovParticipationRate * 100).toString().split(".")[1]?.length
+          ? ((filterParams.maxGovParticipationRate * 10000) / 100).toString().split(".")[1]?.length
           : 0;
         break;
     }
-
-    if (initDecimalMax > 0) {
+    if (initDecimalMax >= 6 && expanded === "activeStake") {
+      setFixMax(6);
+    } else if (initDecimalMax >= 2 && expanded === "drepParticipation") {
+      setFixMax(2);
+    } else if (initDecimalMax > 0) {
       setFixMax(initDecimalMax);
     } else {
       setFixMax(expanded === "activeStake" ? 6 : 0);
@@ -264,9 +271,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
           value={
-            ["minActiveVoteStake", "minGovParticipationRate"].includes(keyOnChangeMin)
+            addDotMin
+              ? Number(minValue || 0).toString() + ","
+              : ["minActiveVoteStake", "minGovParticipationRate"].includes(keyOnChangeMin)
               ? Number(minValue || 0).toFixed(fixMin)
-              : Number(minValue || 0).toString() + (addDotMin ? "," : "")
+              : Number(minValue || 0).toString()
           }
           onKeyDown={(event) => {
             const key = event.key;
@@ -320,6 +329,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
 
             if (addDotMin) {
               numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setFixMin(1);
               setAddDotMin(false);
             }
             setFilterParams({
@@ -351,9 +361,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
           value={
-            ["maxActiveVoteStake", "maxGovParticipationRate"].includes(keyOnChangeMax)
+            addDotMax
+              ? Number(maxValue).toString() + ","
+              : ["maxActiveVoteStake", "maxGovParticipationRate"].includes(keyOnChangeMax)
               ? Number(maxValue).toFixed(fixMax)
-              : Number(maxValue).toString() + (addDotMax ? "," : "")
+              : Number(maxValue).toString()
           }
           onKeyDown={(event) => {
             const key = event.key;
@@ -391,6 +403,11 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "");
 
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
+
             if (Number(numericValue) <= maxValueDefault) {
               const decimals = numericValue.split(".")[1]?.length;
               if (
@@ -403,12 +420,10 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                 setFixMax(6);
               } else if (keyOnChangeMax === "maxGovParticipationRate" && decimals > 2) {
                 setFixMax(2);
+              } else if (addDotMax) {
+                setFixMax(1);
               } else {
                 setFixMax(0);
-                if (addDotMax) {
-                  numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
-                  setAddDotMax(false);
-                }
               }
 
               setFilterParams({

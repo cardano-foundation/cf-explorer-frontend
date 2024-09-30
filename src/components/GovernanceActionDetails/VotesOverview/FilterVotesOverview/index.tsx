@@ -61,7 +61,12 @@ export default function FilterVotesOverview() {
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
   const [fixMax, setFixMax] = useState<number>(6);
   const [fixMin, setFixMin] = useState<number>(0);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { search } = useLocation();
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const [dateRange, setDateRange] = useState<{
     fromDate?: string;
@@ -139,7 +144,7 @@ export default function FilterVotesOverview() {
     if (initDecimalMax > 0) {
       setFixMax(initDecimalMax);
     } else {
-      setFixMax(6);
+      setFixMax(0);
     }
   }, [dataRange, expanded]);
 
@@ -229,7 +234,7 @@ export default function FilterVotesOverview() {
         <Box
           component={Input}
           disabled={disabled}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           sx={{
             fontSize: "14px",
             width: "100% !important",
@@ -238,14 +243,19 @@ export default function FilterVotesOverview() {
             }
           }}
           value={
-            ["activeStakeFrom"].includes(keyOnChangeMin)
+            addDotMin
+              ? Number(minValue || 0).toString() + ","
+              : ["activeStakeFrom"].includes(keyOnChangeMin)
               ? toFixedWithoutRounding(Number(minValue || 0), fixMin)
               : Number(minValue || 0).toString()
           }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -284,6 +294,12 @@ export default function FilterVotesOverview() {
               setFixMin(0);
             }
 
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setFixMin(1);
+              setAddDotMin(false);
+            }
+
             setFilterParams({
               ...filterParams,
               [keyOnChangeMin]:
@@ -301,7 +317,7 @@ export default function FilterVotesOverview() {
 
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           disabled={disabled}
           sx={{
             fontSize: "14px",
@@ -311,14 +327,19 @@ export default function FilterVotesOverview() {
             }
           }}
           value={
-            ["activeStakeTo"].includes(keyOnChangeMax)
+            addDotMax
+              ? Number(maxValue).toString() + ","
+              : ["activeStakeTo"].includes(keyOnChangeMax)
               ? toFixedWithoutRounding(Number(maxValue), fixMax)
               : Number(maxValue).toString()
           }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -339,11 +360,16 @@ export default function FilterVotesOverview() {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "")
               .replace("%", "");
+
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
 
             if (Number(numericValue) <= maxValueDefault) {
               const decimals = numericValue.split(".")[1]?.length;
@@ -351,6 +377,8 @@ export default function FilterVotesOverview() {
                 setFixMax(decimals);
               } else if (decimals > 6) {
                 setFixMax(6);
+              } else if (addDotMax) {
+                setFixMax(1);
               } else {
                 setFixMax(0);
               }
