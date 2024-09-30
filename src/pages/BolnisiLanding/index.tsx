@@ -23,11 +23,18 @@ import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
 import { BOLNISI_LANDING_NWA, BOLNISI_LANDING_OIV, BOLNISI_LANDING_READ_CASE_STUDY } from "src/commons/utils/constants";
+import useFetch from "src/commons/hooks/useFetch";
+import { API } from "src/commons/utils/api";
 
 import Bolnisi_Animation_Light_Mode from "./resource/Bolnisi_Animation_Light_Mode.json";
 import Bolnisi_Animation_Dark_Mode from "./resource/Bolnisi_Animation_Dark_Mode.json";
 import bolnisiAnimationmobileLightMode from "./resource/Bolnisi_Animation_mobile_Light_Mode.png";
 
+interface BolnisiNumbers {
+  numberOfBottles: number | null;
+  numberOfCertificates: number | null;
+  numberOfWineries: number | null;
+}
 const BolnisiLanding = () => {
   useEffect(() => {
     document.title = `Bolnisi | Cardano Blockchain Explorer`;
@@ -269,6 +276,8 @@ const BolnisiTrx = () => {
   const history = useHistory();
   const [cert, setCert] = useState("SCM");
 
+  const { data: bolnisiData } = useFetch<BolnisiNumbers>(API.BOLNISI.OVERVIEW, undefined, false);
+
   const columns: Column<BolnisiTx>[] = [
     {
       title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
@@ -398,21 +407,21 @@ const BolnisiTrx = () => {
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={100000} title="Bottles registered on-chain" />
+              <Card count={bolnisiData?.numberOfBottles} title="Bottles registered on-chain" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={30} title="Wineries joining" />
+              <Card count={bolnisiData?.numberOfWineries} title="Wineries joining" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={1000} title="Certificates issued" />
+              <Card count={bolnisiData?.numberOfCertificates} title="Certificates issued" />
             </Box>
           </MotionDiv>
         </Grid>
