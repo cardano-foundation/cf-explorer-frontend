@@ -6,12 +6,7 @@ import { useTheme } from "@mui/material";
 
 import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -197,22 +192,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               <DetailsInfoItem>
                 <DetailLabel>{t("common.totalTxs")}</DetailLabel>
                 <DetailValue>{data.txCount}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.numberOfHolders")}</DetailLabel>
-                <DetailValue>{numberWithCommas(data.numberOfHolders || 0)}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.totalVolumn")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.totalVolume || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.volume24h")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
