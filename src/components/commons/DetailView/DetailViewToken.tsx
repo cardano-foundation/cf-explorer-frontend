@@ -4,7 +4,7 @@ import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { useTheme } from "@mui/material";
 
-import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { MetadataIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
@@ -214,21 +214,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   </DetailLinkRight>
                 </DetailValue>
               </DetailLink>{" "}
-            </Group>
-            <Group>
-              <DetailLink to={details.token(tokenId, "topHolders")}>
-                <DetailLabel>
-                  <DetailLinkIcon>
-                    <PeopleIcon />
-                  </DetailLinkIcon>
-                  <DetailLinkName>{t("glossary.topHolders")}</DetailLinkName>
-                </DetailLabel>
-                <DetailValue>
-                  <DetailLinkRight>
-                    <BiChevronRight size={24} />
-                  </DetailLinkRight>
-                </DetailValue>
-              </DetailLink>
             </Group>
             <Group>
               <DetailLink to={details.token(tokenId, "tokenMint")}>
