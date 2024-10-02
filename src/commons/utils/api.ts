@@ -5,7 +5,6 @@ export const API = {
     ANALYTICS: "addresses/analytics",
     DETAIL: "addresses",
     MIN_MAX_BALANCE: "addresses/min-max-balance",
-    TOP_ADDRESS: "addresses/top-addresses",
     TOKENS: "addresses/:address/tokens",
     VIEW_ADRRESSES: (txHash: string, scriptHash: string) => `scripts/contract-executions/${txHash}/${scriptHash}`
   },
@@ -187,6 +186,9 @@ export const API = {
     CARBON_EMISSION: "MiCAR/carbon-emission",
     INDICATOR: "/MiCAR/carbon-emission/overview",
     HISTORYCAL: "/MiCAR/carbon-emission/historical"
+  },
+  BOLNISI: {
+    OVERVIEW: "bolnisi/overview"
   }
 };
 
