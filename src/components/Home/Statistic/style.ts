@@ -146,7 +146,7 @@ export const Progress = styled("div")`
   font-weight: var(--font-weight-bold);
   color: ${({ theme }) => theme.palette.common.white};
   color: ${(props) => props.theme.palette.primary.contrastText};
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
 `;
 
 export const ProcessActive = styled("div")<{ rate: number }>`
@@ -161,6 +161,25 @@ export const ProcessActive = styled("div")<{ rate: number }>`
 export const ProgressPending = styled(ProcessActive)<{ rate: number }>`
   width: ${(props) => props.rate}%;
   background-color: ${(props) => props.theme.palette.primary[200]};
+`;
+
+export const ProgressRewards = styled(ProcessActive)<{ rate: number }>`
+  width: ${(props) => props.rate}%;
+  background-color: ${({ theme }) => (theme.isDark ? "#E8564B" : "#FE938C")};
+`;
+
+export const ProgressTreasury = styled(ProcessActive)<{ rate: number }>`
+  width: ${(props) => props.rate}%;
+  background-color: ${({ theme }) => (theme.isDark ? "#1B998B" : "#1B998B")};
+`;
+
+export const CircularLegend = styled(Box)<{ color: string }>`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  background-color: ${(props) => props.color};
+  flex-shrink: 0;
 `;
 
 export const TextPending = styled("span")`
