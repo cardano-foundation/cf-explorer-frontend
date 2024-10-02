@@ -25,7 +25,7 @@ export const ModalContainer = styled(Box)<{
   [theme.breakpoints.down("sm")]: {
     padding: "20px 15px 25px",
     maxWidth: "98vw",
-    maxHeight: "87vh",
+    maxHeight: "80vh",
     overflowY: "hidden"
   }
 }));
