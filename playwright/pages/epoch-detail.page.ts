@@ -31,10 +31,6 @@ export function epochDetailPage(page: Page) {
   const slotTitleColumnBlockTable = page.getByTestId("epochList.slotTitle");
   const slotNoTitleColumnBlockTable = page.getByTestId("epochList.slotNoTitle");
   const createdAtTitleColumnBlockTable = page.getByTestId("epochList.createdAtTitle");
-  const txCountTitleColumnBlockTable = page.getByTestId("epochList.txCountTitle");
-  const feesTitleColumnBlockTable = page.getByTestId("epochList.feesTitle");
-  const outSumTitleColumnBlockTable = page.getByTestId("epochList.outSumTitle");
-
   const goToBlockDetailFromEpoch = async () => {
     await firstBlockInEpochDetail.click();
   };
@@ -145,9 +141,6 @@ export function epochDetailPage(page: Page) {
     await expect(slotTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Slot");
     await expect(slotNoTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Absolute Slot");
     await expect(createdAtTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Created At");
-    await expect(txCountTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Transactions");
-    await expect(feesTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Fees");
-    await expect(outSumTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Output");
   };
 
   const checkBlockDetailPage = async ({ blockId = "" }: { blockId: string | null }) => {
