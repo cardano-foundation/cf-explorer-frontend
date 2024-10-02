@@ -412,6 +412,8 @@ export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2
   const duration = moment.duration(inp, unit);
   const d = duration.days();
   const h = duration.hours();
+  const m = duration.minutes();
+  const s = duration.seconds();
 
   let humanized = "";
   if (d > 1) {
@@ -429,10 +431,11 @@ export const getDurationUnits = (inp: DurationInputArg1, unit: DurationInputArg2
   return {
     d,
     h,
-    humanized
+    m,
+    s,
+    humanized: humanized.trim()
   };
 };
-
 type blockEpochNoType = number | null | undefined;
 
 export const handleChangeLanguage = (newLang: APP_LANGUAGES, currentLanguage: APP_LANGUAGES | undefined) => {

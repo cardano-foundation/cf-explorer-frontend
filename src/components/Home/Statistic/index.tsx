@@ -1,11 +1,9 @@
-import { useMemo } from "react";
 import { Link as LinkDom } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
 import BigNumber from "bignumber.js";
-import { Box } from "@mui/material";
-import { useLocalStorage } from "react-use";
+import { Box, useTheme } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { useScreen } from "src/commons/hooks/useScreen";
@@ -14,17 +12,14 @@ import {
   AdaPriceIcon,
   CurrentEpochHome,
   CurrentEpochHomeDark,
-  HomeDownIcon,
-  HomeUpIcon,
   LiveStakeDarkIcon,
   LiveStakeIcon,
-  MarketCapDarkIcon,
-  MarketCapIcon,
-  UpGreenDarkmodeIcon
+  PotsIcon,
+  PotsIconDark
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { API_GECKO, EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -34,14 +29,11 @@ import {
 } from "src/commons/utils/helper";
 import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import FormNowMessage from "src/components/commons/FormNowMessage";
-import RateWithIcon from "src/components/commons/RateWithIcon";
 import { RootState } from "src/stores/types";
-import useFetchIntervalFromCoinGecko from "src/commons/hooks/useFetchIntervalFromCoinGecko";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
 import {
-  AdaPrice,
+  CircularLegend,
   Content,
   Item,
   ItemIcon,
@@ -51,9 +43,10 @@ import {
   ProcessActive,
   Progress,
   ProgressPending,
+  ProgressRewards,
+  ProgressTreasury,
   StatisticContainer,
   TextPending,
-  TimeDuration,
   Title,
   VerticalContent,
   WrapCardContent,
@@ -72,70 +65,70 @@ const SkeletonBox = () => (
   </Item>
 );
 
-const MILION = 10 ** 6;
-
 const MAX_PERCENT_SHOW_LAST_BAR = 89;
 const MIN_PERCENT_SHOW_FIRST_BAR = 9;
 const HomeStatistic = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
+  const { data: dataPostOverview, loading: loadingPots } = useFetch<PostOverview>(API.POTS_OVERVIEW);
+
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const { liveStake = 0, activeStake = 1 } = data || {};
-  const supply = BigNumber(currentEpoch?.circulatingSupply || 0).div(10 ** 6);
-  const liveRate = new BigNumber(liveStake).div(MILION).div(supply).multipliedBy(100);
-  const circulatingSupply = new BigNumber(supply).multipliedBy(MILION);
+
   const progress = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
     ? (((currentEpoch?.slot || 0) / MAX_SLOT_EPOCH) * 100).toFixed(0)
     : 100;
+
+  const isShowPercentText = (percent: number) => percent >= MIN_PERCENT_SHOW_FIRST_BAR;
   const isShowProgressPendingText = +progress < MAX_PERCENT_SHOW_LAST_BAR;
-  const isShowProgressActiveText = +progress > MIN_PERCENT_SHOW_FIRST_BAR;
-  const isShowLiveStakePercentText = liveRate.toNumber() >= MIN_PERCENT_SHOW_FIRST_BAR;
-  const isShowOtherStakePercentText = liveRate.toNumber() <= MAX_PERCENT_SHOW_LAST_BAR;
-  const [btcDataLocal, setBtcDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("btcData", null);
-  const [usdDataLocal, setUsdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
-  const {
-    data: btcData,
-    lastUpdated: lastUpdatedBtcData,
-    loading: loadingBtcData
-  } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
-  const {
-    data: usdData,
-    lastUpdated: lastUpdatedUsd,
-    loading: loadingUsdData
-  } = useFetchIntervalFromCoinGecko<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
-
-  const btcMarket = useMemo(() => {
-    if (btcData?.length === 0) return null;
-    if (btcData && btcData?.length > 0) {
-      setBtcDataLocal(btcData?.[0] || null);
-    }
-    return btcData?.[0] || null;
-  }, [btcData]);
-
-  const usdMarket = useMemo(() => {
-    if (usdData?.length === 0) return null;
-    if (usdData && usdData?.length > 0) {
-      setUsdDataLocal(usdData?.[0]);
-    }
-    return usdData?.[0] || null;
-  }, [usdData]);
-
-  const { total_supply: total = 1 } = usdMarket || usdDataLocal || {};
-
-  const circulatingRate = circulatingSupply.div(total).div(MILION).multipliedBy(100);
 
   const slot = (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
 
-  const { d: days, h: hours, humanized } = getDurationUnits(countdown ? countdown : 0, "second");
+  const { humanized, s, m, d, h } = getDurationUnits(countdown ? countdown : 0, "second");
   const { humanized: humanizedActive } = getDurationUnits(slot, "second");
 
   const epochActiveText = `Started ${humanizedActive} ago`;
   const epochFinishText = `Finishes in ${humanized}`;
 
   const { isGalaxyFoldSmall } = useScreen();
-  const sign = Math.sign(BigNumber((usdMarket || usdDataLocal)?.price_change_percentage_24h || 0).toNumber());
+
+  const formattedDateTime = moment.utc(new Date());
+  const numberActiveStake = new BigNumber(activeStake);
+  const numberLiveStake = new BigNumber(liveStake);
+
+  const totalStake = numberActiveStake.plus(numberLiveStake);
+  const percentageActiveStake = numberActiveStake.dividedBy(totalStake).multipliedBy(100).toFixed(0);
+
+  const percentageLiveStake = new BigNumber(100).minus(percentageActiveStake).toFixed(0);
+
+  const dataResponPost = {
+    depositsAndFees: new BigNumber(dataPostOverview?.depositsAndFees || 0),
+    rewards: new BigNumber(dataPostOverview?.rewards || 0),
+    treasury: new BigNumber(dataPostOverview?.treasury || 0),
+    reserves: new BigNumber(dataPostOverview?.reserves || 0)
+  };
+
+  const totalDataPots = dataResponPost.depositsAndFees
+    .plus(dataResponPost.rewards)
+    .plus(dataResponPost.treasury)
+    .plus(dataResponPost.reserves);
+
+  const depositsPercentage = dataResponPost.depositsAndFees.dividedBy(totalDataPots).multipliedBy(100).toFixed(0);
+  const rewardsPercentage = dataResponPost.rewards.dividedBy(totalDataPots).multipliedBy(100).toFixed(0);
+  const treasuryPercentage = dataResponPost.treasury.dividedBy(totalDataPots).multipliedBy(100).toFixed(0);
+  const reservesPercentage = new BigNumber(100)
+    .minus(depositsPercentage)
+    .minus(rewardsPercentage)
+    .minus(treasuryPercentage)
+    .toFixed(0);
+
+  const FIX_MAX_SUPPLY = new BigNumber(45_000_000_000);
+  const circulatingSupplyNumber = new BigNumber(currentEpoch?.circulatingSupply ?? 0);
+
+  const circulatingSupplyPercentage = circulatingSupplyNumber.dividedBy(FIX_MAX_SUPPLY).multipliedBy(100);
 
   return (
     <StatisticContainer
@@ -145,79 +138,6 @@ const HomeStatistic = () => {
       alignItems="stretch"
       data-testid="home-statistic"
     >
-      <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {(usdMarket || usdDataLocal) && (btcMarket || btcDataLocal) && !loadingBtcData && !loadingUsdData ? (
-          <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
-              <WrapCardContent>
-                <Box display={"flex"} alignItems={"center"} height={"40px"}>
-                  <ItemIcon
-                    style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                    data-testid="ada-price-icon"
-                    src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
-                    alt={t("stats.adaPrice")}
-                  />
-                  <Name data-testid="ada-price-box-title">{t("stats.adaPrice")}</Name>
-                </Box>
-                <Box display={"flex"} alignItems={"center"}>
-                  <img
-                    src={sign > 0 ? (themeMode === "light" ? HomeUpIcon : UpGreenDarkmodeIcon) : HomeDownIcon}
-                    alt="Home up icon"
-                    width={30}
-                    height={30}
-                  />
-                  <Box ml={1}>
-                    <Title data-testid="ada-current-price">${(usdMarket || usdDataLocal)?.current_price || 0}</Title>
-                  </Box>
-                </Box>
-                <Content gap="5px 15px">
-                  <RateWithIcon
-                    data-testid="ada-twenty-four-hr-price-change"
-                    value={(usdMarket || usdDataLocal)?.price_change_percentage_24h || 0}
-                    showIcon={false}
-                  />
-                  <AdaPrice data-testid="ada-price-in-btc">{(btcMarket || btcDataLocal)?.current_price} BTC</AdaPrice>
-                </Content>
-                <Content>
-                  <TimeDuration data-testid="last-update-ada-price">
-                    <FormNowMessage time={lastUpdatedUsd} />
-                  </TimeDuration>
-                </Content>
-              </WrapCardContent>
-            </Item>
-          </Link>
-        ) : (
-          <SkeletonBox />
-        )}
-      </WrapGrid>
-      <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {(usdMarket || usdDataLocal) && !loadingUsdData ? (
-          <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="market-cap-box" smallitem="true" thememode={themeMode}>
-              <WrapCardContent>
-                <Box display={"flex"} alignItems={"center"} height={"40px"}>
-                  <ItemIcon
-                    data-testid="market-cap-icon"
-                    src={themeMode === "light" ? MarketCapIcon : MarketCapDarkIcon}
-                    alt="Market cap"
-                  />
-                  <Name data-testid="market-cap-box-title">{t("glossary.marketCap")}</Name>
-                </Box>
-                <Title data-testid="market-cap-value">
-                  ${numberWithCommas((usdMarket || usdDataLocal)?.market_cap)}
-                </Title>
-                <Content>
-                  <TimeDuration data-testid="last-update-market-cap">
-                    <FormNowMessage time={lastUpdatedBtcData} />
-                  </TimeDuration>
-                </Content>
-              </WrapCardContent>
-            </Item>
-          </Link>
-        ) : (
-          <SkeletonBox />
-        )}
-      </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
         {currentEpoch ? (
           <Box component={LinkDom} display={"contents"} to={details.epoch(currentEpoch?.no)}>
@@ -248,14 +168,14 @@ const HomeStatistic = () => {
                   <Progress>
                     <CustomTooltip title={epochActiveText}>
                       <ProcessActive data-testid="current-epoch-progress-active" rate={+progress || 0}>
-                        {isShowProgressActiveText && `${+progress || 0}%`}
+                        {isShowPercentText(+progress) && `${+progress || 0}%`}
                       </ProcessActive>
                     </CustomTooltip>
                     <CustomTooltip title={epochFinishText}>
                       <ProgressPending data-testid="current-epoch-progress-pending" rate={100 - (+progress || 0)}>
                         {isShowProgressPendingText && (
                           <TextPending>
-                            {days}d {hours}h
+                            {d}d {h}h
                           </TextPending>
                         )}
                       </ProgressPending>
@@ -263,14 +183,23 @@ const HomeStatistic = () => {
                   </Progress>
                 </Box>
                 <Box>
-                  <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.uniqueAccounts")}: {numberWithCommas(currentEpoch?.account)}
-                  </Box>
-                  <DatetimeTypeTooltip>
-                    <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
-                      {t("glossary.endTimestamp")}: {formatDateTimeLocal(currentEpoch?.endTime)}
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <Box display="flex" alignItems="center">
+                      <CircularLegend color={theme.palette.primary.main} />
+                      <DatetimeTypeTooltip>
+                        <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
+                          {t("glossary.currentTime")}: {formatDateTimeLocal(formattedDateTime.format())}
+                        </Box>
+                      </DatetimeTypeTooltip>
                     </Box>
-                  </DatetimeTypeTooltip>
+
+                    <Box display="flex" alignItems="center">
+                      <CircularLegend color={theme.palette.primary[200]} />
+                      <Box color={({ palette }) => palette.secondary.light} fontSize={"12px"}>
+                        {t("glossary.timeRemaining")}: {`${humanized} ${m}m ${s}s`}
+                      </Box>
+                    </Box>
+                  </Box>
                 </Box>
               </VerticalContent>
             </Item>
@@ -280,9 +209,9 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {data && (usdMarket || usdDataLocal) ? (
+        {data ? (
           <Box component={LinkDom} display={"contents"} to={routers.DELEGATION_POOLS}>
-            <Item data-testid="live-stake-box" thememode={themeMode}>
+            <Item thememode={themeMode}>
               <VerticalContent>
                 <Box>
                   <Box display={"flex"} alignItems={"center"} height={"40px"}>
@@ -301,69 +230,240 @@ const HomeStatistic = () => {
                   <CustomTooltip title={liveStake ? formatADAFull(liveStake) : t("common.N/A")}>
                     <Title data-testid="live-stake-value">{liveStake ? formatADA(liveStake) : t("common.N/A")}</Title>
                   </CustomTooltip>
-                  {currentEpoch?.circulatingSupply !== null && (
-                    <Progress>
-                      <CustomTooltip title={"Total staked to Circulating supply ratio"}>
-                        <ProcessActive
-                          data-testid="live-stake-progress-active"
-                          rate={currentEpoch?.circulatingSupply ? liveRate.toNumber() : 0}
-                        >
-                          {isShowLiveStakePercentText && `${liveRate.toFixed(0, BigNumber.ROUND_DOWN)}%`}
-                        </ProcessActive>
-                      </CustomTooltip>
-                      <ProgressPending
-                        data-testid="live-stake-progress-pending"
-                        rate={(currentEpoch?.circulatingSupply ? liveRate.div(-1).plus(100).toNumber() : 100) || 0}
-                      >
-                        {isShowOtherStakePercentText && (
-                          <Box color={({ palette }) => palette.secondary.main}>
-                            {liveStake ? 100 - +liveRate.toFixed(0, BigNumber.ROUND_DOWN) : 0}%
-                          </Box>
-                        )}
-                      </ProgressPending>
-                    </Progress>
-                  )}
+
+                  <Progress>
+                    <ProcessActive data-testid="live-stake-progress-active" rate={+percentageActiveStake || 0}>
+                      {isShowPercentText(+percentageActiveStake) && (
+                        <Box color={theme.mode === "light" ? "inherit" : theme.palette.secondary[100]}>
+                          {percentageActiveStake}%
+                        </Box>
+                      )}
+                    </ProcessActive>
+
+                    <ProgressPending data-testid="live-stake-progress-pending" rate={+percentageLiveStake || 0}>
+                      {isShowPercentText(+percentageLiveStake) && (
+                        <Box color={({ palette }) => palette.secondary.main}>{percentageLiveStake}%</Box>
+                      )}
+                    </ProgressPending>
+                  </Progress>
                 </Box>
                 <Box>
-                  <Box color={({ palette }) => palette.secondary.light}>
-                    {t("glossary.activeStake")} (<ADAicon width={10} />){": "}
-                    <CustomTooltip title={activeStake ? formatADAFull(activeStake) : t("common.N/A")}>
-                      <span data-testid="active-stake-value">
-                        {activeStake ? formatADA(activeStake) : t("common.N/A")}
-                      </span>
-                    </CustomTooltip>
-                  </Box>
-                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                    <CustomTooltip title={t("glossary.offTheMaxSupply")}>
-                      <span>
-                        {t("glossary.circulatingSupply")} (<ADAicon width={8} />){": "}
-                      </span>
-                    </CustomTooltip>
-                    <CustomTooltip
-                      title={
-                        currentEpoch?.circulatingSupply === null
-                          ? t("common.N/A")
-                          : formatADAFull(currentEpoch?.circulatingSupply || 0)
-                      }
-                    >
-                      <span data-testid="circulating-supply-value">
-                        {currentEpoch?.circulatingSupply === null
-                          ? t("common.N/A")
-                          : formatADA(circulatingSupply.toString())}{" "}
-                      </span>
-                    </CustomTooltip>
-                    {currentEpoch?.circulatingSupply !== null && (
-                      <CustomTooltip title={`${circulatingRate.toFixed(5)}%`}>
-                        <span data-testid="circulating-supply-percentage">
-                          ({circulatingRate.toFixed(0, BigNumber.ROUND_DOWN)}%)
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <CircularLegend color={theme.palette.primary.main} />
+                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                        {t("glossary.activeStake")} {": "}
+                        <CustomTooltip title={activeStake ? formatADAFull(activeStake) : t("common.N/A")}>
+                          <span data-testid="active-stake-value">
+                            {activeStake ? `${formatADA(activeStake)} ADA` : t("common.N/A")}
+                          </span>
+                        </CustomTooltip>
+                      </Box>
+                    </Box>
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <CircularLegend color={theme.palette.primary[200]} />
+                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                        <span>
+                          {t("glossary.liveStake")} {": "}
                         </span>
-                      </CustomTooltip>
-                    )}
+                        <CustomTooltip title={!liveStake ? t("common.N/A") : formatADAFull(liveStake)}>
+                          <span data-testid="circulating-supply-value">
+                            {liveStake ? `${formatADA(liveStake)} ADA` : t("common.N/A")}{" "}
+                          </span>
+                        </CustomTooltip>
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
               </VerticalContent>
             </Item>
           </Box>
+        ) : (
+          <SkeletonBox />
+        )}
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
+        {currentEpoch ? (
+          <Link href={EXT_ADA_PRICE_URL} target="_blank">
+            <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
+              <WrapCardContent>
+                <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                  <ItemIcon
+                    style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                    data-testid="ada-price-icon"
+                    src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
+                  />
+                  <Name>{t("glossary.circulatingSupply")}</Name>
+                </Box>
+                <Box>
+                  <CustomTooltip
+                    title={
+                      currentEpoch?.circulatingSupply
+                        ? formatADAFull(currentEpoch?.circulatingSupply ?? 0)
+                        : t("common.N/A")
+                    }
+                  >
+                    <Title data-testid="live-stake-value">
+                      {currentEpoch?.circulatingSupply
+                        ? formatADA(currentEpoch?.circulatingSupply ?? 0)
+                        : t("common.N/A")}
+                    </Title>
+                  </CustomTooltip>
+
+                  <Progress>
+                    <CustomTooltip title={"Total staked to Circulating supply ratio"}>
+                      <ProcessActive data-testid="live-stake-progress-active" rate={+circulatingSupplyPercentage || 0}>
+                        {`${circulatingSupplyPercentage}%`}
+                      </ProcessActive>
+                    </CustomTooltip>
+                    <ProgressPending
+                      data-testid="live-stake-progress-pending"
+                      rate={+(100 - +circulatingSupplyPercentage || 0).toFixed(0)}
+                    ></ProgressPending>
+                  </Progress>
+                </Box>
+                <Box>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <CircularLegend color={theme.palette.primary.main} />
+                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                        Circulating Supply {": "}
+                        <CustomTooltip
+                          title={
+                            currentEpoch?.circulatingSupply
+                              ? formatADAFull(currentEpoch?.circulatingSupply)
+                              : t("common.N/A")
+                          }
+                        >
+                          <span data-testid="active-stake-value">
+                            {currentEpoch?.circulatingSupply
+                              ? formatADA(currentEpoch?.circulatingSupply ?? 0)
+                              : t("common.N/A")}
+                          </span>
+                        </CustomTooltip>
+                      </Box>
+                    </Box>
+                    <Box display="flex" alignItems="center" justifyContent="center">
+                      <CircularLegend color={theme.palette.primary[200]} />
+                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                        <CustomTooltip title={t("glossary.offTheMaxSupply")}>
+                          <span>Fix Max Supply {": "}</span>
+                        </CustomTooltip>
+                        <CustomTooltip title={"45B"}>
+                          <span data-testid="circulating-supply-value">45B ADA</span>
+                        </CustomTooltip>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </WrapCardContent>
+            </Item>
+          </Link>
+        ) : (
+          <SkeletonBox />
+        )}
+      </WrapGrid>
+      <WrapGrid item xl lg={3} sm={6} xs={12}>
+        {!loadingPots ? (
+          <Item data-testid="market-cap-box" smallitem="true" thememode={themeMode}>
+            <WrapCardContent>
+              <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                <ItemIcon data-testid="market-cap-icon" src={themeMode === "light" ? PotsIcon : PotsIconDark} />
+                <Name data-testid="market-cap-box-title">Pots</Name>
+              </Box>
+              <Box>
+                <CustomTooltip title={formatADAFull(+totalDataPots)}>
+                  <Title data-testid="market-cap-value">{formatADA(+totalDataPots)}</Title>
+                </CustomTooltip>
+                <Progress>
+                  <ProcessActive rate={+depositsPercentage || 0}>
+                    {isShowPercentText(+depositsPercentage) && (
+                      <Box
+                        color={theme.mode === "light" ? "inherit" : theme.palette.secondary[100]}
+                      >{`${depositsPercentage}%`}</Box>
+                    )}
+                  </ProcessActive>
+
+                  <ProgressRewards rate={+rewardsPercentage || 0}>
+                    {isShowPercentText(+rewardsPercentage) && (
+                      <Box color={({ palette }) => palette.secondary.main}>{rewardsPercentage}%</Box>
+                    )}
+                  </ProgressRewards>
+
+                  <ProgressTreasury rate={+treasuryPercentage || 0}>
+                    {isShowPercentText(+treasuryPercentage) && (
+                      <Box color={({ palette }) => palette.secondary.main}>{treasuryPercentage}%</Box>
+                    )}
+                  </ProgressTreasury>
+
+                  <ProgressPending rate={+reservesPercentage || 0}>
+                    {isShowPercentText(+reservesPercentage) && (
+                      <Box color={({ palette }) => palette.secondary.main}>{reservesPercentage}%</Box>
+                    )}
+                  </ProgressPending>
+                </Progress>
+              </Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                <Box display="flex" alignItems="center">
+                  <CircularLegend color={theme.palette.primary.main} />
+                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                    Deposits:{" "}
+                    <CustomTooltip
+                      title={activeStake ? formatADAFull(dataPostOverview?.depositsAndFees) : t("common.N/A")}
+                    >
+                      <span data-testid="active-stake-value">
+                        {activeStake ? formatADA(dataPostOverview?.depositsAndFees) : t("common.N/A")}
+                      </span>
+                    </CustomTooltip>
+                  </Box>
+                </Box>
+
+                <Box display="flex" alignItems="center" justifyContent={"center"}>
+                  <CircularLegend color={"#1B998B"} />
+                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                    Treasury:{" "}
+                    <CustomTooltip title={activeStake ? formatADAFull(dataPostOverview?.treasury) : t("common.N/A")}>
+                      <span data-testid="active-stake-value">
+                        {dataPostOverview?.treasury ? formatADA(dataPostOverview?.treasury) : t("common.N/A")}
+                      </span>
+                    </CustomTooltip>
+                  </Box>
+                </Box>
+
+                <Box display="flex" alignItems="center">
+                  <CircularLegend color={theme.isDark ? "#E8564B" : "#FE938C"} />
+                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                    Rewards:{" "}
+                    <CustomTooltip
+                      title={dataPostOverview?.rewards ? formatADAFull(dataPostOverview?.rewards) : t("common.N/A")}
+                    >
+                      <span data-testid="active-stake-value">
+                        {dataPostOverview?.rewards ? formatADA(dataPostOverview?.rewards) : t("common.N/A")}
+                      </span>
+                    </CustomTooltip>
+                  </Box>
+                </Box>
+
+                <Box display="flex" alignItems="center">
+                  <CircularLegend color={theme.palette.primary[200]} />
+                  <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                    Reserves:{" "}
+                    <CustomTooltip
+                      title={
+                        dataPostOverview?.reserves === null
+                          ? t("common.N/A")
+                          : formatADAFull(dataPostOverview?.reserves)
+                      }
+                    >
+                      <span data-testid="circulating-supply-value">
+                        {dataPostOverview?.reserves ? formatADA(dataPostOverview?.reserves) : t("common.N/A")}{" "}
+                      </span>
+                    </CustomTooltip>
+                  </Box>
+                </Box>
+              </Box>
+            </WrapCardContent>
+          </Item>
         ) : (
           <SkeletonBox />
         )}
