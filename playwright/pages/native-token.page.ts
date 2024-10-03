@@ -39,7 +39,6 @@ export function nativeTokenPage(page: Page) {
   const tokenTransactionTxhash = page.getByTestId("token.transaction.txHash#0");
   const tokenTransactionBlock = page.getByTestId("token.transaction.block#0");
   const tokenTransactionEpoch = page.getByTestId("token.transaction.epoch#0");
-  const tokenTransactionAddress = page.getByTestId("token.transaction.address#0");
   const widgetPolicyName = page.getByTestId("token.widget.policyName");
   const tokenAssetName = page.getByTestId("token.asset.name");
   const tokenMinting = page.getByTestId("token.detail.minting.trxHash#0");
@@ -82,9 +81,7 @@ export function nativeTokenPage(page: Page) {
   const goToEpochDetailFromTransactionTableByEpoch = async () => {
     await tokenTransactionEpoch.click();
   };
-  const goToAddressDetailFromTransactionTableByAddress = async () => {
-    await tokenTransactionAddress.click();
-  };
+
   const goToStakeAddressDetailFromTopHolderTableByAddress = async () => {
     await deatailTopHolderTab.click();
     await topholderTransactionAddress.click();
@@ -152,10 +149,6 @@ export function nativeTokenPage(page: Page) {
     const blockTrx = await tokenTransactionBlock.getAttribute("aria-label");
     return blockTrx;
   };
-  const getAddressByTableValueTrx = async () => {
-    const addressTrx = await tokenTransactionAddress.getAttribute("aria-label");
-    return addressTrx;
-  };
   const getMintingByTableValueTrx = async () => {
     const tokenMintingTrx = await tokenMinting.getAttribute("aria-label");
     return tokenMintingTrx;
@@ -201,7 +194,6 @@ export function nativeTokenPage(page: Page) {
     );
   };
   return {
-    goToAddressDetailFromTransactionTableByAddress,
     goToStakeAddressDetailFromTopHolderTableByAddress,
     goToTransactionDetailFromMintingTableByTxHash,
     goToTransactionDetailFromTransactionTableByTxHash,
@@ -231,7 +223,6 @@ export function nativeTokenPage(page: Page) {
     getDataPolicyName,
     getTokenAssetName,
     getEpochByTableValueTrx,
-    getAddressByTableValueTrx,
     getMintingByTableValueTrx,
     getBlockByTableValueTrx
   };
