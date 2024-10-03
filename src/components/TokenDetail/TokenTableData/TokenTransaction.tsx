@@ -97,28 +97,32 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
             <Flex>
               <Label>{t("drawer.input")}: </Label>
               <div>
-                <CustomTooltip title={r.addressesInput[0]}>
+                <CustomTooltip title={r?.addressesInput?.[0] ? r.addressesInput[0] : ""}>
                   <StyledLink
-                    to={details.address(r.addressesInput[0])}
+                    to={r?.addressesInput?.[0] ? details.address(r.addressesInput[0]) : "#"}
                     data-testid={`token.transaction.address#${index}`}
                   >
-                    {getShortHash(r.addressesInput[0])}
+                    {r?.addressesInput?.[0] ? getShortHash(r.addressesInput[0]) : ""}
                   </StyledLink>
                 </CustomTooltip>
                 <br />
-                {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
+                {r.addressesInput && r.addressesInput.length > 1 && (
+                  <StyledLink to={details.transaction(r.hash)}>...</StyledLink>
+                )}
               </div>
             </Flex>
             <Flex>
               <Label>{t("drawer.ouput")}: </Label>
               <div>
-                <CustomTooltip title={r.addressesOutput[0]}>
-                  <StyledLink to={details.address(r.addressesOutput[0])}>
-                    {getShortHash(r.addressesOutput[0])}
+                <CustomTooltip title={r?.addressesOutput?.[0] ? r.addressesOutput[0] : ""}>
+                  <StyledLink to={r?.addressesOutput?.[0] ? details.address(r.addressesOutput[0]) : "#"}>
+                    {r?.addressesOutput?.[0] ? getShortHash(r.addressesOutput[0]) : ""}
                   </StyledLink>
                 </CustomTooltip>
                 <br />
-                {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
+                {r.addressesOutput && r.addressesOutput.length > 1 && (
+                  <StyledLink to={details.transaction(r.hash)}>...</StyledLink>
+                )}
               </div>
             </Flex>
           </>
