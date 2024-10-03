@@ -356,11 +356,10 @@ export const FooterTable: React.FC<FooterTableProps> = ({
   useEffect(() => {
     trigger && setOpen(false);
   }, [trigger, setOpen]);
-
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">
-        {pagination?.total ? (
+        {pagination?.total && pagination?.total > 10 ? (
           <Box display="flex" alignItems="center">
             <SelectMui
               open={open}
