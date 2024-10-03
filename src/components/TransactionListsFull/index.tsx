@@ -76,20 +76,21 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             <Box display={"flex"}>
               <Label> {t("glossary.input")}: </Label>
               <div>
-                {r.addressesInput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink
-                        to={details.address(tx)}
-                        key={key}
-                        data-testid={`block.detail.trxTable.value.inputAddress#${index}`}
-                      >
-                        <Box ml={1}>{getShortHash(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesInput.length > 1 && (
+                {r?.addressesInput &&
+                  r?.addressesInput.slice(0, 1).map((tx, key) => {
+                    return (
+                      <CustomTooltip key={key} title={tx}>
+                        <StyledLink
+                          to={details.address(tx)}
+                          key={key}
+                          data-testid={`block.detail.trxTable.value.inputAddress#${index}`}
+                        >
+                          <Box ml={1}>{getShortHash(tx)}</Box>
+                        </StyledLink>
+                      </CustomTooltip>
+                    );
+                  })}
+                {r.addressesInput && r.addressesInput.length > 1 && (
                   <StyledLink to={details.transaction(r.hash)}>
                     <Box ml={1}>...</Box>
                   </StyledLink>
@@ -99,16 +100,17 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
             <Box display={"flex"} mt={1}>
               <Label>{t("glossary.output")}: </Label>
               <div>
-                {r.addressesOutput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortHash(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 1 && (
+                {r.addressesOutput &&
+                  r.addressesOutput.slice(0, 1).map((tx, key) => {
+                    return (
+                      <CustomTooltip key={key} title={tx}>
+                        <StyledLink to={details.address(tx)} key={key}>
+                          <Box ml={1}>{getShortHash(tx)}</Box>
+                        </StyledLink>
+                      </CustomTooltip>
+                    );
+                  })}
+                {r.addressesOutput && r.addressesOutput.length > 1 && (
                   <StyledLink to={details.transaction(r.hash)}>
                     <Box ml={1}>...</Box>
                   </StyledLink>
