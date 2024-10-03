@@ -18,7 +18,6 @@ export const routers = {
   POOL_DEREGISTRATION: "/pool-de-registrations",
   STORY_LIST: "/stories",
   STORY_DETAIL: "/story/:storyId",
-  ADDRESS_LIST: "/addresses",
   ADDRESS_DETAIL: "/address/:address",
   TOKEN_LIST: "/tokens",
   TOKEN_DETAIL: "/token/:tokenId/:tabActive?",
@@ -114,7 +113,8 @@ export const details = {
       .replace(":index", index)
       .replace(":tabActive?", tabActive ?? ""),
   constitutionalCommitteeDetail: (id: string, tab?: string) =>
-    routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? "")
+    routers.CONSTITUIONAL_COMMITTEE_DETAIL.replace(":CCid", id ?? "").replace(":tabActive", tab ?? ""),
+  addressMicar: (address?: string) => routers.ADDRESS_DETAIL.replace(":address", address ?? "")
 };
 
 export const listRouters = [
@@ -124,7 +124,6 @@ export const listRouters = [
   routers.DELEGATION_POOLS,
   routers.POOL_CERTIFICATE,
   routers.POOL_DEREGISTRATION,
-  routers.ADDRESS_LIST,
   routers.TOKEN_LIST,
   routers.STAKE_ADDRESS_REGISTRATION,
   routers.STAKE_ADDRESS_DEREGISTRATION,

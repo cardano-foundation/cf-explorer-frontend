@@ -3,17 +3,9 @@ import BigNumber from "bignumber.js";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  ExchageIcon,
-  FileGuard,
-  RewardIconComponent,
-  SlotIcon,
-  TimeIconComponent,
-  USDIconComponent
-} from "src/commons/resources";
+import { ExchageIcon, FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
 import {
   formatDateTimeLocal,
-  formatNumberDivByDecimals,
   getShortHash,
   numberWithCommas,
   formatNumberTotalSupply,
@@ -33,11 +25,10 @@ BigNumber.config({ DECIMAL_PLACES: 40 });
 interface ITokenOverview {
   data: IToken | null;
   loading: boolean;
-  currentHolders: number;
   lastUpdated?: number;
 }
 
-const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders, lastUpdated }) => {
+const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated }) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
@@ -60,7 +51,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
       ),
       value: (
         <TokenDescription>
-          <Box mb={1}>
+          <Box mb={1} data-assetName={`${data?.policy}${data?.name}`} data-testid="token.asset.name">
             {t("common.hexFormat")}: #{data?.name || data?.fingerprint}
           </Box>
           {data?.metadata?.description || ""}
@@ -83,13 +74,14 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
         <>
           <Box position={"relative"}>
             <CustomTooltip title={data?.policy}>
-              <PolicyId>{data?.policy || ""}</PolicyId>
+              <PolicyId data-testid="token.asset.script">{data?.policy || ""}</PolicyId>
             </CustomTooltip>
             <Box position={"absolute"} top={"-5px"} right={0}>
               <CopyButton text={data?.policy}></CopyButton>
             </Box>
           </Box>
           <PolicyScriptBtn
+            data-testid="token.policyScript"
             onClick={() => {
               setOpenModal(true);
               setPolicyId(data?.policy || "");
@@ -126,43 +118,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, currentHolders
           )}
         </>
       )
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("glossary.numberOfHolders")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: RewardIconComponent,
-      value: numberWithCommas(currentHolders || data?.numberOfHolders || "")
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <CustomTooltip title={t("desc.InUnits4Native")}>
-              <WrapTitle>{t("glossary.totalVolumn")}</WrapTitle>
-            </CustomTooltip>
-          </Box>
-        </Box>
-      ),
-      icon: ExchageIcon,
-      value: formatNumberDivByDecimals(data?.totalVolume || "", decimalToken || 0)
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <CustomTooltip title={t("desc.InUnits4Native")}>
-              <WrapTitle>{t("glossary.volume24h")}</WrapTitle>
-            </CustomTooltip>
-          </Box>
-        </Box>
-      ),
-      icon: USDIconComponent,
-      value: formatNumberDivByDecimals(data?.volumeIn24h || "", data?.metadata?.decimals || 0)
     },
     {
       title: (

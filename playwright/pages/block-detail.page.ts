@@ -73,7 +73,7 @@ export function blockDetailPage(page: Page) {
   };
 
   const checkBlockOverviewDetailPage = async ({ blockFrostBlock }: { blockFrostBlock: BlockInformationDto }) => {
-    await expect(blocksDetailHeader, "Block detail title").toHaveText("Block Details");
+    expect(await blocksDetailHeader.textContent(), "Block detail title").toEqual("Block Details");
 
     expect(
       moment((await blocksDetailCreateTime.textContent())?.replace(",", "")).unix(),

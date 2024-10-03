@@ -3,25 +3,19 @@ import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Box } from "@mui/material";
 
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import {
-  formatADAFull,
-  formatDateTimeLocal,
-  formatNameBlockNo,
-  getPageInfo,
-  getShortHash
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNameBlockNo, getPageInfo, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import ADAicon from "src/components/commons/ADAIcon";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { StyledOutput, BlueText, StyledContainer, StyledLink, PriceWrapper, Actions, TimeDuration } from "./styles";
+import { StyledContainer, StyledLink, PriceWrapper, Actions, TimeDuration } from "./styles";
 
 interface IEpochBlockList {
   epochId: string;
@@ -101,39 +95,12 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
           <PriceWrapper data-testid={`epochList.createdAtValue#${index}`}>{formatDateTimeLocal(r.time)}</PriceWrapper>
         </DatetimeTypeTooltip>
       )
-    },
-    {
-      title: <div data-testid="epochList.txCountTitle">{t("drawer.transactions")}</div>,
-      key: "blkCount",
-      minWidth: "100px",
-      render: (r, index) => <BlueText data-testid={`epochList.txCountValue#${index}`}>{r.txCount || 0}</BlueText>
-    },
-    {
-      title: <div data-testid="epochList.feesTitle">{t("common.fees")}</div>,
-      key: "fees",
-      render: (r, index) => (
-        <PriceWrapper data-testid={`epochList.feesValue#${index}`}>
-          {formatADAFull(r.totalFees)}
-          <ADAicon />
-        </PriceWrapper>
-      )
-    },
-    {
-      title: <div data-testid="epochList.outSumTitle">{t("glossary.output")}</div>,
-      key: "outSum",
-      minWidth: "100px",
-      render: (r, index) => (
-        <StyledOutput>
-          <BlueText data-testid={`epochList.outSumValue#${index}`}>{formatADAFull(r.totalOutput)}</BlueText>
-          <ADAicon />
-        </StyledOutput>
-      )
     }
   ];
 
   return (
     <StyledContainer>
-      <Card data-testid="epoch.blockList.blocksTitle" title={t("head.page.blocks")} underline>
+      <Card title={<Box data-testid="epoch.blockList.blocksTitle">{t("head.page.blocks")}</Box>} underline>
         {!error && (
           <Actions>
             <TimeDuration>

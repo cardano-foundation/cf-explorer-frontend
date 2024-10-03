@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
@@ -19,10 +19,9 @@ interface ITokenTopHolder {
   tokenId: string;
   totalSupply?: number;
   decimal?: number;
-  setCurrentHolder?: (holders: number) => void;
 }
 
-const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSupply, decimal, setCurrentHolder }) => {
+const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSupply, decimal }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
@@ -36,20 +35,18 @@ const TokenTopHolder: React.FC<ITokenTopHolder> = ({ tabActive, tokenId, totalSu
     blockKey
   );
   const { error } = fetchData;
-  useEffect(() => {
-    if (fetchData.total && setCurrentHolder) {
-      setCurrentHolder(fetchData.total || 0);
-    }
-  }, [fetchData.total, setCurrentHolder]);
 
   const columns: Column<ITokenTopHolderTable>[] = [
     {
       title: t("common.address"),
       key: "address",
       minWidth: "200px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.address}>
-          <StyledLink to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}>
+          <StyledLink
+            to={r.addressType === "PAYMENT_ADDRESS" ? details.address(r.address) : details.stake(r.address)}
+            data-testid={`transaction.topholder.address#${idx}`}
+          >
             {getShortHash(r.address)}
           </StyledLink>
         </CustomTooltip>

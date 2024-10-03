@@ -3,15 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Box } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  formatNumberTotalSupply,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash, numberWithCommas } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
@@ -53,13 +48,13 @@ const Tokens = () => {
 
   const columns: Column<IToken>[] = [
     {
-      title: t("glossary.icon"),
+      title: <Box data-testid="tokens.table.title.icon">{t("glossary.icon")}</Box>,
       key: "icon",
       minWidth: "50px",
       render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : "")
     },
     {
-      title: t("glossary.assetName"),
+      title: <Box data-testid="tokens.table.title.assetName">{t("glossary.assetName")}</Box>,
       key: "assetName",
       minWidth: "100px",
       render: (r, idx) =>
@@ -70,13 +65,17 @@ const Tokens = () => {
             </AssetName>
           </CustomTooltip>
         ) : (
-          <AssetName data-testid={`token.assetName#${idx}`} to={details.token(r?.fingerprint ?? "")}>
+          <AssetName
+            data-testid={`token.assetName#${idx}`}
+            to={details.token(r?.fingerprint ?? "")}
+            data-policy={`${r?.policy}${r?.name}`}
+          >
             {r.displayName || getShortHash(r.fingerprint || "")}
           </AssetName>
         )
     },
     {
-      title: t("glossary.scriptHash"),
+      title: <Box data-testid="tokens.table.title.scriptHash">{t("glossary.scriptHash")}</Box>,
       key: "policy",
       minWidth: "100px",
       render: (r, idx) => (
@@ -91,31 +90,17 @@ const Tokens = () => {
       )
     },
     {
-      title: t("common.totalTxs"),
+      title: (
+        <Box data-testid="tokens.table.title.totalTxs" component={"span"}>
+          {t("common.totalTxs")}
+        </Box>
+      ),
       key: "txCount",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.txCount),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: t("glossary.numberOfHolders"),
-      key: "numberOfHolders",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.numberOfHolders)
-    },
-    {
-      title: t("glossary.totalVolumn"),
-      key: "TotalVolume",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
-    },
-    {
-      title: t("glossary.volume24h"),
-      key: "volumeIn24h",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)
     },
     {
       title: t("common.totalSupply"),
@@ -130,7 +115,11 @@ const Tokens = () => {
       }
     },
     {
-      title: t("createdAt"),
+      title: (
+        <Box data-testid="tokens.table.title.createdAt" component={"span"}>
+          {t("createdAt")}
+        </Box>
+      ),
       key: "time",
       minWidth: "150px",
       render: (r) => (

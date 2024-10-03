@@ -4,14 +4,9 @@ import { BiChevronRight } from "react-icons/bi";
 import { CgClose } from "react-icons/cg";
 import { useTheme } from "@mui/material";
 
-import { MetadataIcon, PeopleIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
+import { MetadataIcon, TransactionIcon, UnionTokenIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, getShortHash } from "src/commons/utils/helper";
 
 import CopyButton from "../CopyButton";
 import CustomTooltip from "../CustomTooltip";
@@ -149,6 +144,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailValue>
                   <CustomTooltip title={data.policy}>
                     <StyledLink
+                      data-testid="token.widget.scriptHash"
                       to={
                         data.policyIsNativeScript
                           ? details.nativeScriptDetail(data.policy)
@@ -165,7 +161,9 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailLabel>{t("common.tokenID")}</DetailLabel>
                 <DetailValue>
                   <CustomTooltip title={tokenId}>
-                    <StyledLink to={details.token(tokenId)}>{getShortHash(tokenId || "")}</StyledLink>
+                    <StyledLink to={details.token(tokenId)} data-testid="token.widget.tokenId">
+                      {getShortHash(tokenId || "")}
+                    </StyledLink>
                   </CustomTooltip>
                   <CopyButton text={tokenId} />
                 </DetailValue>
@@ -180,7 +178,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                           <div>{getShortHash(data.displayName)}</div>
                         </CustomTooltip>
                       ) : data.displayName ? (
-                        data.displayName
+                        <div data-testid="token.widget.assetName">{data.displayName}</div>
                       ) : (
                         <CustomTooltip title={data.fingerprint || ""}>
                           <div>{getShortHash(data.fingerprint || "")}</div>
@@ -196,22 +194,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 <DetailValue>{data.txCount}</DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("glossary.numberOfHolders")}</DetailLabel>
-                <DetailValue>{numberWithCommas(data.numberOfHolders || 0)}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.totalVolumn")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.totalVolume || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel>{t("glossary.volume24h")}</DetailLabel>
-                <DetailValue>
-                  {formatNumberDivByDecimals(data.volumeIn24h || 0, data?.metadata?.decimals || 0)}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DatetimeTypeTooltip>
                   <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
@@ -219,7 +201,7 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
               </DetailsInfoItem>
             </Group>
             <Group>
-              <DetailLink to={details.token(tokenId)}>
+              <DetailLink data-testid="token.widget.transactions" to={details.token(tokenId)}>
                 <DetailLabel>
                   <DetailLinkIcon>
                     <TransactionIcon />
@@ -232,21 +214,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                   </DetailLinkRight>
                 </DetailValue>
               </DetailLink>{" "}
-            </Group>
-            <Group>
-              <DetailLink to={details.token(tokenId, "topHolders")}>
-                <DetailLabel>
-                  <DetailLinkIcon>
-                    <PeopleIcon />
-                  </DetailLinkIcon>
-                  <DetailLinkName>{t("glossary.topHolders")}</DetailLinkName>
-                </DetailLabel>
-                <DetailValue>
-                  <DetailLinkRight>
-                    <BiChevronRight size={24} />
-                  </DetailLinkRight>
-                </DetailValue>
-              </DetailLink>
             </Group>
             <Group>
               <DetailLink to={details.token(tokenId, "tokenMint")}>
@@ -280,7 +247,12 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
             </Group>
           </ViewDetailScroll>
         </ViewDetailContainer>
-        <ViewMoreButton to={details.token(tokenId)} />
+        <ViewMoreButton
+          to={details.token(tokenId)}
+          data-testid="token.widget.viewDetail"
+          data-policyName={`${data?.policy}${data?.name}`}
+        />
+        <div data-testid="token.widget.policyName" data-policyName={`${data?.policy}${data?.name}`}></div>
       </>
     );
   };

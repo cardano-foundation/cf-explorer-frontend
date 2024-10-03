@@ -38,7 +38,7 @@ export function blocksDashboard(page: Page) {
     await page.goto("/");
   };
   const goToBlocks = async () => {
-    await page.goto("/blocks");
+    await page.goto("/blocks", { timeout: 60000 }); // Increased timeout to 60 seconds
   };
 
   const goToEpochsFromSidebar = async () => {

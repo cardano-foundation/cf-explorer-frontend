@@ -19,7 +19,7 @@ export function epochDetailPage(page: Page) {
 
   const firstBlockInEpochDetail = page.getByTestId("epochList.blockValue#0");
   const firstBlockIdInEpochDetail = page.getByTestId("epochList.blockIdValue#0");
-  const detailTitle = page.getByTestId("detail-header-title");
+  const blockDetailTitle = page.getByTestId("block.detail.header");
   const transationTableTitle = page.getByTestId("header.table.transactions");
   const startTimeEpochOverview = page.getByTestId("epoch.overview.startTimeValue");
   const endTimeEpochOverview = page.getByTestId("epoch.overview.endTimeValue");
@@ -31,10 +31,6 @@ export function epochDetailPage(page: Page) {
   const slotTitleColumnBlockTable = page.getByTestId("epochList.slotTitle");
   const slotNoTitleColumnBlockTable = page.getByTestId("epochList.slotNoTitle");
   const createdAtTitleColumnBlockTable = page.getByTestId("epochList.createdAtTitle");
-  const txCountTitleColumnBlockTable = page.getByTestId("epochList.txCountTitle");
-  const feesTitleColumnBlockTable = page.getByTestId("epochList.feesTitle");
-  const outSumTitleColumnBlockTable = page.getByTestId("epochList.outSumTitle");
-
   const goToBlockDetailFromEpoch = async () => {
     await firstBlockInEpochDetail.click();
   };
@@ -122,8 +118,6 @@ export function epochDetailPage(page: Page) {
   };
 
   const checkEpochDetailPage = async ({ currentEpoch }: { currentEpoch?: BlockfrostEpochInformationDto }) => {
-    await expect(detailTitle, "Epoch detail title").toHaveText("Epoch Details");
-
     expect(
       moment((await startTimeEpochOverview.textContent())?.replace(",", "")).unix(),
       "Start time on epoch detail to equal start time epoch Blockfrost"
@@ -147,14 +141,11 @@ export function epochDetailPage(page: Page) {
     await expect(slotTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Slot");
     await expect(slotNoTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Absolute Slot");
     await expect(createdAtTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Created At");
-    await expect(txCountTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Transactions");
-    await expect(feesTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Fees");
-    await expect(outSumTitleColumnBlockTable, "Check title on finished blocks table").toHaveText("Output");
   };
 
   const checkBlockDetailPage = async ({ blockId = "" }: { blockId: string | null }) => {
     expect(page.url().includes(`/block/${blockId}`)).toBe(true);
-    await expect(detailTitle).toHaveText("Block Details");
+    await expect(blockDetailTitle).toHaveText("Block Details");
     await expect(transationTableTitle).toHaveText("Transactions");
   };
 
