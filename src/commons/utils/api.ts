@@ -46,6 +46,7 @@ export const API = {
     DREPS_OVERVIEW: "dreps/overview"
   },
   POTS_OVERVIEW: "pots/overview",
+  CIRCULATING_SUPPLY: "supply/circulating",
   TOKEN: {
     LIST: "tokens",
     TOKEN_TRX: "tokens/:tokenId/txs",
