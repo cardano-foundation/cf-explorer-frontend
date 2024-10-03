@@ -19,7 +19,7 @@ import {
 } from "src/commons/resources";
 import { details, routers } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
-import { EXT_ADA_PRICE_URL, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
+import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import {
   formatADA,
   formatADAFull,
@@ -38,7 +38,6 @@ import {
   Item,
   ItemIcon,
   ItemSkeleton,
-  Link,
   Name,
   ProcessActive,
   Progress,
@@ -73,6 +72,7 @@ const HomeStatistic = () => {
   const { currentEpoch, blockNo } = useSelector(({ system }: RootState) => system);
   const { data } = useFetch<StakeAnalytics>(API.STAKE.ANALYTICS, undefined, false, blockNo);
   const { data: dataPostOverview, loading: loadingPots } = useFetch<PostOverview>(API.POTS_OVERVIEW);
+  const { data: dataCiculatingSupply, loading: loadingciculating } = useFetch<number>(API.CIRCULATING_SUPPLY);
 
   const { theme: themeMode } = useSelector(({ theme }: RootState) => theme);
   const { liveStake = 0, activeStake = 1 } = data || {};
@@ -125,10 +125,10 @@ const HomeStatistic = () => {
     .minus(treasuryPercentage)
     .toFixed(0);
 
-  const FIX_MAX_SUPPLY = new BigNumber(45_000_000_000);
-  const circulatingSupplyNumber = new BigNumber(currentEpoch?.circulatingSupply ?? 0);
+  const FIX_MAX_SUPPLY = new BigNumber(45_000_000_000_000_000);
+  const circulatingSupplyNumber = new BigNumber(dataCiculatingSupply ?? 0);
 
-  const circulatingSupplyPercentage = circulatingSupplyNumber.dividedBy(FIX_MAX_SUPPLY).multipliedBy(100);
+  const circulatingSupplyPercentage = circulatingSupplyNumber.dividedBy(FIX_MAX_SUPPLY).multipliedBy(100).toFixed(0);
 
   return (
     <StatisticContainer
@@ -283,82 +283,68 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {currentEpoch ? (
-          <Link href={EXT_ADA_PRICE_URL} target="_blank">
-            <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
-              <WrapCardContent>
-                <Box display={"flex"} alignItems={"center"} height={"40px"}>
-                  <ItemIcon
-                    style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
-                    data-testid="ada-price-icon"
-                    src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
-                  />
-                  <Name>{t("glossary.circulatingSupply")}</Name>
-                </Box>
-                <Box>
-                  <CustomTooltip
-                    title={
-                      currentEpoch?.circulatingSupply
-                        ? formatADAFull(currentEpoch?.circulatingSupply ?? 0)
-                        : t("common.N/A")
-                    }
-                  >
-                    <Title data-testid="live-stake-value">
-                      {currentEpoch?.circulatingSupply
-                        ? formatADA(currentEpoch?.circulatingSupply ?? 0)
-                        : t("common.N/A")}
-                    </Title>
-                  </CustomTooltip>
+        {dataCiculatingSupply && !loadingciculating ? (
+          <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
+            <WrapCardContent>
+              <Box display={"flex"} alignItems={"center"} height={"40px"}>
+                <ItemIcon
+                  style={{ top: isGalaxyFoldSmall ? 10 : 15, right: isGalaxyFoldSmall ? 10 : 20 }}
+                  data-testid="ada-price-icon"
+                  src={themeMode === "light" ? AdaPriceIcon : AdaPriceDarkIcon}
+                />
+                <Name>{t("glossary.circulatingSupply")}</Name>
+              </Box>
+              <Box>
+                <CustomTooltip
+                  title={dataCiculatingSupply ? formatADAFull(dataCiculatingSupply ?? 0) : t("common.N/A")}
+                >
+                  <Title data-testid="live-stake-value">
+                    {dataCiculatingSupply ? formatADA(dataCiculatingSupply ?? 0) : t("common.N/A")}
+                  </Title>
+                </CustomTooltip>
 
-                  <Progress>
-                    <CustomTooltip title={"Total staked to Circulating supply ratio"}>
-                      <ProcessActive data-testid="live-stake-progress-active" rate={+circulatingSupplyPercentage || 0}>
-                        {`${circulatingSupplyPercentage}%`}
-                      </ProcessActive>
-                    </CustomTooltip>
-                    <ProgressPending
-                      data-testid="live-stake-progress-pending"
-                      rate={+(100 - +circulatingSupplyPercentage || 0).toFixed(0)}
-                    ></ProgressPending>
-                  </Progress>
-                </Box>
-                <Box>
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                      <CircularLegend color={theme.palette.primary.main} />
-                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                        Circulating Supply {": "}
-                        <CustomTooltip
-                          title={
-                            currentEpoch?.circulatingSupply
-                              ? formatADAFull(currentEpoch?.circulatingSupply)
-                              : t("common.N/A")
-                          }
-                        >
-                          <span data-testid="active-stake-value">
-                            {currentEpoch?.circulatingSupply
-                              ? formatADA(currentEpoch?.circulatingSupply ?? 0)
-                              : t("common.N/A")}
-                          </span>
-                        </CustomTooltip>
-                      </Box>
+                <Progress>
+                  <CustomTooltip title={"Total staked to Circulating supply ratio"}>
+                    <ProcessActive data-testid="live-stake-progress-active" rate={+circulatingSupplyPercentage || 0}>
+                      {`${circulatingSupplyPercentage}%`}
+                    </ProcessActive>
+                  </CustomTooltip>
+                  <ProgressPending
+                    data-testid="live-stake-progress-pending"
+                    rate={+(100 - +circulatingSupplyPercentage || 0).toFixed(0)}
+                  ></ProgressPending>
+                </Progress>
+              </Box>
+              <Box>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                  <Box display="flex" alignItems="center" justifyContent="center">
+                    <CircularLegend color={theme.palette.primary.main} />
+                    <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                      Circulating Supply {": "}
+                      <CustomTooltip
+                        title={dataCiculatingSupply ? formatADAFull(dataCiculatingSupply) : t("common.N/A")}
+                      >
+                        <span data-testid="active-stake-value">
+                          {dataCiculatingSupply ? formatADA(dataCiculatingSupply) : t("common.N/A")}
+                        </span>
+                      </CustomTooltip>
                     </Box>
-                    <Box display="flex" alignItems="center" justifyContent="center">
-                      <CircularLegend color={theme.palette.primary[200]} />
-                      <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
-                        <CustomTooltip title={t("glossary.offTheMaxSupply")}>
-                          <span>Fix Max Supply {": "}</span>
-                        </CustomTooltip>
-                        <CustomTooltip title={"45B"}>
-                          <span data-testid="circulating-supply-value">45B ADA</span>
-                        </CustomTooltip>
-                      </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center" justifyContent="center">
+                    <CircularLegend color={theme.palette.primary[200]} />
+                    <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
+                      <CustomTooltip title={t("glossary.offTheMaxSupply")}>
+                        <span>Fix Max Supply {": "}</span>
+                      </CustomTooltip>
+                      <CustomTooltip title={formatADAFull(+FIX_MAX_SUPPLY)}>
+                        <span data-testid="circulating-supply-value">45B ADA</span>
+                      </CustomTooltip>
                     </Box>
                   </Box>
                 </Box>
-              </WrapCardContent>
-            </Item>
-          </Link>
+              </Box>
+            </WrapCardContent>
+          </Item>
         ) : (
           <SkeletonBox />
         )}

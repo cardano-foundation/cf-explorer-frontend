@@ -99,6 +99,12 @@ export const formatADA = (
       return `${newValue}${syntax ?? `x 10^${exponential}`}`;
     }
   }
+
+  if (realAda.gte(1000) && realAda.lt(10 ** numOfUnits)) {
+    const valueInThousands = realAda.div(1000).toFixed(2);
+    return `${valueInThousands}K`;
+  }
+
   return numberWithCommas(realAda.toString(), decimalDigits);
 };
 

@@ -147,6 +147,7 @@ export const Progress = styled("div")`
   color: ${({ theme }) => theme.palette.common.white};
   color: ${(props) => props.theme.palette.primary.contrastText};
   margin-bottom: 10px;
+  margin-top: 8px;
 `;
 
 export const ProcessActive = styled("div")<{ rate: number }>`
