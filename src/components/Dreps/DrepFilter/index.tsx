@@ -1,4 +1,3 @@
-import React, { useEffect, useMemo, useState } from "react";
 import {
   AccordionSummary,
   Box,
@@ -10,14 +9,17 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
+import BigNumber from "bignumber.js";
+import { isEmpty, pickBy } from "lodash";
+import { parse, stringify } from "qs";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation } from "react-router-dom";
-import { BsFillCheckCircleFill } from "react-icons/bs";
-import { isEmpty, pickBy } from "lodash";
-import { stringify, parse } from "qs";
 
 import useFetch from "src/commons/hooks/useFetch";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 import {
   ActiveStakeDrepIcon,
   CurrentStatusIcon,
@@ -25,9 +27,9 @@ import {
   ExpiryIcon,
   FilterIcon,
   GovernanceIdIcon,
+  PoolParticipationIcon,
   PoolVotingIcon,
-  ResetIcon,
-  PoolParticipationIcon
+  ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
 import {
@@ -37,13 +39,12 @@ import {
   truncateDecimals,
   truncateToTwoDecimals
 } from "src/commons/utils/helper";
-import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
-import usePageInfo from "src/commons/hooks/usePageInfo";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 
-import CustomIcon from "../../commons/CustomIcon";
 import { ApplyFilterButton, StyledInput } from "../../commons/CustomFilter/styles";
+import CustomIcon from "../../commons/CustomIcon";
 import { AccordionContainer, AccordionDetailsFilter, FilterContainer, Input, StyledSlider } from "./styles";
 
 interface PoolResponse {
@@ -74,6 +75,8 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
   const history = useHistory<{ tickerNameSearch?: string; fromPath?: SpecialPath }>();
   const [expanded, setExpanded] = useState<string | false>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [fixMax, setFixMax] = useState<number>(6);
+  const [fixMin, setFixMin] = useState<number>(0);
   const [addDotMin, setAddDotMin] = useState<boolean>(false);
   const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { pageInfo } = usePageInfo();
@@ -122,6 +125,64 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
     });
     setDateRange({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
   }, [JSON.stringify(query)]);
+
+  useEffect(() => {
+    let initDecimalMin = 0;
+
+    switch (expanded) {
+      case "activeStake":
+        initDecimalMin = (
+          filterParams?.minActiveVoteStake
+            ? BigNumber(filterParams?.minActiveVoteStake)
+            : BigNumber(initParams?.minActiveVoteStake).div(10 ** 6) || 0
+        )
+          .toString()
+          .split(".")[1]?.length;
+        break;
+      case "drepParticipation":
+        initDecimalMin = filterParams?.minGovParticipationRate
+          ? (filterParams?.minGovParticipationRate * 100).toString().split(".")[1]?.length
+          : 0;
+        break;
+    }
+    if (initDecimalMin >= 6 && expanded === "activeStake") {
+      setFixMin(6);
+    } else if (initDecimalMin >= 2 && expanded === "drepParticipation") {
+      setFixMin(2);
+    } else if (initDecimalMin > 0) {
+      setFixMin(initDecimalMin);
+    } else {
+      setFixMin(0);
+    }
+    let initDecimalMax = 0;
+
+    switch (expanded) {
+      case "activeStake":
+        initDecimalMax = (
+          filterParams?.maxActiveVoteStake
+            ? BigNumber(filterParams?.maxActiveVoteStake)
+            : BigNumber(initParams?.maxActiveVoteStake).div(10 ** 6) || 0
+        )
+          .toString()
+          .split(".")[1]?.length;
+        break;
+      case "drepParticipation":
+        initDecimalMax = filterParams?.maxGovParticipationRate
+          ? ((filterParams.maxGovParticipationRate * 10000) / 100).toString().split(".")[1]?.length
+          : 0;
+        break;
+    }
+    if (initDecimalMax >= 6 && expanded === "activeStake") {
+      setFixMax(6);
+    } else if (initDecimalMax >= 2 && expanded === "drepParticipation") {
+      setFixMax(2);
+    } else if (initDecimalMax > 0) {
+      setFixMax(initDecimalMax);
+    } else {
+      setFixMax(expanded === "activeStake" ? 6 : 0);
+    }
+  }, [dataRange, expanded]);
+
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
@@ -209,7 +270,13 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(minValue || 0).toString() + (addDotMin ? "," : "")}
+          value={
+            addDotMin
+              ? Number(minValue || 0).toString() + ","
+              : ["minActiveVoteStake", "minGovParticipationRate"].includes(keyOnChangeMin)
+              ? Number(minValue || 0).toFixed(fixMin)
+              : Number(minValue || 0).toString()
+          }
           onKeyDown={(event) => {
             const key = event.key;
 
@@ -244,8 +311,25 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
 
+            const decimals = numericValue.split(".")[1]?.length;
+
+            if (
+              ((keyOnChangeMin === "minActiveVoteStake" && decimals <= 6) ||
+                (keyOnChangeMin === "minGovParticipationRate" && decimals <= 2)) &&
+              decimals > 0
+            ) {
+              setFixMin(decimals);
+            } else if (keyOnChangeMin === "minActiveVoteStake" && decimals > 6) {
+              setFixMin(6);
+            } else if (keyOnChangeMin === "minGovParticipationRate" && decimals > 2) {
+              setFixMin(2);
+            } else {
+              setFixMin(0);
+            }
+
             if (addDotMin) {
               numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setFixMin(1);
               setAddDotMin(false);
             }
             setFilterParams({
@@ -276,7 +360,13 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
             width: "100% !important",
             color: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
           }}
-          value={Number(maxValue).toString() + (addDotMax ? "," : "")}
+          value={
+            addDotMax
+              ? Number(maxValue).toString() + ","
+              : ["maxActiveVoteStake", "maxGovParticipationRate"].includes(keyOnChangeMax)
+              ? Number(maxValue).toFixed(fixMax)
+              : Number(maxValue).toString()
+          }
           onKeyDown={(event) => {
             const key = event.key;
 
@@ -318,7 +408,24 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
               setAddDotMax(false);
             }
 
-            Number(numericValue) <= maxValueDefault &&
+            if (Number(numericValue) <= maxValueDefault) {
+              const decimals = numericValue.split(".")[1]?.length;
+              if (
+                ((keyOnChangeMax === "maxActiveVoteStake" && decimals <= 6) ||
+                  (keyOnChangeMax === "maxGovParticipationRate" && decimals <= 2)) &&
+                decimals > 0
+              ) {
+                setFixMax(decimals);
+              } else if (keyOnChangeMax === "maxActiveVoteStake" && decimals > 6) {
+                setFixMax(6);
+              } else if (keyOnChangeMax === "maxGovParticipationRate" && decimals > 2) {
+                setFixMax(2);
+              } else if (addDotMax) {
+                setFixMax(1);
+              } else {
+                setFixMax(0);
+              }
+
               setFilterParams({
                 ...filterParams,
                 [keyOnChangeMax]:
@@ -334,6 +441,7 @@ const DrepFilter: React.FC<{ loading: boolean }> = ({ loading }) => {
                     ? truncateDecimals(+numericValue, 6)
                     : numericValue
               });
+            }
           }}
           onKeyPress={handleKeyPress}
         />
