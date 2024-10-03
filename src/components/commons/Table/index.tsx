@@ -356,7 +356,6 @@ export const FooterTable: React.FC<FooterTableProps> = ({
   useEffect(() => {
     trigger && setOpen(false);
   }, [trigger, setOpen]);
-
   return (
     <TFooter>
       <Box display={"flex"} alignItems="center" margin="15px 0px">

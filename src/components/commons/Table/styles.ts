@@ -314,7 +314,6 @@ export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 }));
 
 export const StyledResult = styled(Typography)(({ theme }) => ({
-  marginLeft: "20px",
   fontSize: "0.875rem",
   [theme.breakpoints.down(400)]: {
     marginLeft: "8px"
