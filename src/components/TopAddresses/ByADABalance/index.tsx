@@ -36,8 +36,12 @@ const TopAddressesByADABalance = () => {
       key: "address",
       minWidth: 170,
       maxWidth: "35vw",
-      render: (r) => (
-        <StyledLink data-testid="topAddresses.byADABalance.addressValue" to={details.address(r.address)}>
+      render: (r, index) => (
+        <StyledLink
+          aria-label={r.address}
+          data-testid={`topAddresses.byADABalance.addressValue#${index}`}
+          to={details.address(r.address)}
+        >
           <DynamicEllipsisText value={r.address} isTooltip />
         </StyledLink>
       )
@@ -46,9 +50,9 @@ const TopAddressesByADABalance = () => {
       title: <div data-testid="topAddresses.byADABalance.balanceTitle">{t("common.balance")}</div>,
       key: "balance",
       minWidth: 60,
-      render: (r) => (
+      render: (r, index) => (
         <Box display="inline-flex" alignItems="center">
-          <Box data-testid="topAddresses.byADABalance.balanceValue" mr={1}>
+          <Box aria-label={`${r.balance}`} data-testid={`topAddresses.byADABalance.balance#${index}`} mr={1}>
             {formatADAFull(r.balance)}
           </Box>
           <ADAicon />
@@ -59,8 +63,13 @@ const TopAddressesByADABalance = () => {
       title: <div data-testid="topAddresses.byADABalance.transactionCountTitle">{t("glossary.transactionCount")}</div>,
       minWidth: 120,
       key: "transaction_count",
-      render: (r) => (
-        <Box data-testid="topAddresses.byADABalance.transactionCountValue" display="flex" alignItems="center">
+      render: (r, index) => (
+        <Box
+          aria-label={`${r.txCount}`}
+          data-testid={`topAddresses.byADABalance.transactionCountValue#${index}`}
+          display="flex"
+          alignItems="center"
+        >
           {numberWithCommas(r.txCount) || 0}
         </Box>
       )

@@ -159,7 +159,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   );
 };
 
-const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data }) => {
+const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data, index }) => {
   const theme = useTheme();
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {
@@ -174,7 +174,7 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }>
         <Row style={{ marginBottom: 4 }}>
           <Title data-testid="nativeScripts.smartContract.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
           <Box
-            data-testid="nativeScripts.smartContract.card.scriptHashValue"
+            data-testid={`nativeScripts.smartContract.card.scriptHashValue#${index}`}
             mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
