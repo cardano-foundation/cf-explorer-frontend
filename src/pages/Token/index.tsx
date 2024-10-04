@@ -103,7 +103,11 @@ const Tokens = () => {
       }
     },
     {
-      title: <Box data-testid="tokens.table.title.totalSupply">{t("common.totalSupply")}</Box>,
+      title: (
+        <Box data-testid="tokens.table.title.totalSupply" component={"span"}>
+          {t("common.totalSupply")}
+        </Box>
+      ),
       key: "supply",
       minWidth: "150px",
       render: (r) => {
