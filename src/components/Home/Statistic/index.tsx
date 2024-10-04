@@ -126,9 +126,13 @@ const HomeStatistic = () => {
     .toFixed(0);
 
   const FIX_MAX_SUPPLY = new BigNumber(45_000_000_000_000_000);
+  const ADA_FIX_MAX_SUPPLY = FIX_MAX_SUPPLY.div(10 ** 6);
   const circulatingSupplyNumber = new BigNumber(dataCiculatingSupply ?? 0);
 
-  const circulatingSupplyPercentage = circulatingSupplyNumber.dividedBy(FIX_MAX_SUPPLY).multipliedBy(100).toFixed(0);
+  const circulatingSupplyPercentage = circulatingSupplyNumber
+    .dividedBy(ADA_FIX_MAX_SUPPLY)
+    .multipliedBy(100)
+    .toFixed(0);
 
   return (
     <StatisticContainer
@@ -296,19 +300,18 @@ const HomeStatistic = () => {
               </Box>
               <Box>
                 <CustomTooltip
-                  title={dataCiculatingSupply ? formatADAFull(dataCiculatingSupply ?? 0) : t("common.N/A")}
+                  title={dataCiculatingSupply ? formatADAFull((dataCiculatingSupply ?? 0) * 10 ** 6) : t("common.N/A")}
                 >
                   <Title data-testid="live-stake-value">
-                    {dataCiculatingSupply ? formatADA(dataCiculatingSupply ?? 0) : t("common.N/A")}
+                    {dataCiculatingSupply ? formatADA((dataCiculatingSupply ?? 0) * 10 ** 6) : t("common.N/A")}
                   </Title>
                 </CustomTooltip>
 
                 <Progress>
-                  <CustomTooltip title={"Total staked to Circulating supply ratio"}>
-                    <ProcessActive data-testid="live-stake-progress-active" rate={+circulatingSupplyPercentage || 0}>
-                      {`${circulatingSupplyPercentage}%`}
-                    </ProcessActive>
-                  </CustomTooltip>
+                  <ProcessActive data-testid="live-stake-progress-active" rate={+circulatingSupplyPercentage || 0}>
+                    {`${circulatingSupplyPercentage}%`}
+                  </ProcessActive>
+
                   <ProgressPending
                     data-testid="live-stake-progress-pending"
                     rate={+(100 - +circulatingSupplyPercentage || 0).toFixed(0)}
@@ -322,10 +325,12 @@ const HomeStatistic = () => {
                     <Box fontSize={"12px"} color={({ palette }) => palette.secondary.light}>
                       Circulating Supply {": "}
                       <CustomTooltip
-                        title={dataCiculatingSupply ? formatADAFull(dataCiculatingSupply) : t("common.N/A")}
+                        title={dataCiculatingSupply ? formatADAFull(dataCiculatingSupply * 10 ** 6) : t("common.N/A")}
                       >
                         <span data-testid="active-stake-value">
-                          {dataCiculatingSupply ? formatADA(dataCiculatingSupply) : t("common.N/A")}
+                          {dataCiculatingSupply
+                            ? `${formatADA((dataCiculatingSupply ?? 0) * 10 ** 6)} ADA`
+                            : t("common.N/A")}
                         </span>
                       </CustomTooltip>
                     </Box>
