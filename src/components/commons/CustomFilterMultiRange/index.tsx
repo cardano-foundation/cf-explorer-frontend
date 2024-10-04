@@ -99,7 +99,7 @@ const CustomFilterMultiRange: React.FC = () => {
     minBlockLifetime: +(dataRange?.minLifetimeBlock || 0),
     maxBlockLifetime: +(dataRange?.maxLifetimeBlock || 0),
     minVotingPower: +(dataRange?.minVotingPower || 0),
-    maxVotingPower: +(dataRange?.maxVotingPower || 0),
+    maxVotingPower: +(dataRange?.maxVotingPower?.toFixed(4) || 0),
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
     maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
@@ -453,7 +453,7 @@ const CustomFilterMultiRange: React.FC = () => {
                   : ["maxSaturation"].includes(keyOnChangeMax)
                   ? toFixedWithoutRounding(parseFloat(numericValue), 2)
                   : ["maxVotingPower"].includes(keyOnChangeMax)
-                  ? truncateDecimals(+numericValue / 100, 4)
+                  ? truncateDecimals((+numericValue * 100) / 10000, 4)
                   : numericValue
               });
             }

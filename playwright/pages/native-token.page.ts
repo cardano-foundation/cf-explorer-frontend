@@ -23,7 +23,6 @@ export function nativeTokenPage(page: Page) {
   const tokenTableScriptHash = page.getByTestId("tokens.table.title.scriptHash");
   const tokenTableTotalTxs = page.getByTestId("tokens.table.title.totalTxs");
   const tokenTableNumberOfHolders = page.getByTestId("tokens.table.title.numberOfHolders");
-  const tokenTableTotalVolumn = page.getByTestId("tokens.table.title.totalVolumn");
   const tokenTableVolume24h = page.getByTestId("tokens.table.title.volume24h");
   const tokenTableTotalSupply = page.getByTestId("tokens.table.title.totalSupply");
   const tokenTabletoCreatedAt = page.getByTestId("tokens.table.title.createdAt");
@@ -160,7 +159,6 @@ export function nativeTokenPage(page: Page) {
     await expect(tokenTableScriptHash, "Check title on transaction table").toHaveText("Script hash");
     await expect(tokenTableTotalTxs, "Check title on transaction table").toHaveText("Total Transactions");
     await expect(tokenTableNumberOfHolders, "Check title on transaction table").toHaveText("Number of holders");
-    await expect(tokenTableTotalVolumn, "Check title on transaction table").toHaveText("Total volume");
     await expect(tokenTableVolume24h, "Check title on transaction table").toHaveText("Volume 24H");
     await expect(tokenTableTotalSupply, "Check title on transaction table").toHaveText("Total Supply");
     await expect(tokenTabletoCreatedAt, "Check title on transaction table").toHaveText("Created At");

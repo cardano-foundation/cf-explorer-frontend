@@ -58,6 +58,7 @@ const TokenDetail: React.FC = () => {
         <TokenOverview data={data} loading={loading} lastUpdated={lastUpdated} />
         <TokenAnalytics dataToken={data} />
         <TokenTableData
+          totalSupply={data?.supply}
           metadata={data?.metadata}
           metadataJson={data?.metadataJson}
           loading={loading}

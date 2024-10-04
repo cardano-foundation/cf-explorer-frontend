@@ -13,9 +13,9 @@ import {
 } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
-import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
