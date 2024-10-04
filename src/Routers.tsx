@@ -45,7 +45,6 @@ import StakeDetail from "./pages/StakeDetail";
 import StakingLifecycle from "./pages/StakingLifecycle";
 import Tokens from "./pages/Token";
 import TokenDetail from "./pages/TokenDetail";
-import TopAddresses from "./pages/TopAddresses";
 import TopDelegators from "./pages/TopDelegators";
 import TransactionDetail from "./pages/TransactionDetail";
 import TransactionList from "./pages/TransactionList";
@@ -111,7 +110,6 @@ const Routes: React.FC = () => {
       <Route path={routers.NATIVE_SCRIPTS_AND_SC} exact component={NativeScriptAndSC} />
       <Route path={routers.ADDRESS_DETAIL} exact component={AddressWalletDetail} />
       <Route path={routers.POLICY_DETAIL} exact component={PolicyDetail} />
-      <Route path={routers.ADDRESS_LIST} exact component={TopAddresses} />
       <Route path={routers.TOP_DELEGATOR} exact component={TopDelegators} />
       <Route path={routers.CONSTITUIONAL_COMMITTEES} exact component={ConstitutionalCommittees} />
       <Route path={routers.OVERVIEW} exact component={Overview} />
