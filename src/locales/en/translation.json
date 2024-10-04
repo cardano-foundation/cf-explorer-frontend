@@ -91,6 +91,7 @@
   "constitutionalCommittee.page.description": "Explore the role, composition, and current status of the Constitutional Committee responsible for Cardano's governance. Review member details, governance actions, and the proposal policy to understand the decision-making processes that shape the network.",
   "overview.page.description": "Governance actions include types like protocol changes, treasury withdrawals, and hard-fork initiations. Each action has specific approval thresholds, requiring consensus from bodies such as the Constitutional Committee, Delegated Representatives (DReps), and Stake Pool Operators (SPOs), ensuring transparent and effective governance.",
   "govAction.govActionID": "Governance Action ID: ",
+  "overview.page.preDefinedVotes": "Pre-defined Votes",
   "govAction.actionType": "Action Type",
   "govAction.dateCreated": "Date Created",
   "govAction.status": "Status",
