@@ -149,7 +149,7 @@ const DelegationDetailChart: React.FC<DelegationDetailChartProps> = ({ poolId })
   return (
     <StyledContainer>
       <AnalyticsTitle data-testid="delegatorChart.analytics">{t("common.analytics")}</AnalyticsTitle>
-      <GridWrapper container columns={24} spacing="35px">
+      <GridWrapper container columns={24} spacing={4.375}>
         <Grid item xs={24} lg={18}>
           <Box>
             <Box

@@ -10,7 +10,7 @@ export const ContainerTab = styled("div")`
   box-shadow: ${(props) => props.theme.shadow.card};
   position: relative;
   display: flex;
-  margin-top: 62px;
+  margin-top: 36px;
 `;
 
 export const StyledLink = styled(Link)`
