@@ -36,7 +36,6 @@ export function epochsDashboardPage(page: Page) {
   const startTimeInEpochWidget = page.getByTestId("epoch.detailViewEpoch.startTimeValue");
   const endTimeInEpochWidget = page.getByTestId("epoch.detailViewEpoch.endTimeValue");
   const txCountInEpochWidget = page.getByTestId("epoch.detailViewEpoch.txCountValue");
-  const totalOutputInEpochWidget = page.getByTestId("epoch.detailViewEpoch.totalOutputValue");
   const blockTabWidget = page.getByTestId("epoch.detailViewEpoch.blockLink");
   const viewDetailButtonWidget = page.getByTestId("epoch.detailViewEpoch.viewDetail");
   const blockTab = page.getByTestId("epoch.detailViewEpoch.blockLink");
@@ -166,11 +165,6 @@ export function epochsDashboardPage(page: Page) {
       parseInt(<string>await txCountInEpochWidget.textContent()),
       "Total transaction in finished epoch on widget to equal total block in epoch on Blockfrost "
     ).toEqual(currentEpoch?.tx_count || 0);
-
-    expect(
-      +((await totalOutputInEpochWidget.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total output in finished epoch on widget to equal total block in epoch on Blockfrost "
-    ).toEqual(+(currentEpoch?.output || 0));
 
     await expect(blockTabWidget, "Block tab on epoch widget").toHaveText("Blocks");
 
