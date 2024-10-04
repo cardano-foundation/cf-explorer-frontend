@@ -1,4 +1,4 @@
-import { Box, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronRight } from "react-icons/bi";
@@ -10,9 +10,8 @@ import { BlockIcon, CubeIconComponent, RocketIcon } from "src/commons/resources"
 import { details } from "src/commons/routers";
 import { API } from "src/commons/utils/api";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 
-import ADAicon from "../ADAIcon";
 import CustomIcon from "../CustomIcon";
 import CustomTooltip from "../CustomTooltip";
 import FormNowMessage from "../FormNowMessage";
@@ -246,40 +245,6 @@ const DetailViewEpoch: React.FC<DetailViewEpochProps> = ({ epochNo, handleClose,
               <DetailsInfoItem>
                 <DetailLabel data-testid="epoch.detailViewEpoch.blocksTitle">{t("glossary.blocks")}</DetailLabel>
                 <DetailValue data-testid="epoch.detailViewEpoch.blocksValue">{data.blkCount}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel data-testid="epoch.detailViewEpoch.uniqueAccountsTitle">
-                  {t("glossary.uniqueAccounts")}
-                </DetailLabel>
-                <DetailValue data-testid="epoch.detailViewEpoch.uniqueAccountsValue">{data.account}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel data-testid="epoch.detailViewEpoch.txCountTitle">{t("drawer.txCount")}</DetailLabel>
-                <DetailValue data-testid="epoch.detailViewEpoch.txCountValue">{data.txCount}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel data-testid="epoch.detailViewEpoch.rewardsDistributedTitle">
-                  {t("glossary.rewardsDistributed")}
-                </DetailLabel>
-                <DetailValue data-testid="epoch.detailViewEpoch.rewardsDistributedValue">
-                  {data?.rewardsDistributed ? (
-                    <Box>
-                      {formatADAFull(data?.rewardsDistributed)}&nbsp;
-                      <ADAicon />
-                    </Box>
-                  ) : (
-                    t("common.N/A")
-                  )}
-                </DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
-                <DetailLabel data-testid="epoch.detailViewEpoch.totalOutputTitle">
-                  {t("glossary.totalOutput")}
-                </DetailLabel>
-                <DetailValue data-testid="epoch.detailViewEpoch.totalOutputValue">
-                  {formatADAFull(data.outSum)}
-                  <ADAicon />
-                </DetailValue>
               </DetailsInfoItem>
             </Group>
             <Group>
