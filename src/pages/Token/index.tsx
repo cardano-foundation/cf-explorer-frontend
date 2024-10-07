@@ -90,7 +90,11 @@ const Tokens = () => {
       )
     },
     {
-      title: <Box data-testid="tokens.table.title.totalTxs">{t("common.totalTxs")}</Box>,
+      title: (
+        <Box data-testid="tokens.table.title.totalTxs" component={"span"}>
+          {t("common.totalTxs")}
+        </Box>
+      ),
       key: "txCount",
       minWidth: "150px",
       render: (r) => numberWithCommas(r?.txCount),
@@ -99,7 +103,11 @@ const Tokens = () => {
       }
     },
     {
-      title: <Box data-testid="tokens.table.title.totalSupply">{t("common.totalSupply")}</Box>,
+      title: (
+        <Box data-testid="tokens.table.title.totalSupply" component={"span"}>
+          {t("common.totalSupply")}
+        </Box>
+      ),
       key: "supply",
       minWidth: "150px",
       render: (r) => {
@@ -111,7 +119,11 @@ const Tokens = () => {
       }
     },
     {
-      title: <Box data-testid="tokens.table.title.createdAt">{t("createdAt")}</Box>,
+      title: (
+        <Box data-testid="tokens.table.title.createdAt" component={"span"}>
+          {t("createdAt")}
+        </Box>
+      ),
       key: "time",
       minWidth: "150px",
       render: (r) => (
