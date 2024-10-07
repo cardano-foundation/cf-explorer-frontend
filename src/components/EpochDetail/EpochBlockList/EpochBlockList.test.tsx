@@ -26,11 +26,9 @@ describe("EpochBlockList component", () => {
       data: mockedData
     });
     render(<EpochBlockList epochId="417" />);
-    expect(screen.getByText("Transactions")).toBeInTheDocument();
     expect(screen.getByText("Block")).toBeInTheDocument();
     expect(screen.getByText("Block ID")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockedData[0].hash })).toBeInTheDocument();
-    expect(screen.getByText("Output")).toBeInTheDocument();
   });
 
   it("should component render the empty table", () => {

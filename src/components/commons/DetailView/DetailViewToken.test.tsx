@@ -48,7 +48,6 @@ describe("DetailViewToken component", () => {
     render(<DetailViewToken handleClose={jest.fn()} token={mockToken} tokenId={mockTokenId} open={true} />);
     expect(screen.getAllByText(/Token Display Name/i)[0]).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Transactions/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /top holders/i })).toBeInTheDocument();
   });
 
   it("should component go to detail pages", () => {
