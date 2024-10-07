@@ -91,7 +91,7 @@ const useFetchList = <T>(
         setInitialized(true);
         if (error instanceof AxiosError) {
           setError(error?.response?.data?.message || error?.message);
-          setStatusError(error.response?.status || error.request.status);
+          setStatusError(error.response?.status || error.request?.status || undefined);
         } else if (typeof error === "string") setError(error);
       }
       lastFetch.current = Date.now();

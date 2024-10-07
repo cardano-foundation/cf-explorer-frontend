@@ -3,11 +3,10 @@ import { cleanup, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 // eslint-disable-next-line import/no-unresolved
-import { Column } from "src/types/table";
 import { render } from "src/test-utils";
 import useFetch from "src/commons/hooks/useFetch";
 
-import ProtocolParameter, { FilterComponent, TableStyled } from "./index";
+import ProtocolParameter, { FilterComponent } from "./index";
 
 jest.mock("src/commons/hooks/useFetch");
 
@@ -28,34 +27,15 @@ describe("ProtocolParameter page", () => {
 
   it("should be render page", () => {
     render(<ProtocolParameter />);
-    expect(screen.getByText("Updatable Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Global Constants")).toBeInTheDocument();
-    expect(screen.getByText(/View update activity/i)).toBeInTheDocument();
+    expect(screen.getByText("Protocol Parameters")).toBeInTheDocument();
+    expect(screen.getByText("Network group")).toBeInTheDocument();
+    expect(screen.getByText(/View update history/i)).toBeInTheDocument();
   });
-  it("renders the table with given columns and data", () => {
-    const columns: Column<{ test: string }>[] = [
-      {
-        title: "Test Column",
-        key: "test",
-        render: (r) => <div>{r.test}</div>
-      }
-    ];
 
-    const data = [
-      {
-        test: "Test Data"
-      }
-    ];
-
-    render(<TableStyled columns={columns} data={data} loading={false} />);
-
-    expect(screen.getByText("Test Column")).toBeInTheDocument();
-    expect(screen.getByText("Test Data")).toBeInTheDocument();
-  });
   it("renders data in the table", async () => {
     render(<ProtocolParameter />);
-    expect(screen.getByText(/Updatable Parameters/)).toBeInTheDocument();
-    expect(screen.getByText(/Global Constants/)).toBeInTheDocument();
+    expect(screen.getByText(/Economic Group/)).toBeInTheDocument();
+    expect(screen.getByText(/Technical Group/)).toBeInTheDocument();
   });
 });
 
