@@ -18,6 +18,7 @@ import Tabular from "src/components/StakingLifeCycle/SPOLifecycle/Tablular";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import {
   AddressLine,
@@ -76,6 +77,7 @@ const SPOLifecycle = () => {
   const {
     data,
     error,
+    statusError,
     initialized,
     loading: loadingInitialData
   } = useFetch<PoolInfo>(poolId ? API.SPO_LIFECYCLE.POOL_INFO(poolId) : "");
@@ -131,8 +133,9 @@ const SPOLifecycle = () => {
     );
   }
 
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
   if (!initialized && !error) return null;
-  if (error || !data || !data.poolId) return <NoRecord />;
+  if ((error && (statusError || 0) < 500) || !data || !data.poolId) return <NoRecord />;
 
   return (
     <PoolDetailContext.Provider value={data}>

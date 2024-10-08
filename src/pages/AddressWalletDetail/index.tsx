@@ -10,6 +10,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
 import useADAHandle from "src/commons/hooks/useADAHandle";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 const AddressWalletDetail = () => {
   const { address } = useParams<{ address: string }>();
@@ -35,7 +36,7 @@ const AddressWalletDetail = () => {
     document.documentElement.scrollTop = 0;
   }, [address]);
 
-  const { data, loading, initialized, error } = useFetch<WalletAddress>(
+  const { data, loading, initialized, error, statusError } = useFetch<WalletAddress>(
     addressWallet ? `${API.ADDRESS.DETAIL}/${addressWallet}` : "",
     state?.data,
     false,
@@ -49,7 +50,8 @@ const AddressWalletDetail = () => {
       </Box>
     );
   }
-  if (initialized && (!data || error) && !loading) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if (initialized && (!data || (error && (statusError || 0) < 500)) && !loading) return <NoRecord />;
 
   return (
     <ContainerBox>

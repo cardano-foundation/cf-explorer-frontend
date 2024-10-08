@@ -8,6 +8,7 @@ import BlockOverview from "src/components/BlockDetail/BlockOverview";
 import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
 import { API } from "src/commons/utils/api";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer } from "./styles";
 
@@ -15,7 +16,7 @@ const BlockDetail = () => {
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { blockId } = useParams<{ blockId: string }>();
   const { state } = useLocation<{ data?: BlockDetail }>();
-  const { data, loading, initialized, error, lastUpdated } = useFetch<BlockDetail>(
+  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<BlockDetail>(
     `${API.BLOCK.DETAIL}/${blockId}`,
     state?.data,
     false,
@@ -37,7 +38,8 @@ const BlockDetail = () => {
   if (!initialized) {
     return null;
   }
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if ((initialized && !data) || (error && (statusError || 0) < 500)) return <NoRecord />;
 
   return (
     <StyledContainer>

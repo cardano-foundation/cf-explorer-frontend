@@ -44,6 +44,7 @@ import {
 } from "src/pages/NativeScriptsAndSC/styles";
 import DateRangeModal, { DATETIME_PARTTEN, DateRange } from "src/components/commons/CustomFilter/DateRangeModal";
 import { StyledInput } from "src/components/share/styled";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { Chip, Item, Row, Title } from "./style";
 
@@ -90,19 +91,22 @@ const StatusHistory = () => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterGovernanceVotes
-          setQuery={setQuery}
-          query={query}
-          voterType={VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH}
-        />
-      </Box>
-      {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+      {!error && (
+        <Box display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterGovernanceVotes
+            setQuery={setQuery}
+            query={query}
+            voterType={VOTE_TYPE.CONSTITUTIONAL_COMMITTEE_HOT_KEY_HASH}
+          />
+        </Box>
+      )}
+      {((data && data.length === 0 && initialized && !error) || (error && (statusError || 0) < 500)) && (
         <NoRecord m="80px 0px" padding={`0 !important`} />
       )}
+      {error && (statusError || 0) >= 500 && <FetchDataErr m="80px 0px" padding={`0 !important`} />}
       <Box component={Grid} container spacing={2} mt={1}>
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>

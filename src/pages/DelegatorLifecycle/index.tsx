@@ -18,6 +18,7 @@ import { ChartMode, TableMode } from "src/commons/resources";
 import { ROLE_ELEVATED_GEN_REPORT } from "src/commons/utils/constants";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import {
   BoxContainerStyled,
@@ -78,6 +79,7 @@ const DelegatorLifecycle = () => {
   const {
     data,
     error,
+    statusError,
     initialized,
     loading: loadingInitialData
   } = useFetch<IStakeKeyDetail>(`${API.STAKE.DETAIL}/${stakeId}`, undefined, false);
@@ -128,7 +130,9 @@ const DelegatorLifecycle = () => {
   }
   if (!initialized && !error) return null;
 
-  if (error || !data) return <NoRecord />;
+  if (error && (statusError || 0) < 500) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if (!data) return <NoRecord />;
 
   return (
     <DelegatorDetailContext.Provider

@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-export const TitleTab = styled(Box)<{ active: boolean }>(({ active, theme }) => ({
+export const TitleTab = styled(Box)<{ active: string }>(({ active, theme }) => ({
   marginLeft: "8px",
   fontWeight: "bold",
   textTransform: "capitalize",
   fontSize: "18px",
-  color: active ? theme.palette.primary.main : theme.palette.secondary.light
+  color: active === "1" ? theme.palette.primary.main : theme.palette.secondary.light
 }));
 
 export const StyledLink = styled(Link)`
@@ -176,8 +176,8 @@ export const StyledContractTabs = styled(Box)(() => ({
   width: "100%"
 }));
 
-export const StyledAccordionSummary = styled(AccordionSummaryMUI)<{ active: number }>(({ active }) => ({
-  padding: `18px 25px ${active ? 0 : "18px"} 25px`
+export const StyledAccordionSummary = styled(AccordionSummaryMUI)<{ active: string }>(({ active }) => ({
+  padding: `18px 25px ${active === "1" ? 0 : "18px"} 25px`
 }));
 
 export const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({

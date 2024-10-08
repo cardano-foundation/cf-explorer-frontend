@@ -13,9 +13,9 @@ export const WrapGrid = styled(Grid)`
   flex-direction: column;
 `;
 
-export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>`
-  background: ${({ theme, themeMode }) =>
-    themeMode === "light" ? theme.palette.secondary[700] : theme.palette.secondary[0]};
+export const Item = styled(Card)<{ smallitem?: "true" | "false"; thememode?: ThemeType }>`
+  background: ${({ theme, thememode }) =>
+    thememode === "light" ? theme.palette.secondary[700] : theme.palette.secondary[0]};
   height: 100%;
   min-height: 164px;
   font-family: var(--font-family-text);
@@ -31,7 +31,7 @@ export const Item = styled(Card)<{ smallItem?: boolean; themeMode?: ThemeType }>
   }
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 15px;
-    ${({ smallItem }) => smallItem && "height: max-content; min-height: 120px;"}
+    ${({ smallitem }) => smallitem === "true" && "height: max-content; min-height: 120px;"}
   }
   cursor: pointer;
 `;

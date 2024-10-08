@@ -12,6 +12,7 @@ import StakeAnalytics from "src/components/StakeDetail/StakeAnalytics";
 import { setSpecialPath } from "src/stores/system";
 import { routers } from "src/commons/routers";
 import useADAHandle from "src/commons/hooks/useADAHandle";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer } from "./styles";
 
@@ -39,7 +40,7 @@ const StakeDetail: React.FC = () => {
     blockKey
   );
 
-  const { data, loading, initialized, error, lastUpdated } = useFetch<IStakeKeyDetail>(
+  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<IStakeKeyDetail>(
     stakeAddress ? `${API.STAKE.DETAIL}/${stakeAddress}` : "",
     undefined,
     false,
@@ -72,7 +73,8 @@ const StakeDetail: React.FC = () => {
       </Box>
     );
   }
-  if (initialized && (!data || error) && !loading) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if (initialized && (!data || (error && (statusError || 0) < 500)) && !loading) return <NoRecord />;
 
   return (
     <StyledContainer>

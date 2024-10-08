@@ -58,6 +58,7 @@ import { FF_GLOBAL_IS_CONWAY_ERA, VOTE_TYPE } from "src/commons/utils/constants"
 import DelegationGovernanceVotes, { ActionMetadataModalConfirm } from "src/components/GovernanceVotes";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer, StyledMenuItem, StyledSelect, TimeDuration, TitleCard, TitleTab, ValueCard } from "./styles";
 import NotFound from "../NotFound";
@@ -82,7 +83,7 @@ const DrepDetail = () => {
 
   const [typeVote, setTypeVote] = useState("Default");
   const [openModal, setOpenModal] = useState(false);
-  const { data, loading, error } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
+  const { data, loading, error, statusError } = useFetch<DrepOverview>(API.DREP_OVERVIEW.replace(":drepId", drepId));
   const { data: dataChard, loading: loadingChard } = useFetch<DrepOverviewChart>(
     `${API.DREP_OVERVIEW_CHART.replace(":drepId", drepId)}?govActionType=${typeVote === "Default" ? "ALL" : typeVote}`
   );
@@ -115,11 +116,14 @@ const DrepDetail = () => {
             >
               <DynamicEllipsisText
                 value={data?.anchorUrl || ""}
-                sxFirstPart={{ maxWidth: width > 600 ? "calc(100% - 60px)" : "calc(100% - 70px)" }}
+                sxFirstPart={{
+                  maxWidth: "calc(100% - 60px)",
+                  minWidth: 16
+                }}
+                customTruncateFold={[4, 4]}
                 postfix={5}
                 sxLastPart={{ direction: "inherit" }}
-                sx={{ width: data?.anchorUrl.length > 25 ? "100%" : "fit-content", cursor: "pointer" }}
-                isNoLimitPixel={true}
+                sx={{ cursor: "pointer" }}
                 isTooltip
                 whiteSpace="normal"
               />
@@ -128,7 +132,9 @@ const DrepDetail = () => {
           <ActionMetadataModalConfirm
             open={openModal}
             onClose={() => setOpenModal(false)}
-            anchorUrl={data?.anchorUrl || ""}
+            anchorUrl={
+              data?.anchorUrl ? (data?.anchorUrl.includes("http") ? data?.anchorUrl : `//${data.anchorUrl}`) : ""
+            }
           />
         </ValueCard>
       )
@@ -274,7 +280,8 @@ const DrepDetail = () => {
       )
     }
   ];
-  if (error) return <NoRecord />;
+  if (error && (statusError || 0) < 500) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
   if (!FF_GLOBAL_IS_CONWAY_ERA) {
     return <NotFound />;
   }
@@ -452,8 +459,8 @@ const DrepAccordion = () => {
         <StyledAccordion
           key={key}
           expanded={tab === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          customborderradius={needBorderRadius(key)}
+          isdisplaybordertop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary

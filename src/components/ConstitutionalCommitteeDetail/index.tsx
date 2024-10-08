@@ -13,10 +13,10 @@ const ConstitutionalCommitteeDetail = () => {
   const { CCid } = useParams<{ CCid?: string }>();
   const { data, loading, error, statusError } = useFetch<CCDetailOVerview>(API.COMMITTEE.DETAIL_OVERVIEW(CCid || ""));
 
-  if (error && statusError !== 500) {
+  if (error && (statusError || 0) < 500) {
     return <NoRecord m="170px 0px" padding={`0 !important`} />;
   }
-  if (error && statusError === 500) {
+  if (error && (statusError || 0) >= 500) {
     return <FetchDataErr m="170px 0px" padding={`0 !important`} />;
   }
   return (

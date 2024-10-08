@@ -58,6 +58,7 @@ import ConstitutionalCommitteeDetail from "./pages/ConstitutionalCommitteeDetail
 import Overview from "./pages/Overview";
 import NetworkMonitoring from "./pages/NetworkMonitoring";
 import GovernanceActionDetails from "./pages/GovernanceActionDetails";
+import BolnisiLanding from "./pages/BolnisiLanding";
 
 const StakeAddressRegistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.REGISTRATION} />;
 const StakeAddressDeregistration = () => <Stake stakeAddressType={STAKE_ADDRESS_TYPE.DEREREGISTRATION} />;
@@ -130,6 +131,7 @@ const Routes: React.FC = () => {
       <Route path={routers.TERMS_OF_SERVICE} exact component={TermOfServices} />
       <Route path={routers.NATIVE_SCRIPT_DETAIL} exact component={NativeScriptsDetailPage} />
       <Route path={routers.DREP_DETAILS} exact component={DrepDetail} />
+      <Route path={routers.BOLNISI_LANDING} exact component={BolnisiLanding} />
       <Route path={routers.ACCOUNT}>
         <AccountLayout>
           <Switch>

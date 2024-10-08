@@ -2,13 +2,13 @@ import { Accordion, styled, Box } from "@mui/material";
 
 export const StyledAccordion = styled(Accordion)<{
   expanded: boolean;
-  customBorderRadius: string;
-  isDisplayBorderTop: boolean;
-}>(({ expanded, customBorderRadius, isDisplayBorderTop, theme }) => ({
-  borderRadius: expanded ? "12px" : customBorderRadius,
+  customborderradius: string;
+  isdisplaybordertop: string | boolean;
+}>(({ expanded, customborderradius, isdisplaybordertop, theme }) => ({
+  borderRadius: expanded ? "12px" : customborderradius,
   background: theme.palette.secondary[0],
   textAlign: "left",
-  boxShadow: expanded || customBorderRadius !== "0" ? "0px 4px 4px rgba(0, 0, 0, 0.05)" : "none",
+  boxShadow: expanded || customborderradius !== "0" ? "0px 4px 4px rgba(0, 0, 0, 0.05)" : "none",
   "&.MuiAccordion-root:first-of-type": {
     borderTopLeftRadius: "12px",
     borderTopRightRadius: "12px"
@@ -19,7 +19,7 @@ export const StyledAccordion = styled(Accordion)<{
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.05)"
   },
   "&:before": {
-    display: isDisplayBorderTop ? "flex" : "none",
+    display: isdisplaybordertop == "1" ? "flex" : "none",
     width: "calc(100% - 40px)",
     margin: "0 auto",
     height: "1px",

@@ -97,8 +97,8 @@ const StakeTab: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) => {
         <StyledAccordion
           key={key}
           expanded={tabActive === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
+          customborderradius={needBorderRadius(key)}
+          isdisplaybordertop={tabActive !== key && key !== tabs[0].key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary

@@ -72,13 +72,13 @@ const Tabs = () => {
           <StyledAccordion
             key={key}
             expanded={tabActive === key}
-            customBorderRadius={needBorderRadius(key)}
-            isDisplayBorderTop={tabActive !== key && key !== data[0].key && index !== indexExpand + 1}
+            customborderradius={needBorderRadius(key)}
+            isdisplaybordertop={`${+(tabActive !== key && key !== data[0].key && index !== indexExpand + 1)}`}
             onChange={handleChangeTab(key)}
           >
             <StyledAccordionSummary
               data-testid={`nativeScript.${key}`}
-              active={+(tabActive === key)}
+              active={`${+(tabActive === key)}`}
               expandIcon={
                 <IoIosArrowDown
                   style={{
@@ -90,7 +90,7 @@ const Tabs = () => {
               }
             >
               <Icon fill={key === tabActive ? theme.palette.primary.main : theme.palette.secondary.light} />
-              <TitleTab active={key === tabActive}>{label}</TitleTab>
+              <TitleTab active={`${+(key === tabActive)}`}>{label}</TitleTab>
             </StyledAccordionSummary>
             <StyledAccordionDetails>{children}</StyledAccordionDetails>
           </StyledAccordion>

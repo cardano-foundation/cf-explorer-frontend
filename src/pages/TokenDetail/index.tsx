@@ -8,6 +8,7 @@ import NoRecord from "src/components/commons/NoRecord";
 import TokenOverview from "src/components/TokenDetail/TokenOverview";
 import TokenTableData from "src/components/TokenDetail/TokenTableData";
 import TokenAnalytics from "src/components/TokenDetail/TokenAnalytics";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer } from "./styles";
 
@@ -29,7 +30,7 @@ const TokenDetail: React.FC = () => {
   const { state } = useLocation<{ data?: IToken }>();
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const { data, loading, initialized, error, lastUpdated } = useFetch<IToken>(
+  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<IToken>(
     state?.data ? "" : `${API.TOKEN.LIST}/${tokenId}`,
     state?.data,
     false,
@@ -44,7 +45,8 @@ const TokenDetail: React.FC = () => {
     mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [tokenId]);
 
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if ((initialized && !data) || (error && (statusError || 0) < 500)) return <NoRecord />;
 
   return (
     <OverviewMetadataTokenContext.Provider

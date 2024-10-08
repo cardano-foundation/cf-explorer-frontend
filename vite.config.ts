@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
       "process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA": JSON.stringify(env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA)
     },
     optimizeDeps: {
+      exclude: ["util"],
       esbuildOptions: {
         define: {
           global: "globalThis"
@@ -37,7 +38,12 @@ export default defineConfig(({ mode }) => {
     },
     // base: "/en/",
     resolve: {
-      alias: { "src/": resolve(__dirname, "./src/$1"), crypto: "crypto-browserify", stream: "stream-browserify" }
+      alias: {
+        "src/": resolve(__dirname, "./src/$1"),
+        crypto: "crypto-browserify",
+        stream: "stream-browserify",
+        buffer: "buffer/"
+      }
     },
     plugins: [
       react({

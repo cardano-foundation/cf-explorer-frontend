@@ -9,6 +9,7 @@ import { Notice } from "src/commons/resources";
 import { NETWORK, NETWORKS } from "src/commons/utils/constants";
 import { RootState } from "src/stores/types";
 import { setOnDetailView, setSidebar } from "src/stores/user";
+import { routers } from "src/commons/routers";
 
 import StyledModal from "../StyledModal";
 import Footer from "./Footer";
@@ -25,6 +26,7 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
   const [openNoticeModal, setOpenNoticeModal] = useState<boolean>(false);
   const history = useHistory();
   const lastPath = useRef<string>(history.location.pathname);
+
   const { isTablet } = useScreen();
   const theme = useTheme();
   const mainRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +92,12 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
         <Sidebar />
       </Drawer>
       <MainContainer id="main">
-        <Main ref={mainRef} component="main" open={sidebar ? 1 : 0}>
+        <Main
+          ref={mainRef}
+          component="main"
+          open={sidebar ? 1 : 0}
+          bgcolor={routers.BOLNISI_LANDING === history.location.pathname ? (theme.isDark ? "#131316" : "#fff") : ""}
+        >
           {NETWORK === NETWORKS.sanchonet && (
             <Box
               alignItems={"center"}

@@ -141,10 +141,10 @@ const DelegationGovernanceVotes: React.FC<DelegationGovernanceVotesProps> = ({ h
     }
     return (
       <Box component={Grid} container spacing={2}>
-        {((data && data.length === 0 && initialized && !error) || (error && statusError !== 500)) && (
+        {((data && data.length === 0 && initialized && !error) || (error && (statusError || 0) < 500)) && (
           <NoRecord m="80px 0px" padding={`0 !important`} />
         )}
-        {error && statusError === 500 && <FetchDataErr m="80px 0px" padding={`0 !important`} />}
+        {error && (statusError || 0) >= 500 && <FetchDataErr m="80px 0px" padding={`0 !important`} />}
         {data?.map((value, index) => (
           <Grid
             item

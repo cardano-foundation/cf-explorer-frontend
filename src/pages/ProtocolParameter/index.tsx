@@ -55,6 +55,7 @@ import {
   Mary,
   Shelley
 } from "src/components/ProtocolParameters/ExplainerText";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { ExplainerTextModal } from "./ExplainerTextModal";
 import { explainerTextProtocolHistory } from "./explainerText";
@@ -78,7 +79,12 @@ const ProtocolParameter: React.FC = () => {
   const { histories } = useParams<{ histories?: "histories" }>();
   const history = useHistory();
   const { PROTOCOL_PARAMETER } = API;
-  const { data: dataLastest, loading, error } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
+  const {
+    data: dataLastest,
+    loading,
+    error,
+    statusError: statusErrLastest
+  } = useFetch<Partial<TProtocolParam>>(PROTOCOL_PARAMETER.LASTEST);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -228,7 +234,8 @@ const ProtocolParameter: React.FC = () => {
       icon: false
     }
   ];
-  if (error) return <NoRecord />;
+  if (error && (statusErrLastest || 0) < 500) return <NoRecord />;
+  if (error && (statusErrLastest || 0) >= 500) return <FetchDataErr />;
   return (
     <Container>
       {histories && (

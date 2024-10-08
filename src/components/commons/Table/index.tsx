@@ -575,12 +575,8 @@ const Table: React.FC<TableProps> = ({
         {!loading && initialized && data?.length === 0 && !error && (
           <EmptyRecord isModal={isModal} className={emptyClassName} />
         )}
-        {!loading && initialized && error && statusError !== 500 && (
-          <EmptyRecord isModal={isModal} className={emptyClassName} />
-        )}
-        {!loading && initialized && error && statusError === 500 && (
-          <FetchDataErrIcon isModal={isModal} className={emptyClassName} />
-        )}
+        {error && (statusError || 0) < 500 && <EmptyRecord isModal={isModal} className={emptyClassName} />}
+        {error && (statusError || 0) >= 500 && <FetchDataErrIcon isModal={isModal} className={emptyClassName} />}
         {!loading && initialized && data === null && !error && (
           <NotAvailableIcon isModal={isModal} className={emptyClassName} />
         )}

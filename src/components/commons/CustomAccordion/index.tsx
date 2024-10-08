@@ -65,8 +65,8 @@ export const CustomAccordion: React.FC<TCustomAccordionProps> = ({
         <StyledAccordion
           key={key}
           expanded={tabActive === key}
-          customBorderRadius={needBorderRadius(key)}
-          isDisplayBorderTop={tabActive !== key && index !== indexExpand + 1}
+          customborderradius={needBorderRadius(key)}
+          isdisplaybordertop={tabActive !== key && index !== indexExpand + 1}
           onChange={handleChangeTab(key)}
         >
           <AccordionSummary
