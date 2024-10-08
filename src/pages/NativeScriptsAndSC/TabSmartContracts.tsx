@@ -255,7 +255,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
             <Box width={"100%"} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
               <Box display={"flex"} alignItems={"center"}>
                 <FilterVersionIcon fill={theme.palette.secondary.main} />
-                <Box ml={1} color={({ palette }) => palette.secondary.main}>
+                <Box ml={1} color={({ palette }) => palette.secondary.main} data-testid="">
                   {t("common.version")}
                 </Box>
               </Box>
@@ -306,7 +306,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={<Box lineHeight={1}>{t("smartContract.plutusv2")}</Box>}
+                label={
+                  <Box data-testid="nativeScripts.smartContract.filter.plutusv2" lineHeight={1}>
+                    {t("smartContract.plutusv2")}
+                  </Box>
+                }
               />
               <FormControlLabel
                 value="PLUTUSV3"

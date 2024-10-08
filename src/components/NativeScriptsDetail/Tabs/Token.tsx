@@ -40,9 +40,11 @@ const Token = () => {
       title: t("common.tokenID"),
       key: "id",
       minWidth: "100px",
-      render: (r) => (
+      render: (r, idx) => (
         <CustomTooltip title={r.fingerprint}>
-          <LinkComponent to={details.token(r.fingerprint)}>{getShortHash(r.fingerprint || "")}</LinkComponent>
+          <LinkComponent data-testId={`ns.detail.token.tokenid#${idx}`} to={details.token(r.fingerprint)}>
+            {getShortHash(r.fingerprint || "")}
+          </LinkComponent>
         </CustomTooltip>
       )
     },

@@ -131,7 +131,7 @@ const TabNativeScripts = () => {
         {data?.map((item, idx) => (
           <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
             <Box height={"100%"}>
-              <NativeScriptCard key={idx} data={item} hasBeforeAndAfter={hasBeforeAndAfter} />
+              <NativeScriptCard key={idx} data={item} hasBeforeAndAfter={hasBeforeAndAfter} index={idx} />
             </Box>
           </Grid>
         ))}
@@ -296,7 +296,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={<Box lineHeight={1}>{t("nativeScript.filter.timelocked.open")}</Box>}
+                label={
+                  <Box data-testid="filter.timelocked.open" lineHeight={1}>
+                    {t("nativeScript.filter.timelocked.open")}
+                  </Box>
+                }
               />
               <FormControlLabel
                 value={false}
@@ -365,7 +369,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     }}
                   />
                 }
-                label={<Box lineHeight={1}>{t("nativeScript.filter.multiSig.yes")}</Box>}
+                label={
+                  <Box data-testid="filter.multiSig.yes" lineHeight={1}>
+                    {t("nativeScript.filter.multiSig.yes")}
+                  </Box>
+                }
               />
               <FormControlLabel
                 value={false}

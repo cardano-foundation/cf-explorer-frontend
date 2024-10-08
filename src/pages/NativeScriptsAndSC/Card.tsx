@@ -13,7 +13,10 @@ import { LockedTimelock, OpenTimeLock, SigNative } from "src/commons/resources";
 
 import DesPlutusVersion from "./DesPlutusVersion";
 
-const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean }> = ({ data }) => {
+const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: boolean; index: number }> = ({
+  data,
+  index
+}) => {
   const theme = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -47,7 +50,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.nativeScriptDetail(data.scriptHash)}>
         <Row style={{ marginBottom: 4 }}>
-          <Title data-testid="nativeScripts.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
+          <Title data-testid={`nativeScripts.card.scriptHashTitle#${index}`}>{t("common.scriptHash")}: </Title>
           <Box
             data-testid="nativeScripts.card.scriptHashValue"
             mb={"4px"}
@@ -58,10 +61,10 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           </Box>
         </Row>
         <Row>
-          <Title data-testid="nativeScripts.card.policyTitle" width={"100%"}>
+          <Title data-testid={`nativeScripts.card.policyTitle#${index}`} width={"100%"}>
             {t("nativeScript.policy")}:{" "}
           </Title>
-          <Value data-testid="nativeScripts.card.policyValue">
+          <Value data-testid={`nativeScripts.card.policyValue#${index}`}>
             <Box mt={1} display={"flex"} flexWrap={"wrap"}>
               <TimeLockChip isOpen={data.isOpen} />
               <MultiSigChip isMultiSig={data.isMultiSig} />
@@ -69,13 +72,15 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           </Value>
         </Row>
         <Row>
-          <Title data-testid="nativeScripts.card.assetHoldersTitle">{t("nativeScript.assetHolders")}: </Title>
-          <Value data-testid="nativeScripts.card.assetHoldersValue">{data.numberOfAssetHolders || 0}</Value>
+          <Title data-testid={`nativeScripts.card.assetHoldersTitle#${index}`}>
+            {t("nativeScript.assetHolders")}:{" "}
+          </Title>
+          <Value data-testid={`nativeScripts.card.assetHoldersValue#${index}`}>{data.numberOfAssetHolders || 0}</Value>
         </Row>
 
         <Row>
-          <Title data-testid="nativeScripts.card.tokensTitle">{t("nativeScript.tokens")}: </Title>
-          <Value data-testid="nativeScripts.card.tokensValue">{data.numberOfTokens || 0}</Value>
+          <Title data-testid={`nativeScripts.card.tokensTitle#${index}`}>{t("nativeScript.tokens")}: </Title>
+          <Value data-testid={`nativeScripts.card.tokensValue#${index}`}>{data.numberOfTokens || 0}</Value>
         </Row>
         <Row>
           {data.tokens &&
@@ -159,7 +164,7 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
   );
 };
 
-const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data }) => {
+const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }> = ({ data, index }) => {
   const theme = useTheme();
   const [openDesPlutusVersion, setOpenDesPlutusVersion] = useState(false);
   const version = {
@@ -171,10 +176,12 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }>
   return (
     <Item>
       <Box p={2} height={"100%"} display={"block"} component={Link} to={details.smartContract(data.scriptHash)}>
-        <Row style={{ marginBottom: 4 }}>
-          <Title data-testid="nativeScripts.smartContract.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
+        <Row>
+          <Title data-testid={`nativeScripts.smartContract.card.scriptHashTitle#${index}`}>
+            {t("common.scriptHash")}:{" "}
+          </Title>
           <Box
-            data-testid="nativeScripts.smartContract.card.scriptHashValue"
+            data-testid={`nativeScripts.smartContract.card.scriptHashValue${index}`}
             mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
@@ -183,8 +190,8 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }>
           </Box>
         </Row>
         <Row>
-          <Title data-testid="nativeScripts.smartContract.card.versionTitle">{t("Version")}: </Title>
-          <Value data-testid="nativeScripts.smartContract.card.versionValue">
+          <Title data-testid={`nativeScripts.smartContract.card.versionTitle#${index}`}>{t("Version")}: </Title>
+          <Value data-testid={`nativeScripts.smartContract.card.versionValue${index}`}>
             {data.scriptVersion ? version[data.scriptVersion] : ""}
             <Box
               component={Button}
@@ -205,11 +212,15 @@ const SmartContractCard: React.FC<{ data: ScriptSmartContracts; index: number }>
           </Value>
         </Row>
         <Row>
-          <Title data-testid="nativeScripts.smartContract.card.totalTrxTitle">{t("smartContract.totalTrx")}: </Title>
-          <Value data-testid="nativeScripts.smartContract.card.totalTrxValue">{data.txCount || 0}</Value>
+          <Title data-testid={`nativeScripts.smartContract.card.totalTrxTitle#${index}`}>
+            {t("smartContract.totalTrx")}:{" "}
+          </Title>
+          <Value data-testid={`nativeScripts.smartContract.card.totalTrxValue${index}`}>{data.txCount || 0}</Value>
         </Row>
         <Row>
-          <Title data-testid="nativeScripts.smartContract.card.purposeTitle">{t("smartContract.trxPurpose")}: </Title>
+          <Title data-testid={`nativeScripts.smartContract.card.purposeTitle#${index}`}>
+            {t("smartContract.trxPurpose")}:{" "}
+          </Title>
           {data.txPurposes && data.txPurposes.length > 0
             ? data.txPurposes.map((item, index) => {
                 return (
