@@ -263,7 +263,7 @@ interface Transaction {
     stakeAddress: string;
   }[];
   metadataHash: string;
-  metadata: {
+  metadata?: {
     label: number;
     value: string;
     metadataCIP20: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
