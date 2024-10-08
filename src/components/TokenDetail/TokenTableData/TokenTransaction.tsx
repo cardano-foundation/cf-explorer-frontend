@@ -42,10 +42,12 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
       title: t("glossary.txhash"),
       key: "trxhash",
       minWidth: "150px",
-      render: (r) => (
+      render: (r, index) => (
         <>
           <CustomTooltip title={r.hash}>
-            <StyledLink to={details.transaction(r.hash)}>{getShortHash(r.hash)}</StyledLink>
+            <StyledLink to={details.transaction(r.hash)} data-testid={`token.transaction.txHash#${index}`}>
+              {getShortHash(r.hash)}
+            </StyledLink>
           </CustomTooltip>
           <br />
           <DatetimeTypeTooltip>
@@ -58,13 +60,21 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
       title: t("glossary.block"),
       key: "block",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.block(r.blockNo)}>{r.blockNo}</StyledLink>
+      render: (r, index) => (
+        <StyledLink to={details.block(r.blockNo)} data-testid={`token.transaction.block#${index}`}>
+          {r.blockNo}
+        </StyledLink>
+      )
     },
     {
       title: t("glossary.epoch"),
       key: "epoch",
       minWidth: "50px",
-      render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
+      render: (r, index) => (
+        <StyledLink to={details.epoch(r.epochNo)} data-testid={`token.transaction.epoch#${index}`}>
+          {r.epochNo}
+        </StyledLink>
+      )
     },
     {
       title: t("glossary.slot"),
@@ -81,14 +91,19 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
       title: t("glossary.address"),
       key: "addresses",
       minWidth: "200px",
-      render(r) {
+      render(r, index) {
         return (
           <>
             <Flex>
               <Label>{t("drawer.input")}: </Label>
               <div>
                 <CustomTooltip title={r.addressesInput[0]}>
-                  <StyledLink to={details.address(r.addressesInput[0])}>{getShortHash(r.addressesInput[0])}</StyledLink>
+                  <StyledLink
+                    to={details.address(r.addressesInput[0])}
+                    data-testid={`token.transaction.address#${index}`}
+                  >
+                    {getShortHash(r.addressesInput[0])}
+                  </StyledLink>
                 </CustomTooltip>
                 <br />
                 {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}

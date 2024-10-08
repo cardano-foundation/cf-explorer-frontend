@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.7.0...v1.7.0) (2024-09-05)
+
+
+### Features
+
+* add matomo to header in index.html ([#3824](https://github.com/cardano-foundation/cf-explorer-frontend/issues/3824)) ([0e34b60](https://github.com/cardano-foundation/cf-explorer-frontend/commit/0e34b60ee8fe01383a43f3075068d45435dabf8f))
+
+
+### Bug Fixes
+
+* conflict ([b5f15c0](https://github.com/cardano-foundation/cf-explorer-frontend/commit/b5f15c0d9c934b5cbb716bbc69d32e68d67a848c))
+* sync up code 1.5.0 ([66bee0f](https://github.com/cardano-foundation/cf-explorer-frontend/commit/66bee0fb3ca02d518bb84e5fa0311dfd6ecd9694))
+* update test ([02c26ed](https://github.com/cardano-foundation/cf-explorer-frontend/commit/02c26ed858ba521550ff697217f79e931723a62c))
+
 ## [1.7.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.7.0...v1.7.0) (2024-08-28)
 
 
