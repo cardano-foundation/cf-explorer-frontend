@@ -151,7 +151,7 @@ const ProgressSession = () => {
                     fontSize={"clamp(2.25rem, 3vw, 2.5rem);"}
                     fontWeight={"bold"}
                   >
-                    Traceability from grape to glass
+                    {t("bolnisi.landing.slogan")}
                   </Box>
                   <Box
                     textAlign={"left"}
