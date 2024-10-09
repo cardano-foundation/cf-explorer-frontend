@@ -8,8 +8,7 @@ import { Box } from "@mui/material";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
-import { formatADAFull, formatDateTimeLocal } from "src/commons/utils/helper";
-import ADAicon from "src/components/commons/ADAIcon";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
@@ -22,7 +21,7 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import FetchDataErr from "src/components/commons/FetchDataErr";
 
-import { Blocks, BlueText, EpochNumber, Output, StatusTableRow, StyledBox, StyledContainer } from "./styles";
+import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledBox, StyledContainer } from "./styles";
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
@@ -91,51 +90,6 @@ const Epoch: React.FC = () => {
       key: "blkCount",
       minWidth: "100px",
       render: (r, idx) => <Blocks data-testid={`epoch.table.blocksValue#${idx}`}>{r.blkCount}</Blocks>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Capitalize data-testid="epoch.table.uniqueAccountsTitle">{t("glossary.uniqueAccounts")}</Capitalize>,
-      key: "account",
-      minWidth: "100px",
-      render: (r, idx) => <Blocks data-testid={`epoch.epochValue#${idx}`}>{r.account}</Blocks>
-    },
-    {
-      title: <Capitalize data-testid="epoch.table.transactionCountTitle">{t("glossary.transactionCount")}</Capitalize>,
-      key: "transactionCount",
-      minWidth: "100px",
-      render: (r, idx) => <Blocks data-testid={`epoch.table.uniqueAccountsValue#${idx}`}>{r.txCount}</Blocks>
-    },
-    {
-      title: (
-        <Capitalize data-testid="epoch.table.rewardsDistributedTitle">{t("glossary.rewardsDistributed")}</Capitalize>
-      ),
-      key: "rDistributed",
-      minWidth: "100px",
-      render: (r, idx) => (
-        <div data-testid={`epoch.table.rewardsDistributedValue#${idx}`}>
-          {r.rewardsDistributed ? (
-            <Output>
-              {formatADAFull(r.rewardsDistributed)}
-              <ADAicon />
-            </Output>
-          ) : (
-            t("common.N/A")
-          )}
-        </div>
-      )
-    },
-    {
-      title: <Capitalize data-testid="epoch.table.totalOutputTitle">{t("glossary.totalOutput")}</Capitalize>,
-      key: "outSum",
-      minWidth: "100px",
-      render: (r, idx) => (
-        <Output data-testid={`epoch.table.totalOutputValue#${idx}`}>
-          {formatADAFull(r.outSum)}
-          <ADAicon />
-        </Output>
-      ),
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }

@@ -101,7 +101,7 @@ const ChartOverview = (props: TypeProps) => {
   };
 
   return (
-    <Grid container mt={2} spacing={smallScreen || middleScreen ? 6 : 2}>
+    <Grid container mt={0.5} spacing={smallScreen || middleScreen ? 6 : 2}>
       <Grid item xl={6} md={middleScreen ? 12 : 6} xs={12}>
         {loading ? (
           <StyledSkeleton variant="rectangular" />

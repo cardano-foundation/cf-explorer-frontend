@@ -11,7 +11,6 @@ import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 
 import CustomTooltip from "../commons/CustomTooltip";
-import SelectedIcon from "../commons/SelectedIcon";
 import ADAicon from "../commons/ADAIcon";
 import FormNowMessage from "../commons/FormNowMessage";
 import Table, { Column } from "../commons/Table";
@@ -120,63 +119,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: (
-        <Box data-testid="transactions.table.title.outputInAda" component={"span"}>
-          {t("glossary.outputInAda")}
-        </Box>
-      ),
-      minWidth: 120,
-      key: "outSum",
-      render: (r, index) => (
-        <Box display="inline-flex" alignItems="center" data-testid={`transaction.table.value.outputInAda#${index}`}>
-          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <ADAicon />
-          {selected === r.hash && <SelectedIcon />}
-        </Box>
-      ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Box data-testid="transactions.table.title.inputAddress">{t("glossary.inputAddress")}</Box>,
-      key: "addressesInput",
-      minWidth: 120,
-      render: (r, index) => (
-        <Box key={r.hash + "input"}>
-          {r?.addressesInput?.slice(0, 2).map((address, idx) => (
-            <Box key={"addressesInput" + address + idx}>
-              <CustomTooltip title={address}>
-                <StyledLink data-testid={`transaction.table.value.inputAddress#${index}`} to={details.address(address)}>
-                  {getShortHash(address)}
-                </StyledLink>
-              </CustomTooltip>
-            </Box>
-          ))}
-          {r?.addressesInput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </Box>
-      )
-    },
-    {
-      title: <Box data-testid="transactions.table.title.outputAddress">{t("glossary.outpuAddress")}</Box>,
-      key: "addressesOutput",
-      minWidth: 120,
-      render: (r, index) => (
-        <Box key={r.hash + "output"}>
-          {r?.addressesOutput?.slice(0, 2).map((address, idx) => (
-            <Box key={"addressesOutput" + address + idx}>
-              <CustomTooltip title={address}>
-                <StyledLink data-testid={`transaction.table.value.outpuAddress#${index}`} to={details.address(address)}>
-                  {getShortHash(address)}
-                </StyledLink>
-              </CustomTooltip>
-            </Box>
-          ))}
-          {r?.addressesOutput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </Box>
-      )
     }
   ];
   const { pathname } = window.location;

@@ -8,22 +8,20 @@ import { useTranslation } from "react-i18next";
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { setOnDetailView } from "src/stores/user";
 import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
-import SelectedIcon from "src/components/commons/SelectedIcon";
 import Link from "src/components/commons/Link";
-import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
+import { PriceWrapper, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
 const BlockList = () => {
   const { t } = useTranslation();
@@ -104,37 +102,6 @@ const BlockList = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.transactions">{t("glossary.transactions")}</Capitalize>,
-      key: "txCount",
-      minWidth: "50px",
-      render: (r, index) => <BlueText data-testid={`blocks.table.value.txCount#${index}`}>{r.txCount}</BlueText>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.fee">{t("common.fees")}</Capitalize>,
-      key: "fees",
-      render: (r, index) => (
-        <PriceWrapper data-testid={`blocks.table.value.fee#${index}`}>
-          {formatADAFull(r.totalFees)}
-          <ADAicon />
-        </PriceWrapper>
-      )
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.output">{t("glossary.output")}</Capitalize>,
-      key: "output",
-      minWidth: "100px",
-      render: (r, index) => (
-        <PriceWrapper data-testid={`blocks.table.value.output#${index}`}>
-          {formatADAFull(r.totalOutput)}
-          <ADAicon />
-          {selected === (r.blockNo || r.hash) && <SelectedIcon />}
-        </PriceWrapper>
-      )
     }
   ];
 

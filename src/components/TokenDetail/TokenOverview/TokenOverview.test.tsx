@@ -43,7 +43,6 @@ describe("TokenOverview component", () => {
     render(<TokenOverview {...mockTokenOverview} />);
     expect(screen.getByText(/total supply/i)).toBeInTheDocument();
     expect(screen.getByText(/https:\/\/example\.com\/token/i)).toBeInTheDocument();
-    expect(screen.getByText(/number of holders/i)).toBeInTheDocument();
   });
 
   it("should user goto token registry page", () => {

@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 export const WrapHeading = styled(Box)(({ theme }) => ({
-  marginBottom: "132px",
+  marginBottom: "102px",
   padding: "0 24px",
 
   [theme.breakpoints.down(1024)]: {

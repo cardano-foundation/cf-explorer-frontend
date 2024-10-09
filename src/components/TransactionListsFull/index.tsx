@@ -8,7 +8,7 @@ import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
 import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
-import { Label, StyledLink, StyledContainer } from "./styles";
+import { StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
 import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
@@ -67,76 +67,12 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       )
     },
     {
-      title: <Box data-testid="block.detail.trxTable.address">{t("glossary.address")}</Box>,
-      key: "address",
-      minWidth: 120,
-      render(r, index) {
-        return (
-          <div>
-            <Box display={"flex"}>
-              <Label> {t("glossary.input")}: </Label>
-              <div>
-                {r.addressesInput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink
-                        to={details.address(tx)}
-                        key={key}
-                        data-testid={`block.detail.trxTable.value.inputAddress#${index}`}
-                      >
-                        <Box ml={1}>{getShortHash(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesInput.length > 1 && (
-                  <StyledLink to={details.transaction(r.hash)}>
-                    <Box ml={1}>...</Box>
-                  </StyledLink>
-                )}
-              </div>
-            </Box>
-            <Box display={"flex"} mt={1}>
-              <Label>{t("glossary.output")}: </Label>
-              <div>
-                {r.addressesOutput.slice(0, 1).map((tx, key) => {
-                  return (
-                    <CustomTooltip key={key} title={tx}>
-                      <StyledLink to={details.address(tx)} key={key}>
-                        <Box ml={1}>{getShortHash(tx)}</Box>
-                      </StyledLink>
-                    </CustomTooltip>
-                  );
-                })}
-                {r.addressesOutput.length > 1 && (
-                  <StyledLink to={details.transaction(r.hash)}>
-                    <Box ml={1}>...</Box>
-                  </StyledLink>
-                )}
-              </div>
-            </Box>
-          </div>
-        );
-      }
-    },
-    {
       title: <Box data-testid="block.detail.trxTable.fees">{t("common.fees")}</Box>,
       key: "fee",
       minWidth: 120,
       render: (r) => (
         <Box display="inline-flex" alignItems="center">
           <Box mr={1}>{formatADAFull(r.fee)}</Box>
-          <ADAicon />
-        </Box>
-      )
-    },
-    {
-      title: <Box data-testid="block.detail.trxTable.output">{t("glossary.outputInAda")}</Box>,
-      minWidth: 120,
-      key: "ouput",
-      render: (r) => (
-        <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
           <ADAicon />
         </Box>
       )
