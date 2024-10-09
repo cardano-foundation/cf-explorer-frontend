@@ -138,7 +138,7 @@ export const menus: Menu[] = [
   },
   {
     title: "Bolnisi",
-    key: "glossary.bolnisi",
+    key: "glossary.traceability",
     icon: BolnisiDashboard,
     href: routers.BOLNISI_LANDING
   },
