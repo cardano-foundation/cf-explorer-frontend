@@ -1,15 +1,15 @@
 import { Grid, Box, CircularProgress } from "@mui/material";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
-import { parse } from "qs";
+import { parse, stringify } from "qs";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { TimeDuration } from "src/components/TransactionLists/styles";
-import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import { FooterTable } from "src/components/commons/Table";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import NoRecord from "src/components/commons/NoRecord";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import CardVotesOverview from "./CardVotesOverview";
 import FilterVotesOverview from "./FilterVotesOverview";
@@ -60,8 +60,8 @@ export default function VotesOverview() {
   );
 
   const renderCard = () => {
-    if (data.length === 0 || error) return <NoRecord />;
-    if (error && (statusError ?? 0) >= 500) return <EmptyRecord />;
+    if ((!error && data.length === 0) || (error && (statusError || 0) < 500)) return <NoRecord />;
+    if (error && (statusError || 0) >= 500) return <FetchDataErr />;
     return (
       <Box>
         <Grid container spacing={3}>
@@ -84,12 +84,14 @@ export default function VotesOverview() {
 
   return (
     <>
-      <Box marginBottom={"32px"} display="flex" justifyContent={"space-between"} alignItems={"center"}>
-        <TimeDuration>
-          <FormNowMessage time={lastUpdated} />
-        </TimeDuration>
-        <FilterVotesOverview />
-      </Box>
+      {!error && (
+        <Box marginBottom={"32px"} display="flex" justifyContent={"space-between"} alignItems={"center"}>
+          <TimeDuration>
+            <FormNowMessage time={lastUpdated} />
+          </TimeDuration>
+          <FilterVotesOverview />
+        </Box>
+      )}
       <Box mt={3}>{renderCard()}</Box>
       <FooterTable
         pagination={{

@@ -19,7 +19,13 @@ import {
   ResetIcon
 } from "src/commons/resources";
 import { API } from "src/commons/utils/api";
-import { LARGE_NUMBER_ABBREVIATIONS, formatADA, formatPercent, truncateToTwoDecimals } from "src/commons/utils/helper";
+import {
+  LARGE_NUMBER_ABBREVIATIONS,
+  formatADA,
+  formatPercent,
+  truncateDecimals,
+  truncateToTwoDecimals
+} from "src/commons/utils/helper";
 import { FilterWrapper } from "src/pages/NativeScriptsAndSC/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FF_GLOBAL_IS_CONWAY_ERA } from "src/commons/utils/constants";
@@ -242,6 +248,8 @@ const CustomFilterMultiRange: React.FC = () => {
                   ? +numericValue * 10 ** 6
                   : ["minSaturation"].includes(keyOnChangeMin)
                   ? parseFloat(numericValue).toFixed(2)
+                  : ["minActiveStake"].includes(keyOnChangeMin)
+                  ? truncateDecimals(+numericValue, 6) * 10 ** 6
                   : numericValue
             });
           }}

@@ -65,7 +65,7 @@ const DrepsOverview: React.FC = () => {
     );
   }
 
-  const slot = moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+  const slot = moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
     ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
     : MAX_SLOT_EPOCH;
   const countdown = MAX_SLOT_EPOCH - slot;
@@ -95,9 +95,9 @@ const DrepsOverview: React.FC = () => {
           <StyledCard.ClickAble to={details.epoch(data?.epochNo)}>
             <StyledCard.Content>
               <StyledCard.Title data-testid="drep.epochTitle">{t("glossary.epoch")}</StyledCard.Title>
-              <StyledCard.Link data-testid="drep.epochValue" to={details.epoch(data?.epochNo)}>
+              <StyledCard.NumberEpoch data-testid="drep.epochValue">
                 {data?.epochNo || t("common.N/A")}
-              </StyledCard.Link>
+              </StyledCard.NumberEpoch>
               <Box
                 data-testid="drep.time"
                 component="span"
@@ -127,7 +127,7 @@ const DrepsOverview: React.FC = () => {
                 <StyledCard.Content>
                   <StyledCard.Title data-testid="drep.slotTitle">{t("glossary.slot")}</StyledCard.Title>
                   <StyledCard.Value data-testid="drep.slotValue">
-                    {moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                    {moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                       ? (currentEpoch?.slot || 0) % MAX_SLOT_EPOCH
                       : MAX_SLOT_EPOCH}
                     <Box
@@ -145,7 +145,7 @@ const DrepsOverview: React.FC = () => {
                 <StyledLinearProgress
                   variant="determinate"
                   value={
-                    moment(`${currentEpoch?.endTime} GMT+0000`).isAfter(moment().utc())
+                    moment.utc(currentEpoch?.endTime, "YYYY-MM-DDTHH:mm:ssZ").isAfter(moment().utc())
                       ? (((currentEpoch?.slot || 0) % MAX_SLOT_EPOCH) / MAX_SLOT_EPOCH) * 100
                       : 100
                   }

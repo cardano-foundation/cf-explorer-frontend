@@ -60,6 +60,7 @@ import CommunityIconLight from "./icons/community-icon-light.svg";
 import CommunityIconDark from "./icons/community-icon-dark.svg";
 import FetchDataErrDark from "./icons/fetch-data-err-dark.svg";
 import StakingLifecycleIcon from "./icons/menus/stakingLifecycle.svg";
+import BolnisiDashboard from "./icons/bolnisi-dashboard.svg";
 import NetworkMonitoringIcon from "./icons/menus/networkMonitoring.svg";
 import ProtocolIcon from "./icons/menus/Protocol.svg";
 import PolygonWhiteIconUrl from "./icons/polygon-white.svg";
@@ -180,6 +181,9 @@ import ProtocolUpdateComponent from "./icons/protocolUpdateIcon.svg?react";
 import InstantaneousHistoryComponent from "./icons/instantaneousHistoryIcon.svg?react";
 import PolygonDarkIcon from "./icons/polygon-dark.svg?react";
 import PolygonDarkRedIcon from "./icons/polygon-dark-red.svg?react";
+import ZoomInIcon from "./icons/zoom-in-icon.svg?react";
+import ZoomOutIcon from "./icons/zoom-out-icon.svg?react";
+import FindLocationIcon from "./icons/find-location-icon.svg?react";
 import ExchangeIcon from "./icons/exchange-alt.svg?react";
 import MenuIconComponent from "./icons/menus/hamburger.svg?react";
 import HeaderSearchIconComponent from "./icons/header-search.svg?react";
@@ -193,6 +197,7 @@ import GovIDIcon from "./icons/govID-icon.svg?react";
 import GovBodycon from "./icons/govBody-icon.svg?react";
 import TimeStampIcon from "./icons/timeStamp-icon.svg?react";
 import LowestIconComponent from "./icons/lowest-icon.svg?react";
+import AvatarIcon from "./icons/avatar-icon.svg?react";
 import TickerIconComponent from "./icons/ticker.svg?react";
 import CalendarIconComponent from "./icons/calendar.svg?react";
 import RewardIconComponent from "./icons/reward.svg?react";
@@ -224,6 +229,7 @@ import TxInputIcon from "./icons/txInput.svg?react";
 import TxOutputIcon from "./icons/txOutput.svg?react";
 import VerifiedIcon from "./icons/verified.svg?react";
 import InvalidIcon from "./icons/invalid.svg?react";
+import RevokedIcon from "./icons/revoked-icon.svg?react";
 import DescriptonDrepIcon from "./icons/descriptonDrep.svg?react";
 import CreateDrepIcon from "./icons/createdrep.svg?react";
 import ActiveVoteIcon from "./icons/activeVote.svg?react";
@@ -272,6 +278,8 @@ import CCDetailVotingParticipation from "./icons/CCVotingParticipation.svg?react
 import CCDetailLifetimeVotes from "./icons/CCDetailLifetimeVotes.svg?react";
 import CCStatusHistory from "./icons/CCStatusHistory.svg?react";
 import CCDetailRegistrationInformation from "./icons/CCDetailRegistrationInformation.svg?react";
+import MicarIcon from "./icons/micar.svg";
+import SearchMicarIcon from "./icons/search-icon.svg?react";
 
 // eslint-disable-next-line import/order
 import TotalOutput from "./icons/totalOutput.svg?react";
@@ -353,6 +361,9 @@ export {
   LightningIcon,
   LinkOff,
   SignOut,
+  ZoomInIcon,
+  ZoomOutIcon,
+  FindLocationIcon,
   User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
@@ -417,6 +428,7 @@ export {
   DeregistrationLightIcon,
   RegistrationDarkIcon,
   RegistrationLightIcon,
+  BolnisiDashboard,
   // React component
   ExchangeIcon,
   PolygonDarkIcon,
@@ -448,6 +460,7 @@ export {
   UserIconComponent,
   DropIconComponent,
   DelegatorIconComponent,
+  AvatarIcon,
   HeaderSearchIconComponent,
   sunIcon,
   moonIcon,
@@ -503,6 +516,7 @@ export {
   DarkModeMobile,
   VerifiedIcon,
   InvalidIcon,
+  RevokedIcon,
   DescriptonDrepIcon,
   GovBodyIcons,
   CreateDrepIcon,
@@ -546,7 +560,9 @@ export {
   PoolBlocksIcon,
   GovernanceIcon,
   PoolVotingIcon,
-  ParticipationIcon
+  ParticipationIcon,
+  MicarIcon,
+  SearchMicarIcon
 };
 
 import AIcon from "./icons/AIcon.svg?react";
@@ -744,6 +760,17 @@ import CCLastChange from "./icons/CCLastChange.svg?react";
 import CClistMembers from "./icons/CClistMembers.svg?react";
 import CCGorvernanceVote from "./icons/CCGorvernanceVote.svg?react";
 import CCHistoryStatus from "./icons/CCHistoryStatus.svg?react";
+import BolnisiDropdown from "./icons/bolnisi-dropdown.svg?react";
+import Lighning from "./icons/Lighning.svg?react";
+import LighningWhite from "./icons/lighning-white.svg?react";
+import Earch from "./icons/Earch.svg?react";
+import EarchWhite from "./icons/earch-white.svg?react";
+import Wash from "./icons/wash.svg?react";
+import Tree from "./icons/tree.svg?react";
+import TreeWhite from "./icons/tree-white.svg?react";
+import WasteWhite from "./icons/waste-white.svg?react";
+import Clock from "./icons/clock.svg?react";
+import ClockWhite from "./icons/clock-white.svg?react";
 
 export {
   StakingLifecycleComponent,
@@ -941,5 +968,36 @@ export {
   CCLastChange,
   CClistMembers,
   CCGorvernanceVote,
-  CCHistoryStatus
+  CCHistoryStatus,
+  Lighning,
+  LighningWhite,
+  Earch,
+  EarchWhite,
+  Wash,
+  Tree,
+  TreeWhite,
+  WasteWhite,
+  Clock,
+  ClockWhite
+};
+
+// Bolnisi Landing
+
+import bolnisiHeaderBackgroundDark from "./bolnisiLanding/background-header-dark.png";
+import bolnisiHeaderBackgroundLight from "./bolnisiLanding/background-header-light.png";
+import bolnisiHeaderLaptop from "./bolnisiLanding/header-laptop.png";
+import bolnisiHeaderMobile from "./bolnisiLanding/header-mobile.png";
+import bolnisiHeaderTablet from "./bolnisiLanding/header-tablet.png";
+import bodyBackground from "./bolnisiLanding/body-background.png";
+import bolnisiProgress from "./bolnisiLanding/bolnisi-progress.png";
+
+export {
+  bolnisiHeaderBackgroundDark,
+  bolnisiHeaderBackgroundLight,
+  bolnisiHeaderLaptop,
+  bolnisiHeaderMobile,
+  bolnisiHeaderTablet,
+  bodyBackground,
+  bolnisiProgress,
+  BolnisiDropdown
 };

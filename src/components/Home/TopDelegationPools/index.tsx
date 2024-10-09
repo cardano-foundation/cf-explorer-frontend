@@ -31,7 +31,7 @@ const TopDelegationPools = () => {
   const { t } = useTranslation();
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
 
-  const { data, loading, initialized, lastUpdated } = useFetch<DelegationPool[]>(
+  const { data, loading, initialized, lastUpdated, error, statusError } = useFetch<DelegationPool[]>(
     `${API.DELEGATION.TOP}?page=0&size=5`,
     undefined,
     false,
@@ -114,6 +114,8 @@ const TopDelegationPools = () => {
         <FormNowMessage time={lastUpdated} />
       </TimeDurationSm>
       <DelegateTable
+        error={error}
+        statusError={statusError}
         loading={loading}
         initialized={initialized}
         columns={columns}

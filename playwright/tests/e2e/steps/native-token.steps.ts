@@ -33,6 +33,7 @@ Given(/^the user is in the Native tokens page$/, async ({ page }) => {
   await nativeTokenPage(page).goToNativeTokens();
 });
 When(/^the user opens the info widget of a given token$/, async ({ page }) => {
+  await page.waitForTimeout(30000);
   await nativeTokenPage(page).openWidget();
 });
 Then(

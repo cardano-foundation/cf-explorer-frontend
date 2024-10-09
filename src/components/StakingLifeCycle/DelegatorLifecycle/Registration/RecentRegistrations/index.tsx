@@ -12,6 +12,7 @@ import CustomFilter, { FilterParams } from "src/components/commons/CustomFilter"
 import { CommonSkeleton } from "src/components/commons/CustomSkeleton";
 import OverviewStaking from "src/components/commons/OverviewStaking";
 import { EmptyRecord, FooterTable } from "src/components/commons/Table";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { DescriptionText, FilterContainer, StyledList } from "../../styles";
 import { GridBox, StyledContainer, WrapFilterDescription } from "./styles";
@@ -28,7 +29,7 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
   const history = useHistory();
   const { sidebar } = useSelector(({ user }: RootState) => user);
 
-  const { data, total, loading, initialized, error, query } = useFetchList<RegistrationItem>(
+  const { data, total, loading, initialized, error, query, statusError } = useFetchList<RegistrationItem>(
     stakeId ? API.STAKE_LIFECYCLE.REGISTRATION(stakeId) : "",
     { ...pageInfo, ...params, txHash: params.search }
   );
@@ -91,7 +92,10 @@ const RecentRegistrations: React.FC<Props> = ({ setShowBackButton }) => {
             );
           })}
       </GridBox>
-      {!loading && ((initialized && data?.length === 0) || error) && <EmptyRecord />}
+      {error && (statusError || 0) >= 500 && <FetchDataErr />}
+      {((!loading && initialized && data?.length === 0 && !error) || (error && (statusError || 0) < 500)) && (
+        <EmptyRecord />
+      )}
       {initialized && data?.length > 0 && !error && (
         <FooterTable
           pagination={{

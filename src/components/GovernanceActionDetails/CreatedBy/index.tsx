@@ -33,20 +33,39 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
   const { page, size } = pageInfo;
 
   const history = useHistory();
-  const { data } = useFetch<Data>(API.OVERVIEW_GOV_ACTIONS.CREATE_BY(anchorUrl, anchorHash, page, size));
+  const { data, statusError, error } = useFetch<Data>(
+    API.OVERVIEW_GOV_ACTIONS.CREATE_BY(anchorUrl, anchorHash, page, size)
+  );
 
   const columns: Column<Data>[] = [
     {
       title: <Box component={"span"}>{t("glossary.name")}</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box sx={{ fontSize: "14px", color: theme.palette.primary.main }}>{r.name}</Box>
+      render: (r) => (
+        <Box
+          sx={{
+            fontSize: "14px",
+            color: r.name ? theme.palette.primary.main : theme.palette.secondary.main
+          }}
+        >
+          {r.name || t("N/A")}
+        </Box>
+      )
     },
     {
       title: <Box component={"span"}>{t("tab.witnessAlgorithm")}</Box>,
       key: "overview",
       minWidth: "120px",
-      render: (r) => <Box sx={{ fontSize: "14px", color: theme.palette.primary.main }}>{r.witnessAlgorithm}</Box>
+      render: (r) => (
+        <Box
+          sx={{
+            fontSize: "14px"
+          }}
+        >
+          {r.witnessAlgorithm || t("N/A")}
+        </Box>
+      )
     },
     {
       title: <Box component={"span"}>{t("tab.publicKey")}</Box>,
@@ -54,7 +73,7 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.publicKey} placement="top">
-          <Box component={"span"}>{getShortHash(r.publicKey)}</Box>
+          <Box component={"span"}>{getShortHash(r.publicKey) || t("N/A")}</Box>
         </CustomTooltip>
       )
     },
@@ -64,7 +83,7 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
       minWidth: "120px",
       render: (r) => (
         <CustomTooltip title={r.signature} placement="top">
-          <Box component={"span"}>{getShortHash(r.signature)}</Box>
+          <Box component={"span"}>{getShortHash(r.signature) || t("N/A")}</Box>
         </CustomTooltip>
       )
     }
@@ -73,6 +92,8 @@ export default function CreatedBy({ anchorHash, anchorUrl }: Props) {
     <Box>
       <Table
         {...data}
+        statusError={statusError}
+        error={error}
         columns={columns}
         total={{ count: data?.totalItems ?? 0, title: "Total", isDataOverSize: data?.isDataOverSize }}
         pagination={{

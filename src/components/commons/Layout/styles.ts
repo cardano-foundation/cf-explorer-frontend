@@ -180,7 +180,9 @@ export const Main = styled(Box)<{ open: number }>(({ theme, open }) => ({
     paddingTop: 80,
     width: "100vw",
     minHeight: "calc(100vh - 100px)",
-    height: "100%"
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column"
   },
   [theme.breakpoints.down("sm")]: {
     minHeight: "calc(100vh - 263px)"

@@ -28,6 +28,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import NoRecord from "src/components/commons/NoRecord";
 import { setSpecialPath } from "src/stores/system";
 import DelegationGovernanceVotes from "src/components/GovernanceVotes";
+import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { TimeDuration, TitleTab } from "./styles";
 
@@ -93,7 +94,7 @@ const DelegationDetail: React.FC = () => {
 
   const status = useFetch<ListTabResponseSPO>(API.SPO_LIFECYCLE.TABS(poolView || poolId));
 
-  const { data, loading, initialized, error, lastUpdated } = useFetch<DelegationOverview>(
+  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<DelegationOverview>(
     `${API.DELEGATION.POOL_DETAIL_HEADER}/${poolView || poolId}`,
     undefined,
     false,
@@ -140,7 +141,8 @@ const DelegationDetail: React.FC = () => {
     if (status.data) setSpecialPath(routers.DELEGATION_POOLS);
   }, [state, status, data?.poolStatus]);
 
-  if ((initialized && !data) || error) return <NoRecord />;
+  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  if ((initialized && !data) || (error && (statusError || 0) < 500)) return <NoRecord />;
 
   const tabs: {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -252,8 +254,8 @@ const DelegationDetail: React.FC = () => {
           <StyledAccordion
             key={key}
             expanded={tab === key}
-            customBorderRadius={needBorderRadius(key)}
-            isDisplayBorderTop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
+            customborderradius={needBorderRadius(key)}
+            isdisplaybordertop={tab !== key && key !== tabs[0].key && index !== indexExpand + 1}
             onChange={handleChangeTab(key)}
           >
             <AccordionSummary
