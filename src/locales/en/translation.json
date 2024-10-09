@@ -1244,7 +1244,7 @@
   "bolnisi.landing.casestudy.title": "Discover the full advantages of a future-proof blockchain to empower businesses",
   "bolnisi.landing.casestudy.read": "Read Case Study",
   "micar.indicators.enegy": "Energy",
-  "micar.indicators.enegy.des": "The annual energy consumption, non-renewable energy use, and energy intensity quantify the total energy, in kilowatt-hours (kWh), necessary for transaction validation and ledger integrity. These metrics emphasize the system’s energy demands, highlighting both overall usage and reliance on non-renewable resources, while illustrating the energy intensity required for ongoing validation.",
+  "micar.indicators.enegy.des": "The annual energy consumption, renewable energy use, and energy intensity quantify the total energy, in kilowatt-hours (kWh), necessary for transaction validation and ledger integrity. These metrics emphasize the system’s energy demands, highlighting both overall usage and reliance on non-renewable resources, while illustrating the energy intensity required for ongoing validation.",
   "micar.indicators.enegy.des1": "Energy consumption",
   "micar.indicators.enegy.des2": "Non-renewable consumption",
   "micar.indicators.enegy.des3": "Energy intensity",
