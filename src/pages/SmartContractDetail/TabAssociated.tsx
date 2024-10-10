@@ -44,7 +44,9 @@ const TabAssociated: React.FC<TTabAssociatedProps> = ({ data, loading }) => {
               to={address.startsWith("stake") ? details.stake(address) : details.address(address)}
               key={address}
             >
-              <DynamicEllipsisText value={address} />
+              <Box mb={1}>
+                <DynamicEllipsisText value={address} />
+              </Box>
             </StyledLink>
           ))}
         </Box>
