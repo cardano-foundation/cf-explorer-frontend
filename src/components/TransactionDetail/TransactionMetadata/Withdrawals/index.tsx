@@ -76,7 +76,7 @@ const Withdrawals: React.FC<WithdrawalsProps> = ({ data }) => {
                   <Box flex={1}>
                     {item?.addressTo.map((address, idx) => {
                       return (
-                        <Box minWidth={120} key={idx} lineHeight={0}>
+                        <Box minWidth={120} key={idx} lineHeight={0} pt="2px">
                           <AddressLink
                             to={address.startsWith("addr") ? details.address(address) : details.stake(address)}
                           >

@@ -403,14 +403,13 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
       paddingLeft: wide ? 15 : "0 !important"
     }
   },
-  [theme.breakpoints.down(320)]: {
+  [theme.breakpoints.down(321)]: {
     ":nth-of-type(even)": {
-      paddingRight: wide ? 15 : "0 !important",
-      paddingLeft: 3
+      paddingRight: "0 !important",
+      padding: "25px 7px !important"
     },
     ":nth-of-type(odd)": {
-      paddingLeft: wide ? 15 : "0 !important",
-      paddingRight: 3
+      paddingLeft: "0 !important"
     }
   }
 }));
@@ -419,7 +418,10 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main,
   fontSize: "1rem",
   fontWeight: "bold",
-  wordBreak: "break-word"
+  wordBreak: "break-word",
+  [theme.breakpoints.down(321)]: {
+    wordBreak: "unset"
+  }
 }));
 
 export const AllowSearchButton = styled(Box)(({ theme }) => ({
