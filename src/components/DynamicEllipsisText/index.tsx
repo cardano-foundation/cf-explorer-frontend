@@ -13,6 +13,7 @@ const Container = styled(Box)<{ whiteSpace?: "nowrap" | "normal" }>`
   width: 100%;
   text-align: left;
   transform: translateY(1px);
+  margin-bottom: 10px;
 `;
 
 const SubPart = styled("span")`

@@ -17,44 +17,28 @@ jest.mock("react-redux", () => ({
   useSelector: jest.fn()
 }));
 
-const mockItemDay: TransactionChartIF = {
+const mockItemOneMonth: TransactionChartIF = {
   date: "2023-06-02 00:00",
   metadata: 9187,
   simpleTransactions: 32908,
   smartContract: 45187
 };
 
-const mockItemWeek: TransactionChartIF = {
-  date: "2023-06-02 00:00",
-  metadata: 19187,
-  simpleTransactions: 132908,
-  smartContract: 145187
-};
-
-const mockItem2Week: TransactionChartIF = {
+const mockItemOneYear: TransactionChartIF = {
   date: "2023-06-02 00:00",
   metadata: 29187,
   simpleTransactions: 232908,
   smartContract: 245187
 };
 
-const mockItemMonth: TransactionChartIF = {
-  date: "2023-06-02 00:00",
-  metadata: 49187,
-  simpleTransactions: 432908,
-  smartContract: 445187
-};
-
 const getData = (url: string) => {
   switch (url.split("/")[2]) {
-    case "ONE_DAY":
-      return mockItemDay;
-    case "ONE_WEEK":
-      return mockItemWeek;
-    case "TWO_WEEK":
-      return mockItem2Week;
+    case "ONE_MONTH":
+      return mockItemOneMonth;
+    case "ONE_YEAR":
+      return mockItemOneYear;
     default:
-      return mockItemMonth;
+      return mockItemOneMonth;
   }
 };
 
@@ -74,7 +58,7 @@ describe("TransactionChart", () => {
 
   it("Test", () => {
     render(<TransactionChart />);
-    expect(screen.getByText(/Transactions in the last 24 hours/i)).toBeInTheDocument();
+    expect(screen.getByText(/Transaction history/i)).toBeInTheDocument();
   });
 
   it("renders Transaction Chart", async () => {
@@ -84,27 +68,29 @@ describe("TransactionChart", () => {
         <TransactionChart />
       </Router>
     );
-    expect(screen.getByText(/Transactions in the last 24 hours/i)).toBeInTheDocument();
-    const oneDay = screen.getByText("24h");
-    const oneWeek = screen.getByText("1w");
-    const twoWeek = screen.getByText("2w");
+    expect(screen.getByText(/Transaction history/i)).toBeInTheDocument();
+    const threeYear = screen.getByText("3y");
+    const threeMonth = screen.getByText("3m");
+    const oneYear = screen.getByText("1y");
     const oneMonth = screen.getByText("1m");
 
-    expect(oneDay).toBeInTheDocument();
-    expect(oneWeek).toBeInTheDocument();
-    expect(twoWeek).toBeInTheDocument();
+    expect(threeYear).toBeInTheDocument();
+    expect(threeMonth).toBeInTheDocument();
+    expect(oneYear).toBeInTheDocument();
     expect(oneMonth).toBeInTheDocument();
 
-    expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItemDay.metadata));
-    expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItemDay.smartContract));
-    expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItemDay.simpleTransactions));
+    expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItemOneMonth.metadata || 0));
+    expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItemOneMonth.smartContract || 0));
+    expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItemOneMonth.simpleTransactions || 0));
 
-    await userEvent.click(twoWeek);
+    await userEvent.click(oneYear);
     await waitFor(async () => {
-      expect(screen.getByText("Transactions in two weeks")).toBeInTheDocument();
-      expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItem2Week.metadata));
-      expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItem2Week.smartContract));
-      expect(screen.getByTestId("complex")).toHaveTextContent(numberWithCommas(mockItem2Week.simpleTransactions));
+      expect(screen.getByText("Transaction history")).toBeInTheDocument();
+      expect(screen.getByTestId("trx")).toHaveTextContent(numberWithCommas(mockItemOneYear.metadata || 0));
+      expect(screen.getByTestId("simple")).toHaveTextContent(numberWithCommas(mockItemOneYear.smartContract || 0));
+      expect(screen.getByTestId("complex")).toHaveTextContent(
+        numberWithCommas(mockItemOneYear.simpleTransactions || 0)
+      );
     });
   });
 });
