@@ -275,6 +275,7 @@ const BolnisiTrx = () => {
   const theme = useTheme();
   const history = useHistory();
   const [cert, setCert] = useState("SCM");
+  const [open, setOpen] = useState(false);
 
   const { data: bolnisiData } = useFetch<BolnisiNumbers>(API.BOLNISI.OVERVIEW, undefined, false);
 
@@ -407,21 +408,21 @@ const BolnisiTrx = () => {
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfBottles} title="Bottles registered on-chain" />
+              <Card count={bolnisiData?.numberOfBottles || 0} title="Bottles registered on-chain" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfWineries} title="Wineries joining" />
+              <Card count={bolnisiData?.numberOfWineries || 0} title="Wineries joining" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfCertificates} title="Certificates issued" />
+              <Card count={bolnisiData?.numberOfCertificates || 0} title="Certificates issued" />
             </Box>
           </MotionDiv>
         </Grid>
@@ -470,10 +471,19 @@ const BolnisiTrx = () => {
                 [theme.breakpoints.down("md")]: { mt: theme.spacing(1) }
               }}
               value={cert}
+              open={open}
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
               onChange={(e) => setCert(e.target?.value)}
-              inputProps={{ style: { border: "transparent" } }}
+              inputProps={{ style: { border: "transparent" }, id: "" }}
               IconComponent={() => (
-                <BolnisiDropdown fill={theme.palette.primary.main} style={{ marginRight: "10px" }} />
+                <BolnisiDropdown
+                  fill={theme.palette.primary.main}
+                  style={{ paddingRight: "10px", cursor: "pointer" }}
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                />
               )}
               MenuProps={{ MenuListProps: { style: { background: theme.palette.secondary[0] } } }}
             >
@@ -485,6 +495,7 @@ const BolnisiTrx = () => {
               </MenuItem>
             </Select>
           </Box>
+
           <StyledTable
             columns={columns}
             data={data.filter((i) => i.cert === cert)}
