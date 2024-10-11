@@ -418,10 +418,7 @@ export const ValueCard = styled(Box)(({ theme }) => ({
   color: theme.palette.secondary.main,
   fontSize: "1rem",
   fontWeight: "bold",
-  wordBreak: "break-word",
-  [theme.breakpoints.down(321)]: {
-    wordBreak: "unset"
-  }
+  wordBreak: "break-word"
 }));
 
 export const AllowSearchButton = styled(Box)(({ theme }) => ({
