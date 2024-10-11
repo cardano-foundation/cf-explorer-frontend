@@ -163,7 +163,7 @@ describe("TokenTransaction component", () => {
   it("should component render", () => {
     render(<TokenTransaction tokenId="00xx3wecDDCEEdssdE" />);
     expect(screen.getByRole("columnheader", { name: /tx hash/i })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: /addresses/i })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: /Block/i })).toBeInTheDocument();
     screen.logTestingPlaygroundURL();
   });
 
