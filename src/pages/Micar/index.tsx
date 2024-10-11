@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 import { Box, Container } from "@mui/material";
 
 import useFetch from "src/commons/hooks/useFetch";
-import { Lighning, Earch, Wash, Tree, TreeWhite, LighningWhite, EarchWhite, WasteWhite } from "src/commons/resources";
+import { Lighning, Earch, LighningWhite, EarchWhite } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
@@ -83,26 +83,6 @@ const Micar = () => {
         value2={`${numberWithCommas(data?.indicator_5?.result?.value)} tCO2e`}
         value3={`${numberWithCommas(data?.indicator_6?.result?.value)} kgCO2e`}
         content={t("micar.indicators.emissions.des")}
-      />
-      <MicarIndicator
-        bgColor={"#FFE8E0"}
-        icon={theme.isDark ? <WasteWhite /> : <Wash />}
-        title={t("micar.indicators.waste")}
-        des1={data?.indicator_7?.title}
-        des2={data?.indicator_8?.title}
-        des3={data?.indicator_9?.title}
-        value1={`${numberWithCommas(data?.indicator_7?.result?.value)} kg`}
-        value2={formatPercent(data?.indicator_8?.result?.value)}
-        value3={`${numberWithCommas(data?.indicator_9?.result?.value)} t`}
-        content={t("micar.indicators.waste.des")}
-      />
-      <MicarIndicator
-        bgColor={"#D9FFE0"}
-        icon={theme.isDark ? <TreeWhite /> : <Tree />}
-        title={t("micar.indicators.natural")}
-        des1={data?.indicator_10?.title}
-        value1={`${numberWithCommas(data?.indicator_10?.result?.value)} kg`}
-        content={t("micar.indicators.natural.des")}
       />
     </Box>
   );
