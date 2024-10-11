@@ -171,7 +171,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <ResponsiveContainer width="100%" height={520}>
+              <ResponsiveContainer width="100%" height={550}>
                 <ComposedChart
                   width={900}
                   height={400}
@@ -186,7 +186,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     }
                     return (
                       <defs key={item}>
-                        <filter x="-.15" y="-.40" width="1.25" height="1.3" id={item}>
+                        <filter x="-.15" y="-.50" width="1.25" height="1.3" id={item}>
                           <feFlood floodColor={floodColor} result="bg" />
                           <feMerge>
                             <feMergeNode in="bg" />
