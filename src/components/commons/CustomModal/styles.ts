@@ -18,11 +18,15 @@ export const ModalContainer = styled(Box)<{
   maxHeight: "95vh",
   boxSizing: "border-box",
   [theme.breakpoints.down("md")]: {
-    padding: "30px 30px 40px"
+    padding: "30px 30px 40px",
+    maxHeight: "90vh",
+    overflowY: "hidden"
   },
   [theme.breakpoints.down("sm")]: {
     padding: "20px 15px 25px",
-    maxWidth: "98vw"
+    maxWidth: "98vw",
+    maxHeight: "80vh",
+    overflowY: "hidden"
   }
 }));
 

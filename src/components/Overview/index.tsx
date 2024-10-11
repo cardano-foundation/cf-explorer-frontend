@@ -11,6 +11,7 @@ import ChartOverview from "./ChartOverview";
 import TabOverview from "./TabOverview";
 import NoRecord from "../commons/NoRecord";
 import FetchDataErr from "../commons/FetchDataErr";
+import PreDefinedVotesChart from "./ChartPreDefined";
 
 export default function OverviewComponent() {
   const { data, loading, error, statusError } = useFetch<GOoverview>(API.GOVERNANCE_OVERVIEW.OVERVIEW);
@@ -34,6 +35,7 @@ export default function OverviewComponent() {
       </Card>
       <CardOverview loading={loading} data={dataCard} />
       <ChartOverview loading={loading} data={dataChart} />
+      <PreDefinedVotesChart />
       <TabOverview />
     </Box>
   );

@@ -14,6 +14,8 @@ import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
 import MarketCapIcon from "./icons/market-cap.svg";
 import MarketCapDarkIcon from "./icons/market-cap-dark.svg";
+import PotsIcon from "./icons/pots-icon.svg";
+import PotsIconDark from "./icons/pots-icon-dark.svg";
 import CurentEpochIcon from "./icons/curent-epoch.svg";
 import CurentEpochPool from "./icons/curent-epoch-pool.svg";
 import CurentEpochPoolDark from "./icons/curent-epoch-pool-dark.svg";
@@ -301,6 +303,8 @@ export {
   AdaPriceDarkIcon,
   MarketCapIcon,
   MarketCapDarkIcon,
+  PotsIcon,
+  PotsIconDark,
   CurentEpochIcon,
   // WalletOutlineIconComponent,
   LiveStakeIcon,

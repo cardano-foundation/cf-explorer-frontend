@@ -81,6 +81,14 @@ interface StakeAnalytics {
   liveStake: number;
 }
 
+interface PostOverview {
+  depositsAndFees: number;
+  rewards: number;
+  treasury: number;
+  reserves: number;
+  epoch: number;
+}
+
 interface RegistrationItem {
   txHash: string;
   fee: number;

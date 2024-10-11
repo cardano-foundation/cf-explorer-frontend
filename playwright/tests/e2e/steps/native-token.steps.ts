@@ -1,7 +1,6 @@
 import { createBdd } from "playwright-bdd";
 
 import { blockfrostApi } from "playwright/api/call-blockfrost/blockfrost.api";
-import { addressDetailPage } from "playwright/pages/address-detail.page";
 import { blockDetailPage } from "playwright/pages/block-detail.page";
 import { epochDetailPage } from "playwright/pages/epoch-detail.page";
 import { nativeTokenPage } from "playwright/pages/native-token.page";
@@ -14,7 +13,6 @@ const { Given, When, Then } = createBdd();
 let tokenID: string | null;
 let scriptHash: string | null;
 let transactionHash: string | null;
-let address: string | null;
 let epochNo: string | null;
 let blockNo: string | null;
 
@@ -182,36 +180,6 @@ When(/^the user selects the input addres link in the transactions table$/, async
 Then(/^the user should be redirected to the Address details page of the selected address link$/, async ({ page }) => {
   await epochDetailPage(page).checkEpochDetail({ epochNo });
 });
-
-Given(/^the user open the detail page of a token in the native tokens page in web$/, async ({ page }) => {
-  await nativeTokenPage(page).goToNativeTokens();
-  await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
-});
-When(/^the user selects the input addres link in the transactions table in web$/, async ({ page }) => {
-  address = await nativeTokenPage(page).getAddressByTableValueTrx();
-  await nativeTokenPage(page).goToAddressDetailFromTransactionTableByAddress();
-});
-Then(
-  /^the user should be redirected to the Address details page of the selected address link in web$/,
-  async ({ page }) => {
-    await addressDetailPage(page).checkAddressDetail({ address });
-  }
-);
-
-Given(/^the user open the detail page of a token in the native tokens page in web site$/, async ({ page }) => {
-  await nativeTokenPage(page).goToNativeTokens();
-  await nativeTokenPage(page).goToTokensDetailPageFromTableByAssetName();
-});
-When(/^the user selects the addres link in the top holders section in web site$/, async ({ page }) => {
-  address = await nativeTokenPage(page).getAddressByTableValueTrx();
-  await nativeTokenPage(page).goToStakeAddressDetailFromTopHolderTableByAddress();
-});
-Then(
-  /^the user should be redirected to the Address details page of the selected address link in web site$/,
-  async ({ page }) => {
-    await addressDetailPage(page).checkAddressDetail({ address });
-  }
-);
 
 Given(/^the user open the detail page of a token in the native tokens in webpage$/, async ({ page }) => {
   await nativeTokenPage(page).goToNativeTokens();
