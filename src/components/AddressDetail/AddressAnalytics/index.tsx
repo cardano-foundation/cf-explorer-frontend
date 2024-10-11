@@ -202,9 +202,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     tickMargin={5}
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -222,9 +220,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
