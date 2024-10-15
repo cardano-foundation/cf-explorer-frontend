@@ -44,7 +44,7 @@ const Micar = () => {
   const { isMobile, isLaptop } = useScreen();
   const theme = useTheme();
   useEffect(() => {
-    document.title = `MiCAR | Cardano Blockchain Explorer`;
+    document.title = `Sustainability Indicators | Cardano Blockchain Explorer`;
   }, []);
   const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100) / 100} %`;
 
