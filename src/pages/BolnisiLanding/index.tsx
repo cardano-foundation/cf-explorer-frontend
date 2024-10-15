@@ -37,7 +37,7 @@ interface BolnisiNumbers {
 }
 const BolnisiLanding = () => {
   useEffect(() => {
-    document.title = `Bolnisi | Cardano Blockchain Explorer`;
+    document.title = `Traceability Program | Cardano Blockchain Explorer`;
   }, []);
 
   return (
