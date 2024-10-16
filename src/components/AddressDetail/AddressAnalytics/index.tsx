@@ -74,7 +74,6 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     false,
     blockKey
   );
-
   const maxBalance = BigNumber(data?.highestBalance || 0).toString();
   const minBalance = BigNumber(data?.lowestBalance || 0).toString();
 
@@ -105,12 +104,13 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
         BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
     );
-    // Ticks add highest
-    needShowTicks.push(highest);
 
-    // If lowest equal highest, add it.
-    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+    const distanceBetweenLowestAndHighest = BigNumber(highest).minus(lowest).div(tickMax).abs();
 
+    if (distanceBetweenLowestAndHighest.gt(labelHeight)) {
+      needShowTicks.push(highest);
+      needShowTicks.push(lowest);
+    }
     return needShowTicks.sort((a, b) => a - b);
   }, [maxBalance, highest, lowest]);
 
@@ -171,7 +171,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <ResponsiveContainer width="100%" height={550}>
+              <ResponsiveContainer width="100%" height={400}>
                 <ComposedChart
                   width={900}
                   height={400}
@@ -186,7 +186,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     }
                     return (
                       <defs key={item}>
-                        <filter x="-.15" y="-.50" width="1.25" height="1.3" id={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
                           <feFlood floodColor={floodColor} result="bg" />
                           <feMerge>
                             <feMergeNode in="bg" />
