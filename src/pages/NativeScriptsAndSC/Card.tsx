@@ -50,7 +50,6 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
           <Title data-testid="nativeScripts.card.scriptHashTitle">{t("common.scriptHash")}: </Title>
           <Box
             data-testid="nativeScripts.card.scriptHashValue"
-            mb={"4px"}
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
           >
@@ -72,10 +71,6 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
               <MultiSigChip isMultiSig={data.isMultiSig} />
             </Box>
           </Value>
-        </Row>
-        <Row>
-          <Title data-testid="nativeScripts.card.assetHoldersTitle">{t("nativeScript.assetHolders")}: </Title>
-          <Value data-testid="nativeScripts.card.assetHoldersValue">{data.numberOfAssetHolders || 0}</Value>
         </Row>
 
         <Row>
