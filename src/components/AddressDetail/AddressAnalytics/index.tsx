@@ -74,7 +74,6 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     false,
     blockKey
   );
-
   const maxBalance = BigNumber(data?.highestBalance || 0).toString();
   const minBalance = BigNumber(data?.lowestBalance || 0).toString();
 
@@ -105,12 +104,13 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
         BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
     );
-    // Ticks add highest
-    needShowTicks.push(highest);
 
-    // If lowest equal highest, add it.
-    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+    const distanceBetweenLowestAndHighest = BigNumber(highest).minus(lowest).div(tickMax).abs();
 
+    if (distanceBetweenLowestAndHighest.gt(labelHeight)) {
+      needShowTicks.push(highest);
+      needShowTicks.push(lowest);
+    }
     return needShowTicks.sort((a, b) => a - b);
   }, [maxBalance, highest, lowest]);
 
@@ -202,9 +202,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     tickMargin={5}
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -222,9 +220,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
