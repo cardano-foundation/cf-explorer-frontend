@@ -1,8 +1,10 @@
 import {
   Box,
   CircularProgress,
+  Collapse,
   IconButton,
   PaginationRenderItemParams,
+  Paper,
   SelectChangeEvent,
   alpha,
   styled,
@@ -43,6 +45,7 @@ import NoRecord from "../NoRecord";
 import NotAvailable from "../NotAvailable";
 import FetchDataErr from "../FetchDataErr";
 import {
+  Skeleton,
   Empty,
   InputNumber,
   LoadingWrapper,
@@ -63,7 +66,9 @@ import {
   TableFullWidth,
   TableHeaderContainer,
   TableTitle,
+  TitleExpandedRow,
   TotalNumber,
+  ValueExpandedRow,
   Wrapper
 } from "./styles";
 
@@ -186,6 +191,7 @@ const TableRow = <T extends ColumnType>({
   screen,
   index,
   onClickRow,
+  handleOpenDetail,
   showTabView,
   selectedProps,
   selected = false,
@@ -194,7 +200,8 @@ const TableRow = <T extends ColumnType>({
   toggleSelection,
   isSelected,
   isModal,
-  onCallBackHeight
+  onCallBackHeight,
+  expandedEpochTable
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
@@ -208,7 +215,16 @@ const TableRow = <T extends ColumnType>({
     [rowRef.current];
 
   return (
-    <TRow ref={rowRef} onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
+    <TRow
+      ref={rowRef}
+      onClick={(e) => {
+        if (!expandedEpochTable) {
+          handleOpenDetail?.(e, row);
+        }
+        handleClicktWithoutAnchor(e, () => onClickRow?.(e, row));
+      }}
+      {...selectedProps}
+    >
       {selectable && (
         <TCol ismodal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
@@ -239,16 +255,18 @@ const TableRow = <T extends ColumnType>({
       {showTabView && (
         <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {!selected && (
-              <CustomIcon
-                data-testid={`eye-icon#${index}`}
-                icon={EyeIcon}
-                stroke={theme.palette.secondary.light}
-                originWidth={31}
-                originHeight={23}
-                width={24}
-              />
-            )}
+            <CustomIcon
+              data-testid={`eye-icon#${index}`}
+              icon={EyeIcon}
+              stroke={theme.palette.secondary.light}
+              originWidth={31}
+              originHeight={23}
+              width={24}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleOpenDetail?.(e, row);
+              }}
+            />
           </Box>
         </TCol>
       )}
@@ -271,7 +289,10 @@ const TableBody = <T extends ColumnType>({
   toggleSelection,
   isSelected,
   isModal,
-  onCallBackHeight
+  onCallBackHeight,
+  onClickExpandedRow,
+  expandedEpochTable,
+  expandedRow
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -291,23 +312,38 @@ const TableBody = <T extends ColumnType>({
         </LoadingWrapper>
       )}
       {data?.map((row, index) => (
-        <TableRow
-          row={row}
-          key={index}
-          columns={columns}
-          screen={screen}
-          index={index}
-          dataLength={data.length}
-          onClickRow={onClickRow}
-          showTabView={showTabView}
-          selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
-          selectedProps={selected === index ? selectedProps : undefined}
-          selectable={selectable}
-          toggleSelection={toggleSelection}
-          isSelected={isSelected}
-          isModal={isModal}
-          onCallBackHeight={onCallBackHeight}
-        />
+        <>
+          <TableRow
+            row={row}
+            key={index}
+            columns={columns}
+            screen={screen}
+            index={index}
+            dataLength={data.length}
+            onClickRow={() => {
+              expandedEpochTable && onClickExpandedRow && onClickExpandedRow(row);
+            }}
+            handleOpenDetail={onClickRow}
+            showTabView={showTabView}
+            selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+            selectedProps={selected === index ? selectedProps : undefined}
+            selectable={selectable}
+            toggleSelection={toggleSelection}
+            isSelected={isSelected}
+            isModal={isModal}
+            onCallBackHeight={onCallBackHeight}
+            expandedEpochTable={expandedEpochTable}
+          />
+          {expandedEpochTable && expandedRow === row.no && (
+            <tr>
+              <td colSpan={columns.length}>
+                <Collapse in={expandedRow === row.no} timeout="auto" unmountOnExit>
+                  <ExpandedRowContent data={row} />
+                </Collapse>
+              </td>
+            </tr>
+          )}
+        </>
       ))}
     </TBody>
   );
@@ -320,6 +356,61 @@ const TableSekeleton = () => {
         <CircularProgress />
       </LoadingWrapper>
     </Empty>
+  );
+};
+
+export const ExpandedRowContent: React.FC<{ data: IDataEpoch }> = ({ data }) => {
+  const { isMobile } = useScreen();
+  const dataRowExpanded = [
+    { label: "Unique Accounts", value: data.account || "N/A" },
+    { label: "Transaction Count", value: data.txCount || "N/A" },
+    { label: "Rewards Distributed", value: data.rewardsDistributed || "N/A" },
+    { label: "Total Output", value: numberWithCommas(data.outSum) }
+  ];
+  if (!data.account && !data.account && !data.rewardsDistributed && !data.outSum) {
+    return (
+      <>
+        <Box display="flex" justifyContent="flex-start" padding={2} gap={2}>
+          {dataRowExpanded.map((item, index) => (
+            <Paper
+              key={index}
+              variant="outlined"
+              sx={{
+                padding: isMobile ? 2 : 3,
+                textAlign: "start",
+                borderRadius: 4,
+                marginRight: "10px"
+              }}
+            >
+              <Box mb={1}>
+                <Skeleton variant="rectangular" />
+              </Box>
+              <Skeleton variant="rectangular" />
+            </Paper>
+          ))}
+        </Box>
+      </>
+    );
+  }
+
+  return (
+    <Box display="flex" justifyContent="flex-start" padding={2} gap={2}>
+      {dataRowExpanded.map((item, index) => (
+        <Paper
+          key={index}
+          variant="outlined"
+          sx={{
+            padding: isMobile ? 2 : 3,
+            textAlign: "start",
+            borderRadius: 4,
+            marginRight: "10px"
+          }}
+        >
+          <TitleExpandedRow>{item.label}</TitleExpandedRow>
+          <ValueExpandedRow>{item.value}</ValueExpandedRow>
+        </Paper>
+      ))}
+    </Box>
   );
 };
 
@@ -464,7 +555,10 @@ const Table: React.FC<TableProps> = ({
   isModal,
   height,
   minHeight,
-  isFullTableHeight = false
+  isFullTableHeight = false,
+  expandedEpochTable,
+  expandedRow,
+  onClickExpandedRow
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -568,6 +662,9 @@ const Table: React.FC<TableProps> = ({
             isSelected={isSelected}
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
+            expandedEpochTable={expandedEpochTable}
+            expandedRow={expandedRow}
+            onClickExpandedRow={onClickExpandedRow}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}

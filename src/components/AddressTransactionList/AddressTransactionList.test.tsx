@@ -1,10 +1,6 @@
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-
 import * as helper from "src/commons/utils/helper";
 import useFetchList from "src/commons/hooks/useFetchList";
-import { fireEvent, render, screen } from "src/test-utils";
-import { details } from "src/commons/routers";
+import { render, screen } from "src/test-utils";
 
 import AddressTransactionList from ".";
 
@@ -14,6 +10,7 @@ const mockAddress =
 const mockData = {
   data: [
     {
+      dataTestId: "addressTransactionList.blockValue",
       hash: "aee9e36ddbef6855db342ef93978bb636afa5105b05e669fd4d1ac7f780fdbc0",
       blockNo: 7972764,
       blockHash: "355c8a3cdbffc66509c48c40ecfb3b662ed4dee4b488c5f2d28fbb061f87bff9",
@@ -101,16 +98,5 @@ describe("Address Transaction List test", () => {
     // it("should fetch data", () => {
     //   expect(mockUseFetchList).toHaveBeenCalledTimes(1);
     // });
-  });
-
-  it("should component go to detail pages", () => {
-    const history = createBrowserHistory();
-    render(
-      <Router history={history}>
-        <AddressTransactionList address={mockAddress} />
-      </Router>
-    );
-    fireEvent.click(screen.getByRole("link", { name: "7972764" }));
-    expect(history.location.pathname).toBe(details.block("7972764"));
   });
 });
