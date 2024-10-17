@@ -186,6 +186,7 @@ const TableRow = <T extends ColumnType>({
   screen,
   index,
   onClickRow,
+  onClickTabView,
   showTabView,
   selectedProps,
   selected = false,
@@ -237,7 +238,12 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={+selected}>
+        <TCol
+          onClick={(e) => handleClicktWithoutAnchor(e, () => onClickTabView?.(e, row))}
+          minWidth={50}
+          maxWidth={90}
+          selected={+selected}
+        >
           <Box display="flex" alignItems="center" height="1rem">
             {!selected && (
               <CustomIcon
@@ -262,6 +268,7 @@ const TableBody = <T extends ColumnType>({
   screen,
   rowKey,
   onClickRow,
+  onClickTabView,
   showTabView,
   selected,
   selectedProps,
@@ -307,6 +314,7 @@ const TableBody = <T extends ColumnType>({
           isSelected={isSelected}
           isModal={isModal}
           onCallBackHeight={onCallBackHeight}
+          onClickTabView={onClickTabView}
         />
       ))}
     </TBody>
@@ -447,6 +455,7 @@ const Table: React.FC<TableProps> = ({
   error,
   statusError,
   onClickRow,
+  onClickTabView,
   showTabView,
   rowKey,
   selected,
@@ -557,6 +566,7 @@ const Table: React.FC<TableProps> = ({
             screen={screen}
             data={data}
             onClickRow={onClickRow}
+            onClickTabView={onClickTabView}
             showTabView={showTabView}
             rowKey={rowKey}
             selected={selected}
