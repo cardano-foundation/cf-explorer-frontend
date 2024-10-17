@@ -38,6 +38,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
+  onClickTabView?: (e: React.MouseEvent, record: T) => void;
   handleOpenDetail?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
   selected?: boolean;

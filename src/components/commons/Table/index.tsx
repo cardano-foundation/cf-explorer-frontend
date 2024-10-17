@@ -191,6 +191,7 @@ const TableRow = <T extends ColumnType>({
   screen,
   index,
   onClickRow,
+  onClickTabView,
   handleOpenDetail,
   showTabView,
   selectedProps,
