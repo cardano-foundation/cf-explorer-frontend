@@ -10,7 +10,6 @@ const mockAddress =
 const mockData = {
   data: [
     {
-      dataTestId: "addressTransactionList.blockValue",
       hash: "aee9e36ddbef6855db342ef93978bb636afa5105b05e669fd4d1ac7f780fdbc0",
       blockNo: 7972764,
       blockHash: "355c8a3cdbffc66509c48c40ecfb3b662ed4dee4b488c5f2d28fbb061f87bff9",

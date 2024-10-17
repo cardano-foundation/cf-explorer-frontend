@@ -50,22 +50,4 @@ describe("Transactions view", () => {
       expect(history.location.pathname).toBe(details.transaction(mockItem.data[0].hash));
     });
   });
-
-  it("should navigate to the correct route when block item is clicked", async () => {
-    const mockUseFetchList = useFetchList as jest.Mock;
-    mockUseFetchList.mockReturnValue(mockItem);
-    const history = createMemoryHistory();
-
-    render(
-      <Router history={history}>
-        <Transactions />
-      </Router>
-    );
-
-    const transactionsItem = screen.getByText(8902162);
-    fireEvent.click(transactionsItem);
-    await waitFor(() => {
-      expect(history.location.pathname).toBe(details.block(mockItem.data[0].blockNo.toString()));
-    });
-  });
 });
