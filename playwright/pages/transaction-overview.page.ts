@@ -1,7 +1,4 @@
 import { expect, Page } from "@playwright/test";
-import moment from "moment";
-
-import { TransactionInformationDto } from "playwright/api/dtos/transactionInformation.dto";
 
 export function transactionOverviewPage(page: Page) {
   const firstTransactionInTable = page.getByTestId("transaction.table.value.txhash#0");
@@ -19,17 +16,6 @@ export function transactionOverviewPage(page: Page) {
   const transactionTableTitleEpoch = page.getByTestId("transactions.table.title.epoch");
   const transactionTableTitleSlot = page.getByTestId("transactions.table.title.slot");
   const transactionTableTitlelFees = page.getByTestId("transactions.table.title.fees");
-  const transactionWidgeDetailViewBtn = page.getByTestId("transaction.detailViewEpoch.viewDetail");
-
-  const addressDetailFromWidgetByInputAddress = page.getByTestId("transaction.widget.inputAddress");
-  const transactionWidgetTrxSignature = page.getByTestId("transaction.widget.signersInformation");
-  const transactionWidgeSummary = page.getByTestId("transaction.widget.summary");
-  const transactionWidgeUtxo = page.getByTestId("transaction.widget.utxOs");
-  const transactionWidgetEpochNo = page.getByTestId("transaction.widget.epoch");
-  const transactionWidgetBlockNo = page.getByTestId("transaction.widget.block");
-  const transactionWidgetSlotNo = page.getByTestId("transaction.widget.slot");
-  const transactionWidgetCreatedAt = page.getByTestId("transaction.widget.createdAt");
-  const transactionWidgetEpochSlot = page.getByTestId("transaction.widget.epochSlot");
 
   const getDetailBlockPageTitle = async () => {
     await expect(deatailPageTitle, "Check title on block detail").toHaveText("Block Details");
@@ -68,29 +54,6 @@ export function transactionOverviewPage(page: Page) {
     const trxHash = await firstTransactionInTable?.getAttribute("href");
     return trxHash;
   };
-  const getLinkHrefFromWidgeDetailViewBtn = async () => {
-    const trxHash = await transactionWidgeDetailViewBtn?.getAttribute("href");
-    return trxHash;
-  };
-
-  const getLinkHrefFromWidgetTrxSignature = async () => {
-    const trxHash = await transactionWidgetTrxSignature?.getAttribute("href");
-    return trxHash;
-  };
-
-  const getLinkHrefFromWidgetByUtxo = async () => {
-    const trxHash = await transactionWidgeUtxo?.getAttribute("href");
-    return trxHash;
-  };
-  const getLinkHrefFromWidgetBySummary = async () => {
-    const trxHash = await transactionWidgeSummary?.getAttribute("href");
-    return trxHash;
-  };
-
-  const getLinkHrefFromWidgetByInputAddress = async () => {
-    const trxHash = await addressDetailFromWidgetByInputAddress?.getAttribute("href");
-    return trxHash;
-  };
 
   const searchBarOnTransaction = async () => {
     await expect(searchBarEpoch).toHaveText("Transactions");
@@ -109,10 +72,6 @@ export function transactionOverviewPage(page: Page) {
     await page.goto("/transactions");
   };
 
-  const goToTrxDetailFromWidgetDetailViewBtn = async () => {
-    await transactionWidgeDetailViewBtn.click();
-  };
-
   const goToAddressDetailByInputAddreess = async () => {
     await firstInputAddressInTable.click();
   };
@@ -121,47 +80,8 @@ export function transactionOverviewPage(page: Page) {
     await transactionTableValueSlot.click();
   };
 
-  const goToAddrssDetailFromWidgetByInputAddress = async () => {
-    await addressDetailFromWidgetByInputAddress.click();
-  };
-
-  const goToTransactionDetailFromWidgetBySumary = async () => {
-    await transactionWidgeSummary.click();
-  };
-
-  const goToTransactionDetailFromWidgetByTrxTab = async () => {
-    await transactionWidgetTrxSignature.click();
-  };
-
-  const goToTransactionDetailFromWidgetByUTXO = async () => {
-    await transactionWidgeUtxo.click();
-  };
-
   const openLastestTransactionWidget = async () => {
     await transactionTableValueSlot.click();
-  };
-
-  const checkCurrenTransactionWidget = async ({
-    currentTransaction
-  }: {
-    currentTransaction: TransactionInformationDto[];
-  }) => {
-    expect(+((await transactionWidgetEpochNo.innerText()) || 0), "Check epoch on transaction widget").toEqual(
-      currentTransaction[0].epoch_no
-    );
-    expect(+((await transactionWidgetBlockNo.innerText()) || 0), "Check block on transaction widget").toEqual(
-      currentTransaction[0].block_height
-    );
-    expect(+((await transactionWidgetSlotNo.innerText()) || 0), "Check slot on transaction widget").toEqual(
-      currentTransaction[0].absolute_slot
-    );
-    expect(
-      moment((await transactionWidgetCreatedAt.textContent())?.replace(",", "")).unix(),
-      "Check create time on transaction widget"
-    ).toEqual(currentTransaction[0]?.tx_timestamp);
-    expect(+((await transactionWidgetEpochSlot.innerText()) || 0), "Check epoch slot on transaction widget").toEqual(
-      currentTransaction[0].epoch_slot
-    );
   };
 
   const checkTransactionsTable = async () => {
@@ -176,11 +96,6 @@ export function transactionOverviewPage(page: Page) {
     goToAddressDetailByInputAddreess,
     getLinkHrefByInputAddress,
     getDetailAddressPageTitle,
-    getLinkHrefFromWidgetByInputAddress,
-    getLinkHrefFromWidgetBySummary,
-    getLinkHrefFromWidgetByUtxo,
-    getLinkHrefFromWidgetTrxSignature,
-    getLinkHrefFromWidgeDetailViewBtn,
     getDetailEpochPageTitle,
     goToEpochDetailFromTable,
     getDetailBlockPageTitle,
@@ -188,18 +103,12 @@ export function transactionOverviewPage(page: Page) {
     getLinkHrefTxHash,
     goToBlockDetailFromTable,
     goToTransactionDetailFromTable,
-    checkCurrenTransactionWidget,
     openWidget,
     searchBarOnTransaction,
     goToTransactionFromSidebar,
     goToDashboard,
     checkTransactionsTable,
     goToTransactions,
-    openLastestTransactionWidget,
-    goToAddrssDetailFromWidgetByInputAddress,
-    goToTrxDetailFromWidgetDetailViewBtn,
-    goToTransactionDetailFromWidgetBySumary,
-    goToTransactionDetailFromWidgetByUTXO,
-    goToTransactionDetailFromWidgetByTrxTab
+    openLastestTransactionWidget
   };
 }

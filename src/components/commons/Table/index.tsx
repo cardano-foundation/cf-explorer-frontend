@@ -253,7 +253,12 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={+selected}>
+        <TCol
+          onClick={(e) => handleClicktWithoutAnchor(e, () => onClickTabView?.(e, row))}
+          minWidth={50}
+          maxWidth={90}
+          selected={+selected}
+        >
           <Box display="flex" alignItems="center" height="1rem">
             <CustomIcon
               data-testid={`eye-icon#${index}`}
@@ -506,7 +511,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.total > pagination.size ? (
+      {pagination?.total && pagination.total > (pagination?.size || 10) ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
@@ -538,6 +543,7 @@ const Table: React.FC<TableProps> = ({
   error,
   statusError,
   onClickRow,
+  onClickTabView,
   showTabView,
   rowKey,
   selected,
@@ -651,6 +657,7 @@ const Table: React.FC<TableProps> = ({
             screen={screen}
             data={data}
             onClickRow={onClickRow}
+            onClickTabView={onClickTabView}
             showTabView={showTabView}
             rowKey={rowKey}
             selected={selected}

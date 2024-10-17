@@ -84,6 +84,7 @@ const CustomFilterMultiRange: React.FC = () => {
   const [isShowRetired, setIsRetired] = useState<boolean>(/^true$/i.test(pageInfo.retired));
   const fetchDataRange = useFetch<PoolResponse>(API.POOL_RANGE_VALUES);
   const dataRange = fetchDataRange.data;
+
   const initParams = {
     page: 0,
     size: 50,
@@ -102,6 +103,7 @@ const CustomFilterMultiRange: React.FC = () => {
     minGovParticipationRate: +(dataRange?.minGovParticipationRate || 0),
     maxGovParticipationRate: +(dataRange?.maxGovParticipationRate || 0)
   };
+
   const [filterParams, setFilterParams] = useState<PoolResponse>({});
 
   useEffect(() => {
@@ -111,6 +113,8 @@ const CustomFilterMultiRange: React.FC = () => {
       size: +(query?.voteSize || "") || 50,
       sort: (query?.sort || "").toString(),
       query: "",
+
+      ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.maxPoolSize && { maxPoolSize: +(query?.maxPoolSize || 0) }),
       ...(query?.minPoolSize && { minPoolSize: +(query?.minPoolSize || 0) }),
       ...(query?.minPledge && { minPledge: +(query?.minPledge || 0) }),
@@ -216,11 +220,13 @@ const CustomFilterMultiRange: React.FC = () => {
       state: undefined
     });
   };
+
   const handleKeyPress = (event: { key: string }) => {
     if (event.key === "Enter") {
       handleFilter();
     }
   };
+
   const handleChangeValueRange = (event: Event, newValue: number | number[], minKey: string, maxKey: string) => {
     if (!Array.isArray(newValue)) {
       return;
@@ -228,6 +234,7 @@ const CustomFilterMultiRange: React.FC = () => {
     const [min, max] = newValue || [];
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
+
   const isDisableFilter = useMemo(
     () =>
       (filterParams.query || "") !== initParams.query ||
@@ -1203,7 +1210,6 @@ const CustomFilterMultiRange: React.FC = () => {
                   </Box>
                 </>
               )}
-
               <Box my={1} p="0px 16px">
                 <ApplyFilterButton
                   data-testid="filterRange.applyFilters"
