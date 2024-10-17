@@ -12,7 +12,6 @@ import { formatDateTimeLocal } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
-import SelectedIcon from "src/components/commons/SelectedIcon";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
 import { Capitalize } from "src/components/commons/CustomText/styles";
@@ -20,12 +19,14 @@ import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import NoRecord from "src/components/commons/NoRecord";
 import FetchDataErr from "src/components/commons/FetchDataErr";
+import { details } from "src/commons/routers";
 
-import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledBox, StyledContainer } from "./styles";
+import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledContainer, StyledLink } from "./styles";
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<number | null>(null);
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
@@ -52,7 +53,9 @@ const Epoch: React.FC = () => {
       render: (r, idx) => (
         <EpochNumber data-testid={`epoch.epochValue#${idx}`}>
           <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
-            <StyledBox>{r.no || 0}</StyledBox>
+            <StyledLink to={details.epoch(r.no)} data-testid={`blocks.table.value.epoch#${idx}`}>
+              {r.no}
+            </StyledLink>
             <StatusTableRow status={r.status as keyof typeof EPOCH_STATUS}>
               {EPOCH_STATUS_MAPPING[EPOCH_STATUS[r.status]]}
             </StatusTableRow>
@@ -78,10 +81,7 @@ const Epoch: React.FC = () => {
       minWidth: "100px",
       render: (r, idx) => (
         <DatetimeTypeTooltip>
-          <BlueText data-testid={`epoch.table.endTimeValue#${idx}`}>
-            {formatDateTimeLocal(r.endTime || "")}
-            {selected === r.no && <SelectedIcon />}
-          </BlueText>
+          <BlueText data-testid={`epoch.table.endTimeValue#${idx}`}>{formatDateTimeLocal(r.endTime || "")}</BlueText>
         </DatetimeTypeTooltip>
       )
     },
@@ -104,6 +104,11 @@ const Epoch: React.FC = () => {
   const openDetail = (_: IDataEpoch, r: IDataEpoch) => {
     setOnDetailView(true);
     setSelected(r.no);
+  };
+
+  const handleExpandedRow = (data: IDataEpoch) => {
+    setExpandedRow(expandedRow === data.no ? null : data.no);
+    setSelected(data.no);
   };
 
   const handleClose = () => {
@@ -143,9 +148,12 @@ const Epoch: React.FC = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={(_, r) => openDetail(r, r)}
+          onClickExpandedRow={handleExpandedRow}
           rowKey="no"
           selected={selected}
           showTabView
+          expandedEpochTable
+          expandedRow={expandedRow}
         />
       </Card>
       <DetailViewEpoch

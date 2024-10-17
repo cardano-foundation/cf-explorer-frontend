@@ -38,6 +38,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   dataLength?: number;
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
+  handleOpenDetail?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
   selected?: boolean;
   selectedProps?: {
@@ -49,6 +50,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   isSelected?: (item: T) => boolean;
   isModal?: boolean;
   onCallBackHeight?: (height: number) => void;
+  expandedEpochTable?: boolean;
 };
 
 export interface TableProps<T extends ColumnType = any> {
@@ -79,6 +81,9 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
+  onClickExpandedRow?: (data: IDataEpoch) => void;
+  expandedEpochTable?: boolean;
+  expandedRow?: number | null;
   showTabView?: boolean;
   /**
    * @default This props default is row index. If value is string, key of row is row[rowKey].
