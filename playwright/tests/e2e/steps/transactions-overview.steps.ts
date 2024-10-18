@@ -1,7 +1,5 @@
 import { createBdd } from "playwright-bdd";
 
-import { koiosApi } from "playwright/api/call-koios/koios.api";
-
 import { transactionOverviewPage } from "../../../pages/transaction-overview.page";
 import { transactionDetailPage } from "../../../pages/transaction-detail.page";
 import { addressDetailPage } from "../../../pages/address-detail.page";
@@ -22,27 +20,6 @@ Then(
   async ({ page }) => {
     await transactionOverviewPage(page).searchBarOnTransaction();
     await transactionOverviewPage(page).checkTransactionsTable();
-  }
-);
-
-Given(/^the user is in the transactions page in explorer portal site$/, async ({ page }) => {
-  await transactionOverviewPage(page).goToTransactions();
-});
-When(
-  /^the user selects any data of the row execpt the transaction hash, block number, epoch number or addresses hash of one of the transactions record in the table$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).openWidget();
-  }
-);
-Then(
-  /^the user should see the Info widget data with the respective data of the selected transaction$/,
-  async ({ page, request }) => {
-    const ariaLabelValue = await transactionOverviewPage(page).getAttributeTxHashWidget();
-    if (ariaLabelValue) {
-      (await koiosApi(request).getTransactionByTrxHash(ariaLabelValue)).json().then(async (data) => {
-        await transactionOverviewPage(page).checkCurrenTransactionWidget({ currentTransaction: data });
-      });
-    }
   }
 );
 
@@ -99,106 +76,3 @@ When(
 Then(/^the user should be redirected to the address details page of the selected address hash$/, async ({ page }) => {
   await addressDetailPage(page).checkAddressDetail({ address: addressId || "" });
 });
-
-Given(
-  /^the user is in the Transactions page for go to transaction detail from detail button in widget$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).goToTransactions();
-  }
-);
-Given(
-  /^the user open the info widget of one transaction record in the transactions table of transaction page$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).openLastestTransactionWidget();
-  }
-);
-When(/^the user selects the view details button in the transcation info widget$/, async ({ page }) => {
-  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgeDetailViewBtn();
-  await transactionOverviewPage(page).goToTrxDetailFromWidgetDetailViewBtn();
-});
-Then(/^the transaction details page of the selected transaction should be opened$/, async ({ page }) => {
-  await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
-});
-
-Given(/^the user is in the Transactions page to address detail from detail button in widget$/, async ({ page }) => {
-  await transactionOverviewPage(page).goToTransactions();
-});
-Given(/^the user open the info widget of one transaction record in transaction web$/, async ({ page }) => {
-  await transactionOverviewPage(page).openLastestTransactionWidget();
-});
-When(/^the user selects the Input or Output address hash in the transcation info widget$/, async ({ page }) => {
-  addressId = await transactionOverviewPage(page).getLinkHrefFromWidgetByInputAddress();
-  await transactionOverviewPage(page).goToAddrssDetailFromWidgetByInputAddress();
-});
-Then(
-  /^the user should be redirected to the address detail page of the selected input address hash$/,
-  async ({ page }) => {
-    await addressDetailPage(page).checkAddressDetail({ address: addressId || "" });
-  }
-);
-
-Given(
-  /^the user is in the Transactions page for go to transaction detail from summary in widget$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).goToTransactions();
-  }
-);
-Given(
-  /^the user opens the info widget of any transaction in the transactions table from widget of transaction$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).openLastestTransactionWidget();
-  }
-);
-When(/^the user selects the summary section in the info widget$/, async ({ page }) => {
-  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetBySummary();
-  await transactionOverviewPage(page).goToTransactionDetailFromWidgetBySumary();
-});
-Then(
-  /^the transaction detail page of the selected transaction should be opened with the summary section displayed$/,
-  async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
-  }
-);
-
-Given(/^the user is in the Transactions page for go to transaction detail from widget$/, async ({ page }) => {
-  await transactionOverviewPage(page).goToTransactions();
-});
-Given(/^the user opens the info widget of any transaction in the transactions table from widget$/, async ({ page }) => {
-  await transactionOverviewPage(page).openLastestTransactionWidget();
-});
-When(/^the user selects the UTXOs section in the info widget of the selected transaction$/, async ({ page }) => {
-  transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetByUtxo();
-  await transactionOverviewPage(page).goToTransactionDetailFromWidgetByUTXO();
-});
-Then(
-  /^the transaction detail page of the selected transaction should be opened with the UTXOs section displayed$/,
-  async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
-  }
-);
-
-Given(
-  /^the user is in the Transactions page in the explorer page for go to transaction table from widget$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).goToTransactions();
-  }
-);
-Given(
-  /^the user opens the info widget of any transaction in the transactions table from widget tab$/,
-  async ({ page }) => {
-    await transactionOverviewPage(page).openLastestTransactionWidget();
-  }
-);
-When(
-  /^the user selects the transaction signatories section in the info widget of the selected transaction$/,
-  async ({ page }) => {
-    transactionHash = await transactionOverviewPage(page).getLinkHrefFromWidgetTrxSignature();
-    await transactionOverviewPage(page).goToTransactionDetailFromWidgetByTrxTab();
-  }
-);
-Then(
-  /^the transaction detail page of the selected transaction should be opened with the transaction signatories section displayed$/,
-  async ({ page }) => {
-    await transactionDetailPage(page).checkTransactionsDetail({ transactionHash: transactionHash || "" });
-  }
-);

@@ -1,11 +1,9 @@
 import styled from "@emotion/styled";
 import { Container } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { API } from "src/commons/utils/api";
 import TransactionList from "src/components/TransactionLists";
-import DetailViewTransaction from "src/components/commons/DetailView/DetailViewTransaction";
 import { setOnDetailView } from "src/stores/user";
 
 const StyledContainer = styled(Container)`
@@ -17,7 +15,6 @@ const StyledContainer = styled(Container)`
 
 const Transactions = () => {
   const [selected, setSelected] = useState<string | null>(null);
-  const { onDetailView } = useSelector(({ user }: RootState) => user);
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
@@ -29,27 +26,11 @@ const Transactions = () => {
     setSelected(r.hash);
   };
 
-  const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
-  };
-
-  useEffect(() => {
-    if (!onDetailView) handleClose();
-  }, [onDetailView]);
-
   return (
     <>
       <StyledContainer>
-        <TransactionList
-          url={API.TRANSACTION.LIST}
-          openDetail={openDetail}
-          selected={selected}
-          showTabView
-          handleClose={handleClose}
-        />
+        <TransactionList url={API.TRANSACTION.LIST} openDetail={openDetail} selected={selected} showTabView />
       </StyledContainer>
-      <DetailViewTransaction hash={selected || ""} open={onDetailView} handleClose={handleClose} />
     </>
   );
 };
