@@ -50,7 +50,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   isSelected?: (item: T) => boolean;
   isModal?: boolean;
   onCallBackHeight?: (height: number) => void;
-  expandedEpochTable?: boolean;
+  expandedTable?: boolean;
 };
 
 export interface TableProps<T extends ColumnType = any> {
@@ -82,7 +82,8 @@ export interface TableProps<T extends ColumnType = any> {
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
   onClickExpandedRow?: (data: IDataEpoch) => void;
-  expandedEpochTable?: boolean;
+  getExpandedRowData?: (data: IDataEpoch) => { label: string; value: string | number }[];
+  expandedTable?: boolean;
   expandedRow?: number | null;
   showTabView?: boolean;
   /**

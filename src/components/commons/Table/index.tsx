@@ -201,7 +201,7 @@ const TableRow = <T extends ColumnType>({
   isSelected,
   isModal,
   onCallBackHeight,
-  expandedEpochTable
+  expandedTable
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
@@ -218,7 +218,7 @@ const TableRow = <T extends ColumnType>({
     <TRow
       ref={rowRef}
       onClick={(e) => {
-        if (!expandedEpochTable) {
+        if (!expandedTable) {
           handleOpenDetail?.(e, row);
         }
         handleClicktWithoutAnchor(e, () => onClickRow?.(e, row));
@@ -291,8 +291,9 @@ const TableBody = <T extends ColumnType>({
   isModal,
   onCallBackHeight,
   onClickExpandedRow,
-  expandedEpochTable,
-  expandedRow
+  expandedTable,
+  expandedRow,
+  getExpandedRowData
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -321,7 +322,7 @@ const TableBody = <T extends ColumnType>({
             index={index}
             dataLength={data.length}
             onClickRow={() => {
-              expandedEpochTable && onClickExpandedRow && onClickExpandedRow(row);
+              expandedTable && onClickExpandedRow && onClickExpandedRow(row);
             }}
             handleOpenDetail={onClickRow}
             showTabView={showTabView}
@@ -332,13 +333,13 @@ const TableBody = <T extends ColumnType>({
             isSelected={isSelected}
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
-            expandedEpochTable={expandedEpochTable}
+            expandedTable={expandedTable}
           />
-          {expandedEpochTable && expandedRow === row.no && (
+          {expandedTable && expandedRow === row.no && (
             <tr>
               <td colSpan={columns.length}>
                 <Collapse in={expandedRow === row.no} timeout="auto" unmountOnExit>
-                  <ExpandedRowContent data={row} />
+                  {getExpandedRowData && <ExpandedRowContent data={getExpandedRowData(row)} />}
                 </Collapse>
               </td>
             </tr>
@@ -359,43 +360,13 @@ const TableSekeleton = () => {
   );
 };
 
-export const ExpandedRowContent: React.FC<{ data: IDataEpoch }> = ({ data }) => {
+export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[] }> = ({ data }) => {
   const { isMobile } = useScreen();
-  const dataRowExpanded = [
-    { label: "Unique Accounts", value: data.account || "N/A" },
-    { label: "Transaction Count", value: data.txCount || "N/A" },
-    { label: "Rewards Distributed", value: data.rewardsDistributed || "N/A" },
-    { label: "Total Output", value: numberWithCommas(data.outSum) }
-  ];
-  if (!data.account && !data.account && !data.rewardsDistributed && !data.outSum) {
-    return (
-      <>
-        <Box display="flex" justifyContent="flex-start" padding={2} gap={2}>
-          {dataRowExpanded.map((item, index) => (
-            <Paper
-              key={index}
-              variant="outlined"
-              sx={{
-                padding: isMobile ? 2 : 3,
-                textAlign: "start",
-                borderRadius: 4,
-                marginRight: "10px"
-              }}
-            >
-              <Box mb={1}>
-                <Skeleton variant="rectangular" />
-              </Box>
-              <Skeleton variant="rectangular" />
-            </Paper>
-          ))}
-        </Box>
-      </>
-    );
-  }
+  const isLoading = !data[0].value;
 
   return (
     <Box display="flex" justifyContent="flex-start" padding={2} gap={2}>
-      {dataRowExpanded.map((item, index) => (
+      {data.map((item, index) => (
         <Paper
           key={index}
           variant="outlined"
@@ -406,8 +377,19 @@ export const ExpandedRowContent: React.FC<{ data: IDataEpoch }> = ({ data }) => 
             marginRight: "10px"
           }}
         >
-          <TitleExpandedRow>{item.label}</TitleExpandedRow>
-          <ValueExpandedRow>{item.value}</ValueExpandedRow>
+          {isLoading ? (
+            <>
+              <Box mb={1}>
+                <Skeleton variant="rectangular" />
+              </Box>
+              <Skeleton variant="rectangular" />
+            </>
+          ) : (
+            <>
+              <TitleExpandedRow>{item.label}</TitleExpandedRow>
+              <ValueExpandedRow>{item.value}</ValueExpandedRow>
+            </>
+          )}
         </Paper>
       ))}
     </Box>
@@ -556,9 +538,10 @@ const Table: React.FC<TableProps> = ({
   height,
   minHeight,
   isFullTableHeight = false,
-  expandedEpochTable,
+  expandedTable,
   expandedRow,
-  onClickExpandedRow
+  onClickExpandedRow,
+  getExpandedRowData
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -611,7 +594,6 @@ const Table: React.FC<TableProps> = ({
     clearSelection();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
     <Box className={className || ""} style={style} data-testid="table-common">
@@ -662,9 +644,10 @@ const Table: React.FC<TableProps> = ({
             isSelected={isSelected}
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
-            expandedEpochTable={expandedEpochTable}
+            expandedTable={expandedTable}
             expandedRow={expandedRow}
             onClickExpandedRow={onClickExpandedRow}
+            getExpandedRowData={getExpandedRowData}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}

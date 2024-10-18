@@ -36,6 +36,17 @@ describe("DelegationHistoryTab component", () => {
     expect(screen.getByText(formatDateTimeLocal(mockData.time))).toBeInTheDocument();
     expect(screen.getByRole("link", { name: mockData.blockNo.toString() })).toBeInTheDocument();
   });
+
+  it("should the button goto detail page click", () => {
+    const history = createBrowserHistory();
+    render(
+      <Router history={history}>
+        <DelegationHistoryTab />
+      </Router>
+    );
+    fireEvent.click(screen.getByRole("link", { name: mockData.txHash }));
+    expect(history.location.pathname).toBe(details.transaction(mockData.txHash));
+  });
 });
 
 describe("InstantaneousTab comopnent", () => {

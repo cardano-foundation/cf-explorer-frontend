@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
-import { formatDateTimeLocal } from "src/commons/utils/helper";
+import { formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
@@ -129,6 +129,15 @@ const Epoch: React.FC = () => {
 
   if (error && (statusError || 0) < 500) return <NoRecord />;
   if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+  const data = fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data;
+  const getExpandedRowData = (row: IDataEpoch) => {
+    return [
+      { label: "Unique Accounts", value: row.account || null },
+      { label: "Transaction Count", value: row.txCount || null },
+      { label: "Rewards Distributed", value: row.rewardsDistributed || "N/A" },
+      { label: "Total Output", value: numberWithCommas(row.outSum) }
+    ];
+  };
   return (
     <StyledContainer>
       <Card data-testid="epoch.epochsTitle" title={t("glossary.epochs")}>
@@ -136,7 +145,7 @@ const Epoch: React.FC = () => {
         <Table
           {...fetchData}
           data-testid="epoch.table"
-          data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
+          data={data}
           columns={columns}
           total={{ title: t("common.totalEpochs"), count: fetchData.total }}
           pagination={{
@@ -152,8 +161,9 @@ const Epoch: React.FC = () => {
           rowKey="no"
           selected={selected}
           showTabView
-          expandedEpochTable
+          expandedTable
           expandedRow={expandedRow}
+          getExpandedRowData={getExpandedRowData}
         />
       </Card>
       <DetailViewEpoch
