@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
-import { formatDateTimeLocal, numberWithCommas } from "src/commons/utils/helper";
+import { formatDateTimeLocal } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
@@ -129,14 +129,13 @@ const Epoch: React.FC = () => {
 
   if (error && (statusError || 0) < 500) return <NoRecord />;
   if (error && (statusError || 0) >= 500) return <FetchDataErr />;
-  const getExpandedRowData = (row: IDataEpoch) => {
-    return [
-      { label: "Unique Accounts", value: row.account || null },
-      { label: "Transaction Count", value: row.txCount || null },
-      { label: "Rewards Distributed", value: row.rewardsDistributed || "N/A" },
-      { label: "Total Output", value: numberWithCommas(row.outSum) }
-    ];
-  };
+  const epochRowData = [
+    { label: "Unique Accounts", value: "account" },
+    { label: "Transaction Count", value: "txCount" },
+    { label: "Rewards Distributed", value: "rewardsDistributed" },
+    { label: "Total Output", value: "outSum" }
+  ];
+
   return (
     <StyledContainer>
       <Card data-testid="epoch.epochsTitle" title={t("glossary.epochs")}>
@@ -162,7 +161,7 @@ const Epoch: React.FC = () => {
           showTabView
           expandedTable
           expandedRow={expandedRow}
-          getExpandedRowData={getExpandedRowData}
+          epochRowData={epochRowData}
         />
       </Card>
       <DetailViewEpoch

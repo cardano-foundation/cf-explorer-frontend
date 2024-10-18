@@ -293,7 +293,7 @@ const TableBody = <T extends ColumnType>({
   onClickExpandedRow,
   expandedTable,
   expandedRow,
-  getExpandedRowData
+  epochRowData
 }: TableProps<T>) => {
   return (
     <TBody>
@@ -312,40 +312,50 @@ const TableBody = <T extends ColumnType>({
           </Box>
         </LoadingWrapper>
       )}
-      {data?.map((row, index) => (
-        <>
-          <TableRow
-            row={row}
-            key={index}
-            columns={columns}
-            screen={screen}
-            index={index}
-            dataLength={data.length}
-            onClickRow={() => {
-              expandedTable && onClickExpandedRow && onClickExpandedRow(row);
-            }}
-            handleOpenDetail={onClickRow}
-            showTabView={showTabView}
-            selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
-            selectedProps={selected === index ? selectedProps : undefined}
-            selectable={selectable}
-            toggleSelection={toggleSelection}
-            isSelected={isSelected}
-            isModal={isModal}
-            onCallBackHeight={onCallBackHeight}
-            expandedTable={expandedTable}
-          />
-          {expandedTable && expandedRow === row.no && (
-            <tr>
-              <td colSpan={columns.length}>
-                <Collapse in={expandedRow === row.no} timeout="auto" unmountOnExit>
-                  {getExpandedRowData && <ExpandedRowContent data={getExpandedRowData(row)} />}
-                </Collapse>
-              </td>
-            </tr>
-          )}
-        </>
-      ))}
+      {data?.map((row, index) => {
+        const renderExpandedRowData = () => {
+          const expandedRowData = epochRowData.map((item) => ({
+            label: item.label,
+            value: row[item.value]
+          }));
+
+          return <ExpandedRowContent data={expandedRowData} />;
+        };
+        return (
+          <>
+            <TableRow
+              row={row}
+              key={index}
+              columns={columns}
+              screen={screen}
+              index={index}
+              dataLength={data.length}
+              onClickRow={() => {
+                expandedTable && onClickExpandedRow && onClickExpandedRow(row);
+              }}
+              handleOpenDetail={onClickRow}
+              showTabView={showTabView}
+              selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+              selectedProps={selected === index ? selectedProps : undefined}
+              selectable={selectable}
+              toggleSelection={toggleSelection}
+              isSelected={isSelected}
+              isModal={isModal}
+              onCallBackHeight={onCallBackHeight}
+              expandedTable={expandedTable}
+            />
+            {expandedTable && expandedRow === row.no && (
+              <tr>
+                <td colSpan={columns.length}>
+                  <Collapse in={expandedRow === row.no} timeout="auto" unmountOnExit>
+                    {renderExpandedRowData()}
+                  </Collapse>
+                </td>
+              </tr>
+            )}
+          </>
+        );
+      })}
     </TBody>
   );
 };
@@ -541,7 +551,7 @@ const Table: React.FC<TableProps> = ({
   expandedTable,
   expandedRow,
   onClickExpandedRow,
-  getExpandedRowData
+  epochRowData
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -647,7 +657,7 @@ const Table: React.FC<TableProps> = ({
             expandedTable={expandedTable}
             expandedRow={expandedRow}
             onClickExpandedRow={onClickExpandedRow}
-            getExpandedRowData={getExpandedRowData}
+            epochRowData={epochRowData}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
