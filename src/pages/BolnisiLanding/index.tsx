@@ -37,7 +37,7 @@ interface BolnisiNumbers {
 }
 const BolnisiLanding = () => {
   useEffect(() => {
-    document.title = `Bolnisi | Cardano Blockchain Explorer`;
+    document.title = `Traceability Program | Cardano Blockchain Explorer`;
   }, []);
 
   return (
@@ -151,7 +151,7 @@ const ProgressSession = () => {
                     fontSize={"clamp(2.25rem, 3vw, 2.5rem);"}
                     fontWeight={"bold"}
                   >
-                    Traceability from grape to glass
+                    {t("bolnisi.landing.slogan")}
                   </Box>
                   <Box
                     textAlign={"left"}
@@ -279,6 +279,8 @@ const BolnisiTrx = () => {
 
   const { data: bolnisiData } = useFetch<BolnisiNumbers>(API.BOLNISI.OVERVIEW, undefined, false);
 
+  const { data: bolnisiData } = useFetch<BolnisiNumbers>(API.BOLNISI.OVERVIEW, undefined, false);
+
   const columns: Column<BolnisiTx>[] = [
     {
       title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
@@ -301,8 +303,8 @@ const BolnisiTrx = () => {
 
     {
       title: (
-        <Box data-testid="bolnisi.landing.table.cert" component="span">
-          {t("bolnisi.landing.table.cert")}
+        <Box data-testid="bolnisi.landing.table.txType" component="span">
+          {t("bolnisi.landing.table.txType")}
         </Box>
       ),
       key: "value",
@@ -488,10 +490,10 @@ const BolnisiTrx = () => {
               MenuProps={{ MenuListProps: { style: { background: theme.palette.secondary[0] } } }}
             >
               <MenuItem sx={{ color: theme.palette.secondary.light }} value={"SCM"}>
-                SCM
+                {t("bolnisi.landing.menuitem.scm")}
               </MenuItem>
               <MenuItem sx={{ color: theme.palette.secondary.light }} value={"Conformity"}>
-                Conformity
+                {t("bolnisi.landing.menuitem.certificate")}
               </MenuItem>
             </Select>
           </Box>
@@ -512,7 +514,7 @@ const BolnisiTrx = () => {
             lineHeight={"2.625rem"}
             fontWeight={"bold"}
           >
-            Discover the full advantages of a future-proof blockchain to empower businesses
+            {t("bolnisi.landing.casestudy.title")}
           </Box>
 
           <Box
@@ -532,7 +534,7 @@ const BolnisiTrx = () => {
             href={BOLNISI_LANDING_READ_CASE_STUDY}
             target="_blank"
           >
-            Read Case Study
+            {t("bolnisi.landing.casestudy.read")}
           </Box>
         </Container>
       </MotionDiv>
