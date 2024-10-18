@@ -92,7 +92,8 @@ const DelegationHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean
         onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
       }}
       onClickRow={(e, r: DelegationHistory) => {
-        if (e.target !== e.currentTarget) {
+        if (e.target instanceof HTMLAnchorElement) {
+          e.preventDefault();
           e.stopPropagation();
           return;
         }

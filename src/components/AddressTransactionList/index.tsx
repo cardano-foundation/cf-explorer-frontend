@@ -56,7 +56,8 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     if (parent) {
       return;
     }
-    if ("href" in e.target) {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
       e.stopPropagation();
       return;
     }

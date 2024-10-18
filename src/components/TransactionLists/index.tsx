@@ -45,7 +45,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(e, r);
-    if ("href" in e.target) {
+    if (e.target instanceof HTMLSpanElement) {
+      e.preventDefault();
       e.stopPropagation();
       return;
     }
