@@ -129,7 +129,6 @@ const Epoch: React.FC = () => {
 
   if (error && (statusError || 0) < 500) return <NoRecord />;
   if (error && (statusError || 0) >= 500) return <FetchDataErr />;
-  const data = fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data;
   const getExpandedRowData = (row: IDataEpoch) => {
     return [
       { label: "Unique Accounts", value: row.account || null },
@@ -145,7 +144,7 @@ const Epoch: React.FC = () => {
         <Table
           {...fetchData}
           data-testid="epoch.table"
-          data={data}
+          data={fetchData.currentPage === 0 ? [...fetchData.data.slice(1)] : fetchData.data}
           columns={columns}
           total={{ title: t("common.totalEpochs"), count: fetchData.total }}
           pagination={{

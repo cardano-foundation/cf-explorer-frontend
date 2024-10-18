@@ -270,13 +270,13 @@ export const ShowedResults = styled(Typography)`
 export const TitleExpandedRow = styled(Typography)`
   font-size: 14px;
   line-height: 16px;
-  color: "#24262E";
+  color: ${(props) => props.theme.palette.secondary.main};
   font-weight: 700;
 `;
 export const ValueExpandedRow = styled(Typography)`
   font-size: 14px;
   line-height: 30px;
-  color: "#434656";
+  color: ${(props) => props.theme.palette.secondary.light};
   font-weight: 400;
 `;
 
