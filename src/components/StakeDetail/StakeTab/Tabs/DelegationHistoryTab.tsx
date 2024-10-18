@@ -91,7 +91,13 @@ const DelegationHistoryTab: React.FC<{ stakeAddress?: string; isMobile?: boolean
         total: fetchData.total,
         onChange: (page, size) => history.replace({ search: stringify({ page, size }) }, history.location.state)
       }}
-      onClickRow={(e, r: DelegationHistory) => history.push(details.delegation(r.poolId))}
+      onClickRow={(e, r: DelegationHistory) => {
+        if ("href" in e.target) {
+          e.stopPropagation();
+          return;
+        }
+        history.push(details.delegation(r.poolId));
+      }}
     />
   );
 };
