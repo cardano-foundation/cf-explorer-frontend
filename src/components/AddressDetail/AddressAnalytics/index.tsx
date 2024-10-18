@@ -171,7 +171,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <ResponsiveContainer width="100%" height={400}>
+              <ResponsiveContainer width="100%" height={550}>
                 <ComposedChart
                   width={900}
                   height={400}
@@ -186,7 +186,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     }
                     return (
                       <defs key={item}>
-                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
+                        <filter x="-.15" y="-.50" width="1.25" height="1.3" id={item}>
                           <feFlood floodColor={floodColor} result="bg" />
                           <feMerge>
                             <feMergeNode in="bg" />
@@ -202,9 +202,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     tickMargin={5}
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -222,9 +220,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}

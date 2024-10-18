@@ -8,7 +8,6 @@ type NativeScriptsList = {
   before: string;
   after: string;
   isMultiSig: boolean;
-  numberOfAssetHolders: number;
   numberOfTokens: number;
   scriptHash: string;
   isOpen: boolean;

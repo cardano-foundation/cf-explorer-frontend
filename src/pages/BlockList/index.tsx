@@ -10,7 +10,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { setOnDetailView } from "src/stores/user";
-import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -110,6 +109,10 @@ const BlockList = () => {
     setSelected(r.blockNo || r.hash);
   };
 
+  const onClickTabView = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    history.push(details.block(r.blockNo));
+  };
+
   const handleClose = () => {
     setOnDetailView(false);
     setSelected(null);
@@ -143,13 +146,13 @@ const BlockList = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
+          onClickTabView={onClickTabView}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      <DetailViewBlock blockNo={selected || 0} open={onDetailView} handleClose={handleClose} />
     </StyledContainer>
   );
 };
