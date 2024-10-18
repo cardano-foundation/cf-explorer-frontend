@@ -37,6 +37,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
   const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     history.push(details.transaction(r.hash));
   };
+
   const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
@@ -64,7 +65,10 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       render: (r, index) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
-          <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+          <StyledLink
+            to={details.block(r.blockNo || r.blockHash)}
+            data-testid={`transactions.table.block#${r.blockNo}`}
+          >
             <CustomTooltip title={tooltip}>
               <span data-testid={`transaction.table.value.block#${index}`}>{blockName}</span>
             </CustomTooltip>

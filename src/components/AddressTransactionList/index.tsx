@@ -56,6 +56,11 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
     if (parent) {
       return;
     }
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     if (openDetail) return openDetail(e, transaction);
     history.push(details.transaction(transaction.hash));
   };
