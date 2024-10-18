@@ -397,7 +397,7 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
           ) : (
             <>
               <TitleExpandedRow>{item.label}</TitleExpandedRow>
-              <ValueExpandedRow>{item.value}</ValueExpandedRow>
+              <ValueExpandedRow>{item.value || "N/A"}</ValueExpandedRow>
             </>
           )}
         </Paper>
