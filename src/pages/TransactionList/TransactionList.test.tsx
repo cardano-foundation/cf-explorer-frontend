@@ -61,8 +61,8 @@ describe("Transactions view", () => {
         <Transactions />
       </Router>
     );
+    const transactionsItem = screen.getByTestId(`transactions.table.block#${mockItem.data[0].blockNo}`);
 
-    const transactionsItem = screen.getByText(8902162);
     fireEvent.click(transactionsItem);
     await waitFor(() => {
       expect(history.location.pathname).toBe(details.block(mockItem.data[0].blockNo.toString()));
