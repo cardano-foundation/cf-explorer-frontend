@@ -11,6 +11,8 @@ interface FetchReturnType<T> {
   initialized: boolean;
   refresh: () => void;
   lastUpdated?: number;
+  statusError: undefined;
+  update: () => void;
 }
 
 describe("useFetch", () => {
@@ -34,7 +36,9 @@ describe("useFetch", () => {
       initialized: false,
       loading: true,
       refresh: expect.any(Function),
-      lastUpdated: undefined
+      lastUpdated: undefined,
+      statusError: undefined,
+      update: expect.any(Function)
     };
 
     expect(result.current).toEqual(expected);

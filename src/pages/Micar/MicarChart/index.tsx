@@ -88,7 +88,7 @@ const EmissionsAreaChart = () => {
       return filteredData;
     }
 
-    const step = Math.floor(dataLength / totalPoints);
+    const step = Math.ceil(dataLength / totalPoints);
     const result = filteredData.filter((_, index) => index % step === 0).slice(0, totalPoints);
 
     return result;

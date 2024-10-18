@@ -19,7 +19,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    runs-on: ubuntu-latest
+    runs-on: [arc-runner-set]
     if: |
       ${{ github.actor != 'dependabot[bot]' }} &&
       ( "contains(github.event.head_commit.message, 'release-please--branches--main')" ||

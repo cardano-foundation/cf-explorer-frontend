@@ -9,17 +9,25 @@ import {
   RadioGroup,
   Typography
 } from "@mui/material";
+import BigNumber from "bignumber.js";
+import { isEmpty, pickBy } from "lodash";
+import { parse, stringify } from "qs";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import { parse, stringify } from "qs";
-import { isEmpty, pickBy } from "lodash";
-import { BsFillCheckCircleFill } from "react-icons/bs";
-import BigNumber from "bignumber.js";
 
+import useFetch from "src/commons/hooks/useFetch";
+import usePageInfo from "src/commons/hooks/usePageInfo";
 import { FilterIcon, GovBodycon, GovernanceIcon, GovIDIcon, ResetIcon, TimeStampIcon } from "src/commons/resources";
+import { API } from "src/commons/utils/api";
+import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateDecimals } from "src/commons/utils/helper";
+import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
+import { StyledSlider } from "src/components/commons/CustomFilterMultiRange/styles";
 import CustomIcon from "src/components/commons/CustomIcon";
+import CustomTooltip from "src/components/commons/CustomTooltip";
+import { StyledInput } from "src/components/share/styled";
 import {
   AccordionContainer,
   AccordionDetailsFilter,
@@ -27,14 +35,6 @@ import {
   FilterContainer,
   FilterWrapper
 } from "src/pages/NativeScriptsAndSC/styles";
-import { StyledInput } from "src/components/share/styled";
-import { StyledSlider } from "src/components/commons/CustomFilterMultiRange/styles";
-import CustomTooltip from "src/components/commons/CustomTooltip";
-import { formatADA, formatPercent, LARGE_NUMBER_ABBREVIATIONS, truncateDecimals } from "src/commons/utils/helper";
-import DateRangeModal from "src/components/commons/CustomFilter/DateRangeModal";
-import usePageInfo from "src/commons/hooks/usePageInfo";
-import useFetch from "src/commons/hooks/useFetch";
-import { API } from "src/commons/utils/api";
 
 import { Input } from "./styles";
 
@@ -59,7 +59,14 @@ export default function FilterVotesOverview() {
   const [open, setOpen] = useState<boolean>(false);
   const [filterParams, setFilterParams] = useState<RequestParams>({});
   const [showDaterange, setShowDaterange] = useState<boolean>(false);
+  const [fixMax, setFixMax] = useState<number>(6);
+  const [fixMin, setFixMin] = useState<number>(0);
+  const [addDotMin, setAddDotMin] = useState<boolean>(false);
+  const [addDotMax, setAddDotMax] = useState<boolean>(false);
   const { search } = useLocation();
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
   const query = parse(search.split("?")[1]);
   const [dateRange, setDateRange] = useState<{
     fromDate?: string;
@@ -115,6 +122,32 @@ export default function FilterVotesOverview() {
     setDateRange({ fromDate: query?.fromDate as string, toDate: query?.toDate as string });
   }, [JSON.stringify(query)]);
 
+  useEffect(() => {
+    const initDecimalMin = BigNumber(
+      filterParams?.activeStakeFrom ? filterParams?.activeStakeFrom : initParams?.activeStakeFrom || 0
+    )
+      .div(10 ** 6)
+      .toString()
+      .split(".")[1]?.length;
+    if (initDecimalMin > 0) {
+      setFixMin(initDecimalMin);
+    } else {
+      setFixMin(0);
+    }
+
+    const initDecimalMax = BigNumber(
+      filterParams?.activeStakeTo ? filterParams?.activeStakeTo : initParams?.activeStakeTo || 0
+    )
+      .div(10 ** 6)
+      .toString()
+      .split(".")[1]?.length;
+    if (initDecimalMax > 0) {
+      setFixMax(initDecimalMax);
+    } else {
+      setFixMax(0);
+    }
+  }, [dataRange, expanded]);
+
   const handleReset = () => {
     setExpanded(false);
     setOpen(false);
@@ -141,6 +174,15 @@ export default function FilterVotesOverview() {
       return;
     }
     const [min, max] = newValue || [];
+
+    if (maxKey === "activeStakeTo" && initParams?.activeStakeTo && initParams?.activeStakeTo > 10 ** 12) {
+      if (min !== filterParams.activeStakeFrom) {
+        fixMin > 0 && setFixMin(0);
+      }
+      if (max !== filterParams.activeStakeTo) {
+        fixMax > 0 && setFixMax(0);
+      }
+    }
     setFilterParams({ ...filterParams, [minKey]: Math.min(min), [maxKey]: Math.min(max) });
   };
 
@@ -173,20 +215,26 @@ export default function FilterVotesOverview() {
     }
   };
 
+  function toFixedWithoutRounding(value: number, decimals: number) {
+    const factor = Math.pow(10, decimals);
+    return (Math.floor(value * factor) / factor).toFixed(decimals);
+  }
+
   const groupInputRange = (
     minValue: number,
     maxValue: number,
     keyOnChangeMin: string,
     keyOnChangeMax: string,
     maxValueDefault: number,
-    disabled = false
+    disabled = false,
+    minValueDefault?: number
   ) => {
     return (
       <Box display="flex" alignItems="center" gap="30px">
         <Box
           component={Input}
           disabled={disabled}
-          type="number"
+          type={addDotMin ? "text" : "number"}
           sx={{
             fontSize: "14px",
             width: "100% !important",
@@ -194,11 +242,20 @@ export default function FilterVotesOverview() {
               WebkitTextFillColor: theme.isDark ? "#8c93a466 !important" : "#50596d66 !important"
             }
           }}
-          value={Number(minValue || 0).toString()}
+          value={
+            addDotMin
+              ? Number(minValue || 0).toString() + ","
+              : ["activeStakeFrom"].includes(keyOnChangeMin)
+              ? toFixedWithoutRounding(Number(minValue || 0), fixMin)
+              : Number(minValue || 0).toString()
+          }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMin(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -217,10 +274,31 @@ export default function FilterVotesOverview() {
                 ...filterParams,
                 [keyOnChangeMin]: maxValue
               });
+            minValueDefault &&
+              minValue < minValueDefault &&
+              setFilterParams({
+                ...filterParams,
+                [keyOnChangeMin]: minValueDefault * 10 ** 6
+              });
           }}
           onChange={({ target: { value } }) => {
             let numericValue = value.replace(/[^0-9.]/g, "");
             numericValue = numericValue.replace(/^0+(?!$)/, "");
+
+            const decimals = numericValue.split(".")[1]?.length;
+            if (decimals <= 6 && decimals > 0) {
+              setFixMin(decimals);
+            } else if (decimals > 6) {
+              setFixMin(6);
+            } else {
+              setFixMin(0);
+            }
+
+            if (addDotMin) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setFixMin(1);
+              setAddDotMin(false);
+            }
 
             setFilterParams({
               ...filterParams,
@@ -228,7 +306,7 @@ export default function FilterVotesOverview() {
                 +numericValue > maxValue
                   ? 0
                   : ["activeStakeFrom"].includes(keyOnChangeMin)
-                  ? truncateDecimals(+numericValue, 6) * 10 ** 6
+                  ? Math.round(truncateDecimals(+numericValue, 6) * 10 ** 6)
                   : truncateDecimals(+numericValue, 6)
             });
           }}
@@ -239,7 +317,7 @@ export default function FilterVotesOverview() {
 
         <Box
           component={Input}
-          type="number"
+          type={addDotMax ? "text" : "number"}
           disabled={disabled}
           sx={{
             fontSize: "14px",
@@ -248,11 +326,20 @@ export default function FilterVotesOverview() {
               WebkitTextFillColor: theme.isDark ? "#8c93a466 !important" : "#50596d66 !important"
             }
           }}
-          value={Number(maxValue).toString()}
+          value={
+            addDotMax
+              ? Number(maxValue).toString() + ","
+              : ["activeStakeTo"].includes(keyOnChangeMax)
+              ? toFixedWithoutRounding(Number(maxValue), fixMax)
+              : Number(maxValue).toString()
+          }
           onKeyDown={(event) => {
             const key = event.key;
 
-            if (
+            if (isIOS && key === "." && !event.target.value.includes(".")) {
+              event.preventDefault();
+              setAddDotMax(true);
+            } else if (
               !(
                 key === "ArrowLeft" ||
                 key === "ArrowRight" ||
@@ -273,22 +360,39 @@ export default function FilterVotesOverview() {
               });
           }}
           onChange={({ target: { value } }) => {
-            const numericValue = value
+            let numericValue = value
               .replace(/[^0-9.]/g, "")
               .replace(/^0+(?!$)/, "")
               .replace(/^0+(?=\d)/, "")
               .replace("%", "");
 
-            Number(numericValue) <= maxValueDefault &&
+            if (addDotMax) {
+              numericValue = (Number(numericValue.replace(/\\,/, ".")) / 10).toString();
+              setAddDotMax(false);
+            }
+
+            if (Number(numericValue) <= maxValueDefault) {
+              const decimals = numericValue.split(".")[1]?.length;
+              if (decimals <= 6 && decimals > 0) {
+                setFixMax(decimals);
+              } else if (decimals > 6) {
+                setFixMax(6);
+              } else if (addDotMax) {
+                setFixMax(1);
+              } else {
+                setFixMax(0);
+              }
+
               setFilterParams({
                 ...filterParams,
                 [keyOnChangeMax]:
                   +numericValue > maxValueDefault
                     ? maxValueDefault
                     : ["activeStakeTo"].includes(keyOnChangeMax)
-                    ? truncateDecimals(+numericValue, 6) * 10 ** 6
+                    ? Math.round(truncateDecimals(+numericValue, 6) * 10 ** 6)
                     : truncateDecimals(+numericValue, 6)
               });
+            }
           }}
           onKeyPress={handleKeyPress}
         />
@@ -713,7 +817,10 @@ export default function FilterVotesOverview() {
                       BigNumber(initParams.activeStakeTo || 0)
                         .div(10 ** 6)
                         .toNumber(),
-                      dataRange?.maxActiveStake === dataRange?.minActiveStake
+                      dataRange?.maxActiveStake === dataRange?.minActiveStake,
+                      BigNumber(initParams.activeStakeFrom || 0)
+                        .div(10 ** 6)
+                        .toNumber()
                     )}
                   </AccordionDetailsFilter>
                 </AccordionContainer>

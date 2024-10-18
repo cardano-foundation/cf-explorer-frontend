@@ -82,7 +82,7 @@ export const TokenLabel = styled(CIPModalDesc)`
 
 export const CIPLabel = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("md")]: {
-    width: "90%"
+    width: "100%"
   },
   span: {
     marginRight: "12px",
