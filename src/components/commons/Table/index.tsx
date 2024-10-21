@@ -399,14 +399,14 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
         <Paper
           key={index}
           variant="outlined"
-          sx={{
+          sx={(theme) => ({
             flex: 1,
             padding: isMobile ? 2 : 3,
             textAlign: "start",
             borderRadius: 4,
             marginRight: "10px",
-            wordBreak: "break-word"
-          }}
+            backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.background.paper
+          })}
         >
           {loading ? (
             <>
