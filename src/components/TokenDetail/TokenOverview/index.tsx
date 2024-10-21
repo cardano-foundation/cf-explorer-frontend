@@ -1,21 +1,14 @@
 import { Box } from "@mui/material";
 import BigNumber from "bignumber.js";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ExchageIcon, FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
-import {
-  formatDateTimeLocal,
-  getShortHash,
-  numberWithCommas,
-  formatNumberTotalSupply,
-  tokenRegistry
-} from "src/commons/utils/helper";
+import { FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
+import { formatDateTimeLocal, getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
-import { OverviewMetadataTokenContext } from "src/pages/TokenDetail";
 
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
@@ -33,7 +26,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
-  const { txCountRealtime } = useContext(OverviewMetadataTokenContext);
 
   const listItem = [
     {
@@ -91,17 +83,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           </PolicyScriptBtn>
         </>
       )
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1} width={"max-content"}>
-            <WrapTitle>{t("common.totalTxs")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: ExchageIcon,
-      value: numberWithCommas(txCountRealtime || data?.txCount)
     },
     {
       title: <WrapTitle>{t("glossary.tokenType")}</WrapTitle>,
