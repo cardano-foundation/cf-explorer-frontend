@@ -398,7 +398,8 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
             padding: isMobile ? 2 : 3,
             textAlign: "start",
             borderRadius: 4,
-            marginRight: "10px"
+            marginRight: "10px",
+            wordBreak: "break-word"
           }}
         >
           {loading ? (
