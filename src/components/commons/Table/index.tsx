@@ -27,7 +27,7 @@ import {
   SortTableUpDown,
   StartPage
 } from "src/commons/resources";
-import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import breakpoints from "src/themes/breakpoints";
 import {
   ColumnType,
@@ -71,6 +71,7 @@ import {
   ValueExpandedRow,
   Wrapper
 } from "./styles";
+import ADAicon from "../ADAIcon";
 
 const SPACING_TOP_TABLE = 300;
 
@@ -301,6 +302,7 @@ const TableBody = <T extends ColumnType>({
   expandedRow,
   epochRowData
 }: TableProps<T>) => {
+  const { t } = useTranslation();
   return (
     <TBody>
       {loading && initialized && (
@@ -322,10 +324,19 @@ const TableBody = <T extends ColumnType>({
         const renderExpandedRowData = () => {
           const expandedRowData = epochRowData.map((item) => ({
             label: item.label,
-            value: row[item.value]
+            value:
+              row[item.value] === null ? (
+                t("common.N/A")
+              ) : item.isFormatADA ? (
+                <span>
+                  {formatADAFull(row[item.value])} <ADAicon />
+                </span>
+              ) : (
+                row[item.value]
+              )
           }));
 
-          return <ExpandedRowContent data={expandedRowData} />;
+          return <ExpandedRowContent data={expandedRowData} loading={loading} />;
         };
         return (
           <>
@@ -376,24 +387,27 @@ const TableSekeleton = () => {
   );
 };
 
-export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[] }> = ({ data }) => {
+export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[]; loading: boolean }> = ({
+  data,
+  loading
+}) => {
   const { isMobile } = useScreen();
-  const isLoading = !data[0].value;
 
   return (
-    <Box display="flex" justifyContent="flex-start" padding={2} gap={2}>
+    <Box display="flex" justifyContent="space-between" padding={2} gap={2}>
       {data.map((item, index) => (
         <Paper
           key={index}
           variant="outlined"
           sx={{
+            flex: 1,
             padding: isMobile ? 2 : 3,
             textAlign: "start",
             borderRadius: 4,
             marginRight: "10px"
           }}
         >
-          {isLoading ? (
+          {loading ? (
             <>
               <Box mb={1}>
                 <Skeleton variant="rectangular" />
@@ -403,7 +417,7 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
           ) : (
             <>
               <TitleExpandedRow>{item.label}</TitleExpandedRow>
-              <ValueExpandedRow>{item.value || "N/A"}</ValueExpandedRow>
+              <ValueExpandedRow>{item.value}</ValueExpandedRow>
             </>
           )}
         </Paper>
