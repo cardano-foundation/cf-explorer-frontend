@@ -272,12 +272,14 @@ export const TitleExpandedRow = styled(Typography)`
   line-height: 16px;
   color: ${(props) => props.theme.palette.secondary.main};
   font-weight: 700;
+  white-space: nowrap;
 `;
 export const ValueExpandedRow = styled(Typography)`
   font-size: 14px;
   line-height: 30px;
   color: ${(props) => props.theme.palette.secondary.light};
   font-weight: 400;
+  white-space: nowrap;
 `;
 
 export const TableCustomTitle = styled(Box)`
