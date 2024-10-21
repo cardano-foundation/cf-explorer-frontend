@@ -147,6 +147,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                             fontWeight="bold"
                             fontFamily={"var(--font-family-text)"}
                             color={(theme) => theme.palette.primary.main}
+                            width={"100%"}
                           >
                             <EllipsisContainer>
                               <DynamicEllipsisText
@@ -200,7 +201,7 @@ const ItemCollateral = ({ data, type }: { data: CollateralResponses[]; type: "in
                     flexWrap={"wrap"}
                     gap="4px"
                   >
-                    <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"}>
+                    <Box display={"flex"} justifyContent="flex-start" alignItems={"center"} width={"100%"} pt={"1px"}>
                       <Link to={details.address(item.address)} style={{ width: "100%" }}>
                         <Box
                           fontWeight="bold"
