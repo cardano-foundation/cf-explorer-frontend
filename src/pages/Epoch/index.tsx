@@ -129,7 +129,7 @@ const Epoch: React.FC = () => {
 
   if (error && (statusError || 0) < 500) return <NoRecord />;
   if (error && (statusError || 0) >= 500) return <FetchDataErr />;
-  const epochRowData = [
+  const expandedEpochRowData = [
     { label: "Unique Accounts", value: "account" },
     { label: "Transaction Count", value: "txCount" },
     { label: "Rewards Distributed", value: "rewardsDistributed", isFormatADA: true },
@@ -161,7 +161,7 @@ const Epoch: React.FC = () => {
           showTabView
           expandedTable
           expandedRow={expandedRow}
-          epochRowData={epochRowData}
+          expandedRowData={expandedEpochRowData}
         />
       </Card>
       <DetailViewEpoch

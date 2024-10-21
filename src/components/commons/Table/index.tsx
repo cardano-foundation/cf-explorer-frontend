@@ -294,7 +294,7 @@ const TableBody = <T extends ColumnType>({
   onClickExpandedRow,
   expandedTable,
   expandedRow,
-  epochRowData
+  expandedRowData
 }: TableProps<T>) => {
   const { t } = useTranslation();
   return (
@@ -316,7 +316,7 @@ const TableBody = <T extends ColumnType>({
       )}
       {data?.map((row, index) => {
         const renderExpandedRowData = () => {
-          const expandedRowData = epochRowData.map((item) => ({
+          const expandedTableRowData = expandedRowData.map((item) => ({
             label: item.label,
             value:
               row[item.value] === null ? (
@@ -330,7 +330,7 @@ const TableBody = <T extends ColumnType>({
               )
           }));
 
-          return <ExpandedRowContent data={expandedRowData} loading={loading} />;
+          return <ExpandedRowContent data={expandedTableRowData} loading={loading} />;
         };
         return (
           <>
@@ -565,7 +565,7 @@ const Table: React.FC<TableProps> = ({
   expandedTable,
   expandedRow,
   onClickExpandedRow,
-  epochRowData
+  expandedRowData
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -671,7 +671,7 @@ const Table: React.FC<TableProps> = ({
             expandedTable={expandedTable}
             expandedRow={expandedRow}
             onClickExpandedRow={onClickExpandedRow}
-            epochRowData={epochRowData}
+            expandedRowData={expandedRowData}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}
