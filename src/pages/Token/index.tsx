@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Box } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash, numberWithCommas } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
@@ -88,19 +88,6 @@ const Tokens = () => {
           </AssetName>
         </CustomTooltip>
       )
-    },
-    {
-      title: (
-        <Box data-testid="tokens.table.title.totalTxs" component={"span"}>
-          {t("common.totalTxs")}
-        </Box>
-      ),
-      key: "txCount",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.txCount),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
     },
     {
       title: (

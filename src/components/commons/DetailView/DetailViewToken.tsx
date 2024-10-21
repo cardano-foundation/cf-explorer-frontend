@@ -190,10 +190,6 @@ const DetailViewToken: React.FC<DetailViewTokenProps> = (props) => {
                 </DetailValue>
               </DetailsInfoItem>
               <DetailsInfoItem>
-                <DetailLabel>{t("common.totalTxs")}</DetailLabel>
-                <DetailValue>{data.txCount}</DetailValue>
-              </DetailsInfoItem>
-              <DetailsInfoItem>
                 <DetailLabel>{t("createdAt")}</DetailLabel>
                 <DatetimeTypeTooltip>
                   <DetailValue>{formatDateTimeLocal(data.createdOn || "")}</DetailValue>
