@@ -132,8 +132,8 @@ const Epoch: React.FC = () => {
   const epochRowData = [
     { label: "Unique Accounts", value: "account" },
     { label: "Transaction Count", value: "txCount" },
-    { label: "Rewards Distributed", value: "rewardsDistributed" },
-    { label: "Total Output", value: "outSum" }
+    { label: "Rewards Distributed", value: "rewardsDistributed", isFormatADA: true },
+    { label: "Total Output", value: "outSum", isFormatADA: true }
   ];
 
   return (

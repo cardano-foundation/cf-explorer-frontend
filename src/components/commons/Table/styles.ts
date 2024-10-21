@@ -344,7 +344,7 @@ export const StyledPerPage = styled(Typography)(({ theme }) => ({
 }));
 export const Skeleton = styled(CommonSkeleton)`
   height: 1em;
-  width: 50%;
-  min-width: 100px;
+  width: 100%;
+  min-width: 10px;
   border-radius: 4px;
 `;

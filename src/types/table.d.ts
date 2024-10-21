@@ -82,7 +82,7 @@ export interface TableProps<T extends ColumnType = any> {
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
   onClickExpandedRow?: (data: IDataEpoch) => void;
-  epochRowData: { label: string; value: string }[];
+  epochRowData: { label: string; value: string; isFormatADA?: boolean }[];
   expandedTable?: boolean;
   expandedRow?: number | null;
   showTabView?: boolean;
