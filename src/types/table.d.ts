@@ -39,6 +39,7 @@ export type TableRowProps<T extends ColumnType> = Pick<TableProps, "columns"> & 
   index: number;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
   handleOpenDetail?: (e: React.MouseEvent, record: T) => void;
+  onClickTabView?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
   selected?: boolean;
   selectedProps?: {
@@ -57,6 +58,7 @@ export interface TableProps<T extends ColumnType = any> {
   isFullTableHeight?: boolean;
   columns: Column<T>[];
   data?: T[] | null;
+  screen?: string;
   screen?: string;
   className?: string;
   emptyClassName?: string;
@@ -82,9 +84,10 @@ export interface TableProps<T extends ColumnType = any> {
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
   onClickExpandedRow?: (data: IDataEpoch) => void;
-  epochRowData: { label: string; value: string; isFormatADA?: boolean }[];
+  epochRowData?: { label: string; value: string; isFormatADA?: boolean }[];
   expandedTable?: boolean;
   expandedRow?: number | null;
+  onClickTabView?: (e: React.MouseEvent, record: T) => void;
   showTabView?: boolean;
   /**
    * @default This props default is row index. If value is string, key of row is row[rowKey].
