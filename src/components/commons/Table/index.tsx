@@ -330,7 +330,7 @@ const TableBody = <T extends ColumnType>({
               )
           }));
 
-          return <ExpandedRowContent data={expandedRowData} />;
+          return <ExpandedRowContent data={expandedRowData} loading={loading} />;
         };
         return (
           <>
@@ -381,9 +381,11 @@ const TableSekeleton = () => {
   );
 };
 
-export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[] }> = ({ data }) => {
+export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[]; loading: boolean }> = ({
+  data,
+  loading
+}) => {
   const { isMobile } = useScreen();
-  const isLoading = !data[0].value;
 
   return (
     <Box display="flex" justifyContent="space-between" padding={2} gap={2}>
@@ -399,7 +401,7 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
             marginRight: "10px"
           }}
         >
-          {isLoading ? (
+          {loading ? (
             <>
               <Box mb={1}>
                 <Skeleton variant="rectangular" />
@@ -409,7 +411,7 @@ export const ExpandedRowContent: React.FC<{ data: { label: string; value: string
           ) : (
             <>
               <TitleExpandedRow>{item.label}</TitleExpandedRow>
-              <ValueExpandedRow>{item.value || "N/A"}</ValueExpandedRow>
+              <ValueExpandedRow>{item.value}</ValueExpandedRow>
             </>
           )}
         </Paper>
