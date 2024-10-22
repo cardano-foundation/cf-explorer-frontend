@@ -12,7 +12,8 @@ import {
   TotalOutput,
   ExchageAltIcon,
   CubeIconComponent,
-  SlotIcon
+  SlotIcon,
+  TooltipIcon
 } from "src/commons/resources";
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
@@ -247,6 +248,18 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
           <TitleCard height={24} mr={1} sx={{ textWrap: "nowrap" }}>
             {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
           </TitleCard>
+          <CustomTooltip
+            title={
+              <Box sx={{ textAlign: "left" }}>
+                <p>Slot: {t("common.explainSlot")}</p>
+                <p>Absolute slot: {t("common.absoluteSlot")}</p>
+              </Box>
+            }
+          >
+            <span>
+              <TooltipIcon />
+            </span>
+          </CustomTooltip>
         </Box>
       ),
       value: (
