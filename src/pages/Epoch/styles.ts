@@ -88,4 +88,5 @@ export const EpochNumber = styled(Box)`
 export const StyledLink = styled(Link)`
   font-family: var(--font-family-text) !important;
   color: ${(props) => props.theme.palette.primary.main} !important;
+  margin-right: 8px;
 `;
