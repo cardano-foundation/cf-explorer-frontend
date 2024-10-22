@@ -381,10 +381,10 @@ const TableSekeleton = () => {
   );
 };
 
-export const ExpandedRowContent: React.FC<{ data: { label: string; value: string | number }[]; loading: boolean }> = ({
-  data,
-  loading
-}) => {
+export const ExpandedRowContent: React.FC<{
+  data: { label: string; value: string | number }[];
+  loading: boolean | undefined;
+}> = ({ data, loading }) => {
   const { isMobile } = useScreen();
 
   return (
