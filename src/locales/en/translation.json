@@ -448,6 +448,8 @@
   "drawer.transactionsHistory": "Transaction history",
   "head.page.stakeAddressDeregistration": "Stake Address Deregistration",
   "common.lastUpdatedSecondsAgo": "Last updated {{sec}} seconds ago",
+  "common.explainSlot": "Slot within Epoch",
+  "common.absoluteSlot": "Total Slot since Genesis",
   "drawer.rewardWithdrawn": "Reward withdrawn",
   "drawer.notDelegatedToAnyPool": "Not delegated to any pool",
   "drawer.delegationHistory": "Delegation History",
