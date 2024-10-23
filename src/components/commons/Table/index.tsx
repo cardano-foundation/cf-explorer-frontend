@@ -190,8 +190,7 @@ const TableRow = <T extends ColumnType>({
   columns,
   screen,
   index,
-  onClickRow,
-  onClickTabView,
+  onClickExpandedRow,
   handleOpenDetail,
   showTabView,
   selectedProps,
@@ -222,7 +221,7 @@ const TableRow = <T extends ColumnType>({
         if (!expandedTable) {
           handleOpenDetail?.(e, row);
         }
-        handleClicktWithoutAnchor(e, () => onClickRow?.(e, row));
+        handleClicktWithoutAnchor(e, () => onClickExpandedRow?.(e, row));
       }}
       {...selectedProps}
     >
@@ -254,12 +253,7 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol
-          onClick={(e) => handleClicktWithoutAnchor(e, () => onClickTabView?.(e, row))}
-          minWidth={50}
-          maxWidth={90}
-          selected={+selected}
-        >
+        <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
             <CustomIcon
               data-testid={`eye-icon#${index}`}
@@ -345,7 +339,7 @@ const TableBody = <T extends ColumnType>({
               screen={screen}
               index={index}
               dataLength={data.length}
-              onClickRow={() => {
+              onClickExpandedRow={() => {
                 expandedTable && onClickExpandedRow && onClickExpandedRow(row);
               }}
               handleOpenDetail={onClickRow} // this event occur when click on eye icon
