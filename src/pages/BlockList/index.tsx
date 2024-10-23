@@ -81,13 +81,7 @@ const BlockList = () => {
       title: (
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>
-          <CustomTooltip
-            title={
-              <Box sx={{ textAlign: "left" }}>
-                <p>{t("common.explainSlot")}</p>
-              </Box>
-            }
-          >
+          <CustomTooltip title={t("common.explainSlot")}>
             <p>
               <TooltipIcon />
             </p>
@@ -102,13 +96,7 @@ const BlockList = () => {
       title: (
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>{" "}
-          <CustomTooltip
-            title={
-              <Box sx={{ textAlign: "left" }}>
-                <p>{t("common.absoluteSlot")}</p>
-              </Box>
-            }
-          >
+          <CustomTooltip title={t("common.absoluteSlot")}>
             <p>
               <TooltipIcon />
             </p>
