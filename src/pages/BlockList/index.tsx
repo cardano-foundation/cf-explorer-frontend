@@ -135,12 +135,12 @@ const BlockList = () => {
     }
   ];
 
-  const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
-    setOnDetailView(true);
-    setSelected(r.blockNo || r.hash);
-  };
-
-  const onClickTabView = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+  const handleOpenDetail = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     history.push(details.block(r.blockNo));
   };
 
@@ -176,8 +176,7 @@ const BlockList = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={openDetail}
-          onClickTabView={onClickTabView}
+          onClickRow={handleOpenDetail}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
