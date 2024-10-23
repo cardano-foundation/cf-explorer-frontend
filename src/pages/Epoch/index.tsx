@@ -10,7 +10,6 @@ import { API } from "src/commons/utils/api";
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 import { formatDateTimeLocal } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
-import DetailViewEpoch from "src/components/commons/DetailView/DetailViewEpoch";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
 import Table, { Column } from "src/components/commons/Table";
 import { setOnDetailView } from "src/stores/user";
@@ -102,8 +101,7 @@ const Epoch: React.FC = () => {
   }, [t]);
 
   const openDetail = (_: IDataEpoch, r: IDataEpoch) => {
-    setOnDetailView(true);
-    setSelected(r.no);
+    history.push(details.epoch(r.no));
   };
 
   const handleExpandedRow = (data: IDataEpoch) => {
@@ -164,12 +162,6 @@ const Epoch: React.FC = () => {
           expandedRowData={expandedEpochRowData}
         />
       </Card>
-      <DetailViewEpoch
-        open={onDetailView}
-        epochNo={selected || 0}
-        handleClose={handleClose}
-        callback={selected === latestEpoch?.no ? fetchDataLatestEpoch.update : fetchData.update}
-      />
     </StyledContainer>
   );
 };
