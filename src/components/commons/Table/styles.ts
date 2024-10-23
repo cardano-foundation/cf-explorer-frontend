@@ -1,6 +1,7 @@
 import { Box, Checkbox, Typography, styled, Pagination, MenuItem, alpha } from "@mui/material";
 
 import CustomSelect from "../CustomSelect";
+import { CommonSkeleton } from "../CustomSkeleton";
 
 export const Empty = styled(Box)<{ ismodal?: number }>`
   text-align: center;
@@ -266,6 +267,20 @@ export const ShowedResults = styled(Typography)`
   line-height: 16px;
   color: rgba(102, 112, 133, 1);
 `;
+export const TitleExpandedRow = styled(Typography)`
+  font-size: 14px;
+  line-height: 16px;
+  color: ${(props) => props.theme.palette.secondary.main};
+  font-weight: 700;
+  white-space: nowrap;
+`;
+export const ValueExpandedRow = styled(Typography)`
+  font-size: 14px;
+  line-height: 30px;
+  color: ${(props) => props.theme.palette.secondary.light};
+  font-weight: 400;
+  white-space: nowrap;
+`;
 
 export const TableCustomTitle = styled(Box)`
   flex: 1;
@@ -329,3 +344,9 @@ export const StyledPerPage = styled(Typography)(({ theme }) => ({
     marginLeft: "4px"
   }
 }));
+export const Skeleton = styled(CommonSkeleton)`
+  height: 1em;
+  width: 100%;
+  min-width: 10px;
+  border-radius: 4px;
+`;
