@@ -392,19 +392,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           </Box>
           {sort.includes("numberOfTokens") && <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />}
         </Box>
-        <Box
-          data-testid="tabNativeScripts.filter.numberOfAsset"
-          component={ButtonSort}
-          onClick={() => setSort("numberOfAssetHolders,DESC")}
-        >
-          <Box display={"flex"} alignItems={"center"}>
-            <SortNative fill={theme.palette.secondary.main} />
-            <Box ml={1}>{t("NumberOfAssetHolders")}</Box>
-          </Box>
-          {sort.includes("numberOfAssetHolders") && (
-            <BsFillCheckCircleFill size={14} color={theme.palette.primary.main} />
-          )}
-        </Box>
 
         <Box mt={1}>
           <ApplyFilterButton

@@ -191,6 +191,7 @@ const TableRow = <T extends ColumnType>({
   screen,
   index,
   onClickRow,
+  onClickTabView,
   handleOpenDetail,
   showTabView,
   selectedProps,
@@ -253,7 +254,12 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol minWidth={50} maxWidth={90} selected={+selected}>
+        <TCol
+          onClick={(e) => handleClicktWithoutAnchor(e, () => onClickTabView?.(e, row))}
+          minWidth={50}
+          maxWidth={90}
+          selected={+selected}
+        >
           <Box display="flex" alignItems="center" height="1rem">
             <CustomIcon
               data-testid={`eye-icon#${index}`}
