@@ -38,6 +38,12 @@ const BlockList = () => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
 
+  const expandedBlockRowData = [
+    { label: "Transactions", value: "txCount" },
+    { label: "Fees", value: "totalFees", isFormatADA: true },
+    { label: "Output", value: "totalOutput", isFormatADA: true }
+  ];
+
   const columns: Column<Block>[] = [
     {
       title: <Capitalize data-testid="blocks.table.title.block">{t("glossary.block")}</Capitalize>,
@@ -141,6 +147,10 @@ const BlockList = () => {
     if (!onDetailView) handleClose();
   }, [onDetailView]);
 
+  const handleExpandedRow = (data: Block) => {
+    setSelected(selected === data.blockNo ? null : data.blockNo);
+  };
+
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
@@ -169,6 +179,9 @@ const BlockList = () => {
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+          onClickExpandedRow={handleExpandedRow}
+          expandedTable
+          expandedRowData={expandedBlockRowData}
         />
       </Card>
     </StyledContainer>
