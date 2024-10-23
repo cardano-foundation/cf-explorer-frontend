@@ -190,7 +190,7 @@ const TableRow = <T extends ColumnType>({
   columns,
   screen,
   index,
-  onClickRow,
+  onClickExpandedRow,
   handleOpenDetail,
   showTabView,
   selectedProps,
@@ -221,7 +221,7 @@ const TableRow = <T extends ColumnType>({
         if (!expandedTable) {
           handleOpenDetail?.(e, row);
         }
-        handleClicktWithoutAnchor(e, () => onClickRow?.(e, row));
+        handleClicktWithoutAnchor(e, () => onClickExpandedRow?.(e, row));
       }}
       {...selectedProps}
     >
@@ -339,7 +339,7 @@ const TableBody = <T extends ColumnType>({
               screen={screen}
               index={index}
               dataLength={data.length}
-              onClickRow={() => {
+              onClickExpandedRow={() => {
                 expandedTable && onClickExpandedRow && onClickExpandedRow(row);
               }}
               handleOpenDetail={onClickRow} // this event occur when click on eye icon
@@ -505,7 +505,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.size && pagination.total > pagination.size ? (
+      {pagination?.total && pagination.size && pagination.total > (pagination.size || 10) ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
