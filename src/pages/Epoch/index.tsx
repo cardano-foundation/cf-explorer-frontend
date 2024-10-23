@@ -25,7 +25,6 @@ import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledContainer, StyledL
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
   const [selected, setSelected] = useState<number | null>(null);
-  const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
@@ -100,13 +99,12 @@ const Epoch: React.FC = () => {
     document.title = t("head.page.epochsList");
   }, [t]);
 
-  const openDetail = (_: IDataEpoch, r: IDataEpoch) => {
+  const handleOpenDetail = (_: IDataEpoch, r: IDataEpoch) => {
     history.push(details.epoch(r.no));
   };
 
   const handleExpandedRow = (data: IDataEpoch) => {
-    setExpandedRow(expandedRow === data.no ? null : data.no);
-    setSelected(data.no);
+    setSelected(selected === data.no ? null : data.no);
   };
 
   const handleClose = () => {
@@ -127,6 +125,7 @@ const Epoch: React.FC = () => {
 
   if (error && (statusError || 0) < 500) return <NoRecord />;
   if (error && (statusError || 0) >= 500) return <FetchDataErr />;
+
   const expandedEpochRowData = [
     { label: "Unique Accounts", value: "account" },
     { label: "Transaction Count", value: "txCount" },
@@ -137,7 +136,7 @@ const Epoch: React.FC = () => {
   return (
     <StyledContainer>
       <Card data-testid="epoch.epochsTitle" title={t("glossary.epochs")}>
-        {latestEpoch && <FirstEpoch data={latestEpoch} onClick={openDetail} />}
+        {latestEpoch && <FirstEpoch data={latestEpoch} onClick={handleOpenDetail} />}
         <Table
           {...fetchData}
           data-testid="epoch.table"
@@ -152,13 +151,12 @@ const Epoch: React.FC = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={(_, r) => openDetail(r, r)}
+          onClickRow={(_, r) => handleOpenDetail(r, r)}
           onClickExpandedRow={handleExpandedRow}
           rowKey="no"
           selected={selected}
           showTabView
           expandedTable
-          expandedRow={expandedRow}
           expandedRowData={expandedEpochRowData}
         />
       </Card>
