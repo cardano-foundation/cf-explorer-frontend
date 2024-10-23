@@ -536,6 +536,20 @@ const BolnisiTrx = () => {
           </Box>
         </Container>
       </MotionDiv>
+      <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+        <Container maxWidth="md" sx={{ my: "5rem" }}>
+          <iframe
+            width="100%"
+            src="https://www.youtube.com/embed/sg9Fjwqui3M"
+            title="Traceability from Grape to Glass: Cardano Foundation’s Partnership with Bolnisi Wine"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            style={{ aspectRatio: 16 / 9 }}
+          ></iframe>
+        </Container>
+      </MotionDiv>
     </Box>
   );
 };

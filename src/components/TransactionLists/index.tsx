@@ -24,17 +24,9 @@ interface TransactionListProps {
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTabView?: boolean;
-  handleClose: () => void;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({
-  underline = false,
-  url,
-  openDetail,
-  selected,
-  showTabView,
-  handleClose
-}) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, selected, showTabView }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
@@ -42,10 +34,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
-
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
-    if (openDetail) return openDetail(e, r);
-    if (e.target instanceof HTMLSpanElement) {
+    if (e.target instanceof HTMLAnchorElement) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -157,7 +147,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ ...pageInfo, page, size }) });
           },
-          handleCloseDetailView: handleClose,
           hideLastPage: true
         }}
         onClickRow={onClickRow}
