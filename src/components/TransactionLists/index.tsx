@@ -97,13 +97,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       title: (
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Capitalize data-testid="transactions.table.title.slot">{t("glossary.slot")}</Capitalize>
-          <CustomTooltip
-            title={
-              <Box sx={{ textAlign: "left" }}>
-                <p>{t("common.explainSlot")}</p>
-              </Box>
-            }
-          >
+          <CustomTooltip title={t("common.explainSlot")}>
             <p>
               <TooltipIcon />
             </p>
@@ -118,13 +112,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
       title: (
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Capitalize>{t("glossary.absoluteSlot")}</Capitalize>{" "}
-          <CustomTooltip
-            title={
-              <Box sx={{ textAlign: "left" }}>
-                <p>{t("common.absoluteSlot")}</p>
-              </Box>
-            }
-          >
+          <CustomTooltip title={t("common.absoluteSlot")}>
             <p>
               <TooltipIcon />
             </p>
