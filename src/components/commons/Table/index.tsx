@@ -45,7 +45,6 @@ import NoRecord from "../NoRecord";
 import NotAvailable from "../NotAvailable";
 import FetchDataErr from "../FetchDataErr";
 import {
-  Skeleton,
   Empty,
   InputNumber,
   LoadingWrapper,
@@ -191,7 +190,7 @@ const TableRow = <T extends ColumnType>({
   columns,
   screen,
   index,
-  onClickRow,
+  onClickExpandedRow,
   handleOpenDetail,
   showTabView,
   selectedProps,
@@ -222,7 +221,7 @@ const TableRow = <T extends ColumnType>({
         if (!expandedTable) {
           handleOpenDetail?.(e, row);
         }
-        handleClicktWithoutAnchor(e, () => onClickRow?.(e, row));
+        handleClicktWithoutAnchor(e, () => onClickExpandedRow?.(e, row));
       }}
       {...selectedProps}
     >
@@ -293,7 +292,6 @@ const TableBody = <T extends ColumnType>({
   onCallBackHeight,
   onClickExpandedRow,
   expandedTable,
-  expandedRow,
   expandedRowData
 }: TableProps<T>) => {
   const { t } = useTranslation();
@@ -316,7 +314,7 @@ const TableBody = <T extends ColumnType>({
       )}
       {data?.map((row, index) => {
         const renderExpandedRowData = () => {
-          const expandedTableRowData = expandedRowData.map((item) => ({
+          const expandedTableRowData = expandedRowData?.map((item) => ({
             label: item.label,
             value:
               row[item.value] === null ? (
@@ -330,7 +328,7 @@ const TableBody = <T extends ColumnType>({
               )
           }));
 
-          return <ExpandedRowContent data={expandedTableRowData} loading={loading} />;
+          return <ExpandedRowContent data={expandedTableRowData} />;
         };
         return (
           <>
@@ -341,10 +339,10 @@ const TableBody = <T extends ColumnType>({
               screen={screen}
               index={index}
               dataLength={data.length}
-              onClickRow={() => {
+              onClickExpandedRow={() => {
                 expandedTable && onClickExpandedRow && onClickExpandedRow(row);
               }}
-              handleOpenDetail={onClickRow}
+              handleOpenDetail={onClickRow} // this event occur when click on eye icon
               showTabView={showTabView}
               selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
               selectedProps={selected === index ? selectedProps : undefined}
@@ -355,10 +353,14 @@ const TableBody = <T extends ColumnType>({
               onCallBackHeight={onCallBackHeight}
               expandedTable={expandedTable}
             />
-            {expandedTable && expandedRow === row.no && (
+            {expandedTable && !!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected && (
               <tr>
                 <td colSpan={columns.length}>
-                  <Collapse in={expandedRow === row.no} timeout="auto" unmountOnExit>
+                  <Collapse
+                    in={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+                    timeout="auto"
+                    unmountOnExit
+                  >
                     {renderExpandedRowData()}
                   </Collapse>
                 </td>
@@ -382,14 +384,13 @@ const TableSekeleton = () => {
 };
 
 export const ExpandedRowContent: React.FC<{
-  data: { label: string; value: string | number }[];
-  loading: boolean | undefined;
-}> = ({ data, loading }) => {
+  data: { label: string; value: string | number }[] | undefined;
+}> = ({ data }) => {
   const { isMobile } = useScreen();
 
   return (
     <Box display="flex" justifyContent="space-between" padding={2} gap={2}>
-      {data.map((item, index) => (
+      {data?.map((item, index) => (
         <Paper
           key={index}
           variant="outlined"
@@ -402,19 +403,10 @@ export const ExpandedRowContent: React.FC<{
             backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.background.paper
           })}
         >
-          {loading ? (
-            <>
-              <Box mb={1}>
-                <Skeleton variant="rectangular" />
-              </Box>
-              <Skeleton variant="rectangular" />
-            </>
-          ) : (
-            <>
-              <TitleExpandedRow>{item.label}</TitleExpandedRow>
-              <ValueExpandedRow>{item.value}</ValueExpandedRow>
-            </>
-          )}
+          <>
+            <TitleExpandedRow>{item.label}</TitleExpandedRow>
+            <ValueExpandedRow>{item.value}</ValueExpandedRow>
+          </>
         </Paper>
       ))}
     </Box>
@@ -564,7 +556,6 @@ const Table: React.FC<TableProps> = ({
   minHeight,
   isFullTableHeight = false,
   expandedTable,
-  expandedRow,
   onClickExpandedRow,
   expandedRowData
 }) => {
@@ -670,7 +661,6 @@ const Table: React.FC<TableProps> = ({
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
             expandedTable={expandedTable}
-            expandedRow={expandedRow}
             onClickExpandedRow={onClickExpandedRow}
             expandedRowData={expandedRowData}
           />

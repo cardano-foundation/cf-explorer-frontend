@@ -39,7 +39,7 @@ const BlockList = () => {
   }, []);
 
   const expandedBlockRowData = [
-    { label: "Transaction", value: "txCount" },
+    { label: "Transactions", value: "txCount" },
     { label: "Fees", value: "totalFees", isFormatADA: true },
     { label: "Output", value: "totalOutput", isFormatADA: true }
   ];
