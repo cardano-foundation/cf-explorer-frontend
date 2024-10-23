@@ -135,7 +135,12 @@ const BlockList = () => {
     }
   ];
 
-  const handleOpenDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+  const handleOpenDetail = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     history.push(details.block(r.blockNo));
   };
 
