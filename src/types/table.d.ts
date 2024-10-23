@@ -81,10 +81,9 @@ export interface TableProps<T extends ColumnType = any> {
   };
   allowSelect?: boolean;
   onClickRow?: (e: React.MouseEvent, record: T) => void;
-  onClickExpandedRow?: (data: IDataEpoch) => void;
-  expandedRowData: { label: string; value: string; isFormatADA?: boolean }[];
+  onClickExpandedRow?: (data: T) => void;
+  expandedRowData?: { label: string; value: string; isFormatADA?: boolean }[];
   expandedTable?: boolean;
-  expandedRow?: number | null;
   showTabView?: boolean;
   /**
    * @default This props default is row index. If value is string, key of row is row[rowKey].
