@@ -406,7 +406,7 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
   [theme.breakpoints.down(321)]: {
     ":nth-of-type(even)": {
       paddingRight: "0 !important",
-      padding: "25px 7px !important"
+      padding: "20px 7px !important"
     },
     ":nth-of-type(odd)": {
       paddingLeft: "0 !important"
