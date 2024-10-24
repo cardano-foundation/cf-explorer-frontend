@@ -138,6 +138,18 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           <TitleCard mr={1} data-testid="block.detail.overview.title.slot">{`${t("common.slot")} - ${t(
             "glossary.absoluteSlot"
           )}`}</TitleCard>
+          <CustomTooltip
+            title={
+              <Box sx={{ textAlign: "left" }}>
+                <p>Slot: {t("common.explainSlot")}</p>
+                <p>Absolute slot: {t("common.absoluteSlot")}</p>
+              </Box>
+            }
+          >
+            <span>
+              <TooltipIcon />
+            </span>
+          </CustomTooltip>
         </Box>
       ),
       value: (
