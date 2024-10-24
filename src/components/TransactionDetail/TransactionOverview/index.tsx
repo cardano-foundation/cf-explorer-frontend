@@ -247,9 +247,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
       icon: SlotIcon,
       title: (
         <Box data-testid="transactionOverview.slotTitle" display={"flex"} alignItems="center">
-          <TitleCard height={24} mr={1} sx={{ textWrap: "nowrap" }}>
-            {`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}
-          </TitleCard>
+          <TitleCard mr={1}>{`${t("common.slot")} - ${t("glossary.absoluteSlot")}`}</TitleCard>
           <CustomTooltip
             title={
               <Box sx={{ textAlign: "left" }}>
