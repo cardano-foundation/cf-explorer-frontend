@@ -100,7 +100,7 @@ const Epoch: React.FC = () => {
     document.title = t("head.page.epochsList");
   }, [t]);
 
-  const handleOpenDetail = (_: IDataEpoch, r: IDataEpoch) => {
+  const handleOpenDetail = (_: React.MouseEvent, r: IDataEpoch) => {
     setOnDetailView(true);
     setSelected(r.no);
   };
@@ -153,7 +153,7 @@ const Epoch: React.FC = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={(_, r) => handleOpenDetail(r, r)}
+          onClickRow={handleOpenDetail}
           onClickExpandedRow={handleExpandedRow}
           rowKey="no"
           selected={selected}
