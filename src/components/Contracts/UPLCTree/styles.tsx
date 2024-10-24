@@ -49,5 +49,8 @@ export const StyledTreeItem = styled(TreeItem)(({ theme }) => ({
     marginLeft: 15,
     paddingLeft: 18,
     borderLeft: `1px dashed ${theme.isDark ? alpha(theme.palette.grey[200], 0.8) : alpha(theme.palette.grey[400], 0.5)}`
+  },
+  [`& .MuiSvgIcon-root`]: {
+    fill: theme.isDark ? theme.palette.secondary.main : theme.palette.secondary.light
   }
 }));
