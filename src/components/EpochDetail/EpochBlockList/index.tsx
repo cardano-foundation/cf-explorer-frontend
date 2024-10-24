@@ -14,6 +14,7 @@ import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { TooltipIcon } from "src/commons/resources";
 
 import { StyledContainer, StyledLink, PriceWrapper, Actions, TimeDuration } from "./styles";
 
@@ -75,13 +76,31 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
       )
     },
     {
-      title: <div data-testid="epochList.slotTitle">{t("glossary.slot")}</div>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div data-testid="epochList.slotTitle">{t("glossary.slot")}</div>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "50px",
       render: (r, index) => <div data-testid={`epochList.slotValue#${index}`}>{r.epochSlotNo}</div>
     },
     {
-      title: <div data-testid="epochList.slotNoTitle">{t("glossary.absoluteSlot")}</div>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div data-testid="epochList.slotNoTitle">{t("glossary.absoluteSlot")}</div>
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slotNo",
       minWidth: "100px",
       render: (r, index) => <div data-testid={`epochList.slotNoValue#${index}`}>{r.slotNo}</div>
