@@ -1,8 +1,10 @@
 import {
   Box,
   CircularProgress,
+  Collapse,
   IconButton,
   PaginationRenderItemParams,
+  Paper,
   SelectChangeEvent,
   alpha,
   styled,
@@ -25,7 +27,7 @@ import {
   SortTableUpDown,
   StartPage
 } from "src/commons/resources";
-import { getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
+import { formatADAFull, getPageInfo, handleClicktWithoutAnchor, numberWithCommas } from "src/commons/utils/helper";
 import breakpoints from "src/themes/breakpoints";
 import {
   ColumnType,
@@ -63,9 +65,12 @@ import {
   TableFullWidth,
   TableHeaderContainer,
   TableTitle,
+  TitleExpandedRow,
   TotalNumber,
+  ValueExpandedRow,
   Wrapper
 } from "./styles";
+import ADAicon from "../ADAIcon";
 
 const SPACING_TOP_TABLE = 300;
 
@@ -185,8 +190,8 @@ const TableRow = <T extends ColumnType>({
   columns,
   screen,
   index,
-  onClickRow,
-  onClickTabView,
+  onClickExpandedRow,
+  handleOpenDetail,
   showTabView,
   selectedProps,
   selected = false,
@@ -195,7 +200,8 @@ const TableRow = <T extends ColumnType>({
   toggleSelection,
   isSelected,
   isModal,
-  onCallBackHeight
+  onCallBackHeight,
+  expandedTable
 }: TableRowProps<T>) => {
   const colRef = useRef(null);
   const theme = useTheme();
@@ -209,7 +215,16 @@ const TableRow = <T extends ColumnType>({
     [rowRef.current];
 
   return (
-    <TRow ref={rowRef} onClick={(e) => handleClicktWithoutAnchor(e, () => onClickRow?.(e, row))} {...selectedProps}>
+    <TRow
+      ref={rowRef}
+      onClick={(e) => {
+        if (!expandedTable) {
+          handleOpenDetail?.(e, row);
+        }
+        handleClicktWithoutAnchor(e, () => onClickExpandedRow?.(e, row));
+      }}
+      {...selectedProps}
+    >
       {selectable && (
         <TCol ismodal={+(isModal || 0)}>
           <TableCheckBox checked={isSelected?.(row)} onChange={() => toggleSelection?.(row)} />
@@ -238,23 +253,20 @@ const TableRow = <T extends ColumnType>({
         );
       })}
       {showTabView && (
-        <TCol
-          onClick={(e) => handleClicktWithoutAnchor(e, () => onClickTabView?.(e, row))}
-          minWidth={50}
-          maxWidth={90}
-          selected={+selected}
-        >
+        <TCol minWidth={50} maxWidth={90} selected={+selected}>
           <Box display="flex" alignItems="center" height="1rem">
-            {!selected && (
-              <CustomIcon
-                data-testid={`eye-icon#${index}`}
-                icon={EyeIcon}
-                stroke={theme.palette.secondary.light}
-                originWidth={31}
-                originHeight={23}
-                width={24}
-              />
-            )}
+            <CustomIcon
+              data-testid={`eye-icon#${index}`}
+              icon={EyeIcon}
+              stroke={theme.palette.secondary.light}
+              originWidth={31}
+              originHeight={23}
+              width={24}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleOpenDetail?.(e, row);
+              }}
+            />
           </Box>
         </TCol>
       )}
@@ -268,7 +280,6 @@ const TableBody = <T extends ColumnType>({
   screen,
   rowKey,
   onClickRow,
-  onClickTabView,
   showTabView,
   selected,
   selectedProps,
@@ -278,8 +289,12 @@ const TableBody = <T extends ColumnType>({
   toggleSelection,
   isSelected,
   isModal,
-  onCallBackHeight
+  onCallBackHeight,
+  onClickExpandedRow,
+  expandedTable,
+  expandedRowData
 }: TableProps<T>) => {
+  const { t } = useTranslation();
   return (
     <TBody>
       {loading && initialized && (
@@ -297,26 +312,63 @@ const TableBody = <T extends ColumnType>({
           </Box>
         </LoadingWrapper>
       )}
-      {data?.map((row, index) => (
-        <TableRow
-          row={row}
-          key={index}
-          columns={columns}
-          screen={screen}
-          index={index}
-          dataLength={data.length}
-          onClickRow={onClickRow}
-          showTabView={showTabView}
-          selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
-          selectedProps={selected === index ? selectedProps : undefined}
-          selectable={selectable}
-          toggleSelection={toggleSelection}
-          isSelected={isSelected}
-          isModal={isModal}
-          onCallBackHeight={onCallBackHeight}
-          onClickTabView={onClickTabView}
-        />
-      ))}
+      {data?.map((row, index) => {
+        const renderExpandedRowData = () => {
+          const expandedTableRowData = expandedRowData?.map((item) => ({
+            label: item.label,
+            value:
+              row[item.value] === null ? (
+                t("common.N/A")
+              ) : item.isFormatADA ? (
+                <span>
+                  {formatADAFull(row[item.value])} <ADAicon />
+                </span>
+              ) : (
+                row[item.value]
+              )
+          }));
+
+          return <ExpandedRowContent data={expandedTableRowData} />;
+        };
+        return (
+          <>
+            <TableRow
+              row={row}
+              key={index}
+              columns={columns}
+              screen={screen}
+              index={index}
+              dataLength={data.length}
+              onClickExpandedRow={() => {
+                expandedTable && onClickExpandedRow && onClickExpandedRow(row);
+              }}
+              handleOpenDetail={onClickRow} // this event occur when click on eye icon
+              showTabView={showTabView}
+              selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+              selectedProps={selected === index ? selectedProps : undefined}
+              selectable={selectable}
+              toggleSelection={toggleSelection}
+              isSelected={isSelected}
+              isModal={isModal}
+              onCallBackHeight={onCallBackHeight}
+              expandedTable={expandedTable}
+            />
+            {expandedTable && !!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected && (
+              <tr>
+                <td colSpan={columns.length}>
+                  <Collapse
+                    in={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+                    timeout="auto"
+                    unmountOnExit
+                  >
+                    {renderExpandedRowData()}
+                  </Collapse>
+                </td>
+              </tr>
+            )}
+          </>
+        );
+      })}
     </TBody>
   );
 };
@@ -328,6 +380,36 @@ const TableSekeleton = () => {
         <CircularProgress />
       </LoadingWrapper>
     </Empty>
+  );
+};
+
+export const ExpandedRowContent: React.FC<{
+  data: { label: string; value: string | number }[] | undefined;
+}> = ({ data }) => {
+  const { isMobile } = useScreen();
+
+  return (
+    <Box display="flex" justifyContent="space-between" padding={2} gap={2}>
+      {data?.map((item, index) => (
+        <Paper
+          key={index}
+          variant="outlined"
+          sx={(theme) => ({
+            flex: 1,
+            padding: isMobile ? 2 : 3,
+            textAlign: "start",
+            borderRadius: 4,
+            marginRight: "10px",
+            backgroundColor: theme.isDark ? theme.palette.secondary[100] : theme.palette.background.paper
+          })}
+        >
+          <>
+            <TitleExpandedRow>{item.label}</TitleExpandedRow>
+            <ValueExpandedRow>{item.value}</ValueExpandedRow>
+          </>
+        </Paper>
+      ))}
+    </Box>
   );
 };
 
@@ -423,7 +505,7 @@ export const FooterTable: React.FC<FooterTableProps> = ({
           ""
         )}
       </Box>
-      {pagination?.total && pagination.total > pagination.size ? (
+      {pagination?.total && pagination.size && pagination.total > (pagination.size || 10) ? (
         <PaginationCustom
           key={page}
           pagination={pagination}
@@ -455,7 +537,6 @@ const Table: React.FC<TableProps> = ({
   error,
   statusError,
   onClickRow,
-  onClickTabView,
   showTabView,
   rowKey,
   selected,
@@ -473,7 +554,10 @@ const Table: React.FC<TableProps> = ({
   isModal,
   height,
   minHeight,
-  isFullTableHeight = false
+  isFullTableHeight = false,
+  expandedTable,
+  onClickExpandedRow,
+  expandedRowData
 }) => {
   const { selectedItems, toggleSelection, isSelected, clearSelection, selectAll } = useSelection({
     onSelectionChange
@@ -526,7 +610,6 @@ const Table: React.FC<TableProps> = ({
     clearSelection();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
   const isSelectAll = useMemo(() => data?.length === selectedItems.length, [data, selectedItems]);
   return (
     <Box className={className || ""} style={style} data-testid="table-common">
@@ -566,7 +649,6 @@ const Table: React.FC<TableProps> = ({
             screen={screen}
             data={data}
             onClickRow={onClickRow}
-            onClickTabView={onClickTabView}
             showTabView={showTabView}
             rowKey={rowKey}
             selected={selected}
@@ -578,6 +660,9 @@ const Table: React.FC<TableProps> = ({
             isSelected={isSelected}
             isModal={isModal}
             onCallBackHeight={onCallBackHeight}
+            expandedTable={expandedTable}
+            onClickExpandedRow={onClickExpandedRow}
+            expandedRowData={expandedRowData}
           />
         </TableFullWidth>
         {loading && !initialized && <TableSekeleton />}

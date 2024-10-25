@@ -1,4 +1,5 @@
 import { Box, styled, Container } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import { EPOCH_STATUS } from "src/commons/utils/constants";
 
@@ -82,4 +83,10 @@ export const EpochNumber = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+`;
+
+export const StyledLink = styled(Link)`
+  font-family: var(--font-family-text) !important;
+  color: ${(props) => props.theme.palette.primary.main} !important;
+  margin-right: 8px;
 `;
