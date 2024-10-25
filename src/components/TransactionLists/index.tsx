@@ -9,6 +9,7 @@ import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } f
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import { TooltipIcon } from "src/commons/resources";
 
 import CustomTooltip from "../commons/CustomTooltip";
 import ADAicon from "../commons/ADAIcon";
@@ -17,6 +18,7 @@ import Table, { Column } from "../commons/Table";
 import Card from "../commons/Card";
 import { Actions, StyledLink, TimeDuration } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
+import { Capitalize } from "../commons/CustomText/styles";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -24,17 +26,9 @@ interface TransactionListProps {
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTabView?: boolean;
-  handleClose: () => void;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({
-  underline = false,
-  url,
-  openDetail,
-  selected,
-  showTabView,
-  handleClose
-}) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, selected, showTabView }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
@@ -42,10 +36,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
-
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
-    if (openDetail) return openDetail(e, r);
-    if (e.target instanceof HTMLSpanElement) {
+    if (e.target instanceof HTMLAnchorElement) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -102,13 +94,31 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: <Box data-testid="transactions.table.title.slot">{t("glossary.slot")}</Box>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="transactions.table.title.slot">{t("glossary.slot")}</Capitalize>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: 60,
       render: (r, index) => <Box data-testid={`transactions.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize>{t("glossary.absoluteSlot")}</Capitalize>{" "}
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: 60
     },
@@ -157,7 +167,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ ...pageInfo, page, size }) });
           },
-          handleCloseDetailView: handleClose,
           hideLastPage: true
         }}
         onClickRow={onClickRow}

@@ -7,7 +7,6 @@ import {
   ActionTypeIcon,
   AnchorTextIcon,
   BlackCircleIcon,
-  BlackWarningIcon,
   CurrentStatusIcon,
   GovernanceIdIcon,
   SubmissionDateIcon,
@@ -52,7 +51,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         <Item item xs={6} md={6} lg={3} top={1} pr={"5px !important"}>
           <Box display="flex" justifyContent="space-between" pr={"5px"}>
             <CustomIcon fill={theme.palette.secondary.light} icon={GovernanceIdIcon} height={22} marginTop="15px" />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingTop="2px" paddingBottom="3px">
             <StyledTitle data-testid="governance.actionIdTitle">{t("pool.actionId")}</StyledTitle>
@@ -98,7 +96,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         <Item item xs={6} md={6} lg={3} top={1} pr={"5px !important"}>
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={ActionTypeIcon} height={22.27} marginTop="15px" />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingTop="2px" paddingBottom="3px">
             <StyledTitle data-testid="governance.actionTypeTitle">{t("pool.actionType")}</StyledTitle>
@@ -121,7 +118,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={VoteIcon} height={27} marginTop="15px" />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle
             paddingTop="2px"
@@ -176,7 +172,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} icon={CurrentStatusIcon} height={28} marginTop="15px" />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle>
             <Box width={"100%"}>
@@ -208,7 +203,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
               icon={VotingPowerIcon}
               style={{ marginTop: "5px" }}
             />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingBottom="3px">
             <StyledTitle data-testid="governance.votingPowerTitle">{t("pool.votingPowerADA")}</StyledTitle>
@@ -233,7 +227,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingBottom="3px">
             <StyledTitle data-testid="governance.submissionTitle">{t("pool.submission")}</StyledTitle>
@@ -252,7 +245,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         >
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={27} icon={SubmissionDateIcon} />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingBottom="3px">
             <StyledTitle data-testid="governance.expiryDateTitle">{t("pool.expiryDate")}</StyledTitle>
@@ -264,7 +256,6 @@ const OverviewVote: React.FC<{ data: GovernanceVoteDetail | null }> = ({ data })
         <Item item xs={6} md={6} lg={3} pr={"5px !important"} sx={{ [theme.breakpoints.down("lg")]: { pl: "25px" } }}>
           <Box display="flex" justifyContent="space-between" pr="5px">
             <CustomIcon fill={theme.palette.secondary.light} height={25} icon={AnchorTextIcon} />
-            <BlackWarningIcon />
           </Box>
           <InfoTitle paddingBottom="3px">
             <StyledTitle data-testid="governance.actionMetadataTitle">{t("pool.actionMetadata")}</StyledTitle>
