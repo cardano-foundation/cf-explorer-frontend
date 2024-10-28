@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { MouseEvent } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
-import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
+import { DownRedUtxoDarkmode, TooltipIcon, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
 import receiveImg from "src/commons/resources/images/receiveImg.svg";
 import sendImg from "src/commons/resources/images/sendImg.svg";
 import { details } from "src/commons/routers";
@@ -142,12 +142,30 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       render: (r) => <StyledLink to={details.epoch(r.epochNo)}>{r.epochNo}</StyledLink>
     },
     {
-      title: t("glossary.slot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.slot")}</div>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "50px"
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.absoluteSlot")}</div>
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: "100px"
     },

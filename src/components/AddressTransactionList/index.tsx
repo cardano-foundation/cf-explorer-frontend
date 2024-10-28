@@ -17,7 +17,7 @@ import Card from "src/components/commons/Card";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DropdownTokens, { TokenLink } from "src/components/commons/DropdownTokens";
 import Table, { Column } from "src/components/commons/Table";
-import { DownRedUtxoDarkmode, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
+import { DownRedUtxoDarkmode, TooltipIcon, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
 
 import { Img, StyledLink } from "./styles";
 import { TextCardHighlight } from "../AddressDetail/AddressAnalytics/styles";
@@ -138,13 +138,31 @@ const AddressTransactionList: React.FC<AddressTransactionListProps> = ({
       )
     },
     {
-      title: <div data-testid="addressTransactionList.epochSlotNoTitle">{t("glossary.slot")}</div>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div data-testid="addressTransactionList.epochSlotNoTitle">{t("glossary.slot")}</div>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "50px",
       render: (r) => <div data-testid="addressTransactionList.epochSlotNoValue">{r.epochSlotNo}</div>
     },
     {
-      title: <div data-testid="addressTransactionList.slotTitle">{t("glossary.absoluteSlot")}</div>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div data-testid="addressTransactionList.slotTitle">{t("glossary.absoluteSlot")}</div>
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: "100px",
       render: (r) => <div data-testid="addressTransactionList.slotValue">{r.slot}</div>
