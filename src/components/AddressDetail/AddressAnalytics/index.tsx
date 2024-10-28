@@ -104,13 +104,12 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
         BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
     );
+    // Ticks add highest
+    needShowTicks.push(highest);
 
-    const distanceBetweenLowestAndHighest = BigNumber(highest).minus(lowest).div(tickMax).abs();
+    // If lowest equal highest, add it.
+    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
 
-    if (distanceBetweenLowestAndHighest.gt(labelHeight)) {
-      needShowTicks.push(highest);
-      needShowTicks.push(lowest);
-    }
     return needShowTicks.sort((a, b) => a - b);
   }, [maxBalance, highest, lowest]);
 
@@ -142,6 +141,16 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
+  };
+
+  const getTickOffset = (value: number) => {
+    if (value === highest) {
+      return -10;
+    }
+    if (value === lowest && Math.abs(highest - lowest) / highest < 0.1) {
+      return 10;
+    }
+    return 0;
   };
 
   return (
@@ -176,7 +185,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                   width={900}
                   height={400}
                   data={convertDataChart}
-                  margin={{ top: 5, right: 5, bottom: 14 }}
+                  margin={{ top: 10, right: 10, bottom: 14, left: 15 }}
                 >
                   {/* Defs for ticks filter background color */}
                   {["lowest", "highest"].map((item) => {
@@ -217,13 +226,27 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
-                    tick={{
-                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    tick={({ x, y, payload }) => (
+                      <g transform={`translate(${x},${y})`}>
+                        <text
+                          dy={getTickOffset(payload.value)}
+                          x={0}
+                          y={0}
+                          textAnchor="end"
+                          fill={theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]}
+                        >
+                          {formatPriceValue(payload.value)}
+                        </text>
+                      </g>
+                    )}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={false}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
+                    padding={{ top: 10, bottom: 10 }}
+                    width={80}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
