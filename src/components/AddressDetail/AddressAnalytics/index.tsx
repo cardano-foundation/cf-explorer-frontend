@@ -74,7 +74,6 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     false,
     blockKey
   );
-
   const maxBalance = BigNumber(data?.highestBalance || 0).toString();
   const minBalance = BigNumber(data?.lowestBalance || 0).toString();
 
@@ -144,6 +143,16 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     );
   };
 
+  const getTickOffset = (value: number) => {
+    if (value === highest) {
+      return -10;
+    }
+    if (value === lowest && Math.abs(highest - lowest) / highest < 0.1) {
+      return 10;
+    }
+    return 0;
+  };
+
   return (
     <Card title={<TextCardHighlight>{t("analytics")}</TextCardHighlight>}>
       <Wrapper container columns={24} spacing={4.375}>
@@ -171,12 +180,12 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
             {loading || !data ? (
               <SkeletonUI variant="rectangular" style={{ height: "400px" }} />
             ) : (
-              <ResponsiveContainer width="100%" height={550}>
+              <ResponsiveContainer width="100%" height={400}>
                 <ComposedChart
                   width={900}
                   height={400}
                   data={convertDataChart}
-                  margin={{ top: 5, right: 5, bottom: 14 }}
+                  margin={{ top: 10, right: 10, bottom: 14, left: 15 }}
                 >
                   {/* Defs for ticks filter background color */}
                   {["lowest", "highest"].map((item) => {
@@ -186,7 +195,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     }
                     return (
                       <defs key={item}>
-                        <filter x="-.15" y="-.50" width="1.25" height="1.3" id={item}>
+                        <filter x="-.15" y="-.15" width="1.25" height="1.2" id={item}>
                           <feFlood floodColor={floodColor} result="bg" />
                           <feMerge>
                             <feMergeNode in="bg" />
@@ -217,13 +226,27 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
-                    tick={{
-                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+                    tick={({ x, y, payload }) => (
+                      <g transform={`translate(${x},${y})`}>
+                        <text
+                          dy={getTickOffset(payload.value)}
+                          x={0}
+                          y={0}
+                          textAnchor="end"
+                          fill={theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]}
+                        >
+                          {formatPriceValue(payload.value)}
+                        </text>
+                      </g>
+                    )}
+                    tickLine={{
+                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={false}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
+                    padding={{ top: 10, bottom: 10 }}
+                    width={80}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
