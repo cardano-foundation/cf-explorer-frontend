@@ -38,6 +38,12 @@ const BlockList = () => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
 
+  const expandedBlockRowData = [
+    { label: "Transactions", value: "txCount" },
+    { label: "Fees", value: "totalFees", isFormatADA: true },
+    { label: "Output", value: "totalOutput", isFormatADA: true }
+  ];
+
   const columns: Column<Block>[] = [
     {
       title: <Capitalize data-testid="blocks.table.title.block">{t("glossary.block")}</Capitalize>,
@@ -123,12 +129,12 @@ const BlockList = () => {
     }
   ];
 
-  const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
-    setOnDetailView(true);
-    setSelected(r.blockNo || r.hash);
-  };
-
-  const onClickTabView = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+  const handleOpenDetail = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     history.push(details.block(r.blockNo));
   };
 
@@ -140,6 +146,10 @@ const BlockList = () => {
   useEffect(() => {
     if (!onDetailView) handleClose();
   }, [onDetailView]);
+
+  const handleExpandedRow = (data: Block) => {
+    setSelected(selected === data.blockNo ? null : data.blockNo);
+  };
 
   return (
     <StyledContainer>
@@ -164,12 +174,14 @@ const BlockList = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={openDetail}
-          onClickTabView={onClickTabView}
+          onClickRow={handleOpenDetail}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+          onClickExpandedRow={handleExpandedRow}
+          expandedTable
+          expandedRowData={expandedBlockRowData}
         />
       </Card>
     </StyledContainer>
