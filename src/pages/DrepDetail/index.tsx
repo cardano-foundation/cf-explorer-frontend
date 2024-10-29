@@ -43,7 +43,7 @@ import FormNowMessage from "src/components/commons/FormNowMessage";
 import { StyledAccordion } from "src/components/commons/CustomAccordion/styles";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
-import { formatADA, formatDateTimeLocal, formatPercent, getPageInfo } from "src/commons/utils/helper";
+import { formatADA, formatADAFull, formatDateTimeLocal, formatPercent, getPageInfo } from "src/commons/utils/helper";
 import useFetch from "src/commons/hooks/useFetch";
 import {
   BackButton,
@@ -163,7 +163,7 @@ const DrepDetail = () => {
       ),
       value: (
         <ValueCard>
-          {data?.activeVoteStake !== null ? `${formatADA(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
+          {data?.activeVoteStake !== null ? `${formatADAFull(data?.activeVoteStake || 0)} ADA` : t("common.N/A")}{" "}
         </ValueCard>
       )
     },
