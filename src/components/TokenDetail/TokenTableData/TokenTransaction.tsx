@@ -15,6 +15,7 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { TooltipIcon } from "src/commons/resources";
 
 import { SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
@@ -77,12 +78,30 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
       )
     },
     {
-      title: t("glossary.slot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.slot")}</div>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "50px"
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.absoluteSlot")}</div>
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: "100px"
     },
