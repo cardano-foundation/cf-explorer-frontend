@@ -121,6 +121,10 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
       ),
       icon: TimeIconComponent,
       value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.tokenLastActivity || "")}</DatetimeTypeTooltip>
+    },
+    {
+      title: <></>,
+      value: <></>
     }
   ];
 
