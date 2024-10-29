@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.9.0...v1.9.0) (2024-10-16)
+
+
+### Bug Fixes
+
+* adjust page titles for traceability program and sustainability indicators ([#4022](https://github.com/cardano-foundation/cf-explorer-frontend/issues/4022)) ([e478293](https://github.com/cardano-foundation/cf-explorer-frontend/commit/e478293f546975b98077d27951ab41febcf3b2a8))
+
 ## [1.9.0](https://github.com/cardano-foundation/cf-explorer-frontend/compare/v1.7.0...v1.9.0) (2024-10-15)
 
 
