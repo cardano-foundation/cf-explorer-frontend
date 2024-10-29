@@ -287,7 +287,7 @@ const HomeStatistic = () => {
         )}
       </WrapGrid>
       <WrapGrid item xl lg={3} sm={6} xs={12}>
-        {dataCiculatingSupply && !loadingciculating ? (
+        {!loadingciculating ? (
           <Item data-testid="ada-price-box" smallitem="true" thememode={themeMode}>
             <WrapCardContent>
               <Box display={"flex"} alignItems={"center"} height={"40px"}>
