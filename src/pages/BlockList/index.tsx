@@ -9,7 +9,6 @@ import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
-import { setOnDetailView } from "src/stores/user";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -29,7 +28,7 @@ const BlockList = () => {
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { pageInfo, setSort } = usePageInfo();
-  const [selected, setSelected] = useState<number | string | null>(null);
+  const [selected, setSelected] = useState<(number | string | null)[]>([]);
 
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
@@ -139,8 +138,7 @@ const BlockList = () => {
   };
 
   const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
+    setSelected([]);
   };
 
   useEffect(() => {
@@ -148,9 +146,16 @@ const BlockList = () => {
   }, [onDetailView]);
 
   const handleExpandedRow = (data: Block) => {
-    setSelected(selected === data.blockNo ? null : data.blockNo);
-  };
+    setSelected((prev) => {
+      const isSelected = prev.includes(Number(data.blockNo));
 
+      if (isSelected) {
+        return prev.filter((blockNo) => blockNo !== Number(data.blockNo));
+      } else {
+        return [...prev, Number(data.blockNo)];
+      }
+    });
+  };
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
