@@ -91,7 +91,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
 
   const customTicks = useMemo(() => {
     // Default ticks by recharts
-    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest)], 5);
+    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest) * 1.1], 5);
 
     // With 14 is font-size (tick label height), 400 is chart height
     const labelHeight = 14 / 400;
@@ -144,7 +144,11 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
   };
 
   const getTickOffset = (value: number) => {
+    const maxTick = Math.max(...customTicks);
     if (value === highest) {
+      if (Math.abs(value - maxTick) / maxTick < 0.05) {
+        return -45;
+      }
       return -10;
     }
     if (value === lowest && Math.abs(highest - lowest) / highest < 0.1) {
