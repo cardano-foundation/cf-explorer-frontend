@@ -12,7 +12,6 @@ import { formatDateTimeLocal } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import FirstEpoch from "src/components/commons/Epoch/FirstEpoch";
 import Table, { Column } from "src/components/commons/Table";
-import { setOnDetailView } from "src/stores/user";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
@@ -24,7 +23,7 @@ import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledContainer, StyledL
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<(number | string | null)[]>([]);
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
@@ -104,12 +103,19 @@ const Epoch: React.FC = () => {
   };
 
   const handleExpandedRow = (data: IDataEpoch) => {
-    setSelected(selected === data.no ? null : data.no);
+    setSelected((prev) => {
+      const isSelected = prev.includes(Number(data.no));
+
+      if (isSelected) {
+        return prev.filter((no) => no !== Number(data.no));
+      } else {
+        return [...prev, Number(data.no)];
+      }
+    });
   };
 
   const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
+    setSelected([]);
   };
 
   useEffect(() => {

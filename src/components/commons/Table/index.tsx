@@ -345,7 +345,7 @@ const TableBody = <T extends ColumnType>({
               handleOpenDetail={onClickRow} // this event occur when click on eye icon
               showTabView={showTabView}
               selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
-              selectedProps={selected === index ? selectedProps : undefined}
+              selectedProps={selected?.includes(index) ? selectedProps : undefined}
               selectable={selectable}
               toggleSelection={toggleSelection}
               isSelected={isSelected}
@@ -353,11 +353,11 @@ const TableBody = <T extends ColumnType>({
               onCallBackHeight={onCallBackHeight}
               expandedTable={expandedTable}
             />
-            {expandedTable && !!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected && (
+            {expandedTable && !!rowKey && (
               <tr>
                 <td colSpan={columns.length}>
                   <Collapse
-                    in={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
+                    in={!!rowKey && selected?.includes(typeof rowKey === "function" ? rowKey(row) : row[rowKey])}
                     timeout="auto"
                     unmountOnExit
                   >
