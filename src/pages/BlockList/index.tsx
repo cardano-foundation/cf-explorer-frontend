@@ -10,7 +10,6 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { setOnDetailView } from "src/stores/user";
-import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -20,6 +19,7 @@ import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { TooltipIcon } from "src/commons/resources";
 
 import { PriceWrapper, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
@@ -83,13 +83,31 @@ const BlockList = () => {
       )
     },
     {
-      title: <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
-      title: <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>{" "}
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slotNo",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.absSlot#${index}`}>{r.slotNo}</Box>
@@ -114,6 +132,10 @@ const BlockList = () => {
   const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
     setOnDetailView(true);
     setSelected(r.blockNo || r.hash);
+  };
+
+  const onClickTabView = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    history.push(details.block(r.blockNo));
   };
 
   const handleClose = () => {
@@ -153,6 +175,7 @@ const BlockList = () => {
             handleCloseDetailView: handleClose
           }}
           onClickRow={openDetail}
+          onClickTabView={onClickTabView}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
@@ -162,7 +185,6 @@ const BlockList = () => {
           expandedRowData={expandedBlockRowData}
         />
       </Card>
-      <DetailViewBlock blockNo={selected || 0} open={onDetailView} handleClose={handleClose} />
     </StyledContainer>
   );
 };
