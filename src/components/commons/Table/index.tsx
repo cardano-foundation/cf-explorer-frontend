@@ -344,8 +344,12 @@ const TableBody = <T extends ColumnType>({
               }}
               handleOpenDetail={onClickRow} // this event occur when click on eye icon
               showTabView={showTabView}
-              selected={!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]) === selected}
-              selectedProps={selected?.includes(index) ? selectedProps : undefined}
+              selected={
+                Array.isArray(selected)
+                  ? selected.includes(!!rowKey && (typeof rowKey === "function" ? rowKey(row) : row[rowKey]))
+                  : false
+              }
+              selectedProps={Array.isArray(selected) && selected?.includes(index) ? selectedProps : undefined}
               selectable={selectable}
               toggleSelection={toggleSelection}
               isSelected={isSelected}
