@@ -9,11 +9,11 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 
+import { DescriptionText, HeadingPage, WrapHeading } from "./styles";
+import { WorldMap } from "./MicarIndicator/MapMicar";
 import MicarIndicator from "./MicarIndicator";
 import EmissionsChart from "./MicarChart";
 import EmissionsCalculator from "./MicarEmissions";
-import { DescriptionText, HeadingPage, WrapHeading } from "./styles";
-import { WorldMap } from "./MicarIndicator/MapMicar";
 
 interface Indicator {
   indicator: number;

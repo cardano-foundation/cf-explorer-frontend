@@ -104,7 +104,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
 
   const customTicks = useMemo(() => {
     // Default ticks by recharts
-    const ticks = getNiceTickValues([0, maxValue], 5);
+    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest) * 1.1], 5);
 
     // With 14 is font-size (tick label height), 400 is chart height
     const labelHeight = 14 / 400;
@@ -158,6 +158,20 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     );
   };
 
+  const getTickOffset = (value: number) => {
+    const maxTick = Math.max(...customTicks);
+    if (value === highest) {
+      if (Math.abs(value - maxTick) / maxTick < 0.05) {
+        return -45;
+      }
+      return -10;
+    }
+    if (value === lowest && Math.abs(highest - lowest) / highest < 0.1) {
+      return 10;
+    }
+    return 0;
+  };
+
   const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
 
   const renderData = () => {
@@ -186,7 +200,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
           width={900}
           height={400}
           data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
-          margin={{ top: 5, right: 10, bottom: 14 }}
+          margin={{ top: 10, right: 10, bottom: 14, left: 15 }}
         >
           {/* Defs for ticks filter background color */}
           {["lowest", "highest"].map((item) => {
@@ -226,12 +240,28 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
             )}
           </XAxis>
           <YAxis
-            color={theme.palette.secondary.light}
-            stroke={theme.palette.secondary.light}
             tickFormatter={formatPriceValue}
-            tickLine={false}
+            tick={({ x, y, payload }) => (
+              <g transform={`translate(${x},${y})`}>
+                <text
+                  dy={getTickOffset(payload.value)}
+                  x={0}
+                  y={0}
+                  textAnchor="end"
+                  fill={theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]}
+                >
+                  {formatPriceValue(payload.value)}
+                </text>
+              </g>
+            )}
+            tickLine={{
+              stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+            color={theme.palette.secondary.light}
             interval={0}
             ticks={customTicks}
+            padding={{ top: 10, bottom: 10 }}
+            width={80}
           />
           <Tooltip content={renderTooltip} cursor={false} />
           <CartesianGrid vertical={false} strokeWidth={0.33} />
