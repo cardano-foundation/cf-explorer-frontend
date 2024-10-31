@@ -74,8 +74,20 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     false,
     blockKey
   );
-  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
-  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+  const calculatedHighestAndLowest = useMemo(() => {
+    if (!data?.data?.length) return { highest: 0, lowest: 0 };
+
+    return data.data.reduce(
+      (acc, curr) => ({
+        highest: Math.max(acc.highest, curr.value),
+        lowest: Math.min(acc.lowest, curr.value)
+      }),
+      { highest: data.data[0].value, lowest: data.data[0].value }
+    );
+  }, [data?.data]);
+
+  const maxBalance = BigNumber(calculatedHighestAndLowest.highest || 0).toString();
+  const minBalance = BigNumber(calculatedHighestAndLowest.lowest || 0).toString();
 
   const highest = Number(maxBalance);
   const lowest = Number(minBalance);
@@ -90,28 +102,33 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     })) || [];
 
   const customTicks = useMemo(() => {
-    // Default ticks by recharts
-    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest) * 1.1], 5);
+    const values = data?.data?.map((item) => item.value) || [0];
 
-    // With 14 is font-size (tick label height), 400 is chart height
-    const labelHeight = 14 / 400;
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
 
-    const tickMax = ticks[ticks.length - 1] || 1;
+    const tickMin = Math.min(0, minValue);
+    const tickMax = Math.max(maxValue * 1.2, Math.abs(minValue) * 1.2, 0);
 
-    // If tick near lowest and highest ( tick / tickMax < labelHeight), hidden it.
-    const needShowTicks = ticks.filter(
-      (tick) =>
-        BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
-        BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
-    );
-    // Ticks add highest
-    needShowTicks.push(highest);
+    const ticks = getNiceTickValues([tickMin, tickMax], 5);
+    const tickMaxValue = Math.max(...ticks.map(Math.abs));
 
-    // If lowest equal highest, add it.
-    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+    const threshold = tickMaxValue * 0.1;
 
-    return needShowTicks.sort((a, b) => a - b);
-  }, [maxBalance, highest, lowest]);
+    const filteredTicks = ticks.filter((tick) => {
+      if (tick === ticks[0] || tick === ticks[ticks.length - 1]) return true;
+      const distanceToHighest = Math.abs(tick - highest);
+      const distanceToLowest = Math.abs(tick - lowest);
+      return distanceToHighest > threshold && distanceToLowest > threshold;
+    });
+
+    filteredTicks.push(highest);
+    if (BigNumber(highest).minus(lowest).div(tickMaxValue).abs().gt(0)) {
+      filteredTicks.push(lowest);
+    }
+
+    return [...new Set(filteredTicks)].sort((a, b) => a - b);
+  }, [data?.data, highest, lowest]);
 
   const lowestIndex = customTicks.indexOf(lowest) + 1;
   const highestIndex = customTicks.indexOf(highest) + 1;
@@ -144,15 +161,30 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
   };
 
   const getTickOffset = (value: number) => {
-    const maxTick = Math.max(...customTicks);
+    if (!customTicks.includes(value)) {
+      return 0;
+    }
+
+    const maxAbsValue = Math.max(...customTicks.map(Math.abs));
+    const isNearlyEqual = Math.abs(highest - lowest) / maxAbsValue < 0.05;
+
     if (value === highest) {
-      if (Math.abs(value - maxTick) / maxTick < 0.05) {
+      if (Math.abs(value) / maxAbsValue > 0.95) {
         return -45;
+      }
+      if (isNearlyEqual) {
+        return -20;
       }
       return -10;
     }
-    if (value === lowest && Math.abs(highest - lowest) / highest < 0.1) {
-      return 10;
+
+    if (value === lowest) {
+      if (isNearlyEqual) {
+        return 20;
+      }
+      if (Math.abs(highest - lowest) / maxAbsValue < 0.1) {
+        return 10;
+      }
     }
     return 0;
   };
