@@ -16,8 +16,8 @@ import {
   Label,
   Line
 } from "recharts";
-import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
+import { getNiceTickValues } from "recharts-scale";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
@@ -75,15 +75,21 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
 
-  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
-  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+  const maxBalance = useMemo(() => {
+    const values = data?.data?.map((item) => BigNumber(item.value || 0)) || [];
+    return values.length > 0 ? BigNumber.max(...values).toString() : "0";
+  }, [data?.data]);
 
-  const rewards = dataReward?.map?.((item) => item.value || 0) || [];
-  const maxReward = rewards.length > 0 ? BigNumber.max(0, ...rewards).toString() : null;
-  const minReward = rewards.length > 0 ? BigNumber.min(maxReward || 0, ...rewards).toString() : null;
+  const minBalance = useMemo(() => {
+    const values = data?.data?.map((item) => BigNumber(item.value || 0)) || [];
+    return values.length > 0 ? BigNumber.min(...values).toString() : "0";
+  }, [data?.data]);
 
-  const highest = Number(tab === "BALANCE" ? data?.highestBalance : maxReward) || 0;
-  const lowest = Number(tab === "BALANCE" ? data?.lowestBalance : minReward) || 0;
+  const maxReward = Math.max(...(dataReward || []).map((r) => r.value || 0));
+  const minReward = Math.min(...(dataReward || []).map((r) => r.value || 0));
+
+  const highest = Number(tab === "BALANCE" ? maxBalance : maxReward) || 0;
+  const lowest = Number(tab === "BALANCE" ? minBalance : minReward) || 0;
   const isEqualLine = highest === lowest;
 
   const convertDataChart: AnalyticsBalanceExpanded[] = (data?.data || []).map?.((item) => ({
@@ -99,7 +105,6 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     highest,
     lowest
   }));
-
   const customTicks = useMemo(() => {
     const values =
       tab === "BALANCE" ? data?.data?.map((item) => item.value) || [0] : dataReward?.map((item) => item.value) || [0];
@@ -117,7 +122,6 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
 
     const filteredTicks = ticks.filter((tick) => {
       if (tick === ticks[0] || tick === ticks[ticks.length - 1]) return true;
-
       const distanceToHighest = Math.abs(tick - highest);
       const distanceToLowest = Math.abs(tick - lowest);
       return distanceToHighest > threshold && distanceToLowest > threshold;
