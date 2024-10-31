@@ -90,7 +90,7 @@ export interface TableProps<T extends ColumnType = any> {
    * If rowKey is function, key is result of that fuction
    */
   rowKey?: string | ((record: T) => string | number | symbol);
-  selected?: string | number | symbol | null;
+  selected?: (string | number | symbol | null)[];
   selectedProps?: {
     className?: string;
     style?: React.CSSProperties;

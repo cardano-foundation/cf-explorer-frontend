@@ -9,7 +9,6 @@ import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
 import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
-import { setOnDetailView } from "src/stores/user";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
@@ -29,7 +28,7 @@ const BlockList = () => {
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { pageInfo, setSort } = usePageInfo();
-  const [selected, setSelected] = useState<number | string | null>(null);
+  const [selected, setSelected] = useState<(number | string | null)[]>([]);
 
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
@@ -37,6 +36,12 @@ const BlockList = () => {
   useEffect(() => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
+
+  const expandedBlockRowData = [
+    { label: "Transactions", value: "txCount" },
+    { label: "Fees", value: "totalFees", isFormatADA: true },
+    { label: "Output", value: "totalOutput", isFormatADA: true }
+  ];
 
   const columns: Column<Block>[] = [
     {
@@ -123,24 +128,29 @@ const BlockList = () => {
     }
   ];
 
-  const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
-    setOnDetailView(true);
-    setSelected(r.blockNo || r.hash);
-  };
-
-  const onClickTabView = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+  const handleOpenDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
     history.push(details.block(r.blockNo));
   };
 
   const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
+    setSelected([]);
   };
 
   useEffect(() => {
     if (!onDetailView) handleClose();
   }, [onDetailView]);
 
+  const handleExpandedRow = (data: Block) => {
+    setSelected((prev) => {
+      const isSelected = prev.includes(Number(data.blockNo));
+
+      if (isSelected) {
+        return prev.filter((blockNo) => blockNo !== Number(data.blockNo));
+      } else {
+        return [...prev, Number(data.blockNo)];
+      }
+    });
+  };
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
@@ -164,12 +174,14 @@ const BlockList = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={openDetail}
-          onClickTabView={onClickTabView}
+          onClickRow={handleOpenDetail}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+          onClickExpandedRow={handleExpandedRow}
+          expandedTable
+          expandedRowData={expandedBlockRowData}
         />
       </Card>
     </StyledContainer>
