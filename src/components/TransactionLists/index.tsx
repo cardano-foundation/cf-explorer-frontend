@@ -9,15 +9,16 @@ import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } f
 import { details } from "src/commons/routers";
 import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
+import { TooltipIcon } from "src/commons/resources";
 
 import CustomTooltip from "../commons/CustomTooltip";
-import SelectedIcon from "../commons/SelectedIcon";
 import ADAicon from "../commons/ADAIcon";
 import FormNowMessage from "../commons/FormNowMessage";
 import Table, { Column } from "../commons/Table";
 import Card from "../commons/Card";
 import { Actions, StyledLink, TimeDuration } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
+import { Capitalize } from "../commons/CustomText/styles";
 
 interface TransactionListProps {
   underline?: boolean;
@@ -25,17 +26,9 @@ interface TransactionListProps {
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTabView?: boolean;
-  handleClose: () => void;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({
-  underline = false,
-  url,
-  openDetail,
-  selected,
-  showTabView,
-  handleClose
-}) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, selected, showTabView }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
@@ -43,10 +36,15 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
-  const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
-    if (openDetail) return openDetail(_, r);
+  const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     history.push(details.transaction(r.hash));
   };
+
   const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
@@ -74,7 +72,10 @@ const TransactionList: React.FC<TransactionListProps> = ({
       render: (r, index) => {
         const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo) || getShortHash(r.blockHash);
         return (
-          <StyledLink to={details.block(r.blockNo || r.blockHash)}>
+          <StyledLink
+            to={details.block(r.blockNo || r.blockHash)}
+            data-testid={`transactions.table.block#${r.blockNo}`}
+          >
             <CustomTooltip title={tooltip}>
               <span data-testid={`transaction.table.value.block#${index}`}>{blockName}</span>
             </CustomTooltip>
@@ -93,13 +94,31 @@ const TransactionList: React.FC<TransactionListProps> = ({
       )
     },
     {
-      title: <Box data-testid="transactions.table.title.slot">{t("glossary.slot")}</Box>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="transactions.table.title.slot">{t("glossary.slot")}</Capitalize>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: 60,
       render: (r, index) => <Box data-testid={`transactions.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize>{t("glossary.absoluteSlot")}</Capitalize>{" "}
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: 60
     },
@@ -120,63 +139,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: (
-        <Box data-testid="transactions.table.title.outputInAda" component={"span"}>
-          {t("glossary.outputInAda")}
-        </Box>
-      ),
-      minWidth: 120,
-      key: "outSum",
-      render: (r, index) => (
-        <Box display="inline-flex" alignItems="center" data-testid={`transaction.table.value.outputInAda#${index}`}>
-          <Box mr={1}>{formatADAFull(r.totalOutput)}</Box>
-          <ADAicon />
-          {selected === r.hash && <SelectedIcon />}
-        </Box>
-      ),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Box data-testid="transactions.table.title.inputAddress">{t("glossary.inputAddress")}</Box>,
-      key: "addressesInput",
-      minWidth: 120,
-      render: (r, index) => (
-        <Box key={r.hash + "input"}>
-          {r?.addressesInput?.slice(0, 2).map((address, idx) => (
-            <Box key={"addressesInput" + address + idx}>
-              <CustomTooltip title={address}>
-                <StyledLink data-testid={`transaction.table.value.inputAddress#${index}`} to={details.address(address)}>
-                  {getShortHash(address)}
-                </StyledLink>
-              </CustomTooltip>
-            </Box>
-          ))}
-          {r?.addressesInput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </Box>
-      )
-    },
-    {
-      title: <Box data-testid="transactions.table.title.outputAddress">{t("glossary.outpuAddress")}</Box>,
-      key: "addressesOutput",
-      minWidth: 120,
-      render: (r, index) => (
-        <Box key={r.hash + "output"}>
-          {r?.addressesOutput?.slice(0, 2).map((address, idx) => (
-            <Box key={"addressesOutput" + address + idx}>
-              <CustomTooltip title={address}>
-                <StyledLink data-testid={`transaction.table.value.outpuAddress#${index}`} to={details.address(address)}>
-                  {getShortHash(address)}
-                </StyledLink>
-              </CustomTooltip>
-            </Box>
-          ))}
-          {r?.addressesOutput?.length > 2 ? <StyledLink to={details.transaction(r.hash)}>...</StyledLink> : ""}
-        </Box>
-      )
     }
   ];
   const { pathname } = window.location;
@@ -205,7 +167,6 @@ const TransactionList: React.FC<TransactionListProps> = ({
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ ...pageInfo, page, size }) });
           },
-          handleCloseDetailView: handleClose,
           hideLastPage: true
         }}
         onClickRow={onClickRow}

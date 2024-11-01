@@ -1,7 +1,4 @@
 import { expect, Page } from "@playwright/test";
-import moment from "moment";
-
-import { BlockInformationDto } from "playwright/api/dtos/blockInformation.dto";
 
 export function blocksDashboard(page: Page) {
   const blocksTable = page.getByTestId("blocks-card");
@@ -20,22 +17,8 @@ export function blocksDashboard(page: Page) {
   const blocksTableTitleSlot = page.getByTestId("blocks.table.title.slot");
   const blocksTableTitleAbsSlot = page.getByTestId("blocks.table.title.absoluteSlot");
   const blocksTableTitleCreateAt = page.getByTestId("blocks.table.title.createAt");
-  const blocksTableTitleTransactionsCount = page.getByTestId("blocks.table.title.transactions");
-  const blocksTableTitleFee = page.getByTestId("blocks.table.title.fee");
   const blocksTableTitleOutput = page.getByTestId("blocks.table.title.output");
   const blocksTableValueSlot = page.getByTestId("blocks.table.value.slot#2");
-
-  //Block widget
-  const blocksWidgetViewDetailButton = page.getByTestId("block.detailViewEpoch.viewDetail");
-  const blocksWidgetEpochNo = page.getByTestId("block.widget.epochNo");
-  const blocksWidgetSlotNo = page.getByTestId("block.widget.slotNo");
-  const blocksWidgetAbsSlotNo = page.getByTestId("block.widget.absSlotNo");
-  const blocksWidgetCreatedAt = page.getByTestId("block.widget.createdAt");
-  const blocksWidgetConfirmation = page.getByTestId("block.widget.confirmation");
-  const blocksWidgetFee = page.getByTestId("block.widget.fees");
-  const blocksWidgetOutput = page.getByTestId("block.widget.output");
-  const blocksWidgetBlockHash = page.getByTestId("block.widget.blockHash");
-  const blocksWidgetTrxTab = page.getByTestId("block.widget.trxTab");
 
   const goToDashboard = async () => {
     await page.goto("/");
@@ -53,14 +36,6 @@ export function blocksDashboard(page: Page) {
     await blocksTableValueSlot.click();
   };
 
-  const goToBlockDetailFromWidget = async () => {
-    await blocksWidgetViewDetailButton.click();
-  };
-
-  const goToBlockDetailFromWidgetByBlockHash = async () => {
-    await blocksWidgetBlockHash.click();
-  };
-
   const goToBlockDetailFromBlockNo = async () => {
     await blocksTableValueBlock.click();
   };
@@ -71,10 +46,6 @@ export function blocksDashboard(page: Page) {
 
   const goToEpochDetailFromEpochNo = async () => {
     await blocksTableValueEpoch.click();
-  };
-
-  const goToBlockDetailFromWidgetByTrxTab = async () => {
-    await blocksWidgetTrxTab.click();
   };
 
   const openLastBlockDetails = async () => {
@@ -93,44 +64,7 @@ export function blocksDashboard(page: Page) {
     await expect(blocksTableTitleSlot, "Check title on blocks table").toHaveText("Slot");
     await expect(blocksTableTitleAbsSlot, "Check title on blocks table").toHaveText("Absolute Slot");
     await expect(blocksTableTitleCreateAt, "Check title on blocks table").toHaveText("Created At");
-    await expect(blocksTableTitleTransactionsCount, "Check title on blocks table").toHaveText("Transactions");
-    await expect(blocksTableTitleFee, "Check title on blocks table").toHaveText("Fees");
     await expect(blocksTableTitleOutput, "Check title on finished epoch table").toHaveText("Output");
-  };
-
-  const checkBlockWidget = async ({ blockFrostBlock }: { blockFrostBlock: BlockInformationDto }) => {
-    expect(+((await blocksWidgetEpochNo.textContent()) || 0), "Check epoch on block widget").toEqual(
-      blockFrostBlock.epoch
-    );
-    expect(
-      +((await blocksWidgetSlotNo.textContent())?.split("/")[0] || 0),
-      "Slot no in block widget to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.epoch_slot || 0));
-
-    expect(
-      +((await blocksWidgetAbsSlotNo.textContent()) || 0),
-      "Absolute slot in block widget to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.slot || 0));
-
-    expect(
-      moment((await blocksWidgetCreatedAt.textContent())?.replace(",", "")).unix(),
-      "Created time to equal create time epoch Blockfrost"
-    ).toEqual(blockFrostBlock?.time);
-
-    expect(
-      +((await blocksWidgetConfirmation.textContent()) || 0),
-      "Confirmation in block widget to equal total fee in block on Blockfrost "
-    ).toBeGreaterThanOrEqual(+(blockFrostBlock?.confirmations || 0));
-
-    expect(
-      +((await blocksWidgetFee.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total fees in block widget to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.fees || 0));
-
-    expect(
-      +((await blocksWidgetOutput.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total output in block widget to equal total fee in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.output || 0));
   };
 
   return {
@@ -141,12 +75,8 @@ export function blocksDashboard(page: Page) {
     searchBarOnBlocks,
     checkBlocksTable,
     openLastestBlockWidget,
-    goToBlockDetailFromWidget,
     goToBlockDetailFromBlockNo,
     goToEpochDetailFromEpochNo,
-    goToBlockDetailFromBlockId,
-    checkBlockWidget,
-    goToBlockDetailFromWidgetByBlockHash,
-    goToBlockDetailFromWidgetByTrxTab
+    goToBlockDetailFromBlockId
   };
 }

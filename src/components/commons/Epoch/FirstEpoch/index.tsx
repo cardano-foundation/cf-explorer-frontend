@@ -15,7 +15,7 @@ import DatetimeTypeTooltip from "../../DatetimeTypeTooltip";
 
 interface IProps {
   data: IDataEpoch;
-  onClick: (currentEpochData: IDataEpoch, r: IDataEpoch, index: number) => void;
+  onClick: (e: React.MouseEvent, record: IDataEpoch) => void;
 }
 
 export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) {
@@ -139,7 +139,7 @@ export default function FirstEpoch({ data: currentEpochData, onClick }: IProps) 
     }
   ];
   return (
-    <Container onClick={() => onClick(currentEpochData, currentEpochData, -1)} data-testid="epoch.firstEpoch.container">
+    <Container onClick={(e) => onClick(e, currentEpochData)} data-testid="epoch.firstEpoch.container">
       <DetailHeader
         data-testid="epoch.firstEpoch.detailHeader"
         isClickAble={true}

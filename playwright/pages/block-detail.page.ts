@@ -23,9 +23,7 @@ export function blockDetailPage(page: Page) {
   //Block detail - Transactions Table
   const blocksDetailTrxTableTxhash = page.getByTestId("block.detail.trxTable.txhash");
   const blocksDetailTrxTableCreatedAt = page.getByTestId("block.detail.trxTable.createdAt");
-  const blocksDetailTrxTableAddress = page.getByTestId("block.detail.trxTable.address");
   const blocksDetailTrxTableFees = page.getByTestId("block.detail.trxTable.fees");
-  const blocksDetailTrxTableoutput = page.getByTestId("block.detail.trxTable.output");
   const blocksDetailTrxTableValueTrx = page.getByTestId("block.detail.trxTable.value.txhash#0");
   const blocksDetailTrxTableValueInputAddress = page.getByTestId("block.detail.trxTable.value.inputAddress#0");
 
@@ -106,9 +104,7 @@ export function blockDetailPage(page: Page) {
   const checkTransactionsTable = async () => {
     await expect(blocksDetailTrxTableTxhash, "Check title on transaction table").toHaveText("Tx hash");
     await expect(blocksDetailTrxTableCreatedAt, "Check title on transaction table").toHaveText("Created At");
-    await expect(blocksDetailTrxTableAddress, "Check title on transaction table").toHaveText("Addresses");
     await expect(blocksDetailTrxTableFees, "Check title on transaction table").toHaveText("Fees");
-    await expect(blocksDetailTrxTableoutput, "Check title on transaction table").toHaveText("Output in ADA");
   };
 
   const checkBlockDetail = async ({ blockNo }: { blockNo: string | null }) => {

@@ -1,27 +1,18 @@
 import { stringify } from "qs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Box } from "@mui/material";
 
 import { details } from "src/commons/routers";
-import {
-  formatDateTimeLocal,
-  formatNumberDivByDecimals,
-  formatNumberTotalSupply,
-  getShortHash,
-  numberWithCommas
-} from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberTotalSupply, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table, { Column } from "src/components/commons/Table";
-import { setOnDetailView } from "src/stores/user";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { API } from "src/commons/utils/api";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import DetailViewToken from "src/components/commons/DetailView/DetailViewToken";
-import SelectedIcon from "src/components/commons/SelectedIcon";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
@@ -29,10 +20,9 @@ import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const { t } = useTranslation();
-  const { onDetailView } = useSelector(({ user }: RootState) => user);
+
   const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const [selected, setSelected] = useState<IToken | null>(null);
   const { search } = useLocation();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
@@ -96,38 +86,11 @@ const Tokens = () => {
       )
     },
     {
-      title: <Box data-testid="tokens.table.title.totalTxs">{t("common.totalTxs")}</Box>,
-      key: "txCount",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.txCount),
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Box data-testid="tokens.table.title.numberOfHolders">{t("glossary.numberOfHolders")}</Box>,
-      key: "numberOfHolders",
-      minWidth: "150px",
-      render: (r) => numberWithCommas(r?.numberOfHolders)
-    },
-    {
-      title: <Box data-testid="tokens.table.title.totalVolumn">{t("glossary.totalVolumn")}</Box>,
-      key: "TotalVolume",
-      minWidth: "150px",
-      render: (r) => formatNumberDivByDecimals(r?.totalVolume, r.metadata?.decimals || 0)
-    },
-    {
-      title: <Box data-testid="tokens.table.title.volume24h">{t("glossary.volume24h")}</Box>,
-      key: "volumeIn24h",
-      minWidth: "150px",
-      render: (r, index) => (
-        <Box data-testid={`tokens.table.value.volume24h#${index}`}>
-          {formatNumberDivByDecimals(r?.volumeIn24h, r.metadata?.decimals || 0)}
+      title: (
+        <Box data-testid="tokens.table.title.totalSupply" component={"span"}>
+          {t("common.totalSupply")}
         </Box>
-      )
-    },
-    {
-      title: <Box data-testid="tokens.table.title.totalSupply">{t("common.totalSupply")}</Box>,
+      ),
       key: "supply",
       minWidth: "150px",
       render: (r) => {
@@ -139,33 +102,24 @@ const Tokens = () => {
       }
     },
     {
-      title: <Box data-testid="tokens.table.title.createdAt">{t("createdAt")}</Box>,
+      title: (
+        <Box data-testid="tokens.table.title.createdAt" component={"span"}>
+          {t("createdAt")}
+        </Box>
+      ),
       key: "time",
       minWidth: "150px",
-      render: (r) => (
-        <DatetimeTypeTooltip>
-          {formatDateTimeLocal(r.createdOn || "")} {JSON.stringify(selected) === JSON.stringify(r) && <SelectedIcon />}
-        </DatetimeTypeTooltip>
-      ),
+      render: (r) => <DatetimeTypeTooltip>{formatDateTimeLocal(r.createdOn || "")}</DatetimeTypeTooltip>,
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
     }
   ];
 
-  const openDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IToken) => {
-    setOnDetailView(true);
-    setSelected(r || null);
+  const toTokenDetail = (_: React.MouseEvent<Element, MouseEvent>, r: IToken) => {
+    if (!r.fingerprint) return;
+    history.push(details.token(r.fingerprint ?? ""));
   };
-
-  const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
-  };
-
-  useEffect(() => {
-    if (!onDetailView) handleClose();
-  }, [onDetailView]);
 
   return (
     <StyledContainer>
@@ -191,22 +145,14 @@ const Tokens = () => {
                 search: stringify({ ...pageInfo, page, size, tokenName: queries.get("tokenName") || "" })
               });
             },
-            handleCloseDetailView: handleClose,
             hideLastPage: true
           }}
-          onClickRow={openDetail}
+          onClickRow={toTokenDetail}
           rowKey="fingerprint"
-          selected={selected?.fingerprint}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
         />
       </Card>
-      <DetailViewToken
-        open={onDetailView}
-        tokenId={selected?.fingerprint || ""}
-        token={selected}
-        handleClose={handleClose}
-      />
     </StyledContainer>
   );
 };

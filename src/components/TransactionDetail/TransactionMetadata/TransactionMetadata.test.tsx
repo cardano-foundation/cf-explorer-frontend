@@ -167,18 +167,22 @@ const mockTransaction = {
       stakeAddress: "stake-address-1"
     }
   ],
-  metadataHash: "metadata-hash-2",
-  metadata: [
-    {
-      label: 1,
-      value: "value-1",
-      metadataCIP20: {},
-      metadataCIP83: {},
-      metadataCIP25: { tokenMap: undefined },
-      metadataCIP60: { tokenMap: undefined }
-    }
-  ]
+  metadataHash: "metadata-hash-2"
 } as Transaction;
+
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn()
+  }))
+});
 
 describe("TransactionMetadata component", () => {
   it("should component render", () => {

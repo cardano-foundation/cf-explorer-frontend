@@ -15,8 +15,9 @@ import { API } from "src/commons/utils/api";
 import ADAicon from "src/components/commons/ADAIcon";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { TooltipIcon } from "src/commons/resources";
 
-import { Flex, Label, SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
+import { SmallText, StyledLink, PriceValue, TimeDuration } from "./styles";
 
 interface ITokenTransaction {
   tabActive: string;
@@ -77,53 +78,32 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
       )
     },
     {
-      title: t("glossary.slot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.slot")}</div>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "50px"
     },
     {
-      title: t("glossary.absoluteSlot"),
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div>{t("glossary.absoluteSlot")}</div>
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slot",
       minWidth: "100px"
-    },
-
-    {
-      title: t("glossary.address"),
-      key: "addresses",
-      minWidth: "200px",
-      render(r, index) {
-        return (
-          <>
-            <Flex>
-              <Label>{t("drawer.input")}: </Label>
-              <div>
-                <CustomTooltip title={r.addressesInput[0]}>
-                  <StyledLink
-                    to={details.address(r.addressesInput[0])}
-                    data-testid={`token.transaction.address#${index}`}
-                  >
-                    {getShortHash(r.addressesInput[0])}
-                  </StyledLink>
-                </CustomTooltip>
-                <br />
-                {r.addressesInput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
-              </div>
-            </Flex>
-            <Flex>
-              <Label>{t("drawer.ouput")}: </Label>
-              <div>
-                <CustomTooltip title={r.addressesOutput[0]}>
-                  <StyledLink to={details.address(r.addressesOutput[0])}>
-                    {getShortHash(r.addressesOutput[0])}
-                  </StyledLink>
-                </CustomTooltip>
-                <br />
-                {r.addressesOutput.length > 1 && <StyledLink to={details.transaction(r.hash)}>...</StyledLink>}
-              </div>
-            </Flex>
-          </>
-        );
-      }
     },
     {
       title: t("fees"),
@@ -133,19 +113,6 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
         <PriceValue>
           <SmallText>
             {formatADAFull(r.fee)}&nbsp;
-            <ADAicon />
-          </SmallText>
-        </PriceValue>
-      )
-    },
-    {
-      title: t("drawer.ouput"),
-      minWidth: "120px",
-      key: "outSum",
-      render: (r) => (
-        <PriceValue>
-          <SmallText>
-            {formatADAFull(r.totalOutput)}&nbsp;
             <ADAicon />
           </SmallText>
         </PriceValue>

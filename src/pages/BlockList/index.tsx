@@ -8,22 +8,19 @@ import { useTranslation } from "react-i18next";
 import { Column } from "src/types/table";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
-import { setOnDetailView } from "src/stores/user";
-import DetailViewBlock from "src/components/commons/DetailView/DetailViewBlock";
+import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
 import { API } from "src/commons/utils/api";
-import SelectedIcon from "src/components/commons/SelectedIcon";
 import Link from "src/components/commons/Link";
-import ADAicon from "src/components/commons/ADAIcon";
 import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import { TooltipIcon } from "src/commons/resources";
 
-import { PriceWrapper, BlueText, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
+import { PriceWrapper, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
 
 const BlockList = () => {
   const { t } = useTranslation();
@@ -31,7 +28,7 @@ const BlockList = () => {
   const { onDetailView } = useSelector(({ user }: RootState) => user);
   const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { pageInfo, setSort } = usePageInfo();
-  const [selected, setSelected] = useState<number | string | null>(null);
+  const [selected, setSelected] = useState<(number | string | null)[]>([]);
 
   const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
   const mainRef = useRef(document.querySelector("#main"));
@@ -39,6 +36,12 @@ const BlockList = () => {
   useEffect(() => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
   }, []);
+
+  const expandedBlockRowData = [
+    { label: "Transactions", value: "txCount" },
+    { label: "Fees", value: "totalFees", isFormatADA: true },
+    { label: "Output", value: "totalOutput", isFormatADA: true }
+  ];
 
   const columns: Column<Block>[] = [
     {
@@ -79,13 +82,31 @@ const BlockList = () => {
       )
     },
     {
-      title: <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>
+          <CustomTooltip title={t("common.explainSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "epochSlotNo",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
     {
-      title: <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>,
+      title: (
+        <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Capitalize data-testid="blocks.table.title.absoluteSlot">{t("glossary.absoluteSlot")}</Capitalize>{" "}
+          <CustomTooltip title={t("common.absoluteSlot")}>
+            <p>
+              <TooltipIcon />
+            </p>
+          </CustomTooltip>
+        </Box>
+      ),
       key: "slotNo",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.absSlot#${index}`}>{r.slotNo}</Box>
@@ -104,54 +125,32 @@ const BlockList = () => {
       sort: ({ columnKey, sortValue }) => {
         sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
       }
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.transactions">{t("glossary.transactions")}</Capitalize>,
-      key: "txCount",
-      minWidth: "50px",
-      render: (r, index) => <BlueText data-testid={`blocks.table.value.txCount#${index}`}>{r.txCount}</BlueText>,
-      sort: ({ columnKey, sortValue }) => {
-        sortValue ? setSort(`${columnKey},${sortValue}`) : setSort("");
-      }
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.fee">{t("common.fees")}</Capitalize>,
-      key: "fees",
-      render: (r, index) => (
-        <PriceWrapper data-testid={`blocks.table.value.fee#${index}`}>
-          {formatADAFull(r.totalFees)}
-          <ADAicon />
-        </PriceWrapper>
-      )
-    },
-    {
-      title: <Capitalize data-testid="blocks.table.title.output">{t("glossary.output")}</Capitalize>,
-      key: "output",
-      minWidth: "100px",
-      render: (r, index) => (
-        <PriceWrapper data-testid={`blocks.table.value.output#${index}`}>
-          {formatADAFull(r.totalOutput)}
-          <ADAicon />
-          {selected === (r.blockNo || r.hash) && <SelectedIcon />}
-        </PriceWrapper>
-      )
     }
   ];
 
-  const openDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
-    setOnDetailView(true);
-    setSelected(r.blockNo || r.hash);
+  const handleOpenDetail = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Block) => {
+    history.push(details.block(r.blockNo));
   };
 
   const handleClose = () => {
-    setOnDetailView(false);
-    setSelected(null);
+    setSelected([]);
   };
 
   useEffect(() => {
     if (!onDetailView) handleClose();
   }, [onDetailView]);
 
+  const handleExpandedRow = (data: Block) => {
+    setSelected((prev) => {
+      const isSelected = prev.includes(Number(data.blockNo));
+
+      if (isSelected) {
+        return prev.filter((blockNo) => blockNo !== Number(data.blockNo));
+      } else {
+        return [...prev, Number(data.blockNo)];
+      }
+    });
+  };
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
@@ -175,14 +174,16 @@ const BlockList = () => {
             },
             handleCloseDetailView: handleClose
           }}
-          onClickRow={openDetail}
+          onClickRow={handleOpenDetail}
           rowKey={(r: Block) => r.blockNo || r.hash}
           selected={selected}
           showTabView
           tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+          onClickExpandedRow={handleExpandedRow}
+          expandedTable
+          expandedRowData={expandedBlockRowData}
         />
       </Card>
-      <DetailViewBlock blockNo={selected || 0} open={onDetailView} handleClose={handleClose} />
     </StyledContainer>
   );
 };
