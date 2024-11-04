@@ -39,6 +39,15 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
 
   const { error } = fetchData;
 
+  const onClickRow = (e: React.MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
+    if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    history.push(details.block(r.blockNo || r.hash));
+  };
+
   const columns: Column<BlockDetail>[] = [
     {
       title: <div data-testid="epochList.blockTitle">{t("glossary.block")}</div>,
@@ -138,7 +147,7 @@ const EpochBlockList: React.FC<IEpochBlockList> = ({ epochId }) => {
             total: fetchData.total,
             onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
           }}
-          onClickRow={(_, r) => history.push(details.block(r.blockNo || r.hash))}
+          onClickRow={onClickRow}
         />
       </Card>
     </StyledContainer>
