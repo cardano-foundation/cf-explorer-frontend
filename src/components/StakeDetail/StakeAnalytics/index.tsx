@@ -16,8 +16,8 @@ import {
   Label,
   Line
 } from "recharts";
-import { getNiceTickValues } from "recharts-scale";
 import { useSelector } from "react-redux";
+import { getNiceTickValues } from "recharts-scale";
 
 import useFetch from "src/commons/hooks/useFetch";
 import { HighestIconComponent, LowestIconComponent } from "src/commons/resources";
@@ -75,18 +75,22 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     { value: OPTIONS_CHART_ANALYTICS.THREE_MONTH, label: t("time.3m") }
   ];
 
-  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
-  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+  const maxBalance = useMemo(() => {
+    const values = data?.data?.map((item) => BigNumber(item.value || 0)) || [];
+    return values.length > 0 ? BigNumber.max(...values).toString() : "0";
+  }, [data?.data]);
 
-  const rewards = dataReward?.map?.((item) => item.value || 0) || [];
-  const maxReward = rewards.length > 0 ? BigNumber.max(0, ...rewards).toString() : null;
-  const minReward = rewards.length > 0 ? BigNumber.min(maxReward || 0, ...rewards).toString() : null;
+  const minBalance = useMemo(() => {
+    const values = data?.data?.map((item) => BigNumber(item.value || 0)) || [];
+    return values.length > 0 ? BigNumber.min(...values).toString() : "0";
+  }, [data?.data]);
 
-  const highest = Number(tab === "BALANCE" ? data?.highestBalance : maxReward) || 0;
-  const lowest = Number(tab === "BALANCE" ? data?.lowestBalance : minReward) || 0;
+  const maxReward = Math.max(...(dataReward || []).map((r) => r.value || 0));
+  const minReward = Math.min(...(dataReward || []).map((r) => r.value || 0));
+
+  const highest = Number(tab === "BALANCE" ? maxBalance : maxReward) || 0;
+  const lowest = Number(tab === "BALANCE" ? minBalance : minReward) || 0;
   const isEqualLine = highest === lowest;
-
-  const maxValue = Math.max(Number(tab === "BALANCE" ? maxBalance : maxReward), highest);
 
   const convertDataChart: AnalyticsBalanceExpanded[] = (data?.data || []).map?.((item) => ({
     value: item.value || 0,
@@ -101,30 +105,35 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     highest,
     lowest
   }));
-
   const customTicks = useMemo(() => {
-    // Default ticks by recharts
-    const ticks = getNiceTickValues([0, maxValue], 5);
+    const values =
+      tab === "BALANCE" ? data?.data?.map((item) => item.value) || [0] : dataReward?.map((item) => item.value) || [0];
 
-    // With 14 is font-size (tick label height), 400 is chart height
-    const labelHeight = 14 / 400;
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
 
-    const tickMax = ticks[ticks.length - 1] || 1;
+    const tickMin = Math.min(0, minValue);
+    const tickMax = Math.max(maxValue * 1.2, Math.abs(minValue) * 1.2, 0);
 
-    // If tick near lowest and highest ( tick / tickMax < labelHeight), hidden it.
-    const needShowTicks = ticks.filter(
-      (tick) =>
-        BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
-        BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
-    );
-    // Ticks add highest
-    needShowTicks.push(highest);
+    const ticks = getNiceTickValues([tickMin, tickMax], 5);
+    const tickMaxValue = Math.max(...ticks.map(Math.abs));
 
-    // If lowest equal highest, add it.
-    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+    const threshold = tickMaxValue * 0.1;
 
-    return needShowTicks.sort((a, b) => a - b);
-  }, [maxValue, highest, lowest]);
+    const filteredTicks = ticks.filter((tick) => {
+      if (tick === ticks[0] || tick === ticks[ticks.length - 1]) return true;
+      const distanceToHighest = Math.abs(tick - highest);
+      const distanceToLowest = Math.abs(tick - lowest);
+      return distanceToHighest > threshold && distanceToLowest > threshold;
+    });
+
+    filteredTicks.push(highest);
+    if (BigNumber(highest).minus(lowest).div(tickMaxValue).abs().gt(0)) {
+      filteredTicks.push(lowest);
+    }
+
+    return [...new Set(filteredTicks)].sort((a, b) => a - b);
+  }, [data?.data, dataReward, tab, highest, lowest]);
 
   const lowestIndex = customTicks.indexOf(lowest) + 1;
   const highestIndex = customTicks.indexOf(highest) + 1;
@@ -158,6 +167,35 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
     );
   };
 
+  const getTickOffset = (value: number) => {
+    if (!customTicks.includes(value)) {
+      return 0;
+    }
+
+    const maxAbsValue = Math.max(...customTicks.map(Math.abs));
+    const isNearlyEqual = Math.abs(highest - lowest) / maxAbsValue < 0.05;
+
+    if (value === highest) {
+      if (Math.abs(value) / maxAbsValue > 0.95) {
+        return -45;
+      }
+      if (isNearlyEqual) {
+        return -20;
+      }
+      return -10;
+    }
+
+    if (value === lowest) {
+      if (isNearlyEqual) {
+        return 20;
+      }
+      if (Math.abs(highest - lowest) / maxAbsValue < 0.1) {
+        return 10;
+      }
+    }
+    return 0;
+  };
+
   const xAxisProps: XAxisProps = tab === "BALANCE" ? { tickMargin: 5, dx: -15 } : { tickMargin: 5 };
 
   const renderData = () => {
@@ -186,7 +224,7 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
           width={900}
           height={400}
           data={tab === "BALANCE" ? convertDataChart : convertRewardChart}
-          margin={{ top: 5, right: 10, bottom: 14 }}
+          margin={{ top: 10, right: 10, bottom: 14, left: 15 }}
         >
           {/* Defs for ticks filter background color */}
           {["lowest", "highest"].map((item) => {
@@ -226,12 +264,28 @@ const StakeAnalytics: React.FC<{ stakeAddress?: string }> = ({ stakeAddress }) =
             )}
           </XAxis>
           <YAxis
-            color={theme.palette.secondary.light}
-            stroke={theme.palette.secondary.light}
             tickFormatter={formatPriceValue}
-            tickLine={false}
+            tick={({ x, y, payload }) => (
+              <g transform={`translate(${x},${y})`}>
+                <text
+                  dy={getTickOffset(payload.value)}
+                  x={0}
+                  y={0}
+                  textAnchor="end"
+                  fill={theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]}
+                >
+                  {formatPriceValue(payload.value)}
+                </text>
+              </g>
+            )}
+            tickLine={{
+              stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
+            }}
+            color={theme.palette.secondary.light}
             interval={0}
             ticks={customTicks}
+            padding={{ top: 10, bottom: 10 }}
+            width={80}
           />
           <Tooltip content={renderTooltip} cursor={false} />
           <CartesianGrid vertical={false} strokeWidth={0.33} />

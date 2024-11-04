@@ -74,9 +74,20 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     false,
     blockKey
   );
+  const calculatedHighestAndLowest = useMemo(() => {
+    if (!data?.data?.length) return { highest: 0, lowest: 0 };
 
-  const maxBalance = BigNumber(data?.highestBalance || 0).toString();
-  const minBalance = BigNumber(data?.lowestBalance || 0).toString();
+    return data.data.reduce(
+      (acc, curr) => ({
+        highest: Math.max(acc.highest, curr.value),
+        lowest: Math.min(acc.lowest, curr.value)
+      }),
+      { highest: data.data[0].value, lowest: data.data[0].value }
+    );
+  }, [data?.data]);
+
+  const maxBalance = BigNumber(calculatedHighestAndLowest.highest || 0).toString();
+  const minBalance = BigNumber(calculatedHighestAndLowest.lowest || 0).toString();
 
   const highest = Number(maxBalance);
   const lowest = Number(minBalance);
@@ -91,28 +102,33 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
     })) || [];
 
   const customTicks = useMemo(() => {
-    // Default ticks by recharts
-    const ticks = getNiceTickValues([0, Math.max(Number(maxBalance), highest)], 5);
+    const values = data?.data?.map((item) => item.value) || [0];
 
-    // With 14 is font-size (tick label height), 400 is chart height
-    const labelHeight = 14 / 400;
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
 
-    const tickMax = ticks[ticks.length - 1] || 1;
+    const tickMin = Math.min(0, minValue);
+    const tickMax = Math.max(maxValue * 1.2, Math.abs(minValue) * 1.2, 0);
 
-    // If tick near lowest and highest ( tick / tickMax < labelHeight), hidden it.
-    const needShowTicks = ticks.filter(
-      (tick) =>
-        BigNumber(tick).minus(lowest).div(tickMax).abs().gt(labelHeight) &&
-        BigNumber(tick).minus(highest).div(tickMax).abs().gt(labelHeight)
-    );
-    // Ticks add highest
-    needShowTicks.push(highest);
+    const ticks = getNiceTickValues([tickMin, tickMax], 5);
+    const tickMaxValue = Math.max(...ticks.map(Math.abs));
 
-    // If lowest equal highest, add it.
-    if (BigNumber(highest).minus(lowest).div(tickMax).abs().gt(0)) needShowTicks.push(lowest);
+    const threshold = tickMaxValue * 0.1;
 
-    return needShowTicks.sort((a, b) => a - b);
-  }, [maxBalance, highest, lowest]);
+    const filteredTicks = ticks.filter((tick) => {
+      if (tick === ticks[0] || tick === ticks[ticks.length - 1]) return true;
+      const distanceToHighest = Math.abs(tick - highest);
+      const distanceToLowest = Math.abs(tick - lowest);
+      return distanceToHighest > threshold && distanceToLowest > threshold;
+    });
+
+    filteredTicks.push(highest);
+    if (BigNumber(highest).minus(lowest).div(tickMaxValue).abs().gt(0)) {
+      filteredTicks.push(lowest);
+    }
+
+    return [...new Set(filteredTicks)].sort((a, b) => a - b);
+  }, [data?.data, highest, lowest]);
 
   const lowestIndex = customTicks.indexOf(lowest) + 1;
   const highestIndex = customTicks.indexOf(highest) + 1;
@@ -142,6 +158,35 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
         <TooltipValue>{formatADAFull(content.payload?.[0]?.value) || 0}</TooltipValue>
       </TooltipBody>
     );
+  };
+
+  const getTickOffset = (value: number) => {
+    if (!customTicks.includes(value)) {
+      return 0;
+    }
+
+    const maxAbsValue = Math.max(...customTicks.map(Math.abs));
+    const isNearlyEqual = Math.abs(highest - lowest) / maxAbsValue < 0.05;
+
+    if (value === highest) {
+      if (Math.abs(value) / maxAbsValue > 0.95) {
+        return -45;
+      }
+      if (isNearlyEqual) {
+        return -20;
+      }
+      return -10;
+    }
+
+    if (value === lowest) {
+      if (isNearlyEqual) {
+        return 20;
+      }
+      if (Math.abs(highest - lowest) / maxAbsValue < 0.1) {
+        return 10;
+      }
+    }
+    return 0;
   };
 
   return (
@@ -176,7 +221,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                   width={900}
                   height={400}
                   data={convertDataChart}
-                  margin={{ top: 5, right: 5, bottom: 14 }}
+                  margin={{ top: 10, right: 10, bottom: 14, left: 15 }}
                 >
                   {/* Defs for ticks filter background color */}
                   {["lowest", "highest"].map((item) => {
@@ -202,9 +247,7 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                     tick={{
                       fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
-                    tickLine={{
-                      stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tickLine={false}
                     tickMargin={5}
                     color={theme.palette.secondary.light}
                     stroke={theme.palette.secondary.light}
@@ -219,15 +262,27 @@ const AddressAnalytics: React.FC<{ address?: string }> = ({ address }) => {
                   </XAxis>
                   <YAxis
                     tickFormatter={formatPriceValue}
-                    tick={{
-                      fill: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
-                    }}
+                    tick={({ x, y, payload }) => (
+                      <g transform={`translate(${x},${y})`}>
+                        <text
+                          dy={getTickOffset(payload.value)}
+                          x={0}
+                          y={0}
+                          textAnchor="end"
+                          fill={theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]}
+                        >
+                          {formatPriceValue(payload.value)}
+                        </text>
+                      </g>
+                    )}
                     tickLine={{
                       stroke: theme.mode === "light" ? theme.palette.secondary.light : theme.palette.secondary[800]
                     }}
                     color={theme.palette.secondary.light}
                     interval={0}
                     ticks={customTicks}
+                    padding={{ top: 10, bottom: 10 }}
+                    width={80}
                   />
                   <Tooltip content={renderTooltip} cursor={false} />
                   <CartesianGrid vertical={false} strokeWidth={0.33} />
