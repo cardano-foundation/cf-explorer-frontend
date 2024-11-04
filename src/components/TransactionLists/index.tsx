@@ -37,7 +37,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, ur
   const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
-    if (e.target instanceof HTMLAnchorElement) {
+    if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
       e.preventDefault();
       e.stopPropagation();
       return;
