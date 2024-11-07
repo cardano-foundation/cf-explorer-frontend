@@ -45,7 +45,7 @@ import {
   ContentIdentifiers,
   DecryptButton,
   Header,
-  ItemBolnisi,
+  ItemTraceabilityProgram,
   MetaDataJSONValue,
   MetaDataJSONValueText,
   MetaDataValue,
@@ -222,8 +222,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
     }
   };
 
-  // Bolnisi Metadata
-  const renderBolnisi = (data?: Transaction["metadata"][number]["metadataBolnisi"]) => {
+  // TraceabilityProgram Metadata
+  const renderTraceabilityProgram = (data?: Transaction["metadata"][number]["metadataBolnisi"]) => {
     if (!data) return <Box>data not found</Box>;
     return (
       <Box>
@@ -480,7 +480,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               metadata?.metadataCIP83.valid &&
               !textRaw &&
               renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
-            {String(metadata.label) === String(CIPLabel1904) && renderBolnisi(metadata?.metadataBolnisi)}
+            {String(metadata.label) === String(CIPLabel1904) && renderTraceabilityProgram(metadata?.metadataBolnisi)}
           </MetadataWrapper>
         );
       })}
@@ -646,7 +646,12 @@ const Wineries: React.FC<{
             return (
               <Grid item width={"100%"} lg={4} md={6} sm={6} xs={12} key={idx}>
                 <Box height={"100%"} display="flex" flexDirection="column">
-                  <ItemBolnisi display="flex" flexDirection="column" height="100%" justifyContent="space-between">
+                  <ItemTraceabilityProgram
+                    display="flex"
+                    flexDirection="column"
+                    height="100%"
+                    justifyContent="space-between"
+                  >
                     <Box display={"flex"} width={"100%"} justifyContent={"flex-end"} mb={1}>
                       {winery.externalApiAvailable && <VerifyBadge status={winery.pkeyVerified} />}
                       {!winery.externalApiAvailable && (
@@ -708,7 +713,7 @@ const Wineries: React.FC<{
                     >
                       {t("bolsini.viewWineLots")}
                     </Box>
-                  </ItemBolnisi>
+                  </ItemTraceabilityProgram>
                 </Box>
               </Grid>
             );
@@ -760,7 +765,7 @@ const ConformityCert: React.FC<{
           return (
             <Grid item width="100%" lg={4} md={6} sm={6} xs={12} key={idx}>
               <Box display="flex" flexDirection="column" height="100%">
-                <ItemBolnisi style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <ItemTraceabilityProgram style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                   <Box display="flex" justifyContent="flex-end" mb={1}>
                     <VerifyBadge type={type} status={el.signatureVerified} />
                   </Box>
@@ -840,7 +845,7 @@ const ConformityCert: React.FC<{
                     openDrawer={openDrawer}
                     setOpenDrawer={setOpenDrawer}
                   />
-                </ItemBolnisi>
+                </ItemTraceabilityProgram>
               </Box>
             </Grid>
           );

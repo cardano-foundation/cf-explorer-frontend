@@ -985,7 +985,7 @@ export {
   ClockWhite
 };
 
-// Bolnisi Landing
+// TraceabilityProgram Landing
 
 import bolnisiHeaderBackgroundDark from "./bolnisiLanding/background-header-dark.png";
 import bolnisiHeaderBackgroundLight from "./bolnisiLanding/background-header-light.png";

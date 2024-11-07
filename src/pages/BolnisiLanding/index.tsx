@@ -114,7 +114,7 @@ const Header = () => {
         }}
       >
         <img
-          alt="bolnisi "
+          alt="TraceabilityProgram"
           style={{ width: "100%" }}
           src={isLaptop ? (isMobile ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
         />
@@ -198,10 +198,10 @@ const ProgressSession = () => {
                     (OIV). All the while increasing consumer engagement and trust.
                   </Box>
                   <Box mt={2}>
-                    The pilot for the Bolnisi region includes more than 30 wineries with several thousand wine bottles
-                    already registered on the Cardano blockchain. This innovative track and trace solution creates
-                    verifiable on-chain records for the detailed supply chain data provided by the wineries, plus the
-                    certificates of conformity issued by Georgia’s{" "}
+                    The pilot for the Traceability Program region includes more than 30 wineries with several thousand
+                    wine bottles already registered on the Cardano blockchain. This innovative track and trace solution
+                    creates verifiable on-chain records for the detailed supply chain data provided by the wineries,
+                    plus the certificates of conformity issued by Georgia’s{" "}
                     <Box
                       component={"a"}
                       href={BOLNISI_LANDING_NWA}
@@ -240,7 +240,7 @@ const ProgressSession = () => {
         {!isMobile ? (
           <Lottie options={defaultOptions} width={"100%"} />
         ) : (
-          <img alt="bolnisi " style={{ width: "100%" }} src={bolnisiAnimationmobileLightMode} />
+          <img alt="TraceabilityProgram " style={{ width: "100%" }} src={bolnisiAnimationmobileLightMode} />
         )}
       </Box>
       <Box
@@ -541,7 +541,7 @@ const BolnisiTrx = () => {
           <iframe
             width="100%"
             src="https://www.youtube.com/embed/sg9Fjwqui3M"
-            title="Traceability from Grape to Glass: Cardano Foundation’s Partnership with Bolnisi Wine"
+            title="Traceability from Grape to Glass: Cardano Foundation’s Partnership with Traceability Program Wine"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"

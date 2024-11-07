@@ -136,13 +136,13 @@ export const menus: Menu[] = [
     href: routers.NETWORK_MONITORING
   },
   {
-    title: "Bolnisi",
+    title: "Traceability Program",
     key: "glossary.traceability",
     icon: BolnisiDashboard,
     href: routers.BOLNISI_LANDING
   },
   {
-    title: "Micar",
+    title: "Sustainability Indicators",
     key: "glossary.micar",
     icon: MicarIcon,
     href: routers.MICAR
