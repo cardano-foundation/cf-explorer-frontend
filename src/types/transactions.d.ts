@@ -269,7 +269,7 @@ interface Transaction {
     metadataCIP83: { valid?: boolean; requiredProperties?: TTCIP25Properties[] };
     metadataCIP25: CIP;
     metadataCIP60: CIP;
-    metadataBolnisi: {
+    metadataTraceabilityProgram: {
       cid: string;
       cidVerified: boolean;
       externalApiAvailable: boolean;
@@ -323,7 +323,7 @@ type Product = {
 interface WineryData {
   pkeyVerified: boolean;
   wineryId: string;
-  lots: BolnisiWineLots[];
+  lots: TraceabilityProgramWineLots[];
   externalApiAvailable: boolean;
 }
 
@@ -360,7 +360,7 @@ interface OffChainData {
   products: Product[];
   tasting_protocol_number: string;
 }
-interface BolnisiWineLots {
+interface TraceabilityProgramWineLots {
   offChainData: {
     bottling_date: string;
     bottling_location: string;

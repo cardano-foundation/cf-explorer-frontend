@@ -84,7 +84,7 @@
   top: 0;
 }
 
-.bolnisi-body-background::after {
+.traceabilityprogram-body-background::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -95,7 +95,7 @@
   border-bottom-right-radius: 32px;
 }
 
-.bolnisi-body-background::before {
+.traceabilityprogram-body-background::before {
   content: "";
   position: absolute;
   width: 100%;

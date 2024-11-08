@@ -12,7 +12,7 @@ import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import ParseScriptModal from "src/components/ParseScriptModal";
 import {
   AvatarIcon,
-  BolsiniAddress,
+  TraceabilityAddress,
   InvalidIcon,
   RevokedIcon,
   SeeMoreIconHome,
@@ -59,8 +59,8 @@ import {
   Wrapper
 } from "./styles";
 import DefaultImageWine from "./DefaultImageWine";
-import BolnisiWineDrawer from "./BolnisiWineDrawer";
-import BolnisiWineDrawerConformity from "./BolnisiWineDrawerConformity";
+import TraceabilityProgramWineDrawer from "./TraceabilityProgramWineDrawer";
+import TraceabilityProgramWineDrawerConformity from "./TraceabilityProgramWineDrawerConformity";
 
 interface MetadataProps {
   data?: Transaction["metadata"];
@@ -223,7 +223,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
   };
 
   // TraceabilityProgram Metadata
-  const renderTraceabilityProgram = (data?: Transaction["metadata"][number]["metadataBolnisi"]) => {
+  const renderTraceabilityProgram = (data?: Transaction["metadata"][number]["metadataTraceabilityProgram"]) => {
     if (!data) return <Box>data not found</Box>;
     return (
       <Box>
@@ -281,9 +281,9 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               <CustomTooltip
                 title={
                   <Box width={"max-content"} maxWidth={"75vw"}>
-                    {t("bolnisi.verifyErrorTooltip")}
+                    {t("traceabilityprogram.verifyErrorTooltip")}
                     <br />
-                    {t("bolnisi.verifyErrorTooltipTryAgain")}
+                    {t("traceabilityprogram.verifyErrorTooltipTryAgain")}
                   </Box>
                 }
               >
@@ -299,7 +299,7 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
                   >
                     <InvalidIcon fill={theme.palette.secondary.main} />
                   </Box>
-                  <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                  <Box width={"max-content"}>{t("traceabilityprogram.verifyError")}</Box>
                 </BadgeContainerVerify>
               </CustomTooltip>
             )}
@@ -480,7 +480,8 @@ const Metadata: React.FC<MetadataProps> = ({ hash, data }) => {
               metadata?.metadataCIP83.valid &&
               !textRaw &&
               renderButtonDecrypt(metadata?.metadataCIP83?.requiredProperties)}
-            {String(metadata.label) === String(CIPLabel1904) && renderTraceabilityProgram(metadata?.metadataBolnisi)}
+            {String(metadata.label) === String(CIPLabel1904) &&
+              renderTraceabilityProgram(metadata?.metadataTraceabilityProgram)}
           </MetadataWrapper>
         );
       })}
@@ -586,7 +587,7 @@ export const VerifyBadge = ({ status, type }: { status: boolean; type?: string }
 };
 
 const Wineries: React.FC<{
-  wineryData?: Transaction["metadata"][number]["metadataBolnisi"]["wineryData"];
+  wineryData?: Transaction["metadata"][number]["metadataTraceabilityProgram"]["wineryData"];
 }> = ({ wineryData }) => {
   const theme = useTheme();
   const history = useHistory();
@@ -658,9 +659,9 @@ const Wineries: React.FC<{
                         <CustomTooltip
                           title={
                             <Box width={"max-content"} maxWidth={"75vw"}>
-                              {t("bolnisi.verifyErrorTooltip")}
+                              {t("traceabilityprogram.verifyErrorTooltip")}
                               <br />
-                              {t("bolnisi.verifyErrorTooltipTryAgain")}
+                              {t("traceabilityprogram.verifyErrorTooltipTryAgain")}
                             </Box>
                           }
                         >
@@ -676,7 +677,7 @@ const Wineries: React.FC<{
                             >
                               <InvalidIcon fill={theme.palette.secondary.main} />
                             </Box>
-                            <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                            <Box width={"max-content"}>{t("traceabilityprogram.verifyError")}</Box>
                           </BadgeContainerVerify>
                         </CustomTooltip>
                       )}
@@ -688,7 +689,7 @@ const Wineries: React.FC<{
                           {getWineName(winery.wineryId)}
                         </Box>
                         <Box display={"flex"} alignItems={"center"}>
-                          <BolsiniAddress fill={theme.palette.secondary.light} />
+                          <TraceabilityAddress fill={theme.palette.secondary.light} />
                           <Box
                             component={"span"}
                             pl={0.5}
@@ -720,13 +721,13 @@ const Wineries: React.FC<{
           })}
         </Box>
       )}
-      <BolnisiWineDrawer />
+      <TraceabilityProgramWineDrawer />
     </Box>
   );
 };
 
 const ConformityCert: React.FC<{
-  certData?: Transaction["metadata"][number]["metadataBolnisi"]["certData"];
+  certData?: Transaction["metadata"][number]["metadataTraceabilityProgram"]["certData"];
   type?: string;
 }> = ({ certData, type }) => {
   const theme = useTheme();
@@ -840,7 +841,7 @@ const ConformityCert: React.FC<{
                       View Certificate
                     </Box>
                   )}
-                  <BolnisiWineDrawerConformity
+                  <TraceabilityProgramWineDrawerConformity
                     certNo={el.offChainData?.certificate_number}
                     openDrawer={openDrawer}
                     setOpenDrawer={setOpenDrawer}
