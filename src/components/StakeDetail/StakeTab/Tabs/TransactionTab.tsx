@@ -37,7 +37,6 @@ const TransactionTab: React.FC<{ stakeAddress?: string; tabActive: TabStakeDetai
 interface TransactionListFullProps {
   underline?: boolean;
   url: string;
-  openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTitle?: boolean;
   tabActive: TabStakeDetail;
@@ -46,7 +45,6 @@ interface TransactionListFullProps {
 const TransactionListFull: React.FC<TransactionListFullProps> = ({
   underline = false,
   url,
-  openDetail,
   selected,
   showTitle = true,
   tabActive
@@ -60,18 +58,11 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const { isMobile } = useScreen();
 
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
-    let parent: Element | null = e.target as Element;
-    while (
-      parent !== null &&
-      typeof parent?.className.includes === "function" &&
-      !parent?.className.includes("MuiPopover-root")
-    ) {
-      parent = parent?.parentElement;
-    }
-    if (parent) {
+    if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
+      e.preventDefault();
+      e.stopPropagation();
       return;
     }
-    if (openDetail) return openDetail(e, r);
     history.push(details.transaction(r.hash));
   };
 
