@@ -196,7 +196,7 @@ export const Tabs = styled(Box)(({ theme }) => ({
   justifyContent: "flex-end",
   gap: "5px",
   [theme.breakpoints.down("sm")]: {
-    gap: "2px"
+    gap: "5px"
   }
 }));
 

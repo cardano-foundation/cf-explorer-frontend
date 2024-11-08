@@ -109,6 +109,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
               value={data?.utxOs?.inputs[0]?.address || ""}
               isCopy
               isTooltip
+              isSeparateCopyIcon
               postfix={isMobile ? 6 : 8}
             />
           </StyledLink>
@@ -154,6 +155,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
               value={data?.utxOs?.outputs[0]?.address || ""}
               isCopy
               isTooltip
+              isSeparateCopyIcon
               postfix={isMobile ? 6 : 8}
             />
           </StyledLink>
