@@ -38,6 +38,16 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
     blockKey
   );
   const { error } = fetchData;
+
+  const onClickRow = (e: React.MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
+    if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    history.push(details.transaction(r.hash));
+  };
+
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),
@@ -142,7 +152,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
           total: fetchData.total,
           onChange: (page, size) => history.replace({ search: stringify({ page, size }) })
         }}
-        onClickRow={(_, r: Transactions) => history.push(details.transaction(r.hash))}
+        onClickRow={onClickRow}
       />
     </Box>
   );
