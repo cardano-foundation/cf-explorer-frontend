@@ -10,7 +10,7 @@ import { EPOCH_STATUS, MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
 import { SearchIcon } from "src/commons/resources";
-import { formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
+import { formatDateTimeLocal, formatNumberDivByDecimals, getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import DynamicEllipsisText from "src/components/DynamicEllipsisText";
 import { TruncateSubTitleContainer } from "src/components/share/styled";
@@ -44,10 +44,12 @@ import {
   StyledSelect,
   TimeDuration,
   ValueCard,
-  WrapHeader
+  WrapHeader,
+  WrapTitle
 } from "./styles";
 import NoRecord from "../NoRecord";
 import CustomIcon from "../CustomIcon";
+import DatetimeTypeTooltip from "../DatetimeTypeTooltip";
 
 interface TokenInfo {
   assetName?: string;
@@ -82,6 +84,8 @@ export interface DetailHeaderProps {
   isHideButtonBack?: boolean;
   isClickAble?: boolean;
   redirectAction?: React.ReactNode;
+  tokenLastActivity?: string;
+  createdOn?: string;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -100,7 +104,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     lastUpdated,
     isClickAble,
     redirectAction,
-    subTitle
+    subTitle,
+    tokenLastActivity,
+    createdOn
   } = props;
 
   const { isMobile } = useScreen();
@@ -257,6 +263,34 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
           </EpochDetail>
         ) : (
           ""
+        )}
+        {isDetailToken && (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: {
+                xs: "start",
+                sm: "end"
+              },
+              marginTop: "10px"
+            }}
+          >
+            <Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                <WrapTitle sx={{ marginRight: "8px" }}>{t("createdAt")}:</WrapTitle>
+                <Box sx={{ fontWeight: "500", fontSize: "14px" }}>
+                  <DatetimeTypeTooltip>{formatDateTimeLocal(createdOn || "")}</DatetimeTypeTooltip>
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+                <WrapTitle sx={{ marginRight: "8px" }}>{t("glossary.tokenLastActivity")}:</WrapTitle>
+                <Box sx={{ fontWeight: "500", fontSize: "14px" }}>
+                  <DatetimeTypeTooltip>{formatDateTimeLocal(tokenLastActivity || "")}</DatetimeTypeTooltip>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         )}
       </WrapHeader>
       {listItem && (
