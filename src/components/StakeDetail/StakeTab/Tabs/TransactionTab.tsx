@@ -2,7 +2,6 @@ import { Box, useTheme } from "@mui/material";
 import { stringify } from "qs";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
-import { MouseEvent } from "react";
 
 import useFetchList from "src/commons/hooks/useFetchList";
 import { DownRedUtxoDarkmode, TooltipIcon, TransferIcon, UpGreenUtxoDarkmode } from "src/commons/resources";
@@ -57,7 +56,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
   const theme = useTheme();
   const { isMobile } = useScreen();
 
-  const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
+  const onClickRow = (e: React.MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
       e.preventDefault();
       e.stopPropagation();
