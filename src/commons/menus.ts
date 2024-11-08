@@ -3,11 +3,11 @@ import { IconType } from "react-icons/lib";
 
 import {
   BlockChainMenuIcon,
-  BolnisiDashboard,
+  TraceabilityProgramDashboard,
   BrowseIcon,
   DashboardIcon,
   GovernanceHome,
-  MicarIcon,
+  SustainabilityIcon,
   NetworkMonitoringIcon,
   OperationalIcon,
   ProtocolIcon,
@@ -136,16 +136,16 @@ export const menus: Menu[] = [
     href: routers.NETWORK_MONITORING
   },
   {
-    title: "Bolnisi",
+    title: "Traceability Program",
     key: "glossary.traceability",
-    icon: BolnisiDashboard,
-    href: routers.BOLNISI_LANDING
+    icon: TraceabilityProgramDashboard,
+    href: routers.TRACEABILITYPROGRAM_LANDING
   },
   {
-    title: "Micar",
-    key: "glossary.micar",
-    icon: MicarIcon,
-    href: routers.MICAR
+    title: "Sustainability Indicators",
+    key: "glossary.sustainabilityindicators",
+    icon: SustainabilityIcon,
+    href: routers.SUSTAINABILITY
   }
 ];
 

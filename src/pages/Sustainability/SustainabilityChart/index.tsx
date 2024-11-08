@@ -30,7 +30,7 @@ const EmissionsAreaChart = () => {
   const { t } = useTranslation();
   const { isMobile, isGalaxyFoldSmall, isLaptop, isTablet } = useScreen();
   const theme = useTheme();
-  const { data } = useFetch<EmissionChartType>(`${API.MICAR?.HISTORYCAL}`, undefined, false);
+  const { data } = useFetch<EmissionChartType>(`${API.SUSTAINABILITY?.HISTORYCAL}`, undefined, false);
   const dataHistoryChart = data?.entries?.map((it: EmissionsChartIF) => ({
     date: it.date,
     emissions: it.emissions_24h
@@ -197,7 +197,7 @@ const EmissionsAreaChart = () => {
           sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }}
           fontSize={isMobile ? "20px" : isLaptop ? "40px" : "48px"}
         >
-          {t("micar.indicators.emissions.title")}
+          {t("sustainability.indicators.emissions.title")}
         </StyledTitle>
         <ResponsiveContainer
           width={isGalaxyFoldSmall ? "120%" : "100%"}

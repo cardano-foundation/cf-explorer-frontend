@@ -29,7 +29,7 @@ const dataMapping: Array<{ label: string; key: keyof Product }> = [
   { label: "Wine Name", key: "wine_name" }
 ];
 
-export default function BolnisiWineDrawerConformity({
+export default function TraceabilityProgramWineDrawerConformity({
   openDrawer,
   setOpenDrawer,
   certNo

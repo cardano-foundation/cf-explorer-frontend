@@ -9,11 +9,11 @@ import { useScreen } from "src/commons/hooks/useScreen";
 import { API } from "src/commons/utils/api";
 import { numberWithCommas } from "src/commons/utils/helper";
 
+import SustainabilityIndicator from "./SustainabilityIndicator";
+import EmissionsChart from "./SustainabilityChart";
+import EmissionsCalculator from "./SustainabilityEmissions";
 import { DescriptionText, HeadingPage, WrapHeading } from "./styles";
-import { WorldMap } from "./MicarIndicator/MapMicar";
-import MicarIndicator from "./MicarIndicator";
-import EmissionsChart from "./MicarChart";
-import EmissionsCalculator from "./MicarEmissions";
+import { WorldMap } from "./SustainabilityIndicator/MapSustainability";
 
 interface Indicator {
   indicator: number;
@@ -26,7 +26,7 @@ interface Indicator {
   };
 }
 
-interface MicarIndicatorProps {
+interface SustainabilityIndicatorProps {
   indicator_1: Indicator;
   indicator_2: Indicator;
   indicator_3: Indicator;
@@ -39,7 +39,7 @@ interface MicarIndicatorProps {
   indicator_10: Indicator;
 }
 
-const Micar = () => {
+const Sustainability = () => {
   const { t } = useTranslation();
   const { isMobile, isLaptop } = useScreen();
   const theme = useTheme();
@@ -48,7 +48,7 @@ const Micar = () => {
   }, []);
   const formatPercent = (percent?: number) => `${Math.round((percent || 0) * 100) / 100} %`;
 
-  const { data } = useFetch<MicarIndicatorProps>(`${API.MICAR?.INDICATOR}`, undefined, false);
+  const { data } = useFetch<SustainabilityIndicatorProps>(`${API.SUSTAINABILITY?.INDICATOR}`, undefined, false);
   return (
     <Box bgcolor={theme.isDark ? "#131316" : "#FFFFFF"} paddingX={isMobile ? 1 : isLaptop ? 2 : 6} pb={10}>
       <Container sx={{ padding: "0px !important" }}>
@@ -60,31 +60,31 @@ const Micar = () => {
       <WorldMap />
       <EmissionsCalculator />
       <EmissionsChart />
-      <MicarIndicator
+      <SustainabilityIndicator
         bgColor={"#FBEBD7"}
         icon={theme.isDark ? <LighningWhite /> : <Lighning />}
-        title={t("micar.indicators.enegy")}
+        title={t("sustainability.indicators.enegy")}
         des1={data?.indicator_1?.title}
         des2={data?.indicator_2?.title}
         des3={data?.indicator_3?.title}
         value1={`${numberWithCommas(data?.indicator_1?.result?.value)} kWh`}
         value2={formatPercent(data?.indicator_2?.result?.value)}
         value3={`${numberWithCommas(data?.indicator_3?.result?.value)} kWh`}
-        content={t("micar.indicators.enegy.des")}
+        content={t("sustainability.indicators.enegy.des")}
       />
-      <MicarIndicator
+      <SustainabilityIndicator
         bgColor={"#EFF7FF"}
         icon={theme.isDark ? <EarchWhite /> : <Earch />}
-        title={t("micar.indicators.emissions")}
+        title={t("sustainability.indicators.emissions")}
         des1={data?.indicator_4?.title}
         des2={data?.indicator_5?.title}
         des3={data?.indicator_6?.title}
         value1={`${numberWithCommas(data?.indicator_4?.result?.value)} tCO2e`}
         value2={`${numberWithCommas(data?.indicator_5?.result?.value)} tCO2e`}
         value3={`${numberWithCommas(data?.indicator_6?.result?.value)} kgCO2e`}
-        content={t("micar.indicators.emissions.des")}
+        content={t("sustainability.indicators.emissions.des")}
       />
     </Box>
   );
 };
-export default Micar;
+export default Sustainability;

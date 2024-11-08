@@ -100,7 +100,7 @@ const SidebarMenu: React.FC<RouteComponentProps> = ({ history }) => {
           .filter(
             (i) =>
               !(i.key === "glossary.governance" && !FF_GLOBAL_IS_CONWAY_ERA) &&
-              !(i.key === "glossary.micar" && NETWORK !== "mainnet")
+              !(i.key === "glossary.sustainability" && NETWORK !== "mainnet")
           )
           .map((item, index) => {
             const { href, key, children, icon, tooltip } = item;

@@ -90,7 +90,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               />
             </Box>
           </Title>
-          {pathname !== routers.BOLNISI_LANDING && pathname !== routers.MICAR && (
+          {pathname !== routers.TRACEABILITYPROGRAM_LANDING && pathname !== routers.SUSTAINABILITY && (
             <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
           )}
         </HeaderMain>
