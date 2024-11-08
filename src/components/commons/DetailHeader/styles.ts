@@ -276,6 +276,11 @@ export const InfoIcon = styled(FiInfo)`
   margin-left: 2px;
 `;
 
+export const WrapTitle = styled(Box)(({ theme }) => ({
+  fontSize: "14px",
+  color: theme.palette.secondary.light
+}));
+
 export const ProgressLiner = styled("div")<{ progress: number }>`
   position: relative;
   width: 100%;
