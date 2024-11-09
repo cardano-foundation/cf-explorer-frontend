@@ -1,31 +1,42 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, CircularProgress } from "@mui/material";
-import { useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import TransactionListsFull from "src/components/TransactionListsFull";
 import BlockOverview from "src/components/BlockDetail/BlockOverview";
-import useFetch from "src/commons/hooks/useFetch";
 import NoRecord from "src/components/commons/NoRecord";
-import { API } from "src/commons/utils/api";
-import FetchDataErr from "src/components/commons/FetchDataErr";
 
 import { StyledContainer } from "./styles";
+import { ApiConnector } from "../../commons/connector/ApiConnector";
+import { ApiReturnType } from "../../commons/connector/types/APIReturnType";
 
 const BlockDetail = () => {
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  // const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { blockId } = useParams<{ blockId: string }>();
-  const { state } = useLocation<{ data?: BlockDetail }>();
-  const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<BlockDetail>(
-    `${API.BLOCK.DETAIL}/${blockId}`,
-    state?.data,
-    false,
-    blockNo
-  );
+  // const { state } = useLocation<{ data?: BlockDetail }>();
+  // const { data, loading, initialized, error, lastUpdated, statusError } = useFetch<BlockDetail>(
+  //   `${API.BLOCK.DETAIL}/${blockId}`,
+  //   state?.data,
+  //   false,
+  //   blockNo
+  // );
+  const [loading, setLoading] = useState<boolean>(true);
+  const [blockData, setBlockData] = useState<ApiReturnType<Block>>();
+  const [txList, setTxList] = useState<ApiReturnType<Transaction[]>>();
+
+  const apiConnector: ApiConnector = ApiConnector.getApiConnector();
 
   useEffect(() => {
     window.history.replaceState({}, document.title);
     document.title = `Block ${blockId} | Cardano Blockchain Explorer`;
+
+    apiConnector.getBlockDetail(blockId).then((data) => {
+      setBlockData(data);
+      setLoading(false);
+    });
+    apiConnector.getTxList(blockId).then((data) => {
+      setTxList(data);
+    });
   }, [blockId]);
 
   if (loading) {
@@ -35,16 +46,12 @@ const BlockDetail = () => {
       </Box>
     );
   }
-  if (!initialized) {
-    return null;
-  }
-  if (error && (statusError || 0) >= 500) return <FetchDataErr />;
-  if ((initialized && !data) || (error && (statusError || 0) < 500)) return <NoRecord />;
+  if (loading && !blockData) return <NoRecord />;
 
   return (
     <StyledContainer>
-      <BlockOverview data={data} loading={loading} lastUpdated={lastUpdated} />
-      <TransactionListsFull underline={true} url={`${API.BLOCK.DETAIL}/${blockId}/txs`} />
+      <BlockOverview data={blockData?.data} loading={loading} lastUpdated={blockData?.lastUpdated} />
+      <TransactionListsFull underline={true} txListResponse={txList} />
     </StyledContainer>
   );
 };

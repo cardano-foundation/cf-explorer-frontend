@@ -6,41 +6,39 @@ import { useTranslation } from "react-i18next";
 
 import Card from "../commons/Card";
 import Table, { Column } from "../commons/Table";
-import { formatADAFull, formatDateTimeLocal, getPageInfo, getShortHash } from "../../commons/utils/helper";
+import { formatADAFull, getPageInfo, getShortHash } from "../../commons/utils/helper";
 import { details } from "../../commons/routers";
 import { StyledLink, StyledContainer } from "./styles";
 import CustomTooltip from "../commons/CustomTooltip";
-import useFetchList from "../../commons/hooks/useFetchList";
 import ADAicon from "../commons/ADAIcon";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
+import { ApiReturnType } from "../../commons/connector/types/APIReturnType";
 
 interface TransactionListFullProps {
   underline?: boolean;
-  url: string;
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: number | null;
   showTitle?: boolean;
+  txListResponse: ApiReturnType<Transaction[]> | undefined;
 }
 
 const TransactionListFull: React.FC<TransactionListFullProps> = ({
   underline = false,
-  url,
   openDetail,
-  selected,
-  showTitle = true
+  showTitle = true,
+  txListResponse
 }) => {
   const { t } = useTranslation();
   const { search } = useLocation();
   const history = useHistory();
   const pageInfo = getPageInfo(search);
-  const fetchData = useFetchList<Transactions>(url, pageInfo);
 
   const onClickRow = (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (openDetail) return openDetail(_, r);
     history.push(details.transaction(r.hash));
   };
 
-  const columns: Column<Transactions>[] = [
+  const columns: Column<Transaction>[] = [
     {
       title: <Box data-testid="block.detail.trxTable.txhash">{t("glossary.txhash")}</Box>,
       key: "hash",
@@ -48,9 +46,9 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
 
       render: (r, index) => (
         <div>
-          <CustomTooltip title={r.hash}>
-            <StyledLink data-testid={`block.detail.trxTable.value.txhash#${index}`} to={details.transaction(r.hash)}>
-              {getShortHash(r.hash)}
+          <CustomTooltip title={r.tx.hash}>
+            <StyledLink data-testid={`block.detail.trxTable.value.txhash#${index}`} to={details.transaction(r.tx.hash)}>
+              {getShortHash(r.tx.hash)}
             </StyledLink>
           </CustomTooltip>
         </div>
@@ -62,7 +60,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       minWidth: 120,
       render: (r) => (
         <DatetimeTypeTooltip>
-          <Box color={({ palette }) => palette.secondary.light}>{formatDateTimeLocal(r.time || "")}</Box>
+          <Box color={({ palette }) => palette.secondary.light}>{r.tx.time || ""}</Box>
         </DatetimeTypeTooltip>
       )
     },
@@ -72,7 +70,7 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
       minWidth: 120,
       render: (r) => (
         <Box display="inline-flex" alignItems="center">
-          <Box mr={1}>{formatADAFull(r.fee)}</Box>
+          <Box mr={1}>{formatADAFull(r.tx.fee)}</Box>
           <ADAicon />
         </Box>
       )
@@ -94,19 +92,18 @@ const TransactionListFull: React.FC<TransactionListFullProps> = ({
         underline={underline}
       >
         <Table
-          {...fetchData}
+          data={txListResponse?.data || []}
           columns={columns}
-          total={{ count: fetchData.total, title: t("common.totalTxs") }}
+          total={{ count: txListResponse?.total || 0, title: t("common.totalTxs") }}
           pagination={{
             ...pageInfo,
-            total: fetchData.total,
+            total: txListResponse?.total || 0,
             onChange: (page, size) => {
               history.replace({ search: stringify({ page, size }) });
             }
           }}
           onClickRow={onClickRow}
           rowKey="hash"
-          selected={selected}
           className="transactions-table"
         />
       </Card>
