@@ -27,9 +27,9 @@ const BlockDetail = () => {
   const apiConnector: ApiConnector = ApiConnector.getApiConnector();
 
   useEffect(() => {
+    if (!blockId) return;
     window.history.replaceState({}, document.title);
     document.title = `Block ${blockId} | Cardano Blockchain Explorer`;
-
     apiConnector.getBlockDetail(blockId).then((data) => {
       setBlockData(data);
       setLoading(false);

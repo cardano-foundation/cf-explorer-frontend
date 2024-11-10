@@ -1,4 +1,4 @@
-import { YaciConnector } from "./yaciConnector";
+import { YaciConnector } from "./yaci/yaciConnector";
 import { ApiReturnType } from "./types/APIReturnType";
 
 export abstract class ApiConnector {

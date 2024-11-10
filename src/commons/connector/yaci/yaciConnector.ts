@@ -1,8 +1,10 @@
 import axios from "axios";
 
-import { ApiConnector } from "./ApiConnector";
-import { ApiReturnType } from "./types/APIReturnType";
-import { TRANSACTION_STATUS } from "../utils/constants";
+import { ApiConnector } from "../ApiConnector";
+import { ApiReturnType } from "../types/APIReturnType";
+import { TRANSACTION_STATUS } from "../../utils/constants";
+import { TransactionDetails } from "./types";
+import { mapTxUtxoToUtxo } from "./mapper/Mapper";
 
 export class YaciConnector implements ApiConnector {
   baseUrl: string;
@@ -29,6 +31,12 @@ export class YaciConnector implements ApiConnector {
   }
 
   async getBlockDetail(blockId: number | string): Promise<ApiReturnType<Block>> {
+    if (!blockId) {
+      return {
+        data: null,
+        lastUpdated: Date.now()
+      } as ApiReturnType<Block>;
+    }
     const response = await axios.get(`${this.baseUrl}/blocks/${blockId}`);
     const block: Block = {
       time: response.data.time,
@@ -70,26 +78,35 @@ export class YaciConnector implements ApiConnector {
   }
 
   async getTx(txHash: string): Promise<ApiReturnType<Transaction>> {
-    const response = await axios.get(`${this.baseUrl}/txs/${txHash}`);
-    const block = await this.getBlockDetail(response.data.block_height);
+    const response = await axios.get<TransactionDetails>(`${this.baseUrl}/txs/${txHash}`);
+    const txDetails = response.data;
+    const block = await this.getBlockDetail(txDetails.blockHeight!);
     const tx: Transaction = {
       tx: {
-        hash: response.data.hash,
+        hash: txDetails.hash!,
         time: block.data?.time || "",
         blockNo: block.data?.blockNo || 0,
         epochSlot: block.data?.epochSlotNo || 0,
         epochNo: block.data?.epochNo || 0,
-        status: response.data.invalid ? TRANSACTION_STATUS.SUCCESS : TRANSACTION_STATUS.FAILED,
+        status: txDetails.invalid ? TRANSACTION_STATUS.SUCCESS : TRANSACTION_STATUS.FAILED,
         confirmation: 0, // TODO: need to implement
-        fee: response.data.fees,
-        totalOutput: response.data.total_output,
+        fee: txDetails.fees!,
+        totalOutput: txDetails.totalOutput!,
         maxEpochSlot: 0, // TODO: need to implement
         slotNo: block.data?.slotNo || 0
       },
+      utxOs: {
+        inputs: txDetails.inputs!.map((input) => {
+          return mapTxUtxoToUtxo(input);
+        }),
+        outputs: response.data.outputs!.map((output) => {
+          return mapTxUtxoToUtxo(output);
+        })
+      },
       summary: {
-        stakeAddress: response.data.inputs.map((input: { stake_address: string }) => {
+        stakeAddress: txDetails.inputs!.map((input) => {
           return {
-            address: input.stake_address,
+            address: input.stakeAddress || "",
             value: 0, // TODO: need to implement
             tokens: [] // TODO: need to implement
           };
