@@ -6,35 +6,39 @@ import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { Column } from "src/types/table";
-import CustomTooltip from "src/components/commons/CustomTooltip";
 import { details } from "src/commons/routers";
-import { formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import Card from "src/components/commons/Card";
 import Table from "src/components/commons/Table";
-import { API } from "src/commons/utils/api";
 import Link from "src/components/commons/Link";
-import useFetchList from "src/commons/hooks/useFetchList";
 import { Capitalize } from "src/components/commons/CustomText/styles";
 import FormNowMessage from "src/components/commons/FormNowMessage";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
-import { TooltipIcon } from "src/commons/resources";
 
 import { PriceWrapper, StyledContainer, StyledLink, Actions, TimeDuration } from "./styles";
+import { ApiConnector } from "../../commons/connector/ApiConnector";
+import CustomTooltip from "../../components/commons/CustomTooltip";
+import { getShortHash } from "../../commons/utils/helper";
+import { TooltipIcon } from "../../commons/resources";
+import { ApiReturnType } from "../../commons/connector/types/APIReturnType";
 
 const BlockList = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const { onDetailView } = useSelector(({ user }: RootState) => user);
-  const blockNo = useSelector(({ system }: RootState) => system.blockNo);
+  // const blockNo = useSelector(({ system }: RootState) => system.blockNo);
   const { pageInfo, setSort } = usePageInfo();
   const [selected, setSelected] = useState<(number | string | null)[]>([]);
-
-  const fetchData = useFetchList<Block>(API.BLOCK.LIST, { ...pageInfo }, false, blockNo);
+  const [fetchData, setFetchData] = useState<ApiReturnType<Block[]>>();
   const mainRef = useRef(document.querySelector("#main"));
-  const { error } = fetchData;
+
+  const apiConnector: ApiConnector = ApiConnector.getApiConnector();
+
   useEffect(() => {
     document.title = `Blocks List | Cardano Blockchain Explorer`;
+    apiConnector.getBlocks().then((data) => {
+      setFetchData(data);
+    });
   }, []);
 
   const expandedBlockRowData = [
@@ -49,19 +53,16 @@ const BlockList = () => {
       key: "blockNo",
       minWidth: "50px",
       render: (r, index) => {
-        const { blockName, tooltip } = formatNameBlockNo(r.blockNo, r.epochNo);
         return (
-          <Link to={details.block(r.blockNo || r.hash)}>
-            <CustomTooltip title={tooltip}>
-              <span data-testid={`blocks.table.value.block#${index}`}>{blockName}</span>
-            </CustomTooltip>
+          <Link to={details.block(r.blockNo)}>
+            <span data-testid={`blocks.table.value.block#${index}`}>{r.blockNo}</span>
           </Link>
         );
       }
     },
     {
       title: <Capitalize data-testid="blocks.table.title.blockId">{t("glossary.blockID")}</Capitalize>,
-      key: "blockId",
+      key: "hash",
       minWidth: "50px",
       render: (r, index) => (
         <CustomTooltip title={r.hash}>
@@ -73,7 +74,7 @@ const BlockList = () => {
     },
     {
       title: <Capitalize data-testid="blocks.table.title.epoch"> {t("glossary.epoch")}</Capitalize>,
-      key: "epochNo",
+      key: "epoch",
       minWidth: "50px",
       render: (r, index) => (
         <StyledLink to={details.epoch(r.epochNo)} data-testid={`blocks.table.value.epoch#${index}`}>
@@ -85,14 +86,9 @@ const BlockList = () => {
       title: (
         <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <Capitalize data-testid="blocks.table.title.slot">{t("glossary.slot")}</Capitalize>
-          <CustomTooltip title={t("common.explainSlot")}>
-            <p>
-              <TooltipIcon />
-            </p>
-          </CustomTooltip>
         </Box>
       ),
-      key: "epochSlotNo",
+      key: "epochSlot",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.slot#${index}`}>{r.epochSlotNo}</Box>
     },
@@ -107,7 +103,7 @@ const BlockList = () => {
           </CustomTooltip>
         </Box>
       ),
-      key: "slotNo",
+      key: "slot",
       minWidth: "100px",
       render: (r, index) => <Box data-testid={`blocks.table.value.absSlot#${index}`}>{r.slotNo}</Box>
     },
@@ -117,9 +113,7 @@ const BlockList = () => {
       minWidth: "100px",
       render: (r, index) => (
         <DatetimeTypeTooltip>
-          <PriceWrapper data-testid={`blocks.table.value.createAt#${index}`}>
-            {formatDateTimeLocal(r.time)}
-          </PriceWrapper>
+          <PriceWrapper data-testid={`blocks.table.value.createAt#${index}`}>{r.time}</PriceWrapper>
         </DatetimeTypeTooltip>
       ),
       sort: ({ columnKey, sortValue }) => {
@@ -154,35 +148,37 @@ const BlockList = () => {
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
-        {!error && (
+        {fetchData?.lastUpdated && (
           <Actions>
             <TimeDuration>
               <FormNowMessage time={fetchData.lastUpdated} />
             </TimeDuration>
           </Actions>
         )}
-        <Table
-          {...fetchData}
-          columns={columns}
-          total={{ title: t("common.totalBlocks"), count: fetchData.total }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData.total,
-            onChange: (page, size) => {
-              history.replace({ search: stringify({ ...pageInfo, page, size }) });
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            },
-            handleCloseDetailView: handleClose
-          }}
-          onClickRow={handleOpenDetail}
-          rowKey={(r: Block) => r.blockNo || r.hash}
-          selected={selected}
-          showTabView
-          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
-          onClickExpandedRow={handleExpandedRow}
-          expandedTable
-          expandedRowData={expandedBlockRowData}
-        />
+        {fetchData && (
+          <Table
+            data={fetchData?.data}
+            columns={columns}
+            total={{ title: t("common.totalBlocks"), count: fetchData?.total || 0 }}
+            pagination={{
+              ...pageInfo,
+              total: fetchData?.total,
+              onChange: (page, size) => {
+                history.replace({ search: stringify({ ...pageInfo, page, size }) });
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              },
+              handleCloseDetailView: handleClose
+            }}
+            onClickRow={handleOpenDetail}
+            rowKey={(r: Block) => r.blockNo || r.hash}
+            selected={selected}
+            showTabView
+            tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+            onClickExpandedRow={handleExpandedRow}
+            expandedTable
+            expandedRowData={expandedBlockRowData}
+          />
+        )}
       </Card>
     </StyledContainer>
   );

@@ -18,8 +18,6 @@ import { setTheme } from "src/stores/theme";
 import CustomIcon from "../../CustomIcon";
 import TopSearch from "../Sidebar/TopSearch";
 import HeaderSearch from "./HeaderSearch";
-import LoginButton from "./LoginButton";
-import SelectNetwork from "./SelectNetwork";
 import {
   ButtonSideBar,
   HeaderBox,
@@ -36,7 +34,6 @@ import {
   Title,
   WrapButtonSelect
 } from "./styles";
-import SettingTimezone from "./SettingTimezone";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -80,14 +77,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               alignItems={"center"}
               justifyContent={"center"}
               flexDirection={isMobile ? "column" : "row"}
-            >
-              <Box
-                component={"img"}
-                src={theme.mode === "light" ? CardanoBlueLogo : CardanoBlueDarkmodeLogo}
-                width={isMobile ? "80vw" : "auto"}
-                sx={{ margin: "2rem" }}
-              />
-            </Box>
+            ></Box>
           </Title>
           {pathname !== routers.BOLNISI_LANDING && pathname !== routers.MICAR && (
             <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
@@ -95,7 +85,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
         </HeaderMain>
         <HeaderTop data-testid="header-top" ref={refElement}>
           <HeaderLogoLink to="/" data-testid="header-logo">
-            {!sidebar && <HeaderLogo src={LogoIcon} alt="logo desktop" />}
+            {!sidebar && <HeaderLogo alt="logo desktop" />}
           </HeaderLogoLink>
           <SideBarRight>
             <WrapButtonSelect>
@@ -108,15 +98,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
                 }}
               />
             </WrapButtonSelect>
-            <WrapButtonSelect>
-              <SettingTimezone />
-            </WrapButtonSelect>
 
-            <NetworkContainer>
-              <SelectNetwork />
-            </NetworkContainer>
-
-            <LoginButton />
             {history.location.pathname !== routers.STAKING_LIFECYCLE && (
               <SearchButton onClick={handleOpenSearch} home={+home}>
                 <SearchIcon fontSize={24} stroke={theme.palette.secondary.light} fill={theme.palette.secondary[0]} />

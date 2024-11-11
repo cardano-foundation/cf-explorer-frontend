@@ -20,6 +20,7 @@ import FetchDataErr from "src/components/commons/FetchDataErr";
 import { details } from "src/commons/routers";
 
 import { Blocks, BlueText, EpochNumber, StatusTableRow, StyledContainer, StyledLink } from "./styles";
+import { ApiConnector } from "../../commons/connector/ApiConnector";
 
 const Epoch: React.FC = () => {
   const { t } = useTranslation();
@@ -29,18 +30,8 @@ const Epoch: React.FC = () => {
   const epochNo = useSelector(({ system }: RootState) => system.currentEpoch?.no);
   const { pageInfo, setSort } = usePageInfo();
 
-  const [key, setKey] = useState(0);
-  const fetchData = useFetchList<IDataEpoch>(API.EPOCH.LIST, { ...pageInfo }, false, epochNo);
-  const fetchDataLatestEpoch = useFetchList<IDataEpoch>(API.EPOCH.LIST, { page: 0, size: 1 }, false, key);
-
-  const { error, statusError } = fetchData;
-
-  const EPOCH_STATUS_MAPPING = {
-    [EPOCH_STATUS.FINISHED]: t("common.epoch.finished"),
-    [EPOCH_STATUS.IN_PROGRESS]: t("common.epoch.inProgress"),
-    [EPOCH_STATUS.REWARDING]: t("common.epoch.rewarding"),
-    [EPOCH_STATUS.SYNCING]: t("common.epoch.cyncing")
-  };
+  const apiConnector: ApiConnector = ApiConnector.getApiConnector();
+  const apiEpochData = apiConnector.getEpochs();
 
   const columns: Column<IDataEpoch>[] = [
     {

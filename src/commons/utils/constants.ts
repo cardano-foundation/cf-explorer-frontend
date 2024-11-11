@@ -15,45 +15,6 @@ export enum NETWORKS {
   sanchonet = "sanchonet"
 }
 
-export const SUPPORTED_WALLETS: Wallet[] = [
-  {
-    name: "Flint",
-    icon: FlintIcon,
-    link: "https://chrome.google.com/webstore/detail/flint-wallet/hnhobjmcibchnmglfbldbfabcgaknlkj",
-    networks: [NETWORKS.mainnet]
-  },
-  {
-    name: "Nami",
-    icon: NamiIcon,
-    link: "https://chrome.google.com/webstore/detail/nami/lpfcbjknijpeeillifnkikgncikgfhdo",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
-  },
-  {
-    name: "Eternl",
-    icon: EternlIcon,
-    link: "https://chrome.google.com/webstore/detail/eternl/kmhcihpebfmpgmihbkipmjlmmioameka",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
-  },
-  {
-    name: "Yoroi",
-    icon: YoroiIcon,
-    link: "https://chrome.google.com/webstore/detail/yoroi/ffnbelfdoeiohenkjibnmadjiehjhajb",
-    networks: [NETWORKS.mainnet]
-  },
-  {
-    name: "Yoroi",
-    icon: YoroiIcon,
-    link: "https://chrome.google.com/webstore/detail/yoroi-nightly/poonlenmfdfbjfeeballhiibknlknepo",
-    networks: [NETWORKS.preprod]
-  },
-  {
-    name: "Typhon",
-    icon: TyphonIcon,
-    link: "https://chrome.google.com/webstore/detail/typhon-wallet/kfdniefadaanbjodldohaedphafoffoh",
-    networks: [NETWORKS.mainnet, NETWORKS.preprod, NETWORKS.preview]
-  }
-];
-
 export enum EPOCH_STATUS {
   FINISHED = "Finished",
   REWARDING = "Rewarding",

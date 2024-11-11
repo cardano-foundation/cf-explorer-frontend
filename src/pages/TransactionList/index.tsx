@@ -29,7 +29,7 @@ const Transactions = () => {
   return (
     <>
       <StyledContainer>
-        <TransactionList url={API.TRANSACTION.LIST} openDetail={openDetail} selected={selected} showTabView />
+        <TransactionList openDetail={openDetail} selected={selected} showTabView />
       </StyledContainer>
     </>
   );
