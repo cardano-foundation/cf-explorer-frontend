@@ -112,6 +112,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
         lastUpdated={lastUpdated}
         createdOn={data?.createdOn}
         tokenLastActivity={data?.tokenLastActivity}
+        isHasPadding
       />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
