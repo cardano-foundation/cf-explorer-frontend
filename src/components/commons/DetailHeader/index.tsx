@@ -279,13 +279,13 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
             <Box>
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 <WrapTitle sx={{ marginRight: "8px" }}>{t("createdAt")}:</WrapTitle>
-                <Box sx={{ fontWeight: "500", fontSize: "14px" }}>
+                <Box sx={{ fontWeight: "500", fontSize: "14px", color: theme.palette.secondary.main }}>
                   <DatetimeTypeTooltip>{formatDateTimeLocal(createdOn || "")}</DatetimeTypeTooltip>
                 </Box>
               </Box>
               <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                 <WrapTitle sx={{ marginRight: "8px" }}>{t("glossary.tokenLastActivity")}:</WrapTitle>
-                <Box sx={{ fontWeight: "500", fontSize: "14px" }}>
+                <Box sx={{ fontWeight: "500", fontSize: "14px", color: theme.palette.secondary.main }}>
                   <DatetimeTypeTooltip>{formatDateTimeLocal(tokenLastActivity || "")}</DatetimeTypeTooltip>
                 </Box>
               </Box>
