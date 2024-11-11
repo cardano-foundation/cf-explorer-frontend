@@ -24,7 +24,6 @@ import EpochDetail from "./pages/EpochDetail";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import InstantRewards from "./pages/InstantRewards";
-import MyProfile from "./pages/MyProfile";
 import NotFound from "./pages/NotFound";
 import PolicyDetail from "./pages/PolicyDetail";
 import ProtocolParameter from "./pages/ProtocolParameter";
@@ -37,7 +36,6 @@ import ReportGeneratedStakingDetail from "./pages/ReportGeneratedStakingDetail";
 import ResetPassword from "./pages/ResetPassword";
 import SPOLifecycle from "./pages/SPOLifecycle";
 import SearchResult from "./pages/SearchResult";
-import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Stake, { STAKE_ADDRESS_TYPE } from "./pages/Stake";
 import StakeDelegations from "./pages/StakeDelegations";
@@ -82,7 +80,6 @@ const Routes: React.FC = () => {
 
   return (
     <Switch>
-      <Route path={routers.SIGN_IN} exact component={SignIn} />
       <Route path={routers.SIGN_UP} exact component={SignUp} />
       <Route path={routers.VERIFY_EMAIL} exact component={VerifyEmail} />
       <Route path={routers.FORGOT_PASSWORD} exact component={ForgotPassword} />
@@ -136,7 +133,6 @@ const Routes: React.FC = () => {
         <AccountLayout>
           <Switch>
             <Route path={routers.ACCOUNT} exact component={() => <Redirect to={routers.MY_PROFILE} />} />
-            <Route path={routers.MY_PROFILE} exact component={MyProfile} />
             <Route path={routers.BOOKMARK} exact component={Bookmark} />
             <Route path={routers.NOT_FOUND} component={NotFound} />
           </Switch>

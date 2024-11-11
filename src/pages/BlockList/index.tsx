@@ -43,8 +43,8 @@ const BlockList = () => {
 
   const expandedBlockRowData = [
     { label: "Transactions", value: "txCount" },
-    { label: "Fees", value: "fees", isFormatADA: true },
-    { label: "Output", value: "output", isFormatADA: true }
+    { label: "Fees", value: "totalFees", isFormatADA: true },
+    { label: "Output", value: "totalOutput", isFormatADA: true }
   ];
 
   const columns: Column<Block>[] = [
@@ -148,35 +148,37 @@ const BlockList = () => {
   return (
     <StyledContainer>
       <Card data-testid="blocks-card" title={t("head.page.blocks")}>
-        {fetchData?.total && (
+        {fetchData?.lastUpdated && (
           <Actions>
             <TimeDuration>
               <FormNowMessage time={fetchData.lastUpdated} />
             </TimeDuration>
           </Actions>
         )}
-        <Table
-          data={fetchData?.data}
-          columns={columns}
-          total={{ title: t("common.totalBlocks"), count: fetchData?.total || 0 }}
-          pagination={{
-            ...pageInfo,
-            total: fetchData?.total,
-            onChange: (page, size) => {
-              history.replace({ search: stringify({ ...pageInfo, page, size }) });
-              mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-            },
-            handleCloseDetailView: handleClose
-          }}
-          onClickRow={handleOpenDetail}
-          rowKey={(r: Block) => r.blockNo || r.hash}
-          selected={selected}
-          showTabView
-          tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
-          onClickExpandedRow={handleExpandedRow}
-          expandedTable
-          expandedRowData={expandedBlockRowData}
-        />
+        {fetchData && (
+          <Table
+            data={fetchData?.data}
+            columns={columns}
+            total={{ title: t("common.totalBlocks"), count: fetchData?.total || 0 }}
+            pagination={{
+              ...pageInfo,
+              total: fetchData?.total,
+              onChange: (page, size) => {
+                history.replace({ search: stringify({ ...pageInfo, page, size }) });
+                mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+              },
+              handleCloseDetailView: handleClose
+            }}
+            onClickRow={handleOpenDetail}
+            rowKey={(r: Block) => r.blockNo || r.hash}
+            selected={selected}
+            showTabView
+            tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
+            onClickExpandedRow={handleExpandedRow}
+            expandedTable
+            expandedRowData={expandedBlockRowData}
+          />
+        )}
       </Card>
     </StyledContainer>
   );

@@ -94,7 +94,6 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
       <MainContainer id="main">
         <Main
           ref={mainRef}
-          component="main"
           open={sidebar ? 1 : 0}
           // To dos
           bgcolor={

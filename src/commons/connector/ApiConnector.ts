@@ -19,4 +19,8 @@ export abstract class ApiConnector {
   abstract getTxList(blockId: number | string): Promise<ApiReturnType<Transaction[]>>;
 
   abstract getTx(txHash: string): Promise<ApiReturnType<Transaction>>;
+
+  abstract getCurrentEpoch(): Promise<ApiReturnType<EpochCurrentType>>;
+
+  abstract getTransactions(): Promise<ApiReturnType<Transactions[]>>;
 }
