@@ -44,7 +44,7 @@ import "./index.css";
 import { TitleTab } from "./styles";
 
 interface TransactionMetadataProps {
-  data: Transaction | null | undefined;
+  data: Transaction | null;
   loading: boolean;
 }
 

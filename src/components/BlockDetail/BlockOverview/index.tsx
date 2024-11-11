@@ -1,28 +1,32 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import {
   TimeIconComponent,
+  TxConfirm,
   ExchageIcon,
   ExchageAltIcon,
   OutputIcon,
   CubeIconComponent,
   SlotIcon,
-  TooltipIcon,
-  BlockProducerIcon
+  BlockProducerIcon,
+  TooltipIcon
 } from "src/commons/resources";
-import { formatADAFull, formatNameBlockNo } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import ADAicon from "src/components/commons/ADAIcon";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import DynamicEllipsisText from "src/components/DynamicEllipsisText";
+import { details } from "src/commons/routers";
 
-import { TitleCard } from "./styles";
+import { TitleCard, WrapConfirmation } from "./styles";
 
 interface BlockOverviewProps {
-  data: Block | null | undefined;
+  data: BlockDetail | null;
   loading: boolean;
   lastUpdated?: number;
 }
@@ -43,8 +47,23 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
       ),
       value: (
         <DatetimeTypeTooltip>
-          <Box data-testid="block.detail.overview.value.createAt">{data?.time || ""}</Box>
+          <Box data-testid="block.detail.overview.value.createAt">{formatDateTimeLocal(data?.time || "")}</Box>
         </DatetimeTypeTooltip>
+      )
+    },
+    {
+      icon: TxConfirm,
+      title: (
+        <Box display={"flex"} alignItems="center">
+          <TitleCard mr={1} data-testid="block.detail.overview.title.confirmation">
+            {data?.confirmation && data?.confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}
+          </TitleCard>
+        </Box>
+      ),
+      value: (
+        <WrapConfirmation data-testid="block.detail.overview.value.confirmation">
+          {data?.confirmation || 0}
+        </WrapConfirmation>
       )
     },
     {
@@ -153,7 +172,21 @@ const BlockOverview: React.FC<BlockOverviewProps> = ({ data, loading, lastUpdate
           </CustomTooltip>
         </Box>
       ),
-      value: <Box data-testid="block.detail.overview.value.slot">{data?.slotLeader}</Box>
+      value: (
+        <Box
+          component={data?.poolView ? Link : Box}
+          color={({ palette }) => `${data?.poolView ? palette.primary.main : palette.secondary.main}!important`}
+          to={details.delegation(data?.poolView)}
+          data-testid="block.detail.overview.value.producer"
+        >
+          {data?.poolName ? (
+            data.poolName
+          ) : (
+            <DynamicEllipsisText value={data?.poolView ? data.poolView : data?.description || ""} isTooltip />
+          )}{" "}
+          {data?.poolTicker && `- ${data.poolTicker}`}
+        </Box>
+      )
     }
   ];
   return (

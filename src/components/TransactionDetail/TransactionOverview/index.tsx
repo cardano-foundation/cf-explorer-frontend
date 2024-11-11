@@ -8,13 +8,14 @@ import {
   TxInputIcon,
   TxOutputIcon,
   TimeIconComponent,
+  TxConfirm,
   TotalOutput,
   ExchageAltIcon,
   CubeIconComponent,
   SlotIcon,
   TooltipIcon
 } from "src/commons/resources";
-import { formatADAFull, formatNameBlockNo } from "src/commons/utils/helper";
+import { formatADAFull, formatDateTimeLocal, formatNameBlockNo } from "src/commons/utils/helper";
 import { MAX_SLOT_EPOCH } from "src/commons/utils/constants";
 import { details } from "src/commons/routers";
 import { RootState } from "src/stores/types";
@@ -29,7 +30,7 @@ import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import { StyledLink, TitleCard } from "./styles";
 
 interface Props {
-  data: Transaction | null | undefined;
+  data: Transaction | null;
   loading: boolean;
 }
 
@@ -52,7 +53,7 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
     if (data) setLastUpdated(Date.now());
   }, [data, blockNo]);
 
-  // const confirmation = Math.max(0, (blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation) || 0);
+  const confirmation = Math.max(0, (blockNo ? blockNo - (data?.tx?.blockNo || 0) : data?.tx?.confirmation) || 0);
 
   const inputTransaction = useMemo(() => {
     const result = [];
@@ -178,19 +179,20 @@ const TransactionOverview: React.FC<Props> = ({ data, loading }) => {
         </Box>
       ),
       value: (
-        <DatetimeTypeTooltip data-testid="transactionOverview.createdAtValue">{data?.tx?.time}</DatetimeTypeTooltip>
+        <DatetimeTypeTooltip data-testid="transactionOverview.createdAtValue">
+          {formatDateTimeLocal(data?.tx?.time || "")}
+        </DatetimeTypeTooltip>
       )
     },
-    // TODO need to implement
-    // {
-    //   icon: TxConfirm,
-    //   title: (
-    //     <Box data-testid="transactionOverview.comfirmationsTitle" display={"flex"} alignItems="center">
-    //       <TitleCard mr={1}>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</TitleCard>
-    //     </Box>
-    //   ),
-    //   value: <Box data-testid="transactionOverview.comfirmationsValue">{confirmation}</Box>
-    // },
+    {
+      icon: TxConfirm,
+      title: (
+        <Box data-testid="transactionOverview.comfirmationsTitle" display={"flex"} alignItems="center">
+          <TitleCard mr={1}>{confirmation > 1 ? t("glossary.comfirmations") : t("glossary.comfirmation")}</TitleCard>
+        </Box>
+      ),
+      value: <Box data-testid="transactionOverview.comfirmationsValue">{confirmation}</Box>
+    },
     {
       icon: TotalOutput,
       title: (

@@ -18,6 +18,7 @@ import useAuth from "src/commons/hooks/useAuth";
 import { authAxios } from "src/commons/utils/axios";
 import { USER_API } from "src/commons/utils/api";
 
+import SelectNetwork from "../Header/SelectNetwork";
 import SidebarMenu from "./SidebarMenu";
 import { HeaderTop, LogoLink, NavBarLogo, NavbarContainer, NavbarMenuBottom, WrapButtonSelect } from "./styles";
 
@@ -99,6 +100,9 @@ const Sidebar: React.FC = () => {
         </LogoLink>
       </HeaderTop>
       <SidebarMenu />
+      <NavbarMenuBottom sidebar={+sidebar}>
+        <SelectNetwork />
+      </NavbarMenuBottom>
 
       <WrapButtonSelect>
         <ButtonGroup fullWidth={true} variant="outlined" aria-label="outlined primary button group">
