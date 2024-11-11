@@ -1,11 +1,13 @@
 import { useHistory } from "react-router-dom";
 import { stringify } from "qs";
 import { Box } from "@mui/material";
-import { useRef, MouseEvent, useState } from "react";
+import { useRef, MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { formatADAFull, formatDateTimeLocal, formatNameBlockNo, getShortHash } from "src/commons/utils/helper";
 import { details } from "src/commons/routers";
+import useFetchList from "src/commons/hooks/useFetchList";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import { TooltipIcon } from "src/commons/resources";
 
@@ -17,28 +19,22 @@ import Card from "../commons/Card";
 import { Actions, StyledLink, TimeDuration } from "./styles";
 import DatetimeTypeTooltip from "../commons/DatetimeTypeTooltip";
 import { Capitalize } from "../commons/CustomText/styles";
-import { ApiConnector } from "../../commons/connector/ApiConnector";
-import { ApiReturnType } from "../../commons/connector/types/APIReturnType";
 
 interface TransactionListProps {
   underline?: boolean;
+  url: string;
   openDetail?: (_: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => void;
   selected?: string | null;
   showTabView?: boolean;
 }
 
-const TransactionList: React.FC<TransactionListProps> = ({ underline = false, selected, showTabView }) => {
+const TransactionList: React.FC<TransactionListProps> = ({ underline = false, url, selected, showTabView }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { pageInfo, setSort } = usePageInfo();
+  const blockKey = useSelector(({ system }: RootState) => system.blockKey);
 
-  const [transactions, setTransactions] = useState<ApiReturnType<Transactions[]> | undefined>();
-  const apiConnector: ApiConnector = ApiConnector.getApiConnector();
-  apiConnector.getTransactions().then((data) => {
-    setTransactions(data);
-  });
-
-  // const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
+  const fetchData = useFetchList<Transactions>(url, { ...pageInfo }, false, blockKey);
   const mainRef = useRef(document.querySelector("#main"));
   const onClickRow = (e: MouseEvent<Element, globalThis.MouseEvent>, r: Transactions) => {
     if (e.target instanceof HTMLAnchorElement || (e.target instanceof Element && e.target.closest("a"))) {
@@ -49,7 +45,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, se
     history.push(details.transaction(r.hash));
   };
 
-  const { error } = transactions || {};
+  const { error } = fetchData;
   const columns: Column<Transactions>[] = [
     {
       title: <Box data-testid="transactions.table.title.txhash">{t("glossary.txhash")}</Box>,
@@ -64,7 +60,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, se
             </StyledLink>
           </CustomTooltip>
           <Box mt={1} color={({ palette }) => palette.secondary.light}>
-            <DatetimeTypeTooltip>{r.time}</DatetimeTypeTooltip>
+            <DatetimeTypeTooltip>{formatDateTimeLocal(r.time || "")}</DatetimeTypeTooltip>
           </Box>
         </div>
       )
@@ -155,18 +151,18 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, se
       {!error && (
         <Actions>
           <TimeDuration>
-            <FormNowMessage time={transactions?.lastUpdated || 0} />
+            <FormNowMessage time={fetchData.lastUpdated} />
           </TimeDuration>
         </Actions>
       )}
       <Table
-        data={transactions?.data || []}
+        {...fetchData}
         columns={columns}
         maxHeight={"unset"}
-        total={{ count: transactions?.total || 0, title: t("common.totalTxs") }}
+        total={{ count: fetchData.total, title: t("common.totalTxs") }}
         pagination={{
           ...pageInfo,
-          total: transactions?.total || 0,
+          total: fetchData.total,
           onChange: (page, size) => {
             mainRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             history.replace({ search: stringify({ ...pageInfo, page, size }) });
@@ -175,6 +171,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ underline = false, se
         }}
         onClickRow={onClickRow}
         rowKey="hash"
+        selected={selected}
         showTabView={showTabView}
         tableWrapperProps={{ sx: (theme) => ({ [theme.breakpoints.between("sm", "md")]: { minHeight: "60vh" } }) }}
       />

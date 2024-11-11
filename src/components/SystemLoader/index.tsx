@@ -21,17 +21,12 @@ import {
   setWineryName,
   setWineryNameLoading
 } from "src/stores/system";
-import { ApiConnector } from "../../commons/connector/ApiConnector";
 
 export const SystemLoader = () => {
   const { isLoggedIn } = useAuth();
   const [, setBookmark] = useLocalStorage<string[]>("bookmark", []);
-  // const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
-  // const apiConnector = ApiConnector.getApiConnector();
-  // apiConnector.getCurrentEpoch().then((res) => {
-  //   setCurrentEpoch(res.data);
-  // });
-
+  const [currentEpoch, setCurrentEpoch] = useState<EpochCurrentType | null>(null);
+  const { data: epochSummary } = useFetch<EpochCurrentType>(`${API.EPOCH.CURRENT_EPOCH}`);
   const socket = useRef<WebSocket | null>(null);
   const [, setBtcDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("btcData", null);
   const [, setUsdDataLocal] = useLocalStorage<dataFromCoinGecko[number] | null>("usdData", null);
@@ -41,21 +36,21 @@ export const SystemLoader = () => {
     undefined,
     true
   );
-  //
-  // const { data: btcData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
-  // const { data: usdData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
-  //
-  // useEffect(() => {
-  //   if (btcData && btcData?.length > 0) {
-  //     setBtcDataLocal(btcData?.[0] || null);
-  //   }
-  // }, [btcData]);
-  //
-  // useEffect(() => {
-  //   if (usdData && usdData?.length > 0) {
-  //     setUsdDataLocal(usdData?.[0]);
-  //   }
-  // }, [usdData]);
+
+  const { data: btcData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=btc`);
+  const { data: usdData } = useFetch<dataFromCoinGecko>(`${API_GECKO}?ids=cardano&vs_currency=usd`);
+
+  useEffect(() => {
+    if (btcData && btcData?.length > 0) {
+      setBtcDataLocal(btcData?.[0] || null);
+    }
+  }, [btcData]);
+
+  useEffect(() => {
+    if (usdData && usdData?.length > 0) {
+      setUsdDataLocal(usdData?.[0]);
+    }
+  }, [usdData]);
 
   const fetchWineName = () => {
     if (BOLNISI_NAME_API) {
@@ -68,56 +63,60 @@ export const SystemLoader = () => {
     }
   };
 
-  // const currentTime = useRef(Date.now());
+  const currentTime = useRef(Date.now());
 
   useEffect(() => {
     fetchWineName();
     sessionStorage.setItem("timezone", window.navigator.language);
   }, []);
-  // TODO Add this later, when yaci endpoint doesn't return 404 anymore
-  // useEffect(() => {
-  //   if (currentEpoch) {
-  //     currentTime.current = Date.now();
-  //     const {
-  //       no,
-  //       slot,
-  //       totalSlot = MAX_SLOT_EPOCH,
-  //       account,
-  //       startTime,
-  //       endTime,
-  //       circulatingSupply,
-  //       blkCount,
-  //       syncingProgress
-  //     } = currentEpoch;
-  //     const TIME_OUT_CRAWLER_STOP = 100;
-  //     const interval = setInterval(() => {
-  //       const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
-  //       const isCrawlerStop = newSlot - totalSlot > TIME_OUT_CRAWLER_STOP;
-  //       const newNo = newSlot >= totalSlot && !isCrawlerStop ? no + 1 : no;
-  //       setStoreCurrentEpoch({
-  //         slot: newSlot % totalSlot,
-  //         no: newNo,
-  //         totalSlot,
-  //         account,
-  //         startTime,
-  //         endTime,
-  //         circulatingSupply,
-  //         blkCount,
-  //         syncingProgress
-  //       });
-  //     }, 1000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [currentEpoch]);
+
+  useEffect(() => {
+    if (currentEpoch) {
+      currentTime.current = Date.now();
+      const {
+        no,
+        slot,
+        totalSlot = MAX_SLOT_EPOCH,
+        account,
+        startTime,
+        endTime,
+        circulatingSupply,
+        blkCount,
+        syncingProgress
+      } = currentEpoch;
+      const TIME_OUT_CRAWLER_STOP = 100;
+      const interval = setInterval(() => {
+        const newSlot = slot + Math.floor((Date.now() - currentTime.current) / 1000);
+        const isCrawlerStop = newSlot - totalSlot > TIME_OUT_CRAWLER_STOP;
+        const newNo = newSlot >= totalSlot && !isCrawlerStop ? no + 1 : no;
+        setStoreCurrentEpoch({
+          slot: newSlot % totalSlot,
+          no: newNo,
+          totalSlot,
+          account,
+          startTime,
+          endTime,
+          circulatingSupply,
+          blkCount,
+          syncingProgress
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [currentEpoch]);
 
   useEffect(() => {
     if (dataBookmark) setBookmark(dataBookmark);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(dataBookmark)]);
-  // TODO Add this later, when yaci endpoint doesn't return 404 anymore
-  // useEffect(() => {
-  //   if (currentEpoch) setStoreCurrentEpoch(currentEpoch);
-  // }, [currentEpoch]);
+
+  useEffect(() => {
+    if (currentEpoch) setStoreCurrentEpoch(currentEpoch);
+  }, [currentEpoch]);
+
+  useEffect(() => {
+    if (epochSummary) setCurrentEpoch(epochSummary);
+  }, [epochSummary, setCurrentEpoch]);
 
   useEffect(() => {
     const connect = () => {
@@ -142,8 +141,7 @@ export const SystemLoader = () => {
             case EVENT_TYPES.BLOCK:
               setBlockNo(data.payload.blockNo);
               if (data.payload.hasTx) setBlockKey(data.payload.blockHash);
-              // TODO Add this later, when yaci endpoint doesn't return 404 anymore
-              // setCurrentEpoch(data.payload.epochSummary);
+              setCurrentEpoch(data.payload.epochSummary);
               break;
             default:
               break;

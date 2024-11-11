@@ -10,7 +10,7 @@ import { ParsedUrlQuery } from "querystring";
 import { setUserData } from "src/stores/user";
 import breakpoints from "src/themes/breakpoints";
 
-import { APP_LANGUAGES, NETWORK, NETWORKS, OPTIONS_CHART_ANALYTICS } from "./constants";
+import { APP_LANGUAGES, MAX_SLOT_EPOCH, NETWORK, NETWORKS, NETWORK_TYPES, OPTIONS_CHART_ANALYTICS } from "./constants";
 import { getInfo, signIn } from "./userRequest";
 BigNumber.config({ EXPONENTIAL_AT: [-50, 50] });
 
@@ -200,6 +200,32 @@ export const removeAuthInfo = () => {
   setUserData(null);
 };
 
+export const handleSignIn = async (username: string, password: string, cbSuccess?: () => void) => {
+  try {
+    const payload = {
+      username,
+      password,
+      type: 0
+    };
+    const response = await signIn(payload);
+    const data = response.data;
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("walletId", data.address);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("userTimezone", data.timezone);
+    localStorage.setItem("login-type", "normal");
+
+    const userInfo = await getInfo({ network: NETWORK_TYPES[NETWORK] });
+    setUserData({ ...userInfo.data, loginType: "normal" });
+    cbSuccess?.();
+  } catch (error) {
+    removeAuthInfo();
+  }
+};
+
 export const formatDateTimeLocal = (date: string) => {
   if (!date) return "";
   if (!sessionStorage.getItem("timezone")) {
@@ -311,6 +337,13 @@ export const formatTypeDateTime = () => {
     .replace("09", "HH")
     .replace("44", "mm")
     .replace("51", "ss");
+};
+
+export const getEpochSlotNo = (data: IDataEpoch) => {
+  if (data.status === "FINISHED") {
+    return MAX_SLOT_EPOCH;
+  }
+  return moment().diff(moment(data.startTime).toISOString(), "seconds");
 };
 
 export const truncateCustom = (text: string, first = 4, last = 8) => {
