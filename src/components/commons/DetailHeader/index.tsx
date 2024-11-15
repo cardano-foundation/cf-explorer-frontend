@@ -86,6 +86,7 @@ export interface DetailHeaderProps {
   redirectAction?: React.ReactNode;
   tokenLastActivity?: string;
   createdOn?: string;
+  isHasPadding?: boolean;
 }
 
 const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
@@ -106,9 +107,9 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
     redirectAction,
     subTitle,
     tokenLastActivity,
-    createdOn
+    createdOn,
+    isHasPadding
   } = props;
-
   const { isMobile } = useScreen();
   const history = useHistory();
   const theme = useTheme();
@@ -308,6 +309,7 @@ const DetailHeader: React.FC<DetailHeaderProps> = (props) => {
                 key={index}
                 wide={+isDetailToken}
                 itemonrow={itemOnRow}
+                isHasPadding={isHasPadding}
               >
                 <Box position="relative" display={item.hideHeader ? "none" : ""}>
                   {item.icon ? (

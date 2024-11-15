@@ -11,6 +11,7 @@ interface CardItemProps {
   length: number;
   wide?: number;
   itemonrow: number;
+  isHasPadding?: boolean;
 }
 
 export const HeaderDetailContainer = styled(Box)`
@@ -319,7 +320,7 @@ export const ProgressPercent = styled("h4")`
   margin: 0;
 `;
 
-export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemonrow }) => ({
+export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, itemonrow, isHasPadding }) => ({
   width: "max-content",
   padding: length > 6 ? "20px 25px" : "0px 15px",
   borderLeft: `1px solid ${theme.palette.primary[200]}`,
@@ -414,7 +415,7 @@ export const CardItem = styled(Grid)<CardItemProps>(({ theme, length, wide, item
       padding: "20px 7px !important"
     },
     ":nth-of-type(odd)": {
-      paddingLeft: "0 !important"
+      paddingLeft: `${isHasPadding ? "17px !important" : "0 !important"}`
     }
   }
 }));
