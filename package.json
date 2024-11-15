@@ -12,6 +12,7 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@highcharts/map-collection": "^2.3.0",
     "@lottiefiles/lottie-player": "^2.0.4",
+    "@mui/icons-material": "^6.1.6",
     "@mui/lab": "^6.0.0-beta.9",
     "@mui/material": "^6.1.0",
     "@mui/styled-engine-sc": "^6.1.0",

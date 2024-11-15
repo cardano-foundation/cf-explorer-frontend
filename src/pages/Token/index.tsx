@@ -16,7 +16,7 @@ import CustomTooltip from "src/components/commons/CustomTooltip";
 import usePageInfo from "src/commons/hooks/usePageInfo";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 
-import { AssetName, Logo, StyledContainer, TimeDuration } from "./styles";
+import { AssetName, StyledContainer, TimeDuration } from "./styles";
 
 const Tokens = () => {
   const { t } = useTranslation();
@@ -43,12 +43,6 @@ const Tokens = () => {
   }, []);
 
   const columns: Column<IToken>[] = [
-    {
-      title: <Box data-testid="tokens.table.title.icon">{t("glossary.icon")}</Box>,
-      key: "icon",
-      minWidth: "50px",
-      render: (r) => (r?.metadata?.logo ? <Logo src={`${r.metadata?.logo}`} alt="icon" /> : "")
-    },
     {
       title: <Box data-testid="tokens.table.title.assetName">{t("glossary.assetName")}</Box>,
       key: "assetName",
