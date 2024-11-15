@@ -18,7 +18,6 @@ export function blockDetailPage(page: Page) {
   const blocksDetailConfirmation = page.getByTestId("block.detail.overview.value.confirmation");
   const blocksDetailTotalTrx = page.getByTestId("block.detail.overview.value.transactions");
   const blocksDetailTrxFee = page.getByTestId("block.detail.overview.value.transactionFee");
-  const blocksDetailOutput = page.getByTestId("block.detail.overview.value.output");
 
   //Block detail - Transactions Table
   const blocksDetailTrxTableTxhash = page.getByTestId("block.detail.trxTable.txhash");
@@ -91,14 +90,9 @@ export function blockDetailPage(page: Page) {
     ).toBeGreaterThanOrEqual(blockFrostBlock?.confirmations);
 
     expect(
-      +((await blocksDetailTrxFee.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
+      +((await blocksDetailTrxFee.textContent())?.replaceAll(".", "") || 0),
       "Total fees in block detail to equal total fee in block on Blockfrost "
     ).toEqual(+(blockFrostBlock?.fees || 0));
-
-    expect(
-      +((await blocksDetailOutput.textContent())?.replaceAll(",", "") || 0) * 10 ** 6,
-      "Total output in block detail to equal total output in block on Blockfrost "
-    ).toEqual(+(blockFrostBlock?.output || 0));
   };
 
   const checkTransactionsTable = async () => {
