@@ -1014,6 +1014,7 @@
   "ViewAddresses": "View Addresses",
   "ViewStakingLifecycle": "View the Staking Lifecycle",
   "token.timelock": "Time locked",
+  "token.confirmView": "This image may not be suitable for all viewers. Continue viewing?",
   "token.oneTimeMint": "One time mint",
   "sanchonet.toltipTotalStake": "Does not include reward balance",
   "notice": "Important: Scope & Limitations",
