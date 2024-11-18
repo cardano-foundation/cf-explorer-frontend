@@ -47,6 +47,7 @@ const TokenTransaction: React.FC<ITokenTransaction> = ({ tabActive, tokenId }) =
     }
     history.push(details.transaction(r.hash));
   };
+
   const columns: Column<Transactions>[] = [
     {
       title: t("glossary.txhash"),

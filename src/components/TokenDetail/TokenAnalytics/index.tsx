@@ -107,7 +107,7 @@ const TokenAnalytics: FC<ITokenAnalyticsProps> = ({ dataToken }) => {
 
   return (
     <Card title={<TextCardHighlight>{t("analytics")}</TextCardHighlight>}>
-      <Wrapper container columns={24} spacing="35px">
+      <Wrapper container columns={24} spacing={4.375}>
         <Grid item xs={24} lg={18}>
           <Grid spacing={2} container alignItems="center" justifyContent={"space-between"}>
             <Grid item xs={4} sm={4}>

@@ -184,12 +184,12 @@ export const API = {
   EMISSIONS: {
     GRAPH: "txs/graph"
   },
-  MICAR: {
+  SUSTAINABILITY: {
     CARBON_EMISSION: "MiCAR/carbon-emission",
     INDICATOR: "/MiCAR/carbon-emission/overview",
     HISTORYCAL: "/MiCAR/carbon-emission/historical"
   },
-  BOLNISI: {
+  TRACEABILITYPROGRAM: {
     OVERVIEW: "bolnisi/overview"
   }
 };

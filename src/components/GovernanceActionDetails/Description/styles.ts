@@ -16,5 +16,6 @@ export const StyledDescription = {
     font-weight: 400;
     line-height: 20px;
     color: ${(props) => props.theme.palette.secondary.light};
+    word-break: break-word;
   `
 };

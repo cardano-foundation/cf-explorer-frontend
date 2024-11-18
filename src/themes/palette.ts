@@ -88,7 +88,7 @@ const secondaryDark = {
   800: "#BDBFCB",
   light: "#D6E2FF",
   main: "#F6F9FF",
-  background: "#FFFFFF",
+  background: "#BDBFCB",
   contrastText: COMMON.white,
   900: "#19191d"
 };

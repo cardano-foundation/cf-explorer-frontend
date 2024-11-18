@@ -53,7 +53,12 @@ const NativeScriptCard: React.FC<{ data: NativeScriptsList; hasBeforeAndAfter: b
             width={"calc(100% - 100px)"}
             color={`${theme.palette.primary.main} !important`}
           >
-            <DynamicEllipsisText customTruncateFold={[4, 4]} value={data.scriptHash || ""} isTooltip />
+            <DynamicEllipsisText
+              sx={{ marginBottom: "0px" }}
+              customTruncateFold={[4, 4]}
+              value={data.scriptHash || ""}
+              isTooltip
+            />
           </Box>
         </Row>
         <Row>

@@ -37,6 +37,7 @@ import {
   WrapButtonSelect
 } from "./styles";
 import SettingTimezone from "./SettingTimezone";
+// import SelectLanguage from "./SelectLanguage";
 
 const HIDDEN_HEADER_SEARCH_PATHS: string[] = [lists.dashboard()];
 
@@ -89,7 +90,7 @@ const Header: React.FC<RouteComponentProps> = (props) => {
               />
             </Box>
           </Title>
-          {pathname !== routers.BOLNISI_LANDING && pathname !== routers.MICAR && (
+          {pathname !== routers.TRACEABILITYPROGRAM_LANDING && pathname !== routers.SUSTAINABILITY && (
             <HeaderSearchContainer home={+home}>{!pathMatched && <HeaderSearch home={home} />}</HeaderSearchContainer>
           )}
         </HeaderMain>
@@ -111,6 +112,10 @@ const Header: React.FC<RouteComponentProps> = (props) => {
             <WrapButtonSelect>
               <SettingTimezone />
             </WrapButtonSelect>
+
+            {/* <WrapButtonSelect>
+              <SelectLanguage />
+            </WrapButtonSelect> */}
 
             <NetworkContainer>
               <SelectNetwork />

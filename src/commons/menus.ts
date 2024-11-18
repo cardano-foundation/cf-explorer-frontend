@@ -3,11 +3,11 @@ import { IconType } from "react-icons/lib";
 
 import {
   BlockChainMenuIcon,
-  BolnisiDashboard,
+  TraceabilityProgramDashboard,
   BrowseIcon,
   DashboardIcon,
   GovernanceHome,
-  MicarIcon,
+  SustainabilityIcon,
   NetworkMonitoringIcon,
   OperationalIcon,
   ProtocolIcon,
@@ -136,16 +136,16 @@ export const menus: Menu[] = [
     href: routers.NETWORK_MONITORING
   },
   {
-    title: "Bolnisi",
+    title: "Traceability Program",
     key: "glossary.traceability",
-    icon: BolnisiDashboard,
-    href: routers.BOLNISI_LANDING
+    icon: TraceabilityProgramDashboard,
+    href: routers.TRACEABILITYPROGRAM_LANDING
   },
   {
-    title: "Micar",
-    key: "glossary.micar",
-    icon: MicarIcon,
-    href: routers.MICAR
+    title: "Sustainability Indicators",
+    key: "glossary.sustainabilityindicators",
+    icon: SustainabilityIcon,
+    href: routers.SUSTAINABILITY
   }
 ];
 
@@ -167,7 +167,8 @@ export const footerMenus: Menu[] = [
       { href: "https://docs.cardano.org/", title: "Cardano Docs", key: "site.cardanoDocs" },
       { href: "https://education.cardanofoundation.org/", title: "Cardano Academy", key: "site.cardanoAcademy" },
       { href: "https://developers.cardano.org/", title: "Developer Portal", key: "site.developerPortal" },
-      { href: "https://cardanofoundation.org/en/news", title: "News and Blog", key: "site.newsAndBlog" }
+      { href: "https://cardanofoundation.org/blog", title: "Blog", key: "site.blog" },
+      { href: "https://cardanofoundation.org/newsroom", title: "News", key: "site.news" }
     ]
   }
 ];

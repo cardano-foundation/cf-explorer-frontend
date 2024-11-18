@@ -5,14 +5,13 @@ import { useTranslation } from "react-i18next";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import HideImageIcon from "@mui/icons-material/HideImage";
 
-import { FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
-import { formatDateTimeLocal, getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
+import { FileGuard, SlotIcon, USDIconComponent } from "src/commons/resources";
+import { getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
 import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import StyledModal from "src/components/commons/StyledModal";
-
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
 
@@ -153,7 +152,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
       strokeColor: "#000",
       value: (
         <>
-          <Box position={"relative"}>
+          <Box maxWidth={"300px"} position={"relative"}>
             <CustomTooltip title={data?.policy}>
               <PolicyId data-testid="token.asset.script">{data?.policy || ""}</PolicyId>
             </CustomTooltip>
@@ -188,32 +187,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           )}
         </>
       )
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("createdAt")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: TimeIconComponent,
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.createdOn || "")}</DatetimeTypeTooltip>
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("glossary.tokenLastActivity")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: TimeIconComponent,
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.tokenLastActivity || "")}</DatetimeTypeTooltip>
-    },
-    {
-      title: <></>,
-      value: <></>
     }
   ];
 
@@ -226,6 +199,9 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
         listItem={listItem}
         loading={loading}
         lastUpdated={lastUpdated}
+        createdOn={data?.createdOn}
+        tokenLastActivity={data?.tokenLastActivity}
+        isHasPadding
       />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>

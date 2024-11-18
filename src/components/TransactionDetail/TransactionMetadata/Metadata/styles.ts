@@ -317,7 +317,7 @@ export const BadgeContainerVerify = styled(Box)<{ type: "Verified" | "Invalid" |
     }};
 `;
 
-export const ItemBolnisi = styled(Card)`
+export const ItemTraceabilityProgram = styled(Card)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
