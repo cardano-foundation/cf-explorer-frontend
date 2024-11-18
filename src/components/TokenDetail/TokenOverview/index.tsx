@@ -1,28 +1,19 @@
-import { Box, Button, Modal, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ImageSearchIcon from "@mui/icons-material/ImageSearch";
 import HideImageIcon from "@mui/icons-material/HideImage";
-import { CgClose } from "react-icons/cg";
 
 import { FileGuard, SlotIcon, USDIconComponent } from "src/commons/resources";
 import { getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-
+import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import StyledModal from "src/components/commons/StyledModal";
 import ScriptModal from "../../ScriptModal";
-import {
-  ButtonLink,
-  CloseButton,
-  PolicyId,
-  PolicyScriptBtn,
-  TokenDescription,
-  TokenHeader,
-  TokenUrl,
-  WrapTitle
-} from "./styles";
+import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
 
 BigNumber.config({ DECIMAL_PLACES: 40 });
 
@@ -70,37 +61,14 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
             <HideImageIcon sx={{ marginLeft: "8px", width: "auto", height: "36px" }} />
           ) : null}
 
-          <Modal
+          <StyledModal
             open={openLogoModal}
-            onClose={(e: React.MouseEvent) => {
-              e.stopPropagation();
+            handleCloseModal={() => {
               setOpenLogoModal(false);
             }}
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            sx={{ zIndex: 9999 }}
+            width="380px"
           >
-            <Box
-              onClick={(e) => e.stopPropagation()}
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                bgcolor: theme.palette.primary[100],
-                boxShadow: 24,
-                p: 4,
-                borderRadius: 2,
-                minWidth: {
-                  xs: "150px",
-                  sm: "350px"
-                },
-                textAlign: "center",
-                zIndex: 9999,
-                padding: "30px",
-                border: "none",
-                outline: "none"
-              }}
-            >
+            <Box>
               <Box
                 sx={{
                   marginBottom: "20px",
@@ -112,23 +80,20 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
               >
                 NSFW Content
               </Box>
-              <CloseButton onClick={() => setOpenLogoModal(false)}>
-                <CgClose />
-              </CloseButton>
-              <Box sx={{ backgroundColor: theme.isDark ? "#000" : "#fff", borderRadius: "8px", padding: "16px" }}>
+              <Box sx={{ backgroundColor: theme.palette.secondary[100], borderRadius: "8px", padding: "16px" }}>
                 <Box
                   sx={{
-                    maxWidth: "270px",
                     textAlign: "left",
-                    marginBottom: "60px",
+                    marginBottom: "20px",
                     fontSize: "16px",
                     fontWeight: "600",
-                    color: theme.palette.secondary.light
+                    color: theme.palette.secondary.light,
+                    whiteSpace: "pre-line"
                   }}
                 >
                   {t("token.confirmView")}
                 </Box>
-                <Box sx={{ display: "flex", justifyContent: "center", gap: "92px" }}>
+                <Box sx={{ display: "flex", justifyContent: "center", gap: "35px" }}>
                   <Button
                     variant="outlined"
                     onClick={(e) => {
@@ -137,7 +102,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
                       setOpenLogoModal(false);
                     }}
                     sx={{
-                      padding: "12px 16px ",
+                      padding: "10px 12px ",
                       textTransform: "none",
                       borderRadius: "8px",
                       fontWeight: "700",
@@ -154,14 +119,14 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
                       setShowLogo(true);
                       setOpenLogoModal(false);
                     }}
-                    sx={{ padding: "12px 16px", textTransform: "none", borderRadius: "8px", fontWeight: "700" }}
+                    sx={{ padding: "10px 12px", textTransform: "none", borderRadius: "8px", fontWeight: "700" }}
                   >
                     {t("common.continue")}
                   </Button>
                 </Box>
               </Box>
             </Box>
-          </Modal>
+          </StyledModal>
         </TokenHeader>
       ),
       value: (
@@ -198,7 +163,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           <PolicyScriptBtn
             data-testid="token.policyScript"
             onClick={() => {
-              setOpenLogoModal(true);
+              setOpenModal(true);
               setPolicyId(data?.policy || "");
             }}
           >
