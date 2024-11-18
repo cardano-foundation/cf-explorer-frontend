@@ -5,7 +5,7 @@ import { useScreen } from "src/commons/hooks/useScreen";
 
 import { Content, StyledBox, StyledBoxContent, StyledBoxIcon, Title, Value } from "./styles";
 
-interface MicarProps {
+interface SustainabilityProps {
   title: string;
   icon: ReactNode;
   bgColor: string;
@@ -17,7 +17,18 @@ interface MicarProps {
   value3?: string;
   content: string;
 }
-const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value1, value2, value3 }: MicarProps) => {
+const SustainabilityIndicator = ({
+  title,
+  content,
+  bgColor,
+  des1,
+  des2,
+  des3,
+  icon,
+  value1,
+  value2,
+  value3
+}: SustainabilityProps) => {
   const { isSmallScreen, isLaptop, isMobile } = useScreen();
   const theme = useTheme();
 
@@ -107,4 +118,4 @@ const MicarIndicator = ({ title, content, bgColor, des1, des2, des3, icon, value
   );
 };
 
-export default MicarIndicator;
+export default SustainabilityIndicator;

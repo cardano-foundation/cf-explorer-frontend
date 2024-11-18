@@ -4,7 +4,7 @@ import { Box, Typography, Container, useTheme } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
 import CustomIcon from "src/components/commons/CustomIcon";
-import { SearchMicarIcon } from "src/commons/resources";
+import { SearchSustainabilityIcon } from "src/commons/resources";
 import { useScreen } from "src/commons/hooks/useScreen";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -42,7 +42,7 @@ const EmissionsCalculator = () => {
   const fromPath = history.location.pathname as SpecialPath;
 
   const { data, loading } = useFetch<CarbonEmissionData>(
-    address ? `${API.MICAR?.CARBON_EMISSION}/${address}` : "",
+    address ? `${API.SUSTAINABILITY?.CARBON_EMISSION}/${address}` : "",
     undefined,
     false
   );
@@ -74,9 +74,9 @@ const EmissionsCalculator = () => {
     <Box mt={10}>
       <Container maxWidth="lg" sx={{ height: "100%", mt: 8 }}>
         <StyledCard elevation={2}>
-          <StyledTitle>{t("micar.indicators.calculator")}</StyledTitle>
+          <StyledTitle>{t("sustainability.indicators.calculator")}</StyledTitle>
           <Typography sx={{ color: theme.isDark ? "#F7F9FF" : "#000000" }} textAlign={"left"}>
-            {t("micar.emission.caculator.des")}
+            {t("sustainability.emission.caculator.des")}
           </Typography>
           <SearchContainer>
             <StyledInput
@@ -106,7 +106,7 @@ const EmissionsCalculator = () => {
             >
               <CustomIcon
                 bgcolor={theme.isDark ? "#24262E" : "#FFFFFF"}
-                icon={SearchMicarIcon}
+                icon={SearchSustainabilityIcon}
                 fill={theme.isDark ? "#666666" : "#434656"}
                 height={22}
                 padding={1.2}
@@ -125,8 +125,8 @@ const EmissionsCalculator = () => {
             <Box>
               <StyledTypography>
                 {data?.stakeAddress
-                  ? t("micar.indicators.caculator.stakeAddress")
-                  : t("micar.indicators.caculator.address")}
+                  ? t("sustainability.indicators.caculator.stakeAddress")
+                  : t("sustainability.indicators.caculator.address")}
               </StyledTypography>
               <Box display={"flex"} alignItems={"flex-start"} fontSize={isMobile ? "14px" : "20px"}>
                 <StyledLink
@@ -144,11 +144,11 @@ const EmissionsCalculator = () => {
               </Box>
               <Line />
 
-              <StyledTypography>{t("micar.indicators.caculator.noTransaction")}</StyledTypography>
+              <StyledTypography>{t("sustainability.indicators.caculator.noTransaction")}</StyledTypography>
               <StyledValue>{data?.txCount ? data?.txCount : "N/A"}</StyledValue>
               <Line />
 
-              <StyledTypography>{t("micar.indicators.caculator.emissions")}</StyledTypography>
+              <StyledTypography>{t("sustainability.indicators.caculator.emissions")}</StyledTypography>
               <StyledValue>{data?.carbonEmissionPerTx ? `${data?.carbonEmissionPerTx} kWh` : ""}</StyledValue>
             </Box>
           )}

@@ -9,12 +9,12 @@ import { useHistory } from "react-router-dom";
 import "./index.css";
 import {
   bodyBackground,
-  BolnisiDropdown,
-  bolnisiHeaderBackgroundDark,
-  bolnisiHeaderBackgroundLight,
-  bolnisiHeaderLaptop,
-  bolnisiHeaderMobile,
-  bolnisiHeaderTablet
+  TraceabilityProgramDropdown,
+  traceabilityprogramHeaderBackgroundDark,
+  traceabilityprogramHeaderBackgroundLight,
+  traceabilityprogramHeaderLaptop,
+  traceabilityprogramHeaderMobile,
+  traceabilityprogramHeaderTablet
 } from "src/commons/resources";
 import { Column } from "src/types/table";
 import Table from "src/components/commons/Table";
@@ -22,20 +22,24 @@ import { MotionDiv } from "src/commons/animation/motion-div";
 import { getShortHash } from "src/commons/utils/helper";
 import { useScreen } from "src/commons/hooks/useScreen";
 import { details } from "src/commons/routers";
-import { BOLNISI_LANDING_NWA, BOLNISI_LANDING_OIV, BOLNISI_LANDING_READ_CASE_STUDY } from "src/commons/utils/constants";
+import {
+  TRACEABILITYPROGRAM_LANDING_NWA,
+  TRACEABILITYPROGRAM_LANDING_OIV,
+  TRACEABILITYPROGRAM_LANDING_READ_CASE_STUDY
+} from "src/commons/utils/constants";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
 
-import Bolnisi_Animation_Light_Mode from "./resource/Bolnisi_Animation_Light_Mode.json";
-import Bolnisi_Animation_Dark_Mode from "./resource/Bolnisi_Animation_Dark_Mode.json";
-import bolnisiAnimationmobileLightMode from "./resource/Bolnisi_Animation_mobile_Light_Mode.png";
+import TraceabilityProgram_Animation_Light_Mode from "./resource/TraceabilityProgram_Animation_Light_Mode.json";
+import TraceabilityProgram_Animation_Dark_Mode from "./resource/TraceabilityProgram_Animation_Dark_Mode.json";
+import traceabilityprogramAnimationmobileLightMode from "./resource/TraceabilityProgram_Animation_mobile_Light_Mode.png";
 
-interface BolnisiNumbers {
+interface TraceabilityProgramNumbers {
   numberOfBottles: number | null;
   numberOfCertificates: number | null;
   numberOfWineries: number | null;
 }
-const BolnisiLanding = () => {
+const TraceabilityProgramLanding = () => {
   useEffect(() => {
     document.title = `Traceability Program | Cardano Blockchain Explorer`;
   }, []);
@@ -44,12 +48,12 @@ const BolnisiLanding = () => {
     <Box>
       <Header />
       <ProgressSession />
-      <BolnisiTrx />
+      <TraceabilityProgramTrx />
     </Box>
   );
 };
 
-export default BolnisiLanding;
+export default TraceabilityProgramLanding;
 
 const Header = () => {
   const topRef = useRef<HTMLDivElement>();
@@ -65,7 +69,9 @@ const Header = () => {
     <Box>
       <Box
         style={{
-          backgroundImage: `url(${theme.isDark ? bolnisiHeaderBackgroundDark : bolnisiHeaderBackgroundLight})`,
+          backgroundImage: `url(${
+            theme.isDark ? traceabilityprogramHeaderBackgroundDark : traceabilityprogramHeaderBackgroundLight
+          })`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center"
@@ -94,7 +100,7 @@ const Header = () => {
                 }
               }}
             >
-              {t("bolnisi.landing.header")}
+              {t("traceabilityprogram.landing.header")}
             </Box>
           </MotionDiv>
         </Container>
@@ -114,9 +120,15 @@ const Header = () => {
         }}
       >
         <img
-          alt="bolnisi "
+          alt="TraceabilityProgram"
           style={{ width: "100%" }}
-          src={isLaptop ? (isMobile ? bolnisiHeaderMobile : bolnisiHeaderTablet) : bolnisiHeaderLaptop}
+          src={
+            isLaptop
+              ? isMobile
+                ? traceabilityprogramHeaderMobile
+                : traceabilityprogramHeaderTablet
+              : traceabilityprogramHeaderLaptop
+          }
         />
       </Box>
     </Box>
@@ -131,7 +143,7 @@ const ProgressSession = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: theme.isDark ? Bolnisi_Animation_Dark_Mode : Bolnisi_Animation_Light_Mode,
+    animationData: theme.isDark ? TraceabilityProgram_Animation_Dark_Mode : TraceabilityProgram_Animation_Light_Mode,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
@@ -151,7 +163,7 @@ const ProgressSession = () => {
                     fontSize={"clamp(2.25rem, 3vw, 2.5rem);"}
                     fontWeight={"bold"}
                   >
-                    {t("bolnisi.landing.slogan")}
+                    {t("traceabilityprogram.landing.slogan")}
                   </Box>
                   <Box
                     textAlign={"left"}
@@ -186,7 +198,7 @@ const ProgressSession = () => {
                     Georgian wines, ensuring they comply with the commercial industry standard set by the{" "}
                     <Box
                       component={"a"}
-                      href={BOLNISI_LANDING_OIV}
+                      href={TRACEABILITYPROGRAM_LANDING_OIV}
                       target="_blank"
                       sx={{
                         color: theme.isDark ? "#64BCFD !important" : "#2F59DB!important",
@@ -198,13 +210,13 @@ const ProgressSession = () => {
                     (OIV). All the while increasing consumer engagement and trust.
                   </Box>
                   <Box mt={2}>
-                    The pilot for the Bolnisi region includes more than 30 wineries with several thousand wine bottles
-                    already registered on the Cardano blockchain. This innovative track and trace solution creates
-                    verifiable on-chain records for the detailed supply chain data provided by the wineries, plus the
-                    certificates of conformity issued by Georgia’s{" "}
+                    The pilot for the Traceability Program region includes more than 30 wineries with several thousand
+                    wine bottles already registered on the Cardano blockchain. This innovative track and trace solution
+                    creates verifiable on-chain records for the detailed supply chain data provided by the wineries,
+                    plus the certificates of conformity issued by Georgia’s{" "}
                     <Box
                       component={"a"}
-                      href={BOLNISI_LANDING_NWA}
+                      href={TRACEABILITYPROGRAM_LANDING_NWA}
                       target="_blank"
                       sx={{
                         color: theme.isDark ? "#64BCFD !important" : "#2F59DB !important",
@@ -240,11 +252,11 @@ const ProgressSession = () => {
         {!isMobile ? (
           <Lottie options={defaultOptions} width={"100%"} />
         ) : (
-          <img alt="bolnisi " style={{ width: "100%" }} src={bolnisiAnimationmobileLightMode} />
+          <img alt="TraceabilityProgram " style={{ width: "100%" }} src={traceabilityprogramAnimationmobileLightMode} />
         )}
       </Box>
       <Box
-        className="bolnisi-body-background"
+        className="traceabilityprogram-body-background"
         width={"100%"}
         position={"relative"}
         sx={{
@@ -264,24 +276,32 @@ const ProgressSession = () => {
   );
 };
 
-interface BolnisiTx {
+interface TraceabilityProgramTx {
   txHash: string;
   date: string;
   cert: string;
   amount: number;
 }
 
-const BolnisiTrx = () => {
+const TraceabilityProgramTrx = () => {
   const theme = useTheme();
   const history = useHistory();
   const [cert, setCert] = useState("SCM");
   const [open, setOpen] = useState(false);
 
-  const { data: bolnisiData } = useFetch<BolnisiNumbers>(API.BOLNISI.OVERVIEW, undefined, false);
+  const { data: traceabilityprogramData } = useFetch<TraceabilityProgramNumbers>(
+    API.TRACEABILITYPROGRAM.OVERVIEW,
+    undefined,
+    false
+  );
 
-  const columns: Column<BolnisiTx>[] = [
+  const columns: Column<TraceabilityProgramTx>[] = [
     {
-      title: <Box data-testid="bolnisi.landing.table.txHash">{t("bolnisi.landing.table.txHash")}</Box>,
+      title: (
+        <Box data-testid="traceabilityprogram.landing.table.txHash">
+          {t("traceabilityprogram.landing.table.txHash")}
+        </Box>
+      ),
       key: "no",
       render: (r) => (
         <Box
@@ -294,15 +314,17 @@ const BolnisiTrx = () => {
       )
     },
     {
-      title: <Box data-testid="bolnisi.landing.table.date">{t("bolnisi.landing.table.date")}</Box>,
+      title: (
+        <Box data-testid="traceabilityprogram.landing.table.date">{t("traceabilityprogram.landing.table.date")}</Box>
+      ),
       key: "no",
       render: (r) => <Box>{r.date}</Box>
     },
 
     {
       title: (
-        <Box data-testid="bolnisi.landing.table.txType" component="span">
-          {t("bolnisi.landing.table.txType")}
+        <Box data-testid="traceabilityprogram.landing.table.txType" component="span">
+          {t("traceabilityprogram.landing.table.txType")}
         </Box>
       ),
       key: "value",
@@ -311,8 +333,8 @@ const BolnisiTrx = () => {
     },
     {
       title: (
-        <Box data-testid="bolnisi.landing.table.amount" component="span">
-          {t("bolnisi.landing.table.amount")}
+        <Box data-testid="traceabilityprogram.landing.table.amount" component="span">
+          {t("traceabilityprogram.landing.table.amount")}
         </Box>
       ),
       key: "fees",
@@ -408,21 +430,21 @@ const BolnisiTrx = () => {
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfBottles || 0} title="Bottles registered on-chain" />
+              <Card count={traceabilityprogramData?.numberOfBottles || 0} title="Bottles registered on-chain" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfWineries || 0} title="Wineries joining" />
+              <Card count={traceabilityprogramData?.numberOfWineries || 0} title="Wineries joining" />
             </Box>
           </MotionDiv>
         </Grid>
         <Grid item lg={4} md={4} sm={4} xs={12}>
           <MotionDiv initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} style={{ height: "100%" }}>
             <Box height={"100%"} bgcolor={theme.isDark ? "#24262E" : "#F5F7FA"} borderRadius={"1.5rem"}>
-              <Card count={bolnisiData?.numberOfCertificates || 0} title="Certificates issued" />
+              <Card count={traceabilityprogramData?.numberOfCertificates || 0} title="Certificates issued" />
             </Box>
           </MotionDiv>
         </Grid>
@@ -477,7 +499,7 @@ const BolnisiTrx = () => {
               onChange={(e) => setCert(e.target?.value)}
               inputProps={{ style: { border: "transparent" }, id: "" }}
               IconComponent={() => (
-                <BolnisiDropdown
+                <TraceabilityProgramDropdown
                   fill={theme.palette.primary.main}
                   style={{ paddingRight: "10px", cursor: "pointer" }}
                   onClick={() => {
@@ -488,10 +510,10 @@ const BolnisiTrx = () => {
               MenuProps={{ MenuListProps: { style: { background: theme.palette.secondary[0] } } }}
             >
               <MenuItem sx={{ color: theme.palette.secondary.light }} value={"SCM"}>
-                {t("bolnisi.landing.menuitem.scm")}
+                {t("traceabilityprogram.landing.menuitem.scm")}
               </MenuItem>
               <MenuItem sx={{ color: theme.palette.secondary.light }} value={"Conformity"}>
-                {t("bolnisi.landing.menuitem.certificate")}
+                {t("traceabilityprogram.landing.menuitem.certificate")}
               </MenuItem>
             </Select>
           </Box>
@@ -512,7 +534,7 @@ const BolnisiTrx = () => {
             lineHeight={"2.625rem"}
             fontWeight={"bold"}
           >
-            {t("bolnisi.landing.casestudy.title")}
+            {t("traceabilityprogram.landing.casestudy.title")}
           </Box>
 
           <Box
@@ -529,10 +551,10 @@ const BolnisiTrx = () => {
             color={theme.isDark ? "#24262E !important" : "#fff !important"}
             textTransform={"capitalize"}
             sx={{ ":hover": { color: theme.isDark ? "#24262E !important" : "#fff !important" }, cursor: "pointer" }}
-            href={BOLNISI_LANDING_READ_CASE_STUDY}
+            href={TRACEABILITYPROGRAM_LANDING_READ_CASE_STUDY}
             target="_blank"
           >
-            {t("bolnisi.landing.casestudy.read")}
+            {t("traceabilityprogram.landing.casestudy.read")}
           </Box>
         </Container>
       </MotionDiv>
@@ -541,7 +563,7 @@ const BolnisiTrx = () => {
           <iframe
             width="100%"
             src="https://www.youtube.com/embed/sg9Fjwqui3M"
-            title="Traceability from Grape to Glass: Cardano Foundation’s Partnership with Bolnisi Wine"
+            title="Traceability from Grape to Glass: Cardano Foundation’s Partnership with Traceability Program Wine"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
