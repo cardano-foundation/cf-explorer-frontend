@@ -55,8 +55,8 @@ export const routers = {
   TERMS_OF_SERVICE: "/terms-of-service",
   SMARTCONTRACT_DETAIL: "/smartcontract/:id",
   DREP_DETAILS: "/drep/:drepId",
-  BOLNISI_LANDING: "/bolnisi",
-  MICAR: "/micar",
+  BOLNISI_LANDING: "/traceability-program",
+  MICAR: "/sustainability-indicators",
   NOT_FOUND: "/*"
 } as const;
 
