@@ -68,6 +68,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
               setOpenLogoModal(false);
             }}
             width="380px"
+            modalStyle={{ maxWidth: { xs: "380px", sm: "none" } }}
           >
             <Box>
               <Box
