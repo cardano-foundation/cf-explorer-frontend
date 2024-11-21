@@ -132,7 +132,8 @@ export const CARDANO_NEWS_URL = process.env.REACT_APP_CARDANO_NEWS_URL || get(wi
 export const APP_VERSION = process.env.REACT_APP_VERSION || get(window, "env.REACT_APP_VERSION");
 export const EXT_ADA_PRICE_URL =
   process.env.REACT_APP_EXT_ADA_PRICE_URL || get(window, "env.REACT_APP_EXT_ADA_PRICE_URL");
-export const BOLNISI_NAME_API = process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
+export const TRACEABILITYPROGRAM_NAME_API =
+  process.env.REACT_APP_BOLNISI_NAME_API || get(window, "env.REACT_APP_BOLNISI_NAME_API");
 export const API_GECKO = process.env.REACT_APP_API_URL_COIN_GECKO || get(window, "env.REACT_APP_API_URL_COIN_GECKO");
 export const FF_GLOBAL_IS_CONWAY_ERA =
   (process.env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA || get(window, "env.REACT_APP_FF_GLOBAL_IS_CONWAY_ERA")) === "true";
@@ -333,6 +334,6 @@ export enum VOTE_TYPE_GOV_ACTIONS {
   STAKING_POOL_KEY_HASH = "STAKING_POOL_KEY_HASH"
 }
 
-export const BOLNISI_LANDING_READ_CASE_STUDY = "https://cardanofoundation.org/case-studies/bolnisi";
-export const BOLNISI_LANDING_OIV = "https://www.oiv.int/";
-export const BOLNISI_LANDING_NWA = "https://wine.gov.ge/En/";
+export const TRACEABILITYPROGRAM_LANDING_READ_CASE_STUDY = "https://cardanofoundation.org/case-studies/bolnisi";
+export const TRACEABILITYPROGRAM_LANDING_OIV = "https://www.oiv.int/";
+export const TRACEABILITYPROGRAM_LANDING_NWA = "https://wine.gov.ge/En/";

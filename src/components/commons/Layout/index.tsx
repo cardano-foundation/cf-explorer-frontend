@@ -98,7 +98,8 @@ const CustomLayout: React.FC<Props> = ({ children }) => {
           open={sidebar ? 1 : 0}
           // To dos
           bgcolor={
-            routers.BOLNISI_LANDING === history.location.pathname || routers.MICAR === history.location.pathname
+            routers.TRACEABILITYPROGRAM_LANDING === history.location.pathname ||
+            routers.SUSTAINABILITY === history.location.pathname
               ? theme.isDark
                 ? "#131316"
                 : "#fff"
