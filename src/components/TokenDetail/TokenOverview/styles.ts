@@ -1,4 +1,4 @@
-import { alpha, Box, Button, Container, styled } from "@mui/material";
+import { alpha, Box, Button, Container, IconButton, styled } from "@mui/material";
 import { FiInfo } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -369,3 +369,15 @@ export const PolicyScriptBtn = styled(Button)(({ theme }) => ({
   display: "inline-block",
   textDecoration: "underline !important"
 }));
+
+export const CloseButton = styled(IconButton)`
+  color: ${(props) => props.theme.palette.primary[100]};
+  padding: 5.5px;
+  background-color: ${(props) => props.theme.palette.secondary.main};
+  position: absolute;
+  top: 16px;
+  right: 29px;
+  &:hover {
+    background-color: ${(props) => props.theme.palette.secondary.main};
+  }
+`;
