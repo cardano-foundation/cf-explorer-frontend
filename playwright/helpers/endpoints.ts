@@ -17,6 +17,7 @@ export class BlockFrost {
     public static get Base() {
       return `${BlockFrost.BASE_MAIN_NET_URL}/blocks`;
     }
+
     public static get Latest() {
       return `${BlockFrost.Blocks.Base}/latest`;
     }
@@ -25,6 +26,7 @@ export class BlockFrost {
     public static get Base() {
       return `${BlockFrost.BASE_MAIN_NET_URL}/epochs`;
     }
+
     public static get Latest() {
       return `${BlockFrost.Epochs.Base}/latest`;
     }
@@ -34,21 +36,27 @@ export class BlockFrost {
     public static get Base() {
       return `${BlockFrost.BASE_MAIN_NET_URL}/txs`;
     }
+
     public static get Contract() {
       return `${BlockFrost.Transaction.Base}/:hash/redeemers`;
     }
+
     public static get StakeCert() {
       return `${BlockFrost.Transaction.Base}/:hash/stakes`;
     }
+
     public static get RegisPoolCert() {
       return `${BlockFrost.Transaction.Base}/:hash/pool_updates`;
     }
+
     public static get DeregisPoolCert() {
       return `${BlockFrost.Transaction.Base}/:hash/pool_retires`;
     }
+
     public static get DelegationCert() {
       return `${BlockFrost.Transaction.Base}/:hash/delegations`;
     }
+
     public static get InstantaneousReward() {
       return `${BlockFrost.Transaction.Base}/:hash/mirs`;
     }
@@ -82,6 +90,16 @@ export class Koios {
   static getAddress = class {
     public static get Base() {
       return `${Koios.BASE_MAIN_NET_URL}/address_info`;
+    }
+  };
+}
+
+export class Mica {
+  static readonly BASE_MAIN_NET_URL = process.env.MICA_API_URL;
+
+  static Indicator = class {
+    public static get micaIndicator() {
+      return `${Mica.BASE_MAIN_NET_URL}/:indicator/ada`;
     }
   };
 }
