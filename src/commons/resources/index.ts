@@ -12,35 +12,23 @@ import closeIconDarkMode from "./icons/closeIconDarkMode.svg";
 import NotFoundIcon from "./images/icon-404.png";
 import AdaPriceIcon from "./icons/ada-price.svg";
 import AdaPriceDarkIcon from "./icons/ada-price-dark.svg";
-import MarketCapIcon from "./icons/market-cap.svg";
-import MarketCapDarkIcon from "./icons/market-cap-dark.svg";
 import PotsIcon from "./icons/pots-icon.svg";
 import PotsIconDark from "./icons/pots-icon-dark.svg";
-import CurentEpochIcon from "./icons/curent-epoch.svg";
 import CurentEpochPool from "./icons/curent-epoch-pool.svg";
 import CurentEpochPoolDark from "./icons/curent-epoch-pool-dark.svg";
 import LiveStakeIcon from "./icons/live-stake.svg";
 import LiveStakeDarkIcon from "./icons/live-stake-dark.svg";
-import LiveStakePoolIcon from "./icons/live-stake-pool.svg";
 import ComingSoonIcon from "./icons/coming-soon.svg";
 import DownRedIcon from "./icons/down-red.svg";
 import UpGreenIcon from "./icons/up-green.svg";
 import UpGreenDarkmodeIcon from "./icons/up-green-darkmode.svg";
-import BlankBlueIcon from "./icons/blank-blue.svg";
 import CalenderPaleIcon from "./icons/calender-pale.svg";
-import PolicyWhiteIcon from "./icons/policy-white.svg";
 import BlockChainMenuIcon from "./icons/menus/blockchain.svg";
-import DelegatePoolMenuIcon from "./icons/menus/delegate.svg";
 import OperationalIcon from "./icons/menus/Operational.svg";
-import ProtocolParameterIcon from "./icons/protocolParameter.svg";
 import BrowseIcon from "./icons/menus/browser.svg";
 import RocketPoolIcon from "./icons/rocket-pool.svg";
 import RocketPoolDarkIcon from "./icons/rocket-pool-dark.svg";
 import TokenADA from "./icons/tokenADA.svg";
-import MediumIcon from "./icons/medium.svg";
-import RocketBackground from "./icons/rocket-bg.svg";
-import USDIcon from "./icons/usd.svg";
-import SeeMoreIcon from "./icons/seemore.svg";
 import FlintIcon from "./icons/flint.svg";
 import NamiIcon from "./icons/nami.svg";
 import EternlIcon from "./icons/eternl.svg";
@@ -72,21 +60,15 @@ import PaymentWalletUrl from "./images/payment-wallet.png";
 import PaymentWalletDarkUrl from "./images/payment-wallet-dark.png";
 import SPOHolderIconUrl from "./images/spo-holder.png";
 import PolygonSPOUrl from "./images/polygon-spo.png";
-import PolygonSPODarkUrl from "./images/polygon-spo-dark.svg";
 import PolygonSPODarkUrlPng from "./images/polygon-spo-dark.png";
 import RewardAccountIconUrl from "./images/reward-box-icon.png";
 import RewardAccountIconDarkUrl from "./images/reward-box-icon-dark.png";
-import DelegationToIconUrl from "./images/delegation-to.png";
 import RewardWithdrawnIconUrl from "./images/reward-withdrawn.png";
-import MetadataIconUrl from "./icons/metadataIcon2.svg";
 import CurrentEpochHome from "./icons/currentEpochHome.svg";
 import CurrentEpochHomeDark from "./icons/currentEpochHomeDark.svg";
-import HomeUpIcon from "./icons/HomeUpIcon.svg";
-import HomeDownIcon from "./icons/HomeDownIcon.svg";
 import DashboardIcon from "./icons/menus/Dashboard.svg";
 import CardanoBlueLogo from "./icons/cardanoBlue.svg";
 import CardanoBlueDarkmodeLogo from "./icons/cardanoBlueDarkmode.svg";
-import TwitterXIcon from "./icons/TwitterX.svg";
 import NoRecordsIcon from "./images/NoRecords.svg";
 import GiftIcon from "./images/gift-icon.png";
 import DelegatingIcon from "./icons/delegating-icon.svg";
@@ -94,9 +76,7 @@ import sunIcon from "./icons/sun.svg";
 import moonIcon from "./icons/moon.svg";
 import WalletRoundedIcon from "./icons/wallet-rounded.svg";
 import SummaryWalletDark from "./icons/summaryWalletDark.svg";
-import UpGreenDarkmode from "./icons/upGreenDark.svg";
 import UpGreenUtxoDarkmode from "./icons/uputxoGreenDark.svg";
-import DownRedDarkmode from "./icons/downRedDark.svg";
 import DownRedUtxoDarkmode from "./icons/downUtxoRedDark.svg";
 import ArrowUpIcon from "./icons/arrow-up.svg";
 import ArrowUpDarkIcon from "./icons/arrow-up-dark.svg";
@@ -119,46 +99,8 @@ import DeregistrationDarkIcon from "./icons/deregistration-icon-dark.svg";
 import DeregistrationLightIcon from "./icons/deregistration-icon-light.svg";
 import RegistrationDarkIcon from "./icons/registration-icon-dark.svg";
 import RegistrationLightIcon from "./icons/registration-icon-light.svg";
-import timeIconUrl from "./icons/time.svg";
-import timelineUrl from "./icons/timeline.svg";
-import exchageIconUrl from "./icons/Union.svg";
-import exchageAltIconUrl from "./icons/exchangeArrow.svg";
-import outputIconUrl from "./icons/outputIcon.svg";
-import cubeIconUrl from "./icons/blockIcon.svg";
-import txConfirmUrl from "./icons/txConfirm.svg";
-import slotIconUrl from "./icons/slot.svg";
-import txInputIconUrl from "./icons/txInput.svg";
-import txOutputIconUrl from "./icons/txOutput.svg";
-import totalOutputUrl from "./icons/totalOutput.svg";
-import CopyIconSquareUrl from "./images/copy.svg";
-import fileGuardUrl from "./icons/file-guard.svg";
-import RocketIconUrl from "./icons/rocket.svg";
-import DelegationIconUrl from "./icons/delegationIcon.svg";
-import RewardsDistributionIconUrl from "./icons/rewardsDistribution.svg";
-import StakeCertificatesIconUrl from "./icons/stakeCertificateIcon.svg";
-import ProtocolUpdateIconUrl from "./icons/protocolUpdateIcon.svg";
-import InstantaneousHistoryIconUrl from "./icons/instantaneousHistoryIcon.svg";
-import PolygonDarkIconUrl from "./icons/polygon-dark.svg";
-import PolygonDarkRedIconUrl from "./icons/polygon-dark-red.svg";
-import ExchangeIconUrl from "./icons/exchange-alt.svg";
 import MenuIcon from "./icons/menus/hamburger.svg";
-import HeaderSearchIcon from "./icons/header-search.svg";
-import NoteEditIcon from "./icons/note-edit.svg";
-import WithdrawlIcon from "./icons/withdrawl.svg";
-import MintingIconUrl from "./icons/minting.svg";
-import HighestIcon from "./icons/highest-icon.svg";
-import LowestIcon from "./icons/lowest-icon.svg";
-import TickerIcon from "./icons/ticker.svg";
-import CalendarIcon from "./icons/calendar.svg";
 import RewardIcon from "./icons/reward.svg";
-import UserIcon from "./icons/user.svg";
-import DropIcon from "./icons/drop.svg";
-import DelegatorIcon from "./icons/delegator.svg";
-import LightningIcon from "./icons/lightning.svg";
-import LinkOff from "./icons/link-off.svg";
-import User2 from "./icons/user2.svg";
-import WhiteSearchIcon from "./icons/white-search-icon.svg";
-import CopyOutlineIcon from "./icons/copy-outline.svg";
 import GovernanceHome from "./icons/governanceHome.svg";
 import SignOut from "./icons/sign-out.svg";
 //only component
@@ -175,12 +117,6 @@ import DarkModeMobile from "./icons/darkModeMobile.svg?react";
 import Sanchonet from "./icons/sanchonet.svg?react";
 import CopyIconSquare from "./images/copy.svg?react";
 import FileGuard from "./icons/file-guard.svg?react";
-import RocketIcon from "./icons/rocket.svg?react";
-import DelegationIconComponent from "./icons/delegationIcon.svg?react";
-import RewardsDistributionComponent from "./icons/rewardsDistribution.svg?react";
-import StakeCertificatesComponent from "./icons/stakeCertificateIcon.svg?react";
-import ProtocolUpdateComponent from "./icons/protocolUpdateIcon.svg?react";
-import InstantaneousHistoryComponent from "./icons/instantaneousHistoryIcon.svg?react";
 import PolygonDarkIcon from "./icons/polygon-dark.svg?react";
 import ZoomInIcon from "./icons/zoom-in-icon.svg?react";
 import ZoomOutIcon from "./icons/zoom-out-icon.svg?react";
@@ -189,9 +125,6 @@ import PolygonDarkRedIcon from "./icons/polygon-dark-red.svg?react";
 import ExchangeIcon from "./icons/exchange-alt.svg?react";
 import MenuIconComponent from "./icons/menus/hamburger.svg?react";
 import HeaderSearchIconComponent from "./icons/header-search.svg?react";
-import NoteEditIconComponent from "./icons/note-edit.svg?react";
-import WithdrawlIconComponent from "./icons/withdrawl.svg?react";
-import MintingIconComponent from "./icons/minting.svg?react";
 import GovBodyIcons from "./icons/gov-body-icon.svg?react";
 import HighestIconComponent from "./icons/highest-icon.svg?react";
 import DescriptionIcon from "./icons/description-icon.svg?react";
@@ -207,11 +140,9 @@ import UserIconComponent from "./icons/user.svg?react";
 import DropIconComponent from "./icons/drop.svg?react";
 import DelegatorIconComponent from "./icons/delegator.svg?react";
 import LightningIconComponent from "./icons/lightning.svg?react";
-import LinkOffComponent from "./icons/link-off.svg?react";
 import LinkIcon from "./icons/LinkIcon.svg?react";
 import User2Component from "./icons/user2.svg?react";
 import WhiteSearchIconComponent from "./icons/white-search-icon.svg?react";
-import CopyOutlineIconComponent from "./icons/copy-outline.svg?react";
 import TimeIconComponent from "./icons/time.svg?react";
 import TimelineIconComponent from "./icons/timeline.svg?react";
 import ExchageIcon from "./icons/Union.svg?react";
@@ -294,57 +225,35 @@ export {
   EternlIcon,
   YoroiIcon,
   TyphonIcon,
-  HeaderSearchIcon,
   CopyIcon,
   CloseIcon,
   closeIconDarkMode,
   NotFoundIcon,
   AdaPriceIcon,
   AdaPriceDarkIcon,
-  MarketCapIcon,
-  MarketCapDarkIcon,
   PotsIcon,
   PotsIconDark,
-  CurentEpochIcon,
-  // WalletOutlineIconComponent,
   LiveStakeIcon,
   LiveStakeDarkIcon,
-  LiveStakePoolIcon,
   ComingSoonIcon,
   UpGreenIcon,
   UpGreenDarkmodeIcon,
   CurentEpochPool,
   CurentEpochPoolDark,
   DownRedIcon,
-  BlankBlueIcon,
   QrCodeDarkMode,
   QrCodeLightMode,
   CalenderPaleIcon,
   MenuIcon,
   BlockChainMenuIcon,
-  DelegatePoolMenuIcon,
-  ProtocolParameterIcon,
   EmptyIcon,
   RocketPoolIcon,
   RocketPoolDarkIcon,
-  ExchangeIconUrl,
   TokenADA,
-  MediumIcon,
-  RocketBackground,
-  USDIcon,
-  NoteEditIcon,
-  WithdrawlIcon,
-  MintingIconUrl,
-  PolicyWhiteIcon,
-  HighestIcon,
-  LowestIcon,
   BrowseIcon,
   StakingLifecycleIcon,
   NetworkMonitoringIcon,
-  SeeMoreIcon,
-  TickerIcon,
   TickerIconComponent,
-  CalendarIcon,
   TeamsIconLight,
   DateIcon,
   PencilIcon,
@@ -357,18 +266,12 @@ export {
   CommunityIconLight,
   CalendarIconComponent,
   RewardIcon,
-  UserIcon,
-  DropIcon,
-  DelegatorIcon,
   DrepIdIcon,
   ActiveStakeDrepIcon,
-  LightningIcon,
-  LinkOff,
   SignOut,
   ZoomInIcon,
   ZoomOutIcon,
   FindLocationIcon,
-  User2,
   PolygonWhiteIconUrl,
   PolygonBlackIconUrl,
   AdaHolderIconUrl,
@@ -377,49 +280,23 @@ export {
   PaymentWalletDarkUrl,
   SPOHolderIconUrl,
   PolygonSPOUrl,
-  PolygonSPODarkUrl,
   PolygonSPODarkUrlPng,
   RewardAccountIconUrl,
   RewardAccountIconDarkUrl,
-  DelegationToIconUrl,
   RewardWithdrawnIconUrl,
-  timeIconUrl,
-  timelineUrl,
-  exchageIconUrl,
-  exchageAltIconUrl,
   ExchageAltIcon,
-  outputIconUrl,
-  cubeIconUrl,
-  txConfirmUrl,
-  slotIconUrl,
-  txInputIconUrl,
-  txOutputIconUrl,
-  totalOutputUrl,
-  CopyIconSquareUrl,
-  fileGuardUrl,
-  DelegationIconUrl,
-  RewardsDistributionIconUrl,
-  StakeCertificatesIconUrl,
-  ProtocolUpdateIconUrl,
-  InstantaneousHistoryIconUrl,
-  MetadataIconUrl,
   OperationalIcon,
   ProtocolIcon,
   CurrentEpochHome,
   CurrentEpochHomeDark,
-  HomeUpIcon,
   DashboardIcon,
-  HomeDownIcon,
   DescriptionIcon,
   GovIDIcon,
   GovBodycon,
   TimeStampIcon,
   CardanoBlueLogo,
   CardanoBlueDarkmodeLogo,
-  TwitterXIcon,
   NoRecordsIcon,
-  PolygonDarkIconUrl,
-  PolygonDarkRedIconUrl,
   GiftIcon,
   DelegatingIcon,
   LogoDarkmodeFullIcon,
@@ -468,7 +345,6 @@ export {
   HeaderSearchIconComponent,
   sunIcon,
   moonIcon,
-  LinkOffComponent,
   LinkIcon,
   SignOutComponent,
   LightningIconComponent,
@@ -476,30 +352,15 @@ export {
   EmptyDarkIcon,
   FetchDataErrLight,
   FetchDataErrDark,
-  WhiteSearchIcon,
   WhiteSearchIconComponent,
   WalletRoundedIcon,
   ArrowUpIcon,
   ArrowUpDarkIcon,
-  CopyOutlineIcon,
   ArrowDownIcon,
   ArrowDownDarkIcon,
-  RocketIconUrl,
-  RocketIcon,
-  CopyOutlineIconComponent,
   SummaryWalletDark,
-  UpGreenDarkmode,
-  DownRedDarkmode,
   UpGreenUtxoDarkmode,
   DownRedUtxoDarkmode,
-  NoteEditIconComponent,
-  WithdrawlIconComponent,
-  DelegationIconComponent,
-  MintingIconComponent,
-  RewardsDistributionComponent,
-  StakeCertificatesComponent,
-  ProtocolUpdateComponent,
-  InstantaneousHistoryComponent,
   PolicyDark,
   Sanchonet,
   NAIcon,
@@ -569,7 +430,6 @@ export {
   SearchSustainabilityIcon
 };
 
-import AIcon from "./icons/AIcon.svg?react";
 import Notice from "./icons/notice.svg?react";
 import EyeIcon from "./icons/eye.svg?react";
 import StartPage from "./icons/startPagePagination.svg?react";
@@ -577,11 +437,7 @@ import EndPage from "./icons/endPagePagination.svg?react";
 import PrevPage from "./icons/prevPagePagination.svg?react";
 import NextPage from "./icons/nextPagePagination.svg?react";
 import DownIcon from "./icons/down.svg?react";
-import PolicyScriptIcon from "./icons/script.svg?react";
 import FilterIcon from "./icons/filter.svg?react";
-import ListOfReportsIC from "./icons/list-of-report.svg?react";
-import WatchlistIC from "./icons/watchlist.svg?react";
-import ReceidvedRewardsIC from "./icons/received-rewards-ic.svg?react";
 import ADAsymbol from "./icons/ADAsymbol.svg?react";
 import ProtocolUpdateIcon from "./icons/protocolUpdate.svg?react";
 import StakeCertificates from "./icons/stakeCertificate.svg?react";
@@ -597,12 +453,7 @@ import PoolUpdateIcon from "./icons/Staking/poolUpdateIcon.svg?react";
 import TransactionIcon from "./icons/transactionIcon.svg?react";
 import Wallet from "./images/wallet-blue.svg?react";
 import WalletGreenIcon from "./icons/wallet-green.svg?react";
-import BgBlue from "./images/bg-blue.svg?react";
-import BgPink from "./images/bg-pink.svg?react";
-import BgGreen from "./images/bg-green.svg?react";
-import PigSave from "./images/pig-save.svg?react";
 import ButtonListIcon from "./icons/Staking/buttonList.svg?react";
-import ButtonListIconDark from "./icons/Staking/buttonListDark.svg?react";
 import TranferIcon from "./icons/Staking/tranfer.svg?react";
 import BackIcon from "./icons/Staking/BackIcon.svg?react";
 import BackDarkIcon from "./icons/back-dark-icon.svg?react";
@@ -632,16 +483,10 @@ import PoolCert from "./icons/Staking/PoolCert.svg?react";
 import CertUpdate from "./icons/Staking/CertUpdate.svg?react";
 import ChangeIcon from "./icons/Staking/changeIcon.svg?react";
 import DownloadGreenIcon from "./icons/download-green.svg?react";
-import BgCardWhite from "./images/BgCardWhite.svg?react";
-import PoolsizeIcon from "./images/poolsize-ic.svg?react";
-import StatusIC from "./images/status-ic.svg?react";
-import ReewardAvalible from "./images/reward-avalible.svg?react";
-import OwnerAccIC from "./images/owner-acc-ic.svg?react";
 import HideIcon from "./icons/hide.svg?react";
 import ShowIcon from "./icons/show.svg?react";
 import DelegationHistoryIcon from "./icons/delegationHistory.svg?react";
 import StakeKeyHistoryIcon from "./icons/stateKeyHistory.svg?react";
-import WithdrawHistoryIcon from "./icons/withdrawHistory.svg?react";
 import InstantaneousHistoryIcon from "./icons/instantaneousHistory.svg?react";
 import GitCommitIcon from "./icons/git-commit.svg?react";
 import SortTableUpDown from "./icons/SortTableUpDown.svg?react";
@@ -652,7 +497,6 @@ import FirstLast from "./icons/firstLast.svg?react";
 import ProtocolParam from "./icons/protocolParam.svg?react";
 import ResetIcon from "./icons/resetIcon.svg?react";
 import UnionTokenIcon from "./icons/union-token.svg?react";
-import PeopleIcon from "./icons/people.svg?react";
 import SuccessIcon from "./icons/success.svg?react";
 import FailIcon from "./icons/failed.svg?react";
 import SuccessDarkIcon from "./icons/success-dark.svg?react";
@@ -666,7 +510,6 @@ import WalletIconRewardGreen from "./icons/Staking/walletIconRewardGreen.svg?rea
 import WalletIconRewardGreenDark from "./icons/Staking/walletIconRewardGreenDark.svg?react";
 import TransferIcon from "./icons/transfer.svg?react";
 import DelegationHistoryMainIcon from "./icons/delegationHistoryGreen.svg?react";
-import BlockIcon from "./icons/blockIcon.svg?react";
 import ChartMode from "./icons/Staking/ChartMode.svg?react";
 import TableMode from "./icons/Staking/TableMode.svg?react";
 import SummaryIcon from "./images/summaryIcon.svg?react";
@@ -688,21 +531,17 @@ import TotalPoolIcon from "./icons/totalPool.svg?react";
 import TotalPoolDarkIcon from "./icons/totalPoolDark.svg?react";
 import MetadataIcon from "./icons/metadata.svg?react";
 import OwnerAccountIcon from "./icons/owner-account-ic.svg?react";
-import PoolSizeIcon from "./icons/pool-size-ic.svg?react";
 import RewardsAvailableIcon from "./icons/rewards-available-ic.svg?react";
 import StatusIcon from "./icons/status-ic.svg?react";
-import FileOverviewIcon from "./icons/file-overview.svg?react";
 import RedeemerPlusIcon from "./icons/redeemer-plus.svg?react";
 import RedeemerArrowDownIcon from "./icons/redeemer-arrow-down.svg?react";
 import SliderRight from "./icons/swipper-right.svg?react";
-import ExplorerLogo from "./icons/explorer-logo.svg?react";
 import TwitterX from "./icons/TwitterX.svg?react";
 import ExclamationTriangleIcon from "./icons/exclamation-triangle.svg?react";
 import ADAactive from "./icons/Staking/ADAactive.svg?react";
 import ADAinactive from "./icons/Staking/ADAinactive.svg?react";
 import WarningLight from "./icons/warning-light.svg?react";
 import CheckLightGreen from "./icons/check-light-green.svg?react";
-import CopyOutline2 from "./icons/copy-outline-2.svg?react";
 import OutlineEye from "./icons/outline-eye.svg?react";
 import Polygon from "./icons/polygon.svg?react";
 import PoundSign from "./icons/pound-sign.svg?react";
@@ -748,12 +587,10 @@ import OpenTimeLock from "./icons/openTimeLock.svg?react";
 import LockedTimelock from "./icons/lockedTimelock.svg?react";
 import SigNative from "./icons/sigNative.svg?react";
 import NativeSig from "./icons/NativeSig.svg?react";
-import NativeStatus from "./icons/NativeStatus.svg?react";
 import NativeTimelock from "./icons/NativeTimelock.svg?react";
 import NativeType from "./icons/NativeType.svg?react";
 import NativeOneMint from "./icons/NativeOneMint.svg?react";
 import TraceabilityAddress from "./icons/traceabilityAddress.svg?react";
-import DrawerClose from "./icons/drawerClose.svg?react";
 import CCCurentState from "./icons/CCCurentState.svg?react";
 import CCProposalPolicy from "./icons/CCProposalPolicy.svg?react";
 import CCActiveMembers from "./icons/CCActiveMembers.svg?react";
@@ -769,16 +606,12 @@ import Lighning from "./icons/Lighning.svg?react";
 import LighningWhite from "./icons/lighning-white.svg?react";
 import Earch from "./icons/Earch.svg?react";
 import EarchWhite from "./icons/earch-white.svg?react";
-import Wash from "./icons/wash.svg?react";
 import Tree from "./icons/tree.svg?react";
-import TreeWhite from "./icons/tree-white.svg?react";
-import WasteWhite from "./icons/waste-white.svg?react";
 import Clock from "./icons/clock.svg?react";
 import ClockWhite from "./icons/clock-white.svg?react";
 
 export {
   StakingLifecycleComponent,
-  AIcon,
   CheckNotRequiredCIPIcon,
   FilterVersionIcon,
   TimeLock,
@@ -803,11 +636,7 @@ export {
   PrevPage,
   NextPage,
   DownIcon,
-  PolicyScriptIcon,
   FilterIcon,
-  ListOfReportsIC,
-  WatchlistIC,
-  ReceidvedRewardsIC,
   ADAsymbol,
   ProtocolUpdateIcon,
   StakeCertificates,
@@ -823,12 +652,7 @@ export {
   TransactionIcon,
   Wallet,
   WalletGreenIcon,
-  BgBlue,
-  BgPink,
-  BgGreen,
-  PigSave,
   ButtonListIcon,
-  ButtonListIconDark,
   TranferIcon,
   BackIcon,
   BackDarkIcon,
@@ -858,16 +682,10 @@ export {
   CertUpdate,
   ChangeIcon,
   DownloadGreenIcon,
-  BgCardWhite,
-  PoolsizeIcon,
-  StatusIC,
-  ReewardAvalible,
-  OwnerAccIC,
   HideIcon,
   ShowIcon,
   DelegationHistoryIcon,
   StakeKeyHistoryIcon,
-  WithdrawHistoryIcon,
   InstantaneousHistoryIcon,
   GitCommitIcon,
   SortTableUpDown,
@@ -878,7 +696,6 @@ export {
   ProtocolParam,
   ResetIcon,
   UnionTokenIcon,
-  PeopleIcon,
   SuccessIcon,
   FailIcon,
   SuccessDarkIcon,
@@ -892,7 +709,6 @@ export {
   WalletIconRewardGreenDark,
   TransferIcon,
   DelegationHistoryMainIcon,
-  BlockIcon,
   ChartMode,
   TableMode,
   SummaryIcon,
@@ -914,21 +730,17 @@ export {
   TotalPoolDarkIcon,
   MetadataIcon,
   OwnerAccountIcon,
-  PoolSizeIcon,
   RewardsAvailableIcon,
   StatusIcon,
-  FileOverviewIcon,
   RedeemerPlusIcon,
   RedeemerArrowDownIcon,
   SliderRight,
-  ExplorerLogo,
   TwitterX,
   ExclamationTriangleIcon,
   ADAactive,
   ADAinactive,
   WarningLight,
   CheckLightGreen,
-  CopyOutline2,
   OutlineEye,
   Polygon,
   PoundSign,
@@ -954,12 +766,10 @@ export {
   LockedTimelock,
   SigNative,
   NativeSig,
-  NativeStatus,
   NativeTimelock,
   NativeType,
   NativeOneMint,
   TraceabilityAddress,
-  DrawerClose,
   CCCurentState,
   CCProposalPolicy,
   CCActiveMembers,
@@ -974,10 +784,7 @@ export {
   LighningWhite,
   Earch,
   EarchWhite,
-  Wash,
   Tree,
-  TreeWhite,
-  WasteWhite,
   Clock,
   ClockWhite,
   PlusSquareIcon,
