@@ -5,7 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { t } from "i18next";
 
-import { BolsiniAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
+import { TraceabilityAddress, InvalidIcon, SeeMoreIconHome, VerifiedIcon } from "src/commons/resources";
 import { details } from "src/commons/routers";
 import useFetch from "src/commons/hooks/useFetch";
 import { API } from "src/commons/utils/api";
@@ -22,12 +22,12 @@ import { BadgeContainerVerify } from "./styles";
 
 import { VerifyBadge } from ".";
 
-const BolnisiWineDrawer = () => {
+const TraceabilityProgramWineDrawer = () => {
   const theme = useTheme();
   const history = useHistory();
   const { wineryId, trxHash } = useParams<{ wineryId: string; trxHash: string }>();
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
-  const [selectedWine, setSelectedWine] = useState<BolnisiWineLots | null>(null);
+  const [selectedWine, setSelectedWine] = useState<TraceabilityProgramWineLots | null>(null);
   const { hash } = useLocation();
   const { data, loading } = useFetch<WineryData>(
     wineryId && trxHash ? API.TRANSACTION.WINERY_DETAIL(trxHash, wineryId) : ""
@@ -142,7 +142,7 @@ const BolnisiWineDrawer = () => {
                   {getWineName(wineryId)}
                 </Box>
                 <Box display={"flex"} alignItems={"center"} justifyContent={"center"}>
-                  <BolsiniAddress fill={theme.palette.secondary.light} />
+                  <TraceabilityAddress fill={theme.palette.secondary.light} />
                   <Box component={"span"} pl={0.5} fontSize={14} color={theme.palette.secondary.light} lineHeight={1}>
                     {getWineAddress(wineryId)}
                   </Box>
@@ -185,9 +185,9 @@ const BolnisiWineDrawer = () => {
                             <CustomTooltip
                               title={
                                 <Box width={"max-content"} maxWidth={"75vw"}>
-                                  {t("bolnisi.verifyErrorTooltip")}
+                                  {t("traceabilityprogram.verifyErrorTooltip")}
                                   <br />
-                                  {t("bolnisi.verifyErrorTooltipTryAgain")}
+                                  {t("traceabilityprogram.verifyErrorTooltipTryAgain")}
                                 </Box>
                               }
                             >
@@ -203,7 +203,7 @@ const BolnisiWineDrawer = () => {
                                 >
                                   <InvalidIcon fill={theme.palette.secondary.main} />
                                 </Box>
-                                <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                                <Box width={"max-content"}>{t("traceabilityprogram.verifyError")}</Box>
                               </BadgeContainerVerify>
                             </CustomTooltip>
                           )}
@@ -241,7 +241,7 @@ const BolnisiWineDrawer = () => {
   );
 };
 
-export default BolnisiWineDrawer;
+export default TraceabilityProgramWineDrawer;
 
 const CloseButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
@@ -298,7 +298,7 @@ const StyledLink = styled(Box)`
 interface WineDetailModalProps {
   open: boolean;
   externalApiAvailable: boolean;
-  wineData: BolnisiWineLots | null;
+  wineData: TraceabilityProgramWineLots | null;
   onClose: () => void;
 }
 
@@ -371,9 +371,9 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApi
                 <CustomTooltip
                   title={
                     <Box width={"max-content"} maxWidth={"75vw"}>
-                      {t("bolnisi.verifyErrorTooltip")}
+                      {t("traceabilityprogram.verifyErrorTooltip")}
                       <br />
-                      {t("bolnisi.verifyErrorTooltipTryAgain")}
+                      {t("traceabilityprogram.verifyErrorTooltipTryAgain")}
                     </Box>
                   }
                 >
@@ -389,7 +389,7 @@ const WineDetailModal: React.FC<WineDetailModalProps> = ({ wineData, externalApi
                     >
                       <InvalidIcon fill={theme.palette.secondary.main} />
                     </Box>
-                    <Box width={"max-content"}>{t("bolnisi.verifyError")}</Box>
+                    <Box width={"max-content"}>{t("traceabilityprogram.verifyError")}</Box>
                   </BadgeContainerVerify>
                 </CustomTooltip>
               )}

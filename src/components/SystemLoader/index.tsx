@@ -7,7 +7,7 @@ import useFetch from "src/commons/hooks/useFetch";
 import { API, USER_API } from "src/commons/utils/api";
 import {
   API_GECKO,
-  BOLNISI_NAME_API,
+  TRACEABILITYPROGRAM_NAME_API,
   EVENT_TYPES,
   MAX_SLOT_EPOCH,
   NETWORK,
@@ -53,10 +53,10 @@ export const SystemLoader = () => {
   }, [usdData]);
 
   const fetchWineName = () => {
-    if (BOLNISI_NAME_API) {
+    if (TRACEABILITYPROGRAM_NAME_API) {
       setWineryNameLoading(true);
       axios
-        .get(BOLNISI_NAME_API)
+        .get(TRACEABILITYPROGRAM_NAME_API)
         .then((response) => response.data)
         .then((data) => setWineryName(data))
         .finally(() => setWineryNameLoading(false));

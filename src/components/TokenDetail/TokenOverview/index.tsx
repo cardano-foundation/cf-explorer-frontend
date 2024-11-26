@@ -1,14 +1,16 @@
-import { Box } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import BigNumber from "bignumber.js";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ImageSearchIcon from "@mui/icons-material/ImageSearch";
+import HideImageIcon from "@mui/icons-material/HideImage";
 
-import { FileGuard, SlotIcon, TimeIconComponent, USDIconComponent } from "src/commons/resources";
-import { formatDateTimeLocal, getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
+import { FileGuard, SlotIcon, USDIconComponent } from "src/commons/resources";
+import { getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/commons/utils/helper";
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
+import StyledModal from "src/components/commons/StyledModal";
 
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
@@ -23,9 +25,13 @@ interface ITokenOverview {
 
 const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated }) => {
   const { t } = useTranslation();
+  const [openLogoModal, setOpenLogoModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [policyId, setPolicyId] = useState("");
+  const [showLogo, setShowLogo] = useState(false);
   const decimalToken = data?.decimals || data?.metadata?.decimals || 0;
+
+  const theme = useTheme();
 
   const listItem = [
     {
@@ -34,11 +40,94 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           <CustomTooltip title={data?.displayName || data?.fingerprint || ""}>
             <span>{data?.displayName || getShortHash(data?.fingerprint) || ""}</span>
           </CustomTooltip>
-          {data?.metadata && data?.metadata?.logo ? (
-            <Box component={"img"} width={"auto"} height={36} src={`${data.metadata.logo}`} alt="logo icon" ml={1} />
-          ) : (
-            ""
+          {!showLogo && (
+            <ImageSearchIcon
+              sx={{ marginLeft: "8px", width: "auto", height: "36px", cursor: "pointer" }}
+              onClick={() => setOpenLogoModal(true)}
+              color="primary"
+            />
           )}
+          {showLogo && data?.metadata?.logo ? (
+            <Box
+              component="img"
+              width="auto"
+              height={36}
+              src={data.metadata.logo}
+              alt="logo icon"
+              ml={1}
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : showLogo ? (
+            <HideImageIcon sx={{ marginLeft: "8px", width: "auto", height: "36px" }} />
+          ) : null}
+
+          <StyledModal
+            open={openLogoModal}
+            handleCloseModal={() => {
+              setOpenLogoModal(false);
+            }}
+            width="380px"
+            modalStyle={{ maxWidth: { xs: "380px", sm: "none" } }}
+          >
+            <Box>
+              <Box
+                sx={{
+                  marginBottom: "20px",
+                  color: theme.palette.secondary.main,
+                  textAlign: "left",
+                  fontSize: "24px",
+                  fontWeight: "700"
+                }}
+              >
+                NSFW Content
+              </Box>
+              <Box sx={{ backgroundColor: theme.palette.secondary[100], borderRadius: "8px", padding: "16px" }}>
+                <Box
+                  sx={{
+                    textAlign: "left",
+                    marginBottom: "20px",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: theme.palette.secondary.light,
+                    whiteSpace: "pre-line"
+                  }}
+                >
+                  {t("token.confirmView")}
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "center", gap: "35px" }}>
+                  <Button
+                    variant="outlined"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowLogo(false);
+                      setOpenLogoModal(false);
+                    }}
+                    sx={{
+                      padding: "10px 12px ",
+                      textTransform: "none",
+                      borderRadius: "8px",
+                      fontWeight: "700",
+                      backgroundColor: theme.palette.secondary.light,
+                      color: !theme.isDark ? "#fff" : "#000"
+                    }}
+                  >
+                    {t("common.cancel")}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowLogo(true);
+                      setOpenLogoModal(false);
+                    }}
+                    sx={{ padding: "10px 12px", textTransform: "none", borderRadius: "8px", fontWeight: "700" }}
+                  >
+                    {t("common.continue")}
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+          </StyledModal>
         </TokenHeader>
       ),
       value: (
@@ -64,7 +153,7 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
       strokeColor: "#000",
       value: (
         <>
-          <Box position={"relative"}>
+          <Box maxWidth={"300px"} position={"relative"}>
             <CustomTooltip title={data?.policy}>
               <PolicyId data-testid="token.asset.script">{data?.policy || ""}</PolicyId>
             </CustomTooltip>
@@ -99,32 +188,6 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
           )}
         </>
       )
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("createdAt")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: TimeIconComponent,
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.createdOn || "")}</DatetimeTypeTooltip>
-    },
-    {
-      title: (
-        <Box display={"flex"} alignItems="center">
-          <Box component={"span"} mr={1}>
-            <WrapTitle>{t("glossary.tokenLastActivity")}</WrapTitle>
-          </Box>
-        </Box>
-      ),
-      icon: TimeIconComponent,
-      value: <DatetimeTypeTooltip>{formatDateTimeLocal(data?.tokenLastActivity || "")}</DatetimeTypeTooltip>
-    },
-    {
-      title: <></>,
-      value: <></>
     }
   ];
 
@@ -137,6 +200,8 @@ const TokenOverview: React.FC<ITokenOverview> = ({ data, loading, lastUpdated })
         listItem={listItem}
         loading={loading}
         lastUpdated={lastUpdated}
+        createdOn={data?.createdOn}
+        tokenLastActivity={data?.tokenLastActivity}
       />
       <ScriptModal open={openModal} onClose={() => setOpenModal(false)} policy={policyId} />
     </Box>
