@@ -20,6 +20,8 @@ jobs:
           echo "BLOCKFROST_API_TOKEN=${{ secrets.PLAYWRIGHT_BLOCKFROST_API_TOKEN }}" >> .env
           echo "KOIOS_API_URL=${{ secrets.PLAYWRIGHT_KOIOS_API_URL }}" >> .env
           echo "KOIOS_API_TOKEN=${{ secrets.PLAYWRIGHT_KOIOS_API_TOKEN }}" >> .env
+          echo "MICA_API_URL=${{ secrets.PLAYWRIGHT_MICA_API_URL }}" >> .env
+          echo "MICA_API_TOKEN=${{ secrets.PLAYWRIGHT_MICA_API_TOKEN }}" >> .env
           echo "USERNAME=${{ secrets.PLAYWRIGHT_CF_EXPLORER_USERNAME }}" >> .env
           echo "PASSWORD=${{ secrets.PLAYWRIGHT_CF_EXPLORER_PASSWORD }}" >> .env
           echo "HEADLESS=true" >> .env

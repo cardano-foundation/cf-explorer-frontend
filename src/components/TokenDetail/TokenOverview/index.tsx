@@ -10,8 +10,8 @@ import { getShortHash, formatNumberTotalSupply, tokenRegistry } from "src/common
 import CopyButton from "src/components/commons/CopyButton";
 import DetailHeader from "src/components/commons/DetailHeader";
 import CustomTooltip from "src/components/commons/CustomTooltip";
-import DatetimeTypeTooltip from "src/components/commons/DatetimeTypeTooltip";
 import StyledModal from "src/components/commons/StyledModal";
+
 import ScriptModal from "../../ScriptModal";
 import { ButtonLink, PolicyId, PolicyScriptBtn, TokenDescription, TokenHeader, TokenUrl, WrapTitle } from "./styles";
 

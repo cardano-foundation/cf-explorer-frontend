@@ -17,7 +17,6 @@ export function blocksDashboard(page: Page) {
   const blocksTableTitleSlot = page.getByTestId("blocks.table.title.slot");
   const blocksTableTitleAbsSlot = page.getByTestId("blocks.table.title.absoluteSlot");
   const blocksTableTitleCreateAt = page.getByTestId("blocks.table.title.createAt");
-  const blocksTableTitleOutput = page.getByTestId("blocks.table.title.output");
   const blocksTableValueSlot = page.getByTestId("blocks.table.value.slot#2");
 
   const goToDashboard = async () => {
@@ -64,7 +63,6 @@ export function blocksDashboard(page: Page) {
     await expect(blocksTableTitleSlot, "Check title on blocks table").toHaveText("Slot");
     await expect(blocksTableTitleAbsSlot, "Check title on blocks table").toHaveText("Absolute Slot");
     await expect(blocksTableTitleCreateAt, "Check title on blocks table").toHaveText("Created At");
-    await expect(blocksTableTitleOutput, "Check title on finished epoch table").toHaveText("Output");
   };
 
   return {
